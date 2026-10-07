@@ -1,6 +1,6 @@
 # SwiftJXL — reversible JPEG ↔ JPEG XL transcoding
 
-Native-transcoding requirements introduced in contract **0.2.0**; the current common contract is **0.4.0**. Implementation instructions and source review, 18 September 2026. Milestone 1 supplies an unsupported transcoder call shape with empty capabilities; real recompression and reconstruction remain deferred. Read AGENTS.md, IMPLEMENTATION.md and the common contracts first. For application API/dependency changes and rollout gates, see [MIGRATION.md](MIGRATION.md).
+Native-transcoding requirements introduced in contract **0.2.0**; the current common contract distribution is **0.10.0**. Implementation instructions and source review, 18 September 2026. Milestone 1 supplies an unsupported transcoder call shape with empty capabilities; real recompression and reconstruction remain deferred. Read AGENTS.md, IMPLEMENTATION.md and the common contracts first. For application API/dependency changes and rollout gates, see [MIGRATION.md](MIGRATION.md).
 
 ## Required outcome and exact meaning
 
@@ -47,8 +47,8 @@ The predecessor's forward/reverse public entry points may remain explicit conven
 Planned CLI examples, to be implemented and tested later:
 
 ```sh
-swiftjxl transcode -i source.jpg --input-format jpeg --output-format jxl --mode lossless -o recompressed.jxl
-swiftjxl transcode -i recompressed.jxl --input-format jxl --output-format jpeg --mode lossless -o restored.jpg
+swiftjxl-cli transcode -i source.jpg --input-format jpeg --output-format jxl --mode lossless -o recompressed.jxl
+swiftjxl-cli transcode -i recompressed.jxl --input-format jxl --output-format jpeg --mode lossless -o restored.jpg
 ```
 
 The output JXL is a reconstruction-bearing container. `--mode lossless` is the default for these native pairs and requires original-JPEG byte preservation. It must not select the predecessor's default pixel fallback. There is no `--source original.jpg` dependency in the reverse command. Support standard streams, bounded input/output and final-file atomic publication using the shared CLI rules; no intermediate file is created by either operation. Reject incompatible lossy/quality/discard flags.

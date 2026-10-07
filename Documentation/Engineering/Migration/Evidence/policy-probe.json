@@ -1,0 +1,52 @@
+{
+  "predecessor_revision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract_requirements": [
+    "API-07",
+    "MEM-12",
+    "TEST-06"
+  ],
+  "source_sha256": "f7a38d9b28411fa18a30e14ee851303e40b5f259d8f896c57f2cc4ca37250346",
+  "binary_sha256": "77ea6541b9529727cde3fdffe55adce85939272f49576bfb358260b514278566",
+  "source": "policy-probe.swift",
+  "build_exit_code": 1,
+  "build_limitation": "Swift Build compiled and linked the probe but dsymutil could not generate the debug symbol bundle (Operation not permitted). This is not a successful build qualification. The linked executable was run separately.",
+  "execution_command": "work/precision-probe/.build/out/Products/Release/PrecisionProbe",
+  "execution_exit_code": 1,
+  "results": [
+    {
+      "case": "encode workspace limited to one byte",
+      "expected": "resourceLimitExceeded",
+      "observed": "operation succeeded",
+      "requirement_met": false
+    },
+    {
+      "case": "encode admission limited to one byte",
+      "expected": "resourceLimitExceeded",
+      "observed": "operation succeeded",
+      "requirement_met": false
+    },
+    {
+      "case": "encode requires unavailable accelerated backend",
+      "expected": "backendUnavailable",
+      "observed": "operation succeeded",
+      "requirement_met": false
+    },
+    {
+      "case": "decode workspace limited to one byte",
+      "expected": "resourceLimitExceeded",
+      "observed": "operation succeeded",
+      "requirement_met": false
+    },
+    {
+      "case": "decode requires unavailable accelerated backend",
+      "expected": "backendUnavailable",
+      "observed": "operation succeeded",
+      "requirement_met": false
+    },
+    {
+      "case": "preserve required image metadata or reject",
+      "observed": "required metadata lost",
+      "requirement_met": false
+    }
+  ]
+}

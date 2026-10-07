@@ -4,7 +4,7 @@ Read AGENTS.md and every common contract document first. Milestone 1 now impleme
 
 ## Source and destination
 
-Predecessor: [Raster-Lab/JXLSwift](https://github.com/Raster-Lab/JXLSwift) at inspected SHA `760697a54dd253da8e8466c3fd09ecf2c2d89aec`. Highest stable-shaped tag observed: `v1.4.0` (resolve independently before choosing it as a baseline). Target module/product: `SwiftJXL`. Target CLI: `swiftjxl`. Intended first stable library version: `2.1.0`.
+Predecessor: [Raster-Lab/JXLSwift](https://github.com/Raster-Lab/JXLSwift) at inspected SHA `760697a54dd253da8e8466c3fd09ecf2c2d89aec`. Highest stable-shaped tag observed: `v1.4.0` (resolve independently before choosing it as a baseline). Target module/product: `SwiftJXL`. Target CLI: `swiftjxl-cli`. Intended first stable library version: `2.1.0`.
 
 Do not migrate code from moving main without recording the selected revision. Reproduce relevant source tests and inspect source-level capabilities. Existing test totals and benchmark claims are historical, not successor acceptance evidence.
 
@@ -12,7 +12,7 @@ Do not migrate code from moving main without recording the selected revision. Re
 
 | Milestone | Work | Exit evidence |
 | --- | --- | --- |
-| 1 — contract feasibility | Establish Swift 6.4 package, independent local API/owning-memory types, descriptor validation and safe adapter experiment; no codec algorithm migration | Compiling equivalent public calls, lifecycle/race/error tests, standalone consumer build and contract issues resolved explicitly |
+| 1 — contract feasibility | Establish Swift 6.2-minimum package with Swift 6.4 qualification, independent local API/owning-memory types, descriptor validation and safe adapter experiment; no codec algorithm migration | Compiling equivalent public calls, lifecycle/race/error tests, standalone consumer build and contract issues resolved explicitly |
 | 2 — migration baseline | Inventory predecessor subsystems/products; select and migrate the smallest native scalar lossless path with Apache-2.0/provenance reconciliation | Pinned predecessor comparison, independent decode/encode validation, exact sample/precision results, no new runtime codec dependency |
 | 3 — shared-storage path | Direct final decode into caller storage and encode from compatible sealed storage | Required-sharing copy/allocation/lifetime proof; first suite pair or corresponding codec extension passes |
 | 4 — feature/platform coverage | Extend supported modes/layouts, CLI, optional acceleration and all required OS/architecture paths | Capability matrix, codec-specific regressions, platform results, security and performance evidence |
@@ -58,10 +58,10 @@ POL-05 requires every product to be explicitly **retained** (migrates, stays a p
 | --- | --- | --- | --- | --- | --- |
 | `JXLSwift` | 122 / 45,117 | 1 | Adapted — renamed | `SwiftJXL` | API-01 |
 | `JXLSwiftContract` | 7 / 1,059 | 0 | Adapted — folded in | `SwiftJXL` | The module rename dissolves the name collision that justified a separate product. Contract 0.8.0 §5 forbids two parallel surfaces in one module. |
-| `jxl-tool` (exec) | 13 / 2,983 | — | Adapted — renamed | `swiftjxl` | CLI-01 |
+| `jxl-tool` (exec) | 13 / 2,983 | — | Adapted — renamed | `swiftjxl-cli` | CLI-01 |
 | `jxl` (exec) | same target | — | Deferred — dropped | none | A second binary built from the same target for family parity with `j2k`. CLI-01 replaces that scheme with `swiftj2k`/`swiftjls`/`swiftjxl`/`swiftjli` and avoids names that could replace a predecessor binary. |
 
-**Product list after migration:** `SwiftJXL` (library) and `swiftjxl` (executable).
+**Product list after migration:** `SwiftJXL` (library) and `swiftjxl-cli` (executable).
 
 ### Decisions recorded with these dispositions
 

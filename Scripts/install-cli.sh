@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 set -euo pipefail
 repo="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-tool=swiftjxl
+tool=swiftjxl-cli
 prefix=/usr/local
 stage="${DESTDIR:-}"
 binary=

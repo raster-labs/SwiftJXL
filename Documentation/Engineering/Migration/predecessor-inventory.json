@@ -1,0 +1,938 @@
+{
+  "repository": "https://github.com/Raster-Lab/JXLSwift",
+  "revision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "reference": "v1.5.0-rc.1",
+  "status": "Inventory only; no listed implementation or test file has been migrated.",
+  "files": [
+    {
+      "source_path": "Sources/JXLPerfC/JXLPerfC.c",
+      "sha256": "e2483600c0a1cf72f805c7bafc5307beb3ff7d2571cd2dbc4ca8270be8622acc",
+      "bytes": 571,
+      "lines": 20
+    },
+    {
+      "source_path": "Sources/JXLPerfC/include/JXLPerfC.h",
+      "sha256": "360734c64fd4bb92587e7c440f81968f8a298657fb6ba27bfa23f6c6eccf8aec",
+      "bytes": 2255,
+      "lines": 51
+    },
+    {
+      "source_path": "Sources/JXLSwift/Bitstream/BitReader.swift",
+      "sha256": "72bddce1b75551adb976c3adb1bd68586dec5d69406bdb0a0ffb63076e5ee7e8",
+      "bytes": 9830,
+      "lines": 255
+    },
+    {
+      "source_path": "Sources/JXLSwift/Bitstream/BitWriter.swift",
+      "sha256": "fa162d59f4537a69048a6e298f0511ba2c13473d5ca3becead03561b88bc7781",
+      "bytes": 4686,
+      "lines": 113
+    },
+    {
+      "source_path": "Sources/JXLSwift/Bitstream/SpecIntegers.swift",
+      "sha256": "9af2d816d297720c05c9386b8cda45f5a2bab199fdea0259c652f0f80c816b8d",
+      "bytes": 7004,
+      "lines": 178
+    },
+    {
+      "source_path": "Sources/JXLSwift/Bitstream/VarLenUint.swift",
+      "sha256": "72e9fdcc0f5aa1d6b2f61508a06f18a7c247bcef97bb0edcd5288a021b73c177",
+      "bytes": 3144,
+      "lines": 89
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliBitReader.swift",
+      "sha256": "ced2737273c9c824f4f35892a7093f52842de50b80a3ba90364e164e0b3412f0",
+      "bytes": 3854,
+      "lines": 110
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliCompressedMetaBlock.swift",
+      "sha256": "9adfeb29f7b0afd9c70f72796faa8cba6acf08687e4d85353bc444ade987a7a8",
+      "bytes": 6624,
+      "lines": 156
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliDecoder.swift",
+      "sha256": "0d8b7646b6d658e5565e02e952fe1394587368b583ddbc5918d9f370de039410",
+      "bytes": 15402,
+      "lines": 350
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliDistance.swift",
+      "sha256": "65b53e876b222cb61484b74493c3928ba52e50eae9775ec25d934eba20530f80",
+      "bytes": 6313,
+      "lines": 163
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliEncoder.swift",
+      "sha256": "1f6cc37232efdf147834c432fe93f107227d4369f16393a32d755f49fb28b58e",
+      "bytes": 2696,
+      "lines": 61
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliErrors.swift",
+      "sha256": "9b898f89ba20d1a51f8251420f3edc00e0d01e5341818aae48d5f85c89fe6cd7",
+      "bytes": 2457,
+      "lines": 51
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliInsertCopy.swift",
+      "sha256": "af0451fa45d7d33a9847500a8ad186e61c336ff2b281e63503d2cd55cfe06ed5",
+      "bytes": 5503,
+      "lines": 129
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliMetaBlock.swift",
+      "sha256": "bee155155a42fbed78aa6d822ddc54f9e00c3d82267a3457c4b61b926d6b223d",
+      "bytes": 9252,
+      "lines": 231
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliPrefixCode.swift",
+      "sha256": "b8d89b271d69dc4ce33c83d666b4af71e32743264c4c2b85c0c6f2469cbd7d9e",
+      "bytes": 22691,
+      "lines": 533
+    },
+    {
+      "source_path": "Sources/JXLSwift/Brotli/BrotliStaticDictionary.swift",
+      "sha256": "df9a8ebbf88b5067ae4d649a850e7bafd23abf3bf7601177279fdda066e6618e",
+      "bytes": 176297,
+      "lines": 389
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/AsyncOverloads.swift",
+      "sha256": "d24daf59befc36fbe916d0954df42d82af7a015dd9e5cad8014d85bae10412d8",
+      "bytes": 3361,
+      "lines": 75
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/EncodingOptions.swift",
+      "sha256": "ddc1d2835bb22d389e2ea1b8286a6ec210bb458bba8ad5d5d4e515eff896edf8",
+      "bytes": 12211,
+      "lines": 294
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/ImageFrame.swift",
+      "sha256": "57e137ddc2ee99ee38955e59f7454837a73434e99f3095eff9db8d93ede2d2a2",
+      "bytes": 8550,
+      "lines": 207
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/JXLDecoder+LosslessJPEG.swift",
+      "sha256": "2b312bc37a3c2b4fc52b222064ca02c14f998b3b245a41bcfd7f443d825ab40f",
+      "bytes": 6934,
+      "lines": 142
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+      "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+      "bytes": 244050,
+      "lines": 4995
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/JXLEncoder.swift",
+      "sha256": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+      "bytes": 30485,
+      "lines": 691
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/MinimalLosslessCodec.swift",
+      "sha256": "4242e1b35cccc5b1bdde2829af8058286c619eadc58e965992007530b1320b56",
+      "bytes": 39514,
+      "lines": 927
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/ParallelMap.swift",
+      "sha256": "abdcaf5427d34046f58b8055342d3439eca960da6d24d23f799d31c32242cf1d",
+      "bytes": 1833,
+      "lines": 44
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/Progress.swift",
+      "sha256": "dfc3fb17b6863ae1c935815b0d4698192e844e285be1e25bfe91fa5d6663d594",
+      "bytes": 6009,
+      "lines": 171
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/SharedPlaneSeam.swift",
+      "sha256": "2ff3e7ecb00d6449c62e0aa7556e69be6cd8badbb031ebf814399f69225cab47",
+      "bytes": 8852,
+      "lines": 209
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/SpecModularEncoder.swift",
+      "sha256": "1fd8766cf9e7b9103a393e22ab75d6e8ac20026647d06942eed820772d4b621b",
+      "bytes": 152474,
+      "lines": 3179
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/VarDCTBitstreamWriter.swift",
+      "sha256": "87bb11fa445d65220326b673962daef53e0089a1c51208a38553775f45e529e7",
+      "bytes": 105116,
+      "lines": 2189
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codec/VarDCTEncoder.swift",
+      "sha256": "4b69e7535253ec51540df144a2d2cb2efd1980995d51dca41dca3510a86fef3a",
+      "bytes": 105773,
+      "lines": 2290
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/BitDepth.swift",
+      "sha256": "eeb47a9ecae03cc4eea49817f60215a20dab011fdabbbdaf2cde526ccc70e659",
+      "bytes": 3123,
+      "lines": 76
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/ColorEncoding.swift",
+      "sha256": "f494bf77246415ad6d02c46e608284190f28ae229c7abf0f1791ade4080f0ac9",
+      "bytes": 8578,
+      "lines": 215
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/ExtraChannelInfo.swift",
+      "sha256": "6baf288851ecf161f6d466c4fd0ab8a6aa7554b6ccb9a6ea78a24eab49dc8f5c",
+      "bytes": 4318,
+      "lines": 120
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/FrameHeader.swift",
+      "sha256": "d5190e3e341dea46f06842ba254c94dc63882c4f9639aeaeed2a90e99cab4091",
+      "bytes": 43348,
+      "lines": 1128
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/ICCStream.swift",
+      "sha256": "9dab111c2ed044ea3db047aa03d1b5f91a7c97fce615efa6218ecbe2747faa65",
+      "bytes": 20700,
+      "lines": 502
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/ImageMetadata.swift",
+      "sha256": "f66254b6a8d0d815dccfa4f297cc3ff41d04e6a0b6adf15f83060479008b90ad",
+      "bytes": 21181,
+      "lines": 563
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/Signature.swift",
+      "sha256": "da42bad6f78fb286a65f1731dfe87e9e781d6b82cf18be544d5a30e647784e4e",
+      "bytes": 510,
+      "lines": 15
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/SizeHeader.swift",
+      "sha256": "659b9afa61939df450411fbbff4826d72d947b753dcac935d548f10e8b6cf24c",
+      "bytes": 5005,
+      "lines": 127
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/TOC.swift",
+      "sha256": "c919b2b7fa5d88c10daca1a01dedd0353a63aedaf751a14147818e0501773a23",
+      "bytes": 7081,
+      "lines": 176
+    },
+    {
+      "source_path": "Sources/JXLSwift/Codestream/TOCPermutation.swift",
+      "sha256": "ef435535a9d65d8e7acf64952dccc30306d47ec6d20c70578f1eaf06f2c277e6",
+      "bytes": 5254,
+      "lines": 135
+    },
+    {
+      "source_path": "Sources/JXLSwift/Container/JXLContainer.swift",
+      "sha256": "4c882d2e02230192132a852effe902b101d9aa1d088de55754d333be918212e3",
+      "bytes": 13057,
+      "lines": 351
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/ANSDistributionSerialisation.swift",
+      "sha256": "d8d332e4bbd90e1d1acd6017e81186beef05d9ce3db91675592e08054c425f6b",
+      "bytes": 14181,
+      "lines": 339
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/ANSStreamDecoder.swift",
+      "sha256": "e417bc9be14ee7b7ffcc7523263a7e955e10806dcc05ea4e7fe12a40a053bd98",
+      "bytes": 10184,
+      "lines": 234
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/ANSTokenStreamWriter.swift",
+      "sha256": "dc7c6c30b9da658bdf5c3d059c7b9dd0e862d12cc05794cda53e262b7f848868",
+      "bytes": 10176,
+      "lines": 229
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/AliasTable.swift",
+      "sha256": "5c056b8396341a1df36cb5024bfd8b456dc2cde1e387eff85d5f38df80ec85f9",
+      "bytes": 6241,
+      "lines": 167
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/ContextMap.swift",
+      "sha256": "879895ac7e3732ef187c3c806d5f9ddfec0492e1c55615051292a57ce5066856",
+      "bytes": 21165,
+      "lines": 481
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/EntropySectionHeader.swift",
+      "sha256": "efee641031b9e42db4c8ec61002f5f67d7042ce220c2aff202eb6b174492623f",
+      "bytes": 7107,
+      "lines": 187
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/HybridUint.swift",
+      "sha256": "37b3770279108ab1c9c25805f36382e35eda9d8ec600f38125225d08a1b81dfb",
+      "bytes": 12863,
+      "lines": 280
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/LZ77Config.swift",
+      "sha256": "9c4bc56896c931bc7adc9020e275270957e8b1d6f6eb1563f75d937aa5e344e5",
+      "bytes": 6795,
+      "lines": 162
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/MultiClusterCodebook.swift",
+      "sha256": "7b8724d19a8a6c4f5fe64dbab13ab723f70021e325184fe57608649c0136132e",
+      "bytes": 10769,
+      "lines": 254
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/PrefixCode.swift",
+      "sha256": "25389111744f6425330836fa09c9789a5dcabb3b56f3c045252a9f332a56f3cd",
+      "bytes": 8637,
+      "lines": 208
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/PrefixCodeSerialisation.swift",
+      "sha256": "346a98d66b18c4b591a2291edddb747dba476af310012a771fb77cf4686223cb",
+      "bytes": 26810,
+      "lines": 655
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/RANS.swift",
+      "sha256": "df19e8990225356748717d8ddec69af6daf2f00c32d393293c74090ecd190070",
+      "bytes": 10989,
+      "lines": 258
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/SimpleEntropyStream.swift",
+      "sha256": "0b22cda980c440ad4e375815595b55dc65749d61e1ebc12a2ce6f4dec3491aad",
+      "bytes": 10070,
+      "lines": 238
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/SpecANSDistribution.swift",
+      "sha256": "20f9c79788501bd9e55aba097afe148cefaeacadafb2cc2b5830c466e98ae952",
+      "bytes": 24713,
+      "lines": 589
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/TokenStreamReader.swift",
+      "sha256": "e8e45b281af2327dd6de338dbd7de22622e6a3678565a1ba5ee48b4ee4ced088",
+      "bytes": 15553,
+      "lines": 346
+    },
+    {
+      "source_path": "Sources/JXLSwift/Entropy/TokenStreamWriter.swift",
+      "sha256": "204bf17a186ab384434eaaa3b78333fc7e6bb53247af9ca14af07c7b683c2893",
+      "bytes": 3938,
+      "lines": 97
+    },
+    {
+      "source_path": "Sources/JXLSwift/ImageMetrics.swift",
+      "sha256": "07d71a66f7ddf12d7d8f350c2809ffd91233d5ccca269991b54bcfd2aa996fe5",
+      "bytes": 6872,
+      "lines": 173
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JBRDBox.swift",
+      "sha256": "24afeb50cab0800ebdb539b02258217974c23d72e656c8dc7b2a0246f849c554",
+      "bytes": 53834,
+      "lines": 1270
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JBRDExtractor.swift",
+      "sha256": "1789ea3bcbf8d667d871d750300c77d0d6872ea2f867020c4b34a569ae222fef",
+      "bytes": 7943,
+      "lines": 191
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGBitReader.swift",
+      "sha256": "cef46fa9f4a7fa4ee6c27829830c0b074bd2c5bd9e62626d633d0ad21b62d2c5",
+      "bytes": 9433,
+      "lines": 229
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGBitWriter.swift",
+      "sha256": "8c69446f59c9c018b05015ff9ecec2c8f8e9b77e9b946ab6215ad5971a1e0b76",
+      "bytes": 5047,
+      "lines": 126
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGBlockDecoder.swift",
+      "sha256": "ce1e7a4248f7cac545b580492f35b1b67f1335fcedb39774486b12c3aff1cb6c",
+      "bytes": 8544,
+      "lines": 221
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGBlockEncoder.swift",
+      "sha256": "1328ca6fe0ee038c2018a87fcd593ae1c0c3a277401a02486ab667f65a021533",
+      "bytes": 9583,
+      "lines": 244
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGCoefficientImage.swift",
+      "sha256": "bd58b3173bc33c063efb95ba3074fa90ea74eac315cf83ba1777eacbc83c9a48",
+      "bytes": 12559,
+      "lines": 280
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGColorConversion.swift",
+      "sha256": "1790ebed1293dd22663e9636c964d4af55b1c4627e2933382e1a6639d842f23f",
+      "bytes": 4200,
+      "lines": 109
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGContainerWriter.swift",
+      "sha256": "89a038c229827d5a39e94071a4ae4d4b31a778d9b74068b0eae0eb3c2ad39cb1",
+      "bytes": 9151,
+      "lines": 244
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGDecoder.swift",
+      "sha256": "24de5f32534a5e36d9c2f4b51a87917e7e8d12f8153ea1902c4956dd9cd1f31d",
+      "bytes": 9478,
+      "lines": 216
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGDequantiser.swift",
+      "sha256": "1ed35f658693e900846c91c69bd1dd64fe0d10ab3f2c1fee163d2b91a08c37c8",
+      "bytes": 2361,
+      "lines": 59
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGHuffmanCodebook.swift",
+      "sha256": "c37092d7042f82a2b428f14b0cf22ee19d34b66e5c017a9aff704de5667c7fbd",
+      "bytes": 9184,
+      "lines": 218
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGHuffmanTable.swift",
+      "sha256": "ea06642a0dd7354da47f1da2c033c4bc96bfe3ed4c6bb7a8a44022009c643791",
+      "bytes": 5312,
+      "lines": 129
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGIDCT.swift",
+      "sha256": "d553c3baf647fb2fd6eb97d23aa8807ca5986e7292953cda1e1155e4d0b7f0d5",
+      "bytes": 2937,
+      "lines": 73
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGLosslessDecoder.swift",
+      "sha256": "9552e26cc52f3f2a74edbd49e77b8614d8465f83670f0d9b200f183e5ed29213",
+      "bytes": 16270,
+      "lines": 394
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGMarker.swift",
+      "sha256": "aeb8b3d5ae0a8c82d9ebcc8fb8cd2bb5f294d3c238cf6f4f6902ba70d5eec562",
+      "bytes": 5516,
+      "lines": 131
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGPixelAssembler.swift",
+      "sha256": "21c99b13a1819e9dee1657944d16a62f1ff0b88a9cac80929c86cee86016f3f0",
+      "bytes": 6404,
+      "lines": 156
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGQuantTable.swift",
+      "sha256": "9c2eec8243b4aeda23111e5188869305d6f545bd7c50370acb6065ac7fd1c37e",
+      "bytes": 4667,
+      "lines": 118
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGScanDecoder.swift",
+      "sha256": "53e22e7e95783483b1093280d4724d247081a9acbfb1ccd19d52f5fd08dedf32",
+      "bytes": 29162,
+      "lines": 698
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGScanEncoder.swift",
+      "sha256": "76e4bba7af1578d0490e4e56fc95abf7a6ff7ec4fd39099a6cf0d5347a925a58",
+      "bytes": 24513,
+      "lines": 578
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGScanHeader.swift",
+      "sha256": "c090a260b5ca55f0865e0822e6e7da5bc06ddccf48543bfade2975786499054f",
+      "bytes": 7664,
+      "lines": 195
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGSegmentReader.swift",
+      "sha256": "0e080773da53b528d62b8ef7ec91f27c4d2bb09c8cbb375e776b3e1a4298bb5b",
+      "bytes": 10437,
+      "lines": 268
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGStructure.swift",
+      "sha256": "87794b217c33e515ea90d6cc82b986e67bee8412d72d92bf4f6df49200e16395",
+      "bytes": 7880,
+      "lines": 196
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JPEGToJXLAdapter.swift",
+      "sha256": "215b3c978599df540e9a28b5130ea23c08271ad0f1e303294f00bf434a76812d",
+      "bytes": 29324,
+      "lines": 641
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JXLBridgeEncoder.swift",
+      "sha256": "4d8cf46c5441a3bff7d9d74e6a332aae995ba317adfae607e1d44c046eeb8593",
+      "bytes": 20932,
+      "lines": 416
+    },
+    {
+      "source_path": "Sources/JXLSwift/JPEG/JXLToJPEGAdapter.swift",
+      "sha256": "96a1588b8a7c57648ea953b63b58353f39b8518887289628d0ffbb72878a0e15",
+      "bytes": 34246,
+      "lines": 775
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/GroupHeader.swift",
+      "sha256": "8eef50283f08622e05e064a8c70ae9792a83b6ce5659d49ab9ab7632dd4ef946",
+      "bytes": 17877,
+      "lines": 452
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/InverseTransforms.swift",
+      "sha256": "df8e30898eae31d3562e065a5f51abc8daaeafd5b6d3820e68a1b26264f10845",
+      "bytes": 13591,
+      "lines": 335
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/LibjxlPredictor.swift",
+      "sha256": "17216f657f688f30343fef6b344864879826a1d5d71e9f0cee22f844fceea7c2",
+      "bytes": 3294,
+      "lines": 91
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/ModularChannelDecoder.swift",
+      "sha256": "9b7bf346fc8266e372468dfed066d6a72a0226703ffbacf126015f0819325b9a",
+      "bytes": 11579,
+      "lines": 254
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/ModularImage.swift",
+      "sha256": "d7404d49ad03899521a51a940412081d35dc985a45fa26c401e7da03c4cc88e1",
+      "bytes": 12175,
+      "lines": 316
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/ModularProperties.swift",
+      "sha256": "5c540afa03ac102dad82223b4e3379e005f2af435049b764b619135c6e8c1dff",
+      "bytes": 4459,
+      "lines": 112
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/ModularSubImage.swift",
+      "sha256": "0703c27bb324d6fc95ae22b266865cd4466d4859a8bbb8f813ad0deab43285bb",
+      "bytes": 13126,
+      "lines": 321
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/ModularTree.swift",
+      "sha256": "fa0fa5b09144edcbafb38992c3b52c93e9b53032e032a0d08cf4a0d07bc80689",
+      "bytes": 15969,
+      "lines": 371
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/Predictors.swift",
+      "sha256": "c52f7e6ca7904b8039b9fdb7ead93f86e40ac9f9ea9c22d1987c460b5ca22f05",
+      "bytes": 9004,
+      "lines": 234
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/RCT.swift",
+      "sha256": "67e26ef15ccd28fd549fd7abd2dc71ecb152655e287ef310f55f3379330792a5",
+      "bytes": 5053,
+      "lines": 131
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/SpecRCT.swift",
+      "sha256": "d97b53f96a5efce68a3125168106b4b9f964bace73cb19e3b7efa11418e65d2e",
+      "bytes": 5013,
+      "lines": 131
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/SpecSqueeze.swift",
+      "sha256": "d96667940ca74ae309f4dd6b7af50c8f454ba61c76274e7ea3a8605eb1d1e469",
+      "bytes": 6674,
+      "lines": 162
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/Squeeze.swift",
+      "sha256": "bc4355cb6e26575dea31faa784a032a6da6dd1a4e9ae7fa1fb7c171de6e78130",
+      "bytes": 5850,
+      "lines": 149
+    },
+    {
+      "source_path": "Sources/JXLSwift/Modular/WeightedPredictor.swift",
+      "sha256": "275aea03bfa4008a101a316d365df69ce5ce982922da9178fd73d228b966fd43",
+      "bytes": 12628,
+      "lines": 274
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/ACContext.swift",
+      "sha256": "687b06ca4c12ef328b4f8d37714fe1502b5bcc9fe43d2fd2f5a5b20f785b54d2",
+      "bytes": 16475,
+      "lines": 381
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/ACDecoder.swift",
+      "sha256": "4026b7ebeb63a2a181b9ca0bcc852331d4c83dd89e5ab9f25f4323e0550b82bc",
+      "bytes": 13024,
+      "lines": 310
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/ACGroupDecoder.swift",
+      "sha256": "dea24626db3e945feed6dbe2e60e237f0f86a66d677eaf5723f0b012fa1696a9",
+      "bytes": 23735,
+      "lines": 554
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/ACQuantize.swift",
+      "sha256": "3c806d22824b01dd6bf70e4e9163c0d34c397b8c49a3107537162c2c5220b63e",
+      "bytes": 5199,
+      "lines": 116
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/ACStrategy.swift",
+      "sha256": "041f3cdfe2909ca475abccb3f239d5c78af00e2496afdf7709dcdd81857f79fa",
+      "bytes": 4613,
+      "lines": 110
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/ACStrategyImage.swift",
+      "sha256": "030c2a25d42bf0906bc3f20ea694e12e82b09b49a4609f945ba06da53538936a",
+      "bytes": 10987,
+      "lines": 254
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/AFV.swift",
+      "sha256": "fdcd658a63d576117145a8a9e29d0ca25e8e0de0d3c83501701172dc246e5bfe",
+      "bytes": 12749,
+      "lines": 277
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/AccelerateDCT.swift",
+      "sha256": "e1c5c28fc3e89dae7f1c1f6a9bfd1be68cc762c553d416c8cc8a593956495ab2",
+      "bytes": 15196,
+      "lines": 381
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/AdaptiveDCSmoothing.swift",
+      "sha256": "27a2d35ace2864d2bb4cab8da7ffd07221a913c926a3311ef2e4e1bc233ac8c8",
+      "bytes": 4190,
+      "lines": 91
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/AdjustQuantBias.swift",
+      "sha256": "08dc48b2ed7d326b8d7f1ba4d0682479db82721dc4dbfe4897c3ac095a6a632f",
+      "bytes": 2946,
+      "lines": 71
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/CoeffOrders.swift",
+      "sha256": "0c0beb6d6e03af08a060315ccbd5e676ba1398753be01a6abf8d52de7be4a424",
+      "bytes": 13399,
+      "lines": 320
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/ColorCorrelationMap.swift",
+      "sha256": "e2befc9b1141ec86857d84e2e2d412d87dac0fd85b2e967693dbd5fd30ac42ad",
+      "bytes": 10870,
+      "lines": 279
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/DCPredictor.swift",
+      "sha256": "d9a847e0c877641308f2b4f85c2ad400e11ec650ebb11f58fee7b0ea0f52a14f",
+      "bytes": 3027,
+      "lines": 76
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/DCT2D.swift",
+      "sha256": "a4be5cd893a9355f6fab489037308596c533d2b435af370553e06bcf93a594e0",
+      "bytes": 7481,
+      "lines": 209
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/DequantMatricesDC.swift",
+      "sha256": "a6532563a8cefbd8c546754365056fc2f8673b82d68763b417f084412110c936",
+      "bytes": 9918,
+      "lines": 240
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/Dequantize.swift",
+      "sha256": "d8533b1553107a6d42ed480c86b616f0ee43ebee0edf6f56151f9df6292cfbb5",
+      "bytes": 2507,
+      "lines": 59
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/EPF.swift",
+      "sha256": "bb8f2c539b6a4964bc11f361ea22962490206bda46fe7f3d6b4e96fcbf0e326b",
+      "bytes": 22997,
+      "lines": 521
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/Gaborish.swift",
+      "sha256": "a49d49b602c58484293810226fcec9056503b4891b759d6d47d64c9df5198465",
+      "bytes": 6972,
+      "lines": 172
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/IdentityTransform.swift",
+      "sha256": "0fc8dd014756c1c32dc710f7021c08d01fb3a9509905166279f4e5ecaea75ede",
+      "bytes": 3156,
+      "lines": 76
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/LibjxlIDCT.swift",
+      "sha256": "07626562963a97e592419b9cd874a746ed98a4cd25e558268abec666905dbd3d",
+      "bytes": 7435,
+      "lines": 189
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/LowestFrequenciesFromDC.swift",
+      "sha256": "6b606e133f108dddd6e73353540657e86a71a958d06d380fb84318dfc891b4d7",
+      "bytes": 25077,
+      "lines": 584
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/OpsinXYB.swift",
+      "sha256": "9c8a1932b54dd2329864c8621d4af150d2f615b73012c5a341b47f447df5f9fe",
+      "bytes": 4623,
+      "lines": 103
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/QuantEncoding.swift",
+      "sha256": "4519b40dd4dc85e0c020129e2553a2d5df072e079b40076855da110b0da79b7d",
+      "bytes": 23838,
+      "lines": 569
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/QuantEncodingBitstream.swift",
+      "sha256": "b189591a7d0b6ae3a7ace8c0eadc1a2c7530dea2c190a88a1c6a582088ae6d55",
+      "bytes": 6212,
+      "lines": 149
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/QuantWeights.swift",
+      "sha256": "ccf09139ad305f19474a548503579ab5d27e622a11d5dd88f3edeb381e620f5e",
+      "bytes": 28488,
+      "lines": 730
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/QuantizerParams.swift",
+      "sha256": "022c0aa6efb3a1da1a9ebdb09a00d0090cfb5a948518711dae4b51b25c0ef060",
+      "bytes": 2847,
+      "lines": 75
+    },
+    {
+      "source_path": "Sources/JXLSwift/VarDCT/SmallACTransforms.swift",
+      "sha256": "d258cfe434b33010accf343f8861426852fe37a33aab3399704a04d4145ece19",
+      "bytes": 7570,
+      "lines": 187
+    },
+    {
+      "source_path": "Sources/JXLSwiftContract/CodecAPI.swift",
+      "sha256": "7bedc2d9b9caaf5dd536cebb47200c821e4c9eff6cdace442c9c823612bb9bf9",
+      "bytes": 7161,
+      "lines": 147
+    },
+    {
+      "source_path": "Sources/JXLSwiftContract/ContractCodec.swift",
+      "sha256": "83d936d83eff405a48c7a3dfd965ccc660136504faece757347f39a5e3207c0c",
+      "bytes": 11418,
+      "lines": 241
+    },
+    {
+      "source_path": "Sources/JXLSwiftContract/Errors.swift",
+      "sha256": "ebe1cda361c9134b52f9dd07d655469378fbb2979487ebf9d6242d3f14b5f6d3",
+      "bytes": 1196,
+      "lines": 31
+    },
+    {
+      "source_path": "Sources/JXLSwiftContract/Image.swift",
+      "sha256": "2233abd62690aa960d5509a4b40afad4af5f2601c58682546ea9766acde64c43",
+      "bytes": 11543,
+      "lines": 221
+    },
+    {
+      "source_path": "Sources/JXLSwiftContract/ImageDescriptor.swift",
+      "sha256": "aae900ed272eae9a9edb57d4839e7d4fc9beae35c536c32678ded6043cce9e0e",
+      "bytes": 9238,
+      "lines": 171
+    },
+    {
+      "source_path": "Sources/JXLSwiftContract/ImageStorage.swift",
+      "sha256": "1ebdd39201e1d976f5b653491a8f25b64c41d700b7e21a42ce1dcf50e5fb451c",
+      "bytes": 6175,
+      "lines": 135
+    },
+    {
+      "source_path": "Sources/JXLSwiftContract/Options.swift",
+      "sha256": "1aca98c3e33568b6ed0eec4d5a129c8e832cdc817c5604083c5d1cc20020e04c",
+      "bytes": 5930,
+      "lines": 113
+    },
+    {
+      "source_path": "Sources/JXLTool/Batch.swift",
+      "sha256": "395b0db2263e4610575fae587623df16c6346ef9b920ff29eb8e732316c93745",
+      "bytes": 18185,
+      "lines": 496
+    },
+    {
+      "source_path": "Sources/JXLTool/Benchmark.swift",
+      "sha256": "258e7b123f2ce530980be6093ac2c1c2bba5237d775ff67c8bf2649303578f7d",
+      "bytes": 7822,
+      "lines": 190
+    },
+    {
+      "source_path": "Sources/JXLTool/Convert.swift",
+      "sha256": "4605d0d1e6e58748413814fa8cb97962d5ebb6787b098c928daed96bd5711abe",
+      "bytes": 4736,
+      "lines": 120
+    },
+    {
+      "source_path": "Sources/JXLTool/Decode.swift",
+      "sha256": "b0370c1fc65859e64654e9500a79d6fd6556a74a90f96891cc0fa960d33a888d",
+      "bytes": 8884,
+      "lines": 241
+    },
+    {
+      "source_path": "Sources/JXLTool/DecodeM0.swift",
+      "sha256": "c047fd35a3fa3f6a1774bec637b5040c8df1f6c6ab5d99da3c674edecc7f7e6f",
+      "bytes": 1807,
+      "lines": 55
+    },
+    {
+      "source_path": "Sources/JXLTool/Encode.swift",
+      "sha256": "d6b5bf156b01c963cdecaefdcbdfdf26a05d9e925993675f4f4f54d2c5f1c3ff",
+      "bytes": 8052,
+      "lines": 188
+    },
+    {
+      "source_path": "Sources/JXLTool/EncodeM0.swift",
+      "sha256": "927164385708871c1afaea0476628d1b1bf6e15c7072274f63dd6e82173fc1f0",
+      "bytes": 3001,
+      "lines": 79
+    },
+    {
+      "source_path": "Sources/JXLTool/Info.swift",
+      "sha256": "1dc7948cd7d125d46ac557296299b54909c9e2dab0732aba8485be3ec4cd558f",
+      "bytes": 10936,
+      "lines": 256
+    },
+    {
+      "source_path": "Sources/JXLTool/JXLTool.swift",
+      "sha256": "66a810dd84924e5e172d4d0b0e8567dd4ae9a50e4d0e0df6c5f7706deec41ad0",
+      "bytes": 1423,
+      "lines": 39
+    },
+    {
+      "source_path": "Sources/JXLTool/PNM.swift",
+      "sha256": "79a19a9bbf2e65dda77e84d8a6365139251cc1f0a1019853d48530e9190023d0",
+      "bytes": 10634,
+      "lines": 264
+    },
+    {
+      "source_path": "Sources/JXLTool/Stubs.swift",
+      "sha256": "f69d6fd47f44a7d6bd96839726884c03b8267df4576d8cd8181d33546883101d",
+      "bytes": 22401,
+      "lines": 576
+    },
+    {
+      "source_path": "Sources/JXLTool/Transcode.swift",
+      "sha256": "29355795ba052635adb8a3539830384a3ae2a4426c977a655d5871d4a9c0c99b",
+      "bytes": 19489,
+      "lines": 451
+    },
+    {
+      "source_path": "Sources/JXLTool/Utilities.swift",
+      "sha256": "04765bebd5b209b724d14031978bcb31cbe3a433cb8659b79a33a606e6cfaa91",
+      "bytes": 832,
+      "lines": 28
+    },
+    {
+      "source_path": "Tests/Fixtures/conformance/CREDITS.md",
+      "sha256": "5887ccfda56176f2369eea44c4317ff54ec40388adce64c99d7632e70634c2b8",
+      "bytes": 1194,
+      "lines": 24
+    },
+    {
+      "source_path": "Tests/Fixtures/conformance/alpha_triangles/input.jxl",
+      "sha256": "19ac7752a23ad2b22814064cb6b62a581b48be18ed73b5ccc2340888c114d2c9",
+      "bytes": 61,
+      "lines": null
+    },
+    {
+      "source_path": "Tests/Fixtures/conformance/lz77_flower/input.jxl",
+      "sha256": "41046f0de4dd36177aefa9b53fe6c3cd35a8e2c215a8d41ca89a6a9bc7f27541",
+      "bytes": 103540,
+      "lines": null
+    },
+    {
+      "source_path": "Tests/JXLSwiftContractTests/ContractImageLayerTests.swift",
+      "sha256": "e4fb84b1270bcbf3f554868ccad97af523ab49eba8bddd3243931fde7d1c20fa",
+      "bytes": 13117,
+      "lines": 273
+    },
+    {
+      "source_path": "Tests/JXLSwiftTests/BrotliTests.swift",
+      "sha256": "e857044849d25f040d487ca5b47ec3e7caa40db2672d54f780e4c365702b0a46",
+      "bytes": 37209,
+      "lines": 775
+    },
+    {
+      "source_path": "Tests/JXLSwiftTests/CPerfBridgeTests.swift",
+      "sha256": "e147e352077fe2000f27bc2ae3798bff016aa3c0dece68698e4b7d95f9f32733",
+      "bytes": 2237,
+      "lines": 53
+    },
+    {
+      "source_path": "Tests/JXLSwiftTests/ConformanceTests.swift",
+      "sha256": "48093a87b09800e1f63fd5ae1bb972f4efe432b7be064643686c1a7420a0e9f0",
+      "bytes": 12447,
+      "lines": 266
+    },
+    {
+      "source_path": "Tests/JXLSwiftTests/IntegrationTests.swift",
+      "sha256": "17f132c7eda0fb8b169181caadb26c718d5a06938ef29f218f145926c1950c1d",
+      "bytes": 815331,
+      "lines": 18108
+    },
+    {
+      "source_path": "Tests/JXLSwiftTests/JPEGTests.swift",
+      "sha256": "bc223ed4100e10ce7de65a6b25ee21a7eda2866d1cc7e993d41cbdb5b9aad55f",
+      "bytes": 384857,
+      "lines": 8589
+    },
+    {
+      "source_path": "Tests/JXLSwiftTests/PublicAPILosslessJPEGTests.swift",
+      "sha256": "338e54659e369fabe42f9fee5dfbf44f989f32719a0b16e1cb8ed7826ff495b7",
+      "bytes": 5332,
+      "lines": 122
+    },
+    {
+      "source_path": "Tests/JXLSwiftTests/RobustnessTests.swift",
+      "sha256": "d58b2b048e4b4ee985704fa6f0424bf957e72faca908e858c991da1bb3de41ab",
+      "bytes": 21172,
+      "lines": 409
+    }
+  ]
+}

@@ -9,7 +9,7 @@ let package = Package(
         .visionOS("26.0"), .watchOS("26.0")
     ],
     products: [.library(name: "SwiftJXL", targets: ["SwiftJXL"]),
-               .executable(name: "swiftjxl", targets: ["SwiftJXLCLI"])],
+               .executable(name: "swiftjxl-cli", targets: ["SwiftJXLCLI"])],
     targets: [
         .target(name: "SwiftJXL"),
         .executableTarget(name: "SwiftJXLCLI", dependencies: ["SwiftJXL"]),

@@ -1,0 +1,10 @@
+{
+  "encoded_meaningful_bits": 16,
+  "precision_preserved": false,
+  "source_meaningful_bits": 12,
+  "predecessor_revision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "exit_code": 1,
+  "source": "precision-probe.swift",
+  "scope": "New external public consumer; predecessor checkout unchanged",
+  "command": "xcrun swift run --package-path work/precision-probe --disable-sandbox --cache-path \"$PWD/work/precision-probe/.build/cache\" --config-path \"$PWD/work/precision-probe/.build/config\" --security-path \"$PWD/work/precision-probe/.build/security\" --build-system swiftbuild --jobs 2 -c release PrecisionProbe"
+}

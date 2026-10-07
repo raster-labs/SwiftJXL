@@ -206,8 +206,8 @@ def main() -> int:
             (consumer / "Sources/Consumer").mkdir(parents=True)
             package_path = json.dumps(str(repo))
             (consumer / "Package.swift").write_text(
-                '// swift-tools-version: 6.4\nimport PackageDescription\n'
-                'let package = Package(name: "FreshConsumer", platforms: [.macOS(.v27)],\n'
+                '// swift-tools-version: 6.2\nimport PackageDescription\n'
+                'let package = Package(name: "FreshConsumer", platforms: [.macOS("26.0")],\n'
                 f' dependencies: [.package(path: {package_path})],\n'
                 f' targets: [.executableTarget(name: "Consumer", dependencies: [.product(name: "{name}", package: "{name}")])],\n'
                 ' swiftLanguageModes: [.v6])\n')

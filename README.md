@@ -8,7 +8,7 @@ SwiftJXL is the standalone successor to [JXLSwift](https://github.com/Raster-Lab
 
 ## Swift 6.4 development candidate
 
-Current development version: **2.1.0-dev.2** ([VERSION](VERSION)); shared contract **0.9.0**. This increments the earlier unreleased 2.0.0 target and creates no release/tag. See the [current qualification record](Documentation/Engineering/OS27CLI/README.md) for adopted features, exact Xcode/Swift Build evidence and open platform gates. The historical [Milestone 1 evidence](Documentation/MILESTONE1.md) remains unchanged.
+Current development version: **2.1.0-dev.2** ([VERSION](VERSION)); shared contract **0.10.0**. This increments the earlier unreleased 2.0.0 target and creates no release/tag. See the [migration preflight record](Documentation/Engineering/Migration/README.md) for adopted features, exact Xcode/Swift Build evidence and open platform gates. The historical [Milestone 1 evidence](Documentation/MILESTONE1.md) remains unchanged.
 
 ## Intended platform baseline
 
@@ -35,8 +35,8 @@ Planned standalone **reversible existing-JPEG ↔ JPEG XL transcoding** restores
 
 The four independent libraries are SwiftJ2K, SwiftJLS, SwiftJXL and SwiftJLI, all intended to live under Raster-Lab. A future optional umbrella adapts them for codec selection and in-process transcoding. The codecs do not depend on that umbrella. SwiftCompressionFamily is not part of this successor plan. The common contract is mirrored documentation plus behavioural tests, not a shared runtime package.
 
-The package exports `SwiftJXL`; the diagnostic CLI `swiftjxl` provides help/version/capabilities. A [standalone public consumer](Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift) has been compiled and run. It creates a padded 12-in-16 greyscale image, checks known samples and verifies explicit codec unavailability. Run `bash Scripts/validate.sh` for the local contract checks. Features from the predecessor are migration candidates whose exact coverage must be verified; see IMPLEMENTATION.md. Nothing here changes the predecessor repository's current maintenance configuration.
+The package exports `SwiftJXL`; the diagnostic CLI `swiftjxl-cli` provides help/version/capabilities. A [standalone public consumer](Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift) has been compiled and run. It creates a padded 12-in-16 greyscale image, checks known samples and verifies explicit codec unavailability. Run `bash Scripts/validate.sh` for the local contract checks. Features from the predecessor are migration candidates whose exact coverage must be verified; see IMPLEMENTATION.md. Nothing here changes the predecessor repository's current maintenance configuration.
 
 ## Command-line help and manual
 
-The diagnostic CLI now provides `-h` / `--help`, `help <command>`, version and truthful capability reporting. Codec commands remain unavailable. Verbosity has five levels: `-v`, `-vv`, `--verbose 1..5`, `--verbose=+++` and `-verbose: 3`; diagnostics use stderr and `--quiet` suppresses optional messages. See [CLI usage and installation](CLI.md). The installer updates both the executable and its UNIX man page together. [OS 27/CLI qualification](Documentation/Engineering/OS27CLI/README.md) supersedes the earlier OS 26 upgrade decision; earlier evidence remains historical.
+The diagnostic CLI now provides `-h` / `--help`, `help <command>`, version and truthful capability reporting. Codec commands remain unavailable. Verbosity has five levels: `-v`, `-vv`, `--verbose 1..5`, `--verbose=+++` and `-verbose: 3`; diagnostics use stderr and `--quiet` suppresses optional messages. See [CLI usage and installation](CLI.md). The installer updates both the executable and its UNIX man page together. The current contract keeps Apple deployment floors at 26.0 and the compiler minimum at Swift 6.2; OS 27 qualification records remain historical.

@@ -36,7 +36,8 @@ public protocol WritableImageStorage: Sendable {
 
 /// A zero-initialised, independently owned allocation. The mutex protects the
 /// array and lifecycle; no unsafe pointer is stored or marked Sendable.
-/// A mutable borrow holds the mutex and competing/reentrant access fails promptly.
+/// An atomic admission flag rejects competing/reentrant access before attempting
+/// the non-recursive mutex, including on Swift 6.2 Linux where try-lock can trap.
 /// Sealing transfers the array reference to immutable storage without mutating or
 /// cloning its contents. Sealed readers borrow concurrently from that immutable owner.
 public final class OwnedImageStorage: WritableImageStorage, Sendable {
@@ -49,6 +50,7 @@ public final class OwnedImageStorage: WritableImageStorage, Sendable {
         var lease: StorageWriteLease?
     }
     private let state: Mutex<State>
+    private let accessActive = Atomic(false)
 
     public init(byteCount: Int, limits: ResourceLimits = .default) throws {
         try Task.checkCancellation()
@@ -104,10 +106,16 @@ public final class OwnedImageStorage: WritableImageStorage, Sendable {
     }
 
     private func locked<R>(_ body: (inout State) throws -> R) throws -> R {
-        guard let result = try state.withLockIfAvailable({ state in try body(&state) }) else {
+        // Every state access uses this gate. Only the successful entrant reaches
+        // the mutex; reentrant callbacks and competing threads fail without
+        // touching it. Release admission after withLock has unlocked, including
+        // when the borrow throws. No pointer or mutable state leaves the borrow.
+        guard accessActive.compareExchange(expected: false, desired: true,
+                                          ordering: .acquiring).exchanged else {
             throw CodecError(.storageUnavailable, "A storage borrow is already active.")
         }
-        return result
+        defer { accessActive.store(false, ordering: .releasing) }
+        return try state.withLock { state in try body(&state) }
     }
 }
 

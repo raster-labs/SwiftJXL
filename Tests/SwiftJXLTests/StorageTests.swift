@@ -40,6 +40,8 @@ struct StorageTests {
                 try owner.withUnsafeMutableBytes(lease: lease) { _ in }
             }
             expectCodecError(.storageUnavailable) { _ = try owner.finishAndSeal(lease: lease) }
+            expectCodecError(.storageUnavailable) { try owner.abortAndInvalidate(lease: lease) }
+            expectCodecError(.storageUnavailable) { _ = try owner.reserveWrite() }
         }
         let sealed = try owner.finishAndSeal(lease: lease)
         #expect(try sealed.withUnsafeBytes { $0[0] } == 0xFE)
@@ -61,6 +63,25 @@ struct StorageTests {
             try owner.withUnsafeMutableBytes(lease: lease) { _ in }
         }
         expectCodecError(.storageUnavailable) { _ = try owner.reserveWrite() }
+    }
+
+    @Test func throwingBorrowReleasesAdmissionWithoutReplacingStorage() throws {
+        enum ExpectedFailure: Error { case stop }
+        let owner = try OwnedImageStorage(byteCount: 2)
+        let lease = try owner.reserveWrite()
+        #expect(throws: ExpectedFailure.self) {
+            try owner.withUnsafeMutableBytes(lease: lease) { bytes in
+                bytes[0] = 42
+                throw ExpectedFailure.stop
+            }
+        }
+        try owner.withUnsafeMutableBytes(lease: lease) { bytes in
+            #expect(bytes[0] == 42)
+            bytes[1] = 19
+        }
+        let sealed = try owner.finishAndSeal(lease: lease)
+        #expect(sealed.allocationID == owner.allocationID)
+        #expect(try sealed.withUnsafeBytes { Array($0) } == [42, 19])
     }
 
     @Test func freshAllocationsHaveDistinctIdentitiesAndZeroPadding() throws {

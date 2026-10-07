@@ -67,6 +67,8 @@ jobs:
       - run: xcodebuild -version
       - run: swift build
       - run: swift test
+      - name: CLI and staged manual installation
+        run: python3 Scripts/test-cli.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-evidence"
       - name: Address sanitizer
         run: swift test --scratch-path .build/asan --sanitize address
       - name: Thread sanitizer
@@ -98,9 +100,9 @@ jobs:
             echo '    name: "Consumer",'
             echo "    dependencies: [.package(path: \"$GITHUB_WORKSPACE/package\")],"
             echo '    targets: [.executableTarget(name: "Consumer", dependencies: ['
-            echo "        .product(name: \"$NAME\", package: \"$NAME\")])]"
+            echo "        .product(name: \"$NAME\", package: \"package\")])]"
             echo ')'
           } > Package.swift
-          printf 'import %s\nprint("consumer built")\n' "$NAME" > Sources/Consumer/main.swift
+          cp "$GITHUB_WORKSPACE/package/Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift" Sources/Consumer/Consumer.swift
           swift build
           swift run Consumer

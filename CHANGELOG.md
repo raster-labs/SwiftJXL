@@ -1,5 +1,13 @@
 # Change log
 
+## Unreleased — migration preflight, 2026-10-07
+
+- Reject reentrant storage access before attempting a non-recursive mutex, fixing the Swift 6.2 Linux trap while retaining exclusive mutable borrows and concurrent sealed readers.
+- Apply contract 0.10.0's executable name `swiftjxl-cli` across the product, help, installer and manual. Report the actual Apple 26.0 deployment floor.
+- Repair the isolated consumer's package identity and exercise its public storage/API behaviour in CI; run CLI installation checks on macOS.
+- Align the example and generated consumer with the Swift 6.2 manifest minimum and record pinned predecessor, baseline failures and remaining migration gates in `Documentation/Engineering/Migration/README.md`.
+- No codec source, production consumer dependency or stable release changes in this preflight.
+
 ## 2.1.0-dev.1 — Swift 6.4 upgrade, 2026-09-19 (unreleased)
 
 - Require Swift tools/compiler 6.4, retaining Swift 6 language mode and OS 26 deployment floors.
