@@ -203,11 +203,12 @@ private func run() throws -> Int32 {
     try diagnostic(1, "development version \(version)")
     try diagnostic(2, "reporting \(options.command ?? "help")")
     guard options.command == "capabilities" else {
-        try write("\(tool): unsupported feature: codec algorithms are not implemented; no input/output opened.\n", to: .standardError)
+        try write("\(tool): unsupported feature: CLI codec commands are not integrated; no input/output opened.\n", to: .standardError)
         return 4
     }
-    let encoder = Encoder.capabilities
-    let decoder = Decoder.capabilities
+    // CLI file commands remain reserved even though the library scalar API is available.
+    let encoder = CodecCapabilities.contractOnly
+    let decoder = CodecCapabilities.contractOnly
     let formats = Array(Set(encoder.formats + decoder.formats)).sorted()
     if options.json {
         let payload: [String: Any] = ["tool": tool, "version": version, "minimumAppleOS": "26.0",
@@ -218,7 +219,7 @@ private func run() throws -> Int32 {
     } else {
         try write("\(tool) \(version)\nencode: \(encoder.canEncode)\ndecode: \(decoder.canDecode)\ninspect: \(decoder.canInspect)\nformats: \(formats.isEmpty ? "none" : formats.joined(separator: ", "))\n", to: .standardOutput)
     }
-    try diagnostic(3, "advertised formats: \(formats.count); capability values read from the library")
+    try diagnostic(3, "advertised formats: \(formats.count); CLI capabilities; library scalar API is separately available")
     try diagnostic(4, "elapsed seconds: \(ProcessInfo.processInfo.systemUptime - start)")
     try diagnostic(5, "arguments validated; capability report emitted; no codec payload opened")
     return 0

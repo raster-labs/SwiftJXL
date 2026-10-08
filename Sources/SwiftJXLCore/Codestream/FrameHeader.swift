@@ -1115,6 +1115,7 @@ private func readNameString(from r: inout BitReader) throws -> String {
         .offset(constant: 48, extraBits: 10)
     ))
     var bytes = [UInt8]()
+    if r.scalarProfile && len != 0 { throw ScalarModularError.unsupportedProfile }
     bytes.reserveCapacity(Int(len))
     for _ in 0..<Int(len) {
         bytes.append(UInt8(try r.read(bits: 8)))

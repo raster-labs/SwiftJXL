@@ -425,6 +425,7 @@ package struct GroupHeader: Sendable, Equatable {
         } catch let e as BitstreamError {
             throw GroupHeaderError.bitstream(e)
         }
+        if r.scalarProfile && numTransforms != 0 { throw ScalarModularError.unsupportedProfile }
         var transforms: [ModularTransform] = []
         transforms.reserveCapacity(Int(numTransforms))
         for _ in 0..<Int(numTransforms) {

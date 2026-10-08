@@ -16,6 +16,8 @@ swift run swiftjxl-cli capabilities --verbose=+++++
 
 Both global and command-local help include availability, examples, option ranges/defaults, streams, errors and manual discovery. No arguments also show help. Use `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer` with the qualified Xcode on macOS.
 
+The library now exposes its initial scalar API; CLI file operations remain reserved. CLI capability values describe executable commands, not library support.
+
 ## Verbosity
 
 | Level | Cumulative stderr diagnostics |

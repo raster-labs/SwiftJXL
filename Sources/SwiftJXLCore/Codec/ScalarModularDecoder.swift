@@ -22,6 +22,7 @@ package enum ScalarModularDecoder {
     package static func decode(_ data: Data, policy: ScalarDecodePolicy? = nil) throws -> ScalarModularImage {
         let frame = try prepare(data, policy: policy)
         try frame.policy.checkpoint()
+        ScalarStorageAudit.current?.finalPixels(frame.width * frame.height * MemoryLayout<Int32>.stride)
         var pixels = [Int32](repeating: 0, count: frame.width * frame.height)
         try frame.decode(into: &pixels)
         return ScalarModularImage(width: frame.width, height: frame.height,
@@ -34,6 +35,9 @@ package enum ScalarModularDecoder {
         let policy = try suppliedPolicy ?? ScalarDecodePolicy()
         try policy.checkpoint()
         guard data.count <= policy.maximumCompressedBytes else { throw ScalarModularError.resourceLimit }
+        try policy.budget?.reserveWorkspace(ScalarOperationBudget.sum(
+            ScalarOperationBudget.product(data.count, 6),
+            ScalarOperationBudget.sum(256 * min(4096, data.count / 8), 16 * 1024)))
         let codestream: Data
         switch try parseJXLContainer(data, checkpoint: policy.checkpoint) {
         case .naked: codestream = data
@@ -47,7 +51,8 @@ package enum ScalarModularDecoder {
         try policy.checkpoint()
         var r = BitReader(codestream, startingAt: 16, deadline: policy.deadline,
                           maximumNestingDepth: policy.maximumNestingDepth,
-                          maximumEntropyTableBytes: policy.maximumEntropyTableBytes)
+                          maximumEntropyTableBytes: policy.maximumEntropyTableBytes,
+                          scalarProfile: true, budget: policy.budget)
         let size = try SizeHeader.read(from: &r)
         let width = Int(size.xsize), height = Int(size.ysize)
         let (pixelCount, overflow) = width.multipliedReportingOverflow(by: height)
@@ -55,12 +60,19 @@ package enum ScalarModularDecoder {
               height <= policy.maximumDimension, pixelCount <= policy.maximumPixels else {
             throw ScalarModularError.resourceLimit
         }
+        try policy.budget?.reservePixels(ScalarOperationBudget.product(pixelCount, 2))
+        // Predictor rows and final LZ77 history are admitted before any destination write.
+        try policy.budget?.reserveWorkspace(ScalarOperationBudget.sum(
+            ScalarOperationBudget.product(pixelCount, 12), 192 * (width + 2) + 1024))
         let m = try ImageMetadata.read(from: &r)
         guard !m.bitDepth.floatingPoint, (8...16).contains(m.bitDepth.bitsPerSample),
               !m.xybEncoded, m.colorEncoding.colorSpace == .grayscale,
               !m.colorEncoding.useICC, m.extraChannels.isEmpty,
               m.orientation == 1, m.preview == nil, m.animation == nil,
-              m.intrinsicSize == nil else { throw ScalarModularError.unsupportedProfile }
+              m.intrinsicSize == nil,
+              m.colorEncoding.whitePoint == .d65, m.colorEncoding.transferFunction == .srgb,
+              m.intensityTarget == 255, m.minNits == 0, !m.relativeToMaxDisplay,
+              m.linearBelow == 0 else { throw ScalarModularError.unsupportedProfile }
         // CustomTransformData: only its all-default branch is in this profile.
         guard try r.readBit() else { throw ScalarModularError.unsupportedProfile }
         try r.expectZeroPadding()
@@ -95,12 +107,15 @@ package enum ScalarModularDecoder {
         }
         try policy.checkpoint()
         return ScalarModularFrame(width: width, height: height, policy: policy,
-            bitsPerSample: Int(m.bitDepth.bitsPerSample), reader: r,
+            bitsPerSample: Int(m.bitDepth.bitsPerSample), renderingIntent: m.colorEncoding.renderingIntent, reader: r,
             tree: selected.0, header: selected.1, codebook: selected.2, predictor: gh.wpHeader)
     }
 
     private static func readTreeAndCodebook(from r: inout BitReader, pixelCount: Int)
         throws -> (ModularTree, EntropySectionHeader, MultiClusterCodebook) {
+        // Tree nodes, growth overlap, and up to six LZ77 tokens per node.
+        let limit = min(4096, 1024 + pixelCount / 16)
+        try r.budget?.reserveWorkspace(limit * (3 * MemoryLayout<ModularTreeNode>.stride + 72) + 4096)
         let header = try EntropySectionHeader.read(from: &r, numContexts: 6)
         let codebook = try MultiClusterCodebook.read(from: &r, header: header)
         var stream = TokenStreamReader(header: header, codebook: codebook)
@@ -119,6 +134,7 @@ package struct ScalarModularFrame: Sendable {
     package let height: Int
     let policy: ScalarDecodePolicy
     package let bitsPerSample: Int
+    package let renderingIntent: RenderingIntent
     let reader: BitReader
     let tree: ModularTree
     let header: EntropySectionHeader

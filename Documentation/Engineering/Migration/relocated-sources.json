@@ -1,7 +1,7 @@
 {
   "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
   "preconditionCI": "https://github.com/raster-labs/SwiftJXL/actions/runs/37616664498",
-  "status": "Internal scalar migration; not exposed through public codec capabilities",
+  "status": "Initial public scalar greyscale integration with operation memory admission; broader migration and release gates remain open",
   "files": [
     {
       "source": "Sources/JXLSwift/Bitstream/BitReader.swift",
@@ -13,9 +13,10 @@
         "Successor provenance header",
         "Remove payload/environment tracing; bounded nesting and cancellation/deadline checkpoints; safe extreme seek/skip arithmetic",
         "Thread operation deadline and bounded nesting through decoding and container processing",
-        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate"
+        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "e427b6287c6b19c7062081c72bd8e3d21f0d2b020b6d3eefb70c8e591b6e94a0"
+      "destinationSHA256": "a139d466107cbe3afcc652b2d1393179cf8660d4cfc1820543ddcf5f07b8d2b2"
     },
     {
       "source": "Sources/JXLSwift/Bitstream/BitWriter.swift",
@@ -24,9 +25,10 @@
       "licence": "Apache-2.0",
       "changes": [
         "Package-only visibility",
-        "Successor provenance header"
+        "Successor provenance header",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "468892665a7fda94b4afe47ba5d35357d64d65a74db29edfc9de0bceebb99b81"
+      "destinationSHA256": "ff607a06eb6f9bec20df6c5f75b4e7595f64b06cfdc352fa36e28c865d4b4ba6"
     },
     {
       "source": "Sources/JXLSwift/Bitstream/SpecIntegers.swift",
@@ -59,9 +61,10 @@
         "Package-only visibility",
         "Successor provenance header",
         "Positive-size throws replace preconditions; remove obsolete status claims",
-        "Reject nonpositive/over-512 dimensions and invalid samples; fixed initial profile, entry cancellation; remove obsolete predecessor status claims"
+        "Reject nonpositive/over-512 dimensions and invalid samples; fixed initial profile, entry cancellation; remove obsolete predecessor status claims",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "54bd3469b0e2e3aa0cee6767dbfe109b090809dec9164c13efcb60f7fdaa3358"
+      "destinationSHA256": "eabc4a100804abd1b2d42f2f32b9b35791d415a6b911dbb8dc578abf455ffac3"
     },
     {
       "source": "Sources/JXLSwift/Codestream/BitDepth.swift",
@@ -104,9 +107,10 @@
       "changes": [
         "Package-only visibility",
         "Successor provenance header",
-        "Reject unimplemented nonzero extensions; remove tracing"
+        "Reject unimplemented nonzero extensions; remove tracing",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "7161d320ab40155f5ed89200ee6962a97af76eeaef37a262437ea9519a7aa983"
+      "destinationSHA256": "dc93c020047ce28ba74ce6aecc61050a210a8d6f5ccfdab54527bc9000270179"
     },
     {
       "source": "Sources/JXLSwift/Codestream/ImageMetadata.swift",
@@ -116,9 +120,10 @@
       "changes": [
         "Package-only visibility",
         "Successor provenance header",
-        "Reject unimplemented nonzero extensions"
+        "Reject unimplemented nonzero extensions",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "17edaacda234d35ec5bece2b80ca655b6e64d32b1b5e91a980905ab18cdceaa9"
+      "destinationSHA256": "8d7a58a964f8f47bedc6323a43d065ae05f160804f93e84fdf5d1b46e282df5a"
     },
     {
       "source": "Sources/JXLSwift/Codestream/Signature.swift",
@@ -194,9 +199,10 @@
       "licence": "Apache-2.0",
       "changes": [
         "Package-only visibility",
-        "Successor provenance header"
+        "Successor provenance header",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "2b44f8cda66298dc914aa3bd176c19697c0ea28aebda81ed0176f435095a91da"
+      "destinationSHA256": "53092988d283836dd77d6aed636403489e9fbbb4a7d59d027e277c6edaa0d927"
     },
     {
       "source": "Sources/JXLSwift/Entropy/AliasTable.swift",
@@ -230,9 +236,10 @@
       "changes": [
         "Package-only visibility",
         "Successor provenance header",
-        "Bound contexts and nested entropy parsing"
+        "Bound contexts and nested entropy parsing",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "6ddcb577182a5ff4e242c397f27f4b2d7aa5711057a1cc930067718d2777a4de"
+      "destinationSHA256": "c562b40ecfb1356be25bdc62032a8188e85b7c0f6c38e70c4da63f84e7e23daf"
     },
     {
       "source": "Sources/JXLSwift/Entropy/HybridUint.swift",
@@ -344,9 +351,10 @@
       "licence": "Apache-2.0",
       "changes": [
         "Package-only visibility",
-        "Successor provenance header"
+        "Successor provenance header",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "b68b6a3e9855539dec8dd0e061629e3c031b8ba049e4e574836bb92f5275dd1b"
+      "destinationSHA256": "0592431e27376cae52bd49eb7cad679597aaa184991bd75ca7b1d14148a8249f"
     },
     {
       "source": "Sources/JXLSwift/Modular/GroupHeader.swift",
@@ -355,9 +363,10 @@
       "licence": "Apache-2.0",
       "changes": [
         "Package-only visibility",
-        "Successor provenance header"
+        "Successor provenance header",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "2a76b89fa25e7e4343fb906a455a5a27262bf76428132280d00300f6325a64f7"
+      "destinationSHA256": "4dcf47c505e332b29b4928aec41961b3ffc811bd0a0049d65ee61c3c96c44109"
     },
     {
       "source": "Sources/JXLSwift/Modular/LibjxlPredictor.swift",
@@ -460,9 +469,10 @@
         "Constrain first migration profile and validate section length, sample range and entropy completion",
         "Adapt sample access to scoped caller storage; separate frame preparation from final pixel writes",
         "Thread operation deadline and bounded nesting through decoding and container processing",
-        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate"
+        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "e58aefeaf2dbe2f77a004ec5fa2088bd9ce694d7556b6e58d6324cf3a2ec532e"
+      "destinationSHA256": "9eb6904c722ced95c1833795dda5579874309e56b0ce726ed188843604a65e74"
     },
     {
       "source": "Sources/JXLSwift/Codec/ParallelMap.swift",
@@ -470,9 +480,10 @@
       "destination": "Sources/SwiftJXLCore/Codec/ScalarMap.swift",
       "licence": "Apache-2.0",
       "changes": [
-        "Replace pointer-based GCD dispatch with deterministic scalar iteration; performance qualification outstanding"
+        "Replace pointer-based GCD dispatch with deterministic scalar iteration; performance qualification outstanding",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
-      "destinationSHA256": "b4c4f97ef87bb6008baa923e91783cb69e877452e309387fbed56663577c39d2"
+      "destinationSHA256": "9b51499e50778c38db73afb02c0be1f5a1299bb674434d8c0b5f568fb9651461"
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. Internal target is used by tests only; no new public product or public codec capability.",
@@ -490,18 +501,34 @@
   "authoredSuccessorFiles": [
     {
       "destination": "Sources/SwiftJXLCore/Codec/ScalarSampleStorage.swift",
-      "destinationSHA256": "0b2a4aaa4c9f74c15b9c216f6749b003f4929b7ad194427e04d79b37783ab472",
+      "destinationSHA256": "c73b2bb0ed3fa0eff698a7252246f45f9777ba5c3e032780074b7e24183cfb14",
       "licence": "Apache-2.0",
-      "purpose": "Checked scoped 16-bit sample access to caller storage and encoder algorithm workspace"
+      "purpose": "Checked scoped 16-bit sample access to caller storage and encoder algorithm workspace",
+      "changes": [
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
+      ]
     },
     {
       "destination": "Sources/SwiftJXLCore/Codec/ScalarDecodePolicy.swift",
-      "destinationSHA256": "5f2ef6170f30855885ef51df8b84500f98a0ebbdf819037984fbf3de98846c1f",
+      "destinationSHA256": "1a9cbd91a40814f87515de3315a880bbc5adb0d196d0bb7ee79adfa6963f9a23",
       "licence": "Apache-2.0",
       "purpose": "Internal caller-controlled dimension, pixel, compressed-input, nesting and monotonic deadline limits; workspace integration remains outstanding",
       "changes": [
-        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate"
+        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate",
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ]
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift",
+      "destinationSHA256": "837346e8c594d3513e45020d21e76197a87efa8b7ea0d3e3b3bbfdf2179c64f1",
+      "licence": "Apache-2.0",
+      "purpose": "Checked aggregate operation admission and scoped encoder work limits"
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift",
+      "destinationSHA256": "12b1bab79edb576cdc1ebcfdb857379e389b10c64353b2e385dac76b2e477370",
+      "licence": "Apache-2.0",
+      "purpose": "Task-scoped actual allocation-site instrumentation for shared storage validation"
     }
   ]
 }

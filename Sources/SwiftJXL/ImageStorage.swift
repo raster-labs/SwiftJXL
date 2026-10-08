@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import Foundation
+import SwiftJXLCore
 import Synchronization
 
 /// An opaque lease value. Providers create a fresh token for each reservation and
@@ -59,6 +60,7 @@ public final class OwnedImageStorage: WritableImageStorage, Sendable {
             throw CodecError(.resourceLimitExceeded, "Storage allocation exceeds the admission budget.")
         }
         self.byteCount = byteCount; self.allocationID = UUID()
+        ScalarStorageAudit.current?.finalPixels(byteCount)
         self.state = Mutex(State(bytes: [UInt8](repeating: 0, count: byteCount)))
     }
 

@@ -55,6 +55,8 @@ package struct BitReader: Sendable {
     private var nextByte: Int
     private var nestingDepth = 0
     private var operations = 0
+    package let scalarProfile: Bool
+    package let budget: ScalarOperationBudget?
     private let deadline: ContinuousClock.Instant
     private let maximumNestingDepth: Int
     private let maximumEntropyTableBytes: Int
@@ -84,6 +86,7 @@ package struct BitReader: Sendable {
         guard bytes >= 0, !overflow, total <= maximumEntropyTableBytes else {
             throw ScalarModularError.resourceLimit
         }
+        try budget?.reserveWorkspace(bytes)
         reservedEntropyTableBytes = total
     }
 
@@ -93,7 +96,10 @@ package struct BitReader: Sendable {
     package init(_ data: Data, startingAt position: Int = 0,
                  deadline: ContinuousClock.Instant = ContinuousClock.now.advanced(by: .seconds(10)),
                  maximumNestingDepth: Int = 32,
-                 maximumEntropyTableBytes: Int = 32 * 1024 * 1024) {
+                 maximumEntropyTableBytes: Int = 32 * 1024 * 1024,
+                 scalarProfile: Bool = false, budget: ScalarOperationBudget? = nil) {
+        self.scalarProfile = scalarProfile
+        self.budget = budget
         self.maximumEntropyTableBytes = max(0, maximumEntropyTableBytes)
         self.deadline = deadline
         self.maximumNestingDepth = max(0, min(maximumNestingDepth, 32))

@@ -222,9 +222,9 @@ def main() -> int:
                 'let image = try ImageDestination.allocate(descriptor: d).writeUInt16 { x, _ in [UInt16(0), 65535, 4095][x] }\n'
                 'guard try image.sampleUInt16(x: 1, y: 0) == 65535 else { throw CodecError(.internalFailure, "Sample mismatch") }\n'
                 'let encoder = try Encoder()\n'
-                'guard !encoder.capabilities.canEncode else { throw CodecError(.internalFailure, "Update this Milestone 1 consumer") }\n'
-                'do { _ = try await encoder.encode(image); throw CodecError(.internalFailure, "Unexpected codec success") }\n'
-                'catch let error as CodecError where error.category == .unsupportedFeature {}\n'
+                'let encoded = try await encoder.encode(image)\n'
+                'let decoded = try await Decoder().decode(encoded.data)\n'
+                'guard try decoded.image.sampleUInt16(x: 1, y: 0) == 65535 else { throw CodecError(.internalFailure, "Round trip mismatch") }\n'
                 'print("Fresh independent consumer passed")\n')
             run("fresh-local-consumer", swift("run", "consumer", consumer) + ["Consumer"])
             report["open_gates"].append("Fresh URL-based consumer resolution is separate from this local consumer check")

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import Foundation
 import Testing
+import SwiftJXL
 @testable import SwiftJXLCore
 
 #if os(macOS) || os(Linux)
@@ -9,7 +10,7 @@ import Testing
 struct ScalarOracleTests {
     @Test(.enabled(if: ProcessInfo.processInfo.environment["SWIFTJXL_ORACLE_BIN"] != nil),
           arguments: [9, 10, 12, 14, 16])
-    func independentBothDirections(bits: Int) throws {
+    func independentBothDirections(bits: Int) async throws {
         let binaryDirectory = try #require(ProcessInfo.processInfo.environment["SWIFTJXL_ORACLE_BIN"])
         let root = ProcessInfo.processInfo.environment["SWIFTJXL_ORACLE_OUTPUT"]
             .map { URL(fileURLWithPath: $0) } ?? FileManager.default.temporaryDirectory
@@ -59,6 +60,25 @@ struct ScalarOracleTests {
             #expect(decoded.width == width && decoded.height == height)
             #expect(decoded.bitsPerSample == bits)
             #expect(decoded.pixels == samples)
+            // Exercise the shipped public surface against the same independent
+            // fixtures, including meaningful precision and exact encoder bytes.
+            let publicDecoded = try await Decoder().decode(oracleData)
+            #expect(publicDecoded.image.descriptor.meaningfulBits == bits)
+            for y in 0..<height {
+                for x in 0..<width {
+                    #expect(try publicDecoded.image.sampleUInt16(x: x, y: y) == UInt16(samples[y * width + x]))
+                }
+            }
+            let publicEncoded = try await Encoder().encode(publicDecoded.image)
+            let expectedIntentBytes = try SpecModularEncoder.encodeGrayscale16(width: width, height: height,
+                bitsPerSample: UInt32(bits), pixelsInt32: samples, effort: 3, renderingIntent: frame.renderingIntent)
+            #expect(publicEncoded.data == expectedIntentBytes)
+            #expect(try ScalarModularDecoder.prepare(publicEncoded.data).renderingIntent == frame.renderingIntent)
+            // Reference decoder also verifies the metadata-preserving public output.
+            try publicEncoded.data.write(to: native)
+            try run(binaryDirectory + "/djxl", [native.path, oraclePGM.path, "--bits_per_sample=\(bits)", "--quiet"], in: directory)
+            #expect(try Data(contentsOf: oraclePGM) == pgm)
+
         }
     }
 

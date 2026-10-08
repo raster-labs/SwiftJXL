@@ -91,6 +91,7 @@ package struct EntropySectionHeader: Sendable {
         guard numContexts > 0, numContexts <= 4096 else {
             throw BitstreamError.malformedValue("Entropy context limit exceeded")
         }
+        try r.budget?.reserveWorkspace((numContexts + 1) * 64 + 32 * 1024)
         try r.enterNesting()
         defer { r.leaveNesting() }
 

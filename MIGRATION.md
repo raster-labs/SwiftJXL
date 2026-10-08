@@ -1,12 +1,12 @@
 # Migrating applications from JXLSwift to SwiftJXL
 
-The successor requires Swift 6.2 or later, qualifies Swift 6.4, and has Apple OS 26 deployment floors. See the [Swift 6.4 upgrade record](Documentation/Engineering/Swift64/README.md) for development versioning and validation; current codec availability is unchanged.
+The successor requires Swift 6.2 or later, qualifies Swift 6.4, and has Apple OS 26 deployment floors. This guide describes the development migration branch under contract **0.10.0**, not a stable release.
 
-The internal scalar migration is now underway; see the [execution record](Documentation/Engineering/Migration/README.md). This has not yet changed the public codec availability described below.
+**Keep JXLSwift in production.** The public lossless scalar API is now connected and independently tested for unsigned greyscale: encode 9–16 meaningful bits, dimensions up to 512 × 512; decode/inspect 8–16 bits, dimensions up to 1024 × 1024. Storage is one UInt16 plane, little/big endian, with explicit offset, row padding and pixel stride. Decoder input is capped at 4 MiB and must contain one last Modular frame/group, no transforms, ICC, animation, extra channels, orientation changes or ancillary boxes. These are initial feature bounds, not a full JPEG XL implementation.
 
-For application maintainers and coding agents. This guide describes the **Milestone 1 implementation and contract 0.10.0**, not a released codec. The intended first stable version, `2.1.0`, is not an available release requirement.
+Colour is D65 greyscale with sRGB transfer and default tone mapping. Relative rendering intent is implicit; other standard intents are preserved in required metadata key `jpegXL.renderingIntent`, one byte (0 perceptual, 1 relative, 2 saturation, 3 absolute). The encoder honours that key even with `discardAncillary`. Unsupported required metadata or ICC always rejects. Other ancillary entries reject by default and may be discarded only explicitly.
 
-**Keep JXLSwift in production for compression, decompression and JPEG reconstruction.** SwiftJXL currently provides validated descriptors, owning storage and public call shapes. Its encode, decode, inspect and native transcode operations report `unsupportedFeature` after applicable validation; capabilities advertise no supported codec operation. An application can prepare adapters now, but cannot complete a functional codec replacement until later milestones qualify its required features. See [implemented evidence](Documentation/MILESTONE1.md) and [remaining milestones](IMPLEMENTATION.md).
+`Encoder.capabilities` and `Decoder.capabilities` advertise this profile. Native transcoding remains unavailable. CLI file commands remain reserved and its capability report remains false until command integration. No merge, release, production switch or downstream application edit is implied.
 
 ## Baseline and dependency changes
 
@@ -34,10 +34,10 @@ The names below are migration targets, not source-compatible aliases or evidence
 | --- | --- | --- |
 | `ImageFrame` / `JXLImage` | `ImageDescriptor`, `ImageDestination`, immutable `Image` | Map precision, components, colour, alpha, ICC, byte order and strides explicitly; no direct array replacement. |
 | `JXLEncoder(options:)` or `JXLEncoder(configuration:)` | `try SwiftJXL.Encoder(configuration:)` | Separate `EncoderConfiguration` from per-call `EncodeOptions`. |
-| `EncodingOptions`, `JXLConfiguration` | `EncoderConfiguration(mode:codecOptions:)` | Only `.lossless` is modelled; `CodecOptions` has no controls yet. Quality/distance, effort, progressive output, filters, container and frame settings are deferred. |
-| `encoder.encode(frame)` → old `EncodedImage` | `try await encoder.encode(image, options:)` → new `EncodedImage` | Call shape exists; encoding is unsupported. `.data` remains the byte payload; `.encoding` and `.report` replace old `.stats` usage. |
-| `JXLDecoder().decode(data)` → `ImageFrame` | `try SwiftJXL.Decoder()` then `try await decoder.decode(data, options:)` → `DecodedImage` | Use result `.image` and `.report` once decoding is implemented. |
-| `decoder.inspect(data)` → `JXLInspection` | `try decoder.inspect(data, options:)` → `ImageInfo` | Shape exists, inspection unsupported; old box/frame inspection fields have no equivalent today. |
+| `EncodingOptions`, `JXLConfiguration` | `EncoderConfiguration(mode:codecOptions:)` | Only `.lossless` is implemented; `CodecOptions` has no controls yet. Quality/distance, effort, progressive output, filters, container and frame settings are deferred. |
+| `encoder.encode(frame)` → old `EncodedImage` | `try await encoder.encode(image, options:)` → new `EncodedImage` | Encoding works for the bounded scalar greyscale profile. `.data` remains the byte payload; `.encoding` and `.report` replace old `.stats` usage. |
+| `JXLDecoder().decode(data)` → `ImageFrame` | `try SwiftJXL.Decoder()` then `try await decoder.decode(data, options:)` → `DecodedImage` | Use result `.image` and `.report` for the bounded scalar greyscale profile. |
+| `decoder.inspect(data)` → `JXLInspection` | `try decoder.inspect(data, options:)` → `ImageInfo` | Supported-profile headers and output layout are inspected; arbitrary box/frame inspection remains unsupported. |
 | `decodeAll`, `decodeFrame`, `inspectFrames`, `countFrames`, frame-array encoding | No current replacement | Retain predecessor for animation/multi-frame workflows; do not silently keep only frame zero. |
 | `encodeLosslessJPEG(jpeg)` | `try await transcoder.transcode(jpeg, to: .jpegXL)` | Planned reversible JPEG recompression; current stub rejects. |
 | `decodeLosslessJPEG(jxl)` → JPEG `Data` | `try await transcoder.transcode(jxl, to: .jpeg)` → `EncodedImage` | Planned autonomous reconstruction; use `.data` when implemented. Current capabilities are empty. |
@@ -49,65 +49,66 @@ The old `EncodingOptions()` defaults to `.lossy(quality: 90)` and `JXLConfigurat
 
 ## Compilable preparation example
 
-Put this standalone program in an executable target that depends on the local `SwiftJXL` product. It constructs known 12-bit samples in padded 16-bit storage and verifies the current unsupported-operation boundary. It does not compress an image.
+This standalone program constructs 12-bit samples in padded 16-bit storage and verifies a real scalar JPEG XL round trip.
 
 ```swift
+// SPDX-License-Identifier: Apache-2.0
 import Foundation
 import SwiftJXL
 
-enum MigrationCheckError: Error { case unexpectedResult }
+enum ConsumerFailure: Error { case unexpectedResult }
 
 @main
-struct MigrationCheck {
+struct ContractConsumer {
     static func main() async throws {
-        let limits = try SwiftJXL.ResourceLimits(
-            maximumDecodedBytes: 1024, maximumMemoryBytes: 4096)
+        // Plain import, public members only; no testable import or sibling package.
         let descriptor = try SwiftJXL.ImageDescriptor.greyscale16(
-            width: 3, height: 2, meaningfulBits: 12, rowBytes: 8,
-            limits: limits)
-        let destination = try SwiftJXL.ImageDestination.allocate(
-            descriptor: descriptor, limits: limits)
-        let image = try destination.writeUInt16 { x, y in
-            UInt16((y * 3 + x) * 819)
+            width: 3, height: 2, meaningfulBits: 12, rowBytes: 8)
+        let destination = try SwiftJXL.ImageDestination.allocate(descriptor: descriptor)
+        let image = try destination.write { bytes in
+            for y in 0..<2 {
+                for x in 0..<3 {
+                    let value = UInt16((y * 3 + x) * 819)
+                    bytes[y * 8 + x * 2] = UInt8(truncatingIfNeeded: value)
+                    bytes[y * 8 + x * 2 + 1] = UInt8(value >> 8)
+                }
+            }
         }
-        guard try image.sampleUInt16(x: 2, y: 1) == 4095 else {
-            throw MigrationCheckError.unexpectedResult
+        let last = try image.storage.withUnsafeBytes { bytes in
+            UInt16(bytes[12]) | UInt16(bytes[13]) << 8
         }
-        let encoder = try SwiftJXL.Encoder()
-        guard !encoder.capabilities.canEncode else {
-            throw MigrationCheckError.unexpectedResult
+        guard last == 4095, image.descriptor.meaningfulBits == 12 else {
+            throw ConsumerFailure.unexpectedResult
         }
+        let encoder = try SwiftJXL.Encoder(configuration: .init())
+        let encoded = try await encoder.encode(image)
+        let decoder = try SwiftJXL.Decoder(configuration: .init())
+        let decoded = try await decoder.decode(encoded.data)
+        guard try decoded.image.sampleUInt16(x: 2, y: 1) == 4095,
+              decoded.image.descriptor.meaningfulBits == 12 else {
+            throw ConsumerFailure.unexpectedResult
+        }
+        let transcoder = try SwiftJXL.Transcoder(configuration: .init())
         do {
-            _ = try await encoder.encode(
-                image, options: .init(resourceLimits: limits))
-            throw MigrationCheckError.unexpectedResult
+            _ = try await transcoder.transcode(Data(), to: .jpegXL, options: .init())
+            throw ConsumerFailure.unexpectedResult
         } catch let error as SwiftJXL.CodecError {
             guard error.category == .unsupportedFeature else { throw error }
         }
-        let transcoder = try SwiftJXL.Transcoder()
-        guard transcoder.capabilities.isEmpty else {
-            throw MigrationCheckError.unexpectedResult
-        }
-        do {
-            _ = try await transcoder.transcode(Data(), to: .jpegXL)
-            throw MigrationCheckError.unexpectedResult
-        } catch let error as SwiftJXL.CodecError {
-            guard error.category == .unsupportedFeature else { throw error }
-        }
-        print("Migration preparation passed; codec operations remain unavailable.")
+        print("Public consumer passed: owning UInt16 samples and lossless scalar JPEG XL.")
     }
 }
 ```
 
-For an existing reproducible consumer, run `xcrun swift run --package-path Examples/ContractConsumer` from this repository with Xcode's toolchain selected. Run `bash Scripts/validate.sh` for the repository's contract checks. Update the example's expected capabilities when real codec work lands; an empty input here proves only stub rejection, not malformed-JXL handling.
+For an existing reproducible consumer, run `xcrun swift run --package-path Examples/ContractConsumer` from this repository with Xcode's toolchain selected. Run `bash Scripts/validate.sh` for the repository's contract checks. The example uses only the public product and verifies precision and samples. Empty input now reports malformed input.
 
 ## Samples, ownership and operation policy
 
 - Earlier frames use mutable, tightly packed interleaved `[UInt8]`. The successor owns sealed storage with explicit planes and strides. Allocating and filling from a legacy array is an application copy: account for it and budget both allocations. It is not proof of shared-storage hand-off. Advanced providers must enforce the [exclusive lease lifecycle](Documentation/MEMORY_CONTRACT.md); a pointer from an array or `Data.withUnsafeBytes` cannot survive its borrow or cross `await`.
 - Preserve `storageBits` separately from `meaningfulBits`: 12-in-16 is not 8-bit display output. Do not infer precision from observed maxima. Respect byte order, row padding, component order, alpha interpretation and ICC semantics. A valid descriptor does not mean that a codec supports that layout. There is no automatic mapping of old `ColorSpace` tags to a fully qualified successor colour pipeline.
 - Old `.int16` encoding level-shifts samples to unsigned values; `decode(_:signedOutput:)` explicitly reverses it. JPEG XL does not thereby gain native signed sample semantics. Preserve the external interpretation contract and test -32768, -1, 0 and 32767; never relabel unsigned output as signed or infer a replacement from `SampleType.signedInteger`. Float and signed codec coverage remain deferred.
-- Supply application-sized `ResourceLimits` to descriptors, storage and operations. Include compressed data, padded pixel capacity, metadata, workspace and concurrent jobs in admission decisions. Watch has a smaller default profile. The current stubs enforce applicable preflight limits only; deadline/worker fields are not evidence of a functioning parser or bounded codec loop.
-- The [old async overloads](https://github.com/Raster-Lab/JXLSwift/blob/760697a54dd253da8e8466c3fd09ecf2c2d89aec/Sources/JXLSwift/Codec/AsyncOverloads.swift) call synchronous implementations. Current successor async entry points use `@concurrent`; keep UI work on its actor, callbacks `@Sendable`, and propagate `CancellationError` without converting it to success or retrying automatically. Real codec progress/cancellation still needs qualification.
+- Supply application-sized `ResourceLimits` to descriptors, storage and operations. Include compressed data, padded pixel capacity, metadata, workspace and concurrent jobs in admission decisions. Watch has a smaller default profile. The scalar API enforces aggregate reservations and monotonic deadlines. It uses one worker. Conservative workspace bounds are documented in `Documentation/Engineering/Migration/RESOURCE_ADMISSION.md`; measured peak fields remain unknown.
+- The [old async overloads](https://github.com/Raster-Lab/JXLSwift/blob/760697a54dd253da8e8466c3fd09ecf2c2d89aec/Sources/JXLSwift/Codec/AsyncOverloads.swift) call synchronous implementations. Current successor async entry points use `@concurrent`; keep UI work on its actor, callbacks `@Sendable`, and propagate `CancellationError` without converting it to success or retrying automatically. The scalar implementation checks cancellation/deadlines between bounded work units; callbacks run serially outside storage borrows.
 - Default `copyPolicy` is `.requireSharedStorage`; `.allowCopy` permits value-preserving conversion only. Required unavailable acceleration reports `.backendUnavailable`. Treat `.resourceLimitExceeded`, layout, storage, input and feature errors distinctly. Optional report measurements are unknown when `nil`, not zero.
 
 ## Reversible JPEG is a separate migration gate

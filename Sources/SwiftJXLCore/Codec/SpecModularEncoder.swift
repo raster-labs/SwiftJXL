@@ -300,7 +300,7 @@ package enum SpecModularEncoder {
         width: Int, height: Int,
         bitsPerSample: UInt32 = 16,
         pixelsInt32: [Int32],
-        effort: Int = 9
+        effort: Int = 9, renderingIntent: RenderingIntent = .relative
     ) throws -> Data {
         try validateSize(width: width, height: height)
         try validateHighBitDepth(bitsPerSample)
@@ -319,7 +319,7 @@ package enum SpecModularEncoder {
         return try writeOuterCodestream(
             width: width, height: height,
             bitsPerSample: bitsPerSample,
-            colorSpace: .grayscale, extraChannels: [], built: built
+            colorSpace: .grayscale, extraChannels: [], built: built, renderingIntent: renderingIntent
         )
     }
 
@@ -1689,10 +1689,10 @@ package enum SpecModularEncoder {
             case gate(Resid, Result<Gate, any Error>)
             case shared(Shared)
         }
-        let stageA = parallelMap(effort >= 4 ? 3 : 2) { (i: Int) -> StageA in
+        let stageA = try parallelMap(effort >= 4 ? 3 : 2) { (i: Int) -> StageA in
             switch i {
             case 0, 1:
-                let r = computeModularResiduals(
+                let r = try computeModularResiduals(
                     width: width, height: height, channels: channels,
                     sampleHi: sampleHi, postCfg: postCfg, useWP: i == 1)
                 return .gate(r, Result { try bestModularPostCodebook(
@@ -1710,6 +1710,7 @@ package enum SpecModularEncoder {
             throw SpecModularEncoderError.unsupportedFrame(
                 "internal: stage layout")
         }
+        try ScalarEncodingWork.checkpoint()
         let gradBest = try gradRes.get()
         let wpBest = try wpRes.get()
         let useWP = wpBest.bits < gradBest.bits
@@ -2717,6 +2718,7 @@ package enum SpecModularEncoder {
             }
         }
 
+        try ScalarEncodingWork.checkpoint()
         guard let cand = ansCand else {
             return (huffHeader, huffCodebook, true, huffBits)
         }
@@ -2734,7 +2736,7 @@ package enum SpecModularEncoder {
     private static func computeModularResiduals(
         width: Int, height: Int, channels: [[Int32]], sampleHi: Int32,
         postCfg: HybridUintConfig, useWP: Bool
-    ) -> (packedPerChannel: [[UInt32]], histo: [Int], alphabetSize: Int,
+    ) throws -> (packedPerChannel: [[UInt32]], histo: [Int], alphabetSize: Int,
           symbolsPerChannel: [[UInt16]], totalExtraNBits: Int) {
         var packedPerChannel = [[UInt32]]()
         packedPerChannel.reserveCapacity(channels.count)
@@ -2752,6 +2754,7 @@ package enum SpecModularEncoder {
                 var wp = WeightedPredictor(
                     header: .default, xsize: max(1, width))
                 for y in 0..<height {
+                    try ScalarEncodingWork.checkpoint()
                     for x in 0..<width {
                         let nbh = Neighbourhood(at: x, y, in: pix32, width: width)
                         let pred = wp.predict(
@@ -2771,6 +2774,7 @@ package enum SpecModularEncoder {
                 }
             } else {
                 for y in 0..<height {
+                    try ScalarEncodingWork.checkpoint()
                     for x in 0..<width {
                         let nbh = Neighbourhood(at: x, y, in: pix32, width: width)
                         // No [0, sampleHi] clamp here: the gradient's own
@@ -2826,11 +2830,12 @@ package enum SpecModularEncoder {
         bitsPerSample: UInt32,
         colorSpace: ColorSpaceID,
         extraChannels: [ExtraChannelInfo],
-        animation: AnimationHeader?
+        animation: AnimationHeader?, renderingIntent: RenderingIntent = .relative
     ) throws -> Data {
         let colorEncoding: ColorEncoding
         switch colorSpace {
-        case .grayscale: colorEncoding = .grayscaleD65
+        case .grayscale: colorEncoding = ColorEncoding(useICC: false, colorSpace: .grayscale,
+            whitePoint: .d65, primaries: nil, transferFunction: .srgb, renderingIntent: renderingIntent)
         case .rgb:       colorEncoding = .srgb
         default:
             throw SpecModularEncoderError.unsupportedFrame(
@@ -2924,7 +2929,10 @@ package enum SpecModularEncoder {
         )
         try toc.write(to: &w)
         var out = w.finishToData()
-        for s in built.sections { out.append(s) }
+        for s in built.sections {
+            try ScalarEncodingWork.current?.admitAppend(current: out.count, adding: s.count)
+            out.append(s)
+        }
         return out
     }
 
@@ -2938,19 +2946,21 @@ package enum SpecModularEncoder {
         bitsPerSample: UInt32,
         colorSpace: ColorSpaceID,
         extraChannels: [ExtraChannelInfo],
-        built: EncodedSections
+        built: EncodedSections, renderingIntent: RenderingIntent = .relative
     ) throws -> Data {
         var out = try writeModularPrelude(
             width: width, height: height,
             bitsPerSample: bitsPerSample,
             colorSpace: colorSpace,
-            extraChannels: extraChannels, animation: nil)
-        out.append(try writeModularFrameChunk(
+            extraChannels: extraChannels, animation: nil, renderingIntent: renderingIntent)
+        let chunk = try writeModularFrameChunk(
             extraChannels: extraChannels,
             built: built,
             isLast: true,
             animationFrame: .default,
-            haveAnimation: false))
+            haveAnimation: false)
+        try ScalarEncodingWork.current?.admitAppend(current: out.count, adding: chunk.count)
+        out.append(chunk)
         return out
     }
 

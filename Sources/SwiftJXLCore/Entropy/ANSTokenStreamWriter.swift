@@ -125,6 +125,7 @@ package struct ANSTokenStreamWriter {
     package mutating func writeToken(
         context ctx: Int, value: UInt32
     ) throws {
+        try ScalarEncodingWork.checkpoint()
         guard ctx >= 0 && ctx < header.contextMap.numContexts else {
             throw ANSTokenStreamWriterError.contextOutOfRange(
                 ctx, max: header.contextMap.numContexts - 1)
@@ -155,6 +156,7 @@ package struct ANSTokenStreamWriter {
         var state: UInt32 = ANSConstants.initialState
         var i = pending.count - 1
         while i >= 0 {
+            if i & 255 == 0 { try ScalarEncodingWork.checkpoint() }
             let t = pending[i]
             let enc = clusters[t.cluster]
             let f = enc.freq[Int(t.symbol)]
@@ -180,6 +182,7 @@ package struct ANSTokenStreamWriter {
         // per token, [refill?][extra bits].
         w.write(bits: 32, value: state)
         for (j, t) in pending.enumerated() {
+            if j & 255 == 0 { try ScalarEncodingWork.checkpoint() }
             let refill = refills[j]
             if refill != noRefill { w.write(bits: 16, value: refill) }
             if t.extraNBits > 0 {
@@ -209,6 +212,7 @@ package struct ANSTokenStreamWriter {
         var state: UInt32 = ANSConstants.initialState
         var i = symbols.count - 1
         while i >= 0 {
+            if i & 255 == 0 { try ScalarEncodingWork.checkpoint() }
             let cl = clusterIdx.map { Int($0[i]) } ?? 0
             let sym = Int(symbols[i])
             let enc = tables[cl]

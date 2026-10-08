@@ -88,7 +88,16 @@ package enum ScalarModularEncoder {
     /// a packed UInt16 staging image. The caller must account for that workspace;
     /// it is not a measurement of the encoder's total peak workspace.
     package static func encode(_ bytes: UnsafeRawBufferPointer, layout: ScalarPlaneLayout,
-                               bitsPerSample: Int) throws -> Data {
+                               bitsPerSample: Int, renderingIntent: RenderingIntent = .relative, budget: ScalarOperationBudget? = nil) throws -> Data {
+        if let budget {
+            let limit = try budget.admitEncoder(width: layout.width, height: layout.height)
+            let work = ScalarEncodingWork(budget: budget, writerByteLimit: limit)
+            return try ScalarEncodingWork.$current.withValue(work) {
+                let result = try encode(bytes, layout: layout, bitsPerSample: bitsPerSample, renderingIntent: renderingIntent)
+                try work.checkpoint()
+                return result
+            }
+        }
         try Task.checkCancellation()
         guard (9...16).contains(bitsPerSample), layout.width <= 512, layout.height <= 512 else {
             throw ScalarModularError.unsupportedProfile
@@ -97,9 +106,10 @@ package enum ScalarModularEncoder {
             throw ScalarModularError.invalidInput("Scalar source is shorter than its declared geometry")
         }
         let maximum = (Int32(1) << bitsPerSample) - 1
+        ScalarStorageAudit.current?.workingPlane(layout.width * layout.height * MemoryLayout<Int32>.stride)
         var working = [Int32](repeating: 0, count: layout.width * layout.height)
         for y in 0..<layout.height {
-            try Task.checkCancellation()
+            try ScalarEncodingWork.checkpoint()
             for x in 0..<layout.width {
                 let position = layout.offset + y * layout.rowBytes + x * layout.pixelStride
                 let first = Int32(bytes[position]), second = Int32(bytes[position + 1])
@@ -111,6 +121,6 @@ package enum ScalarModularEncoder {
             }
         }
         return try SpecModularEncoder.encodeGrayscale16(width: layout.width, height: layout.height,
-            bitsPerSample: UInt32(bitsPerSample), pixelsInt32: working, effort: 3)
+            bitsPerSample: UInt32(bitsPerSample), pixelsInt32: working, effort: 3, renderingIntent: renderingIntent)
     }
 }
