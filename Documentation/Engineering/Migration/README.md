@@ -68,7 +68,7 @@ A focused external public consumer demonstrates a real precision defect in the p
 
 ## Contract adapter audit — 7 October continuation
 
-The successor CI state was rechecked: run 35800215617 attempt 2 is completed with failure and no newer run exists. Publication of the prepared branch remains pending explicit user approval after automatic approval review rejected the push; there is no live CI job to wait on. The previous goal turn made progress through local fixes, baseline execution and precision evidence. Codec relocation remains unstarted under the CI precondition.
+At this earlier audit checkpoint, run 35800215617 attempt 2 had failed and publication awaited owner approval after automatic approval review rejected the push. The owner subsequently authorised proceeding. Commit `759940492a68bcd7a49b09d7c7b2d0375b97b0df` was published in [draft PR #14](https://github.com/raster-labs/SwiftJXL/pull/14), and [run 37616664498](https://github.com/raster-labs/SwiftJXL/actions/runs/37616664498) passed all seven jobs. This satisfied the CI prerequisite before the first codec source was copied.
 
 A new external consumer exercised six small, deterministic policy cases against the unmodified pinned predecessor. All six failed their contract expectations. [Source](Evidence/policy-probe.swift) and [results with source/binary hashes](Evidence/policy-probe.json).
 
@@ -84,10 +84,36 @@ These findings concern `JXLSwiftContract.JXLContractCodec`, not a claim about ev
 
 ## Outstanding completion gates
 
-1. Pass the complete successor CI workflow on the corrected foundation, then migrate and independently verify the scalar codec with path-level provenance.
+1. Foundation CI passed. Complete scalar migration qualification, including review of the internal algorithms, broader profiles and the separate common API integration below.
 2. Complete common API integration and direct caller-storage encode/decode, with precision, stride, lifecycle, resource, cancellation and measured copy/allocation evidence. No full final-frame adapter copy.
 3. Qualify all required retained modes, colour/alpha/ICC, frames and native JPEG reconstruction; explicitly account for deferred features. Implement and test the supported CLI verbs.
 4. Execute required parser mutation/fuzz campaigns, regressions, independent interoperability in both directions, sanitizers, controlled release performance and platform gates. Existing synthetic tests are not codec evidence.
 5. Verify clean versioned consumption, SBOM/provenance, examples, migration documentation and release readiness. No stable tag or production cutover follows from this preflight.
 
 The programme history sequences SwiftJLS and SwiftJLI before SwiftJXL; their completed migration evidence is not established by this repository's checks. Other repository releases, downstream application edits and predecessor archival remain separate tasks.
+
+## First internal scalar migration — 8 October continuation
+
+After the foundation CI prerequisite passed, 39 predecessor algorithm files were copied and adapted into `Sources/SwiftJXLCore`, together with a rewritten scalar scheduling helper and a decoder adapted from the predecessor's single-section Modular flow. [Path-level provenance and modifications](relocated-sources.json) records original and destination hashes. The predecessor checkout remains unmodified. The new target is currently a dependency of the core tests only: it is not a second exported library and is not yet connected to the public `Encoder`/`Decoder`. Existing public capabilities correctly remain unavailable.
+
+The first tested profile is unsigned greyscale with 9, 10, 12, 14 or 16 meaningful bits, lossless Modular, a single frame and group, no extra channels, ICC, transforms or ancillary metadata. The encoder admission cap for this initial profile is 512 pixels per dimension. Other functions retained within the imported algorithm files have not inherited predecessor qualification. Public caller limits, direct sample storage, exact copy/allocation accounting, colour interpretation and the remaining features are separate outstanding integration work.
+
+The reference encoder automatically emits a level-10 container for high precision despite `--container=0`. The first 14-/16-bit oracle cases exposed that packaging assumption, rather than a sample mismatch. The adapted container parser now handles complete and partial codestream boxes with checked extended sizes, nonzero `Data.startIndex`, duplicate/mixed-box rejection and complete partial sequence validation. Metadata boxes outside this restricted internal profile are rejected rather than silently discarded.
+
+Other changes remove environment-controlled payload logging; replace the predecessor's integer-encoded pointer/GCD helper with deterministic scalar execution; check entropy terminal states and incomplete LZ77 runs; bound nested entropy parsing and tree size; reject unimplemented extensions; validate input samples and reconstructed samples before predictor updates; and add cancellation/deadline checkpoints. These targeted changes do not establish a complete parser security audit or replace the required hour-long fuzz campaigns. Parser/core limits at this stage are internal constants, not the public `ResourceLimits` integration.
+
+Tests under `Tests/SwiftJXLCoreTests` generate synthetic greyscale data with zero, maximum and changing samples. `ScalarOracleTests` invokes test-only `cjxl` and `djxl` 0.12.0 for 25 images: five precisions × five geometries (`1×1`, `2×3`, `31×17`, `128×129`, `255×17`). Both directions check exact samples and precision, including the PNM header. The tests require `SWIFTJXL_ORACLE_BIN`; without it the oracle gate is explicitly skipped. They add no reference codec runtime dependency. Malformed-input tests cover every truncated prefix and single-bit mutation of a generated fixture, trailing bytes, invalid input samples, sliced data, extreme bit-reader offsets, container size overflow, duplicate/mixed/missing partials and cancellation.
+
+The first expanded validation run correctly stopped on an evidence-harness defect: test discovery assumed only `SwiftJXLTests`, although execution now included `SwiftJXLCoreTests` too. All 41 declarations had passed, but discovery counted 32. The harness now inventories every named local test target and continues to require discovery/execution agreement; the failed run is retained under `work/evidence/scalar-qualification` and is not reported as a passing qualification.
+
+
+The corrected qualification command completed with exit 0:
+
+```sh
+SWIFTJXL_ORACLE_BIN=/opt/homebrew/bin \
+SWIFTJXL_ORACLE_OUTPUT="$PWD/../evidence/scalar-qualification-oracle" \
+bash Scripts/validate.sh --checks debug,release,consumer,asan,tsan \
+  --jobs 2 --disable-package-sandbox --output ../evidence/scalar-qualification-v2
+```
+
+Debug, release, AddressSanitizer and ThreadSanitizer each executed 41 declarations / 50 argument cases, with zero failures or skips. The independent public consumer also passed. [Exact commands and tested-source hashes](Evidence/Scalar/report.json), [debug](Evidence/Scalar/debug-tests.xml), [release](Evidence/Scalar/release-tests.xml), [ASan](Evidence/Scalar/asan-tests.xml), [TSan](Evidence/Scalar/tsan-tests.xml), and [oracle executable/fixture hashes](Evidence/Scalar/oracle-manifest.json) preserve the evidence. These are local Apple arm64/Swift 6.4 results. This snapshot has not yet established Linux or other Apple runtime qualification for the migrated algorithms. Controlled performance/allocation measurements and the full fuzz gate remain outstanding; scalar scheduling may reduce predecessor throughput.

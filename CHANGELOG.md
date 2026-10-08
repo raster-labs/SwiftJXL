@@ -1,5 +1,12 @@
 # Change log
 
+## Unreleased — internal scalar migration, 2026-10-08
+
+- Adapt the pinned predecessor’s native bitstream, container, entropy and Modular algorithms into a package-internal test target, with path-level hashes and retained notices.
+- Verify exact lossless samples and precision with independent tools in both directions across 25 greyscale images; add malformed-input, cancellation and container regressions.
+- Remove payload tracing and pointer-based worker dispatch; harden selected parser bounds and entropy completion. Full resource-policy, storage, performance and security qualification remains outstanding.
+- Expand evidence discovery to include every local test target. Public codec capabilities, production consumers and release tags remain unchanged.
+
 ## Unreleased — migration preflight, 2026-10-07
 
 - Reject reentrant storage access before attempting a non-recursive mutex, fixing the Swift 6.2 Linux trap while retaining exclusive mutable borrows and concurrent sealed readers.

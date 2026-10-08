@@ -2,6 +2,8 @@
 
 The successor requires Swift 6.2 or later, qualifies Swift 6.4, and has Apple OS 26 deployment floors. See the [Swift 6.4 upgrade record](Documentation/Engineering/Swift64/README.md) for development versioning and validation; current codec availability is unchanged.
 
+The internal scalar migration is now underway; see the [execution record](Documentation/Engineering/Migration/README.md). This has not yet changed the public codec availability described below.
+
 For application maintainers and coding agents. This guide describes the **Milestone 1 implementation and contract 0.10.0**, not a released codec. The intended first stable version, `2.1.0`, is not an available release requirement.
 
 **Keep JXLSwift in production for compression, decompression and JPEG reconstruction.** SwiftJXL currently provides validated descriptors, owning storage and public call shapes. Its encode, decode, inspect and native transcode operations report `unsupportedFeature` after applicable validation; capabilities advertise no supported codec operation. An application can prepare adapters now, but cannot complete a functional codec replacement until later milestones qualify its required features. See [implemented evidence](Documentation/MILESTONE1.md) and [remaining milestones](IMPLEMENTATION.md).

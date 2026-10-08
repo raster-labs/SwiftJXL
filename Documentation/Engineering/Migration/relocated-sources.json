@@ -1,0 +1,482 @@
+{
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "preconditionCI": "https://github.com/raster-labs/SwiftJXL/actions/runs/37616664498",
+  "status": "Internal scalar migration; not exposed through public codec capabilities",
+  "files": [
+    {
+      "source": "Sources/JXLSwift/Bitstream/BitReader.swift",
+      "sourceSHA256": "72bddce1b75551adb976c3adb1bd68586dec5d69406bdb0a0ffb63076e5ee7e8",
+      "destination": "Sources/SwiftJXLCore/Bitstream/BitReader.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Remove payload/environment tracing; bounded nesting and cancellation/deadline checkpoints; safe extreme seek/skip arithmetic"
+      ],
+      "destinationSHA256": "be5c4d40dd122f574c8eefd253e319eeece99411cf676b0f67fd7e50e15810fc"
+    },
+    {
+      "source": "Sources/JXLSwift/Bitstream/BitWriter.swift",
+      "sourceSHA256": "fa162d59f4537a69048a6e298f0511ba2c13473d5ca3becead03561b88bc7781",
+      "destination": "Sources/SwiftJXLCore/Bitstream/BitWriter.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "468892665a7fda94b4afe47ba5d35357d64d65a74db29edfc9de0bceebb99b81"
+    },
+    {
+      "source": "Sources/JXLSwift/Bitstream/SpecIntegers.swift",
+      "sourceSHA256": "9af2d816d297720c05c9386b8cda45f5a2bab199fdea0259c652f0f80c816b8d",
+      "destination": "Sources/SwiftJXLCore/Bitstream/SpecIntegers.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "13297330d46bd12e4e562be1b75d873e8c1cf6f730443723bc6fdb58ff22c65b"
+    },
+    {
+      "source": "Sources/JXLSwift/Bitstream/VarLenUint.swift",
+      "sourceSHA256": "72e9fdcc0f5aa1d6b2f61508a06f18a7c247bcef97bb0edcd5288a021b73c177",
+      "destination": "Sources/SwiftJXLCore/Bitstream/VarLenUint.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "7108fbd46962aa4c908273f41c8a7ea80c9ccd3a083aee8fe409969125960fd7"
+    },
+    {
+      "source": "Sources/JXLSwift/Codec/SpecModularEncoder.swift",
+      "sourceSHA256": "1fd8766cf9e7b9103a393e22ab75d6e8ac20026647d06942eed820772d4b621b",
+      "destination": "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Positive-size throws replace preconditions; remove obsolete status claims",
+        "Reject nonpositive/over-512 dimensions and invalid samples; fixed initial profile, entry cancellation; remove obsolete predecessor status claims"
+      ],
+      "destinationSHA256": "54bd3469b0e2e3aa0cee6767dbfe109b090809dec9164c13efcb60f7fdaa3358"
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/BitDepth.swift",
+      "sourceSHA256": "eeb47a9ecae03cc4eea49817f60215a20dab011fdabbbdaf2cde526ccc70e659",
+      "destination": "Sources/SwiftJXLCore/Codestream/BitDepth.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "e42b5435d9424b67c1b4bc8cc92b15443575f631187e19d8dce1718e3b26b6d6"
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/ColorEncoding.swift",
+      "sourceSHA256": "f494bf77246415ad6d02c46e608284190f28ae229c7abf0f1791ade4080f0ac9",
+      "destination": "Sources/SwiftJXLCore/Codestream/ColorEncoding.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "dd25291342bbc115704b9cedcb5bd06243bed7b2ead2205cf7a1f1a360bde9f3"
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/ExtraChannelInfo.swift",
+      "sourceSHA256": "6baf288851ecf161f6d466c4fd0ab8a6aa7554b6ccb9a6ea78a24eab49dc8f5c",
+      "destination": "Sources/SwiftJXLCore/Codestream/ExtraChannelInfo.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "4d4e0dfeae35490240096d5cc45c8e773a4993a22cf34feb0418b0a39338f65e"
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/FrameHeader.swift",
+      "sourceSHA256": "d5190e3e341dea46f06842ba254c94dc63882c4f9639aeaeed2a90e99cab4091",
+      "destination": "Sources/SwiftJXLCore/Codestream/FrameHeader.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Reject unimplemented nonzero extensions; remove tracing"
+      ],
+      "destinationSHA256": "7161d320ab40155f5ed89200ee6962a97af76eeaef37a262437ea9519a7aa983"
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/ImageMetadata.swift",
+      "sourceSHA256": "f66254b6a8d0d815dccfa4f297cc3ff41d04e6a0b6adf15f83060479008b90ad",
+      "destination": "Sources/SwiftJXLCore/Codestream/ImageMetadata.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Reject unimplemented nonzero extensions"
+      ],
+      "destinationSHA256": "17edaacda234d35ec5bece2b80ca655b6e64d32b1b5e91a980905ab18cdceaa9"
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/Signature.swift",
+      "sourceSHA256": "da42bad6f78fb286a65f1731dfe87e9e781d6b82cf18be544d5a30e647784e4e",
+      "destination": "Sources/SwiftJXLCore/Codestream/Signature.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "665f0c4f00b91b10876dd772426b61ca6edd4961e7018dc96b3aae3120b772b2"
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/SizeHeader.swift",
+      "sourceSHA256": "659b9afa61939df450411fbbff4826d72d947b753dcac935d548f10e8b6cf24c",
+      "destination": "Sources/SwiftJXLCore/Codestream/SizeHeader.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "17155283b2a9ce6c93c714cedac44c7d25a9931f175912c44650c4b41a0ebfb7"
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/TOC.swift",
+      "sourceSHA256": "c919b2b7fa5d88c10daca1a01dedd0353a63aedaf751a14147818e0501773a23",
+      "destination": "Sources/SwiftJXLCore/Codestream/TOC.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "db418153858b88b3489a9cd177abddfe2c0d927084ea862821e354247638ac31"
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/TOCPermutation.swift",
+      "sourceSHA256": "ef435535a9d65d8e7acf64952dccc30306d47ec6d20c70578f1eaf06f2c277e6",
+      "destination": "Sources/SwiftJXLCore/Codestream/TOCPermutation.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "da7b2af7efd4192001c44dc2179ef7f4527a3af24bd8ae0d9a280fb3c12dc941"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/ANSDistributionSerialisation.swift",
+      "sourceSHA256": "d8d332e4bbd90e1d1acd6017e81186beef05d9ce3db91675592e08054c425f6b",
+      "destination": "Sources/SwiftJXLCore/Entropy/ANSDistributionSerialisation.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "b22ee83cce90e7d5c6d90d208ffd72170026b7a66b40e688b5dc2255abd2dc22"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/ANSStreamDecoder.swift",
+      "sourceSHA256": "e417bc9be14ee7b7ffcc7523263a7e955e10806dcc05ea4e7fe12a40a053bd98",
+      "destination": "Sources/SwiftJXLCore/Entropy/ANSStreamDecoder.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Remove tracing"
+      ],
+      "destinationSHA256": "7a48e71d834f8f1f8d4de3c39633f07145e37460adc118fe06c940182a265dbd"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/ANSTokenStreamWriter.swift",
+      "sourceSHA256": "dc7c6c30b9da658bdf5c3d059c7b9dd0e862d12cc05794cda53e262b7f848868",
+      "destination": "Sources/SwiftJXLCore/Entropy/ANSTokenStreamWriter.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "2b44f8cda66298dc914aa3bd176c19697c0ea28aebda81ed0176f435095a91da"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/AliasTable.swift",
+      "sourceSHA256": "5c056b8396341a1df36cb5024bfd8b456dc2cde1e387eff85d5f38df80ec85f9",
+      "destination": "Sources/SwiftJXLCore/Entropy/AliasTable.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Reject invalid table widths, negative/out-of-range counts and invalid alias pairing; remove tracing"
+      ],
+      "destinationSHA256": "c7efd360b73cd3ff1fe62df1d36cb68399af9eae150945e529be7567708fdec6"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/ContextMap.swift",
+      "sourceSHA256": "879895ac7e3732ef187c3c806d5f9ddfec0492e1c55615051292a57ce5066856",
+      "destination": "Sources/SwiftJXLCore/Entropy/ContextMap.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Verify nested token-stream completion; remove tracing"
+      ],
+      "destinationSHA256": "f5d371b7a8017ffb521632837ea57b422c1e4747e8efd3ecefd6e5237327d159"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/EntropySectionHeader.swift",
+      "sourceSHA256": "efee641031b9e42db4c8ec61002f5f67d7042ce220c2aff202eb6b174492623f",
+      "destination": "Sources/SwiftJXLCore/Entropy/EntropySectionHeader.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Bound contexts and nested entropy parsing"
+      ],
+      "destinationSHA256": "6ddcb577182a5ff4e242c397f27f4b2d7aa5711057a1cc930067718d2777a4de"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/HybridUint.swift",
+      "sourceSHA256": "37b3770279108ab1c9c25805f36382e35eda9d8ec600f38125225d08a1b81dfb",
+      "destination": "Sources/SwiftJXLCore/Entropy/HybridUint.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "0c7d993964572861dee64a752795f9f68b68858d4ecadd13e41814aeb0383ea0"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/LZ77Config.swift",
+      "sourceSHA256": "9c4bc56896c931bc7adc9020e275270957e8b1d6f6eb1563f75d937aa5e344e5",
+      "destination": "Sources/SwiftJXLCore/Entropy/LZ77Config.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Remove tracing"
+      ],
+      "destinationSHA256": "78f4b8b1dd982028b0980f5f5d82dbd03aa30bf939a2555e5be0c8a0f814d083"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/MultiClusterCodebook.swift",
+      "sourceSHA256": "7b8724d19a8a6c4f5fe64dbab13ab723f70021e325184fe57608649c0136132e",
+      "destination": "Sources/SwiftJXLCore/Entropy/MultiClusterCodebook.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Remove tracing"
+      ],
+      "destinationSHA256": "36fb45d297e12358b4db727f6c783710275897796b0a633bb1a5a684f355f449"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/PrefixCode.swift",
+      "sourceSHA256": "25389111744f6425330836fa09c9789a5dcabb3b56f3c045252a9f332a56f3cd",
+      "destination": "Sources/SwiftJXLCore/Entropy/PrefixCode.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "f15a23133883a84a6606480917175547e5f76008f957e07e6b6db569f95f4f69"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/PrefixCodeSerialisation.swift",
+      "sourceSHA256": "346a98d66b18c4b591a2291edddb747dba476af310012a771fb77cf4686223cb",
+      "destination": "Sources/SwiftJXLCore/Entropy/PrefixCodeSerialisation.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "782cd13bdcf37d50e818e35a8872386b643e2bb28c77bc486212df312a98fd47"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/RANS.swift",
+      "sourceSHA256": "df19e8990225356748717d8ddec69af6daf2f00c32d393293c74090ecd190070",
+      "destination": "Sources/SwiftJXLCore/Entropy/RANS.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "8244a4e7f647474885f4e84892ebc96928b5c350f27e8ef877957eb685bafca3"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/SimpleEntropyStream.swift",
+      "sourceSHA256": "0b22cda980c440ad4e375815595b55dc65749d61e1ebc12a2ce6f4dec3491aad",
+      "destination": "Sources/SwiftJXLCore/Entropy/SimpleEntropyStream.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "0c74618755ae5940aaadbc83222bfcda5808434dd63082144e0110f7a348c74f"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/SpecANSDistribution.swift",
+      "sourceSHA256": "20f9c79788501bd9e55aba097afe148cefaeacadafb2cc2b5830c466e98ae952",
+      "destination": "Sources/SwiftJXLCore/Entropy/SpecANSDistribution.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "eea19f53aedeca8ec0a98008fc4eed9d31fc026f6d0b61350e8743682558be8f"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/TokenStreamReader.swift",
+      "sourceSHA256": "e8e45b281af2327dd6de338dbd7de22622e6a3678565a1ba5ee48b4ee4ced088",
+      "destination": "Sources/SwiftJXLCore/Entropy/TokenStreamReader.swift",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Verify terminal ANS/LZ77 state; prohibit cumulative-table fallback after alias construction fails; cancellation/deadline checkpoints"
+      ],
+      "destinationSHA256": "a8c5accc169d700d7a4f5d597515058798f5829efa0e2ff2286fd1fe60a5fd88"
+    },
+    {
+      "source": "Sources/JXLSwift/Entropy/TokenStreamWriter.swift",
+      "sourceSHA256": "204bf17a186ab384434eaaa3b78333fc7e6bb53247af9ca14af07c7b683c2893",
+      "destination": "Sources/SwiftJXLCore/Entropy/TokenStreamWriter.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "b68b6a3e9855539dec8dd0e061629e3c031b8ba049e4e574836bb92f5275dd1b"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/GroupHeader.swift",
+      "sourceSHA256": "8eef50283f08622e05e064a8c70ae9792a83b6ce5659d49ab9ab7632dd4ef946",
+      "destination": "Sources/SwiftJXLCore/Modular/GroupHeader.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "2a76b89fa25e7e4343fb906a455a5a27262bf76428132280d00300f6325a64f7"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/LibjxlPredictor.swift",
+      "sourceSHA256": "17216f657f688f30343fef6b344864879826a1d5d71e9f0cee22f844fceea7c2",
+      "destination": "Sources/SwiftJXLCore/Modular/LibjxlPredictor.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "d22c53808f150333422db9f643ac882529e8f83e58200c4e1d085b9fd21da7e0"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/ModularChannelDecoder.swift",
+      "sourceSHA256": "9b7bf346fc8266e372468dfed066d6a72a0226703ffbacf126015f0819325b9a",
+      "destination": "Sources/SwiftJXLCore/Modular/ModularChannelDecoder.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Checked channel dimensions and output extent, cancellation between rows, per-sample precision rejection before predictor updates; remove tracing"
+      ],
+      "destinationSHA256": "2532eeb6608fdb6ff33cf2adbc1860972de1eb86fafcf75eae666e289620579c"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/ModularProperties.swift",
+      "sourceSHA256": "5c540afa03ac102dad82223b4e3379e005f2af435049b764b619135c6e8c1dff",
+      "destination": "Sources/SwiftJXLCore/Modular/ModularProperties.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "96de5718d84f02a6b1fd9e8e144da1b9e9176694855b8af8ba7465164eadb634"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/ModularTree.swift",
+      "sourceSHA256": "fa0fa5b09144edcbafb38992c3b52c93e9b53032e032a0d08cf4a0d07bc80689",
+      "destination": "Sources/SwiftJXLCore/Modular/ModularTree.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header",
+        "Enforce node limit without off-by-one allocation"
+      ],
+      "destinationSHA256": "14ca65941e854e877d6b53c2fdb6df22fa15f42159ce0fc7a226b26bc5ac940b"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/Predictors.swift",
+      "sourceSHA256": "c52f7e6ca7904b8039b9fdb7ead93f86e40ac9f9ea9c22d1987c460b5ca22f05",
+      "destination": "Sources/SwiftJXLCore/Modular/Predictors.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "9e2fb94b4426b6bfa670bb06a2e5d9bea85795d3d14f96b7ff3c91ef644cbb65"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/RCT.swift",
+      "sourceSHA256": "67e26ef15ccd28fd549fd7abd2dc71ecb152655e287ef310f55f3379330792a5",
+      "destination": "Sources/SwiftJXLCore/Modular/RCT.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "a26c65214a57665d3c086df9e21f213cd965878eddcecdf882d369fabb208f6c"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/WeightedPredictor.swift",
+      "sourceSHA256": "275aea03bfa4008a101a316d365df69ce5ce982922da9178fd73d228b966fd43",
+      "destination": "Sources/SwiftJXLCore/Modular/WeightedPredictor.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only visibility",
+        "Successor provenance header"
+      ],
+      "destinationSHA256": "d1ca9f07c0d0a2411b80fb60c23e91bf2cb1d7a46cbc69dbd139838e43f0cac6"
+    },
+    {
+      "source": "Sources/JXLSwift/Container/JXLContainer.swift",
+      "sourceSHA256": "4c882d2e02230192132a852effe902b101d9aa1d088de55754d333be918212e3",
+      "destination": "Sources/SwiftJXLCore/Container/JXLContainer.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Retain container parser and extraction; omit metadata/Brotli/reconstruction builders; check extended lengths, Data slice indices, duplicate and partial codestreams"
+      ],
+      "destinationSHA256": "7466c12ab4fdb188b41b6679aa4f0acabf1cb78b968b04e43a58c7a5c6c231cb"
+    },
+    {
+      "source": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+      "sourceSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+      "destination": "Sources/SwiftJXLCore/Codec/ScalarModularDecoder.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Adapt single-section Modular decode; explicit restricted profile; validate final entropy state and reject metadata/extensions instead of dropping them",
+        "Constrain first migration profile and validate section length, sample range and entropy completion"
+      ],
+      "destinationSHA256": "1fee83f8f4f62eba3cfe9956da69ac1b73dadb963684ea016dee07579d337294"
+    },
+    {
+      "source": "Sources/JXLSwift/Codec/ParallelMap.swift",
+      "sourceSHA256": "abdcaf5427d34046f58b8055342d3439eca960da6d24d23f799d31c32242cf1d",
+      "destination": "Sources/SwiftJXLCore/Codec/ScalarMap.swift",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Replace pointer-based GCD dispatch with deterministic scalar iteration; performance qualification outstanding"
+      ],
+      "destinationSHA256": "b4c4f97ef87bb6008baa923e91783cb69e877452e309387fbed56663577c39d2"
+    }
+  ],
+  "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. Internal target is used by tests only; no new public product or public codec capability.",
+  "thirdParty": [
+    {
+      "material": "Special-distance lookup table in TokenStreamReader.swift",
+      "upstream": "https://github.com/libjxl/libjxl",
+      "licence": "BSD-3-Clause",
+      "notice": "Documentation/ThirdParty/libjxl-LICENSE.txt",
+      "verifiedLicenceRef": "v0.12.0",
+      "verifiedLicenceBlob": "c66034b105f23d108a51b45c846d5b5c194cc229",
+      "qualification": "Predecessor did not record its original table extraction revision; retain upstream credit and licence without asserting an invented extraction pin."
+    }
+  ]
+}

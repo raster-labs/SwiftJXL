@@ -12,6 +12,8 @@ let package = Package(
                .executable(name: "swiftjxl-cli", targets: ["SwiftJXLCLI"])],
     targets: [
         .target(name: "SwiftJXL"),
+        .target(name: "SwiftJXLCore"),
+        .testTarget(name: "SwiftJXLCoreTests", dependencies: ["SwiftJXLCore"]),
         .executableTarget(name: "SwiftJXLCLI", dependencies: ["SwiftJXL"]),
         .testTarget(name: "SwiftJXLTests", dependencies: ["SwiftJXL"])
     ],
