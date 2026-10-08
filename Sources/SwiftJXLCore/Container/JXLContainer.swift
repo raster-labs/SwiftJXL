@@ -91,7 +91,8 @@ package enum JXLContainerForm: Sendable, Equatable {
 
 /// Parse a JXL byte stream into either a naked codestream or a list of
 /// ISOBMFF boxes. Does not validate codestream contents.
-package func parseJXLContainer(_ data: Data) throws -> JXLContainerForm {
+package func parseJXLContainer(_ data: Data, checkpoint: () throws -> Void = { try Task.checkCancellation() }) throws -> JXLContainerForm {
+    try checkpoint()
     guard data.count >= 2 else {
         throw ContainerError.truncated("file too small to be JXL")
     }
@@ -112,6 +113,7 @@ package func parseJXLContainer(_ data: Data) throws -> JXLContainerForm {
     var cursor = 12
     var boxes: [JXLBox] = []
     while cursor < data.count {
+        try checkpoint()
         guard cursor + 8 <= data.count else {
             throw ContainerError.truncated("partial box header at offset \(cursor)")
         }
@@ -163,7 +165,9 @@ package func parseJXLContainer(_ data: Data) throws -> JXLContainerForm {
 
 /// Locate and concatenate the codestream from a parsed container.
 /// Looks for a single `jxlc` box or a sequence of `jxlp` partials.
-package func extractCodestream(from boxes: [JXLBox], in data: Data) throws -> Data {
+package func extractCodestream(from boxes: [JXLBox], in data: Data,
+                               checkpoint: () throws -> Void = { try Task.checkCancellation() }) throws -> Data {
+    try checkpoint()
     let complete = boxes.filter { $0.type == "jxlc" }
     if let jxlc = complete.first {
         guard complete.count == 1, !boxes.contains(where: { $0.type == "jxlp" }) else {
@@ -180,6 +184,7 @@ package func extractCodestream(from boxes: [JXLBox], in data: Data) throws -> Da
     // sequence and concatenate the rest.
     var ordered: [(seq: UInt32, range: Range<Int>, last: Bool)] = []
     for box in partials {
+        try checkpoint()
         guard box.payloadRange.count >= 4 else {
             throw ContainerError.malformedBox("jxlp box too small")
         }
@@ -192,6 +197,7 @@ package func extractCodestream(from boxes: [JXLBox], in data: Data) throws -> Da
     ordered.sort { $0.seq < $1.seq }
     var combined = Data()
     for (index, part) in ordered.enumerated() {
+        try checkpoint()
         guard part.seq == UInt32(index), part.last == (index == ordered.count - 1) else {
             throw ContainerError.malformedBox("Invalid partial codestream sequence")
         }

@@ -19,8 +19,9 @@ package struct ScalarModularImage {
 }
 
 package enum ScalarModularDecoder {
-    package static func decode(_ data: Data) throws -> ScalarModularImage {
-        let frame = try prepare(data)
+    package static func decode(_ data: Data, policy: ScalarDecodePolicy? = nil) throws -> ScalarModularImage {
+        let frame = try prepare(data, policy: policy)
+        try frame.policy.checkpoint()
         var pixels = [Int32](repeating: 0, count: frame.width * frame.height)
         try frame.decode(into: &pixels)
         return ScalarModularImage(width: frame.width, height: frame.height,
@@ -29,23 +30,28 @@ package enum ScalarModularDecoder {
 
     /// First qualified profile: naked, single-group, single-frame unsigned greyscale,
     /// 8–16 bits, no colour transform, extra channels, palette, squeeze or metadata.
-    package static func prepare(_ data: Data) throws -> ScalarModularFrame {
-        try Task.checkCancellation()
-        guard data.count <= 4 * 1024 * 1024 else { throw ScalarModularError.resourceLimit }
+    package static func prepare(_ data: Data, policy suppliedPolicy: ScalarDecodePolicy? = nil) throws -> ScalarModularFrame {
+        let policy = try suppliedPolicy ?? ScalarDecodePolicy()
+        try policy.checkpoint()
+        guard data.count <= policy.maximumCompressedBytes else { throw ScalarModularError.resourceLimit }
         let codestream: Data
-        switch try parseJXLContainer(data) {
+        switch try parseJXLContainer(data, checkpoint: policy.checkpoint) {
         case .naked: codestream = data
         case .iso(let boxes):
             guard boxes.allSatisfy({ ["ftyp", "jxll", "jxlc", "jxlp"].contains($0.type) }) else {
                 throw ScalarModularError.unsupportedProfile
             }
-            codestream = try extractCodestream(from: boxes, in: data)
+            codestream = try extractCodestream(from: boxes, in: data, checkpoint: policy.checkpoint)
         }
         guard hasCodestreamSignature(codestream) else { throw ScalarModularError.invalidInput("Missing JPEG XL codestream signature") }
-        var r = BitReader(codestream, startingAt: 16)
+        try policy.checkpoint()
+        var r = BitReader(codestream, startingAt: 16, deadline: policy.deadline,
+                          maximumNestingDepth: policy.maximumNestingDepth)
         let size = try SizeHeader.read(from: &r)
         let width = Int(size.xsize), height = Int(size.ysize)
-        guard width > 0, height > 0, width <= 1024, height <= 1024 else {
+        let (pixelCount, overflow) = width.multipliedReportingOverflow(by: height)
+        guard !overflow, width > 0, height > 0, width <= policy.maximumDimension,
+              height <= policy.maximumDimension, pixelCount <= policy.maximumPixels else {
             throw ScalarModularError.resourceLimit
         }
         let m = try ImageMetadata.read(from: &r)
@@ -86,7 +92,8 @@ package enum ScalarModularDecoder {
         } else {
             selected = try readTreeAndCodebook(from: &r, pixelCount: width * height)
         }
-        return ScalarModularFrame(width: width, height: height,
+        try policy.checkpoint()
+        return ScalarModularFrame(width: width, height: height, policy: policy,
             bitsPerSample: Int(m.bitDepth.bitsPerSample), reader: r,
             tree: selected.0, header: selected.1, codebook: selected.2, predictor: gh.wpHeader)
     }
@@ -109,6 +116,7 @@ package enum ScalarModularDecoder {
 package struct ScalarModularFrame: Sendable {
     package let width: Int
     package let height: Int
+    let policy: ScalarDecodePolicy
     package let bitsPerSample: Int
     let reader: BitReader
     let tree: ModularTree
@@ -117,7 +125,7 @@ package struct ScalarModularFrame: Sendable {
     let predictor: WeightedPredictorHeader
 
     package func decode<Storage: ModularSampleBuffer>(into destination: inout Storage) throws {
-        try Task.checkCancellation()
+        try policy.checkpoint()
         var r = reader
         var stream = TokenStreamReader(header: header, codebook: codebook, distanceMultiplier: width)
         try decodeModularChannel(width: width, height: height,
@@ -127,6 +135,6 @@ package struct ScalarModularFrame: Sendable {
         try stream.finish()
         try r.expectZeroPadding()
         guard r.isExhausted else { throw ScalarModularError.invalidInput("Unexpected trailing section bytes") }
-        try Task.checkCancellation()
+        try policy.checkpoint()
     }
 }

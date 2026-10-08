@@ -11,9 +11,10 @@
       "changes": [
         "Package-only visibility",
         "Successor provenance header",
-        "Remove payload/environment tracing; bounded nesting and cancellation/deadline checkpoints; safe extreme seek/skip arithmetic"
+        "Remove payload/environment tracing; bounded nesting and cancellation/deadline checkpoints; safe extreme seek/skip arithmetic",
+        "Thread operation deadline and bounded nesting through decoding and container processing"
       ],
-      "destinationSHA256": "be5c4d40dd122f574c8eefd253e319eeece99411cf676b0f67fd7e50e15810fc"
+      "destinationSHA256": "f6993827c9a4aa4861ed1c6472ebdfbbea5aa8a1b64e2c7957d199765ede7afd"
     },
     {
       "source": "Sources/JXLSwift/Bitstream/BitWriter.swift",
@@ -442,9 +443,10 @@
       "destination": "Sources/SwiftJXLCore/Container/JXLContainer.swift",
       "licence": "Apache-2.0",
       "changes": [
-        "Retain container parser and extraction; omit metadata/Brotli/reconstruction builders; check extended lengths, Data slice indices, duplicate and partial codestreams"
+        "Retain container parser and extraction; omit metadata/Brotli/reconstruction builders; check extended lengths, Data slice indices, duplicate and partial codestreams",
+        "Thread operation deadline and bounded nesting through decoding and container processing"
       ],
-      "destinationSHA256": "7466c12ab4fdb188b41b6679aa4f0acabf1cb78b968b04e43a58c7a5c6c231cb"
+      "destinationSHA256": "92d0025833b4d612162d0fb17e513e21d0569f4f886121e7db3c4e5b7fcde667"
     },
     {
       "source": "Sources/JXLSwift/Codec/JXLDecoder.swift",
@@ -454,9 +456,10 @@
       "changes": [
         "Adapt single-section Modular decode; explicit restricted profile; validate final entropy state and reject metadata/extensions instead of dropping them",
         "Constrain first migration profile and validate section length, sample range and entropy completion",
-        "Adapt sample access to scoped caller storage; separate frame preparation from final pixel writes"
+        "Adapt sample access to scoped caller storage; separate frame preparation from final pixel writes",
+        "Thread operation deadline and bounded nesting through decoding and container processing"
       ],
-      "destinationSHA256": "cdc7d520a55aadcd30247013164c7324427835df94ace36ec363c22574f22c83"
+      "destinationSHA256": "82da7471f377e94a9996fb328e66d42bfa94ae4d4f118deb791fa21daa13f6b2"
     },
     {
       "source": "Sources/JXLSwift/Codec/ParallelMap.swift",
@@ -487,6 +490,12 @@
       "destinationSHA256": "0b2a4aaa4c9f74c15b9c216f6749b003f4929b7ad194427e04d79b37783ab472",
       "licence": "Apache-2.0",
       "purpose": "Checked scoped 16-bit sample access to caller storage and encoder algorithm workspace"
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/Codec/ScalarDecodePolicy.swift",
+      "destinationSHA256": "1136716945d391d300abd21eea5676aec65cacbc86fd6f364ff909421cf74ed4",
+      "licence": "Apache-2.0",
+      "purpose": "Internal caller-controlled dimension, pixel, compressed-input, nesting and monotonic deadline limits; workspace integration remains outstanding"
     }
   ]
 }

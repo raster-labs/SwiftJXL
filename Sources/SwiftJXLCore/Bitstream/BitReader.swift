@@ -55,20 +55,21 @@ package struct BitReader: Sendable {
     private var nextByte: Int
     private var nestingDepth = 0
     private var operations = 0
-    private let deadline = ContinuousClock.now.advanced(by: .seconds(10))
+    private let deadline: ContinuousClock.Instant
+    private let maximumNestingDepth: Int
 
     /// Bounded checks also cover zero-bit symbols and nested context maps.
     package mutating func checkpoint() throws {
         operations += 1
-        if operations & 255 == 0 {
+        if operations == 1 || operations & 255 == 0 {
             try Task.checkCancellation()
             guard ContinuousClock.now < deadline else {
-                throw BitstreamError.malformedValue("Internal scalar deadline exceeded")
+                throw ScalarModularError.resourceLimit
             }
         }
     }
     package mutating func enterNesting() throws {
-        guard nestingDepth < 32 else { throw BitstreamError.malformedValue("Entropy nesting limit exceeded") }
+        guard nestingDepth < maximumNestingDepth else { throw ScalarModularError.resourceLimit }
         nestingDepth += 1
     }
     package mutating func leaveNesting() { nestingDepth -= 1 }
@@ -77,7 +78,11 @@ package struct BitReader: Sendable {
     /// Bit position in the stream (0 = LSB of first byte).
     package var position: Int { pos }
 
-    package init(_ data: Data, startingAt position: Int = 0) {
+    package init(_ data: Data, startingAt position: Int = 0,
+                 deadline: ContinuousClock.Instant = ContinuousClock.now.advanced(by: .seconds(10)),
+                 maximumNestingDepth: Int = 32) {
+        self.deadline = deadline
+        self.maximumNestingDepth = max(0, min(maximumNestingDepth, 32))
         self.data = data
         self.bytes = [UInt8](data)
         self.pos = position

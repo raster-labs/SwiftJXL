@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased — decoder admission and CI interoperability, 2026-10-08
+
+- Thread internal size, nesting and monotonic deadline limits through scalar decoding and container work, including prepared-frame lifetime checks.
+- Add a mandatory independent CI oracle gate built from pinned libjxl source; preserve executable and fixture hashes for debug/release comparisons.
+- Public workspace policy and codec availability remain unimplemented; broader migration is still in progress.
+
 ## Unreleased — internal caller-storage integration, 2026-10-08
 
 - Decode the restricted scalar profile directly into caller storage, preserving offsets, strides, byte order, padding and allocation identity.
