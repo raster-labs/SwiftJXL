@@ -1,16 +1,15 @@
-.TH SWIFTJXL-CLI 1 "September 19, 2026" "2.1.0-dev.2" "Swift Image Compression Suite"
+.TH SWIFTJXL-CLI 1 "October 8, 2026" "2.1.0-dev.2" "Swift Image Compression Suite"
 .SH NAME
-swiftjxl-cli \- help, version and capability reporting for SwiftJXL
+swiftjxl-cli \- inspection, validation and capability reporting for SwiftJXL
 .SH SYNOPSIS
 .B swiftjxl-cli
 .RI [ options ] " command " [ options ]
 .SH DESCRIPTION
-This development tool provides help, version and truthful library capability
-reporting.
-Codec algorithms are not implemented. Reserved encode, decode, inspect and
-validate
-commands and native transcode return 4 without opening input, consuming
-standard input or creating output.
+This development tool inspects headers and validates the complete supported
+scalar JPEG XL frame using the public decoder. It also provides help, version
+and executable capability reporting. This is not a general JPEG XL validator.
+Reserved encode, decode and native transcode return 4 without opening input,
+consuming standard input or creating output.
 Build with Swift 6.2 or later in Swift 6 language mode.
 Apple OS minimum is 26.0.
 CLI hosts are macOS and Linux; consult qualification records for executed
@@ -18,15 +17,38 @@ coverage.
 .SH COMMANDS
 .TP
 .B capabilities [\-\-json]
-Report actual library encode/decode/inspect support. JSON is one document on
-stdout.
-False support values and empty formats mean unavailable algorithms.
+Report executable support. Inspect and validate are available; encode and
+decode file adapters remain unavailable. JSON is one document on stdout.
 .TP
 .B help [command]
 Show global or command-specific help. No arguments also show global help.
 .TP
 .B version
 Show the development version.
+.TP
+.B inspect, validate
+Require \-i/\-\-input PATH; a hyphen reads stdin. Inspect reports supported
+headers, without checking pixel integrity. Validate decodes the entire
+supported frame in memory and discards pixels. Supports unsigned greyscale
+Modular, 8 through 16 meaningful bits, dimensions up to 1024, one frame/group
+and compressed input at most 4 MiB. Unsupported profiles return 4.
+Optional \-o/\-\-output PATH writes a report; the default is stdout.
+Use \-\-json for structured output, including pixelPayloadValidated.
+File reports publish atomically; \-\-overwrite permits replacement of an
+existing regular file. Input aliases and output symlinks are refused.
+Failure preserves any previous report; partial stdout cannot be rolled back.
+.TP
+.B Inspection and validation limits
+Input format is jxl or jpeg-xl. Backend is automatic (default) or scalar-cpu;
+accelerated is unavailable. Copy policy defaults to require-sharing;
+allow-copy is accepted. Threads is a ceiling from 1 to 8; one worker is used.
+Maximum memory is positive bytes, default 1073741824, including command
+buffers and codec admission; it is not a process RSS ceiling.
+Timeout is positive finite seconds, at most 31536000, default 120, checked
+cooperatively across input, codec and output. Pipe polling checks every 25 ms;
+filesystem
+calls depend on operating-system scheduling. Ctrl+C returns 130.
+Mode, max-error and output-format do not apply to these two commands.
 .SH OPTIONS
 .TP
 .B \-h, \-\-help
@@ -59,17 +81,17 @@ Codec command help lists reserved \-i/\-\-input, \-o/\-\-output,
 \-\-input-format, \-\-output-format, \-\-mode, \-\-max-error,
 \-\-backend, \-\-copy-policy, \-\-threads, \-\-max-memory,
 \-\-timeout, \-\-overwrite and \-\-json.
-These are not implemented payload operations. A single hyphen will denote
+Encode/decode/transcode are not implemented payload operations. A hyphen denotes
 standard
-input/output in a future codec command. Default future mode is lossless and
+input/output for inspect and validate. Default future mode is lossless and
 copy
 policy is require-sharing. No private intermediate image format is
 implemented.
 .SH EXIT STATUS
-0 success/help/version; 2 invalid usage; 4 unsupported operation;
-6 output I/O failure including a closed pipe.
-Future codec statuses reserve 3 malformed input, 5 resource/deadline,
-7 internal failure and 130 user cancellation.
+0 success/help/version; 2 invalid usage; 3 malformed input;
+4 unsupported feature/layout/backend/format; 5 resource/deadline;
+6 input/output failure including a closed pipe; 7 internal failure;
+130 user cancellation.
 .SH EXAMPLES
 .nf
 swiftjxl-cli \-h

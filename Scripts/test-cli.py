@@ -27,7 +27,7 @@ def main():
     def cli(*values,expected=0):return run([binary,*values],expected)
     def document(r):
         d=json.loads(r.stdout);assert d['version']==version and d['minimumAppleOS']=='26.0'
-        assert d['canEncode'] is False and d['canDecode'] is False and d['canInspect'] is False and d['formats']==[]
+        assert d['canEncode'] is False and d['canDecode'] is False and d['canInspect'] is True and d['canValidate'] is True and d['formats']==['jpeg-xl']
         return d
     try:
         root=cli('--help');assert 'USAGE:' in root.stdout and 'unavailable' in root.stdout and not root.stderr
@@ -56,7 +56,7 @@ def main():
             r=cli(*form,expected=2);assert not r.stdout and r.stderr
         with tempfile.TemporaryDirectory(prefix='cli stage spaces ',dir=out) as temp:
             temp=Path(temp);payload=temp/'private image λ.raw';payload.write_bytes(b'unchanged')
-            verbs=['encode','decode','inspect','validate']
+            verbs=['encode','decode']
             if tool in ['swiftj2k-cli','swiftjxl-cli']:verbs.append('transcode')
             else:cli('transcode',expected=2)
             for verb in verbs:
