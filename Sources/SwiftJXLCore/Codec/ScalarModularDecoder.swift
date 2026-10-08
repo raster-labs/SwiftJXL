@@ -19,9 +19,17 @@ package struct ScalarModularImage {
 }
 
 package enum ScalarModularDecoder {
+    package static func decode(_ data: Data) throws -> ScalarModularImage {
+        let frame = try prepare(data)
+        var pixels = [Int32](repeating: 0, count: frame.width * frame.height)
+        try frame.decode(into: &pixels)
+        return ScalarModularImage(width: frame.width, height: frame.height,
+                                  bitsPerSample: frame.bitsPerSample, pixels: pixels)
+    }
+
     /// First qualified profile: naked, single-group, single-frame unsigned greyscale,
     /// 8–16 bits, no colour transform, extra channels, palette, squeeze or metadata.
-    package static func decode(_ data: Data) throws -> ScalarModularImage {
+    package static func prepare(_ data: Data) throws -> ScalarModularFrame {
         try Task.checkCancellation()
         guard data.count <= 4 * 1024 * 1024 else { throw ScalarModularError.resourceLimit }
         let codestream: Data
@@ -78,19 +86,9 @@ package enum ScalarModularDecoder {
         } else {
             selected = try readTreeAndCodebook(from: &r, pixelCount: width * height)
         }
-        var stream = TokenStreamReader(header: selected.1, codebook: selected.2, distanceMultiplier: width)
-        let maximum = (Int32(1) << m.bitDepth.bitsPerSample) - 1
-        let pixels = try decodeModularChannel(width: width, height: height,
-            staticChannel: 0, groupId: 0, tree: selected.0, stream: &stream,
-            from: &r, wpHeader: gh.wpHeader, sampleMaximum: maximum)
-        try stream.finish()
-        try r.expectZeroPadding()
-        guard r.isExhausted else { throw ScalarModularError.invalidInput("Unexpected trailing section bytes") }
-        guard pixels.allSatisfy({ $0 >= 0 && $0 <= maximum }) else {
-            throw ScalarModularError.invalidInput("Sample exceeds declared precision")
-        }
-        return ScalarModularImage(width: width, height: height,
-                                  bitsPerSample: Int(m.bitDepth.bitsPerSample), pixels: pixels)
+        return ScalarModularFrame(width: width, height: height,
+            bitsPerSample: Int(m.bitDepth.bitsPerSample), reader: r,
+            tree: selected.0, header: selected.1, codebook: selected.2, predictor: gh.wpHeader)
     }
 
     private static func readTreeAndCodebook(from r: inout BitReader, pixelCount: Int)
@@ -104,5 +102,31 @@ package enum ScalarModularDecoder {
         let post = try EntropySectionHeader.read(from: &r, numContexts: tree.leafCount)
         let postCodebook = try MultiClusterCodebook.read(from: &r, header: post)
         return (tree, post, postCodebook)
+    }
+}
+
+/// Parsed scalar frame. Pixel allocation is the caller's responsibility.
+package struct ScalarModularFrame: Sendable {
+    package let width: Int
+    package let height: Int
+    package let bitsPerSample: Int
+    let reader: BitReader
+    let tree: ModularTree
+    let header: EntropySectionHeader
+    let codebook: MultiClusterCodebook
+    let predictor: WeightedPredictorHeader
+
+    package func decode<Storage: ModularSampleBuffer>(into destination: inout Storage) throws {
+        try Task.checkCancellation()
+        var r = reader
+        var stream = TokenStreamReader(header: header, codebook: codebook, distanceMultiplier: width)
+        try decodeModularChannel(width: width, height: height,
+            staticChannel: 0, groupId: 0, tree: tree, stream: &stream,
+            from: &r, wpHeader: predictor,
+            sampleMaximum: (Int32(1) << bitsPerSample) - 1, out: &destination)
+        try stream.finish()
+        try r.expectZeroPadding()
+        guard r.isExhausted else { throw ScalarModularError.invalidInput("Unexpected trailing section bytes") }
+        try Task.checkCancellation()
     }
 }

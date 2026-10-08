@@ -375,9 +375,10 @@
       "changes": [
         "Package-only visibility",
         "Successor provenance header",
-        "Checked channel dimensions and output extent, cancellation between rows, per-sample precision rejection before predictor updates; remove tracing"
+        "Checked channel dimensions and output extent, cancellation between rows, per-sample precision rejection before predictor updates; remove tracing",
+        "Adapt sample access to scoped caller storage; separate frame preparation from final pixel writes"
       ],
-      "destinationSHA256": "2532eeb6608fdb6ff33cf2adbc1860972de1eb86fafcf75eae666e289620579c"
+      "destinationSHA256": "9d4374a991ed236270933b2b578d2e651df5101ef9a7bc20bb9071b02340e468"
     },
     {
       "source": "Sources/JXLSwift/Modular/ModularProperties.swift",
@@ -452,9 +453,10 @@
       "licence": "Apache-2.0",
       "changes": [
         "Adapt single-section Modular decode; explicit restricted profile; validate final entropy state and reject metadata/extensions instead of dropping them",
-        "Constrain first migration profile and validate section length, sample range and entropy completion"
+        "Constrain first migration profile and validate section length, sample range and entropy completion",
+        "Adapt sample access to scoped caller storage; separate frame preparation from final pixel writes"
       ],
-      "destinationSHA256": "1fee83f8f4f62eba3cfe9956da69ac1b73dadb963684ea016dee07579d337294"
+      "destinationSHA256": "cdc7d520a55aadcd30247013164c7324427835df94ace36ec363c22574f22c83"
     },
     {
       "source": "Sources/JXLSwift/Codec/ParallelMap.swift",
@@ -477,6 +479,14 @@
       "verifiedLicenceRef": "v0.12.0",
       "verifiedLicenceBlob": "c66034b105f23d108a51b45c846d5b5c194cc229",
       "qualification": "Predecessor did not record its original table extraction revision; retain upstream credit and licence without asserting an invented extraction pin."
+    }
+  ],
+  "authoredSuccessorFiles": [
+    {
+      "destination": "Sources/SwiftJXLCore/Codec/ScalarSampleStorage.swift",
+      "destinationSHA256": "0b2a4aaa4c9f74c15b9c216f6749b003f4929b7ad194427e04d79b37783ab472",
+      "licence": "Apache-2.0",
+      "purpose": "Checked scoped 16-bit sample access to caller storage and encoder algorithm workspace"
     }
   ]
 }

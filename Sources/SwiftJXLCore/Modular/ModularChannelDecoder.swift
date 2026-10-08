@@ -50,7 +50,7 @@ package enum ModularChannelDecoderError: Error, Sendable {
 /// `wpHeader` parameterises the weighted predictor (predictor 6 +
 /// property 15); pass the parsed `WeightedPredictorHeader` from the
 /// frame's `GroupHeader`.
-package func decodeModularChannel(
+package func decodeModularChannel<Storage: ModularSampleBuffer>(
     width: Int, height: Int,
     staticChannel: Int32, groupId: Int32,
     tree: ModularTree,
@@ -58,7 +58,7 @@ package func decodeModularChannel(
     from r: inout BitReader,
     wpHeader: WeightedPredictorHeader = .default,
     sampleMaximum: Int32? = nil,
-    out: inout [Int32]
+    out: inout Storage
 ) throws {
     let (count, overflow) = width.multipliedReportingOverflow(by: height)
     guard width > 0, height > 0, !overflow, count == out.count, !tree.nodes.isEmpty else {
@@ -86,110 +86,108 @@ package func decodeModularChannel(
             treeUsesWP = true; break
         }
     }
-    try out.withUnsafeMutableBufferPointer { outBuf in
-        for y in 0..<height {
-            try Task.checkCancellation()
-            for x in 0..<width {
-                // libjxl edge fall-backs (per `lib/jxl/modular/encoding/
-                // context_predict.h::Predict`):
-                //   left:     x>0 ? pp[-1] : (y>0 ? pp[-onerow] : 0)
-                //   top:      y>0 ? pp[-onerow] : left
-                //   topleft:  (x && y) ? pp[-1-onerow] : left
-                //   topright: (x+1<w && y) ? pp[1-onerow] : top
-                //   leftleft: x>1 ? pp[-2] : left
-                //   toptop:   y>1 ? pp[-2*onerow] : top
-                let rowBase = y * width
-                let prevRow = (y - 1) * width
-                let prev2Row = (y - 2) * width
-                let left: Int32
-                if x > 0 {
-                    left = outBuf[rowBase + x - 1]
-                } else if y > 0 {
-                    left = outBuf[prevRow + x]
-                } else {
-                    left = 0
-                }
-                let top: Int32 = y > 0 ? outBuf[prevRow + x] : left
-                let topLeft: Int32 = (x > 0 && y > 0)
-                    ? outBuf[prevRow + x - 1] : left
-                let topRight: Int32 = (x + 1 < width && y > 0)
-                    ? outBuf[prevRow + x + 1] : top
-                let leftLeft: Int32 = x > 1 ? outBuf[rowBase + x - 2] : left
-                let topTop: Int32 = y > 1 ? outBuf[prev2Row + x] : top
-                // Property 15 (WP property) only needed when the tree
-                // branches on it OR uses predictor 6 — `treeUsesWP`
-                // captures both. Skipping `wp.propertyValue` for
-                // non-WP trees saves a per-pixel function call.
-                let wpProp: Int32 = treeUsesWP
-                    ? wp.propertyValue(x: x, y: y, xsize: width)
-                    : 0
-                let leaf: ModularTreeNode
-                if isSingleLeafTree {
-                    // Skip the property fill + tree walk entirely.
-                    leaf = singleLeaf
-                } else {
-                    fillModularProperties(
-                        into: &props,
-                        staticChannel: staticChannel, groupId: groupId,
-                        x: Int32(x), y: Int32(y),
-                        top: top, left: left,
-                        topLeft: topLeft, topRight: topRight,
-                        leftLeft: leftLeft, topTop: topTop,
-                        wpProperty: wpProp
-                    )
-                    do { leaf = try tree.walk(properties: props) }
-                    catch let e as ModularTreeError {
-                        throw ModularChannelDecoderError.treeWalk(e)
-                    }
-                }
-                let token: UInt32
-                do {
-                    token = try stream.readToken(
-                        context: leaf.leafId, from: &r
-                    )
-                } catch let e as TokenStreamReaderError {
-                    throw ModularChannelDecoderError.tokenAtPosition(
-                        x: x, y: y, channel: staticChannel, inner: e
-                    )
-                }
-                // Predictor neighbourhood — substitute available
-                // neighbours at edges (different rules from properties).
-                let nbh = Neighbourhood(
-                    w: left, n: top, nw: topLeft, ne: topRight,
-                    ww: leftLeft, nn: topTop
+    for y in 0..<height {
+        try Task.checkCancellation()
+        for x in 0..<width {
+            // libjxl edge fall-backs (per `lib/jxl/modular/encoding/
+            // context_predict.h::Predict`):
+            //   left:     x>0 ? pp[-1] : (y>0 ? pp[-onerow] : 0)
+            //   top:      y>0 ? pp[-onerow] : left
+            //   topleft:  (x && y) ? pp[-1-onerow] : left
+            //   topright: (x+1<w && y) ? pp[1-onerow] : top
+            //   leftleft: x>1 ? pp[-2] : left
+            //   toptop:   y>1 ? pp[-2*onerow] : top
+            let rowBase = y * width
+            let prevRow = (y - 1) * width
+            let prev2Row = (y - 2) * width
+            let left: Int32
+            if x > 0 {
+                left = out[rowBase + x - 1]
+            } else if y > 0 {
+                left = out[prevRow + x]
+            } else {
+                left = 0
+            }
+            let top: Int32 = y > 0 ? out[prevRow + x] : left
+            let topLeft: Int32 = (x > 0 && y > 0)
+                ? out[prevRow + x - 1] : left
+            let topRight: Int32 = (x + 1 < width && y > 0)
+                ? out[prevRow + x + 1] : top
+            let leftLeft: Int32 = x > 1 ? out[rowBase + x - 2] : left
+            let topTop: Int32 = y > 1 ? out[prev2Row + x] : top
+            // Property 15 (WP property) only needed when the tree
+            // branches on it OR uses predictor 6 — `treeUsesWP`
+            // captures both. Skipping `wp.propertyValue` for
+            // non-WP trees saves a per-pixel function call.
+            let wpProp: Int32 = treeUsesWP
+                ? wp.propertyValue(x: x, y: y, xsize: width)
+                : 0
+            let leaf: ModularTreeNode
+            if isSingleLeafTree {
+                // Skip the property fill + tree walk entirely.
+                leaf = singleLeaf
+            } else {
+                fillModularProperties(
+                    into: &props,
+                    staticChannel: staticChannel, groupId: groupId,
+                    x: Int32(x), y: Int32(y),
+                    top: top, left: left,
+                    topLeft: topLeft, topRight: topRight,
+                    leftLeft: leftLeft, topTop: topTop,
+                    wpProperty: wpProp
                 )
-                // Run WP only when the tree might consult it. For the
-                // common default-tree case (single leaf, predictor 5
-                // = Gradient) WP is dead work and skipping it gives a
-                // significant per-pixel speedup.
-                let wpPred: Int32
-                if treeUsesWP {
-                    wpPred = wp.predict(
-                        x: x, y: y, xsize: width,
-                        n: top, w: left,
-                        ne: topRight, nw: topLeft, nn: topTop
-                    )
-                } else {
-                    wpPred = 0
+                do { leaf = try tree.walk(properties: props) }
+                catch let e as ModularTreeError {
+                    throw ModularChannelDecoderError.treeWalk(e)
                 }
-                let predicted = applyLibjxlPredictor(
-                    raw: leaf.rawPredictor, neighbourhood: nbh,
-                    wpResult: wpPred
+            }
+            let token: UInt32
+            do {
+                token = try stream.readToken(
+                    context: leaf.leafId, from: &r
                 )
-                let signedRes = ZigZag.unpack(token)
-                let scaled = Int32(truncatingIfNeeded:
-                    Int64(signedRes) &* Int64(leaf.multiplier))
-                let value = Int32(truncatingIfNeeded:
-                    Int64(predicted)
-                    &+ Int64(leaf.predictorOffset)
-                    &+ Int64(scaled))
-                if let sampleMaximum, value < 0 || value > sampleMaximum {
-                    throw BitstreamError.malformedValue("Sample outside declared precision")
-                }
-                outBuf[rowBase + x] = value
-                if treeUsesWP {
-                    wp.update(actual: value, x: x, y: y, xsize: width)
-                }
+            } catch let e as TokenStreamReaderError {
+                throw ModularChannelDecoderError.tokenAtPosition(
+                    x: x, y: y, channel: staticChannel, inner: e
+                )
+            }
+            // Predictor neighbourhood — substitute available
+            // neighbours at edges (different rules from properties).
+            let nbh = Neighbourhood(
+                w: left, n: top, nw: topLeft, ne: topRight,
+                ww: leftLeft, nn: topTop
+            )
+            // Run WP only when the tree might consult it. For the
+            // common default-tree case (single leaf, predictor 5
+            // = Gradient) WP is dead work and skipping it gives a
+            // significant per-pixel speedup.
+            let wpPred: Int32
+            if treeUsesWP {
+                wpPred = wp.predict(
+                    x: x, y: y, xsize: width,
+                    n: top, w: left,
+                    ne: topRight, nw: topLeft, nn: topTop
+                )
+            } else {
+                wpPred = 0
+            }
+            let predicted = applyLibjxlPredictor(
+                raw: leaf.rawPredictor, neighbourhood: nbh,
+                wpResult: wpPred
+            )
+            let signedRes = ZigZag.unpack(token)
+            let scaled = Int32(truncatingIfNeeded:
+                Int64(signedRes) &* Int64(leaf.multiplier))
+            let value = Int32(truncatingIfNeeded:
+                Int64(predicted)
+                &+ Int64(leaf.predictorOffset)
+                &+ Int64(scaled))
+            if let sampleMaximum, value < 0 || value > sampleMaximum {
+                throw BitstreamError.malformedValue("Sample outside declared precision")
+            }
+            out[rowBase + x] = value
+            if treeUsesWP {
+                wp.update(actual: value, x: x, y: y, xsize: width)
             }
         }
     }

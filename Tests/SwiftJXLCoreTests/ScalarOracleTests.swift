@@ -39,7 +39,23 @@ struct ScalarOracleTests {
             #expect(actual == pgm)
             let oracleJXL = directory.appendingPathComponent(stem + "-oracle.jxl")
             try run(binaryDirectory + "/cjxl", [input.path, oracleJXL.path, "-d", "0", "-e", "1", "--container=0", "--quiet"], in: directory)
-            let decoded = try ScalarModularDecoder.decode(Data(contentsOf: oracleJXL))
+            let oracleData = try Data(contentsOf: oracleJXL)
+            let decoded = try ScalarModularDecoder.decode(oracleData)
+            let frame = try ScalarModularDecoder.prepare(oracleData)
+            let stride = width * 2 + 6
+            let layout = try ScalarPlaneLayout(width: width, height: height, rowBytes: stride,
+                                               littleEndian: false)
+            var shared = [UInt8](repeating: 0xa5, count: height * stride)
+            try shared.withUnsafeMutableBytes { raw in try frame.decode(into: raw, layout: layout) }
+            for y in 0..<height {
+                #expect(Array(shared[(y * stride)..<(y * stride + width * 2)])
+                        == Array(expected[(y * width * 2)..<((y + 1) * width * 2)]))
+                #expect(shared[(y * stride + width * 2)..<((y + 1) * stride)].allSatisfy { $0 == 0xa5 })
+            }
+            let sharedEncoded = try shared.withUnsafeBytes { raw in
+                try ScalarModularEncoder.encode(raw, layout: layout, bitsPerSample: bits)
+            }
+            #expect(try Data(contentsOf: native) == sharedEncoded)
             #expect(decoded.width == width && decoded.height == height)
             #expect(decoded.bitsPerSample == bits)
             #expect(decoded.pixels == samples)

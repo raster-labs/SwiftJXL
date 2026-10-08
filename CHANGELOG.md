@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased — internal caller-storage integration, 2026-10-08
+
+- Decode the restricted scalar profile directly into caller storage, preserving offsets, strides, byte order, padding and allocation identity.
+- Encode from a scoped immutable source borrow into the codec's Int32 working plane; verify exact codestream equivalence and concurrent reads.
+- Qualify 45 test declarations / 59 argument cases in debug, release and both sanitizers, including 25 independent oracle fixtures. Public resource accounting, measured allocations and public codec integration remain outstanding.
+
 ## Unreleased — internal scalar migration, 2026-10-08
 
 - Adapt the pinned predecessor’s native bitstream, container, entropy and Modular algorithms into a package-internal test target, with path-level hashes and retained notices.

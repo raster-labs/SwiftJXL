@@ -13,7 +13,7 @@ let package = Package(
     targets: [
         .target(name: "SwiftJXL"),
         .target(name: "SwiftJXLCore"),
-        .testTarget(name: "SwiftJXLCoreTests", dependencies: ["SwiftJXLCore"]),
+        .testTarget(name: "SwiftJXLCoreTests", dependencies: ["SwiftJXLCore", "SwiftJXL"]),
         .executableTarget(name: "SwiftJXLCLI", dependencies: ["SwiftJXL"]),
         .testTarget(name: "SwiftJXLTests", dependencies: ["SwiftJXL"])
     ],
