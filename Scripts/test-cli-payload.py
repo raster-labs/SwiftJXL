@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import signal
+import select
 import subprocess
 import time
 
@@ -36,21 +37,44 @@ def main():
         if expected: assert not result.stdout, (values, result.stdout)
         return result
     def stream_case(label, command, expected, cancel=False, **kwargs):
-        p = subprocess.Popen([str(binary), *map(str, command)], stdin=subprocess.PIPE,
+        # Wait for real CLI diagnostics emitted after signal-handler setup.
+        # Sanitizer startup is separate from the cancellation response budget.
+        arguments = [*map(str, command), *(['-vvvvv'] if cancel else [])]
+        p = subprocess.Popen([str(binary), *arguments], stdin=subprocess.PIPE,
                              stdout=kwargs.get('stdout', subprocess.PIPE), stderr=subprocess.PIPE)
         start = time.monotonic()
+        diagnostic_prefix = b''
+        ready_seconds = None
         try:
             if cancel:
-                time.sleep(0.2)
+                marker = (b'[5] swiftjxl-cli: bounded input processed; final report ready; no pixel file created\n'
+                          if 'stdout' in kwargs else
+                          b'[2] swiftjxl-cli: reporting ' + str(command[0]).encode() + b'\n')
+                startup_deadline = start + 10
+                while marker not in diagnostic_prefix:
+                    remaining = startup_deadline - time.monotonic()
+                    if remaining <= 0 or not select.select([p.stderr], [], [], remaining)[0]:
+                        raise AssertionError((label, 'CLI readiness timed out', diagnostic_prefix))
+                    chunk = os.read(p.stderr.fileno(), 4096)
+                    if not chunk:
+                        raise AssertionError((label, 'CLI exited before readiness', diagnostic_prefix))
+                    diagnostic_prefix += chunk
+                    assert len(diagnostic_prefix) <= 65536, (label, 'Unbounded startup diagnostics')
+                ready_seconds = time.monotonic() - start
+                start = time.monotonic()
                 p.send_signal(signal.SIGINT)
             p.wait(timeout=5)
             stdout, stderr = p.communicate()
+            stderr = diagnostic_prefix + stderr
         finally:
             if p.poll() is None:
                 p.kill(); p.wait()
         result = subprocess.CompletedProcess(command, p.returncode, stdout or b'', stderr)
         record(label, result, expected)
-        assert time.monotonic() - start < 5
+        elapsed = time.monotonic() - start
+        report['checks'][-1].update(readiness_seconds=ready_seconds, response_seconds=elapsed)
+        save()
+        assert elapsed < 5
     try:
         payload = (fixtures / 'scalar-12.jxl').read_bytes()
         private = out / 'private image λ with spaces.jxl'

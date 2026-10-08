@@ -1,0 +1,605 @@
+{
+  "status": "passed",
+  "binary_sha256": "9ad4f923365d84d54a78bac11329aeb044ea3557a37873cb7287e3460ae79437",
+  "script_sha256": "6c755a60f2f2a997f9a0be96538bae87f5032f6ad4165a68f1f8d74e295a7643",
+  "fixture_sha256": {
+    "damaged-payload.jxl": "324b60d56cd5ca5c9138b3432de2f44c3ee4032beefbdea8391b5f51658f7e0e",
+    "scalar-16.jxl": "0a363429be5cf2e2fe8aeca54e16d020f25f261f811ca9e838b9af3db7f6c013",
+    "scalar-12.jxl": "30ca5800da23bb7a861b5ed65130d7df6efb49ab11ac7ef3db486aa9dce8c312",
+    "mutation.json": "27ab74ac5ee397ef5b34787d5d0c098d78ca6cd1cae86ba35d9bff9e1a7e940a"
+  },
+  "checks": [
+    {
+      "check": "inspect --help",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "help inspect",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-fixtures/scalar-12.jxl --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-fixtures/scalar-16.jxl --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "inspect -i - --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --json -vvvvv",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting inspect\n[3] swiftjxl-cli: supported scalar profile; one worker; memory and deadline limits enforced\n[4] swiftjxl-cli: elapsed seconds before report publication: 0.004724250000435859\n[5] swiftjxl-cli: bounded input processed; final report ready; no pixel file created\n"
+    },
+    {
+      "check": "inspect -i -",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid or unsupported scalar JPEG XL payload.\n"
+    },
+    {
+      "check": "inspect -i -",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Section length does not match input\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --input-format jpeg-xl --backend scalar-cpu --copy-policy allow-copy --threads 2",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "inspect -i /nonexistent-private-input --input-format png",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Input format is unsupported.\n"
+    },
+    {
+      "check": "inspect -i /nonexistent-private-input --backend accelerated",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Accelerated backend is unavailable.\n"
+    },
+    {
+      "check": "inspect -i /nonexistent-private-input",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Cannot open input.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input must be a regular file or pipe.\n"
+    },
+    {
+      "check": "inspect -i - --threads 0",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Expected a positive integer command limit.\n"
+    },
+    {
+      "check": "inspect -i - --threads 9",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Worker limit must be 1..8.\n"
+    },
+    {
+      "check": "inspect -i - --max-memory -1",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "check": "inspect -i - --max-memory 340282366920938463463374607431768211456",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Expected a positive integer command limit.\n"
+    },
+    {
+      "check": "inspect -i - --timeout nan",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Timeout must be positive, finite and at most 31536000 seconds.\n"
+    },
+    {
+      "check": "inspect -i - --timeout inf",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Timeout must be positive, finite and at most 31536000 seconds.\n"
+    },
+    {
+      "check": "inspect -i - --timeout 0",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Timeout must be positive, finite and at most 31536000 seconds.\n"
+    },
+    {
+      "check": "inspect -i - --timeout 31536001",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Timeout must be positive, finite and at most 31536000 seconds.\n"
+    },
+    {
+      "check": "inspect -i - --backend unknown",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Unknown backend.\n"
+    },
+    {
+      "check": "inspect -i - --copy-policy unknown",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Unknown copy policy.\n"
+    },
+    {
+      "check": "inspect -i - --mode lossless",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Mode, max-error and output-format do not apply to this command.\n"
+    },
+    {
+      "check": "inspect -i - --max-error 1",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Mode, max-error and output-format do not apply to this command.\n"
+    },
+    {
+      "check": "inspect -i - --output-format json",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Mode, max-error and output-format do not apply to this command.\n"
+    },
+    {
+      "check": "inspect",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: --input is required.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --input /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Duplicate command option.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --overwrite",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: --overwrite requires an output file.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --max-memory 1",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Memory limit is too small for command I/O.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --timeout 1e-100",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Operation deadline exceeded.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --quiet --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/inspect report.json --json",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output already exists or is not a regular file.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/inspect report.json --json --overwrite",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "inspect -i - -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/inspect report.json --overwrite",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid or unsupported scalar JPEG XL payload.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --overwrite",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input and output refer to the same file.\n"
+    },
+    {
+      "check": "inspect: stdin aliases report destination",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input and output refer to the same file.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/inspect-hardlink --overwrite",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input and output refer to the same file.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/inspect-symlink --overwrite",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output already exists or is not a regular file.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/missing-directory/report",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Cannot create report transaction.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/inspect-new.json --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "inspect: stalled stdin deadline",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Operation deadline exceeded.\n",
+      "readiness_seconds": null,
+      "response_seconds": 2.277167333999998
+    },
+    {
+      "check": "inspect: Ctrl-C during stalled stdin",
+      "exit_code": 130,
+      "expected": 130,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting inspect\nswiftjxl-cli: cancelled.\n",
+      "readiness_seconds": 0.04646962500000029,
+      "response_seconds": 2.059859000000003
+    },
+    {
+      "check": "inspect: closed report pipe",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output I/O failure.\n"
+    },
+    {
+      "check": "inspect: blocked report deadline",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Operation deadline exceeded.\n",
+      "readiness_seconds": null,
+      "response_seconds": 2.244206583999997
+    },
+    {
+      "check": "inspect: Ctrl-C during blocked report",
+      "exit_code": 130,
+      "expected": 130,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting inspect\n[3] swiftjxl-cli: supported scalar profile; one worker; memory and deadline limits enforced\n[4] swiftjxl-cli: elapsed seconds before report publication: 0.00137479166733101\n[5] swiftjxl-cli: bounded input processed; final report ready; no pixel file created\nswiftjxl-cli: cancelled.\n",
+      "readiness_seconds": 0.04116029200000071,
+      "response_seconds": 2.0534830419999963
+    },
+    {
+      "check": "validate --help",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "help validate",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-fixtures/scalar-12.jxl --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-fixtures/scalar-16.jxl --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "validate -i - --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --json -vvvvv",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting validate\n[3] swiftjxl-cli: supported scalar profile; one worker; memory and deadline limits enforced\n[4] swiftjxl-cli: elapsed seconds before report publication: 0.004947291665303055\n[5] swiftjxl-cli: bounded input processed; final report ready; no pixel file created\n"
+    },
+    {
+      "check": "validate -i -",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid or unsupported scalar JPEG XL payload.\n"
+    },
+    {
+      "check": "validate -i -",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Section length does not match input\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --input-format jpeg-xl --backend scalar-cpu --copy-policy allow-copy --threads 2",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "validate -i /nonexistent-private-input --input-format png",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Input format is unsupported.\n"
+    },
+    {
+      "check": "validate -i /nonexistent-private-input --backend accelerated",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Accelerated backend is unavailable.\n"
+    },
+    {
+      "check": "validate -i /nonexistent-private-input",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Cannot open input.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input must be a regular file or pipe.\n"
+    },
+    {
+      "check": "validate -i - --threads 0",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Expected a positive integer command limit.\n"
+    },
+    {
+      "check": "validate -i - --threads 9",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Worker limit must be 1..8.\n"
+    },
+    {
+      "check": "validate -i - --max-memory -1",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "check": "validate -i - --max-memory 340282366920938463463374607431768211456",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Expected a positive integer command limit.\n"
+    },
+    {
+      "check": "validate -i - --timeout nan",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Timeout must be positive, finite and at most 31536000 seconds.\n"
+    },
+    {
+      "check": "validate -i - --timeout inf",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Timeout must be positive, finite and at most 31536000 seconds.\n"
+    },
+    {
+      "check": "validate -i - --timeout 0",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Timeout must be positive, finite and at most 31536000 seconds.\n"
+    },
+    {
+      "check": "validate -i - --timeout 31536001",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Timeout must be positive, finite and at most 31536000 seconds.\n"
+    },
+    {
+      "check": "validate -i - --backend unknown",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Unknown backend.\n"
+    },
+    {
+      "check": "validate -i - --copy-policy unknown",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Unknown copy policy.\n"
+    },
+    {
+      "check": "validate -i - --mode lossless",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Mode, max-error and output-format do not apply to this command.\n"
+    },
+    {
+      "check": "validate -i - --max-error 1",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Mode, max-error and output-format do not apply to this command.\n"
+    },
+    {
+      "check": "validate -i - --output-format json",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Mode, max-error and output-format do not apply to this command.\n"
+    },
+    {
+      "check": "validate",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: --input is required.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --input /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Duplicate command option.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --overwrite",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: --overwrite requires an output file.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --max-memory 1",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Memory limit is too small for command I/O.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --timeout 1e-100",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Operation deadline exceeded.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --quiet --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/validate report.json --json",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output already exists or is not a regular file.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/validate report.json --json --overwrite",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "validate -i - -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/validate report.json --overwrite",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid or unsupported scalar JPEG XL payload.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl --overwrite",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input and output refer to the same file.\n"
+    },
+    {
+      "check": "validate: stdin aliases report destination",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input and output refer to the same file.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/validate-hardlink --overwrite",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input and output refer to the same file.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/validate-symlink --overwrite",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output already exists or is not a regular file.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/missing-directory/report",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Cannot create report transaction.\n"
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/private image \u03bb with spaces.jxl -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/validate-new.json --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "validate: stalled stdin deadline",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Operation deadline exceeded.\n",
+      "readiness_seconds": null,
+      "response_seconds": 2.227467125000004
+    },
+    {
+      "check": "validate: Ctrl-C during stalled stdin",
+      "exit_code": 130,
+      "expected": 130,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting validate\nswiftjxl-cli: cancelled.\n",
+      "readiness_seconds": 0.03537137499998266,
+      "response_seconds": 2.0708067500000027
+    },
+    {
+      "check": "validate: closed report pipe",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output I/O failure.\n"
+    },
+    {
+      "check": "validate: blocked report deadline",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Operation deadline exceeded.\n",
+      "readiness_seconds": null,
+      "response_seconds": 2.2354291659999888
+    },
+    {
+      "check": "validate: Ctrl-C during blocked report",
+      "exit_code": 130,
+      "expected": 130,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting validate\n[3] swiftjxl-cli: supported scalar profile; one worker; memory and deadline limits enforced\n[4] swiftjxl-cli: elapsed seconds before report publication: 0.0019712499997694977\n[5] swiftjxl-cli: bounded input processed; final report ready; no pixel file created\nswiftjxl-cli: cancelled.\n",
+      "readiness_seconds": 0.03586895800000889,
+      "response_seconds": 2.058777083000024
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-fixtures/damaged-payload.jxl --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "validate -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-fixtures/damaged-payload.jxl",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid or unsupported scalar JPEG XL payload.\n"
+    },
+    {
+      "check": "inspect -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-readiness-tsan/oversized.jxl",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Input exceeds compressed or aggregate memory limits.\n"
+    },
+    {
+      "check": "validate -i -",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Input exceeds compressed or aggregate memory limits.\n"
+    }
+  ]
+}
