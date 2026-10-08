@@ -121,7 +121,7 @@ jobs:
         run: |
           set -euo pipefail
           apt-get update
-          apt-get install -y --no-install-recommends cmake ninja-build pkg-config libjpeg-dev libpng-dev
+          apt-get install -y --no-install-recommends python3 cmake ninja-build pkg-config libjpeg-dev libpng-dev
           git init "$RUNNER_TEMP/libjxl"
           git -C "$RUNNER_TEMP/libjxl" remote add origin https://github.com/libjxl/libjxl.git
           git -C "$RUNNER_TEMP/libjxl" fetch --depth 1 origin a7a9c787341cf703dede03c2009fa460cae5e5df
@@ -136,15 +136,16 @@ jobs:
             -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_ENABLE_OPENEXR=OFF \
             -DJPEGXL_ENABLE_SKCMS=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_BUNDLE_LIBPNG=OFF
           cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl --parallel 2
-          git -C "$RUNNER_TEMP/libjxl" submodule status > "$RUNNER_TEMP/oracle-source-pins.txt"
+          mkdir -p .build
+          git -C "$RUNNER_TEMP/libjxl" submodule status > .build/oracle-source-pins.txt
       - name: Require debug and release oracle tests
-        run: python3 Scripts/validate-oracle.py --tools "$RUNNER_TEMP/libjxl/build/tools" --output "$RUNNER_TEMP/oracle-evidence"
+        run: python3 Scripts/validate-oracle.py --tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/oracle-evidence
       - name: Preserve oracle evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: independent-oracle-evidence
           path: |
-            ${{ runner.temp }}/oracle-evidence
-            ${{ runner.temp }}/oracle-source-pins.txt
+            .build/oracle-evidence
+            .build/oracle-source-pins.txt
           if-no-files-found: warn
