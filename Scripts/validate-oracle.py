@@ -43,7 +43,7 @@ def main():
             report['tools'].append({'name': name, 'version': version,
                 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
         report['swift'] = run('swift-version', ['swift', '--version']).strip()
-        report['commit'] = run('source-commit', ['git', 'rev-parse', 'HEAD']).strip()
+        report['commit'] = run('source-commit', ['git', '-c', f'safe.directory={repo}', 'rev-parse', 'HEAD']).strip()
         sources = [repo / 'Package.swift'] + sorted((repo / 'Sources').rglob('*.swift')) + sorted((repo / 'Tests').rglob('*.swift'))
         report['source_sha256'] = {str(p.relative_to(repo)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
         manifest = (repo / 'Package.swift').read_text()
