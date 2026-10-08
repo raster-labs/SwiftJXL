@@ -46,7 +46,8 @@ package enum ScalarModularDecoder {
         guard hasCodestreamSignature(codestream) else { throw ScalarModularError.invalidInput("Missing JPEG XL codestream signature") }
         try policy.checkpoint()
         var r = BitReader(codestream, startingAt: 16, deadline: policy.deadline,
-                          maximumNestingDepth: policy.maximumNestingDepth)
+                          maximumNestingDepth: policy.maximumNestingDepth,
+                          maximumEntropyTableBytes: policy.maximumEntropyTableBytes)
         let size = try SizeHeader.read(from: &r)
         let width = Int(size.xsize), height = Int(size.ysize)
         let (pixelCount, overflow) = width.multipliedReportingOverflow(by: height)

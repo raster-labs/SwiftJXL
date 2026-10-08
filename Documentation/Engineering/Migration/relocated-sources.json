@@ -12,9 +12,10 @@
         "Package-only visibility",
         "Successor provenance header",
         "Remove payload/environment tracing; bounded nesting and cancellation/deadline checkpoints; safe extreme seek/skip arithmetic",
-        "Thread operation deadline and bounded nesting through decoding and container processing"
+        "Thread operation deadline and bounded nesting through decoding and container processing",
+        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate"
       ],
-      "destinationSHA256": "f6993827c9a4aa4861ed1c6472ebdfbbea5aa8a1b64e2c7957d199765ede7afd"
+      "destinationSHA256": "e427b6287c6b19c7062081c72bd8e3d21f0d2b020b6d3eefb70c8e591b6e94a0"
     },
     {
       "source": "Sources/JXLSwift/Bitstream/BitWriter.swift",
@@ -264,9 +265,10 @@
       "changes": [
         "Package-only visibility",
         "Successor provenance header",
-        "Remove tracing"
+        "Remove tracing",
+        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate"
       ],
-      "destinationSHA256": "36fb45d297e12358b4db727f6c783710275897796b0a633bb1a5a684f355f449"
+      "destinationSHA256": "84769994e1858d5c37a5dd50f8514dfb4f0834ba18bf0963af4a6fe4fa13df4a"
     },
     {
       "source": "Sources/JXLSwift/Entropy/PrefixCode.swift",
@@ -457,9 +459,10 @@
         "Adapt single-section Modular decode; explicit restricted profile; validate final entropy state and reject metadata/extensions instead of dropping them",
         "Constrain first migration profile and validate section length, sample range and entropy completion",
         "Adapt sample access to scoped caller storage; separate frame preparation from final pixel writes",
-        "Thread operation deadline and bounded nesting through decoding and container processing"
+        "Thread operation deadline and bounded nesting through decoding and container processing",
+        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate"
       ],
-      "destinationSHA256": "82da7471f377e94a9996fb328e66d42bfa94ae4d4f118deb791fa21daa13f6b2"
+      "destinationSHA256": "e58aefeaf2dbe2f77a004ec5fa2088bd9ce694d7556b6e58d6324cf3a2ec532e"
     },
     {
       "source": "Sources/JXLSwift/Codec/ParallelMap.swift",
@@ -493,9 +496,12 @@
     },
     {
       "destination": "Sources/SwiftJXLCore/Codec/ScalarDecodePolicy.swift",
-      "destinationSHA256": "1136716945d391d300abd21eea5676aec65cacbc86fd6f364ff909421cf74ed4",
+      "destinationSHA256": "5f2ef6170f30855885ef51df8b84500f98a0ebbdf819037984fbf3de98846c1f",
       "licence": "Apache-2.0",
-      "purpose": "Internal caller-controlled dimension, pixel, compressed-input, nesting and monotonic deadline limits; workspace integration remains outstanding"
+      "purpose": "Internal caller-controlled dimension, pixel, compressed-input, nesting and monotonic deadline limits; workspace integration remains outstanding",
+      "changes": [
+        "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate"
+      ]
     }
   ]
 }

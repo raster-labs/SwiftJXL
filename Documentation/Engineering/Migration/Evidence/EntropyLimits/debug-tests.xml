@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="32" failures="0" skipped="0" time="0.002379375">
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="readsIndependentGoldenBytesFromOddPhysicalAddress()" time="0.00060825"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="initialisesExternalSampleBytesAtOddAddressWithoutChangingPadding()" time="0.000530917"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="writesGoldenBytesForPackedAndPadded12And16BitSamples()" time="0.000594125"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="rejectsCoordinatesBeforeOffsetArithmetic()" time="0.000582708"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="refusesShortProviderBeforeLoadingSample()" time="0.00057225"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="outOfPrecisionWriteInvalidatesDestination()" time="0.000551958"/>
+        <testcase classname="SwiftJXLTests" name="cancellationInProviderFinalisationPreventsPublication(_:)" time="0.001322833"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="imageRetainsAdapterAndAllocationUntilLastReader()" time="0.000631042"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="copiedLeaseCannotOverlapWriters()" time="0.002043417"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="throwingBorrowReleasesAdmissionWithoutReplacingStorage()" time="0.000833292"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="leaseCannotBeForgedReusedOrBorrowedReentrantly()" time="0.000652958"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="abortMakesStorageUnreadableAndUnwritable()" time="0.000691167"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="concurrentReadersPreserveEveryLogicalSample()" time="0.001047917"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="rejectsOwnerCapacityShorterThanDescriptor()" time="0.000585"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="freshAllocationsHaveDistinctIdentitiesAndZeroPadding()" time="0.000543875"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="rejectsOverlappingPlanesAndIncompleteMapping()" time="0.000633458"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="rejectsArithmeticOverflowBeforeAllocation()" time="0.000617792"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="paddedOddDimensionsAndPrecision()" time="0.000643292"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="semanticMetadataMustAgreeWithComponents()" time="0.000659625"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="finalRowNeedsOnlyItsActualSampleBytes()" time="0.000573416"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="rejectsMisalignedOffsetsAndStrides()" time="0.000612792"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="deterministicLayoutMutation()" time="0.000901833"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="rejectsInvalidGeometryAndPrecision()" time="0.000631917"/>
+        <testcase classname="SwiftJXLTests.APITests" name="allCodecCallShapesRejectWithoutTouchingDestination()" time="0.000574959"/>
+        <testcase classname="SwiftJXLTests.APITests" name="admissionBoundariesAndMetadataAreChecked()" time="0.000619416"/>
+        <testcase classname="SwiftJXLTests.APITests" name="reportUnknownMeasurementsRemainUnknown()" time="0.000483792"/>
+        <testcase classname="SwiftJXLTests.APITests" name="capabilitiesDoNotAdvertiseSyntheticSamplesAsJPEGXL()" time="0.000539958"/>
+        <testcase classname="SwiftJXLTests.APITests" name="rejectsInputLimitRequiredBackendAndDestructiveMetadataPolicy()" time="0.000572334"/>
+        <testcase classname="SwiftJXLTests.APITests" name="validatesConfigurationAndFiniteResourceLimits()" time="0.000632792"/>
+        <testcase classname="SwiftJXLTests.APITests" name="safeWriterRejectsOutOfRangeSamplesAndInvalidatesDestination()" time="0.000529084"/>
+        <testcase classname="SwiftJXLTests.APITests" name="metadataSharesTheCallerAdmissionBudgetWithPixels()" time="0.000812208"/>
+        <testcase classname="SwiftJXLTests.APITests" name="cancellationRetainsItsStandardErrorAndInvalidatesPartialWrite()" time="0.0011045"/>
+    </testsuite>
+    <testsuite name="TestResults" errors="0" tests="20" failures="0" skipped="0" time="1.090184083">
+        <testcase classname="SwiftJXLCoreTests.ScalarMalformedTests" name="everyTruncatedPrefixAndTrailingBytesAreRejected()" time="0.041249792"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMalformedTests" name="encoderRejectsSamplesOutsideDeclaredPrecision()" time="0.041318042"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMalformedTests" name="deterministicSingleBitMutationsDoNotTrap()" time="0.107181334"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMalformedTests" name="containerRejectsOverflowAndAmbiguousCodestreams()" time="0.041285333"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMalformedTests" name="cancelledDecodeThrowsCancellationError()" time="0.066031"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMalformedTests" name="storageSlicesAndExtremeReaderOffsets()" time="0.041305458"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarLimitTests" name="tableReservationsAccumulateAndCheckOverflow()" time="0.041254042"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarLimitTests" name="admissionLimitsRespectExactBoundaries()" time="0.065129"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarLimitTests" name="invalidLimitsRejectAndLargeLimitsCannotExpandProfile()" time="0.064097083"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarLimitTests" name="nestingCeilingRejectsBeforeEnteringExtraLevel()" time="0.065087041"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarLimitTests" name="preparedFrameRetainsOperationDeadline()" time="1.0896295"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarLimitTests" name="expiredDeadlineRejectsBeforeParsing()" time="0.065062708"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarLimitTests" name="largeAlphabetIsRejectedBeforeItsTableIsParsed()" time="0.06512425"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarModularTests" name="exactPrecisionAndSamples(bits:)" time="0.041280125"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarModularTests" name="invalidDimensionsThrow()" time="0.041017917"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarOracleTests" name="independentBothDirections(bits:)" time="0.527143209"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:)" time="0.065340334"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="cancellationInvalidatesCallerDestination()" time="0.066238459"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="concurrentEncodersShareOneImmutableSource()" time="0.072447125"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="rejectsShortDestinationBeforeWriting()" time="0.041135667"/>
+    </testsuite>
+</testsuites>

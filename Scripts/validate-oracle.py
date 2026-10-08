@@ -48,8 +48,11 @@ def main():
         report['source_sha256'] = {str(p.relative_to(repo)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
         manifest = (repo / 'Package.swift').read_text()
         modules = set(re.findall(r'\.testTarget\s*\(\s*name:\s*"([^"]+)"', manifest))
+        xctest = any(re.search(r'\bimport\s+XCTest\b|:\s*XCTestCase\b', p.read_text())
+                     for p in (repo / 'Tests').rglob('*.swift'))
+        frameworks = ['--enable-swift-testing', '--enable-xctest' if xctest else '--disable-xctest']
         for config in ('debug', 'release'):
-            command = ['swift', 'test', '-c', config, '--jobs', '2']
+            command = ['swift', 'test', '-c', config, '--jobs', '2'] + frameworks
             listing = run(config + '-discovery', command + ['list'])
             names = [line for line in listing.splitlines() if line.split('.', 1)[0] in modules]
             if not names:

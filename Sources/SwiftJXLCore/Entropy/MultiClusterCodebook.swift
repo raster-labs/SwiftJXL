@@ -69,6 +69,8 @@ package struct MultiClusterCodebook: Sendable {
         header: EntropySectionHeader
     ) throws -> MultiClusterCodebook {
         let n = header.numHistograms
+        guard (1...256).contains(n) else { throw ScalarModularError.resourceLimit }
+        try r.reserveEntropyTableBytes(n * 128)
         if header.usePrefixCode {
             // 1. Per-cluster alphabet sizes.
             var alphabetSizes = [Int]()
@@ -87,6 +89,13 @@ package struct MultiClusterCodebook: Sendable {
             huffman.reserveCapacity(n)
             for c in 0..<n {
                 let alpha = alphabetSizes[c]
+                // Alphabet is at most 65536. Reserve space for lengths,
+                // codewords, symbol sorting/temporaries and the maximum 15-bit
+                // lookup table before parsing or constructing any such table.
+                // 40 bytes/symbol is conservative payload admission, not allocator
+                // telemetry; the fixed allowance includes small helper tables.
+                try r.reserveEntropyTableBytes(alpha * 40 + (1 << 15) * 8 + 4096)
+                try r.checkpoint()
                 let tbl: PrefixCodeTable
                 do {
                     tbl = try PrefixCodeFormat.decode(
@@ -109,6 +118,9 @@ package struct MultiClusterCodebook: Sendable {
         var alphabetSizes = [Int]()
         alphabetSizes.reserveCapacity(n)
         for _ in 0..<n {
+            // Bounded ANS histograms and their later alias-table construction.
+            try r.reserveEntropyTableBytes(64 * 1024)
+            try r.checkpoint()
             let cnt: [Int32]
             do {
                 cnt = try SpecANSDistribution.readHistogram(

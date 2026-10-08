@@ -66,4 +66,28 @@ struct ScalarLimitTests {
         #expect(policy.maximumDimension == 1024)
         #expect(policy.maximumNestingDepth == 32)
     }
+    @Test func largeAlphabetIsRejectedBeforeItsTableIsParsed() throws {
+        var writer = BitWriter()
+        try writer.writeVarLenUint16(65535)
+        let data = writer.finishToData()
+        var reader = BitReader(data, maximumEntropyTableBytes: 1024 * 1024)
+        let header = EntropySectionHeader(lz77: .disabled,
+            contextMap: .trivial(numContexts: 1), usePrefixCode: true,
+            logAlphaSize: 15, uintConfigs: [.raw4])
+        // No table body exists. Resource rejection must precede its parsing
+        // and allocation, rather than falling through to an EOF failure.
+        #expect(throws: ScalarModularError.self) {
+            try MultiClusterCodebook.read(from: &reader, header: header)
+        }
+    }
+
+    @Test func tableReservationsAccumulateAndCheckOverflow() throws {
+        var reader = BitReader(Data(), maximumEntropyTableBytes: 12)
+        try reader.reserveEntropyTableBytes(8)
+        try reader.reserveEntropyTableBytes(4)
+        #expect(throws: ScalarModularError.self) { try reader.reserveEntropyTableBytes(1) }
+        #expect(throws: ScalarModularError.self) { try reader.reserveEntropyTableBytes(Int.max) }
+        #expect(throws: ScalarModularError.self) { try reader.reserveEntropyTableBytes(-1) }
+    }
+
 }

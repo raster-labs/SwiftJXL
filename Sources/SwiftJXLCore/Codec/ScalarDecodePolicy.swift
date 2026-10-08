@@ -9,20 +9,23 @@ package struct ScalarDecodePolicy: Sendable {
     package let maximumPixels: Int
     package let maximumDimension: Int
     package let maximumNestingDepth: Int
+    package let maximumEntropyTableBytes: Int
     package let deadline: ContinuousClock.Instant
 
     package init(maximumCompressedBytes: Int = 4 * 1024 * 1024,
                  maximumPixels: Int = 1024 * 1024, maximumDimension: Int = 1024,
                  maximumNestingDepth: Int = 32,
+                 maximumEntropyTableBytes: Int = 32 * 1024 * 1024,
                  deadline: ContinuousClock.Instant = ContinuousClock.now.advanced(by: .seconds(10))) throws {
         guard maximumCompressedBytes > 0, maximumPixels > 0,
-              maximumDimension > 0, maximumNestingDepth > 0 else {
+              maximumDimension > 0, maximumNestingDepth > 0, maximumEntropyTableBytes > 0 else {
             throw ScalarModularError.invalidInput("Decode limits must be positive")
         }
         self.maximumCompressedBytes = min(maximumCompressedBytes, 4 * 1024 * 1024)
         self.maximumPixels = min(maximumPixels, 1024 * 1024)
         self.maximumDimension = min(maximumDimension, 1024)
         self.maximumNestingDepth = min(maximumNestingDepth, 32)
+        self.maximumEntropyTableBytes = min(maximumEntropyTableBytes, 32 * 1024 * 1024)
         self.deadline = deadline
     }
 

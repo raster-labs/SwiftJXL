@@ -57,6 +57,8 @@ package struct BitReader: Sendable {
     private var operations = 0
     private let deadline: ContinuousClock.Instant
     private let maximumNestingDepth: Int
+    private let maximumEntropyTableBytes: Int
+    private var reservedEntropyTableBytes = 0
 
     /// Bounded checks also cover zero-bit symbols and nested context maps.
     package mutating func checkpoint() throws {
@@ -75,12 +77,24 @@ package struct BitReader: Sendable {
     package mutating func leaveNesting() { nestingDepth -= 1 }
 
 
+    /// Conservative cumulative table admission; not measured total workspace.
+    /// Keeping charges after temporary tables expire also bounds nested codebooks.
+    package mutating func reserveEntropyTableBytes(_ bytes: Int) throws {
+        let (total, overflow) = reservedEntropyTableBytes.addingReportingOverflow(bytes)
+        guard bytes >= 0, !overflow, total <= maximumEntropyTableBytes else {
+            throw ScalarModularError.resourceLimit
+        }
+        reservedEntropyTableBytes = total
+    }
+
     /// Bit position in the stream (0 = LSB of first byte).
     package var position: Int { pos }
 
     package init(_ data: Data, startingAt position: Int = 0,
                  deadline: ContinuousClock.Instant = ContinuousClock.now.advanced(by: .seconds(10)),
-                 maximumNestingDepth: Int = 32) {
+                 maximumNestingDepth: Int = 32,
+                 maximumEntropyTableBytes: Int = 32 * 1024 * 1024) {
+        self.maximumEntropyTableBytes = max(0, maximumEntropyTableBytes)
         self.deadline = deadline
         self.maximumNestingDepth = max(0, min(maximumNestingDepth, 32))
         self.data = data

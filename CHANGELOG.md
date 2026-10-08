@@ -2,6 +2,7 @@
 
 ## Unreleased — decoder admission and CI interoperability, 2026-10-08
 
+- Bound cumulative entropy-table admission before large table construction.
 - Thread internal size, nesting and monotonic deadline limits through scalar decoding and container work, including prepared-frame lifetime checks.
 - Add a mandatory independent CI oracle gate built from pinned libjxl source; preserve executable and fixture hashes for debug/release comparisons.
 - Public workspace policy and codec availability remain unimplemented; broader migration is still in progress.

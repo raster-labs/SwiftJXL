@@ -4,7 +4,7 @@ This is an implementation checklist, not completed memory qualification. Public 
 
 ## Implemented controls
 
-`ScalarDecodePolicy` carries compressed-input, dimension, pixel-count, nesting and monotonic deadline limits. Smaller caller limits are respected; larger values cannot expand the initial qualified profile. Container iteration, entropy reads and prepared-frame writes check the operation deadline/cancellation. Source and destination geometry use checked arithmetic and bounded dimensions. Existing canonical storage validates capacity, leases, sealing and invalidation.
+`ScalarDecodePolicy` carries compressed-input, dimension, pixel-count, nesting and monotonic deadline limits. Smaller caller limits are respected; larger values cannot expand the initial qualified profile. Container iteration, entropy reads and prepared-frame writes check the operation deadline/cancellation. A cumulative entropy-table ceiling now admits codebooks before construction, including nested context maps; it is not total workspace accounting. Source and destination geometry use checked arithmetic and bounded dimensions. Existing canonical storage validates capacity, leases, sealing and invalidation.
 
 ## Allocation inventory requiring admission
 
