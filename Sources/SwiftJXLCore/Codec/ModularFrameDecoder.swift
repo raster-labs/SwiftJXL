@@ -14,6 +14,7 @@ package struct ModularDecodedFrame: Sendable {
     package let grayscale: Bool
     package let alphaAssociated: Bool?
     package let renderingIntent: RenderingIntent
+    package let transferFunction: TransferFunction
     package let image: ModularImage
 }
 
@@ -30,6 +31,7 @@ package enum ModularFrameDecoder {
         package let grayscale: Bool
         package let alphaAssociated: Bool?
         package let renderingIntent: RenderingIntent
+        package let transferFunction: TransferFunction
         fileprivate let codestream: Data, toc: TOC, start: Int
         fileprivate let budget: ScalarOperationBudget, maximumNestingDepth: Int
         fileprivate let globalReader: BitReader, global: Entropy?, selected: Entropy
@@ -103,7 +105,7 @@ package enum ModularFrameDecoder {
               !metadata.xybEncoded, gray || metadata.colorEncoding.colorSpace == .rgb,
               !metadata.colorEncoding.useICC, metadata.orientation == 1,
               metadata.preview == nil, metadata.animation == nil, metadata.intrinsicSize == nil,
-              metadata.colorEncoding.whitePoint == .d65, metadata.colorEncoding.transferFunction == .srgb,
+              metadata.colorEncoding.whitePoint == .d65, [TransferFunction.srgb, .bt709].contains(metadata.colorEncoding.transferFunction),
               gray || metadata.colorEncoding.primaries == .srgb,
               metadata.intensityTarget == 255, metadata.minNits == 0,
               !metadata.relativeToMaxDisplay, metadata.linearBelow == 0,
@@ -168,7 +170,7 @@ package enum ModularFrameDecoder {
         try budget.checkpoint()
         return Prepared(width: width, height: height, bitsPerSample: Int(metadata.bitDepth.bitsPerSample),
             grayscale: gray, alphaAssociated: metadata.extraChannels.first?.alphaAssociated,
-            renderingIntent: metadata.colorEncoding.renderingIntent, codestream: codestream, toc: toc, start: start,
+            renderingIntent: metadata.colorEncoding.renderingIntent, transferFunction: metadata.colorEncoding.transferFunction, codestream: codestream, toc: toc, start: start,
             budget: budget, maximumNestingDepth: maximumNestingDepth, globalReader: globalReader,
             global: global, selected: selected, header: header, geometry: image, transforms: transforms,
             groupDimension: groupDimension, groupsX: groupsX, groupCount: groupCount,
@@ -253,7 +255,7 @@ package enum ModularFrameDecoder {
         }
         return ModularDecodedFrame(width: width, height: height, bitsPerSample: plan.bitsPerSample,
             grayscale: plan.grayscale, alphaAssociated: plan.alphaAssociated,
-            renderingIntent: plan.renderingIntent, image: image)
+            renderingIntent: plan.renderingIntent, transferFunction: plan.transferFunction, image: image)
     }
 
     /// Modular pass brackets use downsample/lastPass, not the VarDCT

@@ -71,7 +71,7 @@ package enum ModularStorageEncoder {
     /// admitted signed algorithm planes are allocated; no packed source copy.
     package static func encode(_ bytes: UnsafeRawBufferPointer, layouts: [ModularChannelLayout],
                                bitsPerSample: Int, grayscale: Bool, alphaAssociated: Bool?,
-                               renderingIntent: RenderingIntent, budget: ScalarOperationBudget) throws -> Data {
+                               renderingIntent: RenderingIntent, transferFunction: TransferFunction = .srgb, budget: ScalarOperationBudget) throws -> Data {
         guard let first = layouts.first, (8...16).contains(bitsPerSample),
               layouts.count == (grayscale ? 1 : 3) + (alphaAssociated == nil ? 0 : 1),
               layouts.allSatisfy({ $0.width == first.width && $0.height == first.height &&
@@ -103,7 +103,7 @@ package enum ModularStorageEncoder {
             }
             let data = try SpecModularEncoder.encodeInteger(width: first.width, height: first.height,
                 bitsPerSample: bitsPerSample, grayscale: grayscale, alphaAssociated: alphaAssociated,
-                channels: channels, renderingIntent: renderingIntent)
+                channels: channels, renderingIntent: renderingIntent, transferFunction: transferFunction)
             try ScalarEncodingWork.checkpoint()
             return data
         }

@@ -1,0 +1,298 @@
+{
+  "generator": "Scripts/TestSupport/modular-transfer-fixtures.c",
+  "libjxl": "0.12.0 a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "licence": "Apache-2.0 synthetic fixture samples; independent test-only libjxl retains BSD-3-Clause.",
+  "expected": "(pixelIndex*71+(pixelIndex/width)*37+channel*113)&((1<<bits)-1), integer division; unsigned samples, straight alpha where present, D65, sRGB primaries, BT.709 transfer, relative intent.",
+  "fixtures": [
+    {
+      "file": "bt709-1-8.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 1,
+      "bits": 8,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-8.jxl",
+        "1",
+        "8"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 1,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "9a880e3c0faabe8ecdad9e8d67ff1d470c5e98a1af58d4ac5e033b20bb3ee68e"
+    },
+    {
+      "file": "bt709-1-12.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 1,
+      "bits": 12,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-12.jxl",
+        "1",
+        "12"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 1,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "515cd13e29fa566efbecf2b1bd5bd17626d15b5ed8339d7bf258a937be399541"
+    },
+    {
+      "file": "bt709-1-16.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 1,
+      "bits": 16,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-16.jxl",
+        "1",
+        "16"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 1,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "f436dd74d301bf662bdbbac4efc154e1de4761c155a28cd465c9dc0e50a45b2c"
+    },
+    {
+      "file": "bt709-2-8.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 2,
+      "bits": 8,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-8.jxl",
+        "2",
+        "8"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 1,
+        "alphaBits": 8,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "c08ce297313c7da3532c33ab9636c2ed66b6ef60b8b40bd16c705b4cd722e12a"
+    },
+    {
+      "file": "bt709-2-12.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 2,
+      "bits": 12,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-12.jxl",
+        "2",
+        "12"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 1,
+        "alphaBits": 12,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "1e74464f93af2def7cb0dbeb42d19bf46ce7ada44b9d5d6d019ed57d90e4f2b4"
+    },
+    {
+      "file": "bt709-2-16.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 2,
+      "bits": 16,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-16.jxl",
+        "2",
+        "16"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 1,
+        "alphaBits": 16,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "e2b57722b26401cca0b694e2dea101246e92f6a5fafd5d92e1a4f9dcec9adc5a"
+    },
+    {
+      "file": "bt709-3-8.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 3,
+      "bits": 8,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-8.jxl",
+        "3",
+        "8"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 3,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "d0ff2cca696915e25b409a0877258cc2b2cfca426e990689c4c7a850b065de9e"
+    },
+    {
+      "file": "bt709-3-12.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 3,
+      "bits": 12,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-12.jxl",
+        "3",
+        "12"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 3,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "df89c23a2fb69a573b43df39576e99e5d294c844df0e140c5ca7e363fd46f1ff"
+    },
+    {
+      "file": "bt709-3-16.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 3,
+      "bits": 16,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-16.jxl",
+        "3",
+        "16"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 3,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "82f267c696d5b22abf5af536eb5f8082cc4a6d908352cb8ea1e6d932fa11c2f6"
+    },
+    {
+      "file": "bt709-4-8.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 4,
+      "bits": 8,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-8.jxl",
+        "4",
+        "8"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 3,
+        "alphaBits": 8,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "6882b42c527c93393a49c87dceebd4b888677f23203f1ea3b1f5d7e3587b63b5"
+    },
+    {
+      "file": "bt709-4-12.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 4,
+      "bits": 12,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-12.jxl",
+        "4",
+        "12"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 3,
+        "alphaBits": 12,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "f18159914687a6654e586b255be6cad7f3aff2b087ca092ac1d7ad9ad9721108"
+    },
+    {
+      "file": "bt709-4-16.jxl",
+      "width": 513,
+      "height": 3,
+      "channels": 4,
+      "bits": 16,
+      "command": [
+        "../modular-preflight/modular-transfer-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-16.jxl",
+        "4",
+        "16"
+      ],
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 3,
+        "alphaBits": 16,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      },
+      "sha256": "47886176506f285eae52d7b2b79ff0c33311a914cc51d7da592f6bd13e4db21c"
+    }
+  ],
+  "generatorSHA256": "d7f205ef3ff65ea3bdf7eeee2ce23e618a966bc22b2d61b049a3af77dbd842f1",
+  "buildCommand": "xcrun clang -Wall -Wextra -Werror -I/opt/homebrew/include Scripts/TestSupport/modular-transfer-fixtures.c -L/opt/homebrew/lib -ljxl -o ../modular-preflight/modular-transfer-fixtures"
+}

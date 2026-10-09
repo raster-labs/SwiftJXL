@@ -92,7 +92,8 @@ public struct DecodedImage: Sendable {
 /// Lossless integer Modular JPEG XL encoding, 8–16 meaningful bits, greyscale
 /// or RGB with optional alpha. Reads explicit UInt8/UInt16 planar/interleaved
 /// layouts into admitted Int32 algorithm workspace. ICC is unsupported;
-/// rendering intent and alpha association are preserved without conversion.
+/// sRGB/BT.709 transfer, rendering intent and alpha association are preserved
+/// without conversion through the documented required metadata entries.
 public struct Encoder: Sendable {
     public let configuration: EncoderConfiguration
     public static let capabilities = CodecCapabilities.modular(encoding: true)
@@ -110,8 +111,9 @@ public struct Encoder: Sendable {
                 additionalBytes: image.descriptor.iccProfile?.count ?? 0)
             let layouts = try modularSourceLayouts(image.descriptor)
             let intent = try renderingIntent(image.metadata)
-            guard image.metadata.requiredKeys.subtracting([renderingIntentKey]).isEmpty,
-                  options.metadataPolicy == .discardAncillary || image.metadata.entries.keys.allSatisfy({ $0 == renderingIntentKey }) else {
+            let transfer = try transferFunction(image.metadata)
+            guard image.metadata.requiredKeys.subtracting([renderingIntentKey, transferFunctionKey]).isEmpty,
+                  options.metadataPolicy == .discardAncillary || image.metadata.entries.keys.allSatisfy({ $0 == renderingIntentKey || $0 == transferFunctionKey }) else {
                 throw CodecError(.unsupportedFeature, "The Modular encoder cannot preserve this metadata.")
             }
             guard image.storage.byteCount <= limits.maximumDecodedBytes else {
@@ -126,7 +128,7 @@ public struct Encoder: Sendable {
                 return try ModularStorageEncoder.encode(bytes, layouts: layouts,
                     bitsPerSample: image.descriptor.meaningfulBits, grayscale: image.descriptor.colour == .greyscale,
                     alphaAssociated: image.descriptor.alpha == .absent ? nil : image.descriptor.alpha == .premultiplied,
-                    renderingIntent: intent, budget: budget)
+                    renderingIntent: intent, transferFunction: transfer, budget: budget)
             }
             try budget.checkpoint()
             try progress(options.progress, .completed, completed: 1)
@@ -239,13 +241,31 @@ private func renderingIntent(_ metadata: ImageMetadata) throws -> RenderingInten
     }
     return intent
 }
-private func frameMetadata(_ frame: ModularFrameDecoder.Prepared, limits: ResourceLimits) throws -> ImageMetadata {
-    guard frame.renderingIntent != .relative else { return .empty }
-    guard renderingIntentKey.utf8.count + 1 <= limits.maximumMetadataBytes else {
-        throw CodecError(.resourceLimitExceeded, "Rendering-intent metadata exceeds limits.")
+// JPEG XL standard transfer-function enum: 1=BT.709, 13=sRGB (implicit).
+private let transferFunctionKey = "jpegXL.transferFunction"
+private func transferFunction(_ metadata: ImageMetadata) throws -> TransferFunction {
+    guard let value = metadata.entries[transferFunctionKey] else { return .srgb }
+    guard value.count == 1 else { throw CodecError(.invalidArgument, "Invalid JPEG XL transfer metadata.") }
+    switch value.first {
+    case 1: return .bt709
+    case 13: return .srgb
+    default: throw CodecError(.unsupportedFeature, "Unsupported JPEG XL transfer function.")
     }
-    return ImageMetadata(entries: [renderingIntentKey: Data([UInt8(frame.renderingIntent.rawValue)])],
-                         requiredKeys: [renderingIntentKey])
+}
+private func frameMetadata(_ frame: ModularFrameDecoder.Prepared, limits: ResourceLimits) throws -> ImageMetadata {
+    let byteCount = (frame.renderingIntent == .relative ? 0 : renderingIntentKey.utf8.count + 1)
+        + (frame.transferFunction == .bt709 ? transferFunctionKey.utf8.count + 1 : 0)
+    guard byteCount <= limits.maximumMetadataBytes else {
+        throw CodecError(.resourceLimitExceeded, "Colour metadata exceeds limits.")
+    }
+    var entries: [String: Data] = [:]
+    if frame.renderingIntent != .relative {
+        entries[renderingIntentKey] = Data([UInt8(frame.renderingIntent.rawValue)])
+    }
+    if frame.transferFunction == .bt709 { entries[transferFunctionKey] = Data([1]) }
+    let metadata = ImageMetadata(entries: entries, requiredKeys: Set(entries.keys))
+    _ = try metadata.validate(limits: limits)
+    return metadata
 }
 private func frameDescriptor(_ frame: ModularFrameDecoder.Prepared, limits: ResourceLimits) throws -> ImageDescriptor {
     // Preserve the original greyscale default and use UInt16 for all allocating

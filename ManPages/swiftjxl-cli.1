@@ -1,6 +1,6 @@
 .TH SWIFTJXL-CLI 1 "October 8, 2026" "2.1.0-dev.2" "Swift Image Compression Suite"
 .SH NAME
-swiftjxl-cli \- inspection, validation and capability reporting for SwiftJXL
+swiftjxl-cli \- image encoding, decoding, inspection and transcoding
 .SH SYNOPSIS
 .B swiftjxl-cli
 .RI [ options ] " command " [ options ]
@@ -18,7 +18,7 @@ coverage.
 .TP
 .B capabilities [\-\-json]
 Report executable support. Inspect and validate are available; encode and
-decode accept the explicit full-precision UInt16 NRRD profile.
+decode accept the explicit UInt16 NRRD and integer PNM/PAM profiles.
 JSON is one document on stdout.
 .TP
 .B help [command]
@@ -30,7 +30,8 @@ Show the development version.
 .B inspect, validate
 Require \-i/\-\-input PATH; a hyphen reads stdin. Inspect reports supported
 headers, without checking pixel integrity. Validate decodes the entire
-supported frame in memory and discards pixels. Supports unsigned greyscale/RGB Modular with optional alpha,
+supported frame in memory and discards pixels. Supports unsigned
+greyscale/RGB Modular with optional alpha,
 8 through 16 meaningful bits, dimensions up to 1024, one frame
 and compressed input at most 4 MiB. Unsupported profiles return 4.
 Optional \-o/\-\-output PATH writes a report; the default is stdout.
@@ -52,7 +53,8 @@ calls depend on operating-system scheduling. Ctrl+C returns 130.
 Mode, max-error and output-format do not apply to these two commands.
 .TP
 .B encode, decode
-Encode requires \-\-input-format nrrd; decode requires \-\-output-format nrrd.
+Encode requires \-\-input-format; decode requires \-\-output-format.
+Select nrrd, pnm or pnm-srgb explicitly.
 The compressed endpoint defaults to jxl; jpeg-xl is also accepted.
 Use \-i/\-\-input and optional \-o/\-\-output; a hyphen denotes a stream.
 Encode and decode dimensions are at most 1024.
@@ -143,3 +145,16 @@ Output defaults to stdout; --output selects an atomic final file transaction.
 --overwrite explicitly permits replacement. --json writes the final success
 report to stderr after binary publication. Limits and stream behaviour follow
 encode/decode; processing creates no intermediate image file.
+
+.SH COLOUR INTERCHANGE
+The pnm profile accepts one binary P5/P6/P7 image, greyscale or RGB,
+with optional straight alpha, 8 to 16 meaningful bits and MAXVAL=2^bits-1.
+Dimensions are at most 1024; input is at most 4 MiB. Multi-byte samples are
+big endian. Standard colour uses BT.709 transfer. The pnm-srgb variant
+requires explicit selection on both import and export; file syntax alone
+cannot distinguish it. No rescaling or colour conversion occurs.
+Premultiplied alpha, ICC, other interpretation metadata, unsupported tuple
+meanings and extra frames reject. Headers are bounded to 16 KiB, numeric
+tokens to 64 bytes, and PAM to 64 lines of at most 1024 bytes each.
+After the P5/P6 MAXVAL exactly one whitespace delimiter precedes the raster;
+any subsequent whitespace or hash byte is sample data.

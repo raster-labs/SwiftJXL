@@ -15,9 +15,10 @@ package enum SpecModularEncoder {
     /// storage. Fixed effort 3 keeps the admitted work envelope deterministic.
     package static func encodeInteger(width: Int, height: Int, bitsPerSample: Int,
                                       grayscale: Bool, alphaAssociated: Bool?,
-                                      channels: [[Int32]], renderingIntent: RenderingIntent) throws -> Data {
+                                      channels: [[Int32]], renderingIntent: RenderingIntent,
+                                      transferFunction: TransferFunction = .srgb) throws -> Data {
         try validateSize(width: width, height: height)
-        guard (8...16).contains(bitsPerSample),
+        guard [TransferFunction.srgb, .bt709].contains(transferFunction), (8...16).contains(bitsPerSample),
               channels.count == (grayscale ? 1 : 3) + (alphaAssociated == nil ? 0 : 1) else {
             throw ScalarModularError.unsupportedProfile
         }
@@ -28,7 +29,7 @@ package enum SpecModularEncoder {
         let built = try buildSections(width: width, height: height, channels: channels,
             sampleHi: (Int32(1) << bitsPerSample) - 1, effort: 3, applyRCT: !grayscale)
         return try writeOuterCodestream(width: width, height: height, bitsPerSample: UInt32(bitsPerSample),
-            colorSpace: grayscale ? .grayscale : .rgb, extraChannels: extras, built: built, renderingIntent: renderingIntent)
+            colorSpace: grayscale ? .grayscale : .rgb, extraChannels: extras, built: built, renderingIntent: renderingIntent, transferFunction: transferFunction)
     }
 
     /// Encode a constant-pixel grayscale image (all pixels equal
@@ -2870,14 +2871,15 @@ package enum SpecModularEncoder {
         bitsPerSample: UInt32,
         colorSpace: ColorSpaceID,
         extraChannels: [ExtraChannelInfo],
-        animation: AnimationHeader?, renderingIntent: RenderingIntent = .relative
+        animation: AnimationHeader?, renderingIntent: RenderingIntent = .relative,
+        transferFunction: TransferFunction = .srgb
     ) throws -> Data {
         let colorEncoding: ColorEncoding
         switch colorSpace {
         case .grayscale: colorEncoding = ColorEncoding(useICC: false, colorSpace: .grayscale,
-            whitePoint: .d65, primaries: nil, transferFunction: .srgb, renderingIntent: renderingIntent)
+            whitePoint: .d65, primaries: nil, transferFunction: transferFunction, renderingIntent: renderingIntent)
         case .rgb: colorEncoding = ColorEncoding(useICC: false, colorSpace: .rgb,
-            whitePoint: .d65, primaries: .srgb, transferFunction: .srgb, renderingIntent: renderingIntent)
+            whitePoint: .d65, primaries: .srgb, transferFunction: transferFunction, renderingIntent: renderingIntent)
         default:
             throw SpecModularEncoderError.unsupportedFrame(
                 "writeModularPrelude: unsupported colorSpace "
@@ -2987,13 +2989,14 @@ package enum SpecModularEncoder {
         bitsPerSample: UInt32,
         colorSpace: ColorSpaceID,
         extraChannels: [ExtraChannelInfo],
-        built: EncodedSections, renderingIntent: RenderingIntent = .relative
+        built: EncodedSections, renderingIntent: RenderingIntent = .relative,
+        transferFunction: TransferFunction = .srgb
     ) throws -> Data {
         var out = try writeModularPrelude(
             width: width, height: height,
             bitsPerSample: bitsPerSample,
             colorSpace: colorSpace,
-            extraChannels: extraChannels, animation: nil, renderingIntent: renderingIntent)
+            extraChannels: extraChannels, animation: nil, renderingIntent: renderingIntent, transferFunction: transferFunction)
         let chunk = try writeModularFrameChunk(
             extraChannels: extraChannels,
             built: built,

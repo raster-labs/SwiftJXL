@@ -1,0 +1,21 @@
+{
+  "status": "preflight only; no CLI colour adapter implemented",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "path": "Sources/JXLTool/PNM.swift",
+  "sourceSHA256": "79a19a9bbf2e65dda77e84d8a6365139251cc1f0a1019853d48530e9190023d0",
+  "standards": [
+    "https://netpbm.sourceforge.net/doc/ppm.html",
+    "https://netpbm.sourceforge.net/doc/pgm.html",
+    "https://netpbm.sourceforge.net/doc/pam.html"
+  ],
+  "reviewed": "2026-10-09",
+  "findings": [
+    "Predecessor CLI implements P5/P6/P7, not native PNG. Preserve this product direction; avoid adding a new PNG codec merely for migration.",
+    "Official PPM/PGM semantics use BT.709 transfer. sRGB PPM is a common variant requiring explicit identification. PAM RGB/GRAYSCALE inherit those sample meanings; *_ALPHA is straight foreground colour with linear opacity.",
+    "Predecessor silently labels RGB input sRGB and ignores most tuple-type distinctions. Do not copy these assumptions into default strict-preservation CLI.",
+    "Core TransferFunction already reads/writes bt709; public Modular profile currently permits srgb only. Supporting BT.709 metadata through public API is a sensible prerequisite for standard PNM/PAM, alongside an explicitly selected sRGB variant if needed.",
+    "Preserve 8\u201316 meaningful bits only when MAXVAL equals (1<<bits)-1; other maxvals need explicit representation rather than silent scaling. Reject excess samples/unsupported tuples, concatenated frames and premultiplied export.",
+    "Bound header length/tokens/counts and checked raster arithmetic; preserve first raster whitespace/hash byte after exact delimiter, including malicious/truncated cases. Source and output I/O remain subject to current atomic publication/resources.",
+    "Need pin source specs in work before implementation, establish predecessor defects with minimal fixtures, add independent semantic oracle and parser/CLI tests, help/manual/capability/provenance updates. Existing NRRD semantics remain separate."
+  ]
+}

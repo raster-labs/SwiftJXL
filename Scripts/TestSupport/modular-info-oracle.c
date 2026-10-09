@@ -29,9 +29,9 @@ int main(int argc, char **argv) {
     if (JxlDecoderProcessInput(decoder) != JXL_DEC_COLOR_ENCODING) goto done;
     JxlColorEncoding colour;
     if (JxlDecoderGetColorAsEncodedProfile(decoder, JXL_COLOR_PROFILE_TARGET_ORIGINAL, &colour) != JXL_DEC_SUCCESS) goto done;
-    printf("{\"width\":%u,\"height\":%u,\"bits\":%u,\"colourChannels\":%u,\"alphaBits\":%u,\"premultiplied\":%d,\"renderingIntent\":%d}\n",
+    printf("{\"width\":%u,\"height\":%u,\"bits\":%u,\"colourChannels\":%u,\"alphaBits\":%u,\"premultiplied\":%d,\"renderingIntent\":%d,\"transferFunction\":%d}\n",
         info.xsize, info.ysize, info.bits_per_sample, info.num_color_channels,
-        info.alpha_bits, info.alpha_premultiplied, colour.rendering_intent);
+        info.alpha_bits, info.alpha_premultiplied, colour.rendering_intent, colour.transfer_function);
     result = 0;
 done:
     JxlDecoderDestroy(decoder);

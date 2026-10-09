@@ -1,6 +1,6 @@
 # swiftjxl-cli: help, diagnostics and installation
 
-Version **2.1.0-dev.2**; Swift 6.2 minimum with Swift 6.4 qualified / Swift 6, Apple OS minimum **26.0**. The CLI targets macOS and Linux; Linux execution remains a qualification requirement. No external parser package or sibling codec is required. Current commands provide help, version, executable capabilities, supported-header inspection and full supported-frame validation. Encode/decode support the explicit full-precision UInt16 NRRD profile below. Native transcode now supports the bounded JPEG reconstruction profile below.
+Version **2.1.0-dev.2**; Swift 6.2 minimum with Swift 6.4 qualified / Swift 6, Apple OS minimum **26.0**. The CLI targets macOS and Linux; Linux execution remains a qualification requirement. No external parser package or sibling codec is required. Current commands provide help, version, executable capabilities, supported-header inspection and full supported-frame validation. Encode/decode support the explicit UInt16 NRRD and integer colour PNM/PAM profiles below. Native transcode now supports the bounded JPEG reconstruction profile below.
 
 ```sh
 swift run swiftjxl-cli --help
@@ -30,7 +30,7 @@ Input is a regular file or pipe; `-` means stdin. Output defaults to stdout and 
 
 `--input-format` accepts `jxl` or `jpeg-xl`. Backend is `automatic` or `scalar-cpu`; `accelerated` rejects. Copy policy is `require-sharing` by default or `allow-copy`; both use the existing public memory contract. `--threads` is a 1–8 worker ceiling; this scalar profile uses one worker. `--max-memory` is a positive aggregate byte ceiling (default 1073741824), reserving compressed-buffer growth, 256 KiB command overhead and the codec's admitted storage/workspace; it is not a process RSS limit. `--timeout` is positive finite seconds, at most 31536000 (default 120), covering cooperative input, codec and output checkpoints. Pipe readiness is checked every 25 ms; ordinary filesystem calls remain subject to operating-system scheduling. Ctrl+C returns 130. `--mode`, `--max-error` and `--output-format` do not apply.
 
-CLI capabilities describe executable commands: `canInspect` and `canValidate` are true; `canEncode` and `canDecode` are true for the 16-bit NRRD profile only. Library capabilities are separate.
+CLI capabilities describe executable commands: `canInspect` and `canValidate` are true; `canEncode` and `canDecode` are true for the NRRD and PNM/PAM profiles. Library capabilities are separate.
 
 ## Encode and decode through NRRD
 
@@ -95,3 +95,20 @@ Both formats are explicit (`jxl` and `jpeg-xl` are aliases). Lossless mode prese
 The qualified profile is 8-bit baseline/extended/progressive Huffman JPEG, greyscale or three components, common 444/422/420/440 sampling, and a single-pass DCT8 JPEG XL reconstruction frame. RGB/greyscale ICC profiles are preserved; other unsupported representations reject. This is not arbitrary JPEG XL-to-JPEG conversion. Standard APP/COM bytes, Exif/XMP, marker ordering, restart/padding/fill and tail details are preserved where the profile admits them. Independent compressed Exif/XMP boxes are resolved using bounded native Brotli.
 
 `--mode lossless` is the default. Lossy/near-lossless, `--max-error`, quality and source-file fallback options do not select a substitute operation. Streams, limits, atomic final-file publication and error statuses follow the existing commands. `--json` writes the final `original-bitstream` fidelity report to stderr after successful binary publication. Capability reports expose `canTranscode`, `maximumTranscodeDimension` and explicit profile limits. Local integration evidence is in the native JPEG migration record; final hosted qualification and broader migration remain pending.
+
+## Colour and alpha through PGM/PPM/PAM
+
+Select `--input-format pnm` or `--output-format pnm` for standard binary P5 (greyscale), P6 (RGB), or P7 (PAM with an explicit GRAYSCALE, GRAYSCALE_ALPHA, RGB or RGB_ALPHA tuple type). The standard interpretation uses D65, BT.709 transfer and RGB primaries shared with sRGB. Alpha is straight, with linear opacity. Samples are never rescaled or colour-converted. See the official [PPM](https://netpbm.sourceforge.net/doc/ppm.html), [PGM](https://netpbm.sourceforge.net/doc/pgm.html) and [PAM](https://netpbm.sourceforge.net/doc/pam.html) specifications.
+
+Use `pnm-srgb` on both import and export only when explicitly working with the common sRGB variant. The file syntax does not distinguish this variant: preserve that external interpretation when handing the file to another tool. Selecting the wrong output interpretation fails; it never silently converts samples. Premultiplied alpha, ICC, non-default rendering intent and other unrepresentable metadata also fail before output publication.
+
+```sh
+swiftjxl-cli encode -i colour.ppm --input-format pnm -o colour.jxl
+swiftjxl-cli decode -i colour.jxl --output-format pnm -o restored.ppm
+swiftjxl-cli encode -i srgb.pam --input-format pnm-srgb -o srgb.jxl
+swiftjxl-cli decode -i srgb.jxl --output-format pnm-srgb -o restored.pam
+```
+
+One image is accepted, with dimensions at most 1024, 8–16 meaningful bits and MAXVAL exactly `2^bits-1`. Multi-byte samples are big endian. Other maxima, unknown tuple meanings, concatenated frames, trailing or truncated payloads and out-of-range samples reject. The P5/P6 raster follows exactly one whitespace delimiter after MAXVAL; whitespace or `#` in the raster is sample data. Header limits are 16 KiB, 64-byte numeric tokens, and for PAM 64 lines/1024 bytes per line. All existing command input, memory, deadline, pipe and atomic-output rules apply.
+
+The encoder retains a sample view of the input Data. Output serialisation uses one row of at most 8192 bytes, included in the CLI overhead reservation; no second full image is created. Library BT.709 metadata is required semantics and survives `discardAncillary`. This profile extends CLI coverage; broader migration and release qualification remain open.

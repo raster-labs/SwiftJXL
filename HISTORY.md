@@ -1,5 +1,11 @@
 # History and provenance — SwiftJXL
 
+## BT.709 colour semantics and PNM CLI — 9 October 2026
+
+Added required transfer metadata and a bounded P5/P6/P7 adapter, preserving standard BT.709 or explicitly selected sRGB samples without conversion. The predecessor probe demonstrates silent sRGB labelling, ignored unsupported PAM tuples and rejected valid comments; the new regression suite covers these differences. Input retains its Data owner, and export uses one bounded row rather than an additional full image.
+
+The full local debug library suite passed 177 declarations / 655 cases. Affected library tests passed 52 declarations / 191 cases in each sanitizer. Colour CLI and independent libjxl checks passed 239 checks in each of debug, release, ASan and TSan; foundation, NRRD and native JPEG regressions passed 96, 119 and 141 checks respectively. The release build required an authorised retry after sandboxed debug-symbol generation failed. The initial oracle-path and manual-lint failures, corrected results, hashes and commands are recorded in [validation evidence](Documentation/Engineering/Migration/Evidence/ModularColour/PNM/validation.json). See [profile and provenance](Documentation/Engineering/Migration/PNM_PROFILE.md). Hosted CI, performance regressions, broader feature/platform coverage and release gates remain open.
+
 ## Decoder checkpoint overhead — 9 October 2026
 
 Profiling found opaque clock-value setup on the ordinary bit/token checkpoint path. Isolating cancellation and clock comparison in a non-inlined helper preserves the original check frequency while reducing allocating-decode median time by 9–13% on four larger local cases. All five benchmark cases retain exact samples and identical encoded bytes. The full local debug, ASan and TSan suites each pass 175 declarations / 642 cases. Experiments in neighbour inlining and coordinate addressing were reverted after insufficient benefit or a measured colour regression; only the checkpoint change remains. [Raw timings and validation](Documentation/Engineering/Migration/Evidence/ModularColour/Performance/reader-validation.json) record the comparison against the previous successor build. Remaining predecessor performance, wider corpus and release gates are still open.

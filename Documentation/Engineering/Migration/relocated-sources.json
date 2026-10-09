@@ -1091,6 +1091,18 @@
         "Use pinned libjxl downsample brackets and empty rANS state semantics; retain expanded inverse transforms",
         "Admit workspace/metadata before allocation, validate restored dimensions/precision, keep public capabilities unchanged pending owning-storage integration"
       ]
+    },
+    {
+      "source": "Sources/JXLTool/PNM.swift",
+      "sourceSHA256": "79a19a9bbf2e65dda77e84d8a6365139251cc1f0a1019853d48530e9190023d0",
+      "destination": "Sources/SwiftJXLCLI/PNM.swift",
+      "destinationSHA256": "7de27c8066fe2522befb8ba1845673360d534b81a1435721deec41e88174b3eb",
+      "licence": "Apache-2.0",
+      "changes": [
+        "New bounded adapter replacing predecessor parser/serialiser; same P5/P6/P7 product direction, not a source copy.",
+        "Explicit BT.709 versus sRGB transfer, validated PAM tuples and precision; retained owning storage with bounded row serialisation."
+      ],
+      "evidence": "Documentation/Engineering/Migration/PNM_PROFILE.md"
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. The package-internal SwiftJXLCore target now supports the public SwiftJXL scalar greyscale encoder, decoder and inspector; it is not a separately exposed library product. Public profile limits and operation admission are documented in MIGRATION.md and RESOURCE_ADMISSION.md.",
