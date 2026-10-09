@@ -1,0 +1,47 @@
+Building for debugging...
+[2 / 21] SwiftJXLCore
+[4 / 23] SwiftJXLCore
+[6 / 26] SwiftJXLCore
+[8 / 26] SwiftJXLCore
+[14 / 32] SwiftJXL
+[21 / 32] SwiftJXLTests-product
+[29 / 41] SwiftJXLTests-product
+[30 / 41] SwiftJXLTests-product
+[33 / 41] SwiftJXLCoreTests-product
+Build complete! (2.55 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite JBRDTests started.
+◇ Test limitsAndCancellationBeforePublication() started.
+◇ Test independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test invalidWriterShapesAndEventLimitsThrow() started.
+◇ Test externalMetadataMustFitExactly() started.
+◇ Test slicedInputAndConcurrentReads() started.
+◇ Test metadataIdentityLengthAndSurplusAreRejected() started.
+◇ Test case passing 1 argument name → "gray" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "422" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test headerTruncationsAndMutationsDoNotTrap() started.
+◇ Test case passing 1 argument name → "420" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "444" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "440" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "restart" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "zero-padding" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to independentBundlesMatchOriginalJPEGFields(_:) started.
+✔ Test limitsAndCancellationBeforePublication() passed after 0.009 seconds.
+✔ Test externalMetadataMustFitExactly() passed after 0.009 seconds.
+✔ Test metadataIdentityLengthAndSurplusAreRejected() passed after 0.009 seconds.
+✔ Test slicedInputAndConcurrentReads() passed after 0.010 seconds.
+✔ Test independentBundlesMatchOriginalJPEGFields(_:) with 16 test cases passed after 0.011 seconds.
+✔ Test invalidWriterShapesAndEventLimitsThrow() passed after 0.011 seconds.
+✔ Test headerTruncationsAndMutationsDoNotTrap() passed after 0.064 seconds.
+✔ Suite JBRDTests passed after 0.065 seconds.
+✔ Test run with 7 tests in 1 suite passed after 0.065 seconds.

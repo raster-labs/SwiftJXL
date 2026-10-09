@@ -42,6 +42,8 @@ struct JBRDBudget {
     private(set) var payload = 0
     private var events = 0
 
+    init(policy: JBRDPolicy) { self.policy = policy }
+
     mutating func reserve(_ count: Int, stride: Int) throws {
         try policy.checkpoint()
         guard count >= 0, stride > 0, count <= (policy.maximumMemoryBytes - reserved) / stride else {
