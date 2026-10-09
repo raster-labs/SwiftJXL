@@ -1,0 +1,283 @@
+{
+  "baseline_commit": "5f67bfb5416463081f073c726f527b5bc27981e4",
+  "source_state": "Local forward-frame implementation, not yet public or independently reversible without the reference decoder",
+  "predecessor_revision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "source_sha256": {
+    "Sources/SwiftJXLCore/JPEG/JPEGBridgeCoefficients.swift": "475399e7168dff3cc0b3aa975e39fb91803c93a801d3d59534788819ff51d195",
+    "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+    "Tests/SwiftJXLCoreTests/JPEGBridgeCoefficientTests.swift": "a7db064d7a9e656da6d2fd0dc1fbe636df38a9b64dfdba980f9d839c7c0c8125",
+    "Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift": "3402bf1fd51177c99446a471a00ff65a6ceae6d662314e3aef2ef9228db2a188"
+  },
+  "commands": [
+    {
+      "configuration": "debug",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEGBridge"
+      ],
+      "exit": 0,
+      "seconds": 2.426165208
+    },
+    {
+      "configuration": "asan",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEGBridge",
+        "--scratch-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-validation-qualification/build/asan",
+        "--sanitize",
+        "address"
+      ],
+      "exit": 0,
+      "seconds": 11.628286791999999
+    },
+    {
+      "configuration": "tsan",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEGBridge",
+        "--scratch-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-validation-qualification/build/tsan",
+        "--sanitize",
+        "thread"
+      ],
+      "exit": 0,
+      "seconds": 20.318040666999998
+    }
+  ],
+  "runs": [
+    {
+      "configuration": "debug",
+      "declarations": 11,
+      "cases": 58,
+      "failures": 0,
+      "skips": 0,
+      "independent_exact_restorations": 19,
+      "log_sha256": "9be1b1f0523d5287703538ed30d29a6db82802320c42a80d44f133ef70c780b5"
+    },
+    {
+      "configuration": "asan",
+      "declarations": 11,
+      "cases": 58,
+      "failures": 0,
+      "skips": 0,
+      "independent_exact_restorations": 19,
+      "log_sha256": "534450e27fb4589fa268dd63311527f5f4cacb434c526225b791ef20ad4471a7"
+    },
+    {
+      "configuration": "tsan",
+      "declarations": 11,
+      "cases": 58,
+      "failures": 0,
+      "skips": 0,
+      "independent_exact_restorations": 19,
+      "log_sha256": "bc65d9c42d36fbb80e268c0321945a2224f8e18e716cfa799c20dd65d3918417"
+    }
+  ],
+  "proof_scope": "Entire JXL codestream and JBRD produced natively; djxl alone restores original JPEG bytes. Container assembly is test-only until the public operation is integrated.",
+  "profiles": [
+    "8-bit DCT JPEG grey/444/422/420/440",
+    "Sequential and progressive scans, restart and metadata variants",
+    "Multiple 256-pixel AC groups within one DC group (at most 2048 pixels per side)",
+    "16-bit quantisation table entries in SOF1 JPEG"
+  ],
+  "memory": "Immutable coefficient buffers shared by scoped identity checks; no pixels, source JPEG, copied frame-wide DC/AC planes or frame-wide token arrays in the adapter/writer. Two predictor rows and one 64-value scratch block. Conservative admission includes six output bounds and 4 MiB fixed scratch/tables. Caller must additionally admit JPEG source, decoded events and reconstruction metadata. Not peak-RSS evidence.",
+  "corrections": [
+    "Explicit Swift 6.2 initializer retained from baseline",
+    "Grey implicit chroma remains zero even for no-colour-transform DC adjustment, matching pinned libjxl",
+    "Quantisation sub-image gradient retains full 16-bit values",
+    "Rebuilt stale generated Swift Build test bundle after adding the resource folder; no fixture lookup fallback"
+  ],
+  "limitations": [
+    "Native reverse frame decoding and public Transcoder/CLI integration unfinished",
+    "No claim of independent .none/RGB frame qualification yet",
+    "Prefix entropy with one cluster; predecessor ANS/context clustering optimisation not yet adapted",
+    "One DC group, matching the predecessor forward size limit",
+    "Hosted validation not yet run for these working changes; baseline CI is separate",
+    "Wider platform, security, allocation and release gates remain open"
+  ],
+  "benchmark": {
+    "fixtures": [
+      {
+        "codestreamBytes": 605,
+        "fixture": "gray",
+        "iterationsPerTrial": 40,
+        "medianMicroseconds": 537.6104250000001,
+        "samplesMicroseconds": [
+          922.247925,
+          631.439575,
+          549.911475,
+          519.6072750000001,
+          527.352075,
+          526.24585,
+          537.6104250000001
+        ],
+        "sourceJPEGBytes": 683,
+        "warmups": 3
+      },
+      {
+        "codestreamBytes": 556,
+        "fixture": "progressive-edge",
+        "iterationsPerTrial": 40,
+        "medianMicroseconds": 507.3302,
+        "samplesMicroseconds": [
+          530.780225,
+          490.0771,
+          492.44792500000005,
+          529.964575,
+          507.3302,
+          491.70415,
+          516.070825
+        ],
+        "sourceJPEGBytes": 834,
+        "warmups": 3
+      },
+      {
+        "codestreamBytes": 779,
+        "fixture": "quant16",
+        "iterationsPerTrial": 40,
+        "medianMicroseconds": 521.026025,
+        "samplesMicroseconds": [
+          494.071875,
+          550.4989499999999,
+          530.359375,
+          527.5677,
+          494.23855000000003,
+          499.35625,
+          521.026025
+        ],
+        "sourceJPEGBytes": 747,
+        "warmups": 3
+      },
+      {
+        "codestreamBytes": 115606,
+        "fixture": "multigroup-420",
+        "iterationsPerTrial": 3,
+        "medianMicroseconds": 18177.25,
+        "samplesMicroseconds": [
+          18736.666666666668,
+          18177.25,
+          18262.833333333332,
+          17862.236,
+          18475.889,
+          17695.833333333332,
+          17097.069333333333
+        ],
+        "sourceJPEGBytes": 89074,
+        "warmups": 3
+      }
+    ],
+    "scope": "Native coefficient-to-JXL frame writer with byte comparison; JPEG decoding and reconstruction metadata excluded",
+    "trials": 7
+  },
+  "benchmark_source_sha256": {
+    "Sources/SwiftJXLCore/Bitstream/BitReader.swift": "a139d466107cbe3afcc652b2d1393179cf8660d4cfc1820543ddcf5f07b8d2b2",
+    "Sources/SwiftJXLCore/Bitstream/BitWriter.swift": "ff607a06eb6f9bec20df6c5f75b4e7595f64b06cfdc352fa36e28c865d4b4ba6",
+    "Sources/SwiftJXLCore/Bitstream/SpecIntegers.swift": "13297330d46bd12e4e562be1b75d873e8c1cf6f730443723bc6fdb58ff22c65b",
+    "Sources/SwiftJXLCore/Bitstream/VarLenUint.swift": "7108fbd46962aa4c908273f41c8a7ea80c9ccd3a083aee8fe409969125960fd7",
+    "Sources/SwiftJXLCore/Brotli/BrotliContext.swift": "50771b1730fdb6e1da0b9f6e76cf32716ce494a2cdd2f5396deca809d55d7a83",
+    "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+    "Sources/SwiftJXLCore/Brotli/BrotliEncoder.swift": "b91fbb1b12834baa7a8a9e7ec7dfd791b0d102f54351aeb175c717f7d0b11a65",
+    "Sources/SwiftJXLCore/Brotli/BrotliMetaBlock.swift": "12ab12a63d852e8bbb0631ff702af8b27bed4d01d59efb26da24a876c1cdc56a",
+    "Sources/SwiftJXLCore/Brotli/BrotliPolicy.swift": "66a5c77678638647dce9b8b102d7150c15229eff1ef59c1e3ad8094e7fc16c5b",
+    "Sources/SwiftJXLCore/Brotli/BrotliPrefixCode.swift": "78ecd93b91a04f550b563e062641627abaeda8514c27c7960b8c3574dfd372d0",
+    "Sources/SwiftJXLCore/Brotli/BrotliReader.swift": "8e89d7e2da1aa36d9a06b46edfb4b8845b5d96d4e70c34677351ad96064759ce",
+    "Sources/SwiftJXLCore/Brotli/BrotliStaticDictionary.swift": "b671966ebf2defc427dc276e8d19793e1ab09e7a9132bbddf68405c0c58db6c7",
+    "Sources/SwiftJXLCore/Codec/ScalarDecodePolicy.swift": "1a9cbd91a40814f87515de3315a880bbc5adb0d196d0bb7ee79adfa6963f9a23",
+    "Sources/SwiftJXLCore/Codec/ScalarMap.swift": "9b51499e50778c38db73afb02c0be1f5a1299bb674434d8c0b5f568fb9651461",
+    "Sources/SwiftJXLCore/Codec/ScalarModularDecoder.swift": "9eb6904c722ced95c1833795dda5579874309e56b0ce726ed188843604a65e74",
+    "Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift": "837346e8c594d3513e45020d21e76197a87efa8b7ea0d3e3b3bbfdf2179c64f1",
+    "Sources/SwiftJXLCore/Codec/ScalarSampleStorage.swift": "c73b2bb0ed3fa0eff698a7252246f45f9777ba5c3e032780074b7e24183cfb14",
+    "Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift": "12b1bab79edb576cdc1ebcfdb857379e389b10c64353b2e385dac76b2e477370",
+    "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift": "eabc4a100804abd1b2d42f2f32b9b35791d415a6b911dbb8dc578abf455ffac3",
+    "Sources/SwiftJXLCore/Codestream/BitDepth.swift": "e42b5435d9424b67c1b4bc8cc92b15443575f631187e19d8dce1718e3b26b6d6",
+    "Sources/SwiftJXLCore/Codestream/ColorEncoding.swift": "dd25291342bbc115704b9cedcb5bd06243bed7b2ead2205cf7a1f1a360bde9f3",
+    "Sources/SwiftJXLCore/Codestream/ExtraChannelInfo.swift": "4d4e0dfeae35490240096d5cc45c8e773a4993a22cf34feb0418b0a39338f65e",
+    "Sources/SwiftJXLCore/Codestream/FrameHeader.swift": "dc93c020047ce28ba74ce6aecc61050a210a8d6f5ccfdab54527bc9000270179",
+    "Sources/SwiftJXLCore/Codestream/ImageMetadata.swift": "8d7a58a964f8f47bedc6323a43d065ae05f160804f93e84fdf5d1b46e282df5a",
+    "Sources/SwiftJXLCore/Codestream/Signature.swift": "665f0c4f00b91b10876dd772426b61ca6edd4961e7018dc96b3aae3120b772b2",
+    "Sources/SwiftJXLCore/Codestream/SizeHeader.swift": "17155283b2a9ce6c93c714cedac44c7d25a9931f175912c44650c4b41a0ebfb7",
+    "Sources/SwiftJXLCore/Codestream/TOC.swift": "db418153858b88b3489a9cd177abddfe2c0d927084ea862821e354247638ac31",
+    "Sources/SwiftJXLCore/Codestream/TOCPermutation.swift": "da7b2af7efd4192001c44dc2179ef7f4527a3af24bd8ae0d9a280fb3c12dc941",
+    "Sources/SwiftJXLCore/Container/JXLContainer.swift": "92d0025833b4d612162d0fb17e513e21d0569f4f886121e7db3c4e5b7fcde667",
+    "Sources/SwiftJXLCore/Entropy/ANSDistributionSerialisation.swift": "b22ee83cce90e7d5c6d90d208ffd72170026b7a66b40e688b5dc2255abd2dc22",
+    "Sources/SwiftJXLCore/Entropy/ANSStreamDecoder.swift": "7a48e71d834f8f1f8d4de3c39633f07145e37460adc118fe06c940182a265dbd",
+    "Sources/SwiftJXLCore/Entropy/ANSTokenStreamWriter.swift": "53092988d283836dd77d6aed636403489e9fbbb4a7d59d027e277c6edaa0d927",
+    "Sources/SwiftJXLCore/Entropy/AliasTable.swift": "c7efd360b73cd3ff1fe62df1d36cb68399af9eae150945e529be7567708fdec6",
+    "Sources/SwiftJXLCore/Entropy/ContextMap.swift": "f5d371b7a8017ffb521632837ea57b422c1e4747e8efd3ecefd6e5237327d159",
+    "Sources/SwiftJXLCore/Entropy/EntropySectionHeader.swift": "c562b40ecfb1356be25bdc62032a8188e85b7c0f6c38e70c4da63f84e7e23daf",
+    "Sources/SwiftJXLCore/Entropy/HybridUint.swift": "0c7d993964572861dee64a752795f9f68b68858d4ecadd13e41814aeb0383ea0",
+    "Sources/SwiftJXLCore/Entropy/LZ77Config.swift": "78f4b8b1dd982028b0980f5f5d82dbd03aa30bf939a2555e5be0c8a0f814d083",
+    "Sources/SwiftJXLCore/Entropy/MultiClusterCodebook.swift": "84769994e1858d5c37a5dd50f8514dfb4f0834ba18bf0963af4a6fe4fa13df4a",
+    "Sources/SwiftJXLCore/Entropy/PrefixCode.swift": "f15a23133883a84a6606480917175547e5f76008f957e07e6b6db569f95f4f69",
+    "Sources/SwiftJXLCore/Entropy/PrefixCodeSerialisation.swift": "782cd13bdcf37d50e818e35a8872386b643e2bb28c77bc486212df312a98fd47",
+    "Sources/SwiftJXLCore/Entropy/RANS.swift": "8244a4e7f647474885f4e84892ebc96928b5c350f27e8ef877957eb685bafca3",
+    "Sources/SwiftJXLCore/Entropy/SimpleEntropyStream.swift": "0c74618755ae5940aaadbc83222bfcda5808434dd63082144e0110f7a348c74f",
+    "Sources/SwiftJXLCore/Entropy/SpecANSDistribution.swift": "eea19f53aedeca8ec0a98008fc4eed9d31fc026f6d0b61350e8743682558be8f",
+    "Sources/SwiftJXLCore/Entropy/TokenStreamReader.swift": "a8c5accc169d700d7a4f5d597515058798f5829efa0e2ff2286fd1fe60a5fd88",
+    "Sources/SwiftJXLCore/Entropy/TokenStreamWriter.swift": "0592431e27376cae52bd49eb7cad679597aaa184991bd75ca7b1d14148a8249f",
+    "Sources/SwiftJXLCore/JPEG/JBRDBox.swift": "864ae446db2ccc24c2e9afa4a7d136aa8055ec636d568bc893be954c114d7e46",
+    "Sources/SwiftJXLCore/JPEG/JBRDBoxWriter.swift": "fafee028686365f41e1435a412171a02b304f32cadbc9b437247ec9a81bcf9e4",
+    "Sources/SwiftJXLCore/JPEG/JBRDMetadata.swift": "8b35c21a89a5099903dfbaf3770afcf1b6bc88792cacfa76d92539949a6deafc",
+    "Sources/SwiftJXLCore/JPEG/JBRDPolicy.swift": "4a6b63c1c7f779972fb03dd69cadcb56882f99d00398c2ee712c0b5e3c1f6cd9",
+    "Sources/SwiftJXLCore/JPEG/JPEGBridgeCoefficients.swift": "475399e7168dff3cc0b3aa975e39fb91803c93a801d3d59534788819ff51d195",
+    "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+    "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift": "8bd5168bb41b82b7a81ec8f7b413adb246216792927f5f953ee68883e7077507",
+    "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+    "Sources/SwiftJXLCore/JPEG/JPEGFrameLayout.swift": "754c38fbfd0a70e5843a9710ad7c1ebf668675d5421e777b3720b63c35eda655",
+    "Sources/SwiftJXLCore/JPEG/JPEGReconstructionMetadata.swift": "05a23379c920833f19de78e19cf44dc9198b20e5eff239170cde04fdff94ad42",
+    "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift": "89a9fe87c072d04eacebb2a4b3bc7bff6f814ae58b6d1fa0e1f79d56872837da",
+    "Sources/SwiftJXLCore/JPEG/JPEGSegmentReader.swift": "d5cd02b4901a2ff96cdbf77fb4a094e337431891f7c8de9cb1a954e47a094e94",
+    "Sources/SwiftJXLCore/Modular/GroupHeader.swift": "4dcf47c505e332b29b4928aec41961b3ffc811bd0a0049d65ee61c3c96c44109",
+    "Sources/SwiftJXLCore/Modular/LibjxlPredictor.swift": "d22c53808f150333422db9f643ac882529e8f83e58200c4e1d085b9fd21da7e0",
+    "Sources/SwiftJXLCore/Modular/ModularChannelDecoder.swift": "9d4374a991ed236270933b2b578d2e651df5101ef9a7bc20bb9071b02340e468",
+    "Sources/SwiftJXLCore/Modular/ModularProperties.swift": "96de5718d84f02a6b1fd9e8e144da1b9e9176694855b8af8ba7465164eadb634",
+    "Sources/SwiftJXLCore/Modular/ModularTree.swift": "14ca65941e854e877d6b53c2fdb6df22fa15f42159ce0fc7a226b26bc5ac940b",
+    "Sources/SwiftJXLCore/Modular/Predictors.swift": "9e2fb94b4426b6bfa670bb06a2e5d9bea85795d3d14f96b7ff3c91ef644cbb65",
+    "Sources/SwiftJXLCore/Modular/RCT.swift": "a26c65214a57665d3c086df9e21f213cd965878eddcecdf882d369fabb208f6c",
+    "Sources/SwiftJXLCore/Modular/WeightedPredictor.swift": "d1ca9f07c0d0a2411b80fb60c23e91bf2cb1d7a46cbc69dbd139838e43f0cac6"
+  }
+}

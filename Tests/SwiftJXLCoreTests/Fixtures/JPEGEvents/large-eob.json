@@ -1,0 +1,12 @@
+{
+  "fixture": "large-eob",
+  "purpose": "Progressive 32768-block EOB-run boundary; all samples 128 and all DCT coefficients zero",
+  "width": 2048,
+  "height": 1024,
+  "generator": "libjpeg-turbo 3.2.0 cjpeg -quality 90 -progressive -optimize",
+  "oracle": "libjxl 0.12.0 cjxl --lossless_jpeg=1 followed by djxl; restored bytes identical",
+  "licence": "CC0-1.0 (authored synthetic fixture)",
+  "jpeg_sha256": "df7cd7bf0e769b241429212c3b3d6e0a7fb539d719653bcf2f63c0a2c9561518",
+  "jbrd_sha256": "748a47481457ffb6af3f2c6584207d3ee91e24377e242f01428419e0db9b591e",
+  "jpeg_bytes": 8486
+}

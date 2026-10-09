@@ -1,0 +1,139 @@
+{
+  "baseline_commit": "7093f6a23fcf864e1c570f43c9d2c90a81a5cc6d",
+  "source_state": "uncommitted native writer; exact hashes below",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "runs": [
+    {
+      "configuration": "debug",
+      "declarations": 61,
+      "cases": 262,
+      "failed": 0,
+      "skipped": 0,
+      "log_sha256": "20dcb7c01ee617fd192a0bd4e489ba94d5b89cdcf5b79428aa8a88c576a1f12a"
+    },
+    {
+      "configuration": "asan",
+      "declarations": 61,
+      "cases": 262,
+      "failed": 0,
+      "skipped": 0,
+      "log_sha256": "6a90dd429e6671d1ae0cab44a2eecf5a86365f20425cfa730a81ca2ae4b2f8b8"
+    },
+    {
+      "configuration": "tsan",
+      "declarations": 61,
+      "cases": 262,
+      "failed": 0,
+      "skipped": 0,
+      "log_sha256": "25b0442eb337cb37b8f45f7fae7b121e4f24d005d186edc2f400ea159a8f75ba"
+    }
+  ],
+  "counts_from": "Swift Testing summaries and parameterised case totals; Swift Build did not emit the requested xUnit files",
+  "commands": [
+    {
+      "configuration": "debug",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEG|JBRD|Brotli",
+        "--xunit-output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/writer-validation/debug.xml"
+      ],
+      "exit": 0,
+      "seconds": 5.2726305
+    },
+    {
+      "configuration": "asan",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEG|JBRD|Brotli",
+        "--xunit-output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/writer-validation/asan.xml",
+        "--scratch-path",
+        "../evidence/cli-validation-qualification/build/asan",
+        "--sanitize",
+        "address"
+      ],
+      "exit": 0,
+      "seconds": 11.847989334000001
+    },
+    {
+      "configuration": "tsan",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEG|JBRD|Brotli",
+        "--xunit-output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/writer-validation/tsan.xml",
+        "--scratch-path",
+        "../evidence/cli-validation-qualification/build/tsan",
+        "--sanitize",
+        "thread"
+      ],
+      "exit": 0,
+      "seconds": 21.047749625
+    }
+  ],
+  "source_sha256": {
+    "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift": "2eb5e4c07a408e751a057a272278ffdf218f4c5ed63a3570e0697db956262d0e",
+    "Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift": "6b14337a9dafd0c84ec9a744515b25398007f4944dc5b8555ccc3df449bb4e19",
+    "Scripts/validate-jpeg-events.py": "7c2a0b0e862b23bb389621b45993eae172a69fff278a745b16b664b243d198e9",
+    "Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/large-eob.jpg": "df7cd7bf0e769b241429212c3b3d6e0a7fb539d719653bcf2f63c0a2c9561518",
+    "Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/large-eob.jbrd": "748a47481457ffb6af3f2c6584207d3ee91e24377e242f01428419e0db9b591e",
+    "Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/large-eob.json": "7b25e2ef04e00295a5c4f2209b3c0f959a309eb4e45ae42b5528e519a9988e96"
+  },
+  "native_byte_exact_cases": 24,
+  "independent_metadata_cases": 21,
+  "independent_reference_event_cases": 6,
+  "reference_command": "python3 Scripts/validate-jpeg-events.py --tools /opt/homebrew/bin --coefficient-oracle ../native-jpeg-audit/coefficient-oracle --output ../native-jpeg-audit/writer-validation/independent-events",
+  "independent_reference_exit": 0,
+  "admission": "Immutable coefficient/metadata owners, fixed table/scratch bounds, buffered refinement bits and growing output are admitted together; one final output buffer and no per-scan buffers. No peak-RSS or instrumented allocation-count claim.",
+  "large_eob_test_deadline_seconds": 60,
+  "remaining": [
+    "Native JPEG/JXL VarDCT coefficient bridge",
+    "Public Transcoder and CLI integration",
+    "Broader platform, performance, memory and security/release qualification"
+  ],
+  "hosted_ci": "pending publication"
+}

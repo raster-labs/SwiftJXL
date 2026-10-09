@@ -1,5 +1,23 @@
 # History and provenance — SwiftJXL
 
+## Native transcoder ICC preservation — 9 October 2026
+
+Added bounded RGB/greyscale ICC decoding and standard ICC writing to native JPEG recompression/reconstruction. Public resource limits cover profiles, fragmented APP2 ordering is preserved, and malformed fragment sets reject. The scalar pixel codec's ICC limits are unchanged. Local debug, ASan and TSan each pass 36 declarations / 124 cases without skips; the expanded independent CLI checks pass 121 process checks. Exact source hashes and commands are in [ICC validation](Documentation/Engineering/Migration/Evidence/NativeJPEG/ICC/validation.json). Final-head hosted validation, review and broader migration gates remain open.
+
+## Public native JPEG integration — 9 October 2026
+
+Connected the bounded native JPEG coefficient/reconstruction stages through the public Transcoder and CLI. Local independent checks cover both directions, Exif/XMP container resolution, repeated byte-exact restoration, resource admission, cancellation and owner lifetime. CLI streams and atomic publication pass regression checks. ICC, final-head qualification and broader migration remain open; this is not a release or production cutover. Exact validation and source hashes are recorded in [PublicIntegration](Documentation/Engineering/Migration/Evidence/NativeJPEG/PublicIntegration/validation.json).
+
+## Native JPEG preparation — 9 October 2026
+
+Native compressed Brotli decoding and JBRD metadata resolution now pass local debug/ASan/TSan qualification. Wire-order prefix codes fix an independently demonstrated predecessor failure; all block/context/dictionary paths have recorded corpus evidence. MIT attribution and exact provenance are retained. Hosted validation and full JPEG restoration remain separate gates.
+
+Brotli framing and stored-block encoding now have native bounded implementations, correcting predecessor metadata skip semantics. Independent libbrotli checks cover 29 streams; compressed-body decoding and full restoration remain open. See the evidence below.
+
+The reconstruction-metadata checkpoint adapts JBRD fields, bounded serialisation and strict Exif/XMP/ICC assembly from the same predecessor pin. Sixteen independent bundles qualify the header boundary; native Brotli, coefficient-bridge integration and full original-JPEG restoration remain open. The coefficient commit passed macOS and the Linux matrix; its oracle job exposed a missing `cc` alias, corrected to the container's existing `clang` for the next run.
+
+Adapted the segment-reader design from pinned predecessor `57e81cb9e2411d1efac435b429a306a031744c1e` under Apache-2.0. Added range retention and resource/cancellation limits, and new checked frame geometry. The nine synthetic JPEG fixtures and source hash records are retained for offline regression. See [native preparation evidence](Documentation/Engineering/Migration/NATIVE_JPEG.md). The next checkpoint adapts entropy and sequential/progressive coefficient decoding, with source hashes for every contributing predecessor file and 15 independent coefficient snapshots. This is internal preparation, not a completed reversible-transcoding implementation.
+
 ## NRRD CLI stage — 9 October 2026
 
 Added new bounded attached/raw UInt16 NRRD parsing and serialisation around the existing public scalar codec. The official specification is pinned before implementation; no predecessor codec or third-party implementation was copied. See [profile and evidence](Documentation/Engineering/Migration/NRRD_PROFILE.md).

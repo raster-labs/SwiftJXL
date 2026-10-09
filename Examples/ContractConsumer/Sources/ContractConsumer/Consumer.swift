@@ -39,7 +39,7 @@ struct ContractConsumer {
             _ = try await transcoder.transcode(Data(), to: .jpegXL, options: .init())
             throw ConsumerFailure.unexpectedResult
         } catch let error as SwiftJXL.CodecError {
-            guard error.category == .unsupportedFeature else { throw error }
+            guard error.category == .malformedInput else { throw error }
         }
         print("Public consumer passed: owning UInt16 samples and lossless scalar JPEG XL.")
     }

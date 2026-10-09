@@ -1,0 +1,131 @@
+{
+  "baseline_commit": "1d3a7d4cc7dee13b0660a7b4da0542773d61324c",
+  "source_state": "uncommitted metadata stage; exact hashes below",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "runs": [
+    {
+      "configuration": "debug",
+      "declarations": 54,
+      "cases": 214,
+      "failed": 0,
+      "skipped": 0,
+      "log_sha256": "461da1be5bf089372d19169e4f34647a0f5dd5d9daa973a34b3d182ae050f660"
+    },
+    {
+      "configuration": "asan",
+      "declarations": 54,
+      "cases": 214,
+      "failed": 0,
+      "skipped": 0,
+      "log_sha256": "d4d4122eea8ea5a3ff45c85a48bccda4efea806403b10e1ae0193d2a7ef058fc"
+    },
+    {
+      "configuration": "tsan",
+      "declarations": 54,
+      "cases": 214,
+      "failed": 0,
+      "skipped": 0,
+      "log_sha256": "3aba18bf3455c0ca00dc860a5fe444eea20954ed9421a048d49f8999109b8ad7"
+    }
+  ],
+  "commands": [
+    {
+      "configuration": "debug",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEG|JBRD|Brotli",
+        "--xunit-output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/metadata-validation/debug.xml"
+      ],
+      "exit": 0,
+      "seconds": 4.852458375
+    },
+    {
+      "configuration": "asan",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEG|JBRD|Brotli",
+        "--xunit-output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/metadata-validation/asan.xml",
+        "--scratch-path",
+        "../evidence/cli-validation-qualification/build/asan",
+        "--sanitize",
+        "address"
+      ],
+      "exit": 0,
+      "seconds": 8.973816042
+    },
+    {
+      "configuration": "tsan",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEG|JBRD|Brotli",
+        "--xunit-output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/metadata-validation/tsan.xml",
+        "--scratch-path",
+        "../evidence/cli-validation-qualification/build/tsan",
+        "--sanitize",
+        "thread"
+      ],
+      "exit": 0,
+      "seconds": 15.920835457999999
+    }
+  ],
+  "source_sha256": {
+    "Sources/SwiftJXLCore/JPEG/JPEGReconstructionMetadata.swift": "05a23379c920833f19de78e19cf44dc9198b20e5eff239170cde04fdff94ad42",
+    "Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift": "72fe93923244b79b17837a21215ad4e3ffa5b89f005fb76fd3aa7b9d585f5c36"
+  },
+  "independent_cases_per_configuration": 23,
+  "oracle": "Homebrew libjxl 0.12.0; pinned source CI pending",
+  "scope": "Native reconstruction metadata only. The independent reference supplies the JXL coefficient frame. This does not prove full native JPEG transcoding.",
+  "long_fill": "Reference encoder rejects a single >65535-byte fill sequence; unchanged gray coefficient frame supplies the independent JXL while native split records restore every long-fill/tail source byte.",
+  "admission": "Retained source/coefficient owners and metadata/header/Brotli/bundle allocations charged across nested phases; conservative estimates, not measured peak RSS. Header uses conservative capacity admission.",
+  "limitations": [
+    "Native VarDCT coefficient frame bridge and native JPEG writer remain incomplete",
+    "Repeated DRI and fill inside restart markers reject explicitly",
+    "Full package release/platform/performance gates remain open",
+    "Superseded first quantisation table rejects explicitly: this JBRD profile requires the first table to be used."
+  ]
+}

@@ -1,0 +1,910 @@
+{
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "legacy_binary_sha256": "bb8ffb167bbb87f05a1084647287d5464f44273df4970559671582ea48116ac3",
+  "tools": {
+    "cjpeg": {
+      "sha256": "1313b8394da8708c93fd1bff14d352957cc5e7775b315ef5970953a0004cc760",
+      "path": "/opt/homebrew/bin/cjpeg"
+    },
+    "cjxl": {
+      "sha256": "582c6dea494b08639ce0aff765b7b6feae1a5d8f1f1a856685f107dac3304320",
+      "path": "/opt/homebrew/bin/cjxl"
+    },
+    "djxl": {
+      "sha256": "25e0a5a5ad107352f7e91a1a9c824576e56d2aca2d53708e5d3dc90eeb621566",
+      "path": "/opt/homebrew/bin/djxl"
+    }
+  },
+  "fixtures": [
+    {
+      "name": "gray",
+      "source_sha256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+      "bytes": 683,
+      "checks": {
+        "fixture": {
+          "command": [
+            "/opt/homebrew/bin/cjpeg",
+            "-outfile",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/source.jpg",
+            "-quality",
+            "80",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/input.pgm"
+          ],
+          "exit": 0,
+          "seconds": 0.014846499999999999,
+          "stderr": ""
+        },
+        "legacy_forward": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/legacy.jxl",
+            "--mode",
+            "coefficient-bridge"
+          ],
+          "exit": 0,
+          "seconds": 0.007816500000000004,
+          "stderr": ""
+        },
+        "reference_forward": {
+          "command": [
+            "/opt/homebrew/bin/cjxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/reference.jxl",
+            "--lossless_jpeg=1",
+            "-e",
+            "3"
+          ],
+          "exit": 0,
+          "seconds": 0.042265958,
+          "stderr": "JPEG XL encoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nEncoding [JPEG, lossless transcode, effort: 3]\nCompressed to 887 bytes including container \n"
+        },
+        "legacy_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/legacy-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.0066178330000000035,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+          "output_bytes": 683
+        },
+        "legacy_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/legacy-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007934791999999996,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 0.762 MP/s, 0.988 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+          "output_bytes": 683
+        },
+        "reference_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/reference-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.005936165999999993,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+          "output_bytes": 683
+        },
+        "reference_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/gray/reference-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007461957999999991,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.696 MP/s, 2.198 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+          "output_bytes": 683
+        }
+      }
+    },
+    {
+      "name": "444",
+      "source_sha256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+      "bytes": 1359,
+      "checks": {
+        "fixture": {
+          "command": [
+            "/opt/homebrew/bin/cjpeg",
+            "-outfile",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/source.jpg",
+            "-quality",
+            "80",
+            "-sample",
+            "1x1,1x1,1x1",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/input.ppm"
+          ],
+          "exit": 0,
+          "seconds": 0.002150291999999998,
+          "stderr": ""
+        },
+        "legacy_forward": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/legacy.jxl",
+            "--mode",
+            "coefficient-bridge"
+          ],
+          "exit": 0,
+          "seconds": 0.006888249999999985,
+          "stderr": ""
+        },
+        "reference_forward": {
+          "command": [
+            "/opt/homebrew/bin/cjxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/reference.jxl",
+            "--lossless_jpeg=1",
+            "-e",
+            "3"
+          ],
+          "exit": 0,
+          "seconds": 0.008520374999999997,
+          "stderr": "JPEG XL encoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nEncoding [JPEG, lossless transcode, effort: 3]\nCompressed to 1450 bytes including container \n"
+        },
+        "legacy_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/legacy-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.006234958000000013,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+          "output_bytes": 1359
+        },
+        "legacy_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/legacy-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.009020791,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.563 MP/s, 4.030 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+          "output_bytes": 1359
+        },
+        "reference_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/reference-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.006189333999999991,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+          "output_bytes": 1359
+        },
+        "reference_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/444/reference-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007740916999999986,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.703 MP/s, 4.392 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+          "output_bytes": 1359
+        }
+      }
+    },
+    {
+      "name": "422",
+      "source_sha256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+      "bytes": 1099,
+      "checks": {
+        "fixture": {
+          "command": [
+            "/opt/homebrew/bin/cjpeg",
+            "-outfile",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/source.jpg",
+            "-quality",
+            "80",
+            "-sample",
+            "2x1,1x1,1x1",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/input.ppm"
+          ],
+          "exit": 0,
+          "seconds": 0.0023408329999999866,
+          "stderr": ""
+        },
+        "legacy_forward": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/legacy.jxl",
+            "--mode",
+            "coefficient-bridge"
+          ],
+          "exit": 0,
+          "seconds": 0.006789792000000017,
+          "stderr": ""
+        },
+        "reference_forward": {
+          "command": [
+            "/opt/homebrew/bin/cjxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/reference.jxl",
+            "--lossless_jpeg=1",
+            "-e",
+            "3"
+          ],
+          "exit": 0,
+          "seconds": 0.008954583000000016,
+          "stderr": "JPEG XL encoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nEncoding [JPEG, lossless transcode, effort: 3]\nCompressed to 1210 bytes including container \n"
+        },
+        "legacy_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/legacy-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.006275041000000009,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+          "output_bytes": 1099
+        },
+        "legacy_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/legacy-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.008025667000000014,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.637 MP/s, 3.413 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+          "output_bytes": 1099
+        },
+        "reference_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/reference-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.006477041000000017,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+          "output_bytes": 1099
+        },
+        "reference_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/422/reference-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007797500000000013,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.634 MP/s, 3.408 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+          "output_bytes": 1099
+        }
+      }
+    },
+    {
+      "name": "420",
+      "source_sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+      "bytes": 1010,
+      "checks": {
+        "fixture": {
+          "command": [
+            "/opt/homebrew/bin/cjpeg",
+            "-outfile",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/source.jpg",
+            "-quality",
+            "80",
+            "-sample",
+            "2x2,1x1,1x1",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/input.ppm"
+          ],
+          "exit": 0,
+          "seconds": 0.002580250000000006,
+          "stderr": ""
+        },
+        "legacy_forward": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/legacy.jxl",
+            "--mode",
+            "coefficient-bridge"
+          ],
+          "exit": 0,
+          "seconds": 0.0068220830000000066,
+          "stderr": ""
+        },
+        "reference_forward": {
+          "command": [
+            "/opt/homebrew/bin/cjxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/reference.jxl",
+            "--lossless_jpeg=1",
+            "-e",
+            "3"
+          ],
+          "exit": 0,
+          "seconds": 0.008512166999999987,
+          "stderr": "JPEG XL encoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nEncoding [JPEG, lossless transcode, effort: 3]\nCompressed to 1143 bytes including container \n"
+        },
+        "legacy_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/legacy-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.006464750000000019,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+          "output_bytes": 1010
+        },
+        "legacy_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/legacy-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007671082999999995,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.664 MP/s, 3.190 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+          "output_bytes": 1010
+        },
+        "reference_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/reference-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.011583500000000024,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+          "output_bytes": 1010
+        },
+        "reference_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/420/reference-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007796458000000006,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.625 MP/s, 3.115 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+          "output_bytes": 1010
+        }
+      }
+    },
+    {
+      "name": "440",
+      "source_sha256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+      "bytes": 1133,
+      "checks": {
+        "fixture": {
+          "command": [
+            "/opt/homebrew/bin/cjpeg",
+            "-outfile",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/source.jpg",
+            "-quality",
+            "80",
+            "-sample",
+            "1x2,1x1,1x1",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/input.ppm"
+          ],
+          "exit": 0,
+          "seconds": 0.002549958000000019,
+          "stderr": ""
+        },
+        "legacy_forward": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/legacy.jxl",
+            "--mode",
+            "coefficient-bridge"
+          ],
+          "exit": 0,
+          "seconds": 0.006828791000000001,
+          "stderr": ""
+        },
+        "reference_forward": {
+          "command": [
+            "/opt/homebrew/bin/cjxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/reference.jxl",
+            "--lossless_jpeg=1",
+            "-e",
+            "3"
+          ],
+          "exit": 0,
+          "seconds": 0.008819790999999966,
+          "stderr": "JPEG XL encoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nEncoding [JPEG, lossless transcode, effort: 3]\nCompressed to 1256 bytes including container \n"
+        },
+        "legacy_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/legacy-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.0065348749999999955,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+          "output_bytes": 1133
+        },
+        "legacy_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/legacy-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007721874999999989,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.617 MP/s, 3.476 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+          "output_bytes": 1133
+        },
+        "reference_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/reference-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.006595624999999994,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+          "output_bytes": 1133
+        },
+        "reference_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/440/reference-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.008908833000000005,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.559 MP/s, 3.352 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+          "output_bytes": 1133
+        }
+      }
+    },
+    {
+      "name": "progressive",
+      "source_sha256": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+      "bytes": 951,
+      "checks": {
+        "fixture": {
+          "command": [
+            "/opt/homebrew/bin/cjpeg",
+            "-outfile",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/source.jpg",
+            "-quality",
+            "80",
+            "-progressive",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/input.ppm"
+          ],
+          "exit": 0,
+          "seconds": 0.0023471669999999834,
+          "stderr": ""
+        },
+        "legacy_forward": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/legacy.jxl",
+            "--mode",
+            "coefficient-bridge"
+          ],
+          "exit": 1,
+          "seconds": 0.00578733299999995,
+          "stderr": "Error: JPEG block decode: malformed AC symbol\n"
+        },
+        "reference_forward": {
+          "command": [
+            "/opt/homebrew/bin/cjxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/reference.jxl",
+            "--lossless_jpeg=1",
+            "-e",
+            "3"
+          ],
+          "exit": 0,
+          "seconds": 0.008857166999999999,
+          "stderr": "JPEG XL encoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nEncoding [JPEG, lossless transcode, effort: 3]\nCompressed to 940 bytes including container \n"
+        },
+        "reference_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/reference-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.0068324169999999795,
+          "stderr": "",
+          "exact_bytes": false,
+          "output_sha256": "bed85e41f5078d40e67ce09aee6d55e9c41af1232e7f3a06ba6032cbe6196258",
+          "output_bytes": 950
+        },
+        "reference_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/progressive/reference-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007879082999999953,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.498 MP/s, 2.703 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+          "output_bytes": 951
+        }
+      }
+    },
+    {
+      "name": "restart",
+      "source_sha256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+      "bytes": 1020,
+      "checks": {
+        "fixture": {
+          "command": [
+            "/opt/homebrew/bin/cjpeg",
+            "-outfile",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/source.jpg",
+            "-quality",
+            "80",
+            "-restart",
+            "1B",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/input.ppm"
+          ],
+          "exit": 0,
+          "seconds": 0.0022961250000000377,
+          "stderr": ""
+        },
+        "legacy_forward": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/legacy.jxl",
+            "--mode",
+            "coefficient-bridge"
+          ],
+          "exit": 0,
+          "seconds": 0.006718791000000002,
+          "stderr": ""
+        },
+        "reference_forward": {
+          "command": [
+            "/opt/homebrew/bin/cjxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/reference.jxl",
+            "--lossless_jpeg=1",
+            "-e",
+            "3"
+          ],
+          "exit": 0,
+          "seconds": 0.008502291999999967,
+          "stderr": "JPEG XL encoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nEncoding [JPEG, lossless transcode, effort: 3]\nCompressed to 1146 bytes including container \n"
+        },
+        "legacy_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/legacy-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.0061790420000000235,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+          "output_bytes": 1020
+        },
+        "legacy_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/legacy-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.0073625420000000275,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.443 MP/s, 2.792 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+          "output_bytes": 1020
+        },
+        "reference_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/reference-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.00588612500000002,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+          "output_bytes": 1020
+        },
+        "reference_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/restart/reference-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007107291999999987,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.610 MP/s, 3.116 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+          "output_bytes": 1020
+        }
+      }
+    },
+    {
+      "name": "metadata-tail",
+      "source_sha256": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+      "bytes": 1045,
+      "checks": {
+        "fixture": {
+          "command": [
+            "/opt/homebrew/bin/cjpeg",
+            "-outfile",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/source.jpg",
+            "-quality",
+            "80",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/input.ppm"
+          ],
+          "exit": 0,
+          "seconds": 0.002104082999999979,
+          "stderr": ""
+        },
+        "legacy_forward": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/legacy.jxl",
+            "--mode",
+            "coefficient-bridge"
+          ],
+          "exit": 1,
+          "seconds": 0.006219165999999998,
+          "stderr": "error: JPEG \u2192 JXL lossless bridge: JXLEncoder: lossless-JPEG bridge jbrd extract: expectedMarkerPrefix(at: 1031, found: 83) is not yet implemented. See ROADMAP.md for status.. Use --mode pixel-fallback (the default) for the lossy pixel path.\nError: notImplemented\n"
+        },
+        "reference_forward": {
+          "command": [
+            "/opt/homebrew/bin/cjxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/reference.jxl",
+            "--lossless_jpeg=1",
+            "-e",
+            "3"
+          ],
+          "exit": 0,
+          "seconds": 0.008695166000000032,
+          "stderr": "JPEG XL encoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nEncoding [JPEG, lossless transcode, effort: 3]\nCompressed to 1181 bytes including container \n"
+        },
+        "reference_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/reference-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.006107290999999959,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+          "output_bytes": 1045
+        },
+        "reference_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/metadata-tail/reference-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007611749999999973,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.474 MP/s, 2.922 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+          "output_bytes": 1045
+        }
+      }
+    },
+    {
+      "name": "fill-marker",
+      "source_sha256": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+      "bytes": 1011,
+      "checks": {
+        "fixture": {
+          "command": [
+            "/opt/homebrew/bin/cjpeg",
+            "-outfile",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/source.jpg",
+            "-quality",
+            "80",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/input.ppm"
+          ],
+          "exit": 0,
+          "seconds": 0.002130999999999994,
+          "stderr": ""
+        },
+        "legacy_forward": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/legacy.jxl",
+            "--mode",
+            "coefficient-bridge"
+          ],
+          "exit": 0,
+          "seconds": 0.00637612500000001,
+          "stderr": ""
+        },
+        "reference_forward": {
+          "command": [
+            "/opt/homebrew/bin/cjxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/source.jpg",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/reference.jxl",
+            "--lossless_jpeg=1",
+            "-e",
+            "3"
+          ],
+          "exit": 0,
+          "seconds": 0.009454832999999996,
+          "stderr": "JPEG XL encoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nEncoding [JPEG, lossless transcode, effort: 3]\nCompressed to 1147 bytes including container \n"
+        },
+        "legacy_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/legacy-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.006030209000000009,
+          "stderr": "",
+          "exact_bytes": false,
+          "output_sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+          "output_bytes": 1010
+        },
+        "legacy_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/legacy.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/legacy-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007616583999999982,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.650 MP/s, 3.163 MB/s, 10 threads.\n",
+          "exact_bytes": false,
+          "output_sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+          "output_bytes": 1010
+        },
+        "reference_legacy": {
+          "command": [
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/.build/out/Products/Release/jxl-tool",
+            "transcode",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/reference-legacy.jpg",
+            "--mode",
+            "reverse"
+          ],
+          "exit": 0,
+          "seconds": 0.006229166000000008,
+          "stderr": "",
+          "exact_bytes": true,
+          "output_sha256": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+          "output_bytes": 1011
+        },
+        "reference_reference": {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/reference.jxl",
+            "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/results/fill-marker/reference-reference.jpg"
+          ],
+          "exit": 0,
+          "seconds": 0.007727499999999998,
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.390 MP/s, 2.667 MB/s, 10 threads.\n",
+          "exact_bytes": true,
+          "output_sha256": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+          "output_bytes": 1011
+        }
+      }
+    }
+  ],
+  "status": "baseline_recorded"
+}

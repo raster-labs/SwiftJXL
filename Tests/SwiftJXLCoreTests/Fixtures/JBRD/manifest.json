@@ -1,0 +1,266 @@
+{
+  "cjxlVersion": "0.12.0",
+  "brotliVersion": 16785408,
+  "brotliLibrarySHA256": "d7ac1e69b6c443341fb4302de0169d187489d58d8a641c8eadd6db9ca2cd0cbf",
+  "cjxlSHA256": "582c6dea494b08639ce0aff765b7b6feae1a5d8f1f1a856685f107dac3304320",
+  "fixtures": [
+    {
+      "name": "progressive",
+      "sourceJPEG_SHA256": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+      "referenceJXL_SHA256": "36b1beeab6c1e017842f9a8ccbb1bb28e83aa166304982db4e161f5e6a5726fd",
+      "jbrdSHA256": "3fc37e72dbece820e9db566f835fcc755a79a120cf84346a9d7a223cd8218bef",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "fcd1a9689cd487fcd26467d949f22886227ed74d1e2b68219b1f37da44ca35d2",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive.jpg",
+        "../native-jpeg-audit/jbrd-reference/progressive.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "progressive-restart",
+      "sourceJPEG_SHA256": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484",
+      "referenceJXL_SHA256": "0d85a79c0751c2a2191daa98660af05be3ce5ed1ff429683e7b2ef12f85468b4",
+      "jbrdSHA256": "e496594d69803ceffebe5ee3bc26aaf769eb7bf2e97de0d0d421c10f9db2004e",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "3adee722814ea58ebf10705237814762d12611ca3c65543060bb89a19126d02d",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-restart.jpg",
+        "../native-jpeg-audit/jbrd-reference/progressive-restart.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "gray",
+      "sourceJPEG_SHA256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+      "referenceJXL_SHA256": "639fad029fe9fb04341fb40b9c15f2b519c60dbc3b4c4ee2236d66958e0c6442",
+      "jbrdSHA256": "6f30d784ec9051dd794820fa3ca7edcaa37114d76806792850cde50f6473fba9",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "58ccd5f055c7e546de7983ef471838abd0c41d7c62fe29b62c0d4236bd5d6610",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "../native-jpeg-audit/jbrd-reference/gray.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "metadata-tail",
+      "sourceJPEG_SHA256": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+      "referenceJXL_SHA256": "204a03aabf2312ba643c1f976fc3609fb9cc9be04aaeea082f2cadbbaa1b9118",
+      "jbrdSHA256": "94ac6c0f7d2b99265c45bbdac0b045c70a4bd1370e01f5fef17fe1e0c93f33d7",
+      "rawSHA256": "33bdcca504c06d14c2119cdd1bbfa38d2c07bcbcf97646007e36ff7024829df6",
+      "fieldsSHA256": "3c9f33420bc611ac12c1b5dab6f2d02f29a5fd3acbf8e05a2f7d0b3d66a087ad",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/metadata-tail.jpg",
+        "../native-jpeg-audit/jbrd-reference/metadata-tail.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "sequential-multiscan",
+      "sourceJPEG_SHA256": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+      "referenceJXL_SHA256": "cf69cbb14753545e0eb386370ef9a140520d1e98fef6a5840159284402a34c43",
+      "jbrdSHA256": "bd8528147e506af4bdcca06a1b3593a509e91853e62b674f7b9b93d63b3e2374",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "aa0b52059cc50d643fc349b91bc998028f9c8f0b97b137ed7121eac7fedf3261",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/sequential-multiscan.jpg",
+        "../native-jpeg-audit/jbrd-reference/sequential-multiscan.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "restart",
+      "sourceJPEG_SHA256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+      "referenceJXL_SHA256": "1aa7f8522648b2c92211591fe0d0965a01fc529ee5672d2b1deae432d81e8f31",
+      "jbrdSHA256": "d253d23292a47ae442f6d732ae2e5893c23d249884d40923054c32f0898a7dcc",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "55ebb403f68085e0c13fa04a9c48a00479e7c3ceae91eae3dbfbfe14354ea293",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/restart.jpg",
+        "../native-jpeg-audit/jbrd-reference/restart.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "fill-marker",
+      "sourceJPEG_SHA256": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+      "referenceJXL_SHA256": "0b1dc781db97cd0e17bae1aa8790837acdd5bd5497ce8c66d33f5b09fb4827db",
+      "jbrdSHA256": "f31e2a0244848bd7f9797bdd9b669510d47c238f8a8cec76686591fe023aee9f",
+      "rawSHA256": "992a0c53b537148da0fbbc742f538d204969a6f2429a0ae9d172fa2eeb270a4a",
+      "fieldsSHA256": "df4aa46299b82af3495bb78cb7021d82dfff87fc6dcdce3a4044329f8f27ddcc",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/fill-marker.jpg",
+        "../native-jpeg-audit/jbrd-reference/fill-marker.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "444",
+      "sourceJPEG_SHA256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+      "referenceJXL_SHA256": "d4c7451e2aaa6dcafbe52a8d08837282f92ddfb572c60e6e7c60b7d7c18eeb5f",
+      "jbrdSHA256": "bd2224baecace590cd0b910bf6dc101ac7a0acfc6d1134b1b53c269d854483f0",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "a3eb4e12c46f735fd599b6ff6148696e13d3fc4f3bd29480950ebf4ba33df0ee",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/444.jpg",
+        "../native-jpeg-audit/jbrd-reference/444.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "progressive-440",
+      "sourceJPEG_SHA256": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+      "referenceJXL_SHA256": "902b1afed93ee21351f6bad262c1b9e8fa1d94d1dd80492a6584da791978388c",
+      "jbrdSHA256": "eaee92cb751e80494c74309680205e00736b7a8ff89c0c77612dea8708c74c84",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "041fa3396f4e43750c5e4ee7e5ed2eb97367320094f1e934505c76f990ee5da4",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-440.jpg",
+        "../native-jpeg-audit/jbrd-reference/progressive-440.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "progressive-dc-refine",
+      "sourceJPEG_SHA256": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d",
+      "referenceJXL_SHA256": "cdc6ceef6cef9dee88a7d0de1cd6af45f650f0670b3d6d9846d6406e4044b578",
+      "jbrdSHA256": "7bbcb9d9ca7994b065b5c9c3eb70d5eaf91565c09751c85cc51ac14618665c77",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "fb0eeac404c98248502cb777f3a5fb320cc2c81c6bfe4a2a356cf4c1afeb7ae4",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-dc-refine.jpg",
+        "../native-jpeg-audit/jbrd-reference/progressive-dc-refine.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "progressive-edge",
+      "sourceJPEG_SHA256": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+      "referenceJXL_SHA256": "7fe1df0f651898158dff319c21d8ff1e3bfcbbd451f0c7453bb4a7090849e6de",
+      "jbrdSHA256": "9cde05929623afcdbd7d7391f97163f914db7f3f6851121202f7fa248bb5db42",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "27d8d5a359677807581786c200ef1f48819fbecc836f7aa7e93911c6825e5869",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.jpg",
+        "../native-jpeg-audit/jbrd-reference/progressive-edge.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "440",
+      "sourceJPEG_SHA256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+      "referenceJXL_SHA256": "35611a958fe621a948199f2a065f4a95b1dd610c4b0a5597e903d8f944a9a837",
+      "jbrdSHA256": "bd2224baecace590cd0b910bf6dc101ac7a0acfc6d1134b1b53c269d854483f0",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "a3eb4e12c46f735fd599b6ff6148696e13d3fc4f3bd29480950ebf4ba33df0ee",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/440.jpg",
+        "../native-jpeg-audit/jbrd-reference/440.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "progressive-422",
+      "sourceJPEG_SHA256": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+      "referenceJXL_SHA256": "fe1aa1eefcb7385f2cbce9edf71f8f1987169ff3634f5882466b421d38f7a464",
+      "jbrdSHA256": "5454500b46b77f9a2e4fc4a27c833d0c5f437799ccc50f684b7b35e10384615c",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "17fc521ebb2d4d44c609e81213102855215f94a9869172e5185c52452b7b27b8",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-422.jpg",
+        "../native-jpeg-audit/jbrd-reference/progressive-422.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "420",
+      "sourceJPEG_SHA256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+      "referenceJXL_SHA256": "9c5bbebabd0f8658610e92550ababafad262b5620edb2fb594f03a53c15d4ef8",
+      "jbrdSHA256": "bd2224baecace590cd0b910bf6dc101ac7a0acfc6d1134b1b53c269d854483f0",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "a3eb4e12c46f735fd599b6ff6148696e13d3fc4f3bd29480950ebf4ba33df0ee",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/420.jpg",
+        "../native-jpeg-audit/jbrd-reference/420.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "422",
+      "sourceJPEG_SHA256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+      "referenceJXL_SHA256": "53996ccb9ca6fc0b05b2f474fd1d571c89e952c5fc925cc746df09c9779c9187",
+      "jbrdSHA256": "bd2224baecace590cd0b910bf6dc101ac7a0acfc6d1134b1b53c269d854483f0",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "a3eb4e12c46f735fd599b6ff6148696e13d3fc4f3bd29480950ebf4ba33df0ee",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEG/422.jpg",
+        "../native-jpeg-audit/jbrd-reference/422.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "zero-padding",
+      "sourceJPEG_SHA256": "3f00b36cd36f9f993f84edcc8047fb1aff23f4b72add3c4e7bb0a6afe4927398",
+      "referenceJXL_SHA256": "71c8a3411eb7b26f577fa2717a491a142e752b6f9d1fd09ca3eb50f837d50273",
+      "jbrdSHA256": "b88a57d751d22ad8a02ae52648b48449094833f1f9207e213217cfa62f51a651",
+      "rawSHA256": "a5abdd879072e77e88452296b6630f666ac7e842f4693b7e29905c758cb653cd",
+      "fieldsSHA256": "912e4aaca54d1287d4bfd3041c8fd12847493b7665b55947b597843dff0367f2",
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "../native-jpeg-audit/jbrd-reference/zero-padding.jpg",
+        "../native-jpeg-audit/jbrd-reference/zero-padding.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    }
+  ],
+  "licence": "Apache-2.0 synthetic task-generated JPEG derivatives; no external image corpus",
+  "generator": "Documentation/Engineering/Migration/Evidence/NativeJPEG/generate-jbrd-fixtures.py"
+}

@@ -1,10 +1,30 @@
 # Change log
 
+## Unreleased — native JPEG public transcoder, 2026-10-09
+
+- Connected native coefficient-frame writing/reading and exact JPEG reconstruction to the public Transcoder and atomic CLI transcode operation. No source-JPEG lookup, pixel fallback or external runtime codec is used.
+- Preserved RGB/greyscale ICC profiles, fragmented APP2 markers, Exif/XMP and supported reconstruction metadata under caller resource limits.
+- Corrected inverse AC correlation for independently generated untransformed RGB reconstruction frames; retained baseline/progressive RGB and tiny/odd-dimension regressions.
+- Charged ICC profiles against the shared metadata ceiling during reverse transcoding before profile allocation.
+- Recorded independent interoperability, sanitizer, CLI and optimised whole-operation benchmark evidence. Final reviewed-head CI remains required; general JPEG XL feature/platform migration and release preparation remain open.
+
+## Unreleased — native JPEG preparation, 2026-10-09
+
+- Recorded a nine-fixture predecessor/independent reconstruction baseline, including progressive, tail and marker-fill failures.
+- Added a bounded internal JPEG framing reader that retains exact ranges over its input owner and separates trailing data at EOI.
+- Added validated DCT frame geometry separating single-component scan blocks from padded interleaved storage; retained synthetic fixtures run offline.
+- Added bounded sequential/progressive coefficient decoding with restart and scan-history validation; visible coefficients and quantisation match libjpeg-turbo across 15 fixtures. Added required independent snapshot verification in CI.
+- Fixed an odd-offset byte-stuffing cancellation gap with failing-before/passing-after regressions.
+- Added bounded JBRD reconstruction-header reading/writing and strict metadata assembly; headers match 16 independent bundles byte for byte. Fixed the independent CI test compiler command to use available clang.
+- Added native Brotli framing and stored-block encoding with correct metadata skipping, canonical padding/length checks, resource admission and cancellation. Independent libbrotli accepted 29 boundary/framing streams.
+- Added bounded native compressed Brotli decoding and JBRD metadata resolution, including block/context switching, persistent distances and the standard dictionary. Fixed the predecessor three-symbol ordering regression; 41 compressed streams, 16 JBRD payloads and 5082 transform vectors match independent references.
+- Native VarDCT/JPEG reconstruction integration and its public capability remain incomplete.
+
 ## Unreleased — public API and CLI integration, 2026-10-09
 
 - Connected public scalar encode/inspect/decode, aggregate memory accounting and rendering-intent preservation; PR #14 passed all eight CI checks, including macOS.
 - Added bounded CLI inspect/validate, safe report publication and cancellation; PR #15 passed all eight CI checks after correcting the test's startup synchronisation.
-- Added explicit attached raw UInt16 NRRD encode/decode on a separate branch, with no extra full-image serialisation array. Added strict header/semantic limits and test-only pynrrd/libjxl interoperability checks. Hosted qualification is pending for this stage.
+- Added explicit attached raw UInt16 NRRD encode/decode on a separate branch, with no extra full-image serialisation array. Added strict header/semantic limits and test-only pynrrd/libjxl interoperability checks. PR #16 passed all eight hosted CI jobs, including macOS.
 - Native JPEG reconstruction, broader features/platform gates and release preparation remain incomplete. No production cutover or release.
 
 ## Unreleased — decoder admission and CI interoperability, 2026-10-08

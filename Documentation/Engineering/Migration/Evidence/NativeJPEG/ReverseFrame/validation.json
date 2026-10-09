@@ -1,0 +1,896 @@
+{
+  "baseline_commit": "65682001be9ad91efe7df46befae288f929e5c0d",
+  "source_state": "Local native reverse coefficient-frame implementation; not public transcoding completion",
+  "predecessor_revision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "source_sha256": {
+    "Sources/SwiftJXLCore/Bitstream/BitReader.swift": "a139d466107cbe3afcc652b2d1393179cf8660d4cfc1820543ddcf5f07b8d2b2",
+    "Sources/SwiftJXLCore/Bitstream/BitWriter.swift": "ff607a06eb6f9bec20df6c5f75b4e7595f64b06cfdc352fa36e28c865d4b4ba6",
+    "Sources/SwiftJXLCore/Bitstream/SpecIntegers.swift": "13297330d46bd12e4e562be1b75d873e8c1cf6f730443723bc6fdb58ff22c65b",
+    "Sources/SwiftJXLCore/Bitstream/VarLenUint.swift": "7108fbd46962aa4c908273f41c8a7ea80c9ccd3a083aee8fe409969125960fd7",
+    "Sources/SwiftJXLCore/Brotli/BrotliContext.swift": "50771b1730fdb6e1da0b9f6e76cf32716ce494a2cdd2f5396deca809d55d7a83",
+    "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+    "Sources/SwiftJXLCore/Brotli/BrotliEncoder.swift": "b91fbb1b12834baa7a8a9e7ec7dfd791b0d102f54351aeb175c717f7d0b11a65",
+    "Sources/SwiftJXLCore/Brotli/BrotliMetaBlock.swift": "12ab12a63d852e8bbb0631ff702af8b27bed4d01d59efb26da24a876c1cdc56a",
+    "Sources/SwiftJXLCore/Brotli/BrotliPolicy.swift": "66a5c77678638647dce9b8b102d7150c15229eff1ef59c1e3ad8094e7fc16c5b",
+    "Sources/SwiftJXLCore/Brotli/BrotliPrefixCode.swift": "78ecd93b91a04f550b563e062641627abaeda8514c27c7960b8c3574dfd372d0",
+    "Sources/SwiftJXLCore/Brotli/BrotliReader.swift": "8e89d7e2da1aa36d9a06b46edfb4b8845b5d96d4e70c34677351ad96064759ce",
+    "Sources/SwiftJXLCore/Brotli/BrotliStaticDictionary.swift": "b671966ebf2defc427dc276e8d19793e1ab09e7a9132bbddf68405c0c58db6c7",
+    "Sources/SwiftJXLCore/Codec/ScalarDecodePolicy.swift": "1a9cbd91a40814f87515de3315a880bbc5adb0d196d0bb7ee79adfa6963f9a23",
+    "Sources/SwiftJXLCore/Codec/ScalarMap.swift": "9b51499e50778c38db73afb02c0be1f5a1299bb674434d8c0b5f568fb9651461",
+    "Sources/SwiftJXLCore/Codec/ScalarModularDecoder.swift": "9eb6904c722ced95c1833795dda5579874309e56b0ce726ed188843604a65e74",
+    "Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift": "837346e8c594d3513e45020d21e76197a87efa8b7ea0d3e3b3bbfdf2179c64f1",
+    "Sources/SwiftJXLCore/Codec/ScalarSampleStorage.swift": "c73b2bb0ed3fa0eff698a7252246f45f9777ba5c3e032780074b7e24183cfb14",
+    "Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift": "12b1bab79edb576cdc1ebcfdb857379e389b10c64353b2e385dac76b2e477370",
+    "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift": "eabc4a100804abd1b2d42f2f32b9b35791d415a6b911dbb8dc578abf455ffac3",
+    "Sources/SwiftJXLCore/Codestream/BitDepth.swift": "e42b5435d9424b67c1b4bc8cc92b15443575f631187e19d8dce1718e3b26b6d6",
+    "Sources/SwiftJXLCore/Codestream/ColorEncoding.swift": "dd25291342bbc115704b9cedcb5bd06243bed7b2ead2205cf7a1f1a360bde9f3",
+    "Sources/SwiftJXLCore/Codestream/ExtraChannelInfo.swift": "4d4e0dfeae35490240096d5cc45c8e773a4993a22cf34feb0418b0a39338f65e",
+    "Sources/SwiftJXLCore/Codestream/FrameHeader.swift": "dc93c020047ce28ba74ce6aecc61050a210a8d6f5ccfdab54527bc9000270179",
+    "Sources/SwiftJXLCore/Codestream/ImageMetadata.swift": "8d7a58a964f8f47bedc6323a43d065ae05f160804f93e84fdf5d1b46e282df5a",
+    "Sources/SwiftJXLCore/Codestream/Signature.swift": "665f0c4f00b91b10876dd772426b61ca6edd4961e7018dc96b3aae3120b772b2",
+    "Sources/SwiftJXLCore/Codestream/SizeHeader.swift": "17155283b2a9ce6c93c714cedac44c7d25a9931f175912c44650c4b41a0ebfb7",
+    "Sources/SwiftJXLCore/Codestream/TOC.swift": "db418153858b88b3489a9cd177abddfe2c0d927084ea862821e354247638ac31",
+    "Sources/SwiftJXLCore/Codestream/TOCPermutation.swift": "da7b2af7efd4192001c44dc2179ef7f4527a3af24bd8ae0d9a280fb3c12dc941",
+    "Sources/SwiftJXLCore/Container/JXLContainer.swift": "92d0025833b4d612162d0fb17e513e21d0569f4f886121e7db3c4e5b7fcde667",
+    "Sources/SwiftJXLCore/Entropy/ANSDistributionSerialisation.swift": "b22ee83cce90e7d5c6d90d208ffd72170026b7a66b40e688b5dc2255abd2dc22",
+    "Sources/SwiftJXLCore/Entropy/ANSStreamDecoder.swift": "7a48e71d834f8f1f8d4de3c39633f07145e37460adc118fe06c940182a265dbd",
+    "Sources/SwiftJXLCore/Entropy/ANSTokenStreamWriter.swift": "53092988d283836dd77d6aed636403489e9fbbb4a7d59d027e277c6edaa0d927",
+    "Sources/SwiftJXLCore/Entropy/AliasTable.swift": "c7efd360b73cd3ff1fe62df1d36cb68399af9eae150945e529be7567708fdec6",
+    "Sources/SwiftJXLCore/Entropy/ContextMap.swift": "f5d371b7a8017ffb521632837ea57b422c1e4747e8efd3ecefd6e5237327d159",
+    "Sources/SwiftJXLCore/Entropy/EntropySectionHeader.swift": "5ec3f1efb411edb8d7d9fe851d01286f0b28f7b7ee85ea8d0a794c5dea907c66",
+    "Sources/SwiftJXLCore/Entropy/HybridUint.swift": "0c7d993964572861dee64a752795f9f68b68858d4ecadd13e41814aeb0383ea0",
+    "Sources/SwiftJXLCore/Entropy/LZ77Config.swift": "78f4b8b1dd982028b0980f5f5d82dbd03aa30bf939a2555e5be0c8a0f814d083",
+    "Sources/SwiftJXLCore/Entropy/MultiClusterCodebook.swift": "84769994e1858d5c37a5dd50f8514dfb4f0834ba18bf0963af4a6fe4fa13df4a",
+    "Sources/SwiftJXLCore/Entropy/PrefixCode.swift": "f15a23133883a84a6606480917175547e5f76008f957e07e6b6db569f95f4f69",
+    "Sources/SwiftJXLCore/Entropy/PrefixCodeSerialisation.swift": "782cd13bdcf37d50e818e35a8872386b643e2bb28c77bc486212df312a98fd47",
+    "Sources/SwiftJXLCore/Entropy/RANS.swift": "8244a4e7f647474885f4e84892ebc96928b5c350f27e8ef877957eb685bafca3",
+    "Sources/SwiftJXLCore/Entropy/SimpleEntropyStream.swift": "0c74618755ae5940aaadbc83222bfcda5808434dd63082144e0110f7a348c74f",
+    "Sources/SwiftJXLCore/Entropy/SpecANSDistribution.swift": "eea19f53aedeca8ec0a98008fc4eed9d31fc026f6d0b61350e8743682558be8f",
+    "Sources/SwiftJXLCore/Entropy/TokenStreamReader.swift": "a8c5accc169d700d7a4f5d597515058798f5829efa0e2ff2286fd1fe60a5fd88",
+    "Sources/SwiftJXLCore/Entropy/TokenStreamWriter.swift": "0592431e27376cae52bd49eb7cad679597aaa184991bd75ca7b1d14148a8249f",
+    "Sources/SwiftJXLCore/JPEG/JBRDBox.swift": "864ae446db2ccc24c2e9afa4a7d136aa8055ec636d568bc893be954c114d7e46",
+    "Sources/SwiftJXLCore/JPEG/JBRDBoxWriter.swift": "fafee028686365f41e1435a412171a02b304f32cadbc9b437247ec9a81bcf9e4",
+    "Sources/SwiftJXLCore/JPEG/JBRDMetadata.swift": "8b35c21a89a5099903dfbaf3770afcf1b6bc88792cacfa76d92539949a6deafc",
+    "Sources/SwiftJXLCore/JPEG/JBRDPolicy.swift": "4a6b63c1c7f779972fb03dd69cadcb56882f99d00398c2ee712c0b5e3c1f6cd9",
+    "Sources/SwiftJXLCore/JPEG/JPEGBridgeCoefficients.swift": "475399e7168dff3cc0b3aa975e39fb91803c93a801d3d59534788819ff51d195",
+    "Sources/SwiftJXLCore/JPEG/JPEGBridgeEntropy.swift": "956ec59962f4d593db57286860ec1476829f4549a842ff6369ef1aa26416a468",
+    "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift": "67e75398407756496fa700270c67737f7f0d6a2f32558e30f4195bb1ab6560ad",
+    "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+    "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift": "8bd5168bb41b82b7a81ec8f7b413adb246216792927f5f953ee68883e7077507",
+    "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+    "Sources/SwiftJXLCore/JPEG/JPEGFrameLayout.swift": "754c38fbfd0a70e5843a9710ad7c1ebf668675d5421e777b3720b63c35eda655",
+    "Sources/SwiftJXLCore/JPEG/JPEGReconstructionMetadata.swift": "05a23379c920833f19de78e19cf44dc9198b20e5eff239170cde04fdff94ad42",
+    "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift": "89a9fe87c072d04eacebb2a4b3bc7bff6f814ae58b6d1fa0e1f79d56872837da",
+    "Sources/SwiftJXLCore/JPEG/JPEGSegmentReader.swift": "d5cd02b4901a2ff96cdbf77fb4a094e337431891f7c8de9cb1a954e47a094e94",
+    "Sources/SwiftJXLCore/Modular/GroupHeader.swift": "4dcf47c505e332b29b4928aec41961b3ffc811bd0a0049d65ee61c3c96c44109",
+    "Sources/SwiftJXLCore/Modular/LibjxlPredictor.swift": "d22c53808f150333422db9f643ac882529e8f83e58200c4e1d085b9fd21da7e0",
+    "Sources/SwiftJXLCore/Modular/ModularChannelDecoder.swift": "9d4374a991ed236270933b2b578d2e651df5101ef9a7bc20bb9071b02340e468",
+    "Sources/SwiftJXLCore/Modular/ModularProperties.swift": "96de5718d84f02a6b1fd9e8e144da1b9e9176694855b8af8ba7465164eadb634",
+    "Sources/SwiftJXLCore/Modular/ModularTree.swift": "14ca65941e854e877d6b53c2fdb6df22fa15f42159ce0fc7a226b26bc5ac940b",
+    "Sources/SwiftJXLCore/Modular/Predictors.swift": "9e2fb94b4426b6bfa670bb06a2e5d9bea85795d3d14f96b7ff3c91ef644cbb65",
+    "Sources/SwiftJXLCore/Modular/RCT.swift": "a26c65214a57665d3c086df9e21f213cd965878eddcecdf882d369fabb208f6c",
+    "Sources/SwiftJXLCore/Modular/WeightedPredictor.swift": "d1ca9f07c0d0a2411b80fb60c23e91bf2cb1d7a46cbc69dbd139838e43f0cac6",
+    "Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift": "e0f070a2bbcf939fc5e913b329a47ffac8b7e642298dd665b91c2abd8801f940",
+    "Tests/SwiftJXLCoreTests/JPEGBridgeCoefficientTests.swift": "a7db064d7a9e656da6d2fd0dc1fbe636df38a9b64dfdba980f9d839c7c0c8125"
+  },
+  "commands": [
+    {
+      "configuration": "debug",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEGBridge"
+      ],
+      "exit": 0,
+      "seconds": 3.5865641669999997
+    },
+    {
+      "configuration": "asan",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEGBridge",
+        "--scratch-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-validation-qualification/build/asan",
+        "--sanitize",
+        "address"
+      ],
+      "exit": 0,
+      "seconds": 15.504428457999998
+    },
+    {
+      "configuration": "tsan",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "JPEGBridge",
+        "--scratch-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-validation-qualification/build/tsan",
+        "--sanitize",
+        "thread"
+      ],
+      "exit": 0,
+      "seconds": 26.819280959
+    }
+  ],
+  "environment": {
+    "SWIFTJXL_ORACLE_BIN": "/opt/homebrew/bin",
+    "SWIFTJXL_ORACLE_OUTPUT": "work/native-jpeg-audit/reverse-frame-qualification/<configuration>-oracle",
+    "CLANG_MODULE_CACHE_PATH": "$PWD/.build/module-cache",
+    "SWIFTPM_MODULECACHE_OVERRIDE": "$PWD/.build/module-cache"
+  },
+  "validation": {
+    "configurations": [
+      "debug",
+      "asan",
+      "tsan"
+    ],
+    "declarations": 14,
+    "cases": 61,
+    "failures": 0,
+    "skips": 0,
+    "independent_cases_per_direction": 19,
+    "scalar_regression": {
+      "declarations": 28,
+      "cases": 41,
+      "exit": 0,
+      "command": "xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter Scalar"
+    }
+  },
+  "oracle": "libjxl 0.12.0, pinned a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "oracle_files": [
+    {
+      "configuration": "debug",
+      "fixture": "420",
+      "files": {
+        "restored.jpg": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+        "reference.jxl": "dd11147711a7227bf8ec9ea070bf47d5a4363183735e27d82a684bf66337199e",
+        "native.jxl": "9c82d53cc334e69b498fcde66d36c42bfa579b3d25bae0139743fa75bc30d259",
+        "native-restored.jpg": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+        "source.jpg": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "422",
+      "files": {
+        "restored.jpg": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+        "reference.jxl": "0f333df41cc85360fbd01eac145922dd82b8b451c83995d27e2f5e9cb29a40d3",
+        "native.jxl": "ff58b7d43a9c99babc94fcafcad2b39e7b5186fccfa0bd7c6fc31f7537edbca6",
+        "native-restored.jpg": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+        "source.jpg": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "440",
+      "files": {
+        "restored.jpg": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+        "reference.jxl": "664445a47a2eb43b4dcf024d28255e59e8b01579ffec1fa5852cf4651290df91",
+        "native.jxl": "b5310bd9d9a31639861c817e332c1d8cff561f1ee78ea229ee37adb6aa4ac718",
+        "native-restored.jpg": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+        "source.jpg": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "444",
+      "files": {
+        "restored.jpg": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+        "reference.jxl": "8024a0ef10dfd17d6a7705e5909134e5c69f387a8938f7c1f117f000b97ea3b5",
+        "native.jxl": "d740b2217cbfbddefac6df792084c570584a37b65e9ce8a2d130677e48019e04",
+        "native-restored.jpg": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+        "source.jpg": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "fill-marker",
+      "files": {
+        "restored.jpg": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+        "reference.jxl": "7647ed0b9037f8cbf8141277545aa926604d55f4c1b5fc11605ab5082d7c1709",
+        "native.jxl": "932c733569af45d98b75c9d7ff656e5238f40e6d716044012856f3b3061f8983",
+        "native-restored.jpg": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+        "source.jpg": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "gray",
+      "files": {
+        "restored.jpg": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+        "reference.jxl": "ca2912b67d65e08229b0b56cbb2f7e71ba5bae29db126f3a65f61a4af7fa2bac",
+        "native.jxl": "c48732605f7d4cf2766bee202e70a9bf4375fa4cca3d370760340b57d6598886",
+        "native-restored.jpg": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+        "source.jpg": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "metadata-tail",
+      "files": {
+        "restored.jpg": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+        "reference.jxl": "1ce8f8a3d2ef5221f4d4596c6346c3f71457d6564189c0939e1cd5c32ccb21f1",
+        "native.jxl": "a2435e9713dd75c1506f645edc7b354a04057da798cd9bd221576942f9b56161",
+        "native-restored.jpg": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+        "source.jpg": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "multigroup-420",
+      "files": {
+        "restored.jpg": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2",
+        "reference.jxl": "d2e43b9557b29da4eb140e9d9ab8ba7409776a654bf6456204f69028bf29a921",
+        "native.jxl": "e2b4bbee1c0c6ea8ab270dd62fa54aa6fd862ac0aaefdae53c43da700555223e",
+        "native-restored.jpg": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2",
+        "source.jpg": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "multigroup-progressive-422",
+      "files": {
+        "restored.jpg": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026",
+        "reference.jxl": "dcde35fa94b8b7f5138e6e3fd82326856bf3de30dc4c0cdfb8c94995be70058d",
+        "native.jxl": "3128ed4812035cf3cc5d3fb545dd2a8c4e7b830cc0ff96299b40b19c8b01432d",
+        "native-restored.jpg": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026",
+        "source.jpg": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "progressive-422",
+      "files": {
+        "restored.jpg": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+        "reference.jxl": "d18abaf1a0d3da289c091bfedd73e2dd4ca63999e518d8226aa1446fb7a1aacd",
+        "native.jxl": "124236cd3732d7a39b18ab87a25560e73670f6c34e21067909df067ebc6577dc",
+        "native-restored.jpg": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+        "source.jpg": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "progressive-440",
+      "files": {
+        "restored.jpg": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+        "reference.jxl": "3555f19681fa8a9744c1afd398ee906f6babc2b88f5661169a845530914e67f3",
+        "native.jxl": "42a8d3e6785694e7de17437520fa5c7968cda4b6bbd5cc135af57a063728691e",
+        "native-restored.jpg": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+        "source.jpg": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "progressive",
+      "files": {
+        "restored.jpg": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+        "reference.jxl": "a7f8105d831bb45b3952cf2eb3060055fffb3b99a21bb97f4aa951c834e8b4ab",
+        "native.jxl": "9219657008ad7e42bc8fb13e50aa442013a624a5d2cf3dc44db4c453ec1b7888",
+        "native-restored.jpg": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+        "source.jpg": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "progressive-dc-refine",
+      "files": {
+        "restored.jpg": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d",
+        "reference.jxl": "f4838e16aefd5b9cdc86699a7dbc5893be0a5ad9594c9f72be1c2588f19d17f3",
+        "native.jxl": "c5f0e4b69207d91961acaeb1987c4943dcfcc577624468fdf2ed9cad8d09895f",
+        "native-restored.jpg": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d",
+        "source.jpg": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "progressive-edge",
+      "files": {
+        "restored.jpg": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+        "reference.jxl": "1f169d8ef06e0167249a77f87639fc26a862c75184a9abecfea50c8e8e2c1ae5",
+        "native.jxl": "ec21b9977ad76bf7b86449077d378e7b78899e02fb9b3218c7814535d52af5bd",
+        "native-restored.jpg": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+        "source.jpg": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "progressive-restart",
+      "files": {
+        "restored.jpg": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484",
+        "reference.jxl": "5acd8ed3c2e2f1aadef42d2f872a7c335a7f7321b6e4a4f68606cc29477e2a3a",
+        "native.jxl": "1ede57b584aebc2fd4da216771b8e15ac2b33b69137add75ad73e5cd4677d8b4",
+        "native-restored.jpg": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484",
+        "source.jpg": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "quant16",
+      "files": {
+        "restored.jpg": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89",
+        "reference.jxl": "0b19948a17790a7fc7dd6c7960a81462b8181d31e6f4a124e95dcad6add403b1",
+        "native.jxl": "fd04664ece398252f9f8e865faeba847c401d83e6e299df845b6e5bcfcbf7cb2",
+        "native-restored.jpg": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89",
+        "source.jpg": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "restart",
+      "files": {
+        "restored.jpg": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+        "reference.jxl": "9187acd9d4d03825ed8b0f029e8eb05e401365d058d653a5547ca2f53635a99d",
+        "native.jxl": "ab87f9e3145a6e0101220a1573dd47ad8b457282146438ccdf50dce7bd86c4b6",
+        "native-restored.jpg": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+        "source.jpg": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "sequential-multiscan",
+      "files": {
+        "restored.jpg": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+        "reference.jxl": "04d812c142a563ed4b6a58f9c89232ef1795428c14eb0707a5948c25db1cf311",
+        "native.jxl": "e1c3e73a0433deb0316b0bdc66b6a4dc848dd439f87d2f55344a1bcda1bbb166",
+        "native-restored.jpg": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+        "source.jpg": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94"
+      }
+    },
+    {
+      "configuration": "debug",
+      "fixture": "wide-gray",
+      "files": {
+        "restored.jpg": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271",
+        "reference.jxl": "0d594c86976c7122e9783d3d266e6dcc4767a43c6878f6dbe04c9ade74de4753",
+        "native.jxl": "d5eb06d8d2513d3205875ecc006f4c8d7cea211b62ad2c0ca7fae9f690122787",
+        "native-restored.jpg": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271",
+        "source.jpg": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "420",
+      "files": {
+        "restored.jpg": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+        "reference.jxl": "dd11147711a7227bf8ec9ea070bf47d5a4363183735e27d82a684bf66337199e",
+        "native.jxl": "9c82d53cc334e69b498fcde66d36c42bfa579b3d25bae0139743fa75bc30d259",
+        "native-restored.jpg": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+        "source.jpg": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "422",
+      "files": {
+        "restored.jpg": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+        "reference.jxl": "0f333df41cc85360fbd01eac145922dd82b8b451c83995d27e2f5e9cb29a40d3",
+        "native.jxl": "ff58b7d43a9c99babc94fcafcad2b39e7b5186fccfa0bd7c6fc31f7537edbca6",
+        "native-restored.jpg": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+        "source.jpg": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "440",
+      "files": {
+        "restored.jpg": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+        "reference.jxl": "664445a47a2eb43b4dcf024d28255e59e8b01579ffec1fa5852cf4651290df91",
+        "native.jxl": "b5310bd9d9a31639861c817e332c1d8cff561f1ee78ea229ee37adb6aa4ac718",
+        "native-restored.jpg": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+        "source.jpg": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "444",
+      "files": {
+        "restored.jpg": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+        "reference.jxl": "8024a0ef10dfd17d6a7705e5909134e5c69f387a8938f7c1f117f000b97ea3b5",
+        "native.jxl": "d740b2217cbfbddefac6df792084c570584a37b65e9ce8a2d130677e48019e04",
+        "native-restored.jpg": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+        "source.jpg": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "fill-marker",
+      "files": {
+        "restored.jpg": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+        "reference.jxl": "7647ed0b9037f8cbf8141277545aa926604d55f4c1b5fc11605ab5082d7c1709",
+        "native.jxl": "932c733569af45d98b75c9d7ff656e5238f40e6d716044012856f3b3061f8983",
+        "native-restored.jpg": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+        "source.jpg": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "gray",
+      "files": {
+        "restored.jpg": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+        "reference.jxl": "ca2912b67d65e08229b0b56cbb2f7e71ba5bae29db126f3a65f61a4af7fa2bac",
+        "native.jxl": "c48732605f7d4cf2766bee202e70a9bf4375fa4cca3d370760340b57d6598886",
+        "native-restored.jpg": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+        "source.jpg": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "metadata-tail",
+      "files": {
+        "restored.jpg": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+        "reference.jxl": "1ce8f8a3d2ef5221f4d4596c6346c3f71457d6564189c0939e1cd5c32ccb21f1",
+        "native.jxl": "a2435e9713dd75c1506f645edc7b354a04057da798cd9bd221576942f9b56161",
+        "native-restored.jpg": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+        "source.jpg": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "multigroup-420",
+      "files": {
+        "restored.jpg": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2",
+        "reference.jxl": "d2e43b9557b29da4eb140e9d9ab8ba7409776a654bf6456204f69028bf29a921",
+        "native.jxl": "e2b4bbee1c0c6ea8ab270dd62fa54aa6fd862ac0aaefdae53c43da700555223e",
+        "native-restored.jpg": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2",
+        "source.jpg": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "multigroup-progressive-422",
+      "files": {
+        "restored.jpg": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026",
+        "reference.jxl": "dcde35fa94b8b7f5138e6e3fd82326856bf3de30dc4c0cdfb8c94995be70058d",
+        "native.jxl": "3128ed4812035cf3cc5d3fb545dd2a8c4e7b830cc0ff96299b40b19c8b01432d",
+        "native-restored.jpg": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026",
+        "source.jpg": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "progressive-422",
+      "files": {
+        "restored.jpg": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+        "reference.jxl": "d18abaf1a0d3da289c091bfedd73e2dd4ca63999e518d8226aa1446fb7a1aacd",
+        "native.jxl": "124236cd3732d7a39b18ab87a25560e73670f6c34e21067909df067ebc6577dc",
+        "native-restored.jpg": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+        "source.jpg": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "progressive-440",
+      "files": {
+        "restored.jpg": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+        "reference.jxl": "3555f19681fa8a9744c1afd398ee906f6babc2b88f5661169a845530914e67f3",
+        "native.jxl": "42a8d3e6785694e7de17437520fa5c7968cda4b6bbd5cc135af57a063728691e",
+        "native-restored.jpg": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+        "source.jpg": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "progressive",
+      "files": {
+        "restored.jpg": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+        "reference.jxl": "a7f8105d831bb45b3952cf2eb3060055fffb3b99a21bb97f4aa951c834e8b4ab",
+        "native.jxl": "9219657008ad7e42bc8fb13e50aa442013a624a5d2cf3dc44db4c453ec1b7888",
+        "native-restored.jpg": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+        "source.jpg": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "progressive-dc-refine",
+      "files": {
+        "restored.jpg": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d",
+        "reference.jxl": "f4838e16aefd5b9cdc86699a7dbc5893be0a5ad9594c9f72be1c2588f19d17f3",
+        "native.jxl": "c5f0e4b69207d91961acaeb1987c4943dcfcc577624468fdf2ed9cad8d09895f",
+        "native-restored.jpg": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d",
+        "source.jpg": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "progressive-edge",
+      "files": {
+        "restored.jpg": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+        "reference.jxl": "1f169d8ef06e0167249a77f87639fc26a862c75184a9abecfea50c8e8e2c1ae5",
+        "native.jxl": "ec21b9977ad76bf7b86449077d378e7b78899e02fb9b3218c7814535d52af5bd",
+        "native-restored.jpg": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+        "source.jpg": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "progressive-restart",
+      "files": {
+        "restored.jpg": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484",
+        "reference.jxl": "5acd8ed3c2e2f1aadef42d2f872a7c335a7f7321b6e4a4f68606cc29477e2a3a",
+        "native.jxl": "1ede57b584aebc2fd4da216771b8e15ac2b33b69137add75ad73e5cd4677d8b4",
+        "native-restored.jpg": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484",
+        "source.jpg": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "quant16",
+      "files": {
+        "restored.jpg": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89",
+        "reference.jxl": "0b19948a17790a7fc7dd6c7960a81462b8181d31e6f4a124e95dcad6add403b1",
+        "native.jxl": "fd04664ece398252f9f8e865faeba847c401d83e6e299df845b6e5bcfcbf7cb2",
+        "native-restored.jpg": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89",
+        "source.jpg": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "restart",
+      "files": {
+        "restored.jpg": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+        "reference.jxl": "9187acd9d4d03825ed8b0f029e8eb05e401365d058d653a5547ca2f53635a99d",
+        "native.jxl": "ab87f9e3145a6e0101220a1573dd47ad8b457282146438ccdf50dce7bd86c4b6",
+        "native-restored.jpg": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+        "source.jpg": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "sequential-multiscan",
+      "files": {
+        "restored.jpg": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+        "reference.jxl": "04d812c142a563ed4b6a58f9c89232ef1795428c14eb0707a5948c25db1cf311",
+        "native.jxl": "e1c3e73a0433deb0316b0bdc66b6a4dc848dd439f87d2f55344a1bcda1bbb166",
+        "native-restored.jpg": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+        "source.jpg": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94"
+      }
+    },
+    {
+      "configuration": "asan",
+      "fixture": "wide-gray",
+      "files": {
+        "restored.jpg": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271",
+        "reference.jxl": "0d594c86976c7122e9783d3d266e6dcc4767a43c6878f6dbe04c9ade74de4753",
+        "native.jxl": "d5eb06d8d2513d3205875ecc006f4c8d7cea211b62ad2c0ca7fae9f690122787",
+        "native-restored.jpg": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271",
+        "source.jpg": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "420",
+      "files": {
+        "restored.jpg": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+        "reference.jxl": "dd11147711a7227bf8ec9ea070bf47d5a4363183735e27d82a684bf66337199e",
+        "native.jxl": "9c82d53cc334e69b498fcde66d36c42bfa579b3d25bae0139743fa75bc30d259",
+        "native-restored.jpg": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+        "source.jpg": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "422",
+      "files": {
+        "restored.jpg": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+        "reference.jxl": "0f333df41cc85360fbd01eac145922dd82b8b451c83995d27e2f5e9cb29a40d3",
+        "native.jxl": "ff58b7d43a9c99babc94fcafcad2b39e7b5186fccfa0bd7c6fc31f7537edbca6",
+        "native-restored.jpg": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+        "source.jpg": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "440",
+      "files": {
+        "restored.jpg": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+        "reference.jxl": "664445a47a2eb43b4dcf024d28255e59e8b01579ffec1fa5852cf4651290df91",
+        "native.jxl": "b5310bd9d9a31639861c817e332c1d8cff561f1ee78ea229ee37adb6aa4ac718",
+        "native-restored.jpg": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+        "source.jpg": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "444",
+      "files": {
+        "restored.jpg": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+        "reference.jxl": "8024a0ef10dfd17d6a7705e5909134e5c69f387a8938f7c1f117f000b97ea3b5",
+        "native.jxl": "d740b2217cbfbddefac6df792084c570584a37b65e9ce8a2d130677e48019e04",
+        "native-restored.jpg": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+        "source.jpg": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "fill-marker",
+      "files": {
+        "restored.jpg": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+        "reference.jxl": "7647ed0b9037f8cbf8141277545aa926604d55f4c1b5fc11605ab5082d7c1709",
+        "native.jxl": "932c733569af45d98b75c9d7ff656e5238f40e6d716044012856f3b3061f8983",
+        "native-restored.jpg": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+        "source.jpg": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "gray",
+      "files": {
+        "restored.jpg": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+        "reference.jxl": "ca2912b67d65e08229b0b56cbb2f7e71ba5bae29db126f3a65f61a4af7fa2bac",
+        "native.jxl": "c48732605f7d4cf2766bee202e70a9bf4375fa4cca3d370760340b57d6598886",
+        "native-restored.jpg": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+        "source.jpg": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "metadata-tail",
+      "files": {
+        "restored.jpg": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+        "reference.jxl": "1ce8f8a3d2ef5221f4d4596c6346c3f71457d6564189c0939e1cd5c32ccb21f1",
+        "native.jxl": "a2435e9713dd75c1506f645edc7b354a04057da798cd9bd221576942f9b56161",
+        "native-restored.jpg": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+        "source.jpg": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "multigroup-420",
+      "files": {
+        "restored.jpg": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2",
+        "reference.jxl": "d2e43b9557b29da4eb140e9d9ab8ba7409776a654bf6456204f69028bf29a921",
+        "native.jxl": "e2b4bbee1c0c6ea8ab270dd62fa54aa6fd862ac0aaefdae53c43da700555223e",
+        "native-restored.jpg": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2",
+        "source.jpg": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "multigroup-progressive-422",
+      "files": {
+        "restored.jpg": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026",
+        "reference.jxl": "dcde35fa94b8b7f5138e6e3fd82326856bf3de30dc4c0cdfb8c94995be70058d",
+        "native.jxl": "3128ed4812035cf3cc5d3fb545dd2a8c4e7b830cc0ff96299b40b19c8b01432d",
+        "native-restored.jpg": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026",
+        "source.jpg": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "progressive",
+      "files": {
+        "restored.jpg": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+        "reference.jxl": "a7f8105d831bb45b3952cf2eb3060055fffb3b99a21bb97f4aa951c834e8b4ab",
+        "native.jxl": "9219657008ad7e42bc8fb13e50aa442013a624a5d2cf3dc44db4c453ec1b7888",
+        "native-restored.jpg": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+        "source.jpg": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "progressive-422",
+      "files": {
+        "restored.jpg": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+        "reference.jxl": "d18abaf1a0d3da289c091bfedd73e2dd4ca63999e518d8226aa1446fb7a1aacd",
+        "native.jxl": "124236cd3732d7a39b18ab87a25560e73670f6c34e21067909df067ebc6577dc",
+        "native-restored.jpg": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+        "source.jpg": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "progressive-440",
+      "files": {
+        "restored.jpg": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+        "reference.jxl": "3555f19681fa8a9744c1afd398ee906f6babc2b88f5661169a845530914e67f3",
+        "native.jxl": "42a8d3e6785694e7de17437520fa5c7968cda4b6bbd5cc135af57a063728691e",
+        "native-restored.jpg": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+        "source.jpg": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "progressive-dc-refine",
+      "files": {
+        "restored.jpg": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d",
+        "reference.jxl": "f4838e16aefd5b9cdc86699a7dbc5893be0a5ad9594c9f72be1c2588f19d17f3",
+        "native.jxl": "c5f0e4b69207d91961acaeb1987c4943dcfcc577624468fdf2ed9cad8d09895f",
+        "native-restored.jpg": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d",
+        "source.jpg": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "progressive-edge",
+      "files": {
+        "restored.jpg": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+        "reference.jxl": "1f169d8ef06e0167249a77f87639fc26a862c75184a9abecfea50c8e8e2c1ae5",
+        "native.jxl": "ec21b9977ad76bf7b86449077d378e7b78899e02fb9b3218c7814535d52af5bd",
+        "native-restored.jpg": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+        "source.jpg": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "progressive-restart",
+      "files": {
+        "restored.jpg": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484",
+        "reference.jxl": "5acd8ed3c2e2f1aadef42d2f872a7c335a7f7321b6e4a4f68606cc29477e2a3a",
+        "native.jxl": "1ede57b584aebc2fd4da216771b8e15ac2b33b69137add75ad73e5cd4677d8b4",
+        "native-restored.jpg": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484",
+        "source.jpg": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "quant16",
+      "files": {
+        "restored.jpg": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89",
+        "reference.jxl": "0b19948a17790a7fc7dd6c7960a81462b8181d31e6f4a124e95dcad6add403b1",
+        "native.jxl": "fd04664ece398252f9f8e865faeba847c401d83e6e299df845b6e5bcfcbf7cb2",
+        "native-restored.jpg": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89",
+        "source.jpg": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "restart",
+      "files": {
+        "restored.jpg": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+        "reference.jxl": "9187acd9d4d03825ed8b0f029e8eb05e401365d058d653a5547ca2f53635a99d",
+        "native.jxl": "ab87f9e3145a6e0101220a1573dd47ad8b457282146438ccdf50dce7bd86c4b6",
+        "native-restored.jpg": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+        "source.jpg": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "sequential-multiscan",
+      "files": {
+        "restored.jpg": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+        "reference.jxl": "04d812c142a563ed4b6a58f9c89232ef1795428c14eb0707a5948c25db1cf311",
+        "native.jxl": "e1c3e73a0433deb0316b0bdc66b6a4dc848dd439f87d2f55344a1bcda1bbb166",
+        "native-restored.jpg": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+        "source.jpg": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94"
+      }
+    },
+    {
+      "configuration": "tsan",
+      "fixture": "wide-gray",
+      "files": {
+        "restored.jpg": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271",
+        "reference.jxl": "0d594c86976c7122e9783d3d266e6dcc4767a43c6878f6dbe04c9ade74de4753",
+        "native.jxl": "d5eb06d8d2513d3205875ecc006f4c8d7cea211b62ad2c0ca7fae9f690122787",
+        "native-restored.jpg": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271",
+        "source.jpg": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271"
+      }
+    }
+  ],
+  "log_sha256": {
+    "tsan.log": "c1aab49404f3d4c4063b12f73b4ea83c9602392edb2100356888a3bc5c413598",
+    "scalar-regression.log": "6d62f8c3d4029c02d03a880b8560f9a4e03306d70bc3a48d0b1a3325c1bee8fc",
+    "debug.log": "7553a59c527dd9c8d68485cf5144327786f6b3024584c2ae0c0b3b6ead18ad44",
+    "asan.log": "0fdd1062acd753288d7b9148eb0b9c81c11eebfdf42a86fe2b8f7f1b6bab81cf"
+  },
+  "benchmark": {
+    "fixtures": [
+      {
+        "codestreamBytes": 605,
+        "fixture": "gray",
+        "iterationsPerTrial": 40,
+        "medianMicroseconds": 39.683350000000004,
+        "samplesMicroseconds": [
+          42.284375,
+          40.84375,
+          40.03855,
+          39.683350000000004,
+          38.3073,
+          38.01875,
+          38.111475
+        ],
+        "sourceJPEGBytes": 683,
+        "warmups": 3
+      },
+      {
+        "codestreamBytes": 556,
+        "fixture": "progressive-edge",
+        "iterationsPerTrial": 40,
+        "medianMicroseconds": 39.194775,
+        "samplesMicroseconds": [
+          41.380225,
+          39.65,
+          39.955225,
+          39.194775,
+          39.121875,
+          38.34375,
+          37.911475
+        ],
+        "sourceJPEGBytes": 834,
+        "warmups": 3
+      },
+      {
+        "codestreamBytes": 779,
+        "fixture": "quant16",
+        "iterationsPerTrial": 40,
+        "medianMicroseconds": 35.74165,
+        "samplesMicroseconds": [
+          36.23125,
+          36.235425,
+          36.1271,
+          35.6302,
+          35.74165,
+          35.579175,
+          35.190625
+        ],
+        "sourceJPEGBytes": 747,
+        "warmups": 3
+      },
+      {
+        "codestreamBytes": 115606,
+        "fixture": "multigroup-420",
+        "iterationsPerTrial": 3,
+        "medianMicroseconds": 4454.875,
+        "samplesMicroseconds": [
+          4403.111333333333,
+          4412.305333333333,
+          4424.902666666667,
+          4511.527666666667,
+          4497.055666666666,
+          4500.25,
+          4454.875
+        ],
+        "sourceJPEGBytes": 89074,
+        "warmups": 3
+      }
+    ],
+    "scope": "Native JXL coefficient-frame reader with coefficient comparison; JPEG input decoding, reconstruction metadata and JPEG output excluded",
+    "trials": 7
+  },
+  "limits": [
+    "DCT8, one DC group and pass, no ICC/extras/animation, RAW quantisation JPEG coefficient profile",
+    "Container/external metadata/public API/CLI integration not complete",
+    "Conservative reservation bounds, not measured peak RSS or allocation counts",
+    "Hosted CI covers older 5f67bfb, not these local changes"
+  ]
+}

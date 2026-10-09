@@ -33,6 +33,8 @@ The new `PayloadOwner` retains immutable Data and exposes only a synchronous reb
 
 CI now runs NRRD checks across Linux Swift 6.2/6.4 x86/ARM debug/release, macOS debug/ASan/TSan, and pinned libjxl debug/release. Python 3.12 is selected on hosted macOS for the pinned test-only NumPy wheel. The standard/third-party algorithms remain external test evidence; no runtime dependency or codec subsystem is copied in this stage. No shared contract document, version, stable tag or production configuration changes.
 
+Hosted validation completed successfully at `3f9a981671f0c3d1b95c75258e38341d571d321a`: all eight jobs in [run 37886167431](https://github.com/raster-labs/SwiftJXL/actions/runs/37886167431), including macOS 26 / Swift 6.2, the four Linux matrix jobs, independent consumer, contract identity and pinned libjxl interoperability. [PR #16](https://github.com/raster-labs/SwiftJXL/pull/16) remains unmerged.
+
 ## Pre-merge integration review — 9 October 2026
 
 PR #16 now targets main after the owner-authorised #14/#15 merges. It includes main commit `77451c7f8954c1d70964e1abb11576c824b5b2c7`, including the nonblocking diagnostic correction. The NRRD parser remains byte-identical to its previous qualified implementation; library sources and package configuration match main. Ten additional process regressions exercise encode/decode with full stderr: input deadline, malformed input, verbose diagnostic failure, cancellation after confirmed readiness, and JSON-report deadline after successful payload publication. Reports remain deadline-bounded and cannot retract already committed payloads.

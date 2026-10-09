@@ -1,0 +1,1790 @@
+{
+  "status": "passed",
+  "binary_sha256": "05a78eb841cf2c6a259a023775423fc496d4b5f108cf44b0723589401106836b",
+  "checks": [
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/420.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/420.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1271,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/420.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/420-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/420.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/420-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/420.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/420-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/420-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/422.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/422.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1398,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/422.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/422-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/422.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/422-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/422.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/422-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/422-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/440.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/440.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1472,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/440.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/440-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/440.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/440-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/440.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/440-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/440-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/444.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/444.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1736,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/444.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/444-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/444.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/444-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/444-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/444-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/fill-marker.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/fill-marker.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1275,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/fill-marker.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/fill-marker-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/fill-marker.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/fill-marker-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/fill-marker.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/fill-marker-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/fill-marker-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/gray.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":905,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/gray.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/gray-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/gray.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/gray-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/gray-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/gray-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/metadata-tail.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/metadata-tail.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1309,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/metadata-tail.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/metadata-tail-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/metadata-tail.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/metadata-tail-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/metadata-tail.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/metadata-tail-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/metadata-tail-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-422.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-422.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":976,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-422.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-422-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-422.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-422-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-422.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-422-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-422-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-440.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-440.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":968,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-440.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-440-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-440.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-440-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-440.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-440-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-440-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-dc-refine.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-dc-refine.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":795,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-dc-refine.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-dc-refine-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-dc-refine.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-dc-refine-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-dc-refine.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-dc-refine-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-dc-refine-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-edge.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":869,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-edge.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-edge-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-edge.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-edge-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-edge-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-edge-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-restart.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-restart.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":867,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-restart.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-restart-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-restart.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-restart-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-restart.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-restart-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-restart-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1068,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/progressive-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/restart.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/restart.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1274,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/restart.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/restart-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/restart.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/restart-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/restart.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/restart-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/restart-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/sequential-multiscan.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/sequential-multiscan.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1088,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/sequential-multiscan.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/sequential-multiscan-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/sequential-multiscan.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/sequential-multiscan-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/sequential-multiscan.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/sequential-multiscan-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/sequential-multiscan-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-420.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-420.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":116126,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-420.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-420-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-420.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-420-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-420.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-420-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-420-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-progressive-422.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-progressive-422.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":151195,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-progressive-422.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-progressive-422-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-progressive-422.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-progressive-422-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-progressive-422.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-progressive-422-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/multigroup-progressive-422-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/quant16.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/quant16.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1079,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/quant16.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/quant16-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/quant16.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/quant16-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/quant16.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/quant16-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/quant16-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/wide-gray.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/wide-gray.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":28143,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/wide-gray.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/wide-gray-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/wide-gray.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/wide-gray-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/wide-gray.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/wide-gray-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/wide-gray-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-rgb-source.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-rgb-source.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":2981,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-rgb-source.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-rgb-source-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-rgb-source.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-rgb-source-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-rgb-source.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-rgb-source-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-rgb-source-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-gray-source.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-gray-source.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":1668,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-gray-source.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-gray-source-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-gray-source.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-gray-source-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-gray-source.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-gray-source-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-gray-source-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-fragmented-source.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-fragmented-source.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": "{\"fidelity\":\"original-bitstream\",\"format\":\"jpeg-xl\",\"operation\":\"transcode\",\"outputBytes\":3001,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-fragmented-source.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-fragmented-source-restored.jpg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-fragmented-source.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-fragmented-source-oracle.jpg",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/cjxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-fragmented-source.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-fragmented-source-reference.jxl",
+        "--lossless_jpeg=1",
+        "--quiet"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/icc-fragmented-source-reference.jxl",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "-",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "-",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "-",
+        "--input-format",
+        "jxl",
+        "--output-format",
+        "jpeg",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/preserved.jpg",
+        "--overwrite",
+        "--json"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid JPEG or JPEG XL reconstruction data.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-validation-final/preserved.jpg"
+      ],
+      "exit": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output already exists or is not a regular file.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--overwrite"
+      ],
+      "exit": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input and output refer to the same file.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "--mode",
+        "lossy"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Native transcoding requires lossless mode.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "--max-error",
+        "1"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: max-error does not apply to original JPEG preservation.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "--max-memory",
+        "1"
+      ],
+      "exit": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Memory limit is too small for command I/O.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jxl",
+        "--timeout",
+        "0.000000001"
+      ],
+      "exit": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Operation deadline exceeded.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg"
+      ],
+      "exit": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Native transcoding requires input-format and output-format.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg",
+        "--output-format",
+        "jpeg"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Unsupported native format pair.\n"
+    }
+  ]
+}

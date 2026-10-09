@@ -1,0 +1,76 @@
+{
+  "status": "native-brotli-and-jbrd-resolution-locally-passed-hosted-pending",
+  "base": "f5cc51f",
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "declarations": 44,
+  "cases": 142,
+  "skips": 0,
+  "configurations": [
+    "debug",
+    "address-sanitizer",
+    "thread-sanitizer"
+  ],
+  "compressedStreams": 41,
+  "jbrdPayloads": 16,
+  "dictionaryTransforms": 5082,
+  "nativeBrotliDecoderImplemented": true,
+  "nativeTranscodeImplemented": false,
+  "coverage": {
+    "contextModeMask": 15,
+    "distancePostfixMask": 15,
+    "shortDistanceMask": 65535,
+    "maximumBlockTypes": [
+      2,
+      2,
+      2
+    ],
+    "maximumTrees": [
+      6,
+      2
+    ],
+    "blockSwitches": 12,
+    "dictionaryReferences": 100,
+    "metadataBlocks": 6,
+    "maximumCompressedBlocks": 4
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/Brotli/BrotliPolicy.swift": "66a5c77678638647dce9b8b102d7150c15229eff1ef59c1e3ad8094e7fc16c5b",
+    "Sources/SwiftJXLCore/Brotli/BrotliStaticDictionary.swift": "b671966ebf2defc427dc276e8d19793e1ab09e7a9132bbddf68405c0c58db6c7",
+    "Sources/SwiftJXLCore/Brotli/BrotliEncoder.swift": "b91fbb1b12834baa7a8a9e7ec7dfd791b0d102f54351aeb175c717f7d0b11a65",
+    "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+    "Sources/SwiftJXLCore/Brotli/BrotliReader.swift": "8e89d7e2da1aa36d9a06b46edfb4b8845b5d96d4e70c34677351ad96064759ce",
+    "Sources/SwiftJXLCore/Brotli/BrotliPrefixCode.swift": "78ecd93b91a04f550b563e062641627abaeda8514c27c7960b8c3574dfd372d0",
+    "Sources/SwiftJXLCore/Brotli/BrotliContext.swift": "50771b1730fdb6e1da0b9f6e76cf32716ce494a2cdd2f5396deca809d55d7a83",
+    "Sources/SwiftJXLCore/Brotli/BrotliMetaBlock.swift": "12ab12a63d852e8bbb0631ff702af8b27bed4d01d59efb26da24a876c1cdc56a",
+    "Sources/SwiftJXLCore/JPEG/JBRDBox.swift": "864ae446db2ccc24c2e9afa4a7d136aa8055ec636d568bc893be954c114d7e46",
+    "Sources/SwiftJXLCore/JPEG/JBRDMetadata.swift": "8b35c21a89a5099903dfbaf3770afcf1b6bc88792cacfa76d92539949a6deafc",
+    "Tests/SwiftJXLCoreTests/BrotliDecoderTests.swift": "8bcd2f5e636d8bc9f87c8404b2405695ef0f99ea61e97d704bf5e13782aabf37"
+  },
+  "referenceRevision": "028fb5a23661f123017c060daa546b55cf4bde29",
+  "referenceSources": {
+    "brotli-transform.h": "b79dd99d1dcc618c1a4284b74dd04adda099fc3f65f906924991a736e09c125c",
+    "brotli-context.h": "2745ef910928a4acd58e1cb98128a0a228fa1812c61e69538c9d393d405bf047",
+    "brotli-dictionary.h": "bfb4f010a2279c53a039ec6f095a12ab62c7d49ab138e385a16caf3904341b10",
+    "brotli-LICENSE.txt": "3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94",
+    "brotli-context.c": "c9aa1acb35af38c90c4a38ba168885b649838236b2d57adb5e76d687bdbe252e"
+  },
+  "benchmark": {
+    "configuration": "standalone swiftc -O; exact successor Brotli sources",
+    "decodedBytesPerIteration": 297576,
+    "encodedBytes": 8281,
+    "iterationsPerSample": 200,
+    "medianMiBPerSecond": 230.7004144269673,
+    "sampleSeconds": [
+      0.260610208,
+      0.245326125,
+      0.246025209,
+      0.2458965,
+      0.259046375,
+      0.251384584,
+      0.245453167
+    ],
+    "warmups": 10
+  },
+  "benchmarkLimit": "Standalone swiftc -O exact Brotli sources on local macOS arm64; not full package release or platform/performance gate. CPU model query unavailable under current sandbox. No measured RSS claim."
+}

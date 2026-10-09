@@ -1,0 +1,245 @@
+{
+  "binarySHA256": "2177ef9b158208bf19e09ede04823f070258007a269bf77dd08de38b24fcb344",
+  "fixtures": [
+    {
+      "fixture": "gray",
+      "iterationsPerTrial": 20,
+      "nativeJXLBytes": 905,
+      "operations": [
+        {
+          "direction": "forward",
+          "knownContainerCopyBytesPerOperation": 857,
+          "medianMicroseconds": 619.05,
+          "samplesMicroseconds": [
+            851.0770500000001,
+            771.01045,
+            627.56875,
+            619.05,
+            616.48335,
+            595.93335,
+            567.80835
+          ]
+        },
+        {
+          "direction": "reverse",
+          "knownContainerCopyBytesPerOperation": 857,
+          "medianMicroseconds": 94.92915,
+          "samplesMicroseconds": [
+            96.55834999999999,
+            94.81875,
+            94.7375,
+            94.83125,
+            94.92915,
+            101.1875,
+            95.42915
+          ]
+        }
+      ],
+      "processHighWaterRSSBytes": 8388608,
+      "scope": "Optimised native whole-operation core with output equality checks; includes metadata and output assembly. RSS is macOS process high-water including runtime, fixture setup and both directions; it is not per-call allocation or peak workspace. Known copy bytes cover container assembly only, not all allocations or metadata/entropy copies.",
+      "sourceJPEGBytes": 683,
+      "trials": 7,
+      "warmups": 3
+    },
+    {
+      "fixture": "progressive-edge",
+      "iterationsPerTrial": 20,
+      "nativeJXLBytes": 869,
+      "operations": [
+        {
+          "direction": "forward",
+          "knownContainerCopyBytesPerOperation": 821,
+          "medianMicroseconds": 645.53125,
+          "samplesMicroseconds": [
+            662.3854,
+            655.36665,
+            645.53125,
+            652.0604000000001,
+            639.2979,
+            636.1,
+            603.7125
+          ]
+        },
+        {
+          "direction": "reverse",
+          "knownContainerCopyBytesPerOperation": 821,
+          "medianMicroseconds": 150.56875,
+          "samplesMicroseconds": [
+            151.71875,
+            148.4583,
+            162.97915,
+            155.24165,
+            150.56875,
+            150.1354,
+            149.1604
+          ]
+        }
+      ],
+      "processHighWaterRSSBytes": 8519680,
+      "scope": "Optimised native whole-operation core with output equality checks; includes metadata and output assembly. RSS is macOS process high-water including runtime, fixture setup and both directions; it is not per-call allocation or peak workspace. Known copy bytes cover container assembly only, not all allocations or metadata/entropy copies.",
+      "sourceJPEGBytes": 834,
+      "trials": 7,
+      "warmups": 3
+    },
+    {
+      "fixture": "quant16",
+      "iterationsPerTrial": 20,
+      "nativeJXLBytes": 1079,
+      "operations": [
+        {
+          "direction": "forward",
+          "knownContainerCopyBytesPerOperation": 1031,
+          "medianMicroseconds": 580.6854000000001,
+          "samplesMicroseconds": [
+            555.9354000000001,
+            585.07915,
+            592.1542000000001,
+            583.1604,
+            580.6854000000001,
+            562.3625,
+            555.87085
+          ]
+        },
+        {
+          "direction": "reverse",
+          "knownContainerCopyBytesPerOperation": 1031,
+          "medianMicroseconds": 96.34585,
+          "samplesMicroseconds": [
+            98.8854,
+            96.34585,
+            96.13125,
+            96.5771,
+            96.70415,
+            96.03125,
+            96.10415
+          ]
+        }
+      ],
+      "processHighWaterRSSBytes": 8437760,
+      "scope": "Optimised native whole-operation core with output equality checks; includes metadata and output assembly. RSS is macOS process high-water including runtime, fixture setup and both directions; it is not per-call allocation or peak workspace. Known copy bytes cover container assembly only, not all allocations or metadata/entropy copies.",
+      "sourceJPEGBytes": 747,
+      "trials": 7,
+      "warmups": 3
+    },
+    {
+      "fixture": "multigroup-420",
+      "iterationsPerTrial": 3,
+      "nativeJXLBytes": 116126,
+      "operations": [
+        {
+          "direction": "forward",
+          "knownContainerCopyBytesPerOperation": 116078,
+          "medianMicroseconds": 21980.583333333332,
+          "samplesMicroseconds": [
+            22027.653000000002,
+            22060.277666666665,
+            21663.291666666668,
+            21881.097333333335,
+            22339.569333333333,
+            21683.361,
+            21980.583333333332
+          ]
+        },
+        {
+          "direction": "reverse",
+          "knownContainerCopyBytesPerOperation": 116078,
+          "medianMicroseconds": 11250.444333333333,
+          "samplesMicroseconds": [
+            11250.444333333333,
+            11693.083333333334,
+            11844.208333333334,
+            11387.152666666667,
+            10998.569666666668,
+            10924.625,
+            10919.319333333333
+          ]
+        }
+      ],
+      "processHighWaterRSSBytes": 10272768,
+      "scope": "Optimised native whole-operation core with output equality checks; includes metadata and output assembly. RSS is macOS process high-water including runtime, fixture setup and both directions; it is not per-call allocation or peak workspace. Known copy bytes cover container assembly only, not all allocations or metadata/entropy copies.",
+      "sourceJPEGBytes": 89074,
+      "trials": 7,
+      "warmups": 3
+    },
+    {
+      "fixture": "icc-rgb",
+      "iterationsPerTrial": 20,
+      "nativeJXLBytes": 2981,
+      "operations": [
+        {
+          "direction": "forward",
+          "knownContainerCopyBytesPerOperation": 2933,
+          "medianMicroseconds": 789.5208,
+          "samplesMicroseconds": [
+            811.19165,
+            789.5208,
+            736.48125,
+            750.9332999999999,
+            791.11875,
+            803.04585,
+            739.2167000000001
+          ]
+        },
+        {
+          "direction": "reverse",
+          "knownContainerCopyBytesPerOperation": 2933,
+          "medianMicroseconds": 212.58955,
+          "samplesMicroseconds": [
+            212.58955,
+            208.54375,
+            208.98125,
+            208.83125,
+            216.67289999999997,
+            212.77710000000002,
+            215.96460000000002
+          ]
+        }
+      ],
+      "processHighWaterRSSBytes": 8617984,
+      "scope": "Optimised native whole-operation core with output equality checks; includes metadata and output assembly. RSS is macOS process high-water including runtime, fixture setup and both directions; it is not per-call allocation or peak workspace. Known copy bytes cover container assembly only, not all allocations or metadata/entropy copies.",
+      "sourceJPEGBytes": 1965,
+      "trials": 7,
+      "warmups": 3
+    },
+    {
+      "fixture": "icc-gray",
+      "iterationsPerTrial": 20,
+      "nativeJXLBytes": 1668,
+      "operations": [
+        {
+          "direction": "forward",
+          "knownContainerCopyBytesPerOperation": 1620,
+          "medianMicroseconds": 641.2583,
+          "samplesMicroseconds": [
+            670.7646,
+            661.3395499999999,
+            641.2583,
+            644.275,
+            638.4354500000001,
+            638.8125,
+            637.4604
+          ]
+        },
+        {
+          "direction": "reverse",
+          "knownContainerCopyBytesPerOperation": 1620,
+          "medianMicroseconds": 112.9979,
+          "samplesMicroseconds": [
+            114.96665,
+            115.125,
+            112.9979,
+            112.3833,
+            112.47915,
+            112.33335,
+            113.4125
+          ]
+        }
+      ],
+      "processHighWaterRSSBytes": 8536064,
+      "scope": "Optimised native whole-operation core with output equality checks; includes metadata and output assembly. RSS is macOS process high-water including runtime, fixture setup and both directions; it is not per-call allocation or peak workspace. Known copy bytes cover container assembly only, not all allocations or metadata/entropy copies.",
+      "sourceJPEGBytes": 1049,
+      "trials": 7,
+      "warmups": 3
+    }
+  ]
+}

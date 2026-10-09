@@ -1,0 +1,337 @@
+{
+  "referenceLibrary": "/opt/homebrew/opt/brotli/lib/libbrotlidec.dylib",
+  "referenceVersion": 16785408,
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "streams": [
+    {
+      "name": "window-10",
+      "stream": "a101",
+      "window": 10,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-11",
+      "stream": "b101",
+      "window": 11,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-12",
+      "stream": "c101",
+      "window": 12,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-13",
+      "stream": "d101",
+      "window": 13,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-14",
+      "stream": "e101",
+      "window": 14,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-15",
+      "stream": "f101",
+      "window": 15,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-16",
+      "stream": "06",
+      "window": 16,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-17",
+      "stream": "8101",
+      "window": 17,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-18",
+      "stream": "33",
+      "window": 18,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-19",
+      "stream": "35",
+      "window": 19,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-20",
+      "stream": "37",
+      "window": 20,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-21",
+      "stream": "39",
+      "window": 21,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-22",
+      "stream": "3b",
+      "window": 22,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-23",
+      "stream": "3d",
+      "window": 23,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "window-24",
+      "stream": "3f",
+      "window": 24,
+      "output": "",
+      "kinds": [
+        "empty"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "metadata-0-False",
+      "stream": "0cb80008706978656c2d6d657461646174612d70726573657276656403",
+      "window": 16,
+      "output": "706978656c2d6d657461646174612d707265736572766564",
+      "kinds": [
+        "metadata",
+        "uncompressed",
+        "empty"
+      ],
+      "lengths": [
+        0,
+        24,
+        0
+      ]
+    },
+    {
+      "name": "metadata-0-True",
+      "stream": "1a",
+      "window": 16,
+      "output": "",
+      "kinds": [
+        "metadata"
+      ],
+      "lengths": [
+        0
+      ]
+    },
+    {
+      "name": "metadata-1-False",
+      "stream": "2c00a5b80008706978656c2d6d657461646174612d70726573657276656403",
+      "window": 16,
+      "output": "706978656c2d6d657461646174612d707265736572766564",
+      "kinds": [
+        "metadata",
+        "uncompressed",
+        "empty"
+      ],
+      "lengths": [
+        1,
+        24,
+        0
+      ]
+    },
+    {
+      "name": "metadata-1-True",
+      "stream": "5a00a5",
+      "window": 16,
+      "output": "",
+      "kinds": [
+        "metadata"
+      ],
+      "lengths": [
+        1
+      ]
+    },
+    {
+      "name": "metadata-256-False",
+      "stream": "ac7fa5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5b80008706978656c2d6d657461646174612d70726573657276656403",
+      "window": 16,
+      "output": "706978656c2d6d657461646174612d707265736572766564",
+      "kinds": [
+        "metadata",
+        "uncompressed",
+        "empty"
+      ],
+      "lengths": [
+        256,
+        24,
+        0
+      ]
+    },
+    {
+      "name": "metadata-256-True",
+      "stream": "5affa5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "window": 16,
+      "output": "",
+      "kinds": [
+        "metadata"
+      ],
+      "lengths": [
+        256
+      ]
+    },
+    {
+      "name": "metadata-257-False",
+      "stream": "4c8000a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5b80008706978656c2d6d657461646174612d70726573657276656403",
+      "window": 16,
+      "output": "706978656c2d6d657461646174612d707265736572766564",
+      "kinds": [
+        "metadata",
+        "uncompressed",
+        "empty"
+      ],
+      "lengths": [
+        257,
+        24,
+        0
+      ]
+    },
+    {
+      "name": "metadata-257-True",
+      "stream": "9a0001a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "window": 16,
+      "output": "",
+      "kinds": [
+        "metadata"
+      ],
+      "lengths": [
+        257
+      ]
+    }
+  ],
+  "encoderBoundaries": [
+    {
+      "count": 0,
+      "prefix": "06",
+      "suffix": "",
+      "sha256": "67586e98fad27da0b9968bc039a1ef34c939b9b8e523a8bef89d478608c5ecf6"
+    },
+    {
+      "count": 1,
+      "prefix": "000010",
+      "suffix": "03",
+      "sha256": "2e9cc4d3e9e7e868184dc55fffe3b5c183e29f11f78f045d7fdcf2ceff6cf61d"
+    },
+    {
+      "count": 65536,
+      "prefix": "f0ff1f",
+      "suffix": "03",
+      "sha256": "7709bc09ca43e146a16625633312f39a754be14b2e470bff7ae2f47fb793f5ee"
+    },
+    {
+      "count": 65537,
+      "prefix": "04001001",
+      "suffix": "03",
+      "sha256": "8f3cd7b9fb9f42ad1d3c0fe7dff0692bc195b7e5c7a93e18fb7ecf5f19306b5b"
+    },
+    {
+      "count": 1048576,
+      "prefix": "f4ffff01",
+      "suffix": "03",
+      "sha256": "cb785ccc68d3fe568b0f95e526caf6cdd4eeabf74c777519111eea11ced6355d"
+    },
+    {
+      "count": 1048577,
+      "prefix": "08000011",
+      "suffix": "03",
+      "sha256": "e856af30f03c7ad6fe85f0d8a98bdfe4f6bf3f37f9b5c01be3788d08e85576a4"
+    }
+  ]
+}

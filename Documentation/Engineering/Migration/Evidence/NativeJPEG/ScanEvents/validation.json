@@ -1,0 +1,92 @@
+{
+  "recordedAtUTC": "2026-10-09T07:16:52.211416+00:00",
+  "baselineCommit": "d1ddababd07f9f3be1a5bcd2b434f9c19aa8a319",
+  "sourceState": "working changes over baseline; exact hashes recorded",
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift": "8bd5168bb41b82b7a81ec8f7b413adb246216792927f5f953ee68883e7077507",
+    "Tests/SwiftJXLCoreTests/JPEGReconstructionEventTests.swift": "0b0989e832470d7520ba664bfef3e801e9013f135ea237657a6ec4c40d2e9378",
+    "Tests/SwiftJXLCoreTests/JPEGCoefficientTests.swift": "000dd10465e6337497a5a151dc7809b15341671d034bcd28d646bf0ae3bc0607",
+    "Scripts/validate-jpeg-events.py": "8b48777c6c730be727f98fd06b192b81e3c6b4e19f85c5f9d4ebd6a2136a28f9",
+    "Package.swift": "19846fb3a6ba3252fae5599df8c95d226774416fac16c02aaee2d354ab7ce9d1",
+    ".github/workflows/contract.yml": "6bc400cf2ddd704a796645372384781e0dcf250f3d84f45006aa7f9761ca2982"
+  },
+  "referenceRevision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "tests": {
+    "debug": {
+      "declarations": 48,
+      "caseExecutions": 164,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'JPEG|JBRD|Brotli'"
+    },
+    "asan": {
+      "declarations": 48,
+      "caseExecutions": 164,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --scratch-path ../evidence/cli-validation-qualification/build/asan --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --sanitize address --filter 'JPEG|JBRD|Brotli'"
+    },
+    "tsan": {
+      "declarations": 48,
+      "caseExecutions": 164,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --scratch-path ../evidence/cli-validation-qualification/build/tsan --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --sanitize thread --filter 'JPEG|JBRD|Brotli'"
+    }
+  },
+  "oracle": {
+    "matchingExistingScanRecords": 15,
+    "authoredByteExactFixtures": 5,
+    "explicitUnsupportedRefinementFixtures": 1,
+    "command": "python3 Scripts/validate-jpeg-events.py --tools /opt/homebrew/bin --coefficient-oracle ../native-jpeg-audit/coefficient-oracle --output ../native-jpeg-audit/events/published-oracle",
+    "exit": 0
+  },
+  "allocationAdmission": {
+    "maximumScanEvents": 65536,
+    "maximumScans": 4096,
+    "eventCapacityAllowancePerRecord": 64,
+    "scanCapacityAllowancePerRecord": 512,
+    "description": "Added to existing aggregate coefficient/input/padding admission; reservations are not measured RSS."
+  },
+  "benchmark": {
+    "toolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+    "flags": [
+      "-O",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-module-cache-path",
+      ".build/module-cache",
+      "-package-name",
+      "SwiftJXL"
+    ],
+    "sourceFiles": [
+      "JPEGEntropyReader.swift",
+      "JPEGFrameLayout.swift",
+      "JPEGSegmentReader.swift",
+      "JPEGCoefficientDecoder.swift"
+    ],
+    "recordTypes": "Exact JBRD scan/component/event declarations extracted into benchmark-models.swift",
+    "fixture": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.jpg",
+    "fixtureSHA256": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+    "warmups": 100,
+    "samples": 7,
+    "iterationsPerSample": 2000,
+    "beforeMedianMicroseconds": 25.474854000000004,
+    "afterMedianMicroseconds": 27.4649585,
+    "latencyIncreasePercent": 7.812034958080605,
+    "limitations": "Isolated exact decoder sources, one small fixture on one host, sequential runs after sanitizers completed. No full-package release/platform/throughput or RSS qualification."
+  },
+  "completeNativeTranscoding": false,
+  "unexecuted": [
+    "updated-head hosted CI",
+    "complete JPEG entropy/container restoration",
+    "VarDCT coefficient bridge",
+    "public transcoder and CLI",
+    "whole-operation resource reporting",
+    "remaining platform/security/performance/release gates"
+  ]
+}

@@ -27,10 +27,10 @@ def main():
     def cli(*values,expected=0):return run([binary,*values],expected)
     def document(r):
         d=json.loads(r.stdout);assert d['version']==version and d['minimumAppleOS']=='26.0'
-        assert d['canEncode'] is True and d['canDecode'] is True and d['canInspect'] is True and d['canValidate'] is True and d['formats']==['jpeg-xl','nrrd'] and d['interchangeMeaningfulBits']==16
+        assert d['canEncode'] is True and d['canDecode'] is True and d['canInspect'] is True and d['canValidate'] is True and d['formats']==['jpeg','jpeg-xl','nrrd'] and d['canTranscode'] is True and d['interchangeMeaningfulBits']==16
         return d
     try:
-        root=cli('--help');assert 'USAGE:' in root.stdout and 'unavailable' in root.stdout and not root.stderr
+        root=cli('--help');assert 'USAGE:' in root.stdout and 'transcode' in root.stdout and not root.stderr
         for form in [[],['-h'],['help']]:assert cli(*form).stdout==root.stdout
         command=cli('capabilities','--help').stdout
         assert cli('help','capabilities').stdout==command and cli('capabilities','-h').stdout==command
@@ -57,7 +57,10 @@ def main():
         with tempfile.TemporaryDirectory(prefix='cli stage spaces ',dir=out) as temp:
             temp=Path(temp);payload=temp/'private image λ.raw';payload.write_bytes(b'unchanged')
             verbs=[]
-            if tool in ['swiftj2k-cli','swiftjxl-cli']:verbs.append('transcode')
+            if tool == 'swiftj2k-cli':verbs.append('transcode')
+            elif tool == 'swiftjxl-cli':
+                assert 'original JPEG' in cli('transcode','--help').stdout
+                cli('transcode',expected=2)
             else:cli('transcode',expected=2)
             for verb in verbs:
                 assert 'UNAVAILABLE:' in cli(verb,'--help').stdout

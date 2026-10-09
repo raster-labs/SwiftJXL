@@ -1,0 +1,28 @@
+{
+  "status": "internal-coefficients-passed",
+  "declarations": 23,
+  "cases": 51,
+  "skips": 0,
+  "configurations": [
+    "debug",
+    "address-sanitizer",
+    "thread-sanitizer"
+  ],
+  "nativeTranscodeImplemented": false,
+  "testFilter": "JPEG.*Tests",
+  "compiler": "Xcode Swift 6.4",
+  "base": "c43c3c6cb13d604dcc75e6152da12f178c9df2af",
+  "contract": "0.10.0",
+  "independentFixtures": 15,
+  "oracle": "libjpeg-turbo 3.2.0; JPEG_LIB_VERSION=80",
+  "oracleBuildCommand": "clang -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -I /opt/homebrew/opt/jpeg-turbo/include -L /opt/homebrew/opt/jpeg-turbo/lib -ljpeg -o ../native-jpeg-audit/coefficient-oracle",
+  "sha256": {
+    "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift": "2f032138fba54b966f5943b97c78e9d6c9aeef09cbe016f4e6665a9ffbfa8d6d",
+    "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+    "Sources/SwiftJXLCore/JPEG/JPEGFrameLayout.swift": "754c38fbfd0a70e5843a9710ad7c1ebf668675d5421e777b3720b63c35eda655",
+    "Sources/SwiftJXLCore/JPEG/JPEGSegmentReader.swift": "d5cd02b4901a2ff96cdbf77fb4a094e337431891f7c8de9cb1a954e47a094e94",
+    "Tests/SwiftJXLCoreTests/JPEGCoefficientTests.swift": "9924a19ffbe0dfe2a820b2c2883c64c498f7e3639d17f5ecf31de9960a7c234c",
+    "Tests/SwiftJXLCoreTests/JPEGFrameLayoutTests.swift": "28cff4e72fbdf2b7986f1b28e2fc0667317209197e7129fca4261f84fab5a800",
+    "Tests/SwiftJXLCoreTests/JPEGSegmentReaderTests.swift": "9681213dbda29d23b40b7b4faba0437fa657d4d0c77de7b6d6147bc820ec062b"
+  }
+}

@@ -1,0 +1,1152 @@
+{
+  "binary": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+  "binary_sha256": "05a78eb841cf2c6a259a023775423fc496d4b5f108cf44b0723589401106836b",
+  "installer_sha256": "2ec55c5025e69e18e92ba76f738bee4fe5c9df4ea6b332ae9ec7140b8b55e693",
+  "test_runner_sha256": "8cc26fd501a5e9ab2bc4bfc17a7dff5559002cf9216530becdd6b3c6584e73a1",
+  "version": "2.1.0-dev.2",
+  "manual_sha256": "79f410f26416f26cd6a34457f8e529f4c8bd0a3190900c5966b1f88d8fdaaf7e",
+  "commands": [
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            Full-precision UInt16 NRRD/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded scalar, UInt16 NRRD and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            Full-precision UInt16 NRRD/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded scalar, UInt16 NRRD and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "-h"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            Full-precision UInt16 NRRD/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded scalar, UInt16 NRRD and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            Full-precision UInt16 NRRD/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded scalar, UInt16 NRRD and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli capabilities [--json] [OPTIONS]\n\nReport executable command support without reading files.\n--json writes one JSON document to stdout; diagnostics stay on stderr.\nReports scalar image, UInt16 NRRD and native JPEG reconstruction profiles.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli capabilities --json\n  swiftjxl-cli capabilities --verbose=+++\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "help",
+        "capabilities"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli capabilities [--json] [OPTIONS]\n\nReport executable command support without reading files.\n--json writes one JSON document to stdout; diagnostics stay on stderr.\nReports scalar image, UInt16 NRRD and native JPEG reconstruction profiles.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli capabilities --json\n  swiftjxl-cli capabilities --verbose=+++\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "-h"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli capabilities [--json] [OPTIONS]\n\nReport executable command support without reading files.\n--json writes one JSON document to stdout; diagnostics stay on stderr.\nReports scalar image, UInt16 NRRD and native JPEG reconstruction profiles.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli capabilities --json\n  swiftjxl-cli capabilities --verbose=+++\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--version",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "+"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=+"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "+++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=+++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vvvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0016966249968390912\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0016176666540559381\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0019551250006770715\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0017323749925708398\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0017451666644774377\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0016017500020097941\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0016769166541052982\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0017304166685789824\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vvvvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0046433750103460625\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v",
+        "-v",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.002146666665794328\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.002060749990050681\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0018877916591009125\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.001991249999264255\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.001681791662122123\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "+++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0016744583408581093\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=+++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0016378749860450625\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--verbose",
+        "capabilities",
+        "--json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "-verbose",
+        "capabilities",
+        "--json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "-v",
+        "--verbose",
+        "2",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\nencode: true\ndecode: true\ninspect: true\nvalidate: true\ntranscode: true\nformats: jpeg, jpeg-xl, nrrd\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "-vv",
+        "-vvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\nencode: true\ndecode: true\ninspect: true\nvalidate: true\ntranscode: true\nformats: jpeg, jpeg-xl, nrrd\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 3; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0001118749933084473\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canEncode\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\"],\"interchangeFormat\":\"nrrd\",\"interchangeMeaningfulBits\":16,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":512,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"profile\":\"single-frame\\/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--help",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            Full-precision UInt16 NRRD/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded scalar, UInt16 NRRD and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=0"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=6"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=10"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=99999999999999999999999999999"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=abc"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=++++++"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=+2"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=\u0661"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose="
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--verbose=5",
+        "-v"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity exceeds the maximum level 5.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "-vvvvvv"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity exceeds the maximum level 5.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "-v",
+        "--quiet"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --quiet and verbosity cannot be combined.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--quiet",
+        "--verbose=1"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --quiet and verbosity cannot be combined.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--quiet",
+        "--verbose=0"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--unknown"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unknown option. Use swiftjxl-cli --help.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "bogus"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unknown command. Use swiftjxl-cli --help.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "help",
+        "bogus"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unknown command. Use swiftjxl-cli --help.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "extra"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unexpected positional argument. Use --input or --output for codec commands.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--verbose:"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--json"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --json requires capabilities or a codec command.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--input",
+        "some-path"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Input/output and codec options require a codec command.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--output",
+        "x"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Input/output and codec options require a codec command.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--version"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --version cannot be combined with a command or command options.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--input"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli transcode --input PATH --input-format FORMAT --output-format FORMAT [OPTIONS]\n\nRecompress JPEG to JPEG XL or restore the original JPEG bytes from JXL.\nSupported pairs: jpeg -> jxl/jpeg-xl; jxl/jpeg-xl -> jpeg.\n8-bit baseline/extended/progressive Huffman JPEG; greyscale or three channels,\ncommon 444/422/420/440 sampling; dimensions <=2048. Input/output <=4194304 bytes.\nRGB/greyscale ICC is preserved; unsupported coefficient profiles return exit 4.\nReverse requires valid JPEG reconstruction data; no original-source fallback.\n\nCOMMAND OPTIONS\n  -i, --input PATH          Required regular file/pipe; '-' means stdin.\n  -o, --output PATH         Final binary output; default '-' means stdout.\n  --input-format FORMAT    jpeg, jxl or jpeg-xl; required.\n  --output-format FORMAT   jpeg, jxl or jpeg-xl; required, opposite format.\n  --mode lossless          Default; original JPEG byte preservation.\n  --json                   Write final JSON report to stderr after payload.\n  --overwrite              Atomically replace an existing final regular file.\n  --backend NAME           automatic or scalar-cpu; accelerated returns 4.\n  --copy-policy POLICY     require-sharing (default) or allow-copy.\n  --threads N              Worker ceiling 1..8; scalar work uses one.\n  --max-memory BYTES       Aggregate memory ceiling, including input/output.\n  --timeout SECONDS        Overall deadline, including pipe I/O.\nLossy/near-lossless modes, max-error, quality and source-file fallback are unsupported.\nLibrary processing stays in memory. Final files publish atomically; stdout\ncan contain partial bytes on I/O failure. JSON is emitted only after success.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli transcode -i source.jpg --input-format jpeg --output-format jxl -o image.jxl\n  swiftjxl-cli transcode -i image.jxl --input-format jxl --output-format jpeg -o restored.jpg\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --input is required.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--help"
+      ],
+      "condition": "stdout pipe with no readers",
+      "exit_code": 6,
+      "expected_exit_code": 6,
+      "stderr": "swiftjxl-cli: output I/O failure.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "Installed /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/bin/swiftjxl-cli\nManual: /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\nRead with: man -M \"/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man\" swiftjxl-cli\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "Installed /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/bin/swiftjxl-cli\nManual: /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\nRead with: man -M \"/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man\" swiftjxl-cli\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/bin/swiftjxl-cli",
+        "--version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/man",
+        "-M",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man",
+        "-w",
+        "swiftjxl-cli"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/mandoc",
+        "-T",
+        "lint",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/mandoc",
+        "-T",
+        "ascii",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "SWIFTJXL-CLI(1)          Swift Image Compression Suite         SWIFTJXL-CLI(1)\n\nN\bNA\bAM\bME\bE\n     swiftjxl-cli - inspection, validation and capability reporting for\n     SwiftJXL\n\nS\bSY\bYN\bNO\bOP\bPS\bSI\bIS\bS\n     s\bsw\bwi\bif\bft\btj\bjx\bxl\bl-\b-c\bcl\bli\bi [_\bo_\bp_\bt_\bi_\bo_\bn_\bs] _\bc_\bo_\bm_\bm_\ba_\bn_\bd [_\bo_\bp_\bt_\bi_\bo_\bn_\bs]\n\nD\bDE\bES\bSC\bCR\bRI\bIP\bPT\bTI\bIO\bON\bN\n     This development tool inspects headers and validates the complete\n     supported scalar JPEG XL frame using the public decoder. It also provides\n     help, version and executable capability reporting. This is not a general\n     JPEG XL validator.  Native transcode recompresses JPEG coefficients to\n     JPEG XL and reconstructs the original JPEG bytes from valid\n     reconstruction data, entirely in memory.  Build with Swift 6.2 or later\n     in Swift 6 language mode.  Apple OS minimum is 26.0.  CLI hosts are macOS\n     and Linux; consult qualification records for executed coverage.\n\nC\bCO\bOM\bMM\bMA\bAN\bND\bDS\bS\n     c\bca\bap\bpa\bab\bbi\bil\bli\bit\bti\bie\bes\bs [\b[-\b--\b-j\bjs\bso\bon\bn]\b]\n            Report executable support. Inspect and validate are available;\n            encode and decode accept the explicit full-precision UInt16 NRRD\n            profile.  JSON is one document on stdout.\n\n     h\bhe\bel\blp\bp [\b[c\bco\bom\bmm\bma\ban\bnd\bd]\b]\n            Show global or command-specific help. No arguments also show\n            global help.\n\n     v\bve\ber\brs\bsi\bio\bon\bn\n            Show the development version.\n\n     i\bin\bns\bsp\bpe\bec\bct\bt,\b, v\bva\bal\bli\bid\bda\bat\bte\be\n            Require -i/--input PATH; a hyphen reads stdin. Inspect reports\n            supported headers, without checking pixel integrity. Validate\n            decodes the entire supported frame in memory and discards pixels.\n            Supports unsigned greyscale Modular, 8 through 16 meaningful bits,\n            dimensions up to 1024, one frame/group and compressed input at\n            most 4 MiB. Unsupported profiles return 4.  Optional -o/--output\n            PATH writes a report; the default is stdout.  Use --json for\n            structured output, including pixelPayloadValidated.  File reports\n            publish atomically; --overwrite permits replacement of an existing\n            regular file. Input aliases and output symlinks are refused.\n            Failure preserves any previous report; partial stdout cannot be\n            rolled back.\n\n     I\bIn\bns\bsp\bpe\bec\bct\bti\bio\bon\bn a\ban\bnd\bd v\bva\bal\bli\bid\bda\bat\bti\bio\bon\bn l\bli\bim\bmi\bit\bts\bs\n            Input format is jxl or jpeg-xl. Backend is automatic (default) or\n            scalar-cpu; accelerated is unavailable. Copy policy defaults to\n            require-sharing; allow-copy is accepted. Threads is a ceiling from\n            1 to 8; one worker is used.  Maximum memory is positive bytes,\n            default 1073741824, including command buffers and codec admission;\n            it is not a process RSS ceiling.  Timeout is positive finite\n            seconds, at most 31536000, default 120, checked cooperatively\n            across input, codec and output. Pipe polling checks every 25 ms;\n            filesystem calls depend on operating-system scheduling. Ctrl+C\n            returns 130.  Mode, max-error and output-format do not apply to\n            these two commands.\n\n     e\ben\bnc\bco\bod\bde\be,\b, d\bde\bec\bco\bod\bde\be\n            Encode requires --input-format nrrd; decode requires --output-\n            format nrrd.  The compressed endpoint defaults to jxl; jpeg-xl is\n            also accepted.  Use -i/--input and optional -o/--output; a hyphen\n            denotes a stream.  Encode dimensions are at most 512; decode\n            dimensions at most 1024.  The explicit NRRD0005 profile is\n            attached, raw, 2D, full-precision UInt16, with little/big endian\n            and x as fastest axis. Encode assigns D65/sRGB and default intent.\n            Decode rejects lower meaningful precision or metadata that this\n            profile cannot preserve. Header limits: 16384 bytes, 64 lines,\n            1024 bytes per line. Detached data, spatial metadata and custom\n            keys reject.  Lossless mode is the only encode mode and default;\n            max-error is unsupported.  Memory, worker, timeout, backend and\n            copy-policy limits are as above.  Output is binary; JSON success\n            reports go to stderr after publication.  Requested verbosity also\n            uses stderr. Reporting failure cannot retract published output.\n            Broken binary output never emits a success report.  Encoding\n            shares retained input bytes with the codec; decoding writes\n            borrowed rows directly. No extra full-image serialisation array is\n            created.  Shell pipes still copy bytes and do not share\n            allocations between processes.\n\nO\bOP\bPT\bTI\bIO\bON\bNS\bS\n     -\b-h\bh,\b, -\b--\b-h\bhe\bel\blp\bp\n            Show help, including after a command.\n\n     -\b--\b-v\bve\ber\brs\bsi\bio\bon\bn\n            Show the development version.\n\n     -\b-v\bv,\b, -\b-v\bvv\bv,\b, -\b-v\bvv\bvv\bv,\b, -\b-v\bvv\bvv\bvv\bv,\b, -\b-v\bvv\bvv\bvv\bvv\bv\n            Increase diagnostic verbosity, up to 5.\n\n     -\b--\b-v\bve\ber\brb\bbo\bos\bse\be L\bLE\bEV\bVE\bEL\bL,\b, -\b--\b-v\bve\ber\brb\bbo\bos\bse\be=\b=L\bLE\bEV\bVE\bEL\bL\n            Set level to 1 through 5, or + through +++++. Bare verbose\n            increments once.\n\n     -\b-v\bve\ber\brb\bbo\bos\bse\be:\b: L\bLE\bEV\bVE\bEL\bL,\b, -\b-v\bve\ber\brb\bbo\bos\bse\be:\b:L\bLE\bEV\bVE\bEL\bL\n            Equivalent explicit verbosity spelling; bare -verbose increments\n            once.\n\n     -\b-q\bq,\b, -\b--\b-q\bqu\bui\bie\bet\bt\n            Suppress optional diagnostics; errors remain visible. Conflicts\n            with verbosity.\n\nD\bDI\bIA\bAG\bGN\bNO\bOS\bST\bTI\bIC\bC L\bLE\bEV\bVE\bEL\bLS\bS\n     Default 0 reports errors only. Levels are cumulative: 1 summary; 2\n     stages; 3 capability/configuration details; 4 elapsed timing; 5 bounded\n     trace. Invalid levels or totals above 5 return 2.  Explicit levels set\n     and repeated flags increment in argument order.  Diagnostics use stderr.\n     Requested help/version/capability data uses stdout.  Diagnostic writes do\n     not wait for stderr to drain. An unavailable diagnostic stream returns\n     I/O failure (6). Final error messages are best effort and cannot block\n     the original failure, deadline (5) or cancellation (130) exit status.  No\n     payload bytes, metadata, raw addresses or input/output paths are logged.\n\nE\bEX\bXI\bIT\bT S\bST\bTA\bAT\bTU\bUS\bS\n     0 success/help/version; 2 invalid usage; 3 malformed input; 4 unsupported\n     feature/layout/backend/format; 5 resource/deadline; 6 input/output\n     failure including a closed pipe; 7 internal failure; 130 user\n     cancellation.\n\nE\bEX\bXA\bAM\bMP\bPL\bLE\bES\bS\n     swiftjxl-cli -h\n     swiftjxl-cli help capabilities\n     swiftjxl-cli capabilities --json -vv\n     swiftjxl-cli capabilities -verbose: 3\n     swiftjxl-cli capabilities --verbose=+++++\n\nI\bIN\bNS\bST\bTA\bAL\bLL\bLA\bAT\bTI\bIO\bON\bN\n     Scripts/install-cli.sh installs or updates the executable and this page\n     together.  Use --prefix for an absolute prefix (default /usr/local),\n     --destdir or DESTDIR for staging, and --binary for a prebuilt binary\n     matching VERSION.  Files are PREFIX/bin/swiftjxl-cli and\n     PREFIX/share/man/man1/swiftjxl-cli.1.  For custom prefixes use man -M\n     PREFIX/share/man swiftjxl-cli, or configure MANPATH.  No index refresh is\n     needed for direct lookup; no sudo runs automatically.\n\nS\bSE\bEE\bE A\bAL\bLS\bSO\bO\n     m\bma\ban\bn(1)\n\n     CLI.md and Documentation/Engineering/OS27CLI/README.md in the SwiftJXL\n     repository.\n\n\nN\bNA\bAT\bTI\bIV\bVE\bE J\bJP\bPE\bEG\bG T\bTR\bRA\bAN\bNS\bSC\bCO\bOD\bDI\bIN\bNG\bG\n     t\btr\bra\ban\bns\bsc\bco\bod\bde\be -\b--\b-i\bin\bnp\bpu\but\bt P\bPA\bAT\bTH\bH -\b--\b-i\bin\bnp\bpu\but\bt-\b-f\bfo\bor\brm\bma\bat\bt F\bFO\bOR\bRM\bMA\bAT\bT -\b--\b-o\bou\but\btp\bpu\but\bt-\b-f\bfo\bor\brm\bma\bat\bt F\bFO\bOR\bRM\bMA\bAT\bT\n     supports jpeg to jxl/jpeg-xl and the reverse pair. Both formats are\n     required.  Mode is lossless (default), preserving the original JPEG\n     bytes. The reverse operation needs valid reconstruction data; it never\n     consults an original JPEG.  Supports 8-bit baseline, extended and\n     progressive Huffman JPEG, greyscale or three components, common\n     444/422/420/440 sampling, dimensions up to 2048.  CLI input and output\n     are limited to 4 MiB. RGB/greyscale ICC profiles are preserved.\n     Unsupported frame profiles return 4.  Lossy/near-lossless, max-error and\n     source-file fallback are unavailable.  Output defaults to stdout;\n     --output selects an atomic final file transaction.  --overwrite\n     explicitly permits replacement. --json writes the final success report to\n     stderr after binary publication. Limits and stream behaviour follow\n     encode/decode; processing creates no intermediate image file.\n\n2.1.0-dev.2                     October 8, 2026                SWIFTJXL-CLI(1)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--prefix",
+        "relative",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Prefix and nonempty staging root must be absolute.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Missing option value.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/wrong version",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Binary version does not match this source and manual.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "Installed /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/bin/swiftjxl-cli\nManual: /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\nRead with: man -M \"/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces/opt/suite tools/share/man\" swiftjxl-cli\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stale source/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Manual version does not match VERSION.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/icc-cli-shell-final/cli stage spaces 2yo86uej/stage with spaces"
+      ],
+      "exit_code": 6,
+      "expected_exit_code": 6,
+      "stdout": "",
+      "stderr": "Refusing to replace a symlink or directory; choose a separate prefix.\n"
+    }
+  ],
+  "status": "passed",
+  "checks": 96
+}

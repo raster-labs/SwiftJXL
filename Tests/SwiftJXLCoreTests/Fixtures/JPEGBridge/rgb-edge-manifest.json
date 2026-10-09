@@ -1,0 +1,53 @@
+{
+  "generator": "libjpeg-turbo cjpeg 3.2.0; synthetic RGB PPM pixels (x*37+y*71+c*113)%256",
+  "licence": "Apache-2.0",
+  "fixtures": [
+    {
+      "file": "rgb.jpg",
+      "width": 31,
+      "height": 17,
+      "options": [
+        "-rgb",
+        "-quality",
+        "89"
+      ],
+      "sha256": "cc132a8ef6ae044a24b714270e73d4bcbf684824f8488034c56489ee22731148"
+    },
+    {
+      "file": "rgb-progressive.jpg",
+      "width": 19,
+      "height": 11,
+      "options": [
+        "-rgb",
+        "-progressive",
+        "-quality",
+        "89"
+      ],
+      "sha256": "c7c5a34bf4568dd71f37259415f8d14a87fcdb9a4f03e24b61b4bb1704ecf538"
+    },
+    {
+      "file": "tiny.jpg",
+      "width": 1,
+      "height": 1,
+      "options": [
+        "-sample",
+        "2x2",
+        "-quality",
+        "89"
+      ],
+      "sha256": "8b1dc62b2bea95a0953f0bbe2c0a61e2ee5848dcf39aac53b5a1d540c9ba970d"
+    },
+    {
+      "file": "thin.jpg",
+      "width": 1,
+      "height": 513,
+      "options": [
+        "-sample",
+        "2x1",
+        "-quality",
+        "89"
+      ],
+      "sha256": "f8a3d2624abb1b0a639e9f1a952421727e60a4cdad6ca2def15692b37fffde23"
+    }
+  ]
+}

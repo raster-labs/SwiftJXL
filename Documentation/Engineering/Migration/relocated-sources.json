@@ -237,9 +237,10 @@
         "Package-only visibility",
         "Successor provenance header",
         "Bound contexts and nested entropy parsing",
-        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable",
+        "Keep default 4096-context cap; explicitly admit bounded VarDCT AC context counts up to 524288 with cumulative workspace accounting"
       ],
-      "destinationSHA256": "c562b40ecfb1356be25bdc62032a8188e85b7c0f6c38e70c4da63f84e7e23daf"
+      "destinationSHA256": "5ec3f1efb411edb8d7d9fe851d01286f0b28f7b7ee85ea8d0a794c5dea907c66"
     },
     {
       "source": "Sources/JXLSwift/Entropy/HybridUint.swift",
@@ -484,6 +485,549 @@
         "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
       "destinationSHA256": "9b51499e50778c38db73afb02c0be1f5a1299bb674434d8c0b5f568fb9651461"
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGSegmentReader.swift",
+      "sourceSHA256": "0e080773da53b528d62b8ef7ec91f27c4d2bb09c8cbb375e776b3e1a4298bb5b",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGSegmentReader.swift",
+      "destinationSHA256": "d5cd02b4901a2ff96cdbf77fb4a094e337431891f7c8de9cb1a954e47a094e94",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Replace copied payloads with ranges over retained Data; retain marker fill, entropy representation and trailing data",
+        "Terminate at EOI, reject missing EOI and preserve sliced-input offsets",
+        "Bound input and segment counts; add bounded cancellation/deadline checkpoints",
+        "Internal preparation only; no native transcoder capability claim",
+        "Threshold-based work checkpoints cannot be skipped by odd-offset FF00 stuffing"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGBitReader.swift",
+      "sourceSHA256": "cef46fa9f4a7fa4ee6c27829830c0b074bd2c5bd9e62626d633d0ad21b62d2c5",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift",
+      "destinationSHA256": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGHuffmanTable.swift",
+      "sourceSHA256": "ea06642a0dd7354da47f1da2c033c4bc96bfe3ed4c6bb7a8a44022009c643791",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift",
+      "destinationSHA256": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGBlockDecoder.swift",
+      "sourceSHA256": "ce1e7a4248f7cac545b580492f35b1b67f1335fcedb39774486b12c3aff1cb6c",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift",
+      "destinationSHA256": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGBlockDecoder.swift",
+      "sourceSHA256": "ce1e7a4248f7cac545b580492f35b1b67f1335fcedb39774486b12c3aff1cb6c",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift",
+      "destinationSHA256": "8bd5168bb41b82b7a81ec8f7b413adb246216792927f5f953ee68883e7077507",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures",
+        "Preserve scan-order EOB reset and trailing zero-run events with cumulative admission; libjxl reconstruction semantics retain BSD attribution"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGScanDecoder.swift",
+      "sourceSHA256": "53e22e7e95783483b1093280d4724d247081a9acbfb1ccd19d52f5fd08dedf32",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift",
+      "destinationSHA256": "8bd5168bb41b82b7a81ec8f7b413adb246216792927f5f953ee68883e7077507",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures",
+        "Preserve scan-order EOB reset and trailing zero-run events with cumulative admission; libjxl reconstruction semantics retain BSD attribution"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGCoefficientImage.swift",
+      "sourceSHA256": "bd58b3173bc33c063efb95ba3074fa90ea74eac315cf83ba1777eacbc83c9a48",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift",
+      "destinationSHA256": "8bd5168bb41b82b7a81ec8f7b413adb246216792927f5f953ee68883e7077507",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures",
+        "Preserve scan-order EOB reset and trailing zero-run events with cumulative admission; libjxl reconstruction semantics retain BSD attribution"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JBRDBox.swift",
+      "sourceSHA256": "24afeb50cab0800ebdb539b02258217974c23d72e656c8dc7b2a0246f849c554",
+      "destination": "Sources/SwiftJXLCore/JPEG/JBRDBox.swift",
+      "destinationSHA256": "864ae446db2ccc24c2e9afa4a7d136aa8055ec636d568bc893be954c114d7e46",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only reconstruction metadata reader/writer/resolver; native Brotli and full JPEG restoration remain separate",
+        "Admit input, payload, marker, event, padding and workspace growth before allocation; bounded cancellation/deadlines",
+        "Validate table/scan references and history, reject wrapping indexes, check shape before writing",
+        "Require exact external metadata and marker identity/length; never partial-fill missing Exif/XMP/ICC",
+        "Independently generated 16-bundle field/offset and byte-identical header comparisons",
+        "Connect native Brotli expansion to strict metadata resolution with aggregate phase admission"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JBRDBox.swift",
+      "sourceSHA256": "24afeb50cab0800ebdb539b02258217974c23d72e656c8dc7b2a0246f849c554",
+      "destination": "Sources/SwiftJXLCore/JPEG/JBRDBoxWriter.swift",
+      "destinationSHA256": "fafee028686365f41e1435a412171a02b304f32cadbc9b437247ec9a81bcf9e4",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only reconstruction metadata reader/writer/resolver; native Brotli and full JPEG restoration remain separate",
+        "Admit input, payload, marker, event, padding and workspace growth before allocation; bounded cancellation/deadlines",
+        "Validate table/scan references and history, reject wrapping indexes, check shape before writing",
+        "Require exact external metadata and marker identity/length; never partial-fill missing Exif/XMP/ICC",
+        "Independently generated 16-bundle field/offset and byte-identical header comparisons"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JBRDBox.swift",
+      "sourceSHA256": "24afeb50cab0800ebdb539b02258217974c23d72e656c8dc7b2a0246f849c554",
+      "destination": "Sources/SwiftJXLCore/JPEG/JBRDMetadata.swift",
+      "destinationSHA256": "8b35c21a89a5099903dfbaf3770afcf1b6bc88792cacfa76d92539949a6deafc",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only reconstruction metadata reader/writer/resolver; native Brotli and full JPEG restoration remain separate",
+        "Admit input, payload, marker, event, padding and workspace growth before allocation; bounded cancellation/deadlines",
+        "Validate table/scan references and history, reject wrapping indexes, check shape before writing",
+        "Require exact external metadata and marker identity/length; never partial-fill missing Exif/XMP/ICC",
+        "Independently generated 16-bundle field/offset and byte-identical header comparisons",
+        "Connect native Brotli expansion to strict metadata resolution with aggregate phase admission"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliMetaBlock.swift",
+      "sourceSHA256": "bee155155a42fbed78aa6d822ddc54f9e00c3d82267a3457c4b61b926d6b223d",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliMetaBlock.swift",
+      "destinationSHA256": "12ab12a63d852e8bbb0631ff702af8b27bed4d01d59efb26da24a876c1cdc56a",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Native RFC 7932 framing foundation; compressed-body decoder remains pending",
+        "Metadata has distinct skip semantics, zero-length MSKIPBYTES and canonical lengths/fill bits are checked",
+        "Admitted input/output/workspace, retained sliced input, bounded cancellation; no input-dependent preconditions",
+        "Standard stored-block encoder validated at length-width boundaries against independent libbrotli"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliEncoder.swift",
+      "sourceSHA256": "1f6cc37232efdf147834c432fe93f107227d4369f16393a32d755f49fb28b58e",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliEncoder.swift",
+      "destinationSHA256": "b91fbb1b12834baa7a8a9e7ec7dfd791b0d102f54351aeb175c717f7d0b11a65",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Native RFC 7932 framing foundation; compressed-body decoder remains pending",
+        "Metadata has distinct skip semantics, zero-length MSKIPBYTES and canonical lengths/fill bits are checked",
+        "Admitted input/output/workspace, retained sliced input, bounded cancellation; no input-dependent preconditions",
+        "Standard stored-block encoder validated at length-width boundaries against independent libbrotli"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliBitReader.swift",
+      "sourceSHA256": "ced2737273c9c824f4f35892a7093f52842de50b80a3ba90364e164e0b3412f0",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliReader.swift",
+      "destinationSHA256": "8e89d7e2da1aa36d9a06b46edfb4b8845b5d96d4e70c34677351ad96064759ce",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Native RFC 7932 framing foundation; compressed-body decoder remains pending",
+        "Metadata has distinct skip semantics, zero-length MSKIPBYTES and canonical lengths/fill bits are checked",
+        "Admitted input/output/workspace, retained sliced input, bounded cancellation; no input-dependent preconditions",
+        "Standard stored-block encoder validated at length-width boundaries against independent libbrotli"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliPrefixCode.swift",
+      "sourceSHA256": "b8d89b271d69dc4ce33c83d666b4af71e32743264c4c2b85c0c6f2469cbd7d9e",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliPrefixCode.swift",
+      "destinationSHA256": "78ecd93b91a04f550b563e062641627abaeda8514c27c7960b8c3574dfd372d0",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliStaticDictionary.swift",
+      "sourceSHA256": "df9a8ebbf88b5067ae4d649a850e7bafd23abf3bf7601177279fdda066e6618e",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliStaticDictionary.swift",
+      "destinationSHA256": "b671966ebf2defc427dc276e8d19793e1ab09e7a9132bbddf68405c0c58db6c7",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliDecoder.swift",
+      "sourceSHA256": "0d8b7646b6d658e5565e02e952fe1394587368b583ddbc5918d9f370de039410",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift",
+      "destinationSHA256": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliCompressedMetaBlock.swift",
+      "sourceSHA256": "9adfeb29f7b0afd9c70f72796faa8cba6acf08687e4d85353bc444ade987a7a8",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift",
+      "destinationSHA256": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliInsertCopy.swift",
+      "sourceSHA256": "af0451fa45d7d33a9847500a8ad186e61c336ff2b281e63503d2cd55cfe06ed5",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift",
+      "destinationSHA256": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliDistance.swift",
+      "sourceSHA256": "65b53e876b222cb61484b74493c3928ba52e50eae9775ec25d934eba20530f80",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift",
+      "destinationSHA256": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JBRDExtractor.swift",
+      "sourceSHA256": "1789ea3bcbf8d667d871d750300c77d0d6872ea2f867020c4b34a569ae222fef",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionMetadata.swift",
+      "destinationSHA256": "05a23379c920833f19de78e19cf44dc9198b20e5eff239170cde04fdff94ad42",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Build self-contained native JBRD metadata from validated coefficient owners; no original-JPEG fallback",
+        "Preserve scan reconstruction events, noncanonical padding, marker fill, tail and active quantisation binding",
+        "Admit aggregate source/coefficient/metadata/header/body owners before copies and check cancellation through publication",
+        "Use native stored Brotli payloads; explicitly reject repeated DRI and restart fill not representable by this reconstruction profile",
+        "Reject valid JPEG quantisation redefinitions that leave the first JBRD table unused; do not misclassify them as malformed input"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGBitWriter.swift",
+      "sourceSHA256": "8c69446f59c9c018b05015ff9ecec2c8f8e9b77e9b946ab6215ad5971a1e0b76",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift",
+      "destinationSHA256": "89a9fe87c072d04eacebb2a4b3bc7bff6f814ae58b6d1fa0e1f79d56872837da",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Reconstruct directly from immutable flat coefficient owners and resolved JBRD metadata; no source-JPEG argument or pixel fallback",
+        "Replace unchecked preconditions/indexing and full scan buffers with validated geometry, bounded single-output construction and cancellation",
+        "Preserve baseline/progressive entropy, scan events, restart markers, noncanonical padding, marker fill and tail",
+        "Validate active quantisation bindings, complete scan histories and coefficient representability before publishing output",
+        "Declare the output initializer explicitly for Swift 6.2 access-control compatibility"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGScanEncoder.swift",
+      "sourceSHA256": "76e4bba7af1578d0490e4e56fc95abf7a6ff7ec4fd39099a6cf0d5347a925a58",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift",
+      "destinationSHA256": "89a9fe87c072d04eacebb2a4b3bc7bff6f814ae58b6d1fa0e1f79d56872837da",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Reconstruct directly from immutable flat coefficient owners and resolved JBRD metadata; no source-JPEG argument or pixel fallback",
+        "Replace unchecked preconditions/indexing and full scan buffers with validated geometry, bounded single-output construction and cancellation",
+        "Preserve baseline/progressive entropy, scan events, restart markers, noncanonical padding, marker fill and tail",
+        "Validate active quantisation bindings, complete scan histories and coefficient representability before publishing output",
+        "Declare the output initializer explicitly for Swift 6.2 access-control compatibility"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JXLToJPEGAdapter.swift",
+      "sourceSHA256": "96a1588b8a7c57648ea953b63b58353f39b8518887289628d0ffbb72878a0e15",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift",
+      "destinationSHA256": "89a9fe87c072d04eacebb2a4b3bc7bff6f814ae58b6d1fa0e1f79d56872837da",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Reconstruct directly from immutable flat coefficient owners and resolved JBRD metadata; no source-JPEG argument or pixel fallback",
+        "Replace unchecked preconditions/indexing and full scan buffers with validated geometry, bounded single-output construction and cancellation",
+        "Preserve baseline/progressive entropy, scan events, restart markers, noncanonical padding, marker fill and tail",
+        "Validate active quantisation bindings, complete scan histories and coefficient representability before publishing output",
+        "Declare the output initializer explicitly for Swift 6.2 access-control compatibility"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGToJXLAdapter.swift",
+      "sourceSHA256": "215b3c978599df540e9a28b5130ea23c08271ad0f1e303294f00bf434a76812d",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeCoefficients.swift",
+      "destinationSHA256": "e87dd0a89b4090d3ca39086d77d5903532b2c6a8658b7c0a797ce63bf17b0fe5",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open",
+        "Thread public dimension, pixel, nesting and remaining operation memory limits into frame processing"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Codec/VarDCTBitstreamWriter.swift",
+      "sourceSHA256": "87bb11fa445d65220326b673962daef53e0089a1c51208a38553775f45e529e7",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "53977b7f5603fd5af1d18b533adee6a48d59f83db7a08634b16f9abed8d966c7",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JXLBridgeEncoder.swift",
+      "sourceSHA256": "4d8cf46c5441a3bff7d9d74e6a332aae995ba317adfae607e1d44c046eeb8593",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "53977b7f5603fd5af1d18b533adee6a48d59f83db7a08634b16f9abed8d966c7",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/ModularSubImage.swift",
+      "sourceSHA256": "0703c27bb324d6fc95ae22b266865cd4466d4859a8bbb8f813ad0deab43285bb",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "53977b7f5603fd5af1d18b533adee6a48d59f83db7a08634b16f9abed8d966c7",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/ACDecoder.swift",
+      "sourceSHA256": "4026b7ebeb63a2a181b9ca0bcc852331d4c83dd89e5ab9f25f4323e0550b82bc",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "53977b7f5603fd5af1d18b533adee6a48d59f83db7a08634b16f9abed8d966c7",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/QuantEncodingBitstream.swift",
+      "sourceSHA256": "b189591a7d0b6ae3a7ace8c0eadc1a2c7530dea2c190a88a1c6a582088ae6d55",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "53977b7f5603fd5af1d18b533adee6a48d59f83db7a08634b16f9abed8d966c7",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/DequantMatricesDC.swift",
+      "sourceSHA256": "a6532563a8cefbd8c546754365056fc2f8673b82d68763b417f084412110c936",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "53977b7f5603fd5af1d18b533adee6a48d59f83db7a08634b16f9abed8d966c7",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/QuantizerParams.swift",
+      "sourceSHA256": "022c0aa6efb3a1da1a9ebdb09a00d0090cfb5a948518711dae4b51b25c0ef060",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "53977b7f5603fd5af1d18b533adee6a48d59f83db7a08634b16f9abed8d966c7",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+      "sourceSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending",
+        "Thread public dimension, pixel, nesting and remaining operation memory limits into frame processing"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JXLToJPEGAdapter.swift",
+      "sourceSHA256": "96a1588b8a7c57648ea953b63b58353f39b8518887289628d0ffbb72878a0e15",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending",
+        "Thread public dimension, pixel, nesting and remaining operation memory limits into frame processing"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/QuantEncoding.swift",
+      "sourceSHA256": "4519b40dd4dc85e0c020129e2553a2d5df072e079b40076855da110b0da79b7d",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending",
+        "Thread public dimension, pixel, nesting and remaining operation memory limits into frame processing"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/DequantMatricesDC.swift",
+      "sourceSHA256": "a6532563a8cefbd8c546754365056fc2f8673b82d68763b417f084412110c936",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending",
+        "Thread public dimension, pixel, nesting and remaining operation memory limits into frame processing"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/QuantizerParams.swift",
+      "sourceSHA256": "022c0aa6efb3a1da1a9ebdb09a00d0090cfb5a948518711dae4b51b25c0ef060",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending",
+        "Thread public dimension, pixel, nesting and remaining operation memory limits into frame processing"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/ColorCorrelationMap.swift",
+      "sourceSHA256": "e2befc9b1141ec86857d84e2e2d412d87dac0fd85b2e967693dbd5fd30ac42ad",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending",
+        "Thread public dimension, pixel, nesting and remaining operation memory limits into frame processing"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/ACContext.swift",
+      "sourceSHA256": "687b06ca4c12ef328b4f8d37714fe1502b5bcc9fe43d2fd2f5a5b20f785b54d2",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeEntropy.swift",
+      "destinationSHA256": "956ec59962f4d593db57286860ec1476829f4549a842ff6369ef1aa26416a468",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/ACDecoder.swift",
+      "sourceSHA256": "4026b7ebeb63a2a181b9ca0bcc852331d4c83dd89e5ab9f25f4323e0550b82bc",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeEntropy.swift",
+      "destinationSHA256": "956ec59962f4d593db57286860ec1476829f4549a842ff6369ef1aa26416a468",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/CoeffOrders.swift",
+      "sourceSHA256": "0c0beb6d6e03af08a060315ccbd5e676ba1398753be01a6abf8d52de7be4a424",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeEntropy.swift",
+      "destinationSHA256": "956ec59962f4d593db57286860ec1476829f4549a842ff6369ef1aa26416a468",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Codestream/ICCStream.swift",
+      "sourceSHA256": "9dab111c2ed044ea3db047aa03d1b5f91a7c97fce615efa6218ecbe2747faa65",
+      "destination": "Sources/SwiftJXLCore/Codestream/ICCStream.swift",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Bounded native ICC entropy and prediction decoding with checked command/data boundaries, byte-valued tokens, final entropy-state validation and cancellation",
+        "Standard literal-prefix ICC writing; no colour conversion or external runtime dependency",
+        "Admission before profile allocations; caller ICC limit capped at 4 MiB; public native JPEG integration"
+      ],
+      "destinationSHA256": "5045a7cfc79a94e085873b6fbe091d680e22a22e27e31575343812b1b927c073"
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. The package-internal SwiftJXLCore target now supports the public SwiftJXL scalar greyscale encoder, decoder and inspector; it is not a separately exposed library product. Public profile limits and operation admission are documented in MIGRATION.md and RESOURCE_ADMISSION.md.",
@@ -496,6 +1040,39 @@
       "verifiedLicenceRef": "v0.12.0",
       "verifiedLicenceBlob": "c66034b105f23d108a51b45c846d5b5c194cc229",
       "qualification": "Predecessor did not record its original table extraction revision; retain upstream credit and licence without asserting an invented extraction pin."
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliContext.swift",
+      "destinationSHA256": "50771b1730fdb6e1da0b9f6e76cf32716ce494a2cdd2f5396deca809d55d7a83",
+      "source": "https://github.com/google/brotli/blob/028fb5a23661f123017c060daa546b55cf4bde29/c/common/context.c",
+      "sourceSHA256": "c9aa1acb35af38c90c4a38ba168885b649838236b2d57adb5e76d687bdbe252e",
+      "licence": "MIT",
+      "licenceFile": "Documentation/ThirdParty/brotli-LICENSE.txt",
+      "qualification": "All 2048 numerical context entries retained in source order. Dictionary/transform code is adapted from the predecessor; original extraction pin was not recorded. Its full dictionary blob and 5082 transformations now match independently installed libbrotli."
+    },
+    {
+      "material": "JPEG reconstruction event semantics in JPEGCoefficientDecoder.swift",
+      "upstream": "https://github.com/libjxl/libjxl/blob/a7a9c787341cf703dede03c2009fa460cae5e5df/lib/jxl/jpeg/enc_jpeg_data_reader.cc",
+      "licence": "BSD-3-Clause",
+      "notice": "Documentation/ThirdParty/libjxl-LICENSE.txt",
+      "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+      "sourceSHA256": "7a03befae3c61b765d9c58061d1dd8acddd7976cbb9328e9af8b21a34022aa53"
+    },
+    {
+      "material": "JPEG entropy and reconstruction writer algorithms in JPEGReconstructionWriter.swift",
+      "upstream": "https://github.com/libjxl/libjxl/blob/a7a9c787341cf703dede03c2009fa460cae5e5df/lib/jxl/jpeg/dec_jpeg_data_writer.cc",
+      "licence": "BSD-3-Clause",
+      "notice": "Documentation/ThirdParty/libjxl-LICENSE.txt",
+      "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+      "sourceSHA256": "411aff6becf196e7859460e2258fbe091f9aaa710d87801b8c1857cf5d91e656"
+    },
+    {
+      "material": "JPEG-to-JXL coefficient channel mapping, transposition and quantisation/DC adjustment",
+      "upstream": "https://github.com/libjxl/libjxl/blob/a7a9c787341cf703dede03c2009fa460cae5e5df/lib/jxl/enc_frame.cc",
+      "licence": "BSD-3-Clause",
+      "notice": "Documentation/ThirdParty/libjxl-LICENSE.txt",
+      "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+      "sourceSHA256": "8dbb152d70d0e991186527bf9a73715d5ea3fdd05e54e3b07be5f51acd889b40"
     }
   ],
   "authoredSuccessorFiles": [
@@ -529,6 +1106,12 @@
       "destinationSHA256": "12b1bab79edb576cdc1ebcfdb857379e389b10c64353b2e385dac76b2e477370",
       "licence": "Apache-2.0",
       "purpose": "Task-scoped actual allocation-site instrumentation for shared storage validation"
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGNativeTranscode.swift",
+      "destinationSHA256": "8f2d40bcb54ded771b8355b41bf55efec4438a9fbb2a3d1a754f9a4ad96a969a",
+      "licence": "Apache-2.0",
+      "purpose": "Native in-memory operation composition with aggregate retained-owner admission, container/external Exif-XMP resolution and strict reconstruction validation"
     }
   ]
 }

@@ -1,0 +1,29 @@
+Building for debugging...
+[3 / 8] SwiftJXLCoreTests-product
+[3 / 14] SwiftJXLCoreTests-product
+[6 / 17] SwiftJXLCoreTests-product
+[10 / 16] SwiftJXLCoreTests-product
+[12 / 16] SwiftJXLCoreTests-product
+Build complete! (1.88 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite JPEGSegmentReaderTests started.
+◇ Suite JPEGCoefficientTests started.
+◇ Test oddOffsetStuffingCannotSkipCheckpoints() started.
+◇ Test stuffedEntropyReaderChecksWorkAtOddOffsets() started.
+✘ Test oddOffsetStuffingCannotSkipCheckpoints() recorded an issue at JPEGSegmentReaderTests.swift:121:9: Expectation failed: an error was expected but none was thrown and "Optional(SwiftJXLCore.JPEGSegment(markerByte: 218, markerRange: Range(2..<4), payloadRange: Range(6..<7), entropyRange: Range(7..<24007)))" was returned
+↳ CancellationError.self → <not evaluated>
+↳   CancellationError → <not evaluated>
+↳   self → <not evaluated>
+✘ Test oddOffsetStuffingCannotSkipCheckpoints() failed after 0.007 seconds with 1 issue.
+✘ Suite JPEGSegmentReaderTests failed after 0.007 seconds with 1 issue.
+✘ Test stuffedEntropyReaderChecksWorkAtOddOffsets() recorded an issue at JPEGCoefficientTests.swift:134:9: Expectation failed: an error was expected but none was thrown
+↳ CancellationError.self → <not evaluated>
+↳   CancellationError → <not evaluated>
+↳   self → <not evaluated>
+✘ Test stuffedEntropyReaderChecksWorkAtOddOffsets() failed after 0.015 seconds with 1 issue.
+✘ Suite JPEGCoefficientTests failed after 0.015 seconds with 1 issue.
+✘ Test run with 2 tests in 2 suites failed after 0.015 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - SwiftJXLCoreTests (Swift Testing)

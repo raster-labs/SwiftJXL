@@ -1,0 +1,7 @@
+{
+  "base": "c277c1c9fc152996581a843875e017c904b54b96",
+  "change": "Explicit internal JBRDBudget initializer for Swift 6.2 access control",
+  "sourceSHA256": "4a6b63c1c7f779972fb03dd69cadcb56882f99d00398c2ee712c0b5e3c1f6cd9",
+  "localValidation": "Swift 6.4 debug JBRDTests: 7 declarations, 22 cases, zero skips; exit 0",
+  "hostedValidation": "Pending new head; run 37891489224 failed Swift 6.2 compilation before tests. Swift 6.4 Linux x86/ARM passed."
+}

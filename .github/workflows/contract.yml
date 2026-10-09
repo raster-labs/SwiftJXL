@@ -166,7 +166,7 @@ jobs:
         run: |
           set -euo pipefail
           apt-get update
-          apt-get install -y --no-install-recommends python3 python3-venv cmake ninja-build pkg-config libjpeg-dev libpng-dev
+          apt-get install -y --no-install-recommends python3 python3-venv cmake ninja-build pkg-config libjpeg-dev libpng-dev libbrotli-dev
           git init "$RUNNER_TEMP/libjxl"
           git -C "$RUNNER_TEMP/libjxl" remote add origin https://github.com/libjxl/libjxl.git
           git -C "$RUNNER_TEMP/libjxl" fetch --depth 1 origin a7a9c787341cf703dede03c2009fa460cae5e5df
@@ -185,6 +185,16 @@ jobs:
           git -C "$RUNNER_TEMP/libjxl" submodule status > .build/oracle-source-pins.txt
       - name: Require debug and release oracle tests
         run: python3 Scripts/validate-oracle.py --tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/oracle-evidence
+      - name: Recheck JPEG coefficient snapshots independently
+        run: |
+          clang -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
+          python3 Scripts/validate-jpeg-coefficients.py --oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/jpeg-coefficient-evidence
+      - name: Recheck JPEG reconstruction-event vectors independently
+        run: python3 Scripts/validate-jpeg-events.py --tools "$RUNNER_TEMP/libjxl/build/tools" --coefficient-oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/jpeg-event-evidence
+      - name: Independently validate native Brotli framing fixtures
+        run: python3 Scripts/validate-brotli-framing.py --output .build/brotli-framing-evidence/report.json
+      - name: Independently validate compressed Brotli and dictionary fixtures
+        run: python3 Scripts/validate-brotli-decoder.py --output .build/brotli-decoder-evidence/report.json
       - name: NRRD and libjxl independent CLI interoperability
         run: |
           python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
@@ -192,6 +202,10 @@ jobs:
           swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output .build/nrrd-reference-debug --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output .build/nrrd-reference-release --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
+      - name: Native JPEG CLI independent interoperability
+        run: |
+          python3 Scripts/test-cli-native-jpeg.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output .build/native-jpeg-cli-debug --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
+          python3 Scripts/test-cli-native-jpeg.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --output .build/native-jpeg-cli-release --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
       - name: Preserve oracle evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -201,4 +215,9 @@ jobs:
             .build/oracle-evidence
             .build/oracle-source-pins.txt
             .build/nrrd-reference-*/report.json
+            .build/native-jpeg-cli-*/report.json
+            .build/jpeg-coefficient-evidence/report.json
+            .build/brotli-framing-evidence/report.json
+            .build/brotli-decoder-evidence/report.json
+            .build/jpeg-event-evidence/report.json
           if-no-files-found: warn

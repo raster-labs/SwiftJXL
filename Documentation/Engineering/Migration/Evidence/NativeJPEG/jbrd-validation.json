@@ -1,0 +1,30 @@
+{
+  "status": "bounded-reconstruction-metadata-passed",
+  "declarations": 30,
+  "cases": 73,
+  "skips": 0,
+  "configurations": [
+    "debug",
+    "address-sanitizer",
+    "thread-sanitizer"
+  ],
+  "nativeTranscodeImplemented": false,
+  "nativeBrotliImplemented": false,
+  "testFilter": "JPEG.*Tests|JBRDTests",
+  "base": "420c890b90efd62c6f3859600030d06da4489211",
+  "contract": "0.10.0",
+  "independentBundles": 16,
+  "checks": "Read fields, exact independent Brotli offset, byte-identical header serialisation, metadata resolution; not complete JPEG restoration",
+  "referenceSources": {
+    "jpeg_data.cc": "59e30685bb8ce19e67500a4aa2f6974388d4499443287ff73145b192700dd271",
+    "dec_jpeg_data.cc": "407787c0fbb187d0ffbb6beb89238b912c4571084c86fe60e4079c43fd7d4f12"
+  },
+  "referenceRevision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "sha256": {
+    "Sources/SwiftJXLCore/JPEG/JBRDBox.swift": "9045c7592205d759b7cb7d88b8222e5714f504a2e8e8788e9099d8a862a91a68",
+    "Sources/SwiftJXLCore/JPEG/JBRDBoxWriter.swift": "fafee028686365f41e1435a412171a02b304f32cadbc9b437247ec9a81bcf9e4",
+    "Sources/SwiftJXLCore/JPEG/JBRDMetadata.swift": "71ffb161fdad78120be5e680c7459aa44feb2f550dc60f777abc0c2fed3e37d7",
+    "Sources/SwiftJXLCore/JPEG/JBRDPolicy.swift": "de10bd5a735557bbc3a4367d1340e911c5a887831b30e2ca9e9990ff7b090c2f",
+    "Tests/SwiftJXLCoreTests/JBRDTests.swift": "86423704f20f548c154c1311233d420c1d312709bc805a2b1317a6ddaba36a1e"
+  }
+}

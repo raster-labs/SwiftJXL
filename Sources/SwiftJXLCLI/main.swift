@@ -10,8 +10,8 @@ import Glibc
 
 private let tool = "swiftjxl-cli"
 private let version = "2.1.0-dev.2"
-private let reserved = ["transcode"]
-private let active = ["inspect", "validate", "encode", "decode"]
+private let reserved: [String] = []
+private let active = ["inspect", "validate", "encode", "decode", "transcode"]
 private let valueOptions: Set<String> = ["--input", "-i", "--output", "-o", "--input-format", "--output-format",
     "--mode", "--max-error", "--backend", "--copy-policy", "--threads", "--max-memory", "--timeout"]
 
@@ -128,13 +128,48 @@ private func help(_ command: String?) -> String {
 
             Report executable command support without reading files.
             --json writes one JSON document to stdout; diagnostics stay on stderr.
-            Inspect/validate support the bounded scalar JPEG XL profile. Encode/decode remain unavailable.
+            Reports scalar image, UInt16 NRRD and native JPEG reconstruction profiles.
 
             \(common)
 
             EXAMPLES
               \(tool) capabilities --json
               \(tool) capabilities --verbose=+++
+            """ + "\n"
+        }
+        if command == "transcode" {
+            return """
+            USAGE: \(tool) transcode --input PATH --input-format FORMAT --output-format FORMAT [OPTIONS]
+
+            Recompress JPEG to JPEG XL or restore the original JPEG bytes from JXL.
+            Supported pairs: jpeg -> jxl/jpeg-xl; jxl/jpeg-xl -> jpeg.
+            8-bit baseline/extended/progressive Huffman JPEG; greyscale or three channels,
+            common 444/422/420/440 sampling; dimensions <=2048. Input/output <=4194304 bytes.
+            RGB/greyscale ICC is preserved; unsupported coefficient profiles return exit 4.
+            Reverse requires valid JPEG reconstruction data; no original-source fallback.
+
+            COMMAND OPTIONS
+              -i, --input PATH          Required regular file/pipe; '-' means stdin.
+              -o, --output PATH         Final binary output; default '-' means stdout.
+              --input-format FORMAT    jpeg, jxl or jpeg-xl; required.
+              --output-format FORMAT   jpeg, jxl or jpeg-xl; required, opposite format.
+              --mode lossless          Default; original JPEG byte preservation.
+              --json                   Write final JSON report to stderr after payload.
+              --overwrite              Atomically replace an existing final regular file.
+              --backend NAME           automatic or scalar-cpu; accelerated returns 4.
+              --copy-policy POLICY     require-sharing (default) or allow-copy.
+              --threads N              Worker ceiling 1..8; scalar work uses one.
+              --max-memory BYTES       Aggregate memory ceiling, including input/output.
+              --timeout SECONDS        Overall deadline, including pipe I/O.
+            Lossy/near-lossless modes, max-error, quality and source-file fallback are unsupported.
+            Library processing stays in memory. Final files publish atomically; stdout
+            can contain partial bytes on I/O failure. JSON is emitted only after success.
+
+            \(common)
+
+            EXAMPLES
+              \(tool) transcode -i source.jpg --input-format jpeg --output-format jxl -o image.jxl
+              \(tool) transcode -i image.jxl --input-format jxl --output-format jpeg -o restored.jpg
             """ + "\n"
         }
         if command == "encode" || command == "decode" {
@@ -244,11 +279,10 @@ private func help(_ command: String?) -> String {
       encode, decode            Full-precision UInt16 NRRD/JPEG XL file and pipe conversion.
       help [command]             Show global or command-specific help.
       version                    Show the development version.
-      \(reserved.joined(separator: ", "))
-                                Reserved; codec algorithms are unavailable (exit 4).
+      transcode                 Reversible native JPEG/JPEG XL coefficient conversion.
 
     Requires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.
-    Bounded scalar inspection/validation and UInt16 NRRD encode/decode are available.
+    Bounded scalar, UInt16 NRRD and native JPEG reconstruction profiles are available.
 
     \(common)
 
@@ -298,10 +332,12 @@ private func write(_ text: String, to handle: FileHandle) throws {
     // Executable support is narrower than the public library precision profile.
     let encoder = Encoder.capabilities
     let decoder = Decoder.capabilities
-    let formats = Array(Set(encoder.formats + decoder.formats + ["nrrd"])).sorted()
+    let formats = Array(Set(encoder.formats + decoder.formats + ["nrrd", "jpeg"])).sorted()
     if options.json {
         let payload: [String: Any] = ["tool": tool, "version": version, "minimumAppleOS": "26.0",
-            "canEncode": encoder.canEncode, "canDecode": true,
+            "canEncode": encoder.canEncode, "canDecode": true, "canTranscode": true,
+            "maximumTranscodeDimension": 2048, "transcodePreservation": "original-bitstream",
+            "transcodeProfileLimits": Transcoder.capabilities[0].profileLimits,
             "interchangeFormat": "nrrd", "interchangeMeaningfulBits": 16,
             "maximumEncodeDimension": 512, "maximumDecodeDimension": 1024,
             "canInspect": decoder.canInspect, "canValidate": true, "formats": formats,
@@ -310,7 +346,7 @@ private func write(_ text: String, to handle: FileHandle) throws {
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
         try FileHandle.standardOutput.write(contentsOf: data + Data([10]))
     } else {
-        try write("\(tool) \(version)\nencode: \(encoder.canEncode)\ndecode: true\ninspect: \(decoder.canInspect)\nvalidate: true\nformats: \(formats.isEmpty ? "none" : formats.joined(separator: ", "))\n", to: .standardOutput)
+        try write("\(tool) \(version)\nencode: \(encoder.canEncode)\ndecode: true\ninspect: \(decoder.canInspect)\nvalidate: true\ntranscode: true\nformats: \(formats.isEmpty ? "none" : formats.joined(separator: ", "))\n", to: .standardOutput)
     }
     try diagnostic(3, "advertised formats: \(formats.count); CLI capabilities; library scalar API is separately available")
     try diagnostic(4, "elapsed seconds: \(ProcessInfo.processInfo.systemUptime - start)")
@@ -335,8 +371,20 @@ private func status(for error: CodecError) -> Int32 {
     guard let input = values["--input"], !input.isEmpty else {
         throw CodecError(.invalidArgument, "--input is required.")
     }
-    let binaryCommand = command == "encode" || command == "decode"
-    if binaryCommand {
+    let binaryCommand = command == "encode" || command == "decode" || command == "transcode"
+    var transcodeTarget: TranscodeTarget?
+    if command == "transcode" {
+        guard values["--max-error"] == nil else { throw CodecError(.invalidArgument, "max-error does not apply to original JPEG preservation.") }
+        if let mode = values["--mode"], mode != "lossless" {
+            throw CodecError(["lossy", "near-lossless"].contains(mode) ? .unsupportedFeature : .invalidArgument, "Native transcoding requires lossless mode.")
+        }
+        guard let from = values["--input-format"], let to = values["--output-format"] else {
+            throw CodecError(.invalidArgument, "Native transcoding requires input-format and output-format.")
+        }
+        if from == "jpeg", ["jxl", "jpeg-xl"].contains(to) { transcodeTarget = .jpegXL }
+        else if ["jxl", "jpeg-xl"].contains(from), to == "jpeg" { transcodeTarget = .jpeg }
+        else { throw CodecError(.unsupportedFormat, "Unsupported native format pair.") }
+    } else if binaryCommand {
         guard values["--max-error"] == nil, command == "encode" || values["--mode"] == nil else {
             throw CodecError(.invalidArgument, "Compression options do not apply to this command.")
         }
@@ -404,11 +452,26 @@ private func status(for error: CodecError) -> Int32 {
     let available = memory - CommandIO.overhead - data.count * 2
     guard available > 0 else { throw CodecError(.resourceLimitExceeded, "Aggregate command memory limit exceeded.") }
     let limits = try ResourceLimits(maximumCompressedBytes: CommandIO.maximumInput,
-        maximumPixels: 1024 * 1024, maximumDimension: 1024, maximumFrames: 1,
+        maximumPixels: command == "transcode" ? 2048 * 2048 : 1024 * 1024,
+        maximumDimension: command == "transcode" ? 2048 : 1024, maximumFrames: 1,
         maximumWorkers: threads, deadlineSeconds: max(io.remainingSeconds, Double.leastNonzeroMagnitude),
         maximumMemoryBytes: available)
     let decodeOptions = DecodeOptions(resourceLimits: limits, executionPolicy: backend, copyPolicy: copy)
     let decoder = try Decoder()
+    if let target = transcodeTarget {
+        let result = try await Transcoder().transcode(data, to: target,
+            options: .init(resourceLimits: limits, executionPolicy: backend, copyPolicy: copy))
+        try io.checkpoint()
+        try diagnostic(3, "native coefficients and reconstruction metadata; original JPEG byte preservation")
+        try diagnostic(4, "elapsed seconds before publication: \(ProcessInfo.processInfo.systemUptime - start)")
+        try io.publish(result.data, path: output, inputPath: input, overwrite: options.overwrite)
+        if options.json {
+            let report: [String: Any] = ["tool": tool, "version": version, "operation": "transcode",
+                "format": result.encoding.format, "fidelity": "original-bitstream", "outputBytes": result.data.count]
+            try io.writeBytes(JSONSerialization.data(withJSONObject: report, options: [.sortedKeys]) + Data([10]), fd: STDERR_FILENO)
+        }
+        return 0
+    }
     if binaryCommand {
         let descriptor: ImageDescriptor
         var outputBytes = 0

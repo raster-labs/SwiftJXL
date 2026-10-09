@@ -1,0 +1,120 @@
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite JPEGCoefficientTests started.
+◇ Suite JBRDTests started.
+◇ Suite JPEGSegmentReaderTests started.
+◇ Suite JPEGFrameLayoutTests started.
+◇ Test everyProgressivePrefixFailsWithoutPublishingCoefficients() started.
+◇ Test invalidWriterShapesAndEventLimitsThrow() started.
+◇ Test multipleScansRetainEachBoundary() started.
+◇ Test metadataIdentityLengthAndSurplusAreRejected() started.
+◇ Test inputCountAndTimeLimitsAreEnforced() started.
+◇ Test externalMetadataMustFitExactly() started.
+◇ Test malformedFramingThrows(_:) started.
+◇ Test slicedInputAndConcurrentReads() started.
+◇ Test headerTruncationsAndMutationsDoNotTrap() started.
+◇ Test longEntropyAndFillRunsHaveBoundedCheckpoints(_:) started.
+◇ Test independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test taskCancellationIsHonoured() started.
+◇ Test everyPrefixBeforeEOIIsRejected() started.
+◇ Test preservesFillScanAndTailWithoutReparsingTail() started.
+◇ Test cancelledOperationHasNoResult() started.
+◇ Test stuffedEntropyReaderChecksWorkAtOddOffsets() started.
+◇ Test allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test slicedLifetimeAndConcurrentOperations() started.
+◇ Test resourceAdmissionAndPaddingLimits() started.
+◇ Test slicedInputHasRelativeRangesAndRetainedLifetime() started.
+◇ Test limitsAndCancellationBeforePublication() started.
+◇ Test wrongRestartSequenceRejects() started.
+◇ Test mutatedInputRemainsBoundedAndCannotTrap() started.
+◇ Test oddOffsetStuffingCannotSkipCheckpoints() started.
+◇ Test invalidHuffmanTreesAndBitRequestsThrow() started.
+◇ Test cancellationDuringCoefficientWorkThrowsBeforePublication() started.
+◇ Test nonCanonicalPaddingIsRetained() started.
+◇ Test malformedAndUnsupportedFramesRejectBeforeAllocation() started.
+◇ Test pinnedIndependentFixtures(_:) started.
+◇ Test nonInterleavedIndicesSkipRightAndBottomPadding() started.
+◇ Test case passing 1 argument fill → false to longEntropyAndFillRunsHaveBoundedCheckpoints(_:) started.
+◇ Test case passing 1 argument data → 6 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 1 argument name → "gray" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument data → 6 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 1 argument fill → true to longEntropyAndFillRunsHaveBoundedCheckpoints(_:) started.
+◇ Test case passing 1 argument data → 4 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 1 argument name → "444" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument data → 4 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 1 argument name → "gray" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "422" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument data → 4 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 1 argument name → "444" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "420" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument data → 3 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 1 argument name → "422" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "440" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "420" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "440" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "restart" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "restart" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+✔ Test multipleScansRetainEachBoundary() passed after 0.055 seconds.
+◇ Test case passing 1 argument name → "metadata-tail" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "gray" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "444" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "422" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "420" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+✔ Test inputCountAndTimeLimitsAreEnforced() passed after 0.073 seconds.
+◇ Test case passing 1 argument name → "440" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "restart" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "zero-padding" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to pinnedIndependentFixtures(_:) started.
+✔ Test malformedFramingThrows(_:) with 6 test cases passed after 0.087 seconds.
+✔ Test externalMetadataMustFitExactly() passed after 0.087 seconds.
+✔ Test longEntropyAndFillRunsHaveBoundedCheckpoints(_:) with 2 test cases passed after 0.087 seconds.
+✔ Test preservesFillScanAndTailWithoutReparsingTail() passed after 0.086 seconds.
+✔ Test everyPrefixBeforeEOIIsRejected() passed after 0.086 seconds.
+✔ Test resourceAdmissionAndPaddingLimits() passed after 0.086 seconds.
+✔ Test invalidWriterShapesAndEventLimitsThrow() passed after 0.087 seconds.
+✔ Test metadataIdentityLengthAndSurplusAreRejected() passed after 0.089 seconds.
+✔ Test slicedInputHasRelativeRangesAndRetainedLifetime() passed after 0.089 seconds.
+✔ Test limitsAndCancellationBeforePublication() passed after 0.089 seconds.
+✔ Test oddOffsetStuffingCannotSkipCheckpoints() passed after 0.089 seconds.
+✔ Test invalidHuffmanTreesAndBitRequestsThrow() passed after 0.089 seconds.
+✔ Test cancellationDuringCoefficientWorkThrowsBeforePublication() passed after 0.089 seconds.
+✔ Test nonCanonicalPaddingIsRetained() passed after 0.089 seconds.
+✔ Test malformedAndUnsupportedFramesRejectBeforeAllocation() passed after 0.096 seconds.
+✔ Test wrongRestartSequenceRejects() passed after 0.097 seconds.
+✔ Test pinnedIndependentFixtures(_:) with 9 test cases passed after 0.096 seconds.
+✔ Test nonInterleavedIndicesSkipRightAndBottomPadding() passed after 0.096 seconds.
+✔ Test taskCancellationIsHonoured() passed after 0.098 seconds.
+✔ Test cancelledOperationHasNoResult() passed after 0.098 seconds.
+✔ Test slicedInputAndConcurrentReads() passed after 0.098 seconds.
+✔ Test slicedLifetimeAndConcurrentOperations() passed after 0.098 seconds.
+✔ Suite JPEGFrameLayoutTests passed after 0.099 seconds.
+✔ Suite JPEGSegmentReaderTests passed after 0.099 seconds.
+✔ Test independentBundlesMatchOriginalJPEGFields(_:) with 16 test cases passed after 0.116 seconds.
+✔ Test allVisibleCoefficientsMatchIndependentLibjpeg(_:) with 15 test cases passed after 0.118 seconds.
+✔ Test stuffedEntropyReaderChecksWorkAtOddOffsets() passed after 0.121 seconds.
+✔ Test headerTruncationsAndMutationsDoNotTrap() passed after 0.537 seconds.
+✔ Suite JBRDTests passed after 0.538 seconds.
+✔ Test everyProgressivePrefixFailsWithoutPublishingCoefficients() passed after 1.028 seconds.
+✔ Test mutatedInputRemainsBoundedAndCannotTrap() passed after 1.028 seconds.
+✔ Suite JPEGCoefficientTests passed after 1.029 seconds.
+✔ Test run with 30 tests in 4 suites passed after 1.029 seconds.

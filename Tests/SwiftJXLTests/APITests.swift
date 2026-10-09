@@ -18,7 +18,7 @@ func expectAsyncCodecError(_ category: CodecError.Category,
 
 @Suite("Public API feasibility")
 struct APITests {
-    @Test func capabilitiesAdvertiseOnlyTheScalarProfile() throws {
+    @Test func capabilitiesAdvertiseQualifiedProfiles() throws {
         let encoder = try Encoder()
         let decoder = try Decoder()
         #expect(encoder.configuration.mode == .lossless)
@@ -26,7 +26,7 @@ struct APITests {
         #expect(encoder.capabilities.canEncode)
         #expect(decoder.capabilities.canDecode)
         #expect(decoder.capabilities.canInspect)
-        #expect(try Transcoder().capabilities.isEmpty)
+        #expect(try Transcoder().capabilities.count == 2)
         #expect(EncodeOptions().copyPolicy == .requireSharedStorage)
         #expect(DecodeOptions().metadataPolicy == .preserve)
         #expect(TranscodeOptions().copyPolicy == .requireSharedStorage)
@@ -90,7 +90,7 @@ struct APITests {
         await expectAsyncCodecError(.malformedInput) { _ = try await decoder.decode(Data(), into: destination) }
         #expect(try destination.writeUInt16 { _, _ in 42 }.sampleUInt16(x: 0, y: 0) == 42)
         for target in TranscodeTarget.allCases {
-            await expectAsyncCodecError(.unsupportedFeature) {
+            await expectAsyncCodecError(.malformedInput) {
                 _ = try await Transcoder().transcode(Data(), to: target)
             }
         }
