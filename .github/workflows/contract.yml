@@ -57,10 +57,14 @@ jobs:
       - name: CLI stream and report checks (debug and release)
         run: |
           apt-get update
-          apt-get install -y --no-install-recommends python3
+          apt-get install -y --no-install-recommends python3 python3-venv
+          python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" -m pip install --only-binary=:all: -r Scripts/nrrd-oracle-requirements.txt
           swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
           python3 Scripts/test-cli-payload.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-debug"
           python3 Scripts/test-cli-payload.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-release"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-debug"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-release"
       - name: Preserve CLI evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -81,12 +85,22 @@ jobs:
       - run: xcodebuild -version
       - run: swift build
       - run: swift test
+      - name: Python for pinned NRRD test oracle
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install test-only NRRD oracle
+        run: |
+          python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" -m pip install --only-binary=:all: -r Scripts/nrrd-oracle-requirements.txt
       - name: CLI and staged manual installation
         run: python3 Scripts/test-cli.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-evidence"
       - name: CLI supported payloads
         run: |
           swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
           python3 Scripts/test-cli-payload.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-debug"
+      - name: NRRD CLI interoperability
+        run: '"$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-debug"'
       - name: Address sanitizer
         run: swift test --scratch-path .build/asan --sanitize address
       - name: Thread sanitizer
@@ -95,6 +109,8 @@ jobs:
         run: |
           python3 Scripts/test-cli-payload.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-asan"
           python3 Scripts/test-cli-payload.py --binary "$(swift build --scratch-path .build/tsan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-tsan"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-asan"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --scratch-path .build/tsan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-tsan"
       - name: Preserve CLI evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -150,7 +166,7 @@ jobs:
         run: |
           set -euo pipefail
           apt-get update
-          apt-get install -y --no-install-recommends python3 cmake ninja-build pkg-config libjpeg-dev libpng-dev
+          apt-get install -y --no-install-recommends python3 python3-venv cmake ninja-build pkg-config libjpeg-dev libpng-dev
           git init "$RUNNER_TEMP/libjxl"
           git -C "$RUNNER_TEMP/libjxl" remote add origin https://github.com/libjxl/libjxl.git
           git -C "$RUNNER_TEMP/libjxl" fetch --depth 1 origin a7a9c787341cf703dede03c2009fa460cae5e5df
@@ -169,6 +185,13 @@ jobs:
           git -C "$RUNNER_TEMP/libjxl" submodule status > .build/oracle-source-pins.txt
       - name: Require debug and release oracle tests
         run: python3 Scripts/validate-oracle.py --tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/oracle-evidence
+      - name: NRRD and libjxl independent CLI interoperability
+        run: |
+          python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" -m pip install --only-binary=:all: -r Scripts/nrrd-oracle-requirements.txt
+          swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output .build/nrrd-reference-debug --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output .build/nrrd-reference-release --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
       - name: Preserve oracle evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -177,4 +200,5 @@ jobs:
           path: |
             .build/oracle-evidence
             .build/oracle-source-pins.txt
+            .build/nrrd-reference-*/report.json
           if-no-files-found: warn

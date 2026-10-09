@@ -1,6 +1,6 @@
 # swiftjxl-cli: help, diagnostics and installation
 
-Version **2.1.0-dev.2**; Swift 6.2 minimum with Swift 6.4 qualified / Swift 6, Apple OS minimum **26.0**. The CLI targets macOS and Linux; Linux execution remains a qualification requirement. No external parser package or sibling codec is required. Current commands provide help, version, executable capabilities, supported-header inspection and full supported-frame validation. Encode/decode file adapters and transcode remain unavailable (exit 4), without opening input, consuming stdin or creating output. Their help describes reserved syntax only.
+Version **2.1.0-dev.2**; Swift 6.2 minimum with Swift 6.4 qualified / Swift 6, Apple OS minimum **26.0**. The CLI targets macOS and Linux; Linux execution remains a qualification requirement. No external parser package or sibling codec is required. Current commands provide help, version, executable capabilities, supported-header inspection and full supported-frame validation. Encode/decode support the explicit full-precision UInt16 NRRD profile below. Native transcode remains unavailable (exit 4), without opening input, consuming stdin or creating output. Its help describes reserved syntax only.
 
 ```sh
 swift run swiftjxl-cli --help
@@ -30,7 +30,23 @@ Input is a regular file or pipe; `-` means stdin. Output defaults to stdout and 
 
 `--input-format` accepts `jxl` or `jpeg-xl`. Backend is `automatic` or `scalar-cpu`; `accelerated` rejects. Copy policy is `require-sharing` by default or `allow-copy`; both use the existing public memory contract. `--threads` is a 1–8 worker ceiling; this scalar profile uses one worker. `--max-memory` is a positive aggregate byte ceiling (default 1073741824), reserving compressed-buffer growth, 256 KiB command overhead and the codec's admitted storage/workspace; it is not a process RSS limit. `--timeout` is positive finite seconds, at most 31536000 (default 120), covering cooperative input, codec and output checkpoints. Pipe readiness is checked every 25 ms; ordinary filesystem calls remain subject to operating-system scheduling. Ctrl+C returns 130. `--mode`, `--max-error` and `--output-format` do not apply.
 
-CLI capabilities describe executable commands: `canInspect` and `canValidate` are true; `canEncode` and `canDecode` remain false until file adapters are implemented. Library capabilities are separate.
+CLI capabilities describe executable commands: `canInspect` and `canValidate` are true; `canEncode` and `canDecode` are true for the 16-bit NRRD profile only. Library capabilities are separate.
+
+## Encode and decode through NRRD
+
+```sh
+swiftjxl-cli encode -i image.nrrd --input-format nrrd -o image.jxl
+swiftjxl-cli decode -i image.jxl --output-format nrrd -o restored.nrrd
+cat image.nrrd | swiftjxl-cli encode -i - --input-format nrrd | swiftjxl-cli decode -i - --output-format nrrd > restored.nrrd
+```
+
+Select `--input-format nrrd` for encode or `--output-format nrrd` for decode explicitly. The compressed endpoint is `jxl`/`jpeg-xl` by default; no filename extension reinterprets raw bytes. Encoding accepts only lossless mode (the default), with dimensions at most 512; decoding accepts dimensions at most 1024. Input is capped at 4 MiB. Resource/backend/copy limits, atomic output and cancellation follow the preceding section. `--max-error` never applies; `--mode` applies only to encode. `--json` writes the final success report to stderr after binary publication; requested verbosity also uses stderr. A reporting failure after publication returns failure but cannot retract the payload. A broken binary output never prints success.
+
+The [pinned and reviewed NRRD subset](Documentation/Engineering/Migration/NRRD_PROFILE.md) is attached NRRD0005, 2D greyscale, raw unsigned 16-bit samples, explicit little/big endian and x as fastest axis. This explicit input profile assigns the existing codec's D65/sRGB/default rendering intent. Header limits are 16 KiB total, 64 lines, 1024 bytes per line. Standard uint16 type aliases, LF/CRLF and comments are supported. Duplicate/missing fields, invalid counts, wrong payload lengths and unsupported fields reject. Detached references, URLs, compressed encodings, spatial metadata and custom keys are never followed or interpreted.
+
+Plain NRRD uint16 cannot represent source-declared 8–15-bit precision or non-default rendering-intent metadata. Decode rejects those rather than silently widening precision or discarding interpretation. Colour, signed samples, animation and ICC remain unsupported. This profile is not a replacement for every predecessor image-file adapter.
+
+Encoding retains the immutable NRRD input owner and exposes a bounded sample view directly to the public encoder. Decoding writes the NRRD header and borrowed decoded rows to the final destination; it creates no full-image serialisation array or intermediate pixel file. OS pipe/file copies still occur and are distinct from in-process storage sharing. Pinned pynrrd/NumPy and libjxl are test-only oracles, never runtime dependencies.
 
 ## Verbosity
 

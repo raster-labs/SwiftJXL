@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## NRRD CLI stage — 9 October 2026
+
+Added new bounded attached/raw UInt16 NRRD parsing and serialisation around the existing public scalar codec. The official specification is pinned before implementation; no predecessor codec or third-party implementation was copied. See [profile and evidence](Documentation/Engineering/Migration/NRRD_PROFILE.md).
+
 ## CLI inspection and validation — 8 October 2026
 
 Added bounded file/pipe inspection and full supported-frame validation through the public decoder, structured reports, cooperative deadlines/cancellation and atomic report publication. No codec subsystem was relocated in this stage. Encode/decode file adapters and reconstruction remain deferred. See [stage evidence](Documentation/Engineering/Migration/CLI_VALIDATION.md); platform gates must pass before merging.

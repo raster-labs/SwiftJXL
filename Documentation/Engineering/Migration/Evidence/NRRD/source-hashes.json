@@ -1,0 +1,12 @@
+{
+  "Sources/SwiftJXLCLI/NRRD.swift": "4f463b65df4e466f1bf6387492930fbd277e629ed6a75243fc98cfdd0e3aa798",
+  "Sources/SwiftJXLCLI/CommandIO.swift": "4046dc16c60d3ce4a36481a33ba495cdcb1a4f34734e44bec69a739d84e20e34",
+  "Sources/SwiftJXLCLI/main.swift": "358b4c00767f3a4ce63a9c310e338d483f9d66bfeae1ccf855789cfd72ecdc39",
+  "Scripts/test-cli-nrrd.py": "d1315bf1bb57fbc062956d75214f22d209c373b8003bb59023843d924014090b",
+  "Scripts/test-cli-payload.py": "6c755a60f2f2a997f9a0be96538bae87f5032f6ad4165a68f1f8d74e295a7643",
+  "Scripts/test-cli.py": "6d0d5eefac3f3c791c290d8c217320ae18cff4e01c384f908c6201aa3f88ed83",
+  "Scripts/nrrd-oracle-requirements.txt": "8d352b4d60c7555a612f30fc76c2a2b59948cb29a6e9e36d101f383da0c2a29f",
+  "Examples/CLIValidationFixtures/Sources/CLIValidationFixtures/main.swift": "233da1582bcee79849449e44517b51f52c3b48539852c7c95b6ea2743fd69f1b",
+  "ManPages/swiftjxl-cli.1": "8bb892459c5a3c510ffc93b21c42f0141e749fba15038c6a18c274feae144b97",
+  ".github/workflows/contract.yml": "baf383c71aa853146a0874f8d40bd393c09d8141e6b6f6720b3663764145c1ae"
+}
