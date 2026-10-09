@@ -115,7 +115,7 @@ For an existing reproducible consumer, run `xcrun swift run --package-path Examp
 
 Pixel-lossless JPEG XL preserves decoded sample values. Reversible existing-JPEG recompression must restore **every original JPEG byte from the JXL alone**. Decoding JPEG to RGB and losslessly encoding those pixels cannot establish this guarantee or recover pixels lost in the original lossy JPEG. Do not substitute a quality setting, an original-JPEG sidecar or a pixel fallback for reconstruction.
 
-The [pinned predecessor methods, tests and limitations](TRANSCODING.md) identify 8-bit DCT bridge paths, noncanonical-padding/metadata gaps and Brotli restrictions requiring qualification. Neither general 16-bit image descriptors nor the separate JPEG pixel decoder prove 12/16-bit or SOF3 JPEG bitstream reconstruction. The successor currently implements neither direction. Its future reversible path must preserve required reconstruction metadata; `discardAncillary` is already rejected by the stub.
+The [pinned predecessor methods, tests and limitations](TRANSCODING.md) identify 8-bit DCT bridge paths, noncanonical-padding/metadata gaps and Brotli restrictions requiring qualification. Neither general 16-bit image descriptors nor the separate JPEG pixel decoder prove 12/16-bit or SOF3 JPEG bitstream reconstruction. The successor now implements both directions within the [bounded native profile](#native-jpeg-transcoder-integration). It preserves required reconstruction metadata and rejects `discardAncillary`.
 
 ## Staged application rollout and handover checklist
 

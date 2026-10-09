@@ -121,6 +121,14 @@ struct ModularStorageTests {
         #expect(result.report.copyEvents.isEmpty && result.report.fidelity == .exactSamples)
         #expect(audit.snapshot.finalPixelAllocations == 0)
         let allocated = try await Decoder().decode(data)
+        let sourceAudit = ScalarStorageAudit()
+        let stridedEncoding = try await ScalarStorageAudit.$current.withValue(sourceAudit) {
+            try await Encoder().encode(result.image)
+        }
+        let canonicalEncoding = try await Encoder().encode(allocated.image)
+        #expect(stridedEncoding.data == canonicalEncoding.data)
+        #expect(stridedEncoding.report.copyEvents.isEmpty && sourceAudit.snapshot.finalPixelAllocations == 0)
+        #expect(result.image.storage.allocationID == owner.allocationID)
         var expected = [UInt8](repeating: 0, count: capacity)
         for c in 0..<f.channels { for i in 0..<(f.width * f.height) {
             let value = (name.hasPrefix("palette-") ? (i % 4) * 47 + c * 31 : i * 71 + (i / f.width) * 37 + c * 113) & ((1 << f.bits) - 1)
@@ -163,6 +171,30 @@ struct ModularStorageTests {
             Issue.record("Damaged pixel payload was accepted")
         } catch let error as CodecError { #expect(error.category == .malformedInput) }
         #expect(throws: CodecError.self) { try invalidated.writeUInt16 { _, _ in 0 } }
+    }
+
+    @Test(arguments: [2, 4], [8, 12, 16])
+    func independentAssociatedAlphaInput(_ channels: Int, _ bits: Int) async throws {
+        let file = try #require(Bundle.module.url(forResource: "premult-\(channels)-\(bits)",
+            withExtension: "jxl", subdirectory: "Modular/Alpha"))
+        let data = try Data(contentsOf: file)
+        let info = try Decoder().inspect(data)
+        #expect(info.descriptor.width == 513 && info.descriptor.height == 3)
+        #expect(info.descriptor.alpha == .premultiplied && info.descriptor.meaningfulBits == bits)
+        let decoded = try await Decoder().decode(data)
+        let maximum = (1 << bits) - 1
+        try decoded.image.storage.withUnsafeBytes { bytes in
+            var equal = true
+            for i in 0..<(513 * 3) {
+                let alpha = (i * 211) & maximum
+                for c in 0..<channels {
+                    let expected = c == channels - 1 ? alpha : alpha * (c + 1) / channels
+                    let p = (i * channels + c) * 2
+                    if Int(bytes[p]) | (Int(bytes[p + 1]) << 8) != expected { equal = false }
+                }
+            }
+            #expect(equal)
+        }
     }
 
 }

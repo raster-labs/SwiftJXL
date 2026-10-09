@@ -1,5 +1,11 @@
 # History and provenance — SwiftJXL
 
+## Modular edge coverage and entropy checkpoint profiling — 9 October 2026
+
+Added six independently encoded associated-alpha inputs, public strided-source byte-equivalence checks and precision extrema/invalid-high-bit regressions. Profiling identified repeated cancellation/deadline/task-local checks in entropy token emission. These now run before the first token and within 256 tokens, including zero-bit symbols; byte-growth admission remains immediate and final publication remains checked. Added tests for cancellation, expired deadlines and latched failures at this boundary. The full local suite passed 175 declarations / 642 argument cases in debug, ASan and TSan, with no failures or skips.
+
+Release probes retain raw interleaved timings against both the pinned predecessor and the pre-change successor, with independent sample verification and exact successor codestream equality. The checkpoint change reduced measured encoding latency by 31–48% across five cases. Remaining encoder and decoder regressions exceed the investigation threshold; no performance waiver or release qualification is claimed. Power mode, wider corpus and peak-workspace qualification remain open. See [validation and raw measurements](Documentation/Engineering/Migration/Evidence/ModularColour/Performance/validation.json). Predecessor source and production are unchanged.
+
 ## Integer Modular colour/alpha API — 9 October 2026
 
 Connected integer greyscale/RGB and optional alpha through owning decoder and encoder storage, with explicit component mapping, 8/16-bit storage, byte order and strides. Inspection allocates no pixel planes; identity decoding writes directly to caller samples, while transforms use admitted Int32 algorithm planes. Encoding uses fixed effort 3 and preserves rendering intent and alpha association. Grouped rANS output now includes the required terminal state for its empty global stream. Invalid UTF-8 names reject rather than silently becoming empty.

@@ -98,6 +98,52 @@ struct ModularEncoderTests {
         #endif
     }
 
+    @Test(arguments: [1, 2, 3, 4], [8, 12, 16])
+    func precisionExtremaAndInvalidHighBits(_ channels: Int, _ bits: Int) async throws {
+        let roles: [ComponentRole] = (channels < 3 ? [.grey] : [.red, .green, .blue]) +
+            (channels % 2 == 0 ? [.alpha] : [])
+        let plane = try PlaneDescriptor(width: 2, height: 1, components: Array(roles.indices),
+            sampleStride: 2, pixelStride: channels * 2, rowBytes: channels * 4, byteCount: channels * 4)
+        let descriptor = try ImageDescriptor(width: 2, height: 1, meaningfulBits: bits,
+            components: roles, colour: channels < 3 ? .greyscale : .rgb,
+            alpha: channels % 2 == 0 ? .straight : .absent, planes: [plane])
+        let maximum = (1 << bits) - 1
+        let source = try ImageDestination.allocate(descriptor: descriptor).write { raw in
+            for c in 0..<channels {
+                raw[c * 2] = UInt8(truncatingIfNeeded: maximum)
+                raw[c * 2 + 1] = UInt8(truncatingIfNeeded: maximum >> 8)
+            }
+        }
+        let encoded = try await Encoder().encode(source)
+        let decoded = try ModularFrameDecoder.decode(encoded.data, budget: budget())
+        #expect(decoded.image.channels.allSatisfy { $0.pixels == [Int32(maximum), 0] })
+        #if os(macOS) || os(Linux)
+        if let binary = ProcessInfo.processInfo.environment["SWIFTJXL_ORACLE_BIN"] {
+            try oracle(encoded.data, expected: [[Int32]](repeating: [Int32(maximum), 0], count: channels),
+                       width: 2, height: 1, bits: bits, binary: binary)
+        }
+        #endif
+        if bits < 16 {
+            let invalid = try ImageDestination.allocate(descriptor: descriptor).write { raw in
+                raw[1] = UInt8(1 << (bits - 8)) // first sample = 1 << meaningfulBits
+            }
+            for policy: CopyPolicy in [.requireSharedStorage, .allowCopy] {
+                do {
+                    _ = try await Encoder().encode(invalid, options: .init(copyPolicy: policy))
+                    Issue.record("Out-of-precision source sample was accepted")
+                } catch let error as CodecError { #expect(error.category == .invalidArgument) }
+            }
+        }
+        let audit = ScalarStorageAudit()
+        do {
+            _ = try await ScalarStorageAudit.$current.withValue(audit) {
+                try await Encoder().encode(source, options: .init(resourceLimits: ResourceLimits(maximumWorkspaceBytes: 1)))
+            }
+            Issue.record("Insufficient workspace was accepted")
+        } catch let error as CodecError { #expect(error.category == .resourceLimitExceeded) }
+        #expect(audit.snapshot.workingPlaneAllocations == 0 && audit.snapshot.finalPixelAllocations == 0)
+    }
+
     #if os(macOS) || os(Linux)
     private func oracle(_ encoded: Data, expected: [[Int32]], width: Int, height: Int, bits: Int, binary: String) throws {
         let root = ProcessInfo.processInfo.environment["SWIFTJXL_ORACLE_OUTPUT"].map { URL(fileURLWithPath: $0) }

@@ -692,7 +692,8 @@ package enum SpecModularEncoder {
             // Correlated content collapses Co/Cg to near-zero (large win);
             // already-decorrelated content would pay the +1-bit chroma
             // range for no gain, so the identity (no-RCT) path is kept
-            // there — RCT can then never make a frame larger.
+            // there. This proxy does not guarantee a smaller final stream;
+            // headers and the selected entropy coder also affect its size.
             var c0 = channels[0]
             var c1 = channels[1]
             var c2 = channels[2]

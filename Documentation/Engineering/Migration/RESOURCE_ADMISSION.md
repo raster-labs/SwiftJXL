@@ -38,6 +38,8 @@ The 88*N term is twice the payload sum of the Int32 working plane (4*N), both gr
 
 `BitWriter` admits growth before appending and clamps speculative capacity requests. Its nonthrowing bit API latches overflow; bounded throwing checkpoints and final publication propagate `resourceLimitExceeded`. Frame and outer Data appends are checked separately before growth. Source copies, prediction rows, entropy costing/emission and ANS reverse/forward work have cancellation/deadline checks. Scratch candidate failures cannot swallow the operation's latched limit/deadline failure.
 
+Entropy emission checks cancellation, deadline and the overflow latch before the first token and at intervals of at most 256 tokens, including zero-bit prefix symbols. Prefix counters belong to each bit writer; ANS uses its pending-token count. ANS finalisation also checks before allocating refill storage. Output-byte admission remains per write, and public publication performs its final operation check. This replaces expensive per-token clock/task-local/lock calls without allowing unchecked output growth. Regression tests cancel or latch a failure immediately after the first zero-bit token and require rejection within the next 256 tokens.
+
 This envelope is intentionally conservative and may reject an image whose actual allocator peak would fit. It covers this exact effort/profile only; a broader codec path must receive a new audit and admission model. Heap overhead/runtime allocations are not an exact process RSS guarantee.
 
 ## Storage evidence and telemetry

@@ -33,6 +33,18 @@ package struct BitWriter: Sendable {
     private var accBits: Int = 0
 
     private let work = ScalarEncodingWork.current
+    private var tokensUntilCheckpoint = 0
+
+    /// Prefix symbols can emit zero bits, so count tokens rather than bytes.
+    /// Value-local state follows this writer; no shared counter or extra lock.
+    package mutating func checkpointToken() throws {
+        if tokensUntilCheckpoint == 0 {
+            try ScalarEncodingWork.checkpoint()
+            tokensUntilCheckpoint = 256
+        }
+        tokensUntilCheckpoint -= 1
+    }
+
     private func admit(_ count: Int) -> Bool {
         guard let work else { return true }
         guard count >= 0, count <= work.writerByteLimit - bytes.count else {

@@ -16,7 +16,7 @@ Swift 6.2 manifest minimum with Swift 6.4 as the qualified primary toolchain, Sw
 
 ## Start reading
 
-Moving an application from JXLSwift? Read the [application migration guide](MIGRATION.md) for dependency/API mappings, ownership changes, a compilable preparation example and staged rollout checks. Real codec replacement remains blocked by the deferred encoding, decoding and reconstruction implementations.
+Moving an application from JXLSwift? Read the [application migration guide](MIGRATION.md) for dependency/API mappings, ownership changes, a compilable preparation example and staged rollout checks. Bounded integer Modular and native JPEG reconstruction profiles are implemented; broader feature coverage and release qualification remain open.
 
 The first coding task is **Milestone 1: API and memory-contract feasibility**, using synthetic buffers. Its implementation and local test evidence are recorded in [Milestone 1 validation](Documentation/MILESTONE1.md). Codec migration and the first real shared-storage transcode follow in Milestones 2 and 3. Use the staged instructions in [AGENTS.md](AGENTS.md).
 
@@ -29,7 +29,7 @@ The first coding task is **Milestone 1: API and memory-contract feasibility**, u
 
 ## Native in-memory transcoding
 
-Planned standalone **reversible existing-JPEG ↔ JPEG XL transcoding** restores the original JPEG bytes from the JXL alone, with coefficients and reconstruction metadata held in memory. The predecessor already exposes forward/reverse methods and byte-equality tests; the supported JPEG/metadata profiles still require qualification. This preserves an existing lossy JPEG without recovering pixels lost during its original encoding. See [transcoding instructions and source-review findings](TRANSCODING.md) for the API/CLI pattern, limits and acceptance tests. This remains planned successor functionality.
+Standalone **reversible existing-JPEG ↔ JPEG XL transcoding** restores the original JPEG bytes from the JXL alone for the implemented bounded profile, with coefficients and reconstruction metadata held in memory. This preserves an existing lossy JPEG without recovering pixels lost during its original encoding. See the [current profile](MIGRATION.md#native-jpeg-transcoder-integration) and [validation record](Documentation/Engineering/Migration/NATIVE_JPEG.md) for exact limits and evidence; broader JPEG XL coverage remains open.
 
 ## Relationship to the suite
 
