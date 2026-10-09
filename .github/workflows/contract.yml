@@ -202,6 +202,10 @@ jobs:
           swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output .build/nrrd-reference-debug --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output .build/nrrd-reference-release --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
+      - name: Native JPEG CLI independent interoperability
+        run: |
+          python3 Scripts/test-cli-native-jpeg.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output .build/native-jpeg-cli-debug --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
+          python3 Scripts/test-cli-native-jpeg.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --output .build/native-jpeg-cli-release --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
       - name: Preserve oracle evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -211,6 +215,7 @@ jobs:
             .build/oracle-evidence
             .build/oracle-source-pins.txt
             .build/nrrd-reference-*/report.json
+            .build/native-jpeg-cli-*/report.json
             .build/jpeg-coefficient-evidence/report.json
             .build/brotli-framing-evidence/report.json
             .build/brotli-decoder-evidence/report.json

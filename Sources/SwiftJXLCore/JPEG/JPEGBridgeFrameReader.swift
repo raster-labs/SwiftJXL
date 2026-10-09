@@ -45,7 +45,9 @@ package enum JPEGBridgeFrameReader {
             maximumDecodedBytes: policy.maximumCoefficientBytes, maximumCompressedBytes: max(1, codestream.count),
             deadline: policy.deadline)
         try budget.reserveWorkspace(4 * 1024 * 1024)
-        var reader = BridgeFrameReader(r: BitReader(codestream, deadline: policy.deadline, budget: budget),
+        var reader = BridgeFrameReader(r: BitReader(codestream, deadline: policy.deadline,
+            maximumNestingDepth: policy.maximumNestingDepth,
+            maximumEntropyTableBytes: min(32 * 1024 * 1024, policy.maximumMemoryBytes), budget: budget),
             policy: policy, budget: budget)
         return try reader.read()
     }
@@ -106,6 +108,8 @@ private struct BridgeFrameReader {
         guard try r.read(bits: 16) == 0x0aff else { throw JPEGEntropyError.malformed }
         let size = try SizeHeader.read(from: &r), width = Int(size.xsize), height = Int(size.ysize)
         guard width > 0, height > 0, width <= 2048, height <= 2048 else { throw JPEGEntropyError.resourceLimit }
+        guard width <= policy.maximumDimension, height <= policy.maximumDimension,
+              width <= policy.maximumPixels / height else { throw JPEGEntropyError.resourceLimit }
         let metadata = try ImageMetadata.read(from: &r)
         guard !metadata.xybEncoded, metadata.extraChannels.isEmpty, metadata.animation == nil,
               metadata.preview == nil, !metadata.bitDepth.floatingPoint, metadata.bitDepth.bitsPerSample == 8,

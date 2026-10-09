@@ -9,18 +9,26 @@ import Foundation
 package struct JPEGBridgePolicy: Sendable {
     package let maximumCoefficientBytes: Int
     package let maximumMemoryBytes: Int
+    package let maximumDimension: Int
+    package let maximumPixels: Int
+    package let maximumNestingDepth: Int
     package let deadline: ContinuousClock.Instant
     private let work: @Sendable () throws -> Void
 
     package init(maximumCoefficientBytes: Int = 64 * 1024 * 1024,
                  maximumMemoryBytes: Int = 256 * 1024 * 1024,
+                 maximumDimension: Int = 2048, maximumPixels: Int = 2048 * 2048,
+                 maximumNestingDepth: Int = 32,
                  deadline: ContinuousClock.Instant = .now.advanced(by: .seconds(10)),
                  checkpoint: @escaping @Sendable () throws -> Void = {}) throws {
-        guard maximumCoefficientBytes > 0, maximumMemoryBytes > 0 else {
+        guard maximumCoefficientBytes > 0, maximumMemoryBytes > 0,
+              maximumDimension > 0, maximumPixels > 0, maximumNestingDepth > 0 else {
             throw JPEGEntropyError.resourceLimit
         }
         self.maximumCoefficientBytes = maximumCoefficientBytes
         self.maximumMemoryBytes = maximumMemoryBytes
+        self.maximumDimension = maximumDimension; self.maximumPixels = maximumPixels
+        self.maximumNestingDepth = maximumNestingDepth
         self.deadline = deadline; self.work = checkpoint
     }
 

@@ -4,6 +4,8 @@ import Synchronization
 import Testing
 @testable import SwiftJXLCore
 
+// Avoid concurrent oracle processes and instrumented large-frame oversubscription.
+@Suite(.serialized)
 struct JPEGBridgeFrameTests {
     @Test func readerRejectsTruncationTrailingBytesAndEnforcesBudgets() throws {
         let url = try #require(Bundle.module.url(forResource: "gray", withExtension: "jpg", subdirectory: "JPEG"))

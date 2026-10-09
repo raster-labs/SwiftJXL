@@ -8,8 +8,8 @@ swiftjxl-cli \- inspection, validation and capability reporting for SwiftJXL
 This development tool inspects headers and validates the complete supported
 scalar JPEG XL frame using the public decoder. It also provides help, version
 and executable capability reporting. This is not a general JPEG XL validator.
-Native transcode remains reserved and returns 4 without opening input,
-consuming standard input or creating output.
+Native transcode recompresses JPEG coefficients to JPEG XL and reconstructs
+the original JPEG bytes from valid reconstruction data, entirely in memory.
 Build with Swift 6.2 or later in Swift 6 language mode.
 Apple OS minimum is 26.0.
 CLI hosts are macOS and Linux; consult qualification records for executed
@@ -99,10 +99,6 @@ Diagnostic writes do not wait for stderr to drain. An unavailable diagnostic
 stream returns I/O failure (6). Final error messages are best effort and cannot
 block the original failure, deadline (5) or cancellation (130) exit status.
 No payload bytes, metadata, raw addresses or input/output paths are logged.
-.SH RESERVED CODEC SYNTAX
-Native transcode remains unavailable. Its help describes reserved syntax
-without opening input or creating output. No private intermediate image
-format is implemented.
 .SH EXIT STATUS
 0 success/help/version; 2 invalid usage; 3 malformed input;
 4 unsupported feature/layout/backend/format; 5 resource/deadline;
@@ -131,3 +127,18 @@ No index refresh is needed for direct lookup; no sudo runs automatically.
 .PP
 CLI.md and Documentation/Engineering/OS27CLI/README.md in the SwiftJXL
 repository.
+
+.SH NATIVE JPEG TRANSCODING
+.B transcode --input PATH --input-format FORMAT --output-format FORMAT
+supports jpeg to jxl/jpeg-xl and the reverse pair. Both formats are required.
+Mode is lossless (default), preserving the original JPEG bytes. The reverse
+operation needs valid reconstruction data; it never consults an original JPEG.
+Supports 8-bit baseline, extended and progressive Huffman JPEG, greyscale
+or three components, common 444/422/420/440 sampling, dimensions up to 2048.
+CLI input and output are limited to 4 MiB. ICC and unsupported frame profiles
+return 4. Lossy/near-lossless, max-error and source-file fallback
+are unavailable.
+Output defaults to stdout; --output selects an atomic final file transaction.
+--overwrite explicitly permits replacement. --json writes the final success
+report to stderr after binary publication. Limits and stream behaviour follow
+encode/decode; processing creates no intermediate image file.

@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Public native JPEG integration — 9 October 2026
+
+Connected the bounded native JPEG coefficient/reconstruction stages through the public Transcoder and CLI. Local independent checks cover both directions, Exif/XMP container resolution, repeated byte-exact restoration, resource admission, cancellation and owner lifetime. CLI streams and atomic publication pass regression checks. ICC, final-head qualification and broader migration remain open; this is not a release or production cutover. Exact validation and source hashes are recorded in [PublicIntegration](Documentation/Engineering/Migration/Evidence/NativeJPEG/PublicIntegration/validation.json).
+
 ## Native JPEG preparation — 9 October 2026
 
 Native compressed Brotli decoding and JBRD metadata resolution now pass local debug/ASan/TSan qualification. Wire-order prefix codes fix an independently demonstrated predecessor failure; all block/context/dictionary paths have recorded corpus evidence. MIT attribution and exact provenance are retained. Hosted validation and full JPEG restoration remain separate gates.

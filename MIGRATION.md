@@ -6,7 +6,7 @@ The successor requires Swift 6.2 or later, qualifies Swift 6.4, and has Apple OS
 
 Colour is D65 greyscale with sRGB transfer and default tone mapping. Relative rendering intent is implicit; other standard intents are preserved in required metadata key `jpegXL.renderingIntent`, one byte (0 perceptual, 1 relative, 2 saturation, 3 absolute). The encoder honours that key even with `discardAncillary`. Unsupported required metadata or ICC always rejects. Other ancillary entries reject by default and may be discarded only explicitly.
 
-`Encoder.capabilities` and `Decoder.capabilities` advertise this profile. Native transcoding remains unavailable. CLI `inspect` and `validate` now process this bounded profile. Encode/decode support explicit attached raw UInt16 NRRD at 16 meaningful bits; transcode remains reserved; executable capabilities distinguish these from library support. No merge, release, production switch or downstream application edit is implied.
+`Encoder.capabilities` and `Decoder.capabilities` advertise this profile. Native transcoding now provides bounded original-JPEG byte preservation; see the profile below. CLI `inspect` and `validate` now process this bounded profile. Encode/decode support explicit attached raw UInt16 NRRD at 16 meaningful bits; transcode implements the qualified JPEG/JPEG XL pair; executable capabilities distinguish these from library support. No merge, release, production switch or downstream application edit is implied.
 
 ## Baseline and dependency changes
 
@@ -39,8 +39,8 @@ The names below are migration targets, not source-compatible aliases or evidence
 | `JXLDecoder().decode(data)` → `ImageFrame` | `try SwiftJXL.Decoder()` then `try await decoder.decode(data, options:)` → `DecodedImage` | Use result `.image` and `.report` for the bounded scalar greyscale profile. |
 | `decoder.inspect(data)` → `JXLInspection` | `try decoder.inspect(data, options:)` → `ImageInfo` | Supported-profile headers and output layout are inspected; arbitrary box/frame inspection remains unsupported. |
 | `decodeAll`, `decodeFrame`, `inspectFrames`, `countFrames`, frame-array encoding | No current replacement | Retain predecessor for animation/multi-frame workflows; do not silently keep only frame zero. |
-| `encodeLosslessJPEG(jpeg)` | `try await transcoder.transcode(jpeg, to: .jpegXL)` | Planned reversible JPEG recompression; current stub rejects. |
-| `decodeLosslessJPEG(jxl)` → JPEG `Data` | `try await transcoder.transcode(jxl, to: .jpeg)` → `EncodedImage` | Planned autonomous reconstruction; use `.data` when implemented. Current capabilities are empty. |
+| `encodeLosslessJPEG(jpeg)` | `try await transcoder.transcode(jpeg, to: .jpegXL)` | Native bounded coefficient recompression; ICC and unqualified representations reject. |
+| `decodeLosslessJPEG(jxl)` → JPEG `Data` | `try await transcoder.transcode(jxl, to: .jpeg)` → `EncodedImage` | Autonomous native reconstruction; use `.data`. Requires valid jbrd and the supported coefficient frame. |
 | `EncoderError`, `DecoderError` | `CodecError.category`; separate `CancellationError` | Map application errors by category, never diagnostic string matching. |
 
 Sources: [old frame and alias](https://github.com/Raster-Lab/JXLSwift/blob/760697a54dd253da8e8466c3fd09ecf2c2d89aec/Sources/JXLSwift/Codec/ImageFrame.swift), [old options/results](https://github.com/Raster-Lab/JXLSwift/blob/760697a54dd253da8e8466c3fd09ecf2c2d89aec/Sources/JXLSwift/Codec/EncodingOptions.swift), [old decoder](https://github.com/Raster-Lab/JXLSwift/blob/760697a54dd253da8e8466c3fd09ecf2c2d89aec/Sources/JXLSwift/Codec/JXLDecoder.swift), [new API](Sources/SwiftJXL/CodecAPI.swift) and [new transcoder](Sources/SwiftJXL/Transcoding.swift).
@@ -93,7 +93,7 @@ struct ContractConsumer {
             _ = try await transcoder.transcode(Data(), to: .jpegXL, options: .init())
             throw ConsumerFailure.unexpectedResult
         } catch let error as SwiftJXL.CodecError {
-            guard error.category == .unsupportedFeature else { throw error }
+            guard error.category == .malformedInput else { throw error }
         }
         print("Public consumer passed: owning UInt16 samples and lossless scalar JPEG XL.")
     }
@@ -127,3 +127,11 @@ The [pinned predecessor methods, tests and limitations](TRANSCODING.md) identify
 6. Measure copied bytes, peak memory, cancellation, concurrent ownership and latency in the application. Test rollback before switching production routing. Remove the old dependency only when every required feature, deployment target and retained asset passes; retain a reviewed earlier revision for rollback.
 
 Coding agents must read [AGENTS.md](AGENTS.md), inspect actual application usage and report each required feature as implemented/tested, deferred or unsupported. This guide authorises no codec implementation or edits to downstream applications by itself. Do not delete unmapped features, weaken fidelity tests, fabricate release tags or claim complete migration from a successful build. Update this guide, the README and change log whenever a later milestone changes these mappings.
+
+## Native JPEG transcoder integration
+
+`Transcoder.capabilities` declares JPEG → JPEG XL coefficient recompression and JPEG XL → original JPEG reconstruction with `.originalBitstream` fidelity. The public method returns `EncodedImage`, format `jpeg-xl` or `jpeg`, and owned compressed `.data`. No source JPEG is required for reverse, no pixel image is allocated, and no external runtime tool or intermediate file is used. See [CLI examples](CLI.md#native-jpeg-reconstruction).
+
+Initial qualified limits: 8-bit baseline/extended/progressive Huffman JPEG; greyscale or three components; common 444/422/420/440 sampling; at most 2048 pixels per dimension and 64 MiB compressed/coefficient data. Reverse accepts the supported single-pass DCT8 reconstruction frame, including independently generated libjxl files. All caller resource limits apply additionally. Unknown allocation/RSS measurements remain nil; reported container-copy bytes do not claim to measure all entropy or metadata copies.
+
+ICC integration, multiple DC groups/passes, arithmetic JPEG, CMYK and unqualified markers are not silently converted. Unsupported inputs throw. `discardAncillary` rejects because it contradicts exact original-byte restoration. Exact APP/COM and supported Exif/XMP metadata, marker ordering, padding/fill/restart and tail bytes are preserved. The detailed support and evidence register is [NATIVE_JPEG.md](Documentation/Engineering/Migration/NATIVE_JPEG.md). Local public/CLI integration does not establish release readiness or production cutover; full final-head qualification remains required.
