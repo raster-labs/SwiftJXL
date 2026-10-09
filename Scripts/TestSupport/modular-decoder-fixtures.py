@@ -1,14 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # Synthetic fixtures for the internal decoder. Run from the repository root.
-import json,subprocess,hashlib,os
+import json,subprocess,hashlib,os,sys
 from pathlib import Path
 root=Path('Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder');work=Path('../modular-preflight/decoder')
 specs=[('gray8',31,17,1,8,False),('grayalpha8',31,17,2,8,False),('rgb8',31,17,3,8,False),('rgba8',31,17,4,8,False),('rgb12',31,17,3,12,False),('rgba16',31,17,4,16,False),('groups-rgb8',513,259,3,8,False),('groups-rgba16',1025,17,4,16,False),('responsive-gray8',513,259,1,8,True),('responsive-rgb8',513,259,3,8,True)]
 specs += [('responsive-wide-rgb8',4097,17,3,8,True),('responsive-small-rgb8',31,17,3,8,True),('grayalpha16',31,17,2,16,False),('palette-rgb8',31,17,3,8,False),('palette-rgb16',31,17,3,16,False)]
+specs += [('groups-grayalpha16',1025,17,2,16,False)]
+selected = set(sys.argv[1:])
 root.mkdir(parents=True,exist_ok=True)
 work.mkdir(parents=True,exist_ok=True)
-records=[]
+records=json.loads((root/'manifest.json').read_text()) if selected else []
 for name,w,h,c,bits,progressive in specs:
+    if selected and name not in selected: continue
+    records = [r for r in records if r["name"] != name]
     maximum=(1<<bits)-1
     header=f'P7\nWIDTH {w}\nHEIGHT {h}\nDEPTH {c}\nMAXVAL {maximum}\nTUPLTYPE '+{1:'GRAYSCALE',2:'GRAYSCALE_ALPHA',3:'RGB',4:'RGB_ALPHA'}[c]+'\nENDHDR\n'
     body=bytearray()

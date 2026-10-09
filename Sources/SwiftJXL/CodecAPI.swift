@@ -134,12 +134,17 @@ public struct Encoder: Sendable {
     }
 }
 
-/// Single-frame, single-group unsigned greyscale JPEG XL decoding into 16-bit
-/// storage. Initial profile: 8–16 meaningful bits, at most 1024 × 1024 pixels,
-/// no transforms, ICC, ancillary boxes, animation or display transformations.
+/// Single-frame integer Modular JPEG XL decoding, 8–16 meaningful bits,
+/// greyscale or RGB with optional straight/premultiplied alpha. Supports bounded
+/// groups, RCT, simple palettes and Squeeze. Caller storage may be planar or
+/// interleaved, 8/16-bit, padded and either byte order. ICC, ancillary boxes,
+/// animation and display transformations are not supported.
 public struct Decoder: Sendable {
     public let configuration: DecoderConfiguration
-    public static let capabilities = CodecCapabilities.scalar(encoding: false)
+    public static let capabilities = CodecCapabilities(formats: ["jpeg-xl"], compressionModes: [.lossless],
+        sampleTypes: [.unsignedInteger], meaningfulPrecision: 8...16,
+        layouts: ["greyscale or RGB, optional alpha; planar/interleaved UInt8/UInt16; explicit byte order, offsets and strides"],
+        availableBackends: [.scalarCPU], canInspect: true, canEncode: false, canDecode: true)
     public var capabilities: CodecCapabilities { Self.capabilities }
     public init(configuration: DecoderConfiguration = .init()) throws { self.configuration = configuration }
 
@@ -206,7 +211,7 @@ private func operationBudget(_ limits: ResourceLimits, retained: Int,
         deadline: deadline)
 }
 private func prepare(_ data: Data, options: DecodeOptions, start: ContinuousClock.Instant,
-                     destinationBytes: Int = 0) throws -> (ScalarModularFrame, ScalarOperationBudget) {
+                     destinationBytes: Int = 0) throws -> (ModularFrameDecoder.Prepared, ScalarOperationBudget) {
     try Task.checkCancellation()
     try validateOperation(options.executionPolicy)
     let l = options.resourceLimits
@@ -216,11 +221,9 @@ private func prepare(_ data: Data, options: DecodeOptions, start: ContinuousCloc
     let budget = try operationBudget(l, retained: data.count, start: start)
     try budget.reservePixels(destinationBytes)
     try progress(options.progress, .inspecting, completed: 0)
-    let policy = try ScalarDecodePolicy(maximumCompressedBytes: l.maximumCompressedBytes,
-        maximumPixels: l.maximumPixels, maximumDimension: l.maximumDimension,
-        maximumNestingDepth: l.maximumNestingDepth, maximumEntropyTableBytes: l.maximumWorkspaceBytes,
-        budget: budget, deadline: budget.deadline)
-    let frame = try ScalarModularDecoder.prepare(data, policy: policy)
+    let frame = try ModularFrameDecoder.prepare(data, budget: budget,
+        maximumDimension: l.maximumDimension, maximumPixels: l.maximumPixels,
+        maximumNestingDepth: l.maximumNestingDepth)
     _ = try frameMetadata(frame, limits: l)
     return (frame, budget)
 }
@@ -234,7 +237,7 @@ private func renderingIntent(_ metadata: ImageMetadata) throws -> RenderingInten
     }
     return intent
 }
-private func frameMetadata(_ frame: ScalarModularFrame, limits: ResourceLimits) throws -> ImageMetadata {
+private func frameMetadata(_ frame: ModularFrameDecoder.Prepared, limits: ResourceLimits) throws -> ImageMetadata {
     guard frame.renderingIntent != .relative else { return .empty }
     guard renderingIntentKey.utf8.count + 1 <= limits.maximumMetadataBytes else {
         throw CodecError(.resourceLimitExceeded, "Rendering-intent metadata exceeds limits.")
@@ -242,15 +245,56 @@ private func frameMetadata(_ frame: ScalarModularFrame, limits: ResourceLimits) 
     return ImageMetadata(entries: [renderingIntentKey: Data([UInt8(frame.renderingIntent.rawValue)])],
                          requiredKeys: [renderingIntentKey])
 }
-private func frameDescriptor(_ frame: ScalarModularFrame, limits: ResourceLimits) throws -> ImageDescriptor {
-    try .greyscale16(width: frame.width, height: frame.height, meaningfulBits: frame.bitsPerSample, limits: limits)
+private func frameDescriptor(_ frame: ModularFrameDecoder.Prepared, limits: ResourceLimits) throws -> ImageDescriptor {
+    // Preserve the original greyscale default and use UInt16 for all allocating
+    // decodes. Caller destinations may instead request UInt8 for 8-bit streams.
+    let roles = frameRoles(frame)
+    let stride = try checkedMultiply(roles.count, 2)
+    let row = try checkedMultiply(frame.width, stride)
+    let bytes = try checkedMultiply(row, frame.height)
+    let plane = try PlaneDescriptor(width: frame.width, height: frame.height,
+        components: Array(roles.indices), sampleStride: 2, pixelStride: stride, rowBytes: row, byteCount: bytes)
+    return try ImageDescriptor(width: frame.width, height: frame.height, meaningfulBits: frame.bitsPerSample,
+        components: roles, colour: frame.grayscale ? .greyscale : .rgb, alpha: frameAlpha(frame), planes: [plane], limits: limits)
 }
-private func finish(_ frame: ScalarModularFrame, into destination: ImageDestination,
+private func frameRoles(_ frame: ModularFrameDecoder.Prepared) -> [ComponentRole] {
+    (frame.grayscale ? [.grey] : [.red, .green, .blue]) + (frame.alphaAssociated == nil ? [] : [.alpha])
+}
+private func frameAlpha(_ frame: ModularFrameDecoder.Prepared) -> AlphaInterpretation {
+    guard let associated = frame.alphaAssociated else { return .absent }
+    return associated ? .premultiplied : .straight
+}
+private func modularLayouts(_ d: ImageDescriptor, frame: ModularFrameDecoder.Prepared) throws -> [ModularChannelLayout] {
+    let roles = frameRoles(frame)
+    guard d.sampleType == .unsignedInteger, [8, 16].contains(d.storageBits),
+          d.iccProfile == nil else {
+        throw CodecError(.unsupportedFeature, "Requires unsigned 8/16-bit Modular storage without ICC.")
+    }
+    guard d.width == frame.width, d.height == frame.height, d.meaningfulBits == frame.bitsPerSample,
+          d.colour == (frame.grayscale ? .greyscale : .rgb), d.alpha == frameAlpha(frame),
+          d.components.count == roles.count, roles.allSatisfy({ d.components.contains($0) }) else {
+        throw CodecError(.incompatibleImageLayout, "Destination geometry, precision, colour or alpha differs from the frame.")
+    }
+    // The validated descriptor maps each component exactly once and prevents
+    // plane overlap. Resolve roles explicitly, including BGR and reversed planes.
+    return try roles.map { role in
+        guard let component = d.components.firstIndex(of: role),
+              let plane = d.planes.first(where: { $0.components.contains(component) }),
+              let position = plane.components.firstIndex(of: component) else {
+            throw CodecError(.incompatibleImageLayout, "Destination component mapping is incomplete.")
+        }
+        return try ModularChannelLayout(width: d.width, height: d.height,
+            offset: checkedAdd(plane.offset, checkedMultiply(position, plane.sampleStride)),
+            rowBytes: plane.rowBytes, pixelStride: plane.pixelStride,
+            storageBits: d.storageBits, littleEndian: d.byteOrder == .littleEndian)
+    }
+}
+private func finish(_ frame: ModularFrameDecoder.Prepared, into destination: ImageDestination,
                     budget: ScalarOperationBudget, options: DecodeOptions,
                     start: ContinuousClock.Instant) throws -> DecodedImage {
     let d = destination.descriptor
     try d.validate(limits: options.resourceLimits)
-    let layout = try scalarLayout(d, encoding: false)
+    let layouts = try modularLayouts(d, frame: frame)
     guard d.width == frame.width, d.height == frame.height, d.meaningfulBits == frame.bitsPerSample else {
         throw CodecError(.incompatibleImageLayout, "Destination dimensions or meaningful precision differ from the frame.")
     }
@@ -263,7 +307,7 @@ private func finish(_ frame: ScalarModularFrame, into destination: ImageDestinat
         try progress(options.progress, .completed, completed: 1)
         try budget.checkpoint()
     }) { bytes in
-        try frame.decode(into: bytes, layout: layout)
+        try frame.decode(into: bytes, layouts: layouts)
         try budget.checkpoint()
     }
     try budget.checkpoint()

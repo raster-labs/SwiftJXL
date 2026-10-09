@@ -38,6 +38,7 @@ package struct ModularChannel: Sendable, Equatable {
     package mutating func allocatePixels(budget: ScalarOperationBudget) throws {
         guard pixels.isEmpty else { throw ModularGeometryError.populatedGeometry }
         try budget.reserveWorkspace(ScalarOperationBudget.sum(64, ScalarOperationBudget.product(sampleCount, 4)))
+        if sampleCount > 0 { ScalarStorageAudit.current?.workingPlane(sampleCount * 4) }
         pixels = [Int32](repeating: 0, count: sampleCount)
     }
 

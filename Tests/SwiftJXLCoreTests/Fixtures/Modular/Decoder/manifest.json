@@ -332,5 +332,27 @@
     ],
     "inputSHA256": "1396cb83e256b68cddf2d617d0c6de643d6d9c64a1e708834bc241e8d56f1cd1",
     "sha256": "c726e86ccf4f7059a1077488ee094f120a097853c84120ec745d6a823c6ac21d"
+  },
+  {
+    "name": "groups-grayalpha16",
+    "width": 1025,
+    "height": 17,
+    "channels": 2,
+    "bits": 16,
+    "progressive": false,
+    "command": [
+      "/opt/homebrew/bin/cjxl",
+      "../modular-preflight/decoder/groups-grayalpha16.pam",
+      "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-grayalpha16.jxl",
+      "-d",
+      "0",
+      "-e",
+      "3",
+      "-m",
+      "1",
+      "--num_threads=2"
+    ],
+    "inputSHA256": "a134313882a4198fcea591c7ba03e86e5c5bae794b0b120af56d92a9b93e44c3",
+    "sha256": "32d1cfe0a0f16e59396d854fd20ec2ca9b2d39e010f5f6777bf502b0f9aa8455"
   }
 ]

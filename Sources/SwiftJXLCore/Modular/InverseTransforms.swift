@@ -84,6 +84,7 @@ private func inversePalette(image: inout ModularImage, transform t: ModularTrans
     restored.reserveCapacity(count)
     for c in 0..<count {
         try budget.checkpoint()
+        if indices.sampleCount > 0 { ScalarStorageAudit.current?.workingPlane(indices.sampleCount * 4) }
         var values = [Int32](repeating: 0, count: indices.sampleCount)
         for i in values.indices {
             if i & 1023 == 0 { try budget.checkpoint() }

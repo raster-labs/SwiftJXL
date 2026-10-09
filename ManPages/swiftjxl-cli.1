@@ -30,8 +30,8 @@ Show the development version.
 .B inspect, validate
 Require \-i/\-\-input PATH; a hyphen reads stdin. Inspect reports supported
 headers, without checking pixel integrity. Validate decodes the entire
-supported frame in memory and discards pixels. Supports unsigned greyscale
-Modular, 8 through 16 meaningful bits, dimensions up to 1024, one frame/group
+supported frame in memory and discards pixels. Supports unsigned greyscale/RGB Modular with optional alpha,
+8 through 16 meaningful bits, dimensions up to 1024, one frame
 and compressed input at most 4 MiB. Unsupported profiles return 4.
 Optional \-o/\-\-output PATH writes a report; the default is stdout.
 Use \-\-json for structured output, including pixelPayloadValidated.

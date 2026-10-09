@@ -217,7 +217,7 @@ private func help(_ command: String?) -> String {
             USAGE: \(tool) \(command) --input PATH [OPTIONS]
 
             \(command == "inspect" ? "Inspect supported headers and output geometry; pixel payload integrity is not checked." : "Decode the entire supported frame in memory to validate its pixel payload; discard pixels.")
-            Supports a single-frame/group unsigned greyscale Modular JPEG XL profile,
+            Supports single-frame unsigned greyscale/RGB Modular JPEG XL with optional alpha,
             8..16 meaningful bits, dimensions <=1024, compressed input <=4194304 bytes.
             This is not a general JPEG XL conformance validator. Unsupported profiles return 4.
 
@@ -341,7 +341,7 @@ private func write(_ text: String, to handle: FileHandle) throws {
             "interchangeFormat": "nrrd", "interchangeMeaningfulBits": 16,
             "maximumEncodeDimension": 512, "maximumDecodeDimension": 1024,
             "canInspect": decoder.canInspect, "canValidate": true, "formats": formats,
-            "profile": "single-frame/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024",
+            "profile": "single-frame integer Modular grey/RGB with optional alpha; 8..16 bits; maximum dimension 1024",
             "maximumCompressedBytes": CommandIO.maximumInput]
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
         try FileHandle.standardOutput.write(contentsOf: data + Data([10]))
@@ -522,18 +522,22 @@ private func status(for error: CodecError) -> Int32 {
         hasMetadata = !info.metadata.entries.isEmpty
     }
     try io.checkpoint()
+    let colour = descriptor.colour == .rgb ? "rgb" : "greyscale"
+    let alpha = descriptor.alpha == .absent ? "absent" : (descriptor.alpha == .straight ? "straight" : "premultiplied")
     let validated = command == "validate"
     let report: Data
     if options.json {
         let object: [String: Any] = ["tool": tool, "version": version, "operation": command,
-            "format": "jpeg-xl", "profile": "scalar-greyscale-modular", "frameCount": 1,
+            "format": "jpeg-xl", "profile": "integer-modular", "frameCount": 1,
+            "colour": colour, "alpha": alpha,
+            "componentCount": descriptor.components.count,
             "width": descriptor.width, "height": descriptor.height,
             "sampleType": "unsigned-integer", "meaningfulBits": descriptor.meaningfulBits,
             "storageBits": descriptor.storageBits, "hasMetadata": hasMetadata,
             "pixelPayloadValidated": validated]
         report = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys]) + Data([10])
     } else {
-        report = Data("JPEG XL: \(descriptor.width)x\(descriptor.height), unsigned greyscale, \(descriptor.meaningfulBits) meaningful bits, 1 frame\n\(validated ? "Supported scalar pixel payload validated." : "Supported headers inspected; pixel payload not validated.")\n".utf8)
+        report = Data("JPEG XL: \(descriptor.width)x\(descriptor.height), unsigned \(colour), \(descriptor.components.count) components, alpha \(alpha), \(descriptor.meaningfulBits) meaningful bits, 1 frame\n\(validated ? "Supported scalar pixel payload validated." : "Supported headers inspected; pixel payload not validated.")\n".utf8)
     }
     try diagnostic(3, "supported scalar profile; one worker; memory and deadline limits enforced")
     try diagnostic(4, "elapsed seconds before report publication: \(ProcessInfo.processInfo.systemUptime - start)")
