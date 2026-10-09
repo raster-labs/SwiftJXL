@@ -79,7 +79,7 @@ def main():
             help_text=run([command,'--help']).stdout
             assert b'NRRD0005' in help_text and b'--timeout' in help_text
             assert run(['help',command]).stdout==help_text
-        for shape in [(1, 1), (1, 512), (5, 7), (17, 31)]:
+        for shape in [(1, 1), (1, 512), (5, 7), (17, 31), (513, 17), (1024, 3)]:
             samples = ((np.arange(np.prod(shape), dtype=np.uint32).reshape(shape) * 7919) & 65535)
             if samples.size > 1: samples.flat[-1] = 65535
             for endian in ['<', '>']:
@@ -159,7 +159,7 @@ def main():
         ]
         for payload_bad, code in invalid: encode(payload_bad, expected=code)
         encode(b'NRRD0005\n'+(b'#'+b'x'*1000+b'\n')*17+b'\n', expected=5)
-        encode(header.replace(b'sizes: 2 2',b'sizes: 513 1')+b'\n'+b'\0'*(513*2),expected=4)
+        encode(header.replace(b'sizes: 2 2',b'sizes: 513 1')+b'\n'+b'\0'*(513*2),expected=0)
         encode(header.replace(b'sizes: 2 2',b'sizes: 1025 1')+b'\n'+b'\0'*(1025*2),expected=5)
         # A plain uint16 header cannot retain lower source precision or intent.
         decode((args.fixtures / 'scalar-12.jxl').read_bytes(), expected=4)

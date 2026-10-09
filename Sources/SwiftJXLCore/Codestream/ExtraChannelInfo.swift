@@ -88,7 +88,9 @@ package struct ExtraChannelInfo: Sendable {
         for _ in 0..<Int(nameLen) {
             nameBytes.append(UInt8(try r.read(bits: 8)))
         }
-        let name = String(bytes: nameBytes, encoding: .utf8) ?? ""
+        guard let name = String(bytes: nameBytes, encoding: .utf8) else {
+            throw BitstreamError.malformedValue("Invalid extra-channel name UTF-8")
+        }
 
         var alphaAssociated = false
         var spotRGBA: (Float, Float, Float, Float)? = nil

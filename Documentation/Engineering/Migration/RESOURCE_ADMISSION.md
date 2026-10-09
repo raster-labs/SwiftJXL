@@ -1,6 +1,6 @@
 # Resource admission — public integer Modular profile
 
-Contract 0.10.0 MEM-10–13 and TEST-06 control this implementation. These are conservative operation reservations, **not measured allocator/RSS peaks**. Unknown report measurements remain `nil`. The encoder remains one unsigned greyscale plane through 512 × 512 at effort 3. The general decoder admits 8–16-bit grey/RGB with optional alpha, dimensions through 16384 per axis, caller-defined compressed/pixel/memory ceilings, entropy tables at most 32 MiB per reader and nesting at most 32.
+Contract 0.10.0 MEM-10–13 and TEST-06 control this implementation. These are conservative operation reservations, **not measured allocator/RSS peaks**. Unknown report measurements remain `nil`. The encoder supports unsigned greyscale/RGB with optional same-precision alpha through 16384 per axis at effort 3, subject to caller limits. The general decoder admits 8–16-bit grey/RGB with optional alpha, dimensions through 16384 per axis, caller-defined compressed/pixel/memory ceilings, entropy tables at most 32 MiB per reader and nesting at most 32.
 
 ## Admission model
 
@@ -19,6 +19,12 @@ Contract 0.10.0 MEM-10–13 and TEST-06 control this implementation. These are c
 | Unsupported payloads | Bounded extra-channel descriptors/names are admitted before parsing; unsupported semantics are rejected before pixel writes. ICC, non-default tone mapping, non-D65/sRGB transfer, animation and unsupported extras are rejected. Required rendering intent uses a bounded one-byte metadata value and counts against the metadata ceiling. |
 
 The public decoder never calls the allocating `[Int32]` convenience decoder. Without global transforms it writes through `BorrowedModularChannel`, including independent group rectangles. Group-local transforms may require group Int32 workspace. Global transforms require signed Int32 algorithm planes (at least four bytes per transformed sample; inverse palette/Squeeze can overlap additional admitted planes); final reconstructed values are written from those planes into the caller's storage with no additional packed final-image allocation. Pointer lifetime stays inside the synchronous owner borrow. Reservations accumulate across groups and passes; they deliberately overestimate peak live workspace. Allocation-site audit counts controlled plane allocations, not allocator/RSS peaks. Operation report peak fields remain unknown (`nil`).
+
+## General encoder envelope
+
+The public encoder admits `N = width*height*channels` samples and `G = ceil(width/512)*ceil(height/512)` groups using checked arithmetic before allocating planes. Its compressed-output reservation is `B = min(6*N + 65536, maximumCompressedBytes)`. Workspace is conservatively `144*N + 192*(min(width,512)+2)*channels + 16384*G*channels + 6*B + 4194304`. This includes original Int32 planes, three RCT candidate planes, group rectangle scratch, both predictor/residual/symbol candidates, ANS pending/refill arrays, section/final buffers and capacity overlap. It is a cumulative admission bound, not measured peak RSS. The original narrow scalar internal entry remains available for baseline tests with its earlier envelope below.
+
+The public path preserves rendering intent for both colour interpretations and alpha association. Grouped rANS streams emit a 32-bit terminal state even when their global pixel stream is empty. Source ingestion, RCT/cost passes and grouped residual rows include cancellation/deadline checkpoints.
 
 ## Encoder envelope
 

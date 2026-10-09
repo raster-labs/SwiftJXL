@@ -1116,9 +1116,13 @@ private func readNameString(from r: inout BitReader) throws -> String {
     ))
     var bytes = [UInt8]()
     if r.scalarProfile && len != 0 { throw ScalarModularError.unsupportedProfile }
+    if len > 0 { try r.budget?.reserveWorkspace(Int(len) * 3 + 128) }
     bytes.reserveCapacity(Int(len))
     for _ in 0..<Int(len) {
         bytes.append(UInt8(try r.read(bits: 8)))
     }
-    return String(bytes: bytes, encoding: .utf8) ?? ""
+    guard let name = String(bytes: bytes, encoding: .utf8) else {
+        throw BitstreamError.malformedValue("Invalid frame name UTF-8")
+    }
+    return name
 }

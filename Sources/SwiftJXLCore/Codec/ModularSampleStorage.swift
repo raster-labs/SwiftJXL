@@ -65,3 +65,47 @@ struct BorrowedModularChannel: ModularSampleBuffer {
         }
     }
 }
+
+package enum ModularStorageEncoder {
+    /// Source ownership and read borrow remain with the public caller. Only
+    /// admitted signed algorithm planes are allocated; no packed source copy.
+    package static func encode(_ bytes: UnsafeRawBufferPointer, layouts: [ModularChannelLayout],
+                               bitsPerSample: Int, grayscale: Bool, alphaAssociated: Bool?,
+                               renderingIntent: RenderingIntent, budget: ScalarOperationBudget) throws -> Data {
+        guard let first = layouts.first, (8...16).contains(bitsPerSample),
+              layouts.count == (grayscale ? 1 : 3) + (alphaAssociated == nil ? 0 : 1),
+              layouts.allSatisfy({ $0.width == first.width && $0.height == first.height &&
+                  $0.storageBits >= bitsPerSample && $0.requiredBytes <= bytes.count }) else {
+            throw ScalarModularError.invalidInput("Incompatible Modular source layout")
+        }
+        let limit = try budget.admitModularEncoder(width: first.width, height: first.height, channels: layouts.count)
+        return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: limit)) {
+            let n = first.width * first.height, maximum = (Int32(1) << bitsPerSample) - 1
+            var channels: [[Int32]] = []
+            channels.reserveCapacity(layouts.count)
+            for layout in layouts {
+                ScalarStorageAudit.current?.workingPlane(n * 4)
+                var plane = [Int32](repeating: 0, count: n)
+                for y in 0..<first.height {
+                    try ScalarEncodingWork.checkpoint()
+                    for x in 0..<first.width {
+                        if x & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
+                        let p = layout.offset + y * layout.rowBytes + x * layout.pixelStride
+                        var value = Int32(bytes[p])
+                        if layout.storageBits == 16 {
+                            value = layout.littleEndian ? value | (Int32(bytes[p + 1]) << 8) : (value << 8) | Int32(bytes[p + 1])
+                        }
+                        guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                        plane[y * first.width + x] = value
+                    }
+                }
+                channels.append(plane)
+            }
+            let data = try SpecModularEncoder.encodeInteger(width: first.width, height: first.height,
+                bitsPerSample: bitsPerSample, grayscale: grayscale, alphaAssociated: alphaAssociated,
+                channels: channels, renderingIntent: renderingIntent)
+            try ScalarEncodingWork.checkpoint()
+            return data
+        }
+    }
+}

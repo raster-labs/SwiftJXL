@@ -1,5 +1,11 @@
 # History and provenance — SwiftJXL
 
+## Integer Modular colour/alpha API — 9 October 2026
+
+Connected integer greyscale/RGB and optional alpha through owning decoder and encoder storage, with explicit component mapping, 8/16-bit storage, byte order and strides. Inspection allocates no pixel planes; identity decoding writes directly to caller samples, while transforms use admitted Int32 algorithm planes. Encoding uses fixed effort 3 and preserves rendering intent and alpha association. Grouped rANS output now includes the required terminal state for its empty global stream. Invalid UTF-8 names reject rather than silently becoming empty.
+
+The decoder milestone passed 35 declarations / 120 cases in debug, ASan and TSan. The subsequent encoder/API regression scope passed 21 declarations / 112 cases in each configuration, including 54 independent libjxl output checks and six premultiplied-alpha cases. An independent C header oracle confirmed precision, alpha association and rendering intent. The expanded NRRD CLI gate passed 119 checks per configuration, covering grouped images through its 1024-pixel dimension limit. These scopes reuse earlier evidence rather than represent a whole-suite or release gate. Commands and hashes are in [decoder storage evidence](Documentation/Engineering/Migration/Evidence/ModularColour/public-storage-validation.json) and [encoder evidence](Documentation/Engineering/Migration/Evidence/ModularColour/encoder-validation.json). Full feature-group edge cases, release performance/memory, fuzz/platform/hosted validation, review and broader migration remain open. Production is unchanged.
+
 ## Native transcoder ICC preservation — 9 October 2026
 
 Added bounded RGB/greyscale ICC decoding and standard ICC writing to native JPEG recompression/reconstruction. Public resource limits cover profiles, fragmented APP2 ordering is preserved, and malformed fragment sets reject. The scalar pixel codec's ICC limits are unchanged. Local debug, ASan and TSan each pass 36 declarations / 124 cases without skips; the expanded independent CLI checks pass 121 process checks. Exact source hashes and commands are in [ICC validation](Documentation/Engineering/Migration/Evidence/NativeJPEG/ICC/validation.json). Final-head hosted validation, review and broader migration gates remain open.

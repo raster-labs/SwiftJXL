@@ -82,7 +82,6 @@ struct NRRD {
             guard bytes.count - cursor == width * height * 2 else {
                 throw CodecError(.malformedInput, "NRRD payload length does not match its dimensions.")
             }
-            guard width <= 512, height <= 512 else { throw CodecError(.unsupportedFeature, "Scalar encoding is limited to dimensions at most 512.") }
             return Self(width: width, height: height, order: endian == "little" ? .littleEndian : .bigEndian, payloadOffset: cursor)
         }
     }

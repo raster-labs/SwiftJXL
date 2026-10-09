@@ -2,7 +2,7 @@
 import Foundation
 import SwiftJXLCore
 
-/// The initial scalar profile uses fixed, lossless codec settings.
+/// The integer Modular profile uses fixed effort-3, lossless codec settings.
 public struct CodecOptions: Sendable, Equatable { public init() {} }
 public struct EncoderConfiguration: Sendable, Equatable {
     public let mode: CompressionMode
@@ -89,12 +89,13 @@ public struct DecodedImage: Sendable {
     public let report: OperationReport
 }
 
-/// Lossless unsigned greyscale JPEG XL encoding, 9–16 meaningful bits in
-/// 16-bit shared storage, up to 512 × 512 pixels. ICC and required metadata
-/// are unsupported. Algorithm working memory is admitted before source access.
+/// Lossless integer Modular JPEG XL encoding, 8–16 meaningful bits, greyscale
+/// or RGB with optional alpha. Reads explicit UInt8/UInt16 planar/interleaved
+/// layouts into admitted Int32 algorithm workspace. ICC is unsupported;
+/// rendering intent and alpha association are preserved without conversion.
 public struct Encoder: Sendable {
     public let configuration: EncoderConfiguration
-    public static let capabilities = CodecCapabilities.scalar(encoding: true)
+    public static let capabilities = CodecCapabilities.modular(encoding: true)
     public var capabilities: CodecCapabilities { Self.capabilities }
     public init(configuration: EncoderConfiguration = .default) throws { self.configuration = configuration }
 
@@ -107,11 +108,11 @@ public struct Encoder: Sendable {
             try image.descriptor.validate(limits: limits)
             let metadataBytes = try image.metadata.validate(limits: limits,
                 additionalBytes: image.descriptor.iccProfile?.count ?? 0)
-            let layout = try scalarLayout(image.descriptor, encoding: true)
+            let layouts = try modularSourceLayouts(image.descriptor)
             let intent = try renderingIntent(image.metadata)
             guard image.metadata.requiredKeys.subtracting([renderingIntentKey]).isEmpty,
                   options.metadataPolicy == .discardAncillary || image.metadata.entries.keys.allSatisfy({ $0 == renderingIntentKey }) else {
-                throw CodecError(.unsupportedFeature, "The scalar encoder cannot preserve this metadata.")
+                throw CodecError(.unsupportedFeature, "The Modular encoder cannot preserve this metadata.")
             }
             guard image.storage.byteCount <= limits.maximumDecodedBytes else {
                 throw CodecError(.resourceLimitExceeded, "Source storage exceeds decoded limits.")
@@ -119,11 +120,13 @@ public struct Encoder: Sendable {
             let budget = try operationBudget(limits, retained: checkedAdd(image.storage.byteCount, metadataBytes), start: start)
             try progress(options.progress, .processing, completed: 0)
             let data = try image.storage.withUnsafeBytes { bytes in
-                guard bytes.count == image.storage.byteCount, bytes.count >= layout.requiredBytes else {
+                guard bytes.count == image.storage.byteCount, layouts.allSatisfy({ bytes.count >= $0.requiredBytes }) else {
                     throw CodecError(.storageUnavailable, "Source provider returned inconsistent capacity.")
                 }
-                return try ScalarModularEncoder.encode(bytes, layout: layout,
-                    bitsPerSample: image.descriptor.meaningfulBits, renderingIntent: intent, budget: budget)
+                return try ModularStorageEncoder.encode(bytes, layouts: layouts,
+                    bitsPerSample: image.descriptor.meaningfulBits, grayscale: image.descriptor.colour == .greyscale,
+                    alphaAssociated: image.descriptor.alpha == .absent ? nil : image.descriptor.alpha == .premultiplied,
+                    renderingIntent: intent, budget: budget)
             }
             try budget.checkpoint()
             try progress(options.progress, .completed, completed: 1)
@@ -141,10 +144,7 @@ public struct Encoder: Sendable {
 /// animation and display transformations are not supported.
 public struct Decoder: Sendable {
     public let configuration: DecoderConfiguration
-    public static let capabilities = CodecCapabilities(formats: ["jpeg-xl"], compressionModes: [.lossless],
-        sampleTypes: [.unsignedInteger], meaningfulPrecision: 8...16,
-        layouts: ["greyscale or RGB, optional alpha; planar/interleaved UInt8/UInt16; explicit byte order, offsets and strides"],
-        availableBackends: [.scalarCPU], canInspect: true, canEncode: false, canDecode: true)
+    public static let capabilities = CodecCapabilities.modular(encoding: false)
     public var capabilities: CodecCapabilities { Self.capabilities }
     public init(configuration: DecoderConfiguration = .init()) throws { self.configuration = configuration }
 
@@ -180,25 +180,27 @@ public struct Decoder: Sendable {
 }
 
 private extension CodecCapabilities {
-    static func scalar(encoding: Bool) -> Self {
+    static func modular(encoding: Bool) -> Self {
         Self(formats: ["jpeg-xl"], compressionModes: [.lossless], sampleTypes: [.unsignedInteger],
-             meaningfulPrecision: encoding ? 9...16 : 8...16,
-             layouts: ["single-plane greyscale UInt16; explicit byte order, row padding and pixel stride"],
+             meaningfulPrecision: 8...16,
+             layouts: ["greyscale or RGB, optional alpha; planar/interleaved UInt8/UInt16; explicit byte order, offsets and strides"],
              availableBackends: [.scalarCPU], canInspect: !encoding, canEncode: encoding, canDecode: !encoding)
     }
 }
 
-private func scalarLayout(_ d: ImageDescriptor, encoding: Bool) throws -> ScalarPlaneLayout {
-    guard d.sampleType == .unsignedInteger, d.storageBits == 16,
-          (encoding ? 9...16 : 8...16).contains(d.meaningfulBits),
-          d.components == [.grey], d.colour == .greyscale, d.alpha == .absent,
-          d.planes.count == 1, d.iccProfile == nil,
-          d.width <= (encoding ? 512 : 1024), d.height <= (encoding ? 512 : 1024) else {
-        throw CodecError(.unsupportedFeature, "Requires the supported unsigned UInt16 greyscale profile without ICC.")
+private func modularSourceLayouts(_ d: ImageDescriptor) throws -> [ModularChannelLayout] {
+    guard d.sampleType == .unsignedInteger, [8, 16].contains(d.storageBits),
+          (8...16).contains(d.meaningfulBits), d.iccProfile == nil,
+          d.width <= 16384, d.height <= 16384,
+          d.colour == .greyscale || d.colour == .rgb else {
+        throw CodecError(.unsupportedFeature, "Requires the supported unsigned integer Modular profile without ICC.")
     }
-    let p = d.planes[0]
-    return try ScalarPlaneLayout(width: d.width, height: d.height, offset: p.offset,
-        rowBytes: p.rowBytes, pixelStride: p.pixelStride, littleEndian: d.byteOrder == .littleEndian)
+    let roles: [ComponentRole] = (d.colour == .greyscale ? [.grey] : [.red, .green, .blue]) +
+        (d.alpha == .absent ? [] : [.alpha])
+    guard d.components.count == roles.count, roles.allSatisfy({ d.components.contains($0) }) else {
+        throw CodecError(.unsupportedFeature, "Unsupported Modular source component roles.")
+    }
+    return try channelLayouts(d, roles: roles)
 }
 private func operationBudget(_ limits: ResourceLimits, retained: Int,
                              start: ContinuousClock.Instant) throws -> ScalarOperationBudget {
@@ -275,6 +277,9 @@ private func modularLayouts(_ d: ImageDescriptor, frame: ModularFrameDecoder.Pre
           d.components.count == roles.count, roles.allSatisfy({ d.components.contains($0) }) else {
         throw CodecError(.incompatibleImageLayout, "Destination geometry, precision, colour or alpha differs from the frame.")
     }
+    return try channelLayouts(d, roles: roles)
+}
+private func channelLayouts(_ d: ImageDescriptor, roles: [ComponentRole]) throws -> [ModularChannelLayout] {
     // The validated descriptor maps each component exactly once and prevents
     // plane overlap. Resolve roles explicitly, including BGR and reversed planes.
     return try roles.map { role in

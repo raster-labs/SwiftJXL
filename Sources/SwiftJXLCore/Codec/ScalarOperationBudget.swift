@@ -77,6 +77,22 @@ package final class ScalarOperationBudget: Sendable {
         return n
     }
 
+    /// Multi-channel effort-3 admission: original and RCT candidate planes,
+    /// grouped rectangle scratch, both predictor candidates, ANS pending/refill
+    /// storage and array-capacity overlap. Cumulative bound, not measured peak.
+    package func admitModularEncoder(width: Int, height: Int, channels: Int) throws -> Int {
+        let samples = try Self.product(Self.product(width, height), channels)
+        let groups = try Self.product((width - 1) / 512 + 1, (height - 1) / 512 + 1)
+        let outputLimit = min(try Self.sum(Self.product(samples, 6), 65536), maximumCompressedBytes)
+        let arrays = try Self.product(samples, 144)
+        let rows = try Self.product(Self.product(min(width, 512) + 2, channels), 192)
+        let inventory = try Self.product(Self.product(groups, channels), 16 * 1024)
+        try reserveOutput(outputLimit)
+        try reserveWorkspace(Self.sum(Self.sum(arrays, rows),
+            Self.sum(inventory, Self.sum(Self.product(outputLimit, 6), 4 * 1024 * 1024))))
+        return outputLimit
+    }
+
     /// Effort-3, one-channel, single-group envelope; see RESOURCE_ADMISSION.md.
     /// Every input-dependent term is admitted before creating the working plane.
     package func admitEncoder(width: Int, height: Int) throws -> Int {

@@ -180,7 +180,7 @@ private func help(_ command: String?) -> String {
             NRRD0005, 2D greyscale, explicit little/big endian; x is the fastest axis.
             This explicit profile assigns D65/sRGB/default intent on encode. Decode
             rejects sub-16-bit precision or interpretation metadata NRRD cannot preserve.
-            Encode dimensions <=512; decode <=1024. Input <=4194304 bytes.
+            Encode/decode dimensions <=1024. Input <=4194304 bytes.
             NRRD header <=16384 bytes, 64 lines, 1024 bytes/line. Detached references,
             compressed encodings, spatial metadata and custom fields are unsupported.
 
@@ -339,7 +339,7 @@ private func write(_ text: String, to handle: FileHandle) throws {
             "maximumTranscodeDimension": 2048, "transcodePreservation": "original-bitstream",
             "transcodeProfileLimits": Transcoder.capabilities[0].profileLimits,
             "interchangeFormat": "nrrd", "interchangeMeaningfulBits": 16,
-            "maximumEncodeDimension": 512, "maximumDecodeDimension": 1024,
+            "maximumEncodeDimension": 1024, "maximumDecodeDimension": 1024,
             "canInspect": decoder.canInspect, "canValidate": true, "formats": formats,
             "profile": "single-frame integer Modular grey/RGB with optional alpha; 8..16 bits; maximum dimension 1024",
             "maximumCompressedBytes": CommandIO.maximumInput]

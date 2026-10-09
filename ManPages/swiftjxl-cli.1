@@ -55,7 +55,7 @@ Mode, max-error and output-format do not apply to these two commands.
 Encode requires \-\-input-format nrrd; decode requires \-\-output-format nrrd.
 The compressed endpoint defaults to jxl; jpeg-xl is also accepted.
 Use \-i/\-\-input and optional \-o/\-\-output; a hyphen denotes a stream.
-Encode dimensions are at most 512; decode dimensions at most 1024.
+Encode and decode dimensions are at most 1024.
 The explicit NRRD0005 profile is attached, raw, 2D, full-precision UInt16,
 with little/big endian and x as fastest axis. Encode assigns D65/sRGB and
 default intent. Decode rejects lower meaningful precision or metadata
