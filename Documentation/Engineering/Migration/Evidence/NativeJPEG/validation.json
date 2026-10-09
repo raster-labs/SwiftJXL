@@ -1,0 +1,22 @@
+{
+  "status": "internal-preparation-passed",
+  "declarations": 11,
+  "cases": 25,
+  "skips": 0,
+  "configurations": [
+    "debug",
+    "address-sanitizer",
+    "thread-sanitizer"
+  ],
+  "nativeTranscodeImplemented": false,
+  "testFilter": "JPEG.*Tests",
+  "compiler": "Xcode Swift 6.4",
+  "base": "3f9a981671f0c3d1b95c75258e38341d571d321a",
+  "contract": "0.10.0",
+  "sha256": {
+    "Sources/SwiftJXLCore/JPEG/JPEGFrameLayout.swift": "754c38fbfd0a70e5843a9710ad7c1ebf668675d5421e777b3720b63c35eda655",
+    "Sources/SwiftJXLCore/JPEG/JPEGSegmentReader.swift": "a87b95fa850995e87e300032b50b92324b58645b84109f5047c8574ccc86668d",
+    "Tests/SwiftJXLCoreTests/JPEGFrameLayoutTests.swift": "28cff4e72fbdf2b7986f1b28e2fc0667317209197e7129fca4261f84fab5a800",
+    "Tests/SwiftJXLCoreTests/JPEGSegmentReaderTests.swift": "0f78019567b40d5d30b9a997d84d102df41bdebd2ff546a541a2a30987a06ec7"
+  }
+}

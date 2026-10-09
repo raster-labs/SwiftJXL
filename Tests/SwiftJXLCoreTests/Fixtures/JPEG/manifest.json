@@ -1,0 +1,51 @@
+{
+  "licence": "Apache-2.0; synthetic task-generated images, no external image corpus",
+  "generator": "baseline.py retained under Documentation/Engineering/Migration/Evidence/NativeJPEG",
+  "fixtures": [
+    {
+      "name": "gray",
+      "source_sha256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+      "bytes": 683
+    },
+    {
+      "name": "444",
+      "source_sha256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+      "bytes": 1359
+    },
+    {
+      "name": "422",
+      "source_sha256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+      "bytes": 1099
+    },
+    {
+      "name": "420",
+      "source_sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+      "bytes": 1010
+    },
+    {
+      "name": "440",
+      "source_sha256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+      "bytes": 1133
+    },
+    {
+      "name": "progressive",
+      "source_sha256": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+      "bytes": 951
+    },
+    {
+      "name": "restart",
+      "source_sha256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+      "bytes": 1020
+    },
+    {
+      "name": "metadata-tail",
+      "source_sha256": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
+      "bytes": 1045
+    },
+    {
+      "name": "fill-marker",
+      "source_sha256": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
+      "bytes": 1011
+    }
+  ]
+}

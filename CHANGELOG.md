@@ -1,10 +1,17 @@
 # Change log
 
+## Unreleased — native JPEG preparation, 2026-10-09
+
+- Recorded a nine-fixture predecessor/independent reconstruction baseline, including progressive, tail and marker-fill failures.
+- Added a bounded internal JPEG framing reader that retains exact ranges over its input owner and separates trailing data at EOI.
+- Added validated DCT frame geometry separating single-component scan blocks from padded interleaved storage; retained synthetic fixtures run offline.
+- Native coefficient/reconstruction integration and its public capability remain incomplete.
+
 ## Unreleased — public API and CLI integration, 2026-10-09
 
 - Connected public scalar encode/inspect/decode, aggregate memory accounting and rendering-intent preservation; PR #14 passed all eight CI checks, including macOS.
 - Added bounded CLI inspect/validate, safe report publication and cancellation; PR #15 passed all eight CI checks after correcting the test's startup synchronisation.
-- Added explicit attached raw UInt16 NRRD encode/decode on a separate branch, with no extra full-image serialisation array. Added strict header/semantic limits and test-only pynrrd/libjxl interoperability checks. Hosted qualification is pending for this stage.
+- Added explicit attached raw UInt16 NRRD encode/decode on a separate branch, with no extra full-image serialisation array. Added strict header/semantic limits and test-only pynrrd/libjxl interoperability checks. PR #16 passed all eight hosted CI jobs, including macOS.
 - Native JPEG reconstruction, broader features/platform gates and release preparation remain incomplete. No production cutover or release.
 
 ## Unreleased — decoder admission and CI interoperability, 2026-10-08

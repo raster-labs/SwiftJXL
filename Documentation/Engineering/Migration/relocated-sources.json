@@ -484,6 +484,19 @@
         "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
       ],
       "destinationSHA256": "9b51499e50778c38db73afb02c0be1f5a1299bb674434d8c0b5f568fb9651461"
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGSegmentReader.swift",
+      "sourceSHA256": "0e080773da53b528d62b8ef7ec91f27c4d2bb09c8cbb375e776b3e1a4298bb5b",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGSegmentReader.swift",
+      "destinationSHA256": "a87b95fa850995e87e300032b50b92324b58645b84109f5047c8574ccc86668d",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Replace copied payloads with ranges over retained Data; retain marker fill, entropy representation and trailing data",
+        "Terminate at EOI, reject missing EOI and preserve sliced-input offsets",
+        "Bound input and segment counts; add bounded cancellation/deadline checkpoints",
+        "Internal preparation only; no native transcoder capability claim"
+      ]
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. Internal target is used by tests only; no new public product or public codec capability.",
