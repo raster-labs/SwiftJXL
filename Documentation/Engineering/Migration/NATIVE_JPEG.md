@@ -223,7 +223,7 @@ Local Swift 6.4 debug, address-sanitizer and thread-sanitizer runs each pass **3
 
 Whole-operation `-O` core benchmarks use three warmups and seven trials, checking complete output equality on every iteration. On this local macOS 27 arm64 / Swift 6.4 host, median forward/reverse times were 619/95 µs (greyscale), 646/151 µs (progressive edge), 581/96 µs (16-bit quantisation), 21,981/11,250 µs (257 × 513 4:2:0), 790/213 µs (RGB ICC) and 641/113 µs (greyscale ICC). Isolated process high-water RSS ranged from 8,388,608 to 10,272,768 bytes, including runtime, fixture setup and both directions. It is not a per-call allocation count or separate forward/reverse memory measurement. Known container-copy bytes are recorded separately; other allocation/copy telemetry remains unmeasured. [Exact benchmark samples, scope and commands](Evidence/NativeJPEG/ICC/Benchmark/result.json) are retained.
 
-The current straightforward prefix encoder favours correctness: its output is larger than the source JPEG for five of these six fixtures (for example 116,126 versus 89,074 bytes for the larger 4:2:0 case). No compression-ratio improvement is claimed; entropy optimisation and broader performance qualification remain migration work.
+The current straightforward prefix encoder favours correctness: its output is larger than the source JPEG for all six of these fixtures (for example 116,126 versus 89,074 bytes for the larger 4:2:0 case). No compression-ratio improvement is claimed; entropy optimisation and broader performance qualification remain migration work.
 
 ## Final native-transcoder review corrections
 
