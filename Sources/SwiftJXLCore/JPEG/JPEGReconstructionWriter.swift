@@ -48,6 +48,10 @@ private struct JPEGOutput {
     private var pending = 0
     let limit: Int
     let policy: JPEGReconstructionPolicy
+    init(limit: Int, policy: JPEGReconstructionPolicy) {
+        self.limit = limit
+        self.policy = policy
+    }
     mutating func byte(_ byte: UInt8) throws {
         guard data.count < limit else { throw JPEGEntropyError.resourceLimit }
         if data.count & 1023 == 0 { try policy.checkpoint() }

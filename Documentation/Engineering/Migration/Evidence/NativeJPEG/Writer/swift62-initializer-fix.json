@@ -1,0 +1,18 @@
+{
+  "baseline_commit": "6e73484a5ff624a312582b01d84b857f49eeeadf",
+  "failure_run": 37905238946,
+  "failure": "Swift 6.2 rejects synthesized JPEGOutput initializer because private stored properties make it private",
+  "correction": "Explicit init(limit:policy:) preserves stored-property defaults and leaves entropy logic unchanged",
+  "source_sha256": "89a9fe87c072d04eacebb2a4b3bc7bff6f814ae58b6d1fa0e1f79d56872837da",
+  "validation": {
+    "configuration": "local macOS Swift 6.4 debug",
+    "filter": "JPEG|JBRD|Brotli",
+    "declarations": 61,
+    "cases": 262,
+    "failures": 0,
+    "skips": 0,
+    "log_sha256": "95f320101afa05c789cbe3cd3b90e6ca1d32fc069d64c8125c378d158d735f1f"
+  },
+  "prior_sanitizers": "61 declarations / 262 cases each at baseline; not rerun for this initializer-only correction",
+  "swift62_validation": "Requires fresh hosted CI; local toolchain is Swift 6.4"
+}
