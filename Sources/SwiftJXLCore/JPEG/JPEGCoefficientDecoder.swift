@@ -1,7 +1,10 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
 // Copyright (c) 2026 Raster-Lab.
 // Adapted from JXLSwift JPEGCoefficientImage/JPEGScanDecoder/JPEGBlockDecoder
 // at 57e81cb9e2411d1efac435b429a306a031744c1e. T.81 F.2 and G.2.
+// Reconstruction event semantics adapted from libjxl a7a9c787341cf703dede03c2009fa460cae5e5df,
+// lib/jxl/jpeg/enc_jpeg_data_reader.cc, Copyright the JPEG XL Project Authors.
+// See Documentation/ThirdParty/libjxl-LICENSE.txt.
 import Foundation
 
 package struct JPEGDecodedCoefficients: Sendable {
@@ -12,6 +15,9 @@ package struct JPEGDecodedCoefficients: Sendable {
     /// Natural-order quantisation values latched at each component's first scan.
     package let quantisation: [[UInt16]]
     package let padding: [JPEGEntropyPadding]
+    /// SOS parameters and reconstruction events in scan order. Event indices
+    /// count entropy-coded blocks, including interleaved MCU padding blocks.
+    package let scans: [JBRDScanInfo]
 }
 
 package struct JPEGCoefficientPolicy: Sendable {
@@ -19,6 +25,7 @@ package struct JPEGCoefficientPolicy: Sendable {
     package let maximumCoefficientBytes: Int
     package let maximumMemoryBytes: Int
     package let maximumPaddingRecords: Int
+    package let maximumScanEvents: Int
     package let deadline: ContinuousClock.Instant
     private let workCheckpoint: @Sendable () throws -> Void
 
@@ -26,12 +33,15 @@ package struct JPEGCoefficientPolicy: Sendable {
                  maximumCoefficientBytes: Int = 64 * 1024 * 1024,
                  maximumMemoryBytes: Int = 256 * 1024 * 1024,
                  maximumPaddingRecords: Int = 65536,
+                 maximumScanEvents: Int = 65536,
                  deadline: ContinuousClock.Instant = .now.advanced(by: .seconds(10)),
                  checkpoint: @escaping @Sendable () throws -> Void = {}) throws {
         guard maximumInputBytes > 0, maximumCoefficientBytes > 0, maximumMemoryBytes > 0,
-              (1...65536).contains(maximumPaddingRecords) else { throw JPEGEntropyError.resourceLimit }
+              (1...65536).contains(maximumPaddingRecords),
+              (1...65536).contains(maximumScanEvents) else { throw JPEGEntropyError.resourceLimit }
         self.maximumInputBytes = maximumInputBytes; self.maximumCoefficientBytes = maximumCoefficientBytes
         self.maximumMemoryBytes = maximumMemoryBytes; self.maximumPaddingRecords = maximumPaddingRecords
+        self.maximumScanEvents = maximumScanEvents
         self.deadline = deadline
         self.workCheckpoint = checkpoint
     }
@@ -47,7 +57,11 @@ package struct JPEGCoefficientPolicy: Sendable {
         guard input <= maximumInputBytes, input <= maximumMemoryBytes else { throw JPEGEntropyError.resourceLimit }
         // Two coefficient bounds cover storage/transient overlap. Fixed table,
         // history and parser scratch plus four padding-array capacity bounds.
+        // Scan inventory is bounded by the segment parser's 4096 records and
+        // one required padding record per scan. Events share a cumulative cap;
+        // allowances cover array growth and retained SOS component inventories.
         let auxiliary = 2 * 1024 * 1024 + maximumPaddingRecords * 128
+            + min(maximumPaddingRecords, 4096) * 512 + maximumScanEvents * 64
         guard auxiliary <= maximumMemoryBytes - input,
               coefficients <= maximumCoefficientBytes / 4,
               coefficients <= (maximumMemoryBytes - input - auxiliary) / 8 else {
@@ -65,6 +79,8 @@ package struct JPEGCoefficientDecoder {
     private var coefficients: [[Int32]] = []
     private var history: [[Int]] = []
     private var padding: [JPEGEntropyPadding] = []
+    private var scans: [JBRDScanInfo] = []
+    private var reconstructionEvents = 0
 
     package static func decode(_ data: Data, policy: JPEGCoefficientPolicy) throws -> JPEGDecodedCoefficients {
         try policy.admit(input: data.count, coefficients: 0)
@@ -110,7 +126,7 @@ package struct JPEGCoefficientDecoder {
               componentQuantisation.allSatisfy({ $0.count == 64 }) else { throw JPEGEntropyError.malformed }
         try policy.checkpoint()
         return JPEGDecodedCoefficients(source: data, frame: frame, coefficients: coefficients,
-                                       quantisation: componentQuantisation, padding: padding)
+                                       quantisation: componentQuantisation, padding: padding, scans: scans)
     }
 
     private mutating func parseQuantisation(_ range: Range<Int>) throws {
@@ -160,6 +176,7 @@ package struct JPEGCoefficientDecoder {
     }
 
     private struct ScanComponent { let index: Int; let dc: Int; let ac: Int }
+    private struct BlockEvents { var reset = false; var extraZeroRuns = 0 }
 
     private mutating func decodeScan(_ segment: JPEGSegment, frame: JPEGFrameLayout, restartInterval: Int) throws {
         let start = segment.payloadRange.lowerBound
@@ -206,15 +223,23 @@ package struct JPEGCoefficientDecoder {
         }
         var bits = try JPEGEntropyReader(data: data, range: segment.entropyRange, checkpoint: policy.checkpoint)
         var predictors = Array<Int32>(repeating: 0, count: frame.components.count)
-        var eobRun = 0, restartNumber: UInt8 = 0
+        // -1 means fresh state; 0 means a previous EOB run ended exactly here.
+        // Adjacent EOB runs require an explicit flush during byte restoration.
+        var eobRun = -1, restartNumber: UInt8 = 0
+        var scan = JBRDScanInfo(ss: UInt32(ss), se: UInt32(se), ah: UInt32(ah), al: UInt32(al),
+            numComponents: UInt32(count), components: components.map {
+                JBRDScanComponent(compIdx: UInt32($0.index), dcTblIdx: UInt32($0.dc), acTblIdx: UInt32($0.ac))
+            })
+        var blockScanIndex: UInt32 = 0
         let total = count == 1 ? frame.components[components[0].index].singleComponentBlockCount : frame.mcusWide * frame.mcusHigh
         for mcu in 0..<total {
             try policy.checkpoint()
             if mcu > 0 && restartInterval > 0 && mcu % restartInterval == 0 {
-                guard eobRun == 0 else { throw JPEGEntropyError.malformed }
+                guard eobRun <= 0 else { throw JPEGEntropyError.malformed }
                 try appendPadding(bits.restart(0xd0 + restartNumber))
                 restartNumber = (restartNumber + 1) & 7
                 predictors = Array(repeating: 0, count: predictors.count)
+                eobRun = -1
             }
             for component in components {
                 let ci = component.index, geometry = frame.components[ci]
@@ -227,19 +252,32 @@ package struct JPEGCoefficientDecoder {
                         let column = (mcu % frame.mcusWide) * geometry.horizontalSampling + ordinal % geometry.horizontalSampling
                         block = row * geometry.paddedBlocksWide + column
                     }
+                    var events = BlockEvents()
                     try Self.decodeBlock(values: &coefficients[ci], base: block * 64, bits: &bits,
                         dc: huffman[component.dc], ac: huffman[4 + component.ac], predictor: &predictors[ci],
-                        ss: ss, se: se, ah: ah, al: al, progressive: progressive, eobRun: &eobRun)
+                        ss: ss, se: se, ah: ah, al: al, progressive: progressive, eobRun: &eobRun, events: &events)
+                    let added = (events.reset ? 1 : 0) + (events.extraZeroRuns > 0 ? 1 : 0)
+                    guard added <= policy.maximumScanEvents - reconstructionEvents else { throw JPEGEntropyError.resourceLimit }
+                    reconstructionEvents += added
+                    if events.reset { scan.resetPoints.append(blockScanIndex) }
+                    if events.extraZeroRuns > 0 {
+                        scan.extraZeroRuns.append(.init(blockIdx: blockScanIndex, numExtraZeroRuns: UInt32(events.extraZeroRuns)))
+                    }
+                    guard blockScanIndex < UInt32.max else { throw JPEGEntropyError.resourceLimit }
+                    blockScanIndex += 1
                 }
             }
         }
-        guard eobRun == 0 else { throw JPEGEntropyError.malformed }
+        guard eobRun <= 0 else { throw JPEGEntropyError.malformed }
         try appendPadding(bits.finish())
+        guard scans.count < min(policy.maximumPaddingRecords, 4096) else { throw JPEGEntropyError.resourceLimit }
+        scans.append(scan)
     }
 
     private static func decodeBlock(values: inout [Int32], base: Int, bits: inout JPEGEntropyReader,
                                     dc: JPEGHuffmanTable?, ac: JPEGHuffmanTable?, predictor: inout Int32,
-                                    ss: Int, se: Int, ah: Int, al: Int, progressive: Bool, eobRun: inout Int) throws {
+                                    ss: Int, se: Int, ah: Int, al: Int, progressive: Bool, eobRun: inout Int,
+                                    events: inout BlockEvents) throws {
         if ss == 0 {
             if ah == 0 {
                 guard let dc else { throw JPEGEntropyError.malformed }
@@ -258,36 +296,51 @@ package struct JPEGCoefficientDecoder {
         var k = max(ss, 1)
         if ah == 0 {
             if eobRun > 0 { eobRun -= 1; return }
+            let endedPreviousRun = eobRun == 0
+            eobRun = -1
             while k <= se {
                 let token = try ac.symbol(&bits), run = Int(token >> 4), size = Int(token & 15)
                 if size == 0 {
                     if run == 15 {
                         guard k + 16 <= se + 1 else { throw JPEGEntropyError.malformed }
+                        events.extraZeroRuns += 1
                         k += 16; continue
                     }
-                    if progressive { eobRun = (1 << run) + (try bits.bits(run)) - 1 }
+                    if progressive {
+                        events.reset = ss > 0 && k == ss && endedPreviousRun
+                        eobRun = (1 << run) + (try bits.bits(run)) - 1
+                    }
                     else if run != 0 { throw JPEGEntropyError.malformed }
                     break
                 }
                 k += run
                 guard k <= se, size <= 10 else { throw JPEGEntropyError.malformed }
                 values[base + JPEGZigZag.order[k]] = try bits.magnitude(size) * Int32(1 << al)
+                events.extraZeroRuns = 0
                 k += 1
             }
             return
         }
         let step = Int32(1 << al)
-        if eobRun == 0 {
+        var trailingRefinementZeroRun = false
+        if eobRun <= 0 {
+            let endedPreviousRun = eobRun == 0
+            eobRun = -1
             while k <= se {
                 let token = try ac.symbol(&bits)
                 var run = Int(token >> 4)
                 let size = Int(token & 15)
                 guard size <= 1 else { throw JPEGEntropyError.malformed }
                 var newValue: Int32 = 0
-                if size == 1 { newValue = try bits.bit() == 1 ? step : -step }
+                if size == 1 {
+                    newValue = try bits.bit() == 1 ? step : -step
+                    trailingRefinementZeroRun = false
+                }
                 else if run != 15 {
+                    events.reset = ss > 0 && k == ss && endedPreviousRun
                     eobRun = (1 << run) + (try bits.bits(run)); break
                 }
+                else { trailingRefinementZeroRun = true }
                 var landed = false
                 while k <= se {
                     let index = base + JPEGZigZag.order[k]
@@ -300,6 +353,10 @@ package struct JPEGCoefficientDecoder {
                 k += 1
             }
         }
+        // Standard JBRD restoration does not consume extra-zero-run events in
+        // refinement scans. Reject an unrepresentable tail rather than silently
+        // discarding its codewords; libjxl rejects the same reconstruction case.
+        guard !trailingRefinementZeroRun else { throw JPEGEntropyError.unsupported }
         if eobRun > 0 {
             while k <= se { try refine(&values[base + JPEGZigZag.order[k]], step: step, bits: &bits); k += 1 }
             eobRun -= 1

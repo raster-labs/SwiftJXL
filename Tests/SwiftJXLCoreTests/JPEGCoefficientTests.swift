@@ -76,7 +76,8 @@ struct JPEGCoefficientTests {
                 do {
                     let result = try JPEGCoefficientDecoder.decode(changed,
                         policy: JPEGCoefficientPolicy(maximumCoefficientBytes: 1024 * 1024,
-                                                      maximumMemoryBytes: 16 * 1024 * 1024))
+                                                      maximumMemoryBytes: 16 * 1024 * 1024,
+                                                      maximumPaddingRecords: 1024, maximumScanEvents: 1024))
                     #expect(result.coefficients.reduce(0) { $0 + $1.count } == result.frame.coefficientCount)
                     #expect(result.source == changed)
                 } catch {

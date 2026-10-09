@@ -1,0 +1,170 @@
+{
+  "description": "Authored JPEG entropy vectors; expected events derived from explicit scan bits. Independent libjxl 0.12.0 reconstruction verifies byte-exact representability.",
+  "cjxlVersion": "cjxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project",
+  "cjxlSHA256": "582c6dea494b08639ce0aff765b7b6feae1a5d8f1f1a856685f107dac3304320",
+  "fixtures": [
+    {
+      "name": "sequential-extra-zero",
+      "resetPoints": [
+        []
+      ],
+      "extraZeroRuns": [
+        [
+          [
+            0,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      ],
+      "jpegSHA256": "bc79a6fcf66a4e5877156e4c8195ee403217c693e52ccfe3b9deb40e1b3c9bc5",
+      "jbrdSHA256": "5fc3e1935a684998162a61afdfe14c1b0aa1a8a7f17fe34a19324b51085d55e2",
+      "referenceJXLSHA256": "a05e7cef72e5a5f564eb9f20e8a89f9956f3eebff060d80ffc3dac971b214d05",
+      "referenceByteExactRestoration": true,
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/sequential-extra-zero.jpg",
+        "../native-jpeg-audit/events/sequential-extra-zero.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "progressive-split",
+      "resetPoints": [
+        [],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      "extraZeroRuns": [
+        [],
+        [],
+        []
+      ],
+      "jpegSHA256": "e93500368a9b84e18a6c3de130a46a146c467b24b1d21d2383086068cb12983d",
+      "jbrdSHA256": "e3d6dc2ceb9f31cb7ff1adebf4bbce281a3ee57040259e141e6771449af064d9",
+      "referenceJXLSHA256": "c33c88a822ab264678238756cd3f1e1481d5dbec72a56bc021063d60216e9fea",
+      "referenceByteExactRestoration": true,
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/progressive-split.jpg",
+        "../native-jpeg-audit/events/progressive-split.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "progressive-grouped",
+      "resetPoints": [
+        [],
+        [
+          2
+        ],
+        [
+          2
+        ]
+      ],
+      "extraZeroRuns": [
+        [],
+        [],
+        []
+      ],
+      "jpegSHA256": "f0d540b45d814342fc88718bc9f542033fa640ab0071d9258c181d11592c878e",
+      "jbrdSHA256": "0f89cb4833f2b5b64f4d174604542bf08ceddfc9ac2e627b5581764e42318f68",
+      "referenceJXLSHA256": "7917b1f75a4ed3174bc118412b25a3cf182dd4d820971e86279a7b7c215059c2",
+      "referenceByteExactRestoration": true,
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/progressive-grouped.jpg",
+        "../native-jpeg-audit/events/progressive-grouped.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "progressive-restart-split",
+      "resetPoints": [
+        [],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "extraZeroRuns": [
+        [],
+        [],
+        []
+      ],
+      "jpegSHA256": "ce59cd3c6b1bb0a6f736b0396123e2324ea1b93d53526f170778a7b6059d62d9",
+      "jbrdSHA256": "48c2c5c463176302cffb34146ac4d920a084289b811d410cf8d22104390a6ed8",
+      "referenceJXLSHA256": "11967561fd0c0790ecb86d40b763885f6129a2248a5c5e7a3b9d2b7d833a6a9b",
+      "referenceByteExactRestoration": true,
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/progressive-restart-split.jpg",
+        "../native-jpeg-audit/events/progressive-restart-split.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    },
+    {
+      "name": "progressive-band-zero",
+      "resetPoints": [
+        [],
+        [],
+        [
+          2
+        ]
+      ],
+      "extraZeroRuns": [
+        [],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        []
+      ],
+      "jpegSHA256": "a9bda1372d1bd6af251ba9f48452cc45980a868d94e3a2f5b4f455365e4b282e",
+      "jbrdSHA256": "1c663b11a6b9580e19b4f07637feb309bdea9fafe2a0d31aeafc9ef76eb288b7",
+      "referenceJXLSHA256": "3be8c909da7c84bfa61825647d73e2cd62de8f3952246db7e09ad4087bead92c",
+      "referenceByteExactRestoration": true,
+      "command": [
+        "/opt/homebrew/bin/cjxl",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/progressive-band-zero.jpg",
+        "../native-jpeg-audit/events/progressive-band-zero.jxl",
+        "--lossless_jpeg=1",
+        "-e",
+        "3"
+      ]
+    }
+  ],
+  "unsupportedFixture": {
+    "name": "refinement-extra-zero-unsupported",
+    "jpegSHA256": "72fdffe1896bb87cf47d38f99766cc615e9c90294cd69b3026cd4585a0f521fa"
+  }
+}

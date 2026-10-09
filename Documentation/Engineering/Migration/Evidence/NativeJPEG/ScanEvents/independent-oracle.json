@@ -1,0 +1,139 @@
+{
+  "status": "passed",
+  "tools": {
+    "cjxl": {
+      "sha256": "582c6dea494b08639ce0aff765b7b6feae1a5d8f1f1a856685f107dac3304320",
+      "version": "cjxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project"
+    },
+    "djxl": {
+      "sha256": "25e0a5a5ad107352f7e91a1a9c824576e56d2aca2d53708e5d3dc90eeb621566",
+      "version": "djxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project"
+    }
+  },
+  "checks": [
+    {
+      "name": "sequential-extra-zero",
+      "byteExactRestoration": true,
+      "reconstructionBundleMatches": true,
+      "commands": [
+        [
+          "/opt/homebrew/bin/cjxl",
+          "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/sequential-extra-zero.jpg",
+          "../native-jpeg-audit/events/published-oracle/sequential-extra-zero.jxl",
+          "--lossless_jpeg=1",
+          "-e",
+          "3"
+        ],
+        [
+          "/opt/homebrew/bin/djxl",
+          "../native-jpeg-audit/events/published-oracle/sequential-extra-zero.jxl",
+          "../native-jpeg-audit/events/published-oracle/sequential-extra-zero.jpg"
+        ]
+      ],
+      "jpegSHA256": "bc79a6fcf66a4e5877156e4c8195ee403217c693e52ccfe3b9deb40e1b3c9bc5",
+      "jbrdSHA256": "5fc3e1935a684998162a61afdfe14c1b0aa1a8a7f17fe34a19324b51085d55e2"
+    },
+    {
+      "name": "progressive-split",
+      "byteExactRestoration": true,
+      "reconstructionBundleMatches": true,
+      "commands": [
+        [
+          "/opt/homebrew/bin/cjxl",
+          "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/progressive-split.jpg",
+          "../native-jpeg-audit/events/published-oracle/progressive-split.jxl",
+          "--lossless_jpeg=1",
+          "-e",
+          "3"
+        ],
+        [
+          "/opt/homebrew/bin/djxl",
+          "../native-jpeg-audit/events/published-oracle/progressive-split.jxl",
+          "../native-jpeg-audit/events/published-oracle/progressive-split.jpg"
+        ]
+      ],
+      "jpegSHA256": "e93500368a9b84e18a6c3de130a46a146c467b24b1d21d2383086068cb12983d",
+      "jbrdSHA256": "e3d6dc2ceb9f31cb7ff1adebf4bbce281a3ee57040259e141e6771449af064d9"
+    },
+    {
+      "name": "progressive-grouped",
+      "byteExactRestoration": true,
+      "reconstructionBundleMatches": true,
+      "commands": [
+        [
+          "/opt/homebrew/bin/cjxl",
+          "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/progressive-grouped.jpg",
+          "../native-jpeg-audit/events/published-oracle/progressive-grouped.jxl",
+          "--lossless_jpeg=1",
+          "-e",
+          "3"
+        ],
+        [
+          "/opt/homebrew/bin/djxl",
+          "../native-jpeg-audit/events/published-oracle/progressive-grouped.jxl",
+          "../native-jpeg-audit/events/published-oracle/progressive-grouped.jpg"
+        ]
+      ],
+      "jpegSHA256": "f0d540b45d814342fc88718bc9f542033fa640ab0071d9258c181d11592c878e",
+      "jbrdSHA256": "0f89cb4833f2b5b64f4d174604542bf08ceddfc9ac2e627b5581764e42318f68"
+    },
+    {
+      "name": "progressive-restart-split",
+      "byteExactRestoration": true,
+      "reconstructionBundleMatches": true,
+      "commands": [
+        [
+          "/opt/homebrew/bin/cjxl",
+          "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/progressive-restart-split.jpg",
+          "../native-jpeg-audit/events/published-oracle/progressive-restart-split.jxl",
+          "--lossless_jpeg=1",
+          "-e",
+          "3"
+        ],
+        [
+          "/opt/homebrew/bin/djxl",
+          "../native-jpeg-audit/events/published-oracle/progressive-restart-split.jxl",
+          "../native-jpeg-audit/events/published-oracle/progressive-restart-split.jpg"
+        ]
+      ],
+      "jpegSHA256": "ce59cd3c6b1bb0a6f736b0396123e2324ea1b93d53526f170778a7b6059d62d9",
+      "jbrdSHA256": "48c2c5c463176302cffb34146ac4d920a084289b811d410cf8d22104390a6ed8"
+    },
+    {
+      "name": "progressive-band-zero",
+      "byteExactRestoration": true,
+      "reconstructionBundleMatches": true,
+      "commands": [
+        [
+          "/opt/homebrew/bin/cjxl",
+          "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/progressive-band-zero.jpg",
+          "../native-jpeg-audit/events/published-oracle/progressive-band-zero.jxl",
+          "--lossless_jpeg=1",
+          "-e",
+          "3"
+        ],
+        [
+          "/opt/homebrew/bin/djxl",
+          "../native-jpeg-audit/events/published-oracle/progressive-band-zero.jxl",
+          "../native-jpeg-audit/events/published-oracle/progressive-band-zero.jpg"
+        ]
+      ],
+      "jpegSHA256": "a9bda1372d1bd6af251ba9f48452cc45980a868d94e3a2f5b4f455365e4b282e",
+      "jbrdSHA256": "1c663b11a6b9580e19b4f07637feb309bdea9fafe2a0d31aeafc9ef76eb288b7"
+    }
+  ],
+  "unsupportedRefinementTail": {
+    "jpegSHA256": "72fdffe1896bb87cf47d38f99766cc615e9c90294cd69b3026cd4585a0f521fa",
+    "coefficientOracleSHA256": "4672dd2f9431f807580eef4e565405676f3bc2c5375bfb447bbfb46b43746283",
+    "independentJPEGDecodePassed": true,
+    "referenceReconstructionExit": 1,
+    "command": [
+      "/opt/homebrew/bin/cjxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/refinement-extra-zero-unsupported.jpg",
+      "../native-jpeg-audit/events/published-oracle/unsupported.jxl",
+      "--lossless_jpeg=1",
+      "-e",
+      "3"
+    ]
+  }
+}

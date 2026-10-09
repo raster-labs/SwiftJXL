@@ -189,6 +189,8 @@ jobs:
         run: |
           clang -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
           python3 Scripts/validate-jpeg-coefficients.py --oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/jpeg-coefficient-evidence
+      - name: Recheck JPEG reconstruction-event vectors independently
+        run: python3 Scripts/validate-jpeg-events.py --tools "$RUNNER_TEMP/libjxl/build/tools" --coefficient-oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/jpeg-event-evidence
       - name: Independently validate native Brotli framing fixtures
         run: python3 Scripts/validate-brotli-framing.py --output .build/brotli-framing-evidence/report.json
       - name: Independently validate compressed Brotli and dictionary fixtures
@@ -212,4 +214,5 @@ jobs:
             .build/jpeg-coefficient-evidence/report.json
             .build/brotli-framing-evidence/report.json
             .build/brotli-decoder-evidence/report.json
+            .build/jpeg-event-evidence/report.json
           if-no-files-found: warn
