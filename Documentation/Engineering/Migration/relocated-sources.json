@@ -1040,6 +1040,40 @@
         "Checked type/length admission and bounded cancellation/deadline callback",
         "Internal Modular expansion preparation; public scalar profile unchanged"
       ]
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/ModularImage.swift",
+      "sourceSHA256": "d7404d49ad03899521a51a940412081d35dc985a45fa26c401e7da03c4cc88e1",
+      "destination": "Sources/SwiftJXLCore/Modular/ModularImage.swift",
+      "destinationSHA256": "f601eae2b4e9c70dd84f90fea65440fd688b3b877be671f8f2d5847bae15e591",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Checked immutable channel geometry without eager pixel allocation; cumulative workspace admission before buffers and descriptor growth",
+        "Retain expanded implicit squeeze steps; bounded transform/channel counts; reject meta/normal overlap and unsupported palettes"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/SpecSqueeze.swift",
+      "sourceSHA256": "d96667940ca74ae309f4dd6b7af50c8f454ba61c76274e7ea3a8605eb1d1e469",
+      "destination": "Sources/SwiftJXLCore/Modular/SpecSqueeze.swift",
+      "destinationSHA256": "04300d869d668cb59a6d27d2269b0133337eb71dcdc4518a397bb2f36b330768",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Validate paired dimensions, shifts and sample counts before allocation",
+        "Admitted output plane and bounded cancellation; scoped buffer borrows; preserve meta shifts"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/InverseTransforms.swift",
+      "sourceSHA256": "df8e30898eae31d3562e065a5f51abc8daaeafd5b6d3820e68a1b26264f10845",
+      "destination": "Sources/SwiftJXLCore/Modular/InverseTransforms.swift",
+      "destinationSHA256": "16c979ba2891aa6db659d84e437ae719682291e1dab06aadbed30000e379e4c9",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Use admitted working planes and explicit expanded transform chain; reject partial results on failure",
+        "Preserve actual 8\u201316-bit palette precision and correctly restore first-normal/meta channel counts",
+        "Static delta lookup table; reject predicted/delta palettes; admit RCT COW costs before mutating"
+      ]
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. The package-internal SwiftJXLCore target now supports the public SwiftJXL scalar greyscale encoder, decoder and inspector; it is not a separately exposed library product. Public profile limits and operation admission are documented in MIGRATION.md and RESOURCE_ADMISSION.md.",
