@@ -201,6 +201,99 @@ def main():
                 blocked([command,'-i',source,*formats], command+': output deadline',stdout=writefd)
                 blocked([command,'-i',source,*formats], command+': output cancellation',cancel=True,stdout=writefd)
             finally:os.close(readfd);os.close(writefd)
+        # A blocked diagnostic sink must not hide a deadline or malformed-input
+        # exit behind an uninterruptible error-message write. Keep the read end
+        # open but never drain it, so this tests backpressure rather than EPIPE.
+        readfd, writefd = os.pipe()
+        try:
+            os.set_blocking(writefd, False)
+            try:
+                while True: os.write(writefd, b'x' * 4096)
+            except BlockingIOError: pass
+            os.set_blocking(writefd, True)
+            for command, formats in [('encode', ['--input-format', 'nrrd']), ('decode', ['--output-format', 'nrrd'])]:
+                for arguments, expected, stalled in [
+                    (['-i', '-', '--timeout', '.15'], 5, True),
+                    (['-i', '-'], 3, False),
+                    (['-i', '-', '-vv'], 6, True),
+                ]:
+                    p = subprocess.Popen([str(binary), command, *formats, *arguments],
+                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=writefd)
+                    start = time.monotonic()
+                    try:
+                        if stalled:
+                            p.wait(timeout=5)
+                            stdout, _ = p.communicate()
+                        else:
+                            stdout, _ = p.communicate(b'bad', timeout=5)
+                        assert not stdout
+                        result = subprocess.CompletedProcess(arguments, p.returncode, stdout, b'')
+                        record(command + ': full stderr ' + ' '.join(arguments), result, expected)
+                        report['checks'][-1]['response_seconds'] = time.monotonic() - start
+                        save()
+                    finally:
+                        if p.poll() is None:
+                            p.kill(); p.communicate()
+            assert os.get_blocking(writefd), 'Diagnostic writer failed to restore shared fd flags'
+        finally:
+            os.close(readfd); os.close(writefd)
+        # Establish signal readiness before filling stderr, then ensure the
+        # cancellation error itself cannot block while trying to log exit 130.
+        for command, formats in [('encode', ['--input-format', 'nrrd']), ('decode', ['--output-format', 'nrrd'])]:
+            readfd, writefd = os.pipe()
+            p = subprocess.Popen([str(binary), command, *formats, '-i', '-', '-vv'],
+                                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=writefd)
+            try:
+                marker = b'[2] swiftjxl-cli: reporting ' + command.encode() + b'\n'
+                prefix = b''
+                end = time.monotonic() + 10
+                while marker not in prefix:
+                    remaining = end - time.monotonic()
+                    assert remaining > 0 and select.select([readfd], [], [], remaining)[0], 'Readiness timeout'
+                    chunk = os.read(readfd, 4096)
+                    assert chunk and len(prefix) + len(chunk) <= 65536
+                    prefix += chunk
+                os.set_blocking(writefd, False)
+                try:
+                    while True: os.write(writefd, b'x' * 4096)
+                except BlockingIOError: pass
+                os.set_blocking(writefd, True)
+                start = time.monotonic()
+                p.send_signal(signal.SIGINT)
+                p.wait(timeout=5)
+                stdout, _ = p.communicate()
+                assert not stdout
+                record(command + ': Ctrl-C with full stderr',
+                       subprocess.CompletedProcess([], p.returncode, stdout, prefix), 130)
+                report['checks'][-1]['response_seconds'] = time.monotonic() - start
+                save()
+                assert os.get_blocking(writefd)
+            finally:
+                if p.poll() is None:
+                    p.kill(); p.communicate()
+                os.close(readfd); os.close(writefd)
+        # JSON reports follow binary publication. A full report sink must reach
+        # the deadline and preserve the already committed payload accurately.
+        for command, source, formats in [('encode', source_file, ['--input-format', 'nrrd']),
+                                         ('decode', jxl_file, ['--output-format', 'nrrd'])]:
+            readfd, writefd = os.pipe()
+            target = out / (command + '-published-before-report-deadline')
+            try:
+                os.set_blocking(writefd, False)
+                try:
+                    while True: os.write(writefd, b'x' * 4096)
+                except BlockingIOError: pass
+                os.set_blocking(writefd, True)
+                result = subprocess.run([str(binary), command, '-i', str(source), *formats,
+                    '-o', str(target), '--json', '--timeout', '.5'],
+                    stdout=subprocess.PIPE, stderr=writefd, timeout=5)
+                result.stderr = b''
+                record(command + ': full JSON report sink after publication', result, 5)
+                assert not result.stdout and os.get_blocking(writefd)
+                if command == 'encode': assert target.read_bytes() == jxl_file.read_bytes()
+                else: read(target.read_bytes(), data, 'published-report-deadline.nrrd')
+            finally:
+                os.close(readfd); os.close(writefd)
         assert not list(out.glob('.swiftjxl-report-*.tmp'))
         report['status']='passed';save();print(f'{len(report["checks"])} NRRD CLI checks passed')
     except Exception as error:
