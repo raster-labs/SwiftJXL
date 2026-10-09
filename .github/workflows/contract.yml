@@ -187,7 +187,7 @@ jobs:
         run: python3 Scripts/validate-oracle.py --tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/oracle-evidence
       - name: Recheck JPEG coefficient snapshots independently
         run: |
-          cc -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
+          clang -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
           python3 Scripts/validate-jpeg-coefficients.py --oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/jpeg-coefficient-evidence
       - name: NRRD and libjxl independent CLI interoperability
         run: |

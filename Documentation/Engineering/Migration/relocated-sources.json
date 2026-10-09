@@ -576,6 +576,48 @@
         "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
         "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
       ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JBRDBox.swift",
+      "sourceSHA256": "24afeb50cab0800ebdb539b02258217974c23d72e656c8dc7b2a0246f849c554",
+      "destination": "Sources/SwiftJXLCore/JPEG/JBRDBox.swift",
+      "destinationSHA256": "9045c7592205d759b7cb7d88b8222e5714f504a2e8e8788e9099d8a862a91a68",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only reconstruction metadata reader/writer/resolver; native Brotli and full JPEG restoration remain separate",
+        "Admit input, payload, marker, event, padding and workspace growth before allocation; bounded cancellation/deadlines",
+        "Validate table/scan references and history, reject wrapping indexes, check shape before writing",
+        "Require exact external metadata and marker identity/length; never partial-fill missing Exif/XMP/ICC",
+        "Independently generated 16-bundle field/offset and byte-identical header comparisons"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JBRDBox.swift",
+      "sourceSHA256": "24afeb50cab0800ebdb539b02258217974c23d72e656c8dc7b2a0246f849c554",
+      "destination": "Sources/SwiftJXLCore/JPEG/JBRDBoxWriter.swift",
+      "destinationSHA256": "fafee028686365f41e1435a412171a02b304f32cadbc9b437247ec9a81bcf9e4",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only reconstruction metadata reader/writer/resolver; native Brotli and full JPEG restoration remain separate",
+        "Admit input, payload, marker, event, padding and workspace growth before allocation; bounded cancellation/deadlines",
+        "Validate table/scan references and history, reject wrapping indexes, check shape before writing",
+        "Require exact external metadata and marker identity/length; never partial-fill missing Exif/XMP/ICC",
+        "Independently generated 16-bundle field/offset and byte-identical header comparisons"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JBRDBox.swift",
+      "sourceSHA256": "24afeb50cab0800ebdb539b02258217974c23d72e656c8dc7b2a0246f849c554",
+      "destination": "Sources/SwiftJXLCore/JPEG/JBRDMetadata.swift",
+      "destinationSHA256": "71ffb161fdad78120be5e680c7459aa44feb2f550dc60f777abc0c2fed3e37d7",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Package-only reconstruction metadata reader/writer/resolver; native Brotli and full JPEG restoration remain separate",
+        "Admit input, payload, marker, event, padding and workspace growth before allocation; bounded cancellation/deadlines",
+        "Validate table/scan references and history, reject wrapping indexes, check shape before writing",
+        "Require exact external metadata and marker identity/length; never partial-fill missing Exif/XMP/ICC",
+        "Independently generated 16-bundle field/offset and byte-identical header comparisons"
+      ]
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. Internal target is used by tests only; no new public product or public codec capability.",

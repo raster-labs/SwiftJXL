@@ -1,0 +1,5 @@
+Pinned libjxl 0.12.0 interoperability / Swift 6.4	UNKNOWN STEP	2026-10-09T05:39:29.5733561Z -- Check for working C compiler: /usr/bin/clang - skipped
+Pinned libjxl 0.12.0 interoperability / Swift 6.4	UNKNOWN STEP	2026-10-09T05:41:59.9427866Z ##[group]Run cc -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
+Pinned libjxl 0.12.0 interoperability / Swift 6.4	UNKNOWN STEP	2026-10-09T05:41:59.9428870Z ^[[36;1mcc -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"^[[0m
+Pinned libjxl 0.12.0 interoperability / Swift 6.4	UNKNOWN STEP	2026-10-09T05:41:59.9822435Z /__w/_temp/1cf58ad6-1963-4cb2-a182-a17445f04c6d.sh: 1: cc: not found
+Pinned libjxl 0.12.0 interoperability / Swift 6.4	UNKNOWN STEP	2026-10-09T05:41:59.9863021Z ##[error]Process completed with exit code 127.
