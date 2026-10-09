@@ -8,6 +8,7 @@
 - Added bounded sequential/progressive coefficient decoding with restart and scan-history validation; visible coefficients and quantisation match libjpeg-turbo across 15 fixtures. Added required independent snapshot verification in CI.
 - Fixed an odd-offset byte-stuffing cancellation gap with failing-before/passing-after regressions.
 - Added bounded JBRD reconstruction-header reading/writing and strict metadata assembly; headers match 16 independent bundles byte for byte. Fixed the independent CI test compiler command to use available clang.
+- Added native Brotli framing and stored-block encoding with correct metadata skipping, canonical padding/length checks, resource admission and cancellation. Independent libbrotli accepted 29 boundary/framing streams.
 - Native JBRD/Brotli/VarDCT reconstruction integration and its public capability remain incomplete.
 
 ## Unreleased — public API and CLI integration, 2026-10-09

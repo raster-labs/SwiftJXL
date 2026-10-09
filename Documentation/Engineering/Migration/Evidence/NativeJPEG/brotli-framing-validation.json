@@ -1,0 +1,37 @@
+{
+  "status": "framing-foundation-tested-compressed-decoder-pending",
+  "base": "1e40cee9bef7aa8df9c37dc83c25d63a237c9276",
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "declarations": 36,
+  "cases": 79,
+  "skips": 0,
+  "configurations": [
+    "debug",
+    "address-sanitizer",
+    "thread-sanitizer"
+  ],
+  "independentOracleChecks": 29,
+  "predecessorBrotliTests": 36,
+  "predecessorBrotliFailures": 0,
+  "nativeTranscodeImplemented": false,
+  "nativeBrotliDecoderImplemented": false,
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/Brotli/BrotliEncoder.swift": "b91fbb1b12834baa7a8a9e7ec7dfd791b0d102f54351aeb175c717f7d0b11a65",
+    "Sources/SwiftJXLCore/Brotli/BrotliMetaBlock.swift": "12ab12a63d852e8bbb0631ff702af8b27bed4d01d59efb26da24a876c1cdc56a",
+    "Sources/SwiftJXLCore/Brotli/BrotliPolicy.swift": "e004df3ea159546554a487dd93aded35a7d7789ad04ff518c0402dc6d5cb3801",
+    "Sources/SwiftJXLCore/Brotli/BrotliReader.swift": "8e89d7e2da1aa36d9a06b46edfb4b8845b5d96d4e70c34677351ad96064759ce"
+  },
+  "testSHA256": "969ef144a50ab9c547cdaaf3b2ac6190cabd36326def678e1f3241315131e30a",
+  "fixtureSHA256": "e3786e13a08007d6e3303fa4dbc7ab5719f09e9ccb116ccd2aa3d2e87840d88a",
+  "specification": {
+    "url": "https://www.rfc-editor.org/rfc/rfc7932.txt",
+    "sha256": "394abd1879e016f4eac89512c2acaf92f7b2d67feb8ab58b6b118c213be07146",
+    "reviewedSections": [
+      "9.1",
+      "9.2",
+      "9.3",
+      "10"
+    ]
+  }
+}

@@ -1,0 +1,96 @@
+Test Suite 'BrotliCompressedMetaBlockHeaderTests' started at 2026-10-07 17:02:19.225.
+Test Case '-[JXLSwiftTests.BrotliCompressedMetaBlockHeaderTests testCompressedMetaBlockHeader_RealCjxlBrob]' started.
+Test Case '-[JXLSwiftTests.BrotliCompressedMetaBlockHeaderTests testCompressedMetaBlockHeader_RealCjxlBrob]' passed (0.002 seconds).
+Test Suite 'BrotliCompressedMetaBlockHeaderTests' passed at 2026-10-07 17:02:19.227.
+Test Suite 'BrotliDecoderTests' started at 2026-10-07 17:02:19.227.
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_BrotliCLI_EmptyDefault]' started.
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_BrotliCLI_EmptyDefault]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_EmptyStream]' started.
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_EmptyStream]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_RealCjxlBrobPayload_18Bytes]' started.
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_RealCjxlBrobPayload_18Bytes]' passed (0.001 seconds).
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_TruncatedCompressedStream_ThrowsBitstream]' started.
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_TruncatedCompressedStream_ThrowsBitstream]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_UncompressedABC_FromBrotliCLI]' started.
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_UncompressedABC_FromBrotliCLI]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_UncompressedHello_FromBrotliCLI]' started.
+Test Case '-[JXLSwiftTests.BrotliDecoderTests testDecode_UncompressedHello_FromBrotliCLI]' passed (0.000 seconds).
+Test Suite 'BrotliDecoderTests' passed at 2026-10-07 17:02:19.229.
+Test Suite 'BrotliDistanceTests' started at 2026-10-07 17:02:19.229.
+Test Case '-[JXLSwiftTests.BrotliDistanceTests testDistanceLut_DefaultNPostfix0NDirect0]' started.
+Test Case '-[JXLSwiftTests.BrotliDistanceTests testDistanceLut_DefaultNPostfix0NDirect0]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliDistanceTests testResolveShortCode_LastDistance]' started.
+Test Case '-[JXLSwiftTests.BrotliDistanceTests testResolveShortCode_LastDistance]' passed (0.000 seconds).
+Test Suite 'BrotliDistanceTests' passed at 2026-10-07 17:02:19.229.
+Test Suite 'BrotliInsertCopyLutTests' started at 2026-10-07 17:02:19.229.
+Test Case '-[JXLSwiftTests.BrotliInsertCopyLutTests testCmdLut_HasCorrectSize]' started.
+Test Case '-[JXLSwiftTests.BrotliInsertCopyLutTests testCmdLut_HasCorrectSize]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliInsertCopyLutTests testCmdLut_Symbol0_ZeroInsertCopy2]' started.
+Test Case '-[JXLSwiftTests.BrotliInsertCopyLutTests testCmdLut_Symbol0_ZeroInsertCopy2]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliInsertCopyLutTests testCmdLut_Symbol127_StillInCellIdx1]' started.
+Test Case '-[JXLSwiftTests.BrotliInsertCopyLutTests testCmdLut_Symbol127_StillInCellIdx1]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliInsertCopyLutTests testCmdLut_Symbol128_FirstReadDistance]' started.
+Test Case '-[JXLSwiftTests.BrotliInsertCopyLutTests testCmdLut_Symbol128_FirstReadDistance]' passed (0.000 seconds).
+Test Suite 'BrotliInsertCopyLutTests' passed at 2026-10-07 17:02:19.230.
+Test Suite 'BrotliMetaBlockHeaderTests' started at 2026-10-07 17:02:19.230.
+Test Case '-[JXLSwiftTests.BrotliMetaBlockHeaderTests testEmptyStream_IsLastEmpty]' started.
+Test Case '-[JXLSwiftTests.BrotliMetaBlockHeaderTests testEmptyStream_IsLastEmpty]' passed (0.000 seconds).
+Test Suite 'BrotliMetaBlockHeaderTests' passed at 2026-10-07 17:02:19.230.
+Test Suite 'BrotliPrefixCodeTests' started at 2026-10-07 17:02:19.230.
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_DecodeSingleSymbol_ConsumesZeroBits]' started.
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_DecodeSingleSymbol_ConsumesZeroBits]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_DecodeTwoSymbol_OneBitEach]' started.
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_DecodeTwoSymbol_OneBitEach]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_KraftViolation_Throws]' started.
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_KraftViolation_Throws]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_LengthOver15_Throws]' started.
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_LengthOver15_Throws]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_SingleSymbol]' started.
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_SingleSymbol]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_TwoSymbols_OneBitEach]' started.
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testPrefixCode_TwoSymbols_OneBitEach]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testReadSimple_OneSymbol_TwoBitNSYM]' started.
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testReadSimple_OneSymbol_TwoBitNSYM]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testReadSimple_TwoSymbols]' started.
+Test Case '-[JXLSwiftTests.BrotliPrefixCodeTests testReadSimple_TwoSymbols]' passed (0.000 seconds).
+Test Suite 'BrotliPrefixCodeTests' passed at 2026-10-07 17:02:19.230.
+Test Suite 'BrotliStaticDictionaryTests' started at 2026-10-07 17:02:19.230.
+Test Case '-[JXLSwiftTests.BrotliStaticDictionaryTests testBrotliEncoder_Uncompressed_AcceptedByBrotliCLI]' started.
+Test Case '-[JXLSwiftTests.BrotliStaticDictionaryTests testBrotliEncoder_Uncompressed_AcceptedByBrotliCLI]' passed (0.265 seconds).
+Test Case '-[JXLSwiftTests.BrotliStaticDictionaryTests testBrotliEncoder_Uncompressed_RoundTrips]' started.
+Test Case '-[JXLSwiftTests.BrotliStaticDictionaryTests testBrotliEncoder_Uncompressed_RoundTrips]' passed (0.001 seconds).
+Test Case '-[JXLSwiftTests.BrotliStaticDictionaryTests testDecode_StaticDictionary_BrotliCLIOracle]' started.
+Test Case '-[JXLSwiftTests.BrotliStaticDictionaryTests testDecode_StaticDictionary_BrotliCLIOracle]' passed (0.280 seconds).
+Test Case '-[JXLSwiftTests.BrotliStaticDictionaryTests testTransformWord_AllTransforms_MatchLibbrotli]' started.
+Test Case '-[JXLSwiftTests.BrotliStaticDictionaryTests testTransformWord_AllTransforms_MatchLibbrotli]' passed (0.000 seconds).
+Test Suite 'BrotliStaticDictionaryTests' passed at 2026-10-07 17:02:19.778.
+Test Suite 'BrotliStreamHeaderTests' started at 2026-10-07 17:02:19.778.
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_10_to_15]' started.
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_10_to_15]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_16]' started.
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_16]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_17]' started.
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_17]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_18_to_24]' started.
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_18_to_24]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_ReservedN1_Throws]' started.
+Test Case '-[JXLSwiftTests.BrotliStreamHeaderTests testWBITS_ReservedN1_Throws]' passed (0.000 seconds).
+Test Suite 'BrotliStreamHeaderTests' passed at 2026-10-07 17:02:19.779.
+Test Suite 'BrotliVarLenU8Tests' started at 2026-10-07 17:02:19.779.
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_FirstBitZero_Returns1]' started.
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_FirstBitZero_Returns1]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_Nnn0_Returns2]' started.
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_Nnn0_Returns2]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_Nnn1_Range3To4]' started.
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_Nnn1_Range3To4]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_Nnn3_Range9To16]' started.
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_Nnn3_Range9To16]' passed (0.000 seconds).
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_Nnn7_Range129To256]' started.
+Test Case '-[JXLSwiftTests.BrotliVarLenU8Tests testVarLenU8_Nnn7_Range129To256]' passed (0.000 seconds).
+Test Suite 'BrotliVarLenU8Tests' passed at 2026-10-07 17:02:19.780.
+Test Case '-[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlPayload_DistributeBrotliPayload]' started.
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:5232: -[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlPayload_DistributeBrotliPayload] : Test skipped - jbrd payload not present at /tmp/cjxl-ref-420.jbrd
+Test Case '-[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlPayload_DistributeBrotliPayload]' skipped (0.000 seconds).
+Test Case '-[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlPayload_TrailingBrotliShape]' started.
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:5185: -[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlPayload_TrailingBrotliShape] : Test skipped - jbrd payload not present at /tmp/cjxl-ref-420.jbrd
+Test Case '-[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlPayload_TrailingBrotliShape]' skipped (0.000 seconds).

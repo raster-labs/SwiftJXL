@@ -78,3 +78,24 @@ The coefficient head `420c890b90efd62c6f3859600030d06da4489211` passed macOS, al
 Continue with native bounded Brotli, extraction of reconstruction events from JPEG entropy data, and the native VarDCT coefficient bridge. Connect the qualified metadata fields to JPEG scan restoration, then the common in-memory Transcoder and CLI with resource/copy reports and cancellation throughout. Qualify autonomous byte equality in both oracle directions, corrupted/unsupported metadata, repeated cycles, concurrency, performance and all required platforms before declaring this native gate complete. Main, releases and JXLSwift production are unchanged.
 
 The metadata head `c277c1c9fc152996581a843875e017c904b54b96` failed Swift 6.2 compilation in [run 37891489224](https://github.com/raster-labs/SwiftJXL/actions/runs/37891489224): the synthesised `JBRDBudget` initializer was private on that compiler. Swift 6.4 Linux x86/ARM passed. An explicit internal initializer now fixes the access-control difference; local Swift 6.4 targeted metadata checks passed (7 declarations / 22 cases, no skips). Existing sanitizer evidence remains tied to the earlier source hashes. Fresh hosted Swift 6.2 validation is required. See `Evidence/NativeJPEG/jbrd-initializer-fix.json` and its log.
+
+## Native Brotli framing foundation — 9 October 2026
+
+Adapted the pinned predecessor's stream/meta-block and stored-block encoding algorithms. A new input-owner reader uses relative offsets without a full byte-array copy. Metadata now has distinct skip semantics: MSKIPBYTES zero means zero bytes, metadata never enters output/history, nonminimal lengths and nonzero alignment bits reject. This corrects predecessor source behaviour not covered by its passing baseline. Window encodings, variable-length counts and trailing-input checks are bounded; encoding admits input, output capacity/transients and scratch before allocation, and checks cancellation every 4096 payload bytes. Bit reading checks work every 1024 calls (at most 4096 consumed bytes). These are conservative operation reservations, not measured RSS; enclosing JBRD/container memory still needs aggregate admission.
+
+The existing predecessor baseline has **36 Brotli tests passing, zero failures** across nine suites. Its metadata edge coverage was insufficient; no predecessor source was edited. RFC 7932 sections 9–10 were checked before adaptation; the exact text hash is recorded in `Evidence/NativeJPEG/brotli-framing-validation.json`.
+
+Local Swift 6.4 debug, ASan and TSan each passed **36 declarations / 79 cases**, zero skips, covering JPEG coefficients/reconstruction headers and six new Brotli test declarations. The new tests exercise 23 independently accepted streams (all window sizes, empty/nonempty/final metadata), all 256 variable-length counts, truncation, reserved fields, noncanonical lengths, fill/trailing bytes, sliced input, cancellation/deadlines and allocation limits. Encoder bytes match six independently decoded boundary streams at 0, 1, 65536, 65537, 1048576 and 1048577 bytes. `Scripts/validate-brotli-framing.py` independently rechecks all 29 streams with libbrotli and records version plus fixture/output hashes; it is also required in the hosted oracle job. The test-only library is not linked to any package product.
+
+Commands (repository root; all recorded local results exit 0):
+
+```sh
+CLANG_MODULE_CACHE_PATH="$PWD/.build/module-cache" SWIFTPM_MODULECACHE_OVERRIDE="$PWD/.build/module-cache" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'JPEG.*Tests|JBRDTests|BrotliFramingTests'
+# Sanitizers use the same filter, --sanitize address or thread, and existing
+# --scratch-path ../evidence/cli-validation-qualification/build/asan or tsan;
+# cache/config/security are under ../evidence/cli-validation-qualification.
+python3 Scripts/validate-brotli-framing.py --library /opt/homebrew/opt/brotli/lib/libbrotlidec.dylib --output ../native-jpeg-audit/brotli-framing-oracle.json
+(cd Documentation && shasum -a 256 -c COMMON_CONTRACT_SHA256.txt)
+```
+
+Hosted validation of the Brotli additions is **pending**. Compressed-body decoding (block switching/context maps, LZ77 and dictionary), integration with JBRD, full JPEG restoration, hot-path release performance and whole-operation resource evidence remain open. No full Brotli decoder or public transcoding capability is advertised. The stored-block encoder is standard Brotli but does not perform entropy compression.
