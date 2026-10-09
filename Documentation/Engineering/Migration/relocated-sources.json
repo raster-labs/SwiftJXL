@@ -1028,6 +1028,18 @@
         "Admission before profile allocations; caller ICC limit capped at 4 MiB; public native JPEG integration"
       ],
       "destinationSHA256": "5045a7cfc79a94e085873b6fbe091d680e22a22e27e31575343812b1b927c073"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/SpecRCT.swift",
+      "sourceSHA256": "d97b53f96a5efce68a3125168106b4b9f964bace73cb19e3b7efa11418e65d2e",
+      "destination": "Sources/SwiftJXLCore/Modular/SpecRCT.swift",
+      "destinationSHA256": "47d23658646337819adbbf2942862f033a58279ab90df9c9c06542c63ca65602",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Reuses the three admitted working planes; removes temporary output/permutation arrays",
+        "Checked type/length admission and bounded cancellation/deadline callback",
+        "Internal Modular expansion preparation; public scalar profile unchanged"
+      ]
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. The package-internal SwiftJXLCore target now supports the public SwiftJXL scalar greyscale encoder, decoder and inspector; it is not a separately exposed library product. Public profile limits and operation admission are documented in MIGRATION.md and RESOURCE_ADMISSION.md.",

@@ -1,0 +1,153 @@
+{
+  "scope": "Internal dormant encoder preflight only; does not qualify public API, bounds or general decoder",
+  "source_commit": "9a4ff2ba51a8c5fb02e37b4e499995ce1a78b5e1",
+  "oracle": "libjxl 0.12.0 djxl",
+  "fixtures": [
+    {
+      "fixture": "gray8",
+      "command": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/gray8.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/gray8.pam",
+        "--bits_per_sample=8",
+        "--quiet"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "header": {
+        "WIDTH": "31",
+        "HEIGHT": "17",
+        "DEPTH": "1",
+        "MAXVAL": "255",
+        "TUPLTYPE": "GRAYSCALE"
+      },
+      "sample_count": 527,
+      "exact_samples": true,
+      "exact_geometry": true,
+      "jxl_sha256": "53b49ede99c15366dc420e9b6dbc06d80cb713660dff34d2d9c5953038995549"
+    },
+    {
+      "fixture": "grayalpha8",
+      "command": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/grayalpha8.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/grayalpha8.pam",
+        "--bits_per_sample=8",
+        "--quiet"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "header": {
+        "WIDTH": "31",
+        "HEIGHT": "17",
+        "DEPTH": "2",
+        "MAXVAL": "255",
+        "TUPLTYPE": "GRAYSCALE_ALPHA"
+      },
+      "sample_count": 1054,
+      "exact_samples": true,
+      "exact_geometry": true,
+      "jxl_sha256": "7135523859808cfe42245d6f5257533307712f0791ce518d2e31ab1437c07e14"
+    },
+    {
+      "fixture": "rgb8",
+      "command": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/rgb8.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/rgb8.pam",
+        "--bits_per_sample=8",
+        "--quiet"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "header": {
+        "WIDTH": "31",
+        "HEIGHT": "17",
+        "DEPTH": "3",
+        "MAXVAL": "255",
+        "TUPLTYPE": "RGB"
+      },
+      "sample_count": 1581,
+      "exact_samples": true,
+      "exact_geometry": true,
+      "jxl_sha256": "75e1b787c4e62e6235f8e3f8cd0d1ae8db0f7f25e86415cdf60036dce40d96f6"
+    },
+    {
+      "fixture": "rgba8",
+      "command": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/rgba8.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/rgba8.pam",
+        "--bits_per_sample=8",
+        "--quiet"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "header": {
+        "WIDTH": "31",
+        "HEIGHT": "17",
+        "DEPTH": "4",
+        "MAXVAL": "255",
+        "TUPLTYPE": "RGB_ALPHA"
+      },
+      "sample_count": 2108,
+      "exact_samples": true,
+      "exact_geometry": true,
+      "jxl_sha256": "fe585a6301204b82eca6997403edf8a34c771ca00a2dc75cb2eb57898faafedf"
+    },
+    {
+      "fixture": "rgb12",
+      "command": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/rgb12.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/rgb12.pam",
+        "--bits_per_sample=12",
+        "--quiet"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "header": {
+        "WIDTH": "31",
+        "HEIGHT": "17",
+        "DEPTH": "3",
+        "MAXVAL": "4095",
+        "TUPLTYPE": "RGB"
+      },
+      "sample_count": 1581,
+      "exact_samples": true,
+      "exact_geometry": true,
+      "jxl_sha256": "336f07d6972edb2b3ffafa69fbec5380992a0a1ddde6d1ffa578de096dbabafa"
+    },
+    {
+      "fixture": "rgba16",
+      "command": [
+        "/opt/homebrew/bin/djxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/rgba16.jxl",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/../modular-preflight/rgba16.pam",
+        "--bits_per_sample=16",
+        "--quiet"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "header": {
+        "WIDTH": "31",
+        "HEIGHT": "17",
+        "DEPTH": "4",
+        "MAXVAL": "65535",
+        "TUPLTYPE": "RGB_ALPHA"
+      },
+      "sample_count": 2108,
+      "exact_samples": true,
+      "exact_geometry": true,
+      "jxl_sha256": "6f8b2262faae1c3c767da035fd0316f288a4a661fc481d63181a47f76e4d8ea6"
+    }
+  ],
+  "binary_sha256": "0f0ade581c0edd4bb57388d4a58216d8c37edd086fbe7e23bac89e56730136ba",
+  "source_sha256": {
+    "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift": "eabc4a100804abd1b2d42f2f32b9b35791d415a6b911dbb8dc578abf455ffac3",
+    "Sources/SwiftJXLCore/Codec/ScalarSampleStorage.swift": "c73b2bb0ed3fa0eff698a7252246f45f9777ba5c3e032780074b7e24183cfb14",
+    "Sources/SwiftJXLCore/Codec/ScalarModularDecoder.swift": "9eb6904c722ced95c1833795dda5579874309e56b0ce726ed188843604a65e74",
+    "Sources/SwiftJXL/CodecAPI.swift": "cb56ab61f729da5ca6de944b7702631e2a8d29b5e11648119237d50e3d313f2b"
+  },
+  "passed": true
+}
