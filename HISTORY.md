@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Decoder checkpoint overhead — 9 October 2026
+
+Profiling found opaque clock-value setup on the ordinary bit/token checkpoint path. Isolating cancellation and clock comparison in a non-inlined helper preserves the original check frequency while reducing allocating-decode median time by 9–13% on four larger local cases. All five benchmark cases retain exact samples and identical encoded bytes. The full local debug, ASan and TSan suites each pass 175 declarations / 642 cases. Experiments in neighbour inlining and coordinate addressing were reverted after insufficient benefit or a measured colour regression; only the checkpoint change remains. [Raw timings and validation](Documentation/Engineering/Migration/Evidence/ModularColour/Performance/reader-validation.json) record the comparison against the previous successor build. Remaining predecessor performance, wider corpus and release gates are still open.
+
 ## Modular edge coverage and entropy checkpoint profiling — 9 October 2026
 
 Added six independently encoded associated-alpha inputs, public strided-source byte-equivalence checks and precision extrema/invalid-high-bit regressions. Profiling identified repeated cancellation/deadline/task-local checks in entropy token emission. These now run before the first token and within 256 tokens, including zero-bit symbols; byte-growth admission remains immediate and final publication remains checked. Added tests for cancellation, expired deadlines and latched failures at this boundary. The full local suite passed 175 declarations / 642 argument cases in debug, ASan and TSan, with no failures or skips.

@@ -6,6 +6,7 @@
 - Adapted grouped/progressive decoding, reversible colour transforms, simple palettes and Squeeze. Corrected empty global rANS state emission and rejected malformed UTF-8 names.
 - Added independent alpha fixtures, precision-extrema and strided-source checks. Expanded the UInt16 greyscale NRRD CLI dimension limit consistently to 1024; general colour file adapters remain pending.
 - Profiled and reduced entropy-checkpoint overhead while retaining cancellation within 256 tokens and immediate output-growth limits. Remaining predecessor performance regressions, full feature/platform qualification and release gates remain open.
+- Isolated reader deadline checks from ordinary token/bit reads without changing check frequency; retained measured decoder improvement and full local regression coverage.
 
 ## Unreleased — native JPEG public transcoder, 2026-10-09
 
