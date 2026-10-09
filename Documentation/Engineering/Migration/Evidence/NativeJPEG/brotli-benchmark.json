@@ -1,0 +1,17 @@
+{
+  "configuration" : "standalone swiftc -O; exact successor Brotli sources",
+  "decodedBytesPerIteration" : 297576,
+  "encodedBytes" : 8281,
+  "iterationsPerSample" : 200,
+  "medianMiBPerSecond" : 230.70041442696731,
+  "sampleSeconds" : [
+    0.26061020800000001,
+    0.24532612500000001,
+    0.24602520899999999,
+    0.24589649999999999,
+    0.259046375,
+    0.25138458400000002,
+    0.245453167
+  ],
+  "warmups" : 10
+}

@@ -191,6 +191,8 @@ jobs:
           python3 Scripts/validate-jpeg-coefficients.py --oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/jpeg-coefficient-evidence
       - name: Independently validate native Brotli framing fixtures
         run: python3 Scripts/validate-brotli-framing.py --output .build/brotli-framing-evidence/report.json
+      - name: Independently validate compressed Brotli and dictionary fixtures
+        run: python3 Scripts/validate-brotli-decoder.py --output .build/brotli-decoder-evidence/report.json
       - name: NRRD and libjxl independent CLI interoperability
         run: |
           python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
@@ -209,4 +211,5 @@ jobs:
             .build/nrrd-reference-*/report.json
             .build/jpeg-coefficient-evidence/report.json
             .build/brotli-framing-evidence/report.json
+            .build/brotli-decoder-evidence/report.json
           if-no-files-found: warn

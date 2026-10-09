@@ -99,3 +99,31 @@ python3 Scripts/validate-brotli-framing.py --library /opt/homebrew/opt/brotli/li
 ```
 
 Hosted validation of the Brotli additions is **pending**. Compressed-body decoding (block switching/context maps, LZ77 and dictionary), integration with JBRD, full JPEG restoration, hot-path release performance and whole-operation resource evidence remain open. No full Brotli decoder or public transcoding capability is advertised. The stored-block encoder is standard Brotli but does not perform entropy compression.
+
+## Native Brotli decoder and JBRD resolution — 9 October 2026
+
+The compatibility-fix commit `1e40cee9bef7aa8df9c37dc83c25d63a237c9276` passed all eight hosted jobs, including macOS 26 / Swift 6.2, in [run 37892041402](https://github.com/raster-labs/SwiftJXL/actions/runs/37892041402). This is evidence for that commit, not the subsequent Brotli implementation.
+
+Implemented native RFC 7932 simple/complex canonical prefix codes, all four literal context modes, context maps with zero-run/inverse-MTF decoding, literal/command/distance block switching, short/direct/postfix distances, overlapping LZ77 copies and the standard dictionary/transforms. Distance history persists across meta-blocks. Metadata blocks are skipped without entering output/history. Input, declared output, table allocations, command/meta-block counts, alignment, trailing bytes and insert/copy/dictionary expansion are checked. Cancellation covers zero-bit prefix trees, bounded bit work and long copies. The decoder returns exactly the caller-admitted expansion size or throws, without partial success or external fallback.
+
+A new isolated predecessor regression demonstrates why a direct copy was insufficient: stream `420000006450804060108006` yields `41 01 02` with independent libbrotli, but pinned JXLSwift returns `01 02 41`. Its three-symbol simple-code implementation sorts symbols before assigning lengths; RFC 7932 section 3.4 assigns lengths in wire order. The successor passes this regression. The original 36 passing predecessor Brotli tests and this failing additional probe are both retained.
+
+`JBRDBoxReader.readResolved` now combines header parsing, native Brotli expansion and strict marker-metadata assembly. It admits retained header/external buffers before giving the decoder the remaining memory budget, and charges persistent dictionary workspace during subsequent assembly. The public JPEG transcoder remains unavailable: coefficient-bridge integration and complete original-JPEG byte restoration are still required. The standalone stored-block Brotli encoder exists; full JPEG reconstruction event extraction/forward assembly is not yet connected.
+
+Validation on local Swift 6.4: debug, ASan and TSan each passed **44 declarations / 142 cases**, zero skips. The decoder matches **41 independent compressed streams** and **16 independent JBRD payloads**. Additional loops check the 23 framing streams, six encoder size boundaries, all 121 dictionary transforms on the first/last word of every supported length (**5082 independent vectors**), truncation/bit mutations, expansion errors, allocation/command/meta-block limits and cancellation. Coverage counters prove all four context modes, all four postfix values, all sixteen short distance codes, two block types in each category, six literal/two distance trees, actual block switches, dictionary references and multi-meta-block/metadata paths. These counters describe the retained corpus, not exhaustive format/security qualification.
+
+The dictionary blob is byte-identical to independent libbrotli. Its transforms and predecessor-derived decoding material retain MIT attribution alongside owner-authored Apache-2.0 work. The 2048 context entries come from `google/brotli` pin `028fb5a23661f123017c060daa546b55cf4bde29`; source hashes and the MIT licence are retained. Neither libbrotli nor libjxl is a runtime dependency. `Scripts/validate-brotli-decoder.py` repeats the independent fixture/transform checks in the hosted oracle job.
+
+An isolated optimised build of the exact Brotli source files (`swiftc -O`, local macOS arm64/Swift 6.4) decoded the 297576-byte mixed fixture at a **230.70 MiB/s median** across seven samples of 200 iterations after ten warmups; every result was byte-compared. Raw timings, harness and toolchain are retained. This is a narrow local measurement, not full package release, comparative performance, RSS or platform qualification; the CPU-model query was unavailable under the current sandbox. Conservative admitted memory is reported separately from measured memory, and whole-transcoder copy/lifetime accounting remains open.
+
+Commands and evidence:
+
+```sh
+# Use the same debug/sanitizer cache and scratch options recorded in the framing section:
+xcrun swift test --filter 'JPEG.*Tests|JBRDTests|Brotli.*Tests'
+python3 Scripts/validate-brotli-decoder.py --decoder-library /opt/homebrew/opt/brotli/lib/libbrotlidec.dylib --common-library /opt/homebrew/opt/brotli/lib/libbrotlicommon.dylib --output ../native-jpeg-audit/brotli-native-oracle.json
+xcrun swiftc -O -package-name SwiftJXL Sources/SwiftJXLCore/Brotli/*.swift ../native-jpeg-audit/brotli-release-probe/main.swift -o ../native-jpeg-audit/brotli-release-probe/benchmark
+../native-jpeg-audit/brotli-release-probe/benchmark "$PWD/Tests/SwiftJXLCoreTests/Fixtures/Brotli"
+```
+
+All listed executed tests/oracle/benchmark commands returned zero. `Evidence/NativeJPEG/brotli-native-validation.json` records final source hashes and coverage. Hosted Swift 6.2/6.4 debug/release and macOS checks for the new implementation remain pending its pushed head. Full fuzzing, whole-transcoder release benchmarks, broader image features, Apple adapters/platform coverage and release preparation remain open. All seven common contracts remain byte-identical. No main merge, tag, release or production cutover occurred.

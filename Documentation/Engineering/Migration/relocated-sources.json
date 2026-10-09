@@ -581,14 +581,15 @@
       "source": "Sources/JXLSwift/JPEG/JBRDBox.swift",
       "sourceSHA256": "24afeb50cab0800ebdb539b02258217974c23d72e656c8dc7b2a0246f849c554",
       "destination": "Sources/SwiftJXLCore/JPEG/JBRDBox.swift",
-      "destinationSHA256": "9045c7592205d759b7cb7d88b8222e5714f504a2e8e8788e9099d8a862a91a68",
+      "destinationSHA256": "864ae446db2ccc24c2e9afa4a7d136aa8055ec636d568bc893be954c114d7e46",
       "licence": "Apache-2.0",
       "changes": [
         "Package-only reconstruction metadata reader/writer/resolver; native Brotli and full JPEG restoration remain separate",
         "Admit input, payload, marker, event, padding and workspace growth before allocation; bounded cancellation/deadlines",
         "Validate table/scan references and history, reject wrapping indexes, check shape before writing",
         "Require exact external metadata and marker identity/length; never partial-fill missing Exif/XMP/ICC",
-        "Independently generated 16-bundle field/offset and byte-identical header comparisons"
+        "Independently generated 16-bundle field/offset and byte-identical header comparisons",
+        "Connect native Brotli expansion to strict metadata resolution with aggregate phase admission"
       ]
     },
     {
@@ -609,14 +610,15 @@
       "source": "Sources/JXLSwift/JPEG/JBRDBox.swift",
       "sourceSHA256": "24afeb50cab0800ebdb539b02258217974c23d72e656c8dc7b2a0246f849c554",
       "destination": "Sources/SwiftJXLCore/JPEG/JBRDMetadata.swift",
-      "destinationSHA256": "71ffb161fdad78120be5e680c7459aa44feb2f550dc60f777abc0c2fed3e37d7",
+      "destinationSHA256": "8b35c21a89a5099903dfbaf3770afcf1b6bc88792cacfa76d92539949a6deafc",
       "licence": "Apache-2.0",
       "changes": [
         "Package-only reconstruction metadata reader/writer/resolver; native Brotli and full JPEG restoration remain separate",
         "Admit input, payload, marker, event, padding and workspace growth before allocation; bounded cancellation/deadlines",
         "Validate table/scan references and history, reject wrapping indexes, check shape before writing",
         "Require exact external metadata and marker identity/length; never partial-fill missing Exif/XMP/ICC",
-        "Independently generated 16-bundle field/offset and byte-identical header comparisons"
+        "Independently generated 16-bundle field/offset and byte-identical header comparisons",
+        "Connect native Brotli expansion to strict metadata resolution with aggregate phase admission"
       ]
     },
     {
@@ -657,6 +659,84 @@
         "Admitted input/output/workspace, retained sliced input, bounded cancellation; no input-dependent preconditions",
         "Standard stored-block encoder validated at length-width boundaries against independent libbrotli"
       ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliPrefixCode.swift",
+      "sourceSHA256": "b8d89b271d69dc4ce33c83d666b4af71e32743264c4c2b85c0c6f2469cbd7d9e",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliPrefixCode.swift",
+      "destinationSHA256": "78ecd93b91a04f550b563e062641627abaeda8514c27c7960b8c3574dfd372d0",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliStaticDictionary.swift",
+      "sourceSHA256": "df9a8ebbf88b5067ae4d649a850e7bafd23abf3bf7601177279fdda066e6618e",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliStaticDictionary.swift",
+      "destinationSHA256": "b671966ebf2defc427dc276e8d19793e1ab09e7a9132bbddf68405c0c58db6c7",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliDecoder.swift",
+      "sourceSHA256": "0d8b7646b6d658e5565e02e952fe1394587368b583ddbc5918d9f370de039410",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift",
+      "destinationSHA256": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliCompressedMetaBlock.swift",
+      "sourceSHA256": "9adfeb29f7b0afd9c70f72796faa8cba6acf08687e4d85353bc444ade987a7a8",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift",
+      "destinationSHA256": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliInsertCopy.swift",
+      "sourceSHA256": "af0451fa45d7d33a9847500a8ad186e61c336ff2b281e63503d2cd55cfe06ed5",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift",
+      "destinationSHA256": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Brotli/BrotliDistance.swift",
+      "sourceSHA256": "65b53e876b222cb61484b74493c3928ba52e50eae9775ec25d934eba20530f80",
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift",
+      "destinationSHA256": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+      "licence": "Apache-2.0 AND MIT",
+      "changes": [
+        "Bounded native RFC 7932 decoding, with cumulative table admission, exact output/input bounds and cancellation",
+        "Correct wire-order three-symbol codes, cross-meta-block distance history and metadata skipping",
+        "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
+        "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
+      ]
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. Internal target is used by tests only; no new public product or public codec capability.",
@@ -669,6 +749,15 @@
       "verifiedLicenceRef": "v0.12.0",
       "verifiedLicenceBlob": "c66034b105f23d108a51b45c846d5b5c194cc229",
       "qualification": "Predecessor did not record its original table extraction revision; retain upstream credit and licence without asserting an invented extraction pin."
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/Brotli/BrotliContext.swift",
+      "destinationSHA256": "50771b1730fdb6e1da0b9f6e76cf32716ce494a2cdd2f5396deca809d55d7a83",
+      "source": "https://github.com/google/brotli/blob/028fb5a23661f123017c060daa546b55cf4bde29/c/common/context.c",
+      "sourceSHA256": "c9aa1acb35af38c90c4a38ba168885b649838236b2d57adb5e76d687bdbe252e",
+      "licence": "MIT",
+      "licenceFile": "Documentation/ThirdParty/brotli-LICENSE.txt",
+      "qualification": "All 2048 numerical context entries retained in source order. Dictionary/transform code is adapted from the predecessor; original extraction pin was not recorded. Its full dictionary blob and 5082 transformations now match independently installed libbrotli."
     }
   ],
   "authoredSuccessorFiles": [

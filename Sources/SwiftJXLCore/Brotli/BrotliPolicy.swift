@@ -14,6 +14,7 @@ package struct BrotliPolicy: Sendable {
     package let maximumOutputBytes: Int
     package let maximumMemoryBytes: Int
     package let maximumMetaBlocks: Int
+    package let maximumCommands: Int
     package let deadline: ContinuousClock.Instant
     private let workCheckpoint: @Sendable () throws -> Void
 
@@ -21,15 +22,18 @@ package struct BrotliPolicy: Sendable {
                  maximumOutputBytes: Int = 8 * 1024 * 1024,
                  maximumMemoryBytes: Int = 64 * 1024 * 1024,
                  maximumMetaBlocks: Int = 65536,
+                 maximumCommands: Int = 16 * 1024 * 1024,
                  deadline: ContinuousClock.Instant = .now.advanced(by: .seconds(10)),
                  checkpoint: @escaping @Sendable () throws -> Void = {}) throws {
         guard maximumInputBytes > 0, maximumInputBytes <= Int.max / 8,
               maximumOutputBytes >= 0, maximumMemoryBytes > 0,
-              (1...65536).contains(maximumMetaBlocks) else { throw BrotliError.resourceLimit }
+              (1...65536).contains(maximumMetaBlocks),
+              (1...(1 << 28)).contains(maximumCommands) else { throw BrotliError.resourceLimit }
         self.maximumInputBytes = maximumInputBytes
         self.maximumOutputBytes = maximumOutputBytes
         self.maximumMemoryBytes = maximumMemoryBytes
         self.maximumMetaBlocks = maximumMetaBlocks
+        self.maximumCommands = maximumCommands
         self.deadline = deadline
         self.workCheckpoint = checkpoint
     }

@@ -2,6 +2,8 @@
 
 ## Native JPEG preparation — 9 October 2026
 
+Native compressed Brotli decoding and JBRD metadata resolution now pass local debug/ASan/TSan qualification. Wire-order prefix codes fix an independently demonstrated predecessor failure; all block/context/dictionary paths have recorded corpus evidence. MIT attribution and exact provenance are retained. Hosted validation and full JPEG restoration remain separate gates.
+
 Brotli framing and stored-block encoding now have native bounded implementations, correcting predecessor metadata skip semantics. Independent libbrotli checks cover 29 streams; compressed-body decoding and full restoration remain open. See the evidence below.
 
 The reconstruction-metadata checkpoint adapts JBRD fields, bounded serialisation and strict Exif/XMP/ICC assembly from the same predecessor pin. Sixteen independent bundles qualify the header boundary; native Brotli, coefficient-bridge integration and full original-JPEG restoration remain open. The coefficient commit passed macOS and the Linux matrix; its oracle job exposed a missing `cc` alias, corrected to the container's existing `clang` for the next run.

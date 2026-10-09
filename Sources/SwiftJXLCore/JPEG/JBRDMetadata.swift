@@ -19,13 +19,14 @@ extension JBRDParsedBundle {
     /// external metadata or size mismatches throw; never manufacture zero bytes.
     /// This method does not decompress Brotli or reconstruct JPEG entropy data.
     package func resolvingPayload(_ decoded: Data, external: JBRDExternalMetadata = .init(),
-                                  policy: JBRDPolicy) throws -> JBRDBox {
+                                  policy: JBRDPolicy, retainedWorkspaceBytes: Int = 0) throws -> JBRDBox {
         try policy.checkpoint()
         guard decoded.count == expectedBrotliBytes, box.appData.count == box.appMarkerType.count,
               box.markerOrder.count <= policy.maximumMarkers else {
             throw JBRDError.malformed("Metadata payload size or layout mismatch")
         }
         var budget = JBRDBudget(policy: policy)
+        try budget.reserve(retainedWorkspaceBytes, stride: 1)
         try budget.reserve(reservedBytes, stride: 1)
         try budget.reserve(box.markerOrder.count, stride: 1024)
         try budget.reserve(decoded.count, stride: 2)

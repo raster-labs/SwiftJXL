@@ -11,3 +11,7 @@ See Documentation/Engineering/Migration/relocated-sources.json.
 
 The special-distance lookup table retains the JPEG XL Project Authors'
 BSD-3-Clause terms. See Documentation/ThirdParty/libjxl-LICENSE.txt.
+
+Native Brotli reconstruction code includes Brotli Authors dictionary, transforms,
+context tables and adapted decoding algorithms under MIT terms.
+See Documentation/ThirdParty/brotli-LICENSE.txt and the migration provenance.

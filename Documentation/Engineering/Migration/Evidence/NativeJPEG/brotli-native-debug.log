@@ -1,0 +1,215 @@
+Building for debugging...
+[2 / 7] SwiftJXLCoreTests-product
+[4 / 9] SwiftJXLCoreTests-product
+[11 / 15] SwiftJXLCoreTests-product
+Build complete! (1.59 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite JPEGSegmentReaderTests started.
+◇ Suite JPEGCoefficientTests started.
+◇ Suite JPEGFrameLayoutTests started.
+◇ Suite BrotliFramingTests started.
+◇ Suite BrotliDecoderTests started.
+◇ Suite JBRDTests started.
+◇ Test nonCanonicalPaddingIsRetained() started.
+◇ Test wrongRestartSequenceRejects() started.
+◇ Test slicedLifetimeAndConcurrentOperations() started.
+◇ Test everyPrefixBeforeEOIIsRejected() started.
+◇ Test mutatedInputRemainsBoundedAndCannotTrap() started.
+◇ Test invalidHuffmanTreesAndBitRequestsThrow() started.
+◇ Test multipleScansRetainEachBoundary() started.
+◇ Test everyProgressivePrefixFailsWithoutPublishingCoefficients() started.
+◇ Test cancelledOperationHasNoResult() started.
+◇ Test longEntropyAndFillRunsHaveBoundedCheckpoints(_:) started.
+◇ Test malformedFramingThrows(_:) started.
+◇ Test allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test cancellationDuringCoefficientWorkThrowsBeforePublication() started.
+◇ Test oddOffsetStuffingCannotSkipCheckpoints() started.
+◇ Test taskCancellationIsHonoured() started.
+◇ Test preservesFillScanAndTailWithoutReparsingTail() started.
+◇ Test resourceAdmissionAndPaddingLimits() started.
+◇ Test stuffedEntropyReaderChecksWorkAtOddOffsets() started.
+◇ Test inputCountAndTimeLimitsAreEnforced() started.
+◇ Test inputOutputMemoryAndDeadlineAdmission() started.
+◇ Test pinnedIndependentFixtures(_:) started.
+◇ Test slicedInputHasRelativeRangesAndRetainedLifetime() started.
+◇ Test nonInterleavedIndicesSkipRightAndBottomPadding() started.
+◇ Test invalidWriterShapesAndEventLimitsThrow() started.
+◇ Test cancellationAndBoundedWork() started.
+◇ Test storedAndMetadataBlocks() started.
+◇ Test malformedAndUnsupportedFramesRejectBeforeAllocation() started.
+◇ Test compressedFeatureCoverage() started.
+◇ Test limitsAndCancellationBeforePublication() started.
+◇ Test malformedContextAndBlockTablesStayBounded() started.
+◇ Test externalMetadataMustFitExactly() started.
+◇ Test rejectsTruncationTrailingAndWrongExpansion() started.
+◇ Test independentlyAcceptedFramingAndMetadata() started.
+◇ Test headerTruncationsAndMutationsDoNotTrap() started.
+◇ Test case passing 1 argument fill → false to longEntropyAndFillRunsHaveBoundedCheckpoints(_:) started.
+◇ Test case passing 1 argument fill → true to longEntropyAndFillRunsHaveBoundedCheckpoints(_:) started.
+◇ Test case passing 1 argument data → 6 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 1 argument data → 6 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 1 argument data → 4 bytes to malformedFramingThrows(_:) started.
+◇ Test resourceLimitsAndCancellation() started.
+◇ Test case passing 1 argument data → 4 bytes to malformedFramingThrows(_:) started.
+◇ Test independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test encoderMatchesIndependentBoundaryStreams() started.
+◇ Test case passing 1 argument data → 4 bytes to malformedFramingThrows(_:) started.
+◇ Test metadataIdentityLengthAndSurplusAreRejected() started.
+◇ Test case passing 1 argument data → 3 bytes to malformedFramingThrows(_:) started.
+◇ Test independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "gray" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test malformedHeadersAndTruncation() started.
+◇ Test slicedInputAndConcurrentReads() started.
+◇ Test completeVariableLengthCountRange() started.
+◇ Test independentJPEGReconstructionPayloads(_:) started.
+◇ Test allDictionaryTransformsMatchIndependentReference() started.
+◇ Test case passing 1 argument name → "444" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "422" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "420" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "440" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "restart" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "gray" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "444" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "422" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "420" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "440" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "restart" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+✔ Test multipleScansRetainEachBoundary() passed after 0.010 seconds.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+✔ Test invalidHuffmanTreesAndBitRequestsThrow() passed after 0.018 seconds.
+✔ Test malformedFramingThrows(_:) with 6 test cases passed after 0.018 seconds.
+✔ Test longEntropyAndFillRunsHaveBoundedCheckpoints(_:) with 2 test cases passed after 0.018 seconds.
+◇ Test case passing 1 argument name → "gray" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "444" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "422" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "420" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "440" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "restart" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "zero-padding" to independentBundlesMatchOriginalJPEGFields(_:) started.
+✔ Test everyPrefixBeforeEOIIsRejected() passed after 0.033 seconds.
+◇ Test case passing 1 argument name → "text-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "text-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "text-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "text-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "text-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "text-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "text-q11-m1" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "text-q11-m2" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "unicode-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "unicode-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "unicode-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "unicode-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "unicode-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "unicode-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "binary-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "binary-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "binary-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "binary-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "binary-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "binary-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q11-m1" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q11-m2" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "mixed-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "mixed-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "mixed-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "mixed-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "mixed-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "mixed-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "streaming-postfix0-direct0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "streaming-postfix1-direct12" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "streaming-postfix3-direct120" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "unsorted-three-symbol" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "all-block-types-mtf0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "all-block-types-mtf1" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "all-short-distances" to independentCompressedStreams(_:) started.
+✔ Test preservesFillScanAndTailWithoutReparsingTail() passed after 0.331 seconds.
+✔ Test oddOffsetStuffingCannotSkipCheckpoints() passed after 0.340 seconds.
+◇ Test case passing 1 argument name → "gray" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "444" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "422" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "420" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "440" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "progressive" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "restart" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "zero-padding" to independentJPEGReconstructionPayloads(_:) started.
+✔ Test cancellationDuringCoefficientWorkThrowsBeforePublication() passed after 0.354 seconds.
+✔ Test resourceAdmissionAndPaddingLimits() passed after 0.354 seconds.
+✔ Test inputCountAndTimeLimitsAreEnforced() passed after 0.354 seconds.
+✔ Test wrongRestartSequenceRejects() passed after 0.355 seconds.
+✔ Test nonCanonicalPaddingIsRetained() passed after 0.355 seconds.
+✔ Test inputOutputMemoryAndDeadlineAdmission() passed after 0.354 seconds.
+✔ Test allVisibleCoefficientsMatchIndependentLibjpeg(_:) with 15 test cases passed after 0.365 seconds.
+✔ Test pinnedIndependentFixtures(_:) with 9 test cases passed after 0.364 seconds.
+✔ Test slicedInputHasRelativeRangesAndRetainedLifetime() passed after 0.365 seconds.
+✔ Test nonInterleavedIndicesSkipRightAndBottomPadding() passed after 0.364 seconds.
+✔ Test malformedAndUnsupportedFramesRejectBeforeAllocation() passed after 0.364 seconds.
+✔ Test limitsAndCancellationBeforePublication() passed after 0.364 seconds.
+✔ Test externalMetadataMustFitExactly() passed after 0.364 seconds.
+✔ Test invalidWriterShapesAndEventLimitsThrow() passed after 0.364 seconds.
+✔ Test independentlyAcceptedFramingAndMetadata() passed after 0.364 seconds.
+✔ Test storedAndMetadataBlocks() passed after 0.364 seconds.
+✔ Test independentBundlesMatchOriginalJPEGFields(_:) with 16 test cases passed after 0.364 seconds.
+✔ Test stuffedEntropyReaderChecksWorkAtOddOffsets() passed after 0.365 seconds.
+✔ Test encoderMatchesIndependentBoundaryStreams() passed after 0.364 seconds.
+✔ Test metadataIdentityLengthAndSurplusAreRejected() passed after 0.364 seconds.
+✔ Test rejectsTruncationTrailingAndWrongExpansion() passed after 0.364 seconds.
+✔ Test headerTruncationsAndMutationsDoNotTrap() passed after 0.364 seconds.
+✔ Test malformedHeadersAndTruncation() passed after 0.364 seconds.
+✔ Test completeVariableLengthCountRange() passed after 0.365 seconds.
+✔ Test independentJPEGReconstructionPayloads(_:) with 16 test cases passed after 0.362 seconds.
+✔ Test malformedContextAndBlockTablesStayBounded() passed after 0.366 seconds.
+✔ Test taskCancellationIsHonoured() passed after 0.372 seconds.
+✔ Test cancelledOperationHasNoResult() passed after 0.372 seconds.
+✔ Test slicedLifetimeAndConcurrentOperations() passed after 0.372 seconds.
+✔ Suite JPEGFrameLayoutTests passed after 0.373 seconds.
+✔ Test cancellationAndBoundedWork() passed after 0.372 seconds.
+✔ Test resourceLimitsAndCancellation() passed after 0.372 seconds.
+✔ Test slicedInputAndConcurrentReads() passed after 0.371 seconds.
+✔ Suite JPEGSegmentReaderTests passed after 0.373 seconds.
+✔ Suite BrotliFramingTests passed after 0.373 seconds.
+✔ Suite JBRDTests passed after 0.373 seconds.
+✔ Test independentCompressedStreams(_:) with 41 test cases passed after 0.536 seconds.
+✔ Test allDictionaryTransformsMatchIndependentReference() passed after 0.602 seconds.
+✔ Test everyProgressivePrefixFailsWithoutPublishingCoefficients() passed after 0.639 seconds.
+✔ Test mutatedInputRemainsBoundedAndCannotTrap() passed after 0.650 seconds.
+✔ Suite JPEGCoefficientTests passed after 0.651 seconds.
+BROTLI_COVERAGE modes=15 postfix=15 short=65535 dictionary=100 switches=12 types=2,2,2 trees=6,2 metadata=6 blocks=4
+✔ Test compressedFeatureCoverage() passed after 0.965 seconds.
+✔ Suite BrotliDecoderTests passed after 0.965 seconds.
+✔ Test run with 44 tests in 6 suites passed after 0.966 seconds.

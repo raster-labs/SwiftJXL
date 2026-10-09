@@ -268,10 +268,32 @@ package struct JBRDBox: Sendable, Equatable {
 
 /// Bundle reader for the `jbrd` box payload. Implements the Field-
 /// style serialisation libjxl's `JPEGData::VisitFields` produces.
-/// The Brotli-compressed payload that follows the Bundle is read
-/// separately by `JBRDBox.readBrotliPayload(:)` once the Brotli
-/// decoder ships (phase J step 5g).
+/// `read` exposes the bounded header and payload range; `readResolved` also
+/// decodes the native Brotli body and assembles exact marker metadata.
 package enum JBRDBoxReader {
+
+    /// Native reconstruction header + Brotli + marker metadata assembly. This
+    /// still does not decode JPEG XL coefficients or reconstruct a JPEG file.
+    package static func readResolved(_ data: Data, external: JBRDExternalMetadata = .init(),
+                                     policy: JBRDPolicy) throws -> JBRDBox {
+        let parsed = try read(data, policy: policy)
+        var budget = JBRDBudget(policy: policy)
+        try budget.reserve(parsed.reservedBytes, stride: 1)
+        for bytes in [external.exifTIFF, external.xmp, external.iccProfile] {
+            if let bytes { try budget.reserve(bytes.count, stride: 2) }
+        }
+        let remaining = policy.maximumMemoryBytes - budget.reserved
+        let brotliPolicy = try BrotliPolicy(maximumInputBytes: policy.maximumInputBytes,
+                                           maximumOutputBytes: policy.maximumPayloadBytes,
+                                           maximumMemoryBytes: remaining, deadline: policy.deadline,
+                                           checkpoint: { try policy.checkpoint() })
+        let body = data[(data.startIndex + parsed.brotliRange.lowerBound)..<(data.startIndex + parsed.brotliRange.upperBound)]
+        let decoded = try BrotliDecoder.decode(body, expectedOutputSize: parsed.expectedBrotliBytes, policy: brotliPolicy)
+        // Fixed dictionary/context storage can remain resident after decode.
+        // Decode temporaries have ended before the resolver's separate admission.
+        return try parsed.resolvingPayload(decoded, external: external, policy: policy,
+                                          retainedWorkspaceBytes: 1024 * 1024)
+    }
 
     /// Parse and admit the reconstruction bundle, leaving its compressed
     /// metadata payload separate. This does not restore JPEG bytes by itself.

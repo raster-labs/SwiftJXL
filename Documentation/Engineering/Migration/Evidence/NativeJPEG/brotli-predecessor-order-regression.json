@@ -1,0 +1,24 @@
+{
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "streamHex": "420000006450804060108006",
+  "independentLibbrotliOutput": "410102",
+  "predecessorOutput": "010241",
+  "reference": "RFC 7932 section 3.4: NSYM=3 assigns lengths 1,2,2 in the order symbols appear; predecessor incorrectly sorts all three symbols first",
+  "sourceSHA256": {
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliBitReader.swift": "ced2737273c9c824f4f35892a7093f52842de50b80a3ba90364e164e0b3412f0",
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliStaticDictionary.swift": "df9a8ebbf88b5067ae4d649a850e7bafd23abf3bf7601177279fdda066e6618e",
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliEncoder.swift": "1f6cc37232efdf147834c432fe93f107227d4369f16393a32d755f49fb28b58e",
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliDecoder.swift": "0d8b7646b6d658e5565e02e952fe1394587368b583ddbc5918d9f370de039410",
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliDistance.swift": "65b53e876b222cb61484b74493c3928ba52e50eae9775ec25d934eba20530f80",
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliCompressedMetaBlock.swift": "9adfeb29f7b0afd9c70f72796faa8cba6acf08687e4d85353bc444ade987a7a8",
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliInsertCopy.swift": "af0451fa45d7d33a9847500a8ad186e61c336ff2b281e63503d2cd55cfe06ed5",
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliPrefixCode.swift": "b8d89b271d69dc4ce33c83d666b4af71e32743264c4c2b85c0c6f2469cbd7d9e",
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliErrors.swift": "9b898f89ba20d1a51f8251420f3edc00e0d01e5341818aae48d5f85c89fe6cd7",
+    "../JXLSwift/Sources/JXLSwift/Brotli/BrotliMetaBlock.swift": "bee155155a42fbed78aa6d822ddc54f9e00c3d82267a3457c4b61b926d6b223d",
+    "../JXLSwift/Sources/JXLSwift/Bitstream/BitReader.swift": "72bddce1b75551adb976c3adb1bd68586dec5d69406bdb0a0ffb63076e5ee7e8",
+    "../JXLSwift/Sources/JXLSwift/Bitstream/BitWriter.swift": "fa162d59f4537a69048a6e298f0511ba2c13473d5ca3becead03561b88bc7781",
+    "../JXLSwift/Sources/JXLSwift/Entropy/PrefixCodeSerialisation.swift": "346a98d66b18c4b591a2291edddb747dba476af310012a771fb77cf4686223cb"
+  },
+  "method": "Compiled pinned predecessor Brotli files and bit reader/writer without modification; extracted original ceilLog2 helper lines 162-166 into temporary probe. No predecessor checkout changes.",
+  "nextAction": "Implement bounded canonical prefix codes against BrotliReader, add this independent failing-before regression, then compressed block/context/LZ77/dictionary integration. PrefixCode and InsertCopy sources also cite exact libbrotli ports: preserve MIT credit/licence when adapting."
+}

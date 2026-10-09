@@ -9,7 +9,8 @@
 - Fixed an odd-offset byte-stuffing cancellation gap with failing-before/passing-after regressions.
 - Added bounded JBRD reconstruction-header reading/writing and strict metadata assembly; headers match 16 independent bundles byte for byte. Fixed the independent CI test compiler command to use available clang.
 - Added native Brotli framing and stored-block encoding with correct metadata skipping, canonical padding/length checks, resource admission and cancellation. Independent libbrotli accepted 29 boundary/framing streams.
-- Native JBRD/Brotli/VarDCT reconstruction integration and its public capability remain incomplete.
+- Added bounded native compressed Brotli decoding and JBRD metadata resolution, including block/context switching, persistent distances and the standard dictionary. Fixed the predecessor three-symbol ordering regression; 41 compressed streams, 16 JBRD payloads and 5082 transform vectors match independent references.
+- Native VarDCT/JPEG reconstruction integration and its public capability remain incomplete.
 
 ## Unreleased — public API and CLI integration, 2026-10-09
 
