@@ -21,7 +21,10 @@ for name in ['cjxl', 'djxl']:
     executable = args.tools.resolve() / name
     version = subprocess.run([str(executable), '--version'], check=True, capture_output=True, timeout=10)
     report['tools'][name] = {'sha256': sha(executable), 'version': (version.stdout + version.stderr).decode().strip()}
-for entry in json.loads((fixtures / 'manifest.json').read_text())['fixtures']:
+entries = json.loads((fixtures / 'manifest.json').read_text())['fixtures']
+large = json.loads((fixtures / 'large-eob.json').read_text())
+entries.append({'name': large['fixture'], 'jpegSHA256': large['jpeg_sha256'], 'jbrdSHA256': large['jbrd_sha256']})
+for entry in entries:
     name = entry['name']
     source = fixtures / (name + '.jpg')
     bundle = fixtures / (name + '.jbrd')

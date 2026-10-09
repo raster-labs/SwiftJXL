@@ -754,6 +754,45 @@
         "Use native stored Brotli payloads; explicitly reject repeated DRI and restart fill not representable by this reconstruction profile",
         "Reject valid JPEG quantisation redefinitions that leave the first JBRD table unused; do not misclassify them as malformed input"
       ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGBitWriter.swift",
+      "sourceSHA256": "8c69446f59c9c018b05015ff9ecec2c8f8e9b77e9b946ab6215ad5971a1e0b76",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift",
+      "destinationSHA256": "2eb5e4c07a408e751a057a272278ffdf218f4c5ed63a3570e0697db956262d0e",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Reconstruct directly from immutable flat coefficient owners and resolved JBRD metadata; no source-JPEG argument or pixel fallback",
+        "Replace unchecked preconditions/indexing and full scan buffers with validated geometry, bounded single-output construction and cancellation",
+        "Preserve baseline/progressive entropy, scan events, restart markers, noncanonical padding, marker fill and tail",
+        "Validate active quantisation bindings, complete scan histories and coefficient representability before publishing output"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGScanEncoder.swift",
+      "sourceSHA256": "76e4bba7af1578d0490e4e56fc95abf7a6ff7ec4fd39099a6cf0d5347a925a58",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift",
+      "destinationSHA256": "2eb5e4c07a408e751a057a272278ffdf218f4c5ed63a3570e0697db956262d0e",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Reconstruct directly from immutable flat coefficient owners and resolved JBRD metadata; no source-JPEG argument or pixel fallback",
+        "Replace unchecked preconditions/indexing and full scan buffers with validated geometry, bounded single-output construction and cancellation",
+        "Preserve baseline/progressive entropy, scan events, restart markers, noncanonical padding, marker fill and tail",
+        "Validate active quantisation bindings, complete scan histories and coefficient representability before publishing output"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JXLToJPEGAdapter.swift",
+      "sourceSHA256": "96a1588b8a7c57648ea953b63b58353f39b8518887289628d0ffbb72878a0e15",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift",
+      "destinationSHA256": "2eb5e4c07a408e751a057a272278ffdf218f4c5ed63a3570e0697db956262d0e",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Reconstruct directly from immutable flat coefficient owners and resolved JBRD metadata; no source-JPEG argument or pixel fallback",
+        "Replace unchecked preconditions/indexing and full scan buffers with validated geometry, bounded single-output construction and cancellation",
+        "Preserve baseline/progressive entropy, scan events, restart markers, noncanonical padding, marker fill and tail",
+        "Validate active quantisation bindings, complete scan histories and coefficient representability before publishing output"
+      ]
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. The package-internal SwiftJXLCore target now supports the public SwiftJXL scalar greyscale encoder, decoder and inspector; it is not a separately exposed library product. Public profile limits and operation admission are documented in MIGRATION.md and RESOURCE_ADMISSION.md.",
@@ -783,6 +822,14 @@
       "notice": "Documentation/ThirdParty/libjxl-LICENSE.txt",
       "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
       "sourceSHA256": "7a03befae3c61b765d9c58061d1dd8acddd7976cbb9328e9af8b21a34022aa53"
+    },
+    {
+      "material": "JPEG entropy and reconstruction writer algorithms in JPEGReconstructionWriter.swift",
+      "upstream": "https://github.com/libjxl/libjxl/blob/a7a9c787341cf703dede03c2009fa460cae5e5df/lib/jxl/jpeg/dec_jpeg_data_writer.cc",
+      "licence": "BSD-3-Clause",
+      "notice": "Documentation/ThirdParty/libjxl-LICENSE.txt",
+      "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+      "sourceSHA256": "411aff6becf196e7859460e2258fbe091f9aaa710d87801b8c1857cf5d91e656"
     }
   ],
   "authoredSuccessorFiles": [

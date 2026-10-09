@@ -70,6 +70,159 @@ struct JPEGReconstructionMetadataTests {
         if name == "long-fill" { #expect(resolved.interMarkerData.map(\.count) == [65535, 1]) }
     }
 
+    @Test(arguments: metadataCorpus)
+    func nativeWriterRestoresOriginalWithoutSourceParameter(_ name: String) throws {
+        let original = try source(name)
+        let decoded = try JPEGCoefficientDecoder.decode(original, policy: JPEGCoefficientPolicy())
+        let metadata = try JPEGReconstructionMetadata.encode(decoded, policy: JBRDPolicy()).box
+        let restored = try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
+                                                         policy: JPEGReconstructionPolicy())
+        #expect(restored == original)
+    }
+
+    @Test(arguments: Array(metadataCorpus.prefix(20)))
+    func nativeWriterAcceptsIndependentMetadata(_ name: String) throws {
+        let decoded = try JPEGCoefficientDecoder.decode(source(name), policy: JPEGCoefficientPolicy())
+        let native = try JPEGReconstructionMetadata.encode(decoded, policy: JBRDPolicy()).box
+        let directory = metadataCorpus.firstIndex(of: name).map { $0 < 15 ? "JBRD" : "JPEGEvents" } ?? "JBRD"
+        let url = try #require(Bundle.module.url(forResource: name, withExtension: "jbrd", subdirectory: directory))
+        var metadata = try JBRDBoxReader.readResolved(Data(contentsOf: url), policy: JBRDPolicy())
+        metadata.width = native.width; metadata.height = native.height
+        try #require(metadata.quant.count == native.quant.count && metadata.components.count == native.components.count)
+        for i in metadata.quant.indices { metadata.quant[i].values = native.quant[i].values }
+        for i in metadata.components.indices {
+            metadata.components[i].hSampFactor = native.components[i].hSampFactor
+            metadata.components[i].vSampFactor = native.components[i].vSampFactor
+            metadata.components[i].widthInBlocks = native.components[i].widthInBlocks
+            metadata.components[i].heightInBlocks = native.components[i].heightInBlocks
+        }
+        #expect(try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
+                                                  policy: JPEGReconstructionPolicy()) == decoded.source)
+    }
+
+    @Test func nativeWriterLimitsAndCancellationAtEveryPhase() throws {
+        let original = try source("progressive")
+        let decoded = try JPEGCoefficientDecoder.decode(original, policy: JPEGCoefficientPolicy())
+        let metadata = try JPEGReconstructionMetadata.encode(decoded, policy: JBRDPolicy()).box
+        #expect(try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
+            policy: JPEGReconstructionPolicy(maximumOutputBytes: original.count)) == original)
+        for policy in try [JPEGReconstructionPolicy(maximumOutputBytes: original.count - 1),
+                           JPEGReconstructionPolicy(maximumCoefficientBytes: 1),
+                           JPEGReconstructionPolicy(maximumMemoryBytes: 1),
+                           JPEGReconstructionPolicy(maximumBufferedRefinementBits: 1),
+                           JPEGReconstructionPolicy(deadline: .now.advanced(by: .seconds(-1)))] {
+            #expect(throws: (any Error).self) {
+                try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata, policy: policy)
+            }
+        }
+        let count = Mutex(0)
+        _ = try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
+            policy: JPEGReconstructionPolicy(checkpoint: { count.withLock { $0 += 1 } }))
+        let total = count.withLock { $0 }
+        for stop in [1, total / 4, total / 2, total - 1, total] {
+            let calls = Mutex(0)
+            #expect(throws: CancellationError.self) {
+                try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
+                    policy: JPEGReconstructionPolicy(checkpoint: {
+                        if calls.withLock({ $0 += 1; return $0 }) == stop { throw CancellationError() }
+                    }))
+            }
+            #expect(calls.withLock { $0 } == stop)
+        }
+    }
+
+    @Test func nativeWriterRejectsInconsistentOwnersAndMetadata() throws {
+        let decoded = try JPEGCoefficientDecoder.decode(source("gray"), policy: JPEGCoefficientPolicy())
+        let original = try JPEGReconstructionMetadata.encode(decoded, policy: JBRDPolicy()).box
+        var mutations: [JBRDBox] = []
+        var box = original; box.width = Int.max; mutations.append(box)
+        box = original; box.quant[0].values[0] = Int32.min; mutations.append(box)
+        box = original; box.components[0].widthInBlocks += 1; mutations.append(box)
+        box = original; box.scanInfo[0].components[0].compIdx = UInt32.max; mutations.append(box)
+        box = original; box.scanInfo[0].resetPoints = [10000]; mutations.append(box)
+        box = original; box.scanInfo[0].extraZeroRuns = [JBRDExtraZeroRun(blockIdx: 10000, numExtraZeroRuns: 1)]; mutations.append(box)
+        box = original; box.huffmanCode[0].values.removeLast(); mutations.append(box)
+        box = original; box.hasZeroPaddingBit = true; box.paddingBits = []; mutations.append(box)
+        box = original; box.hasZeroPaddingBit = true; box.paddingBits = [UInt8](repeating: 1, count: 64); mutations.append(box)
+        box = original; box.markerOrder.swapAt(0, box.markerOrder.firstIndex(of: 0xda) ?? 0); mutations.append(box)
+        for changed in mutations {
+            #expect(throws: (any Error).self) {
+                try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: changed,
+                                                  policy: JPEGReconstructionPolicy())
+            }
+        }
+        for changed in [[], [Array(decoded.coefficients[0].dropLast())], [[Int32](repeating: Int32.min, count: decoded.coefficients[0].count)]] {
+            #expect(throws: (any Error).self) {
+                try JPEGReconstructionWriter.write(coefficients: changed, metadata: original, policy: JPEGReconstructionPolicy())
+            }
+        }
+    }
+
+    @Test func nativeWriterCoefficientMutationsEitherRejectOrRoundtripExactly() throws {
+        let decoded = try JPEGCoefficientDecoder.decode(source("gray"), policy: JPEGCoefficientPolicy())
+        let metadata = try JPEGReconstructionMetadata.encode(decoded, policy: JBRDPolicy()).box
+        var accepted = 0
+        for offset in stride(from: 0, to: decoded.coefficients[0].count, by: 19) {
+            for value: Int32 in [Int32.min, -1023, 0, 1023, Int32.max] {
+                var changed = decoded.coefficients; changed[0][offset] = value
+                let bytes: Data
+                do {
+                    bytes = try JPEGReconstructionWriter.write(coefficients: changed, metadata: metadata,
+                        policy: JPEGReconstructionPolicy(maximumOutputBytes: 1024 * 1024))
+                } catch { continue } // The original Huffman tables need not represent every mutation.
+                let restored = try JPEGCoefficientDecoder.decode(bytes, policy: JPEGCoefficientPolicy())
+                #expect(restored.coefficients == changed)
+                accepted += 1
+            }
+        }
+        #expect(accepted > 10)
+    }
+
+    @Test func nativeWriterCrossesMaximumProgressiveEOBRun() throws {
+        let url = try #require(Bundle.module.url(forResource: "large-eob", withExtension: "jpg", subdirectory: "JPEGEvents"))
+        let source = try Data(contentsOf: url)
+        let decoded = try JPEGCoefficientDecoder.decode(source,
+            policy: JPEGCoefficientPolicy(deadline: .now.advanced(by: .seconds(60))))
+        #expect(decoded.coefficients.count == 1 && decoded.coefficients[0].count == 32768 * 64)
+        #expect(decoded.coefficients[0].allSatisfy { $0 == 0 })
+        let native = try JPEGReconstructionMetadata.encode(decoded, policy: JBRDPolicy(deadline: .now.advanced(by: .seconds(60)))).box
+        let bundle = try #require(Bundle.module.url(forResource: "large-eob", withExtension: "jbrd", subdirectory: "JPEGEvents"))
+        var independent = try JBRDBoxReader.readResolved(Data(contentsOf: bundle), policy: JBRDPolicy())
+        #expect(independent.scanInfo.map(\.resetPoints) == native.scanInfo.map(\.resetPoints))
+        #expect(independent.scanInfo.contains { $0.resetPoints.contains(32767) })
+        independent.width = native.width; independent.height = native.height
+        for i in independent.quant.indices { independent.quant[i].values = native.quant[i].values }
+        for i in independent.components.indices {
+            independent.components[i].hSampFactor = native.components[i].hSampFactor
+            independent.components[i].vSampFactor = native.components[i].vSampFactor
+            independent.components[i].widthInBlocks = native.components[i].widthInBlocks
+            independent.components[i].heightInBlocks = native.components[i].heightInBlocks
+        }
+        #expect(try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: independent,
+            policy: JPEGReconstructionPolicy(deadline: .now.advanced(by: .seconds(60)))) == source)
+    }
+
+    @Test func nativeWriterConcurrentOwnersAndTaskCancellation() async throws {
+        let decoded = try JPEGCoefficientDecoder.decode(source("progressive-restart"), policy: JPEGCoefficientPolicy())
+        let metadata = try JPEGReconstructionMetadata.encode(decoded, policy: JBRDPolicy()).box
+        try await withThrowingTaskGroup(of: Data.self) { group in
+            for _ in 0..<4 {
+                group.addTask {
+                    try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
+                                                       policy: JPEGReconstructionPolicy())
+                }
+            }
+            for try await bytes in group { #expect(bytes == decoded.source) }
+        }
+        await Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            #expect(throws: CancellationError.self) {
+                try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
+                                                   policy: JPEGReconstructionPolicy())
+            }
+        }.value
+    }
+
     @Test func resourceLimitsAndMidOperationCancellation() throws {
         let decoded = try JPEGCoefficientDecoder.decode(source("progressive-split"), policy: JPEGCoefficientPolicy())
         for policy in try [JBRDPolicy(maximumInputBytes: 1), JBRDPolicy(maximumMemoryBytes: 1),
