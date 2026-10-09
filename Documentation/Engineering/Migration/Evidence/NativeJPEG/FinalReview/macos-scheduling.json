@@ -1,0 +1,20 @@
+{
+  "failed_run": 37916937651,
+  "failed_head": "9a4ff2ba51a8c5fb02e37b4e499995ce1a78b5e1",
+  "failed_job": 113775495933,
+  "other_jobs_passed": 7,
+  "failure": "concurrentOwnersAndTaskCancellation exceeded its shared 10-second deadline while scheduled alongside other Thread Sanitizer suites (23.429 seconds). No sanitizer race report; production deadline enforcement returned resourceLimit.",
+  "correction": "Set a 120-second deadline only for this shared-owner/cancellation test. Retain four concurrent tasks, explicit cancellation, the separate expired-deadline regression and all production limits.",
+  "local_validation": {
+    "configuration": "thread-sanitizer",
+    "filter": "JPEGBridgeCoefficientTests",
+    "declarations": 8,
+    "cases": 37,
+    "exit": 0,
+    "skips": 0,
+    "log_sha256": "12ccd0fe8288c1d110107d1be6638e1b38affc06deb11e1cb969e32993361ee4"
+  },
+  "test_source_sha256": "2ea0eccd9ec583a6266cc2d9e6182ede43a5e201bf55ed122ed342c34182be7a",
+  "ci_log_sha256": "b263a940a77c591a074177fd21210ad540e2a8eec7b5de7cef27f00f1a473b89",
+  "remaining": "New hosted head must pass all required checks, including macOS, before merge."
+}

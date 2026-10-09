@@ -182,7 +182,11 @@ struct JPEGBridgeCoefficientTests {
     }
 
     @Test func concurrentOwnersAndTaskCancellation() async throws {
-        let view = try bridge(decoded("progressive"))
+        // This tests shared owners and task cancellation, not scheduler latency.
+        // TSan on a contended hosted runner can queue these tasks for >10 s.
+        // Expired-deadline enforcement is tested separately above.
+        let policy = try JPEGBridgePolicy(deadline: .now.advanced(by: .seconds(120)))
+        let view = try bridge(decoded("progressive"), policy: policy)
         try await withThrowingTaskGroup(of: Int32.self) { group in
             for _ in 0..<4 {
                 group.addTask {
