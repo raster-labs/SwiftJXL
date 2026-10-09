@@ -17,18 +17,27 @@ def run(args,expected=0,input=None):
 def cli(source,target,extra=(),input=None,expected=0):
  return run([binary,'transcode','-i',source,'--input-format','jpeg' if target=='jxl' else 'jxl','--output-format',target,*extra],expected,input)
 try:
- for folder in ['JPEG','JPEGBridge']:
-  for source in sorted((repo/'Tests/SwiftJXLCoreTests/Fixtures'/folder).glob('*.jpg')):
-   expected=source.read_bytes();name=source.stem
-   native=out/(name+'.jxl');restored=out/(name+'.jpg')
-   result=cli(source,'jxl',['-o',native,'--json']);assert not result.stdout
-   assert json.loads(result.stderr)['fidelity']=='original-bitstream'
-   cli(native,'jpeg',['-o',restored]);assert restored.read_bytes()==expected
-   oracle=out/(name+'-oracle.jpg')
-   run([a.reference_tools/'djxl',native,oracle,'--quiet']);assert oracle.read_bytes()==expected
-   reference=out/(name+'-reference.jxl')
-   run([a.reference_tools/'cjxl',source,reference,'--lossless_jpeg=1','--quiet'])
-   result=cli(reference,'jpeg');assert result.stdout==expected
+ sources = [source for folder in ['JPEG','JPEGBridge']
+            for source in sorted((repo/'Tests/SwiftJXLCoreTests/Fixtures'/folder).glob('*.jpg'))]
+ for name,base,profileName,count in [('icc-rgb','444','srgb',1),('icc-gray','gray','gray-gamma22',1),('icc-fragmented','444','srgb',2)]:
+  profile=(repo/'Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge'/(profileName+'.icc')).read_bytes()
+  markers=b''
+  for part in range(count):
+   payload=b'ICC_PROFILE\0'+bytes([part+1,count])+profile[len(profile)*part//count:len(profile)*(part+1)//count]
+   markers+=b'\xff\xe2'+(len(payload)+2).to_bytes(2,'big')+payload
+  original=(repo/'Tests/SwiftJXLCoreTests/Fixtures/JPEG'/(base+'.jpg')).read_bytes()
+  source=out/(name+'-source.jpg');source.write_bytes(original[:2]+markers+original[2:]);sources.append(source)
+ for source in sources:
+  expected=source.read_bytes();name=source.stem
+  native=out/(name+'.jxl');restored=out/(name+'-restored.jpg')
+  result=cli(source,'jxl',['-o',native,'--json']);assert not result.stdout
+  assert json.loads(result.stderr)['fidelity']=='original-bitstream'
+  cli(native,'jpeg',['-o',restored]);assert restored.read_bytes()==expected
+  oracle=out/(name+'-oracle.jpg')
+  run([a.reference_tools/'djxl',native,oracle,'--quiet']);assert oracle.read_bytes()==expected
+  reference=out/(name+'-reference.jxl')
+  run([a.reference_tools/'cjxl',source,reference,'--lossless_jpeg=1','--quiet'])
+  result=cli(reference,'jpeg');assert result.stdout==expected
  # Binary stdin/stdout, no filesystem intermediate needed by either command.
  source=repo/'Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg';data=source.read_bytes()
  encoded=cli('-','jxl',input=data).stdout

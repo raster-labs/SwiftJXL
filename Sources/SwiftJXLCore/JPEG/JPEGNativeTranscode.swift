@@ -5,19 +5,19 @@ import Foundation
 /// capacity after all still-retained owners have been admitted.
 package struct JPEGNativePolicy: Sendable {
     package let compressed: Int, coefficients: Int, workspace: Int, memory: Int
-    package let metadata: Int, dimension: Int, pixels: Int, nesting: Int
+    package let metadata: Int, dimension: Int, pixels: Int, nesting: Int, icc: Int
     package let deadline: ContinuousClock.Instant
     package init(compressed: Int, coefficients: Int, workspace: Int, memory: Int,
-                 metadata: Int, dimension: Int, pixels: Int, nesting: Int,
+                 metadata: Int, dimension: Int, pixels: Int, nesting: Int, icc: Int = 4 * 1024 * 1024,
                  deadline: ContinuousClock.Instant) throws {
-        guard [compressed, coefficients, workspace, memory, metadata, dimension, pixels, nesting].allSatisfy({ $0 > 0 }) else {
+        guard [compressed, coefficients, workspace, memory, metadata, dimension, pixels, nesting, icc].allSatisfy({ $0 > 0 }) else {
             throw JPEGEntropyError.resourceLimit
         }
         self.compressed = min(compressed, 64 * 1024 * 1024)
         self.coefficients = min(coefficients, 64 * 1024 * 1024)
         self.workspace = workspace; self.memory = memory; self.metadata = min(metadata, 8 * 1024 * 1024)
         self.dimension = min(dimension, 2048); self.pixels = min(pixels, 2048 * 2048)
-        self.nesting = min(nesting, 32); self.deadline = deadline
+        self.nesting = min(nesting, 32); self.icc = min(icc, 4 * 1024 * 1024); self.deadline = deadline
     }
     package func checkpoint() throws {
         try Task.checkCancellation()
@@ -78,7 +78,7 @@ private struct NativeOperation {
     }
     func bridgePolicy() throws -> JPEGBridgePolicy {
         try JPEGBridgePolicy(maximumCoefficientBytes: policy.coefficients, maximumMemoryBytes: available(),
-            maximumDimension: policy.dimension, maximumPixels: policy.pixels, maximumNestingDepth: policy.nesting,
+            maximumDimension: policy.dimension, maximumPixels: policy.pixels, maximumNestingDepth: policy.nesting, maximumICCBytes: policy.icc,
             deadline: policy.deadline)
     }
     func dimensions(_ width: Int, _ height: Int) throws {
@@ -99,6 +99,7 @@ private struct NativeOperation {
         // Inspect dimensions and ancillary bytes before coefficient allocation.
         var segments = try JPEGSegmentReader(source, maximumInputBytes: policy.compressed, deadline: policy.deadline)
         var frame: JPEGFrameLayout?, ancillary = 0, adobe: UInt8?
+        var iccFragments: [Int: Range<Int>] = [:], iccCount = 0, iccBytes = 0
         while let segment = try segments.next() {
             try policy.checkpoint()
             if (0xc0...0xc2).contains(segment.markerByte) {
@@ -113,9 +114,16 @@ private struct NativeOperation {
                 func begins(_ prefix: [UInt8]) -> Bool {
                     range.count >= prefix.count && prefix.enumerated().allSatisfy { source[source.startIndex + range.lowerBound + $0.offset] == $0.element }
                 }
-                // ICC coding in the JXL colour header is a separate remaining
-                // integration stage. Never silently label those pixels sRGB.
-                if segment.markerByte == 0xe2, begins(Array("ICC_PROFILE\0".utf8)) { throw JPEGEntropyError.unsupported }
+                if segment.markerByte == 0xe2, begins(Array("ICC_PROFILE\0".utf8)) {
+                    guard range.count >= 14 else { throw JPEGEntropyError.malformed }
+                    let index = Int(source[source.startIndex + range.lowerBound + 12])
+                    let count = Int(source[source.startIndex + range.lowerBound + 13])
+                    guard index > 0, index <= count, iccFragments[index] == nil,
+                          iccCount == 0 || iccCount == count else { throw JPEGEntropyError.malformed }
+                    let body = (range.lowerBound + 14)..<range.upperBound
+                    guard body.count <= policy.icc - iccBytes else { throw JPEGEntropyError.resourceLimit }
+                    iccBytes += body.count; iccCount = count; iccFragments[index] = body
+                }
                 if segment.markerByte == 0xee, begins(Array("Adobe".utf8)) {
                     guard range.count == 12, adobe == nil else { throw JPEGEntropyError.unsupported }
                     adobe = source[source.startIndex + range.lowerBound + 11]
@@ -125,6 +133,23 @@ private struct NativeOperation {
         }
         guard let frame, let tail = segments.trailingRange else { throw JPEGEntropyError.malformed }
         guard tail.count <= policy.metadata - ancillary else { throw JPEGEntropyError.resourceLimit }
+        var iccProfile: Data?
+        if iccCount > 0 {
+            guard iccFragments.count == iccCount else { throw JPEGEntropyError.malformed }
+            try reserve(multiply(iccBytes, 4))
+            var bytes = Data(); bytes.reserveCapacity(iccBytes)
+            for index in 1...iccCount {
+                try policy.checkpoint()
+                guard let range = iccFragments[index] else { throw JPEGEntropyError.malformed }
+                bytes.append(copy(range))
+            }
+            guard bytes.count >= 128, bytes.prefix(4).reduce(0, { ($0 << 8) | Int($1) }) == bytes.count,
+                  bytes[36..<40] == Data("acsp".utf8) else { throw JPEGEntropyError.malformed }
+            guard bytes[16..<20] == Data((frame.components.count == 1 ? "GRAY" : "RGB ").utf8) else {
+                throw JPEGEntropyError.unsupported
+            }
+            iccProfile = bytes
+        }
         let decoded = try JPEGCoefficientDecoder.decode(source, policy: JPEGCoefficientPolicy(
             maximumInputBytes: policy.compressed, maximumCoefficientBytes: policy.coefficients,
             maximumMemoryBytes: available(), deadline: policy.deadline))
@@ -142,7 +167,7 @@ private struct NativeOperation {
         let colour: ColorTransform = adobe == 0 || (adobe == nil && rgb) ? .none : .yCbCr
         let view = try JPEGBridgeCoefficients(frame: frame, coefficients: decoded.coefficients,
             quantisation: decoded.quantisation, colourTransform: colour, policy: bridgePolicy())
-        let codestream = try JPEGBridgeFrameWriter.write(view, maximumOutputBytes: policy.compressed, policy: bridgePolicy())
+        let codestream = try JPEGBridgeFrameWriter.write(view, maximumOutputBytes: policy.compressed, iccProfile: iccProfile, policy: bridgePolicy())
         try reserve(multiply(codestream.count, 2))
         let size = try ScalarOperationBudget.sum(48, ScalarOperationBudget.sum(metadata.bundle.count, codestream.count))
         guard size <= policy.compressed else { throw JPEGEntropyError.resourceLimit }
@@ -233,12 +258,13 @@ private struct NativeOperation {
             default: throw JPEGEntropyError.unsupported
             }
         }
-        if parsed.box.appMarkerType.contains(.icc) { throw JPEGEntropyError.unsupported }
-        let metadata = try JBRDBoxReader.readResolved(bundle, external: external, policy: metadataPolicy())
-        try retainMetadata(metadata)
         let codestream = try extractCodestream(from: boxes, in: source, checkpoint: policy.checkpoint)
         let frame = try JPEGBridgeFrameReader.read(codestream, policy: bridgePolicy())
         for plane in frame.coefficients { try reserve(multiply(plane.count, 8)) }
+        external.iccProfile = frame.iccProfile
+        if let icc = frame.iccProfile { try reserve(multiply(icc.count, 2)) }
+        let metadata = try JBRDBoxReader.readResolved(bundle, external: external, policy: metadataPolicy())
+        try retainMetadata(metadata)
         let resolved = try frame.resolve(metadata)
         let result = try JPEGReconstructionWriter.write(coefficients: frame.coefficients, metadata: resolved,
             policy: JPEGReconstructionPolicy(maximumOutputBytes: policy.compressed, maximumCoefficientBytes: policy.coefficients,

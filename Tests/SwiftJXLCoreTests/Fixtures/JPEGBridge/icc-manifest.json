@@ -1,0 +1,18 @@
+{
+  "generator": "LittleCMS generated synthetic standard colour profiles; timestamp normalised to 2026-01-01; no external profile files",
+  "lcms_version": 2190,
+  "fixtures": [
+    {
+      "file": "srgb.icc",
+      "bytes": 588,
+      "sha256": "81d313ce695fe3d921806c24018e87561b90127a69057797cfe20f9b508359b8"
+    },
+    {
+      "file": "gray-gamma22.icc",
+      "bytes": 348,
+      "sha256": "4b97c5eef9f552e1868dc36e9c3822eb1d681599a22cc8c4b71d9f903434c0df"
+    }
+  ],
+  "profile_copyright": "No copyright, use freely (embedded profile text)",
+  "recipe": "Scripts/generate-icc-fixtures.py"
+}

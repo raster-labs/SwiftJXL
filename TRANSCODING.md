@@ -1,6 +1,6 @@
 # SwiftJXL — reversible JPEG ↔ JPEG XL transcoding
 
-Native-transcoding requirements introduced in contract **0.2.0**; the current common contract distribution is **0.10.0**. Implementation instructions and source review, 18 September 2026. The migration branch now implements bounded native recompression and reconstruction through the public Transcoder and CLI. ICC integration, final-head qualification and broader gates remain open; see Documentation/Engineering/Migration/NATIVE_JPEG.md. Read AGENTS.md, IMPLEMENTATION.md and the common contracts first. For application API/dependency changes and rollout gates, see [MIGRATION.md](MIGRATION.md).
+Native-transcoding requirements introduced in contract **0.2.0**; the current common contract distribution is **0.10.0**. Implementation instructions and source review, 18 September 2026. The migration branch now implements bounded native recompression and reconstruction through the public Transcoder and CLI. RGB/greyscale ICC preservation is integrated; final-head qualification and broader gates remain open; see Documentation/Engineering/Migration/NATIVE_JPEG.md. Read AGENTS.md, IMPLEMENTATION.md and the common contracts first. For application API/dependency changes and rollout gates, see [MIGRATION.md](MIGRATION.md).
 
 ## Required outcome and exact meaning
 

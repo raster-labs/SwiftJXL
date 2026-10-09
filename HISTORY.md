@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Native transcoder ICC preservation — 9 October 2026
+
+Added bounded RGB/greyscale ICC decoding and standard ICC writing to native JPEG recompression/reconstruction. Public resource limits cover profiles, fragmented APP2 ordering is preserved, and malformed fragment sets reject. The scalar pixel codec's ICC limits are unchanged. Local debug, ASan and TSan each pass 36 declarations / 124 cases without skips; the expanded independent CLI checks pass 121 process checks. Exact source hashes and commands are in [ICC validation](Documentation/Engineering/Migration/Evidence/NativeJPEG/ICC/validation.json). Final-head hosted validation, review and broader migration gates remain open.
+
 ## Public native JPEG integration — 9 October 2026
 
 Connected the bounded native JPEG coefficient/reconstruction stages through the public Transcoder and CLI. Local independent checks cover both directions, Exif/XMP container resolution, repeated byte-exact restoration, resource admission, cancellation and owner lifetime. CLI streams and atomic publication pass regression checks. ICC, final-head qualification and broader migration remain open; this is not a release or production cutover. Exact validation and source hashes are recorded in [PublicIntegration](Documentation/Engineering/Migration/Evidence/NativeJPEG/PublicIntegration/validation.json).

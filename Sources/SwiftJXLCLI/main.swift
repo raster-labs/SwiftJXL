@@ -145,7 +145,7 @@ private func help(_ command: String?) -> String {
             Supported pairs: jpeg -> jxl/jpeg-xl; jxl/jpeg-xl -> jpeg.
             8-bit baseline/extended/progressive Huffman JPEG; greyscale or three channels,
             common 444/422/420/440 sampling; dimensions <=2048. Input/output <=4194304 bytes.
-            ICC and profiles outside the qualified coefficient bridge return exit 4.
+            RGB/greyscale ICC is preserved; unsupported coefficient profiles return exit 4.
             Reverse requires valid JPEG reconstruction data; no original-source fallback.
 
             COMMAND OPTIONS

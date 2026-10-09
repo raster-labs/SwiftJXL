@@ -135,8 +135,9 @@ Mode is lossless (default), preserving the original JPEG bytes. The reverse
 operation needs valid reconstruction data; it never consults an original JPEG.
 Supports 8-bit baseline, extended and progressive Huffman JPEG, greyscale
 or three components, common 444/422/420/440 sampling, dimensions up to 2048.
-CLI input and output are limited to 4 MiB. ICC and unsupported frame profiles
-return 4. Lossy/near-lossless, max-error and source-file fallback
+CLI input and output are limited to 4 MiB. RGB/greyscale ICC profiles are
+preserved. Unsupported frame profiles return 4.
+Lossy/near-lossless, max-error and source-file fallback
 are unavailable.
 Output defaults to stdout; --output selects an atomic final file transaction.
 --overwrite explicitly permits replacement. --json writes the final success

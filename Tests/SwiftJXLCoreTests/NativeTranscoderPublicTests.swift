@@ -89,17 +89,50 @@ struct NativeTranscoderPublicTests {
             do { _ = try await transcoder.transcode(data, to: .jpeg); Issue.record("Malformed container accepted") }
             catch let error as CodecError { #expect(error.category == .malformedInput) }
         }
-        // An ICC-bearing JPEG must reject until its colour header is integrated.
+        // A malformed ICC profile must reject rather than invent colour metadata.
         let payload = Data("ICC_PROFILE\0".utf8) + Data([1,1,0,0,0,0])
         var icc = jpeg
         icc.insert(contentsOf: Data([0xff,0xe2,0,UInt8(payload.count + 2)]) + payload, at: 2)
-        do { _ = try await transcoder.transcode(icc, to: .jpegXL); Issue.record("ICC was silently discarded") }
-        catch let error as CodecError { #expect(error.category == .unsupportedFeature) }
+        do { _ = try await transcoder.transcode(icc, to: .jpegXL); Issue.record("Invalid ICC was accepted") }
+        catch let error as CodecError { #expect(error.category == .malformedInput) }
+    }
+
+    @Test func iccFragmentValidationAndLimits() async throws {
+        let profile = try Data(contentsOf: #require(Bundle.module.url(forResource: "srgb", withExtension: "icc", subdirectory: "JPEGBridge")))
+        let base = try source("444"), transcoder = try Transcoder()
+        func marker(_ part: UInt8, _ count: UInt8, _ body: Data) -> Data {
+            let payload = Data("ICC_PROFILE\0".utf8) + Data([part, count]) + body
+            let size = payload.count + 2
+            return Data([0xff,0xe2,UInt8(size >> 8),UInt8(size & 255)]) + payload
+        }
+        func jpeg(_ markers: Data) -> Data {
+            var bytes = base; bytes.insert(contentsOf: markers, at: 2); return bytes
+        }
+        let first = marker(1, 2, Data(profile.prefix(200)))
+        let second = marker(2, 2, Data(profile.dropFirst(200)))
+        // Fragment sequence identifiers control assembly, while exact marker
+        // order is preserved in the reconstructed original bitstream.
+        let original = jpeg(second + first)
+        let exact = try ResourceLimits(maximumICCBytes: profile.count)
+        let encoded = try await transcoder.transcode(original, to: .jpegXL, options: .init(resourceLimits: exact))
+        #expect(try await transcoder.transcode(encoded.data, to: .jpeg, options: .init(resourceLimits: exact)).data == original)
+        let limited = try ResourceLimits(maximumICCBytes: profile.count - 1)
+        for (bytes, target) in [(original, TranscodeTarget.jpegXL), (encoded.data, .jpeg)] {
+            do {
+                _ = try await transcoder.transcode(bytes, to: target, options: .init(resourceLimits: limited))
+                Issue.record("ICC limit was not enforced")
+            } catch let error as CodecError { #expect(error.category == .resourceLimitExceeded) }
+        }
+        for markers in [first, first + first, marker(0, 1, profile), marker(2, 1, profile),
+                        first + marker(2, 3, Data(profile.dropFirst(200)))] {
+            do { _ = try await transcoder.transcode(jpeg(markers), to: .jpegXL); Issue.record("Malformed ICC fragments accepted") }
+            catch let error as CodecError { #expect(error.category == .malformedInput) }
+        }
     }
 
     #if os(macOS) || os(Linux)
     @Test(.enabled(if: ProcessInfo.processInfo.environment["SWIFTJXL_ORACLE_BIN"] != nil),
-          arguments: fixtures + ["exif-xmp"])
+          arguments: fixtures + ["exif-xmp", "icc-rgb", "icc-gray", "icc-fragmented"])
     func independentPublicInteroperability(_ name: String) async throws {
         let tools = try #require(ProcessInfo.processInfo.environment["SWIFTJXL_ORACLE_BIN"])
         let output = ProcessInfo.processInfo.environment["SWIFTJXL_ORACLE_OUTPUT"]
@@ -107,7 +140,21 @@ struct NativeTranscoderPublicTests {
         let directory = root.appendingPathComponent("native-public-\(name)-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         defer { if output == nil { try? FileManager.default.removeItem(at: directory) } }
-        var original = try source(name == "exif-xmp" ? "gray" : name)
+        var original = try source(name == "exif-xmp" || name == "icc-gray" ? "gray" : name.hasPrefix("icc-") ? "444" : name)
+        if name.hasPrefix("icc-") {
+            let profileName = name == "icc-gray" ? "gray-gamma22" : "srgb"
+            let profileURL = try #require(Bundle.module.url(forResource: profileName, withExtension: "icc", subdirectory: "JPEGBridge"))
+            let profile = try Data(contentsOf: profileURL)
+            let count = name == "icc-fragmented" ? 2 : 1
+            var markers = Data()
+            for part in 0..<count {
+                let start = profile.count * part / count, end = profile.count * (part + 1) / count
+                let payload = Data("ICC_PROFILE\0".utf8) + Data([UInt8(part + 1), UInt8(count)]) + profile[start..<end]
+                let n = payload.count + 2
+                markers.append(contentsOf: [0xff,0xe2,UInt8(n >> 8),UInt8(n & 255)]); markers.append(payload)
+            }
+            original.insert(contentsOf: markers, at: 2)
+        }
         if name == "exif-xmp" {
             let tiff = Data([0x49,0x49,42,0,8,0,0,0,0,0,0,0,0,0])
             let xmp = Data("<x:xmpmeta xmlns:x=\"adobe:ns:meta/\"><test>synthetic</test></x:xmpmeta>".utf8)

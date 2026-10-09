@@ -60,7 +60,7 @@ public struct Transcoder: Sendable {
         "Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side",
         "64 MiB compressed/coefficient limits; bounded metadata and caller resource ceilings",
         "Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame",
-        "ICC, multiple DC groups/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly"
+        "RGB/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly"
     ]
 
     public init(configuration: TranscoderConfiguration = .default) throws {
@@ -87,7 +87,7 @@ public struct Transcoder: Sendable {
             let policy = try JPEGNativePolicy(compressed: limits.maximumCompressedBytes,
                 coefficients: limits.maximumDecodedBytes, workspace: limits.maximumWorkspaceBytes,
                 memory: limits.maximumMemoryBytes, metadata: limits.maximumMetadataBytes,
-                dimension: limits.maximumDimension, pixels: limits.maximumPixels, nesting: limits.maximumNestingDepth,
+                dimension: limits.maximumDimension, pixels: limits.maximumPixels, nesting: limits.maximumNestingDepth, icc: limits.maximumICCBytes,
                 deadline: start.advanced(by: .seconds(min(limits.deadlineSeconds, 31_536_000))))
             options.progress?(try ProgressUpdate(phase: .processing, completedUnits: 0, totalUnits: 1))
             try policy.checkpoint()

@@ -12,6 +12,7 @@ package struct JPEGBridgeDecodedFrame: Sendable {
     package let blocks: [(width: Int, height: Int)]
     package let coefficients: [[Int32]]
     package let quantisation: [[Int32]]
+    package let iccProfile: Data?
 
     package func resolve(_ metadata: JBRDBox) throws -> JBRDBox {
         var result = metadata
@@ -113,12 +114,18 @@ private struct BridgeFrameReader {
         let metadata = try ImageMetadata.read(from: &r)
         guard !metadata.xybEncoded, metadata.extraChannels.isEmpty, metadata.animation == nil,
               metadata.preview == nil, !metadata.bitDepth.floatingPoint, metadata.bitDepth.bitsPerSample == 8,
-              !metadata.colorEncoding.useICC,
               metadata.colorEncoding.colorSpace == .rgb || metadata.colorEncoding.colorSpace == .grayscale else {
             throw JPEGEntropyError.unsupported
         }
         let gray = metadata.colorEncoding.colorSpace == .grayscale
         guard try r.readBit() else { throw JPEGEntropyError.unsupported } // default custom transform data
+        let icc = metadata.colorEncoding.useICC
+            ? try ICCStream.decode(from: &r, maximumBytes: policy.maximumICCBytes, checkpoint: policy.checkpoint) : nil
+        if let icc {
+            guard icc.count >= 128, icc.prefix(4).reduce(0, { ($0 << 8) | Int($1) }) == icc.count,
+                  icc[36..<40] == Data("acsp".utf8),
+                  icc[16..<20] == Data((gray ? "GRAY" : "RGB ").utf8) else { throw JPEGEntropyError.malformed }
+        }
         try r.expectZeroPadding()
         let frame = try FrameHeader.read(from: &r, context: FrameHeaderContext(xybEncoded: false))
         guard frame.encoding == .varDCT, frame.frameType == .regular, frame.isLast,
@@ -291,6 +298,6 @@ private struct BridgeFrameReader {
         let quantisation = order.map { c in (0..<64).map { quant[c][($0 % 8) * 8 + $0 / 8] } }
         try policy.checkpoint()
         return JPEGBridgeDecodedFrame(width: width, height: height, sampling: sampling,
-            blocks: order.map { (width: widths[$0], height: heights[$0]) }, coefficients: order.map { planes[$0] }, quantisation: quantisation)
+            blocks: order.map { (width: widths[$0], height: heights[$0]) }, coefficients: order.map { planes[$0] }, quantisation: quantisation, iccProfile: icc)
     }
 }

@@ -13,12 +13,13 @@ import Foundation
 /// lists. Prefix coding is standard JXL; ANS/clustering optimisation is separate.
 package enum JPEGBridgeFrameWriter {
     package static func write(_ coefficients: JPEGBridgeCoefficients,
-                              maximumOutputBytes: Int = 64 * 1024 * 1024,
+                              maximumOutputBytes: Int = 64 * 1024 * 1024, iccProfile: Data? = nil,
                               policy: JPEGBridgePolicy) throws -> Data {
         try policy.checkpoint()
         let frame = coefficients.frame
         guard frame.width <= 2048, frame.height <= 2048 else { throw JPEGEntropyError.unsupported }
-        let scratch = 4 * 1024 * 1024
+        guard (iccProfile?.count ?? 0) <= policy.maximumICCBytes else { throw JPEGEntropyError.resourceLimit }
+        let scratch = 4 * 1024 * 1024 + (iccProfile?.count ?? 0) * 8 + 65536
         guard maximumOutputBytes > 0, frame.coefficientCount <= policy.maximumCoefficientBytes / 4,
               coefficients.admittedBytes <= policy.maximumMemoryBytes,
               scratch < policy.maximumMemoryBytes - coefficients.admittedBytes else {
@@ -32,7 +33,7 @@ package enum JPEGBridgeFrameWriter {
         try budget.reserveWorkspace(scratch + limit * 6)
         let work = ScalarEncodingWork(budget: budget, writerByteLimit: limit)
         return try ScalarEncodingWork.$current.withValue(work) {
-            let writer = BridgeFrameWriter(view: coefficients, policy: policy, limit: limit)
+            let writer = BridgeFrameWriter(view: coefficients, policy: policy, limit: limit, iccProfile: iccProfile)
             let result = try writer.write()
             try work.checkpoint(); try policy.checkpoint()
             return result
@@ -68,6 +69,7 @@ private struct BridgeFrameWriter {
     let view: JPEGBridgeCoefficients
     let policy: JPEGBridgePolicy
     let limit: Int
+    let iccProfile: Data?
     private var blocksX: Int { view.frame.components[0].paddedBlocksWide }
     private var blocksY: Int { view.frame.components[0].paddedBlocksHigh }
     private var groupsX: Int { (view.frame.width + 255) / 256 }
@@ -253,11 +255,16 @@ private struct BridgeFrameWriter {
     private func imageHeader(to writer: inout BitWriter) throws {
         writer.write(bits: 8, value: 0xff); writer.write(bits: 8, value: 0x0a)
         try SizeHeader(xsize: UInt32(view.frame.width), ysize: UInt32(view.frame.height)).write(to: &writer)
+        let colour = iccProfile == nil ? (view.frame.components.count == 1 ? ColorEncoding.grayscaleD65 : .srgb)
+            : ColorEncoding(useICC: true, colorSpace: view.frame.components.count == 1 ? .grayscale : .rgb,
+                whitePoint: nil, primaries: nil, transferFunction: .unknown, renderingIntent: .relative)
         let metadata = ImageMetadata(allDefault: false, orientation: 1, intrinsicSize: nil, preview: nil, animation: nil,
             bitDepth: BitDepth(floatingPoint: false, bitsPerSample: 8), modular16BitBufferSufficient: true,
-            extraChannels: [], xybEncoded: false, colorEncoding: view.frame.components.count == 1 ? .grayscaleD65 : .srgb,
+            extraChannels: [], xybEncoded: false, colorEncoding: colour,
             intensityTarget: 255, minNits: 0, relativeToMaxDisplay: false, linearBelow: 0)
-        try metadata.write(to: &writer); writer.writeBit(true); writer.alignToByte()
+        try metadata.write(to: &writer); writer.writeBit(true)
+        if let iccProfile { try ICCStream.write(iccProfile, to: &writer, maximumBytes: policy.maximumICCBytes, checkpoint: policy.checkpoint) }
+        writer.alignToByte()
     }
 
     private func frameHeader(to writer: inout BitWriter) throws {
