@@ -33,6 +33,7 @@ package struct JPEGSegmentReader: Sendable {
     package let data: Data
     private var position = 0
     private var segmentCount = 0
+    private var nextCheckpoint = 0
     private var ended = false
     private let maximumSegments: Int
     private let deadline: ContinuousClock.Instant
@@ -93,11 +94,18 @@ package struct JPEGSegmentReader: Sendable {
         guard ContinuousClock.now < deadline else { throw JPEGParseError.resourceLimit }
     }
 
+    private mutating func checkScan() throws {
+        if position >= nextCheckpoint {
+            try check()
+            nextCheckpoint = position + min(4096, data.count - position)
+        }
+    }
+
     private mutating func readMarker() throws -> UInt8 {
         guard position < data.count else { throw JPEGParseError.truncated(at: position) }
         guard byte(position) == 0xff else { throw JPEGParseError.expectedMarkerPrefix(at: position) }
         while position < data.count, byte(position) == 0xff {
-            if position & 4095 == 0 { try check() }
+            try checkScan()
             position += 1
         }
         guard position < data.count else { throw JPEGParseError.truncated(at: position) }
@@ -109,7 +117,7 @@ package struct JPEGSegmentReader: Sendable {
 
     private mutating func skipEntropy() throws {
         while position < data.count {
-            if position & 4095 == 0 { try check() }
+            try checkScan()
             if byte(position) != 0xff { position += 1; continue }
             let start = position
             let marker = try entropyMarker()
@@ -124,7 +132,7 @@ package struct JPEGSegmentReader: Sendable {
     // these bytes verbatim; the later entropy decoder validates scan semantics.
     private mutating func entropyMarker() throws -> UInt8 {
         while position < data.count, byte(position) == 0xff {
-            if position & 4095 == 0 { try check() }
+            try checkScan()
             position += 1
         }
         guard position < data.count else { throw JPEGParseError.truncated(at: position) }

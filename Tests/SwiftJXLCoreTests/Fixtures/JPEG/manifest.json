@@ -5,47 +5,94 @@
     {
       "name": "gray",
       "source_sha256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
-      "bytes": 683
+      "bytes": 683,
+      "coefficient_sha256": "21f0b7dd1ed16ba239228c1d09f1b574dbf1cff8dddc160a8dfff683e445a461"
     },
     {
       "name": "444",
       "source_sha256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
-      "bytes": 1359
+      "bytes": 1359,
+      "coefficient_sha256": "4531a34258f6ff5f9423de08652a6f1b7c45a2b5b121ed9d5c8b4f0ea8dd235e"
     },
     {
       "name": "422",
       "source_sha256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
-      "bytes": 1099
+      "bytes": 1099,
+      "coefficient_sha256": "3c3e282be0ac3e1051708f8a0f0b733ee6d21627c3e2a5d3cea4742afc921fe1"
     },
     {
       "name": "420",
       "source_sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
-      "bytes": 1010
+      "bytes": 1010,
+      "coefficient_sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
     },
     {
       "name": "440",
       "source_sha256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
-      "bytes": 1133
+      "bytes": 1133,
+      "coefficient_sha256": "f1e7bdbc50c036d38a19e48d2a53b3d1bd1bc9a4e2e9689d9959668bf15c4506"
     },
     {
       "name": "progressive",
       "source_sha256": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
-      "bytes": 951
+      "bytes": 951,
+      "coefficient_sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
     },
     {
       "name": "restart",
       "source_sha256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
-      "bytes": 1020
+      "bytes": 1020,
+      "coefficient_sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
     },
     {
       "name": "metadata-tail",
       "source_sha256": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2",
-      "bytes": 1045
+      "bytes": 1045,
+      "coefficient_sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
     },
     {
       "name": "fill-marker",
       "source_sha256": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493",
-      "bytes": 1011
+      "bytes": 1011,
+      "coefficient_sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
+    },
+    {
+      "name": "progressive-422",
+      "source_sha256": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+      "bytes": 903,
+      "coefficient_sha256": "cac4b26acf2d79c0bf27a3c18d5da1c65aebe280bb3c325facf161c2e46e36cf"
+    },
+    {
+      "name": "progressive-440",
+      "source_sha256": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+      "bytes": 898,
+      "coefficient_sha256": "c852f0258fdf708b5deaa325516cedb48687294293316344c309b926c2f5e397"
+    },
+    {
+      "name": "progressive-dc-refine",
+      "source_sha256": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d",
+      "bytes": 695,
+      "coefficient_sha256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+    },
+    {
+      "name": "progressive-edge",
+      "source_sha256": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+      "bytes": 834,
+      "coefficient_sha256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+    },
+    {
+      "name": "progressive-restart",
+      "source_sha256": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484",
+      "bytes": 958,
+      "coefficient_sha256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+    },
+    {
+      "name": "sequential-multiscan",
+      "source_sha256": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+      "bytes": 899,
+      "coefficient_sha256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
     }
-  ]
+  ],
+  "coefficientOracle": "libjpeg-turbo 3.2.0, JPEG_LIB_VERSION=80; Scripts/TestSupport/jpeg-coefficient-oracle.c",
+  "extendedGenerator": "Evidence/NativeJPEG/extend-coefficient-fixtures.py"
 }

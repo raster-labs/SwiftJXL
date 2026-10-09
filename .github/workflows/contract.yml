@@ -185,6 +185,10 @@ jobs:
           git -C "$RUNNER_TEMP/libjxl" submodule status > .build/oracle-source-pins.txt
       - name: Require debug and release oracle tests
         run: python3 Scripts/validate-oracle.py --tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/oracle-evidence
+      - name: Recheck JPEG coefficient snapshots independently
+        run: |
+          cc -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
+          python3 Scripts/validate-jpeg-coefficients.py --oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/jpeg-coefficient-evidence
       - name: NRRD and libjxl independent CLI interoperability
         run: |
           python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
@@ -201,4 +205,5 @@ jobs:
             .build/oracle-evidence
             .build/oracle-source-pins.txt
             .build/nrrd-reference-*/report.json
+            .build/jpeg-coefficient-evidence/report.json
           if-no-files-found: warn

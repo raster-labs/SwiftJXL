@@ -108,6 +108,19 @@ struct JPEGSegmentReaderTests {
         #expect(calls.withLock { $0 } == 6)
     }
 
+    @Test func oddOffsetStuffingCannotSkipCheckpoints() throws {
+        let calls = Mutex(0)
+        let stuffed = Data((0..<12000).flatMap { _ in [UInt8(0xff), 0] })
+        // Entropy starts at odd offset 7, and every stuffed pair advances by 2.
+        let bytes = Data([0xff, 0xd8, 0xff, 0xda, 0, 3, 0]) + stuffed + Data([0xff, 0xd9])
+        var reader = try JPEGSegmentReader(bytes, checkpoint: {
+            let n = calls.withLock { $0 += 1; return $0 }
+            if n == 6 { throw CancellationError() }
+        })
+        _ = try reader.next()
+        #expect(throws: CancellationError.self) { try reader.next() }
+    }
+
     @Test func taskCancellationIsHonoured() async {
         await Task {
             withUnsafeCurrentTask { $0?.cancel() }

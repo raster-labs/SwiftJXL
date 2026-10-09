@@ -1,0 +1,94 @@
+[
+  {
+    "name": "progressive-edge",
+    "command": [
+      "/opt/homebrew/bin/cjpeg",
+      "-quality",
+      "80",
+      "-progressive",
+      "-outfile",
+      "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.jpg",
+      "../native-jpeg-audit/extended/input.ppm"
+    ],
+    "sha256": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+    "oracleSHA256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+  },
+  {
+    "name": "progressive-restart",
+    "command": [
+      "/opt/homebrew/bin/cjpeg",
+      "-quality",
+      "80",
+      "-progressive",
+      "-restart",
+      "1B",
+      "-outfile",
+      "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-restart.jpg",
+      "../native-jpeg-audit/extended/input.ppm"
+    ],
+    "sha256": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484",
+    "oracleSHA256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+  },
+  {
+    "name": "progressive-422",
+    "command": [
+      "/opt/homebrew/bin/cjpeg",
+      "-quality",
+      "80",
+      "-progressive",
+      "-sample",
+      "2x1,1x1,1x1",
+      "-outfile",
+      "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-422.jpg",
+      "../native-jpeg-audit/extended/input.ppm"
+    ],
+    "sha256": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+    "oracleSHA256": "cac4b26acf2d79c0bf27a3c18d5da1c65aebe280bb3c325facf161c2e46e36cf"
+  },
+  {
+    "name": "progressive-440",
+    "command": [
+      "/opt/homebrew/bin/cjpeg",
+      "-quality",
+      "80",
+      "-progressive",
+      "-sample",
+      "1x2,1x1,1x1",
+      "-outfile",
+      "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-440.jpg",
+      "../native-jpeg-audit/extended/input.ppm"
+    ],
+    "sha256": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+    "oracleSHA256": "c852f0258fdf708b5deaa325516cedb48687294293316344c309b926c2f5e397"
+  },
+  {
+    "name": "progressive-dc-refine",
+    "command": [
+      "/opt/homebrew/bin/cjpeg",
+      "-quality",
+      "80",
+      "-scans",
+      "../native-jpeg-audit/extended/dc-refine.scans",
+      "-outfile",
+      "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-dc-refine.jpg",
+      "../native-jpeg-audit/extended/input.ppm"
+    ],
+    "sha256": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d",
+    "oracleSHA256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+  },
+  {
+    "name": "sequential-multiscan",
+    "command": [
+      "/opt/homebrew/bin/cjpeg",
+      "-quality",
+      "80",
+      "-scans",
+      "../native-jpeg-audit/extended/sequential.scans",
+      "-outfile",
+      "Tests/SwiftJXLCoreTests/Fixtures/JPEG/sequential-multiscan.jpg",
+      "../native-jpeg-audit/extended/input.ppm"
+    ],
+    "sha256": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+    "oracleSHA256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+  }
+]

@@ -489,13 +489,92 @@
       "source": "Sources/JXLSwift/JPEG/JPEGSegmentReader.swift",
       "sourceSHA256": "0e080773da53b528d62b8ef7ec91f27c4d2bb09c8cbb375e776b3e1a4298bb5b",
       "destination": "Sources/SwiftJXLCore/JPEG/JPEGSegmentReader.swift",
-      "destinationSHA256": "a87b95fa850995e87e300032b50b92324b58645b84109f5047c8574ccc86668d",
+      "destinationSHA256": "d5cd02b4901a2ff96cdbf77fb4a094e337431891f7c8de9cb1a954e47a094e94",
       "licence": "Apache-2.0",
       "changes": [
         "Replace copied payloads with ranges over retained Data; retain marker fill, entropy representation and trailing data",
         "Terminate at EOI, reject missing EOI and preserve sliced-input offsets",
         "Bound input and segment counts; add bounded cancellation/deadline checkpoints",
-        "Internal preparation only; no native transcoder capability claim"
+        "Internal preparation only; no native transcoder capability claim",
+        "Threshold-based work checkpoints cannot be skipped by odd-offset FF00 stuffing"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGBitReader.swift",
+      "sourceSHA256": "cef46fa9f4a7fa4ee6c27829830c0b074bd2c5bd9e62626d633d0ad21b62d2c5",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift",
+      "destinationSHA256": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGHuffmanTable.swift",
+      "sourceSHA256": "ea06642a0dd7354da47f1da2c033c4bc96bfe3ed4c6bb7a8a44022009c643791",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift",
+      "destinationSHA256": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGBlockDecoder.swift",
+      "sourceSHA256": "ce1e7a4248f7cac545b580492f35b1b67f1335fcedb39774486b12c3aff1cb6c",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift",
+      "destinationSHA256": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGBlockDecoder.swift",
+      "sourceSHA256": "ce1e7a4248f7cac545b580492f35b1b67f1335fcedb39774486b12c3aff1cb6c",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift",
+      "destinationSHA256": "2f032138fba54b966f5943b97c78e9d6c9aeef09cbe016f4e6665a9ffbfa8d6d",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGScanDecoder.swift",
+      "sourceSHA256": "53e22e7e95783483b1093280d4724d247081a9acbfb1ccd19d52f5fd08dedf32",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift",
+      "destinationSHA256": "2f032138fba54b966f5943b97c78e9d6c9aeef09cbe016f4e6665a9ffbfa8d6d",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGCoefficientImage.swift",
+      "sourceSHA256": "bd58b3173bc33c063efb95ba3074fa90ea74eac315cf83ba1777eacbc83c9a48",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift",
+      "destinationSHA256": "2f032138fba54b966f5943b97c78e9d6c9aeef09cbe016f4e6665a9ffbfa8d6d",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Bounded package-only native coefficient adaptation; no pixel image or external runtime dependency",
+        "Retain source owner, use flat coefficient storage and admit memory before allocation",
+        "Fix visible/padded scan traversal; check restart sequences, progressive history, Huffman trees and arithmetic",
+        "Preserve padding records; bounded cancellation/deadline checks and independent offline coefficient fixtures"
       ]
     }
   ],

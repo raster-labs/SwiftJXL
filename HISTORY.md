@@ -2,7 +2,7 @@
 
 ## Native JPEG preparation — 9 October 2026
 
-Adapted the segment-reader design from pinned predecessor `57e81cb9e2411d1efac435b429a306a031744c1e` under Apache-2.0. Added range retention and resource/cancellation limits, and new checked frame geometry. The nine synthetic JPEG fixtures and source hash records are retained for offline regression. See [native preparation evidence](Documentation/Engineering/Migration/NATIVE_JPEG.md). This is internal preparation, not a completed reversible-transcoding implementation.
+Adapted the segment-reader design from pinned predecessor `57e81cb9e2411d1efac435b429a306a031744c1e` under Apache-2.0. Added range retention and resource/cancellation limits, and new checked frame geometry. The nine synthetic JPEG fixtures and source hash records are retained for offline regression. See [native preparation evidence](Documentation/Engineering/Migration/NATIVE_JPEG.md). The next checkpoint adapts entropy and sequential/progressive coefficient decoding, with source hashes for every contributing predecessor file and 15 independent coefficient snapshots. This is internal preparation, not a completed reversible-transcoding implementation.
 
 ## NRRD CLI stage — 9 October 2026
 
