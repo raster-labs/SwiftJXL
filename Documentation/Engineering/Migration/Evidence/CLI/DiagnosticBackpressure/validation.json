@@ -1,0 +1,48 @@
+{
+  "recorded_at_utc": "2026-10-09T07:04:48.714652+00:00",
+  "baseline_commit": "f8adb16c6649f6fd113d74696e794036fa73ca3c",
+  "source_state": "uncommitted fix over baseline; exact changed-source hashes in source-hashes.json",
+  "finding": "Full stderr prevented an operation deadline from returning its error status.",
+  "resolution": "Nonblocking diagnostic writes; final operation error output remains best effort.",
+  "runs": [
+    {
+      "configuration": "debug",
+      "build_command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift build --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --product swiftjxl-cli",
+      "build_exit": 0,
+      "test_command": "python3 Scripts/test-cli-payload.py --binary .build/out/Products/Debug/swiftjxl-cli --fixtures ../evidence/cli-fixtures --output ../pr15-review/debug-payload-final",
+      "test_exit": 0,
+      "passed_process_checks": 104,
+      "build_log_sha256": "20614321004414af05b5ba4cbf92e6f904f5e2c1c98109699805d7d44004de63"
+    },
+    {
+      "configuration": "asan",
+      "build_command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift build --disable-sandbox --scratch-path ../evidence/cli-validation-qualification/build/asan --cache-path ../evidence/cli-validation-qualification/cache --config-path ../evidence/cli-validation-qualification/config --security-path ../evidence/cli-validation-qualification/security --build-system swiftbuild --jobs 2 --sanitize address --product swiftjxl-cli",
+      "build_exit": 0,
+      "test_command": "python3 Scripts/test-cli-payload.py --binary ../evidence/cli-validation-qualification/build/asan/out/Products/Debug/swiftjxl-cli --fixtures ../evidence/cli-fixtures --output ../pr15-review/asan-payload",
+      "test_exit": 0,
+      "passed_process_checks": 104,
+      "build_log_sha256": "38efba162dbc74a13a128a46cef7b68ab30d2d2ec06afd751f8e6d7a2266be12"
+    },
+    {
+      "configuration": "tsan",
+      "build_command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift build --disable-sandbox --scratch-path ../evidence/cli-validation-qualification/build/tsan --cache-path ../evidence/cli-validation-qualification/cache --config-path ../evidence/cli-validation-qualification/config --security-path ../evidence/cli-validation-qualification/security --build-system swiftbuild --jobs 2 --sanitize thread --product swiftjxl-cli",
+      "build_exit": 0,
+      "test_command": "python3 Scripts/test-cli-payload.py --binary ../evidence/cli-validation-qualification/build/tsan/out/Products/Debug/swiftjxl-cli --fixtures ../evidence/cli-fixtures --output ../pr15-review/tsan-payload",
+      "test_exit": 0,
+      "passed_process_checks": 104,
+      "build_log_sha256": "de9026964e26715f1df4324b1df65a60d97f56d802f8915e0215db4824715b97"
+    }
+  ],
+  "foundation": {
+    "exit": 0,
+    "checks": 103,
+    "command": "python3 Scripts/test-cli.py --binary .build/out/Products/Debug/swiftjxl-cli --output ../pr15-review/foundation"
+  },
+  "manual_lint": {
+    "command": "mandoc -Tlint ManPages/swiftjxl-cli.1",
+    "exit": 0
+  },
+  "codec_changes": false,
+  "hosted_ci": "new head requires validation",
+  "merge_authorised": false
+}

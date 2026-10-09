@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## CLI inspection and validation — 8 October 2026
+
+Added bounded file/pipe inspection and full supported-frame validation through the public decoder, structured reports, cooperative deadlines/cancellation and atomic report publication. No codec subsystem was relocated in this stage. Encode/decode file adapters and reconstruction remain deferred. See [stage evidence](Documentation/Engineering/Migration/CLI_VALIDATION.md); platform gates must pass before merging.
+
 ## Public scalar integration — 8 October 2026
 
 Connected public lossless greyscale encode, inspect and both decode call shapes on the feature branch, from predecessor pin `57e81cb9e2411d1efac435b429a306a031744c1e`. Added aggregate memory admission, bounded output assembly, encoder deadlines, required rendering-intent preservation, storage allocation instrumentation and public independent-oracle coverage. See the current resource audit and migration record for executed evidence and remaining release gates. This is not a release or production cutover.

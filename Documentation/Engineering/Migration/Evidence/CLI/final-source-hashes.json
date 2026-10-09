@@ -1,0 +1,10 @@
+{
+  "Sources/SwiftJXLCLI/main.swift": "888ad702c6c3aeb3b73ea561e36be20ea93ab98f63679605155e6f55ec0412b0",
+  "Sources/SwiftJXLCLI/CommandIO.swift": "b35cb0c8e4158f9b37d1f2690858d16d8bf004cfa72f81a42e81b10e9daaac34",
+  "Scripts/test-cli-payload.py": "fb6ef0bc3c6e6f91053397e9daeb8f08c11bbb97a9fc4a2233393b5327be9e96",
+  "Scripts/test-cli.py": "cc5e8bc4395a0bedccaac1d7af5660236b821e42d06cf7b3ab8bae1953a44532",
+  "Examples/CLIValidationFixtures/Package.swift": "7d10f414c44e125414c01a8dde4ae3f46e7213e4751dfe0657efc7d39e909c93",
+  "Examples/CLIValidationFixtures/Sources/CLIValidationFixtures/main.swift": "08c4c30b35f013e6279694f88ad6097048b94657dd5f8ad7275fc4ecbc5113af",
+  "ManPages/swiftjxl-cli.1": "981d682dae9584bf96e403531d2369aba68c161443a81c182150933f0b649232",
+  ".github/workflows/contract.yml": "346a85365885739975828cf28dd49befe90602f0be7da740e909a4bd1695fafb"
+}

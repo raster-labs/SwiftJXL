@@ -151,3 +151,7 @@ The scalar core now backs `Encoder`, `Decoder.inspect` and both decode forms. Pa
 Local Apple arm64 / Swift 6.4 verification passed 59 declarations and 73 argument cases in each of debug, AddressSanitizer and ThreadSanitizer, with zero failures/skips. These include public encode/decode through all 25 independent fixtures (five sizes × five precisions), exact compressed-byte comparisons, rendering-intent preservation, aggregate-limit boundaries and allocation-site instrumentation. The independent public-only consumer passed. [Exact report and source hashes](Evidence/PublicAPI/report.json), xUnit records and [ordinary allocator observations](Evidence/PublicAPI/ordinary-memory-probe.json) are retained together. Heap observations are not peak-workspace claims.
 
 Latest completed CI before this change was run 37745149343 at `957d906`: all eight jobs, including pinned libjxl debug/release, passed. Current-branch CI is tracked on draft PR #14; prior CI is not claimed as validation of the new public integration. Long fuzzing, controlled release performance, broader codec profiles, platform adapters, CLI file operations and native JPEG reconstruction remain outstanding. Main has not been merged and JXLSwift remains production.
+
+## CLI inspection/validation follow-on
+
+The separate branch based on public integration adds supported-profile CLI inspection and validation. See [scope, provenance and evidence](CLI_VALIDATION.md). Encode/decode file adapters and reconstruction remain deferred; the previous PR’s macOS gate remains open.

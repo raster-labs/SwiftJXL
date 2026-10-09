@@ -6,7 +6,7 @@ The successor requires Swift 6.2 or later, qualifies Swift 6.4, and has Apple OS
 
 Colour is D65 greyscale with sRGB transfer and default tone mapping. Relative rendering intent is implicit; other standard intents are preserved in required metadata key `jpegXL.renderingIntent`, one byte (0 perceptual, 1 relative, 2 saturation, 3 absolute). The encoder honours that key even with `discardAncillary`. Unsupported required metadata or ICC always rejects. Other ancillary entries reject by default and may be discarded only explicitly.
 
-`Encoder.capabilities` and `Decoder.capabilities` advertise this profile. Native transcoding remains unavailable. CLI file commands remain reserved and its capability report remains false until command integration. No merge, release, production switch or downstream application edit is implied.
+`Encoder.capabilities` and `Decoder.capabilities` advertise this profile. Native transcoding remains unavailable. CLI `inspect` and `validate` now process this bounded profile. Encode/decode file adapters and transcode remain reserved; executable capabilities distinguish these from library support. No merge, release, production switch or downstream application edit is implied.
 
 ## Baseline and dependency changes
 
@@ -20,11 +20,11 @@ This mapping was checked against [JXLSwift at `760697a54dd253da8e8466c3fd09ecf2c
 | SwiftPM target dependency | `.product(name: "JXLSwift", package: "JXLSwift")` | `.product(name: "SwiftJXL", package: "SwiftJXL")` |
 | Compiler | Swift 6.2 manifest | Swift 6.2 minimum, Swift 6.4 qualification, Swift 6 language mode and complete concurrency checking |
 | Apple deployment targets | macOS 13, iOS/tvOS 16, watchOS 9, visionOS 1 | All listed Apple OS minima are 26.0 |
-| Executables | `jxl-tool`, `jxl` | `swiftjxl-cli` provides help/version/capabilities only |
+| Executables | `jxl-tool`, `jxl` | `swiftjxl-cli` provides help/version/capabilities and bounded-profile inspect/validate |
 
 Use a local checkout during preparation: add `.package(path: "../SwiftJXL")` to your development manifest and the successor product to the adapter target. Adjust the path for your checkout. For reproducible remote evaluation, use the successor URL with `revision:` set to an actual reviewed full commit SHA; record it and the lockfile. Do not write `from: "2.1.0"` before that release exists. In Xcode, add the local package and link its `SwiftJXL` product to the evaluation target; update deployment settings deliberately.
 
-The [current manifest](Package.swift) exports the dependency-free `SwiftJXL` library and diagnostic `swiftjxl-cli` executable. The [predecessor manifest](https://github.com/Raster-Lab/JXLSwift/blob/760697a54dd253da8e8466c3fd09ecf2c2d89aec/Package.swift) also declares the two CLI products and a `JXLPerfC` development target; their codec/performance commands have no successor replacement today. Keep payload-processing scripts on the earlier tools; see [current diagnostic CLI support](CLI.md). CompressionFamily, a sibling codec and an umbrella package are not successor prerequisites. Linux is an intended qualification target; see [platform requirements and evidence limits](Documentation/PLATFORMS.md).
+The [current manifest](Package.swift) exports the dependency-free `SwiftJXL` library and diagnostic `swiftjxl-cli` executable. The [predecessor manifest](https://github.com/Raster-Lab/JXLSwift/blob/760697a54dd253da8e8466c3fd09ecf2c2d89aec/Package.swift) also declares the two CLI products and a `JXLPerfC` development target; their encoding, decoding and performance commands have no successor replacement today. Keep those scripts on the earlier tools; see [current diagnostic CLI support](CLI.md). CompressionFamily, a sibling codec and an umbrella package are not successor prerequisites. Linux is an intended qualification target; see [platform requirements and evidence limits](Documentation/PLATFORMS.md).
 
 ## API mapping: available surface versus deferred behaviour
 

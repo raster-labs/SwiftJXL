@@ -54,6 +54,20 @@ jobs:
       - run: swift test
       - run: swift build -c release
       - run: swift test -c release
+      - name: CLI stream and report checks (debug and release)
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3
+          swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
+          python3 Scripts/test-cli-payload.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-debug"
+          python3 Scripts/test-cli-payload.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-release"
+      - name: Preserve CLI evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: cli-${{ matrix.swift }}-${{ matrix.runner }}
+          path: ${{ runner.temp }}/cli-*/report.json
+          if-no-files-found: warn
 
   macos:
     name: macOS 26 / Swift 6.2
@@ -69,10 +83,25 @@ jobs:
       - run: swift test
       - name: CLI and staged manual installation
         run: python3 Scripts/test-cli.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-evidence"
+      - name: CLI supported payloads
+        run: |
+          swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
+          python3 Scripts/test-cli-payload.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-debug"
       - name: Address sanitizer
         run: swift test --scratch-path .build/asan --sanitize address
       - name: Thread sanitizer
         run: swift test --scratch-path .build/tsan --sanitize thread
+      - name: CLI sanitizer stream checks
+        run: |
+          python3 Scripts/test-cli-payload.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-asan"
+          python3 Scripts/test-cli-payload.py --binary "$(swift build --scratch-path .build/tsan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-tsan"
+      - name: Preserve CLI evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: cli-macos
+          path: ${{ runner.temp }}/cli-*/report.json
+          if-no-files-found: warn
 
   independent-consumer:
     name: Independent consumer resolves at tools 6.2
