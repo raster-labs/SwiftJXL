@@ -29,9 +29,15 @@ struct ModularFrameDecoderTests {
         #expect(decoded.alphaAssociated == (fixture.channels % 2 == 0 ? false : nil))
         let maximum = (1 << fixture.bits) - 1
         for c in 0..<fixture.channels {
-            let expected = (0..<(fixture.width * fixture.height)).map {
-                Int32(name.hasPrefix("palette-") ? (($0 % 4) * 47 + c * 31) & maximum
-                    : ($0 * 71 + ($0 / fixture.width) * 37 + c * 113) & maximum)
+            let expected: [Int32] = (0..<(fixture.width * fixture.height)).map { index in
+                let value: Int
+                if name.hasPrefix("palette-") {
+                    value = (index % 4) * 47 + c * 31
+                } else {
+                    let row = index / fixture.width
+                    value = index * 71 + row * 37 + c * 113
+                }
+                return Int32(value & maximum)
             }
             #expect(decoded.image.channels[c].pixels == expected)
         }
