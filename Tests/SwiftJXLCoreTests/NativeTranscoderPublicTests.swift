@@ -9,9 +9,9 @@ import SwiftJXL
 struct NativeTranscoderPublicTests {
     static let fixtures = ["gray", "444", "422", "420", "440", "progressive", "restart", "metadata-tail",
         "fill-marker", "progressive-edge", "progressive-restart", "progressive-422", "progressive-440",
-        "progressive-dc-refine", "sequential-multiscan", "multigroup-420", "multigroup-progressive-422", "wide-gray", "quant16"]
+        "progressive-dc-refine", "sequential-multiscan", "multigroup-420", "multigroup-progressive-422", "wide-gray", "quant16", "rgb", "rgb-progressive", "tiny", "thin"]
     private func source(_ name: String) throws -> Data {
-        let dir = name.hasPrefix("multigroup") || name == "wide-gray" || name == "quant16" ? "JPEGBridge" : "JPEG"
+        let dir = name.hasPrefix("multigroup") || name == "wide-gray" || ["quant16", "rgb", "rgb-progressive", "tiny", "thin"].contains(name) ? "JPEGBridge" : "JPEG"
         return try Data(contentsOf: #require(Bundle.module.url(forResource: name, withExtension: "jpg", subdirectory: dir)))
     }
     @Test(arguments: fixtures) func publicRepeatedRoundTripPreservesEveryByte(_ name: String) async throws {
@@ -178,6 +178,18 @@ struct NativeTranscoderPublicTests {
         let reverse = try await transcoder.transcode(Data(contentsOf: reference), to: .jpeg)
         try reverse.data.write(to: directory.appendingPathComponent("native-restored.jpg"))
         #expect(reverse.data == original)
+        if name.hasPrefix("icc-") {
+            // ICC shares the metadata ceiling, even when libjxl stores the
+            // profile outside the compressed reconstruction metadata bundle.
+            let size = name == "icc-gray" ? 348 : 588
+            let limits = try ResourceLimits(maximumMetadataBytes: size - 1)
+            for (bytes, target) in [(original, TranscodeTarget.jpegXL), (try Data(contentsOf: reference), .jpeg)] {
+                do {
+                    _ = try await transcoder.transcode(bytes, to: target, options: .init(resourceLimits: limits))
+                    Issue.record("ICC bypassed the shared metadata limit")
+                } catch let error as CodecError { #expect(error.category == .resourceLimitExceeded) }
+            }
+        }
     }
     private func run(_ executable: String, _ arguments: [String], directory: URL) throws {
         let log = directory.appendingPathComponent(URL(fileURLWithPath: executable).lastPathComponent + ".log")

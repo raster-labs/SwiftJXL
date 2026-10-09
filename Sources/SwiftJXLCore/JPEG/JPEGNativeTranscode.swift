@@ -76,9 +76,10 @@ private struct NativeOperation {
             maximumPayloadBytes: policy.metadata, maximumMemoryBytes: available(),
             deadline: policy.deadline)
     }
-    func bridgePolicy() throws -> JPEGBridgePolicy {
+    func bridgePolicy(remainingMetadataBytes: Int? = nil) throws -> JPEGBridgePolicy {
         try JPEGBridgePolicy(maximumCoefficientBytes: policy.coefficients, maximumMemoryBytes: available(),
-            maximumDimension: policy.dimension, maximumPixels: policy.pixels, maximumNestingDepth: policy.nesting, maximumICCBytes: policy.icc,
+            maximumDimension: policy.dimension, maximumPixels: policy.pixels, maximumNestingDepth: policy.nesting,
+            maximumICCBytes: min(policy.icc, max(1, remainingMetadataBytes ?? policy.metadata)),
             deadline: policy.deadline)
     }
     func dimensions(_ width: Int, _ height: Int) throws {
@@ -259,10 +260,14 @@ private struct NativeOperation {
             }
         }
         let codestream = try extractCodestream(from: boxes, in: source, checkpoint: policy.checkpoint)
-        let frame = try JPEGBridgeFrameReader.read(codestream, policy: bridgePolicy())
+        let frame = try JPEGBridgeFrameReader.read(codestream,
+            policy: bridgePolicy(remainingMetadataBytes: policy.metadata - ancillaryBytes))
         for plane in frame.coefficients { try reserve(multiply(plane.count, 8)) }
         external.iccProfile = frame.iccProfile
-        if let icc = frame.iccProfile { try reserve(multiply(icc.count, 2)) }
+        if let icc = frame.iccProfile {
+            guard icc.count <= policy.metadata - ancillaryBytes else { throw JPEGEntropyError.resourceLimit }
+            try reserve(multiply(icc.count, 2))
+        }
         let metadata = try JBRDBoxReader.readResolved(bundle, external: external, policy: metadataPolicy())
         try retainMetadata(metadata)
         let resolved = try frame.resolve(metadata)

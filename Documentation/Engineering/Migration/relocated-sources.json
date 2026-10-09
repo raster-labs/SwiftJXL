@@ -907,7 +907,7 @@
       "source": "Sources/JXLSwift/Codec/JXLDecoder.swift",
       "sourceSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
       "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
-      "destinationSHA256": "b418475fc5da5f0aeb319448fd65a544172f761f1a5ce8d4d23d0bfae21a5a00",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
       "licence": "Apache-2.0 AND BSD-3-Clause",
       "changes": [
         "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
@@ -920,7 +920,7 @@
       "source": "Sources/JXLSwift/JPEG/JXLToJPEGAdapter.swift",
       "sourceSHA256": "96a1588b8a7c57648ea953b63b58353f39b8518887289628d0ffbb72878a0e15",
       "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
-      "destinationSHA256": "b418475fc5da5f0aeb319448fd65a544172f761f1a5ce8d4d23d0bfae21a5a00",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
       "licence": "Apache-2.0 AND BSD-3-Clause",
       "changes": [
         "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
@@ -933,7 +933,7 @@
       "source": "Sources/JXLSwift/VarDCT/QuantEncoding.swift",
       "sourceSHA256": "4519b40dd4dc85e0c020129e2553a2d5df072e079b40076855da110b0da79b7d",
       "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
-      "destinationSHA256": "b418475fc5da5f0aeb319448fd65a544172f761f1a5ce8d4d23d0bfae21a5a00",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
       "licence": "Apache-2.0 AND BSD-3-Clause",
       "changes": [
         "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
@@ -946,7 +946,7 @@
       "source": "Sources/JXLSwift/VarDCT/DequantMatricesDC.swift",
       "sourceSHA256": "a6532563a8cefbd8c546754365056fc2f8673b82d68763b417f084412110c936",
       "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
-      "destinationSHA256": "b418475fc5da5f0aeb319448fd65a544172f761f1a5ce8d4d23d0bfae21a5a00",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
       "licence": "Apache-2.0 AND BSD-3-Clause",
       "changes": [
         "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
@@ -959,7 +959,7 @@
       "source": "Sources/JXLSwift/VarDCT/QuantizerParams.swift",
       "sourceSHA256": "022c0aa6efb3a1da1a9ebdb09a00d0090cfb5a948518711dae4b51b25c0ef060",
       "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
-      "destinationSHA256": "b418475fc5da5f0aeb319448fd65a544172f761f1a5ce8d4d23d0bfae21a5a00",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
       "licence": "Apache-2.0 AND BSD-3-Clause",
       "changes": [
         "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
@@ -972,7 +972,7 @@
       "source": "Sources/JXLSwift/VarDCT/ColorCorrelationMap.swift",
       "sourceSHA256": "e2befc9b1141ec86857d84e2e2d412d87dac0fd85b2e967693dbd5fd30ac42ad",
       "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
-      "destinationSHA256": "b418475fc5da5f0aeb319448fd65a544172f761f1a5ce8d4d23d0bfae21a5a00",
+      "destinationSHA256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
       "licence": "Apache-2.0 AND BSD-3-Clause",
       "changes": [
         "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
@@ -1109,7 +1109,7 @@
     },
     {
       "destination": "Sources/SwiftJXLCore/JPEG/JPEGNativeTranscode.swift",
-      "destinationSHA256": "0c4082b365c770d74d859ad5ac21fe3b026936e7a739d6fbf6e272e4ffeed40a",
+      "destinationSHA256": "8f2d40bcb54ded771b8355b41bf55efec4438a9fbb2a3d1a754f9a4ad96a969a",
       "licence": "Apache-2.0",
       "purpose": "Native in-memory operation composition with aggregate retained-owner admission, container/external Exif-XMP resolution and strict reconstruction validation"
     }

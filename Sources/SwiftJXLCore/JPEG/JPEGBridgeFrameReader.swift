@@ -271,7 +271,8 @@ private struct BridgeFrameReader {
             try stream.finish(); try end(3 + group)
         }
         if entries == 1 { try r.expectZeroPadding(); guard r.position == ends[0] else { throw JPEGEntropyError.malformed } }
-        if css.maxHShift == 0, css.maxVShift == 0, !gray, frame.colorTransform == .yCbCr {
+        // JPEG AC correlation is also used for untransformed RGB frames.
+        if css.maxHShift == 0, css.maxVShift == 0, !gray {
             for c in [0, 2] {
                 let map = acMeta[c == 0 ? 0 : 1]
                 for y in 0..<by {

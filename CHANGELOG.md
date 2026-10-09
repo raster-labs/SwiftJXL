@@ -1,5 +1,13 @@
 # Change log
 
+## Unreleased — native JPEG public transcoder, 2026-10-09
+
+- Connected native coefficient-frame writing/reading and exact JPEG reconstruction to the public Transcoder and atomic CLI transcode operation. No source-JPEG lookup, pixel fallback or external runtime codec is used.
+- Preserved RGB/greyscale ICC profiles, fragmented APP2 markers, Exif/XMP and supported reconstruction metadata under caller resource limits.
+- Corrected inverse AC correlation for independently generated untransformed RGB reconstruction frames; retained baseline/progressive RGB and tiny/odd-dimension regressions.
+- Charged ICC profiles against the shared metadata ceiling during reverse transcoding before profile allocation.
+- Recorded independent interoperability, sanitizer, CLI and optimised whole-operation benchmark evidence. Final reviewed-head CI remains required; general JPEG XL feature/platform migration and release preparation remain open.
+
 ## Unreleased — native JPEG preparation, 2026-10-09
 
 - Recorded a nine-fixture predecessor/independent reconstruction baseline, including progressive, tail and marker-fill failures.
