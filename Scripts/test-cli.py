@@ -27,7 +27,8 @@ def main():
     def cli(*values,expected=0):return run([binary,*values],expected)
     def document(r):
         d=json.loads(r.stdout);assert d['version']==version and d['minimumAppleOS']=='26.0'
-        assert d['canEncode'] is True and d['canDecode'] is True and d['canInspect'] is True and d['canValidate'] is True and d['formats']==['jpeg','jpeg-xl','nrrd'] and d['canTranscode'] is True and d['interchangeMeaningfulBits']==16
+        assert d['canEncode'] is True and d['canDecode'] is True and d['canInspect'] is True and d['canValidate'] is True and d['formats']==['jpeg','jpeg-xl','nrrd','pnm','pnm-srgb'] and d['canTranscode'] is True and d['interchangeMeaningfulBits']==16
+        assert d['interchangeFormats']==['nrrd','pnm','pnm-srgb'] and d['pnmMeaningfulBits']==list(range(8,17))
         return d
     try:
         root=cli('--help');assert 'USAGE:' in root.stdout and 'transcode' in root.stdout and not root.stderr

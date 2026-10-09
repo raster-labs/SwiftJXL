@@ -1,0 +1,30 @@
+{
+  "status": "Internal colour-transform preparation; public codec capabilities unchanged",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "configurations": {
+    "debug": {
+      "declarations": 3,
+      "cases": 44,
+      "failures": 0,
+      "skips": 0,
+      "log_sha256": "ca8c7f2578391b20f23547f85d22a7b49be1b4882f0b7c69519d73495b66935b"
+    },
+    "asan": {
+      "declarations": 3,
+      "cases": 44,
+      "failures": 0,
+      "skips": 0,
+      "log_sha256": "8be368a9dbc9d4bb2b30f8a68ece2b53030049b44c9e2647ea38110ce4549d7c"
+    }
+  },
+  "source_sha256": "47d23658646337819adbbf2942862f033a58279ab90df9c9c06542c63ca65602",
+  "tests_sha256": "74bb9eb2dbef2ef49f14ea0cab23fc2cef5ca4ed4e101fb0774b481c64a12929",
+  "scope": "All42RCTvariants match recorded predecessor vectors, including32-bit wrapping extremes. Unique buffer addresses preserved, malformed input rejects before writes, cancellation checked in1024-sample chunks. Scoped raw pointers remain inside nested synchronous mutable borrows.",
+  "performance": "Kernel-only release benchmark, repeated unique working planes; pinned predecessor54.33us, revised successor36.84us median per inverse over65536 samples/channel. Initial array-subscript version was157.32us and replaced with bounded scoped borrows. Matching checksums. Full-codec performance and independent general decode remain unqualified.",
+  "remaining": [
+    "General Modular geometry/transforms and group decoder",
+    "Direct multi-channel8/16bit strided storage and encoder integration",
+    "Independent full-profile tests, malformed inputs, lifetime, sanitizers, full-operation benchmarks and hosted checks"
+  ]
+}

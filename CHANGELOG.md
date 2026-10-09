@@ -1,5 +1,14 @@
 # Change log
 
+## Unreleased — integer Modular colour and owning storage, 2026-10-09
+
+- Added bounded integer greyscale/RGB encoding and decoding with optional straight or premultiplied alpha, 8–16 meaningful bits and explicit planar/interleaved sample layout. Encode reads retained source storage; decode writes directly to the supplied destination, using admitted algorithm planes when transforms require them.
+- Adapted grouped/progressive decoding, reversible colour transforms, simple palettes and Squeeze. Corrected empty global rANS state emission and rejected malformed UTF-8 names.
+- Added independent alpha fixtures, precision-extrema and strided-source checks. Expanded the UInt16 greyscale NRRD CLI dimension limit consistently to 1024.
+- Preserved BT.709 transfer explicitly through required colour metadata. Added bounded P5/P6/P7 colour CLI import/export with explicit BT.709 or sRGB interpretation, 8–16 meaningful bits and optional straight alpha; no sample rescaling or implicit colour conversion.
+- Profiled and reduced entropy-checkpoint overhead while retaining cancellation within 256 tokens and immediate output-growth limits. Remaining predecessor performance regressions, full feature/platform qualification and release gates remain open.
+- Isolated reader deadline checks from ordinary token/bit reads without changing check frequency; retained measured decoder improvement and full local regression coverage.
+
 ## Unreleased — native JPEG public transcoder, 2026-10-09
 
 - Connected native coefficient-frame writing/reading and exact JPEG reconstruction to the public Transcoder and atomic CLI transcode operation. No source-JPEG lookup, pixel fallback or external runtime codec is used.

@@ -174,13 +174,14 @@ jobs:
           test "$(git -C "$RUNNER_TEMP/libjxl" rev-parse HEAD)" = a7a9c787341cf703dede03c2009fa460cae5e5df
           git -C "$RUNNER_TEMP/libjxl" submodule update --init --depth 1 third_party/brotli third_party/highway third_party/lcms
           cmake -S "$RUNNER_TEMP/libjxl" -B "$RUNNER_TEMP/libjxl/build" -G Ninja \
+            -DCMAKE_PROJECT_INCLUDE="$GITHUB_WORKSPACE/Scripts/TestSupport/modular-info-oracle.cmake" \
             -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF \
             -DJPEGXL_ENABLE_TOOLS=ON -DJPEGXL_ENABLE_BENCHMARK=OFF \
             -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_MANPAGES=OFF \
             -DJPEGXL_ENABLE_DOXYGEN=OFF -DJPEGXL_ENABLE_JNI=OFF \
             -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_ENABLE_OPENEXR=OFF \
             -DJPEGXL_ENABLE_SKCMS=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_BUNDLE_LIBPNG=OFF
-          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl --parallel 2
+          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl swiftjxl-modular-info-oracle --parallel 2
           mkdir -p .build
           git -C "$RUNNER_TEMP/libjxl" submodule status > .build/oracle-source-pins.txt
       - name: Require debug and release oracle tests
@@ -206,6 +207,10 @@ jobs:
         run: |
           python3 Scripts/test-cli-native-jpeg.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output .build/native-jpeg-cli-debug --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
           python3 Scripts/test-cli-native-jpeg.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --output .build/native-jpeg-cli-release --reference-tools "$RUNNER_TEMP/libjxl/build/tools"
+      - name: PNM colour and libjxl independent CLI interoperability
+        run: |
+          python3 Scripts/test-cli-pnm.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --info-oracle "$RUNNER_TEMP/libjxl/build/swiftjxl-modular-info-oracle" --reference-tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/pnm-reference-debug
+          python3 Scripts/test-cli-pnm.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --info-oracle "$RUNNER_TEMP/libjxl/build/swiftjxl-modular-info-oracle" --reference-tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/pnm-reference-release
       - name: Preserve oracle evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -216,6 +221,7 @@ jobs:
             .build/oracle-source-pins.txt
             .build/nrrd-reference-*/report.json
             .build/native-jpeg-cli-*/report.json
+            .build/pnm-reference-*/report.json
             .build/jpeg-coefficient-evidence/report.json
             .build/brotli-framing-evidence/report.json
             .build/brotli-decoder-evidence/report.json

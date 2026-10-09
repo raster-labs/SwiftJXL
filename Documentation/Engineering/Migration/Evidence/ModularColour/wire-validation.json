@@ -1,0 +1,57 @@
+{
+  "status": "Internal wire-format correction before general decoder integration; public scalar capabilities unchanged",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "base": "4785316",
+  "contract": "0.10.0",
+  "primaryReference": {
+    "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+    "tag": "v0.12.0",
+    "tagAndPinnedTransformSourcesMatch": true,
+    "files": {
+      "transform-libjxl.cc": "e8843e8f0e7d22430d2ae0a149eff31caca58690d2141c095ff7051e1d23f5ef",
+      "squeeze-params-libjxl.cc": "bd9dcba89ab369886f31ba901fa062130bb6e4fff225bfdd39b7aef6979af09d",
+      "squeeze-libjxl.cc": "efa6a023d3956aacf93edd2a1b8e8cd8085c542bcb8c16ec2904a4658dd3c6ef",
+      "dec-modular-libjxl.cc": "6ca17724595f7e0aee0feb5c4ac76384a6ccd993b323a7d29b374e94baf9eaca"
+    },
+    "urls": [
+      "https://github.com/libjxl/libjxl/blob/a7a9c787341cf703dede03c2009fa460cae5e5df/lib/jxl/modular/transform/transform.cc",
+      "https://github.com/libjxl/libjxl/blob/a7a9c787341cf703dede03c2009fa460cae5e5df/lib/jxl/modular/transform/squeeze_params.cc"
+    ]
+  },
+  "correction": "Replace guessed default bit and wrong count distribution with U32(Val0,BitsOffset4/1,BitsOffset6/9,BitsOffset8/41). Both read/write corrected; empty parameters use value0. Add descriptor allocation admission. Reject RCT crossing meta/normal channel boundary even with equal geometry.",
+  "fixtures": {
+    "generator": "Scripts/TestSupport/squeeze-wire-vectors.py",
+    "generatorSHA256": "44c7096b62b7bc4b8517cd0d74a014b33d7eaaaee7e5a6cc49186e3cb34761fc",
+    "fixtureSHA256": "4d7b3d38f8a2bc5258c770d6133d1331973361703c80ceaffeeef4a12e4404f5",
+    "vectors": 12,
+    "basis": "Independent Python bit packing from primary VisitFields distributions; all selectors, count boundaries, channel-range boundaries, parameter booleans. Trailing unaligned marker verifies consumed bit count. Canonical outputs compared byte-exactly. These are wire-format vectors, not full-image oracle tests."
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/Modular/GroupHeader.swift": "c1b1e5141011b1b2d18c1c59744537104fcf8432bde1a55c6fef4b71e5a50076",
+    "Sources/SwiftJXLCore/Modular/ModularImage.swift": "5b17d7ee0b892fb79126749d18bc80b10bf15573a4658a68da427a7f58b6e9ee",
+    "Tests/SwiftJXLCoreTests/ModularWireTests.swift": "6ddf5350ea531ebeda991a644aa9f9fe11dad38a3c3afb37a20e2910914f4d49"
+  },
+  "configurations": {
+    "debug": {
+      "declarations": 17,
+      "cases": 63,
+      "exitCode": 0,
+      "failures": 0,
+      "skips": 0,
+      "logSHA256": "e20b04ab3b1f933a62bab54c37c9ab446505fedb920f9225ae111348bdb621b2"
+    },
+    "asan": {
+      "declarations": 17,
+      "cases": 63,
+      "exitCode": 0,
+      "failures": 0,
+      "skips": 0,
+      "logSHA256": "4d2e84606f66ca5970509bdbf64a9fb07f4b32fd8e3fb5618f507fe2817dfb02"
+    }
+  },
+  "commands": {
+    "debug": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'ModularWireTests|ModularTransformTests|ScalarModularTests|SpecRCTTests'",
+    "asan": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter 'ModularWireTests|ModularTransformTests|ScalarModularTests|SpecRCTTests'"
+  },
+  "pending": "General section/group decoding, independent full-image transform corpus, direct colour/alpha storage and encoder/public API integration, complete feature-group qualification and PR. No release or production cutover."
+}

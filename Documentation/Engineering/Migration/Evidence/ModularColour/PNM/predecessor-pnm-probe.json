@@ -1,0 +1,20 @@
+[
+  {
+    "accepted" : true,
+    "alphaChannels" : 0,
+    "case" : "standard-ppm",
+    "colour" : "sRGB",
+    "output" : "..\/modular-preflight\/predecessor-standard-ppm.jxl"
+  },
+  {
+    "accepted" : true,
+    "alphaChannels" : 1,
+    "case" : "unsupported-tuple",
+    "colour" : "sRGB"
+  },
+  {
+    "accepted" : false,
+    "case" : "standard-comment",
+    "error" : "PNM: malformed header — width is not an integer"
+  }
+]

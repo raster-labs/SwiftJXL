@@ -128,7 +128,7 @@ private func help(_ command: String?) -> String {
 
             Report executable command support without reading files.
             --json writes one JSON document to stdout; diagnostics stay on stderr.
-            Reports scalar image, UInt16 NRRD and native JPEG reconstruction profiles.
+            Reports integer colour image, NRRD/PNM and native JPEG reconstruction profiles.
 
             \(common)
 
@@ -177,18 +177,23 @@ private func help(_ command: String?) -> String {
             USAGE: \(tool) \(command) --input PATH \(command == "encode" ? "--input-format nrrd" : "--output-format nrrd") [OPTIONS]
 
             \(command == "encode" ? "Encode attached raw full-precision UInt16 NRRD to lossless JPEG XL." : "Decode supported 16-bit greyscale JPEG XL to attached raw UInt16 NRRD.")
+            Also accepts pnm: binary P5/P6/P7, grey/RGB with optional straight alpha,
+            8..16 bits, MAXVAL=2^bits-1, BT.709 transfer. Select pnm-srgb for the
+            explicit sRGB variant on BOTH import and export; no colour conversion.
+            Premultiplied alpha, ICC and other interpretation metadata reject.
+            One image, <=1024 per axis, <=4 MiB input; PNM header <=16384 bytes.
             NRRD0005, 2D greyscale, explicit little/big endian; x is the fastest axis.
             This explicit profile assigns D65/sRGB/default intent on encode. Decode
             rejects sub-16-bit precision or interpretation metadata NRRD cannot preserve.
-            Encode dimensions <=512; decode <=1024. Input <=4194304 bytes.
+            Encode/decode dimensions <=1024. Input <=4194304 bytes.
             NRRD header <=16384 bytes, 64 lines, 1024 bytes/line. Detached references,
             compressed encodings, spatial metadata and custom fields are unsupported.
 
             COMMAND OPTIONS
               -i, --input PATH          Required regular file/pipe; '-' means stdin.
               -o, --output PATH         Final binary file; default '-' means stdout.
-              --input-format FORMAT    encode: nrrd required; decode: jxl/jpeg-xl optional.
-              --output-format FORMAT   decode: nrrd required; encode: jxl/jpeg-xl optional.
+              --input-format FORMAT    encode: nrrd/pnm/pnm-srgb required; decode: jxl/jpeg-xl optional.
+              --output-format FORMAT   decode: nrrd/pnm/pnm-srgb required; encode: jxl/jpeg-xl optional.
               --mode lossless          Encode only; the only supported mode and default.
               --json                   Write final JSON report to stderr after binary output.
               --overwrite              Atomically replace an existing regular output file.
@@ -217,7 +222,7 @@ private func help(_ command: String?) -> String {
             USAGE: \(tool) \(command) --input PATH [OPTIONS]
 
             \(command == "inspect" ? "Inspect supported headers and output geometry; pixel payload integrity is not checked." : "Decode the entire supported frame in memory to validate its pixel payload; discard pixels.")
-            Supports a single-frame/group unsigned greyscale Modular JPEG XL profile,
+            Supports single-frame unsigned greyscale/RGB Modular JPEG XL with optional alpha,
             8..16 meaningful bits, dimensions <=1024, compressed input <=4194304 bytes.
             This is not a general JPEG XL conformance validator. Unsupported profiles return 4.
 
@@ -276,13 +281,13 @@ private func help(_ command: String?) -> String {
     COMMANDS
       capabilities [--json]      Report executable command support.
       inspect, validate         Inspect headers or validate the supported scalar frame.
-      encode, decode            Full-precision UInt16 NRRD/JPEG XL file and pipe conversion.
+      encode, decode            NRRD or integer colour PNM/PAM/JPEG XL file and pipe conversion.
       help [command]             Show global or command-specific help.
       version                    Show the development version.
       transcode                 Reversible native JPEG/JPEG XL coefficient conversion.
 
     Requires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.
-    Bounded scalar, UInt16 NRRD and native JPEG reconstruction profiles are available.
+    Bounded integer Modular, NRRD/PNM and native JPEG reconstruction profiles are available.
 
     \(common)
 
@@ -332,16 +337,17 @@ private func write(_ text: String, to handle: FileHandle) throws {
     // Executable support is narrower than the public library precision profile.
     let encoder = Encoder.capabilities
     let decoder = Decoder.capabilities
-    let formats = Array(Set(encoder.formats + decoder.formats + ["nrrd", "jpeg"])).sorted()
+    let formats = Array(Set(encoder.formats + decoder.formats + ["nrrd", "pnm", "pnm-srgb", "jpeg"])).sorted()
     if options.json {
         let payload: [String: Any] = ["tool": tool, "version": version, "minimumAppleOS": "26.0",
             "canEncode": encoder.canEncode, "canDecode": true, "canTranscode": true,
             "maximumTranscodeDimension": 2048, "transcodePreservation": "original-bitstream",
             "transcodeProfileLimits": Transcoder.capabilities[0].profileLimits,
             "interchangeFormat": "nrrd", "interchangeMeaningfulBits": 16,
-            "maximumEncodeDimension": 512, "maximumDecodeDimension": 1024,
+            "interchangeFormats": ["nrrd", "pnm", "pnm-srgb"], "pnmMeaningfulBits": Array(8...16), "pnmColourTransfers": ["bt709", "srgb-explicit-variant"],
+            "maximumEncodeDimension": 1024, "maximumDecodeDimension": 1024,
             "canInspect": decoder.canInspect, "canValidate": true, "formats": formats,
-            "profile": "single-frame/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024",
+            "profile": "single-frame integer Modular grey/RGB with optional alpha; 8..16 bits; maximum dimension 1024",
             "maximumCompressedBytes": CommandIO.maximumInput]
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
         try FileHandle.standardOutput.write(contentsOf: data + Data([10]))
@@ -394,9 +400,9 @@ private func status(for error: CodecError) -> Int32 {
         }
         let required = command == "encode" ? "--input-format" : "--output-format"
         guard let format = values[required] else {
-            throw CodecError(.invalidArgument, "Select the NRRD interchange format explicitly.")
+            throw CodecError(.invalidArgument, "Select nrrd, pnm or pnm-srgb explicitly.")
         }
-        guard format == "nrrd" else { throw CodecError(.unsupportedFormat, "Unsupported interchange format.") }
+        guard ["nrrd", "pnm", "pnm-srgb"].contains(format) else { throw CodecError(.unsupportedFormat, "Unsupported interchange format.") }
         let optional = command == "encode" ? "--output-format" : "--input-format"
         if let format = values[optional], !["jxl", "jpeg-xl"].contains(format) {
             throw CodecError(.unsupportedFormat, "Unsupported compressed format.")
@@ -473,67 +479,78 @@ private func status(for error: CodecError) -> Int32 {
         return 0
     }
     if binaryCommand {
+        let interchange = values[command == "encode" ? "--input-format" : "--output-format"] ?? "nrrd"
+        let srgb = interchange == "pnm-srgb"
         let descriptor: ImageDescriptor
         var outputBytes = 0
         if command == "encode" {
-            let header = try NRRD.parse(data, io: io)
-            let image = try header.image(data, limits: limits)
+            let image: Image
+            if interchange == "nrrd" { image = try NRRD.parse(data, io: io).image(data, limits: limits) }
+            else { image = try PNM.parse(data, io: io).image(data, srgb: srgb, limits: limits) }
             descriptor = image.descriptor
             try io.checkpoint()
             let encoded = try await Encoder().encode(image, options: EncodeOptions(resourceLimits: limits,
                 executionPolicy: backend, copyPolicy: copy))
             outputBytes = encoded.data.count
-            try diagnostic(3, "full-precision NRRD source shared with scalar encoder")
+            try diagnostic(3, "interchange source shared with scalar encoder")
             try diagnostic(4, "elapsed seconds before publication: \(ProcessInfo.processInfo.systemUptime - start)")
             try diagnostic(5, "final encoded payload ready for publication")
             try io.publish(encoded.data, path: output, inputPath: input, overwrite: options.overwrite)
         } else {
             let info = try decoder.inspect(data, options: decodeOptions)
-            try NRRD.requireRepresentable(info.descriptor, metadata: info.metadata)
+            if interchange == "nrrd" { try NRRD.requireRepresentable(info.descriptor, metadata: info.metadata) }
+            else { try PNM.requireRepresentable(info.descriptor, metadata: info.metadata, srgb: srgb) }
             let decoded = try await decoder.decode(data, options: decodeOptions)
             descriptor = decoded.image.descriptor
-            try diagnostic(3, "full-precision decoded storage serialised directly to final NRRD")
+            try diagnostic(3, "decoded storage serialised to final interchange output")
             try diagnostic(4, "elapsed seconds before publication: \(ProcessInfo.processInfo.systemUptime - start)")
             try diagnostic(5, "final decoded payload ready for publication")
             try io.publish(path: output, inputPath: input, overwrite: options.overwrite) { fd in
-                try NRRD.write(decoded.image, fd: fd, io: io)
+                if interchange == "nrrd" { try NRRD.write(decoded.image, fd: fd, io: io) }
+                else { try PNM.write(decoded.image, srgb: srgb, fd: fd, io: io) }
             }
             outputBytes = descriptor.width * descriptor.height * 2
         }
         if options.json {
             let report: [String: Any] = ["tool": tool, "version": version, "operation": command,
-                "format": command == "encode" ? "jpeg-xl" : "nrrd", "width": descriptor.width,
-                "height": descriptor.height, "meaningfulBits": 16, "fidelity": "exact-samples",
-                "outputSampleBytes": descriptor.width * descriptor.height * 2,
+                "format": command == "encode" ? "jpeg-xl" : interchange, "width": descriptor.width,
+                "height": descriptor.height, "meaningfulBits": descriptor.meaningfulBits,
+                "componentCount": descriptor.components.count, "fidelity": "exact-samples",
+                "outputSampleBytes": descriptor.width * descriptor.height * descriptor.components.count * (descriptor.meaningfulBits <= 8 ? 1 : 2),
                 "encodedBytes": command == "encode" ? outputBytes : data.count]
             try io.writeBytes(JSONSerialization.data(withJSONObject: report, options: [.sortedKeys]) + Data([10]), fd: STDERR_FILENO)
         }
         return 0
     }
     let descriptor: ImageDescriptor
-    let hasMetadata: Bool
+    let metadata: ImageMetadata
     if command == "validate" {
         let decoded = try await decoder.decode(data, options: decodeOptions)
         descriptor = decoded.image.descriptor
-        hasMetadata = !decoded.image.metadata.entries.isEmpty
+        metadata = decoded.image.metadata
     } else {
         let info = try decoder.inspect(data, options: decodeOptions)
         descriptor = info.descriptor
-        hasMetadata = !info.metadata.entries.isEmpty
+        metadata = info.metadata
     }
     try io.checkpoint()
+    let colour = descriptor.colour == .rgb ? "rgb" : "greyscale"
+    let alpha = descriptor.alpha == .absent ? "absent" : (descriptor.alpha == .straight ? "straight" : "premultiplied")
+    let colourTransfer = metadata.entries["jpegXL.transferFunction"] == Data([1]) ? "bt709" : "srgb"
     let validated = command == "validate"
     let report: Data
     if options.json {
         let object: [String: Any] = ["tool": tool, "version": version, "operation": command,
-            "format": "jpeg-xl", "profile": "scalar-greyscale-modular", "frameCount": 1,
+            "format": "jpeg-xl", "profile": "integer-modular", "frameCount": 1,
+            "colour": colour, "alpha": alpha, "colourTransfer": colourTransfer,
+            "componentCount": descriptor.components.count,
             "width": descriptor.width, "height": descriptor.height,
             "sampleType": "unsigned-integer", "meaningfulBits": descriptor.meaningfulBits,
-            "storageBits": descriptor.storageBits, "hasMetadata": hasMetadata,
+            "storageBits": descriptor.storageBits, "hasMetadata": !metadata.entries.isEmpty,
             "pixelPayloadValidated": validated]
         report = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys]) + Data([10])
     } else {
-        report = Data("JPEG XL: \(descriptor.width)x\(descriptor.height), unsigned greyscale, \(descriptor.meaningfulBits) meaningful bits, 1 frame\n\(validated ? "Supported scalar pixel payload validated." : "Supported headers inspected; pixel payload not validated.")\n".utf8)
+        report = Data("JPEG XL: \(descriptor.width)x\(descriptor.height), unsigned \(colour), \(descriptor.components.count) components, alpha \(alpha), \(descriptor.meaningfulBits) meaningful bits, 1 frame\n\(validated ? "Supported scalar pixel payload validated." : "Supported headers inspected; pixel payload not validated.")\n".utf8)
     }
     try diagnostic(3, "supported scalar profile; one worker; memory and deadline limits enforced")
     try diagnostic(4, "elapsed seconds before report publication: \(ProcessInfo.processInfo.systemUptime - start)")

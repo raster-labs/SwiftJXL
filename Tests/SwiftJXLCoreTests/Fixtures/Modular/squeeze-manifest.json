@@ -1,0 +1,14 @@
+{
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "generator": "Scripts/TestSupport/squeeze-baseline.swift",
+  "generatorSHA256": "4a69f75e5b4d2c6a98eb519eedfbf0bfb74592f903c5f777e13ff160580c92ba",
+  "fixtureSHA256": "921596b745a3eebf012bff2a4ba50d5469da0306d7eeecdea4a3913c04f77c70",
+  "metadataStub": "Documentation/Engineering/Migration/Evidence/ModularColour/TransformTypes.swift",
+  "sourceSHA256": {
+    "ModularImage.swift": "d7404d49ad03899521a51a940412081d35dc985a45fa26c401e7da03c4cc88e1",
+    "SpecSqueeze.swift": "d96667940ca74ae309f4dd6b7af50c8f454ba61c76274e7ea3a8605eb1d1e469"
+  },
+  "scope": "12 synthetic paired-channel vectors from pinned predecessor: both axes, even/odd/single sample extent, Int32 extremes. Not independent full-image codec qualification.",
+  "command": "xcrun swiftc -swift-version 6 -package-name baseline -module-cache-path .build/module-cache ../modular-preflight/transforms/TransformTypes.swift ../JXLSwift/Sources/JXLSwift/Modular/ModularImage.swift ../JXLSwift/Sources/JXLSwift/Modular/SpecSqueeze.swift Scripts/TestSupport/squeeze-baseline.swift -o ../modular-preflight/transforms/squeeze-baseline && ../modular-preflight/transforms/squeeze-baseline > Tests/SwiftJXLCoreTests/Fixtures/Modular/squeeze-baseline.json",
+  "exitCode": 0
+}

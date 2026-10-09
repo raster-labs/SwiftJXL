@@ -11,6 +11,27 @@ package enum SpecModularEncoderError: Error, Sendable {
 
 package enum SpecModularEncoder {
 
+    /// Canonical signed algorithm planes, populated directly from owning source
+    /// storage. Fixed effort 3 keeps the admitted work envelope deterministic.
+    package static func encodeInteger(width: Int, height: Int, bitsPerSample: Int,
+                                      grayscale: Bool, alphaAssociated: Bool?,
+                                      channels: [[Int32]], renderingIntent: RenderingIntent,
+                                      transferFunction: TransferFunction = .srgb) throws -> Data {
+        try validateSize(width: width, height: height)
+        guard [TransferFunction.srgb, .bt709].contains(transferFunction), (8...16).contains(bitsPerSample),
+              channels.count == (grayscale ? 1 : 3) + (alphaAssociated == nil ? 0 : 1) else {
+            throw ScalarModularError.unsupportedProfile
+        }
+        let extras = alphaAssociated.map { associated in
+            [ExtraChannelInfo(type: .alpha, bitDepth: .init(floatingPoint: false, bitsPerSample: UInt32(bitsPerSample)),
+                              dimShift: 0, name: "", alphaAssociated: associated)]
+        } ?? []
+        let built = try buildSections(width: width, height: height, channels: channels,
+            sampleHi: (Int32(1) << bitsPerSample) - 1, effort: 3, applyRCT: !grayscale)
+        return try writeOuterCodestream(width: width, height: height, bitsPerSample: UInt32(bitsPerSample),
+            colorSpace: grayscale ? .grayscale : .rgb, extraChannels: extras, built: built, renderingIntent: renderingIntent, transferFunction: transferFunction)
+    }
+
     /// Encode a constant-pixel grayscale image (all pixels equal
     /// `pixelValue`) into a naked JXL codestream that round-trips
     /// through `JXLDecoder.decodeModular`. The simplest spec-compliant
@@ -597,9 +618,10 @@ package enum SpecModularEncoder {
     /// matches what the real coder would produce.
     private static func estimateGradientResidualBits(
         _ ch: [Int32], width: Int, height: Int
-    ) -> Int {
+    ) throws -> Int {
         var bits = 0
         for y in 0..<height {
+            try ScalarEncodingWork.checkpoint()
             for x in 0..<width {
                 let nbh = Neighbourhood(at: x, y, in: ch, width: width)
                 let pred = Predictor.gradient.apply(to: nbh)
@@ -624,9 +646,14 @@ package enum SpecModularEncoder {
     ) throws -> EncodedSections {
         try Task.checkCancellation()
         for channel in channels {
-            guard channel.count == width * height,
-                  channel.allSatisfy({ $0 >= 0 && $0 <= sampleHi }) else {
-                throw SpecModularEncoderError.unsupportedFrame("Samples exceed declared geometry or precision")
+            guard channel.count == width * height else {
+                throw SpecModularEncoderError.unsupportedFrame("Samples exceed declared geometry")
+            }
+            for i in channel.indices {
+                if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
+                guard channel[i] >= 0, channel[i] <= sampleHi else {
+                    throw SpecModularEncoderError.unsupportedFrame("Samples exceed declared precision")
+                }
             }
         }
         let groupSizeShift: UInt32 = 2
@@ -666,16 +693,22 @@ package enum SpecModularEncoder {
             // Correlated content collapses Co/Cg to near-zero (large win);
             // already-decorrelated content would pay the +1-bit chroma
             // range for no gain, so the identity (no-RCT) path is kept
-            // there — RCT can then never make a frame larger.
+            // there. This proxy does not guarantee a smaller final stream;
+            // headers and the selected entropy coder also affect its size.
             var c0 = channels[0]
             var c1 = channels[1]
             var c2 = channels[2]
-            RCT.forward(.ycocgR, channel0: &c0, channel1: &c1, channel2: &c2)
-            let rgbCost =
+            // Three COW candidate planes are included in the admission bound.
+            for _ in 0..<3 { ScalarStorageAudit.current?.workingPlane(c0.count * 4) }
+            for i in c0.indices {
+                if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
+                (c0[i], c1[i], c2[i]) = RCT.forwardPixel(.ycocgR, r: c0[i], g: c1[i], b: c2[i])
+            }
+            let rgbCost = try
                 estimateGradientResidualBits(channels[0], width: width, height: height)
                 + estimateGradientResidualBits(channels[1], width: width, height: height)
                 + estimateGradientResidualBits(channels[2], width: width, height: height)
-            let ycocgCost =
+            let ycocgCost = try
                 estimateGradientResidualBits(c0, width: width, height: height)
                 + estimateGradientResidualBits(c1, width: width, height: height)
                 + estimateGradientResidualBits(c2, width: width, height: height)
@@ -719,7 +752,7 @@ package enum SpecModularEncoder {
         // edge fall-backs against the rect. `flat` lists every group-channel
         // token run for the codebook cost-gate.
         func residuals(useWP: Bool)
-            -> (perGroup: [[[UInt32]]], flatSymbols: [[UInt16]],
+            throws -> (perGroup: [[[UInt32]]], flatSymbols: [[UInt16]],
                 histo: [Int], alphabetSize: Int, totalExtraNBits: Int) {
             // Every (channel, group) rect is an independent prediction
             // stream (WP state is per rect, matching the decoder) — run
@@ -734,7 +767,7 @@ package enum SpecModularEncoder {
                 let extraNBits: Int
             }
             let chCount = channels.count
-            let slots = parallelMap(chCount * numGroups) {
+            let slots = try parallelMap(chCount * numGroups) {
                 (slot: Int) -> RectOut in
                 let ci = slot / numGroups
                 let gi = slot % numGroups
@@ -743,8 +776,10 @@ package enum SpecModularEncoder {
                 let rectX0 = gx * groupDim, rectY0 = gy * groupDim
                 let rectW = min(groupDim, width - rectX0)
                 let rectH = min(groupDim, height - rectY0)
+                ScalarStorageAudit.current?.workingPlane(rectW * rectH * 4)
                 var rect = [Int32](repeating: 0, count: rectW * rectH)
                 for ry in 0..<rectH {
+                    try ScalarEncodingWork.checkpoint()
                     let s = (rectY0 + ry) * width + rectX0
                     for rx in 0..<rectW { rect[ry * rectW + rx] = pix[s + rx] }
                 }
@@ -759,6 +794,7 @@ package enum SpecModularEncoder {
                     var wp = WeightedPredictor(
                         header: .default, xsize: max(1, rectW))
                     for ry in 0..<rectH {
+                        try ScalarEncodingWork.checkpoint()
                         for rx in 0..<rectW {
                             let nbh = Neighbourhood(at: rx, ry, in: rect, width: rectW)
                             let pred = wp.predict(
@@ -777,6 +813,7 @@ package enum SpecModularEncoder {
                     }
                 } else {
                     for ry in 0..<rectH {
+                        try ScalarEncodingWork.checkpoint()
                         for rx in 0..<rectW {
                             let nbh = Neighbourhood(at: rx, ry, in: rect, width: rectW)
                             // No [0, sampleHi] clamp — match the decoder's
@@ -822,12 +859,12 @@ package enum SpecModularEncoder {
                     maxTok + 1, totalExtraNBits)
         }
         // Cost-gate predictor × entropy (same lever as single-section).
-        let grad = residuals(useWP: false)
+        let grad = try residuals(useWP: false)
         let gradBest = try bestModularPostCodebook(
             histo: grad.histo, alphabetSize: grad.alphabetSize,
             postCfg: postCfg, symbolsPerChannel: grad.flatSymbols,
             totalExtraNBits: grad.totalExtraNBits)
-        let wp = residuals(useWP: true)
+        let wp = try residuals(useWP: true)
         let wpBest = try bestModularPostCodebook(
             histo: wp.histo, alphabetSize: wp.alphabetSize,
             postCfg: postCfg, symbolsPerChannel: wp.flatSymbols,
@@ -853,6 +890,8 @@ package enum SpecModularEncoder {
             rawPredictor: rawPredictor
         )
         try GroupHeader(transforms: modularTransforms).write(to: &dcGlobal)
+        // Even without global pixel tokens, an rANS stream has a terminal state.
+        if !postUsePrefix { dcGlobal.write(bits: 32, value: ANSConstants.initialState) }
         dcGlobal.alignToByte()
         let dcGlobalData = dcGlobal.finishToData()
 
@@ -1172,6 +1211,7 @@ package enum SpecModularEncoder {
                 try c.write(to: &dcGlobal, header: h)
                 try GroupHeader(transforms: transforms).write(to: &dcGlobal)
             } catch { return Int.max }
+            if !h.usePrefixCode { dcGlobal.write(bits: 32, value: ANSConstants.initialState) }
             dcGlobal.alignToByte()
             var total = dcGlobal.bitCount / 8
             if h.usePrefixCode {
@@ -1273,6 +1313,7 @@ package enum SpecModularEncoder {
             try c.write(to: &dcGlobal, header: h)
             try GroupHeader(transforms: transforms).write(to: &dcGlobal)
         } catch { return nil }
+        if !h.usePrefixCode { dcGlobal.write(bits: 32, value: ANSConstants.initialState) }
         dcGlobal.alignToByte()
         var sections = [Data]()
         sections.reserveCapacity(2 + numDcGroups + numGroups)
@@ -2813,9 +2854,9 @@ package enum SpecModularEncoder {
         // Modular coding is pixel-based (no DCT block alignment), and the
         // group tiler crops partial edge rects — so arbitrary dimensions
         // are supported (essential for arbitrary-size medical images).
-        guard width <= 512 && height <= 512 else {
+        guard width <= 16384 && height <= 16384 else {
             throw SpecModularEncoderError.unsupportedFrame(
-                "Initial scalar migration profile requires 1 ≤ width,height ≤ 512"
+                "Integer Modular encoding requires 1 ≤ width,height ≤ 16384"
             )
         }
     }
@@ -2830,13 +2871,15 @@ package enum SpecModularEncoder {
         bitsPerSample: UInt32,
         colorSpace: ColorSpaceID,
         extraChannels: [ExtraChannelInfo],
-        animation: AnimationHeader?, renderingIntent: RenderingIntent = .relative
+        animation: AnimationHeader?, renderingIntent: RenderingIntent = .relative,
+        transferFunction: TransferFunction = .srgb
     ) throws -> Data {
         let colorEncoding: ColorEncoding
         switch colorSpace {
         case .grayscale: colorEncoding = ColorEncoding(useICC: false, colorSpace: .grayscale,
-            whitePoint: .d65, primaries: nil, transferFunction: .srgb, renderingIntent: renderingIntent)
-        case .rgb:       colorEncoding = .srgb
+            whitePoint: .d65, primaries: nil, transferFunction: transferFunction, renderingIntent: renderingIntent)
+        case .rgb: colorEncoding = ColorEncoding(useICC: false, colorSpace: .rgb,
+            whitePoint: .d65, primaries: .srgb, transferFunction: transferFunction, renderingIntent: renderingIntent)
         default:
             throw SpecModularEncoderError.unsupportedFrame(
                 "writeModularPrelude: unsupported colorSpace "
@@ -2946,13 +2989,14 @@ package enum SpecModularEncoder {
         bitsPerSample: UInt32,
         colorSpace: ColorSpaceID,
         extraChannels: [ExtraChannelInfo],
-        built: EncodedSections, renderingIntent: RenderingIntent = .relative
+        built: EncodedSections, renderingIntent: RenderingIntent = .relative,
+        transferFunction: TransferFunction = .srgb
     ) throws -> Data {
         var out = try writeModularPrelude(
             width: width, height: height,
             bitsPerSample: bitsPerSample,
             colorSpace: colorSpace,
-            extraChannels: extraChannels, animation: nil, renderingIntent: renderingIntent)
+            extraChannels: extraChannels, animation: nil, renderingIntent: renderingIntent, transferFunction: transferFunction)
         let chunk = try writeModularFrameChunk(
             extraChannels: extraChannels,
             built: built,

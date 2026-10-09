@@ -82,7 +82,6 @@ struct NRRD {
             guard bytes.count - cursor == width * height * 2 else {
                 throw CodecError(.malformedInput, "NRRD payload length does not match its dimensions.")
             }
-            guard width <= 512, height <= 512 else { throw CodecError(.unsupportedFeature, "Scalar encoding is limited to dimensions at most 512.") }
             return Self(width: width, height: height, order: endian == "little" ? .littleEndian : .bigEndian, payloadOffset: cursor)
         }
     }
@@ -91,7 +90,7 @@ struct NRRD {
         let bytes = width * height * 2
         let plane = try PlaneDescriptor(width: width, height: height, rowBytes: width * 2, byteCount: bytes)
         let descriptor = try ImageDescriptor(width: width, height: height, byteOrder: order, planes: [plane], limits: limits)
-        return try Image(descriptor: descriptor, storage: PayloadOwner(data: data, offset: payloadOffset), limits: limits)
+        return try Image(descriptor: descriptor, storage: InterchangePayloadOwner(data: data, offset: payloadOffset), limits: limits)
     }
 
     static func requireRepresentable(_ descriptor: ImageDescriptor, metadata: ImageMetadata) throws {
@@ -123,7 +122,7 @@ struct NRRD {
 
 /// Owns immutable input Data across encoder suspension. The rebase happens only
 /// inside each synchronous borrow; no borrowed pointer is retained or returned.
-private final class PayloadOwner: ReadOnlyImageStorage, Sendable {
+final class InterchangePayloadOwner: ReadOnlyImageStorage, Sendable {
     private let data: Data
     private let offset: Int
     let allocationID = UUID()

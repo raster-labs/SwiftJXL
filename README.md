@@ -2,7 +2,7 @@
 
 JPEG XL for the **Swift Image Compression Suite**.
 
-**Status: initial public scalar JPEG XL integration on the migration branch.** `Encoder`, `Decoder.inspect`, allocating decode and caller-destination decode support a bounded lossless unsigned greyscale profile. Encoding supports 9–16 meaningful bits through 512 × 512; decoding supports 8–16 bits through 1024 × 1024, in one frame/group without transforms. Both use 16-bit owning storage with explicit byte order, row padding and pixel stride. Resource admission covers retained input, destination, workspace and output. See [MIGRATION.md](MIGRATION.md) for metadata and profile limits. CLI header inspection and supported-frame validation are available; full-precision UInt16 NRRD encode/decode is also available. Bounded native JPEG reconstruction is now integrated through `Transcoder` and CLI `transcode`; RGB/greyscale ICC profiles are preserved for native transcoding; broader colour/VarDCT pixel profiles remain pending. Keep JXLSwift in production; **2.1.0 is not a published release**.
+**Status: migration branch, not a published release.** The public Modular decoder now supports bounded greyscale/RGB and optional alpha, grouped/progressive integer streams, RCT, simple palettes and Squeeze. It writes directly to owning planar/interleaved UInt8/UInt16 destinations with explicit offsets and strides; allocating decode uses UInt16. Encoding now accepts the same integer colour/alpha layouts at fixed effort 3. See [MIGRATION.md](MIGRATION.md) for precise bounds and unqualified gates. CLI UInt16 NRRD and integer colour PGM/PPM/PAM encode/decode and bounded native JPEG reconstruction are available. Broader VarDCT pixel profiles and full migration qualification are pending. Keep JXLSwift in production; **2.1.0 is not a published release**.
 
 SwiftJXL is the standalone successor to [JXLSwift](https://github.com/Raster-Lab/JXLSwift). The successor is intended to provide a harmonised API, explicit memory ownership, high-precision sample preservation and efficient shared-storage integration. It has no mandatory dependency on another suite library or CompressionFamily. Apache-2.0 licensing applies to these documents and subsequent authorised in-house implementation; third-party material retains its own terms.
 
@@ -16,7 +16,7 @@ Swift 6.2 manifest minimum with Swift 6.4 as the qualified primary toolchain, Sw
 
 ## Start reading
 
-Moving an application from JXLSwift? Read the [application migration guide](MIGRATION.md) for dependency/API mappings, ownership changes, a compilable preparation example and staged rollout checks. Real codec replacement remains blocked by the deferred encoding, decoding and reconstruction implementations.
+Moving an application from JXLSwift? Read the [application migration guide](MIGRATION.md) for dependency/API mappings, ownership changes, a compilable preparation example and staged rollout checks. Bounded integer Modular and native JPEG reconstruction profiles are implemented; broader feature coverage and release qualification remain open.
 
 The first coding task is **Milestone 1: API and memory-contract feasibility**, using synthetic buffers. Its implementation and local test evidence are recorded in [Milestone 1 validation](Documentation/MILESTONE1.md). Codec migration and the first real shared-storage transcode follow in Milestones 2 and 3. Use the staged instructions in [AGENTS.md](AGENTS.md).
 
@@ -29,7 +29,7 @@ The first coding task is **Milestone 1: API and memory-contract feasibility**, u
 
 ## Native in-memory transcoding
 
-Planned standalone **reversible existing-JPEG ↔ JPEG XL transcoding** restores the original JPEG bytes from the JXL alone, with coefficients and reconstruction metadata held in memory. The predecessor already exposes forward/reverse methods and byte-equality tests; the supported JPEG/metadata profiles still require qualification. This preserves an existing lossy JPEG without recovering pixels lost during its original encoding. See [transcoding instructions and source-review findings](TRANSCODING.md) for the API/CLI pattern, limits and acceptance tests. This remains planned successor functionality.
+Standalone **reversible existing-JPEG ↔ JPEG XL transcoding** restores the original JPEG bytes from the JXL alone for the implemented bounded profile, with coefficients and reconstruction metadata held in memory. This preserves an existing lossy JPEG without recovering pixels lost during its original encoding. See the [current profile](MIGRATION.md#native-jpeg-transcoder-integration) and [validation record](Documentation/Engineering/Migration/NATIVE_JPEG.md) for exact limits and evidence; broader JPEG XL coverage remains open.
 
 ## Relationship to the suite
 
@@ -39,4 +39,4 @@ The package exports `SwiftJXL`; the diagnostic CLI `swiftjxl-cli` provides help/
 
 ## Command-line help and manual
 
-The diagnostic CLI now provides `-h` / `--help`, `help <command>`, version and truthful capability reporting. The `inspect` and `validate` commands process the bounded scalar profile; encode/decode use the explicit 16-bit NRRD profile; transcode supports the qualified native JPEG reconstruction pair. Verbosity has five levels: `-v`, `-vv`, `--verbose 1..5`, `--verbose=+++` and `-verbose: 3`; diagnostics use stderr and `--quiet` suppresses optional messages. See [CLI usage and installation](CLI.md). The installer updates both the executable and its UNIX man page together. The current contract keeps Apple deployment floors at 26.0 and the compiler minimum at Swift 6.2; OS 27 qualification records remain historical.
+The diagnostic CLI now provides `-h` / `--help`, `help <command>`, version and truthful capability reporting. The `inspect` and `validate` commands process the bounded scalar profile; encode/decode use explicit NRRD or integer colour PNM/PAM profiles; transcode supports the qualified native JPEG reconstruction pair. Verbosity has five levels: `-v`, `-vv`, `--verbose 1..5`, `--verbose=+++` and `-verbose: 3`; diagnostics use stderr and `--quiet` suppresses optional messages. See [CLI usage and installation](CLI.md). The installer updates both the executable and its UNIX man page together. The current contract keeps Apple deployment floors at 26.0 and the compiler minimum at Swift 6.2; OS 27 qualification records remain historical.
