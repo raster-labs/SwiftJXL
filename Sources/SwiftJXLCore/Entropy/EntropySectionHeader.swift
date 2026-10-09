@@ -86,9 +86,13 @@ package struct EntropySectionHeader: Sendable {
     /// distance — the caller doesn't need to compensate for that).
     package static func read(
         from r: inout BitReader,
-        numContexts: Int
+        numContexts: Int,
+        maximumContexts: Int = 4096
     ) throws -> EntropySectionHeader {
-        guard numContexts > 0, numContexts <= 4096 else {
+        // VarDCT coefficient groups require more contexts than scalar Modular.
+        // Callers opt in explicitly; the shared budget still admits allocation.
+        guard maximumContexts > 0, maximumContexts <= 524288,
+              numContexts > 0, numContexts <= maximumContexts else {
             throw BitstreamError.malformedValue("Entropy context limit exceeded")
         }
         try r.budget?.reserveWorkspace((numContexts + 1) * 64 + 32 * 1024)

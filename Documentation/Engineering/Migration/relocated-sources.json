@@ -237,9 +237,10 @@
         "Package-only visibility",
         "Successor provenance header",
         "Bound contexts and nested entropy parsing",
-        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable",
+        "Keep default 4096-context cap; explicitly admit bounded VarDCT AC context counts up to 524288 with cumulative workspace accounting"
       ],
-      "destinationSHA256": "c562b40ecfb1356be25bdc62032a8188e85b7c0f6c38e70c4da63f84e7e23daf"
+      "destinationSHA256": "5ec3f1efb411edb8d7d9fe851d01286f0b28f7b7ee85ea8d0a794c5dea907c66"
     },
     {
       "source": "Sources/JXLSwift/Entropy/HybridUint.swift",
@@ -899,6 +900,114 @@
         "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
         "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
         "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+      "sourceSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "67e75398407756496fa700270c67737f7f0d6a2f32558e30f4195bb1ab6560ad",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JXLToJPEGAdapter.swift",
+      "sourceSHA256": "96a1588b8a7c57648ea953b63b58353f39b8518887289628d0ffbb72878a0e15",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "67e75398407756496fa700270c67737f7f0d6a2f32558e30f4195bb1ab6560ad",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/QuantEncoding.swift",
+      "sourceSHA256": "4519b40dd4dc85e0c020129e2553a2d5df072e079b40076855da110b0da79b7d",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "67e75398407756496fa700270c67737f7f0d6a2f32558e30f4195bb1ab6560ad",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/DequantMatricesDC.swift",
+      "sourceSHA256": "a6532563a8cefbd8c546754365056fc2f8673b82d68763b417f084412110c936",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "67e75398407756496fa700270c67737f7f0d6a2f32558e30f4195bb1ab6560ad",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/QuantizerParams.swift",
+      "sourceSHA256": "022c0aa6efb3a1da1a9ebdb09a00d0090cfb5a948518711dae4b51b25c0ef060",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "67e75398407756496fa700270c67737f7f0d6a2f32558e30f4195bb1ab6560ad",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/ColorCorrelationMap.swift",
+      "sourceSHA256": "e2befc9b1141ec86857d84e2e2d412d87dac0fd85b2e967693dbd5fd30ac42ad",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "destinationSHA256": "67e75398407756496fa700270c67737f7f0d6a2f32558e30f4195bb1ab6560ad",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/ACContext.swift",
+      "sourceSHA256": "687b06ca4c12ef328b4f8d37714fe1502b5bcc9fe43d2fd2f5a5b20f785b54d2",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeEntropy.swift",
+      "destinationSHA256": "956ec59962f4d593db57286860ec1476829f4549a842ff6369ef1aa26416a468",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/ACDecoder.swift",
+      "sourceSHA256": "4026b7ebeb63a2a181b9ca0bcc852331d4c83dd89e5ab9f25f4323e0550b82bc",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeEntropy.swift",
+      "destinationSHA256": "956ec59962f4d593db57286860ec1476829f4549a842ff6369ef1aa26416a468",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/CoeffOrders.swift",
+      "sourceSHA256": "0c0beb6d6e03af08a060315ccbd5e676ba1398753be01a6abf8d52de7be4a424",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeEntropy.swift",
+      "destinationSHA256": "956ec59962f4d593db57286860ec1476829f4549a842ff6369ef1aa26416a468",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Read bounded JPEG-reconstruction VarDCT frames into flat natural-order coefficient owners without pixel decoding",
+        "Validate section bounds, entropy terminal states, DCT8 orders, quantisation, colour-correlation restoration and resource/cancellation limits",
+        "Qualify native and independently generated libjxl frames; public operation, ICC and broader frame profiles remain pending"
       ]
     }
   ],
