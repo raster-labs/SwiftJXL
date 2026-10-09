@@ -82,6 +82,7 @@ package struct ExtraChannelInfo: Sendable {
             .offset(constant: 16, extraBits: 5),
             .offset(constant: 48, extraBits: 10)
         ))
+        if nameLen > 0 { try r.budget?.reserveWorkspace(Int(nameLen) * 3 + 128) }
         var nameBytes = [UInt8]()
         nameBytes.reserveCapacity(Int(nameLen))
         for _ in 0..<Int(nameLen) {

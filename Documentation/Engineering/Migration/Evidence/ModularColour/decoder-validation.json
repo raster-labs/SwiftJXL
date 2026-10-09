@@ -1,0 +1,85 @@
+{
+  "status": "Internal general integer Modular decoder integration; public storage/API profile remains unchanged and complete feature-group qualification is pending",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "baseCommit": "d1f3fc6",
+  "contract": "0.10.0",
+  "configurations": {
+    "debug": {
+      "declarations": 21,
+      "cases": 81,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "logSHA256": "33b62f8c768bdf910764f6c1dc87551b95227e36e0fdb84ed3ebe1ffe170bbd4"
+    },
+    "asan": {
+      "declarations": 21,
+      "cases": 81,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "logSHA256": "6fc3b46053d0ea25d29a5cb815e7f09c3722d18fa7fd1822905e22212b46699d"
+    },
+    "tsan": {
+      "declarations": 21,
+      "cases": 81,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "logSHA256": "d6b205220286389feafef549662dd23150fb9d165204d6585b3eb01557e73054"
+    }
+  },
+  "commands": {
+    "debug": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'ModularFrameDecoderTests|ModularWireTests|ModularTransformTests|ScalarModularTests|SpecRCTTests'",
+    "asan": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter 'ModularFrameDecoderTests|ModularWireTests|ModularTransformTests|ScalarModularTests|SpecRCTTests'",
+    "tsan": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter 'ModularFrameDecoderTests|ModularWireTests|ModularTransformTests|ScalarModularTests|SpecRCTTests'"
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift": "7f18446aa51d4bd6363b7a21cd24789b53f8a9cdf6666ae4f58153966a8b880f",
+    "Sources/SwiftJXLCore/Codec/ScalarModularDecoder.swift": "8279571ee84c1bf2c908641a460b4f0abc516a6187570562d29c81bb667a4067",
+    "Sources/SwiftJXLCore/Codestream/ExtraChannelInfo.swift": "aabd7f4ebfc5eaaa597488fa3ebc4c76391482ec274717230962b40da5506753",
+    "Sources/SwiftJXLCore/Codestream/ImageMetadata.swift": "324627dd9c2a697a7d90e0add1c6afca63e434da3aa6e6e31d04dcbb2c638fc6"
+  },
+  "testsSHA256": "635899029321f58d3f93c72b0544a1d9c20dd55cd855a38fdee4f8887b3d136c",
+  "oracle": {
+    "version": "cjxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project",
+    "binarySHA256": "582c6dea494b08639ce0aff765b7b6feae1a5d8f1f1a856685f107dac3304320",
+    "fixtures": 15,
+    "manifest": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/manifest.json",
+    "manifestSHA256": "33b2dc5270ace82f10a8dfc647056eb34b51f2cb800662153ef2528e38620414",
+    "generator": "Scripts/TestSupport/modular-decoder-fixtures.py",
+    "generatorSHA256": "c589323ed8713f645f7655aa47914b92e55463e77345aa22aa2a8333572aa2e6",
+    "provenance": "Synthetic PAM inputs generated locally; no external images or private data. Independently encoded by cjxl0.12.0; decoded samples compare exactly with input-generating formulas. Reuse fixture hashes in manifest."
+  },
+  "referenceSource": {
+    "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+    "files": {
+      "dec-modular-libjxl.cc": "6ca17724595f7e0aee0feb5c4ac76384a6ccd993b323a7d29b374e94baf9eaca",
+      "dec-frame-libjxl.cc": "d84b402f91784c2858e4ac152610ac830ebd447cd416d433d3d0c932056f678f",
+      "frame-header-libjxl.h": "61773e30a1892b70f4744f09e1e068d19057a1343f866481375a8a72a0f1965c",
+      "modular-encoding-libjxl.cc": "f5be833162347da2b752655620a94cb91a709389bdb010475a061823d19b0e8f"
+    }
+  },
+  "verified": [
+    "Greyscale8, greyscale+alpha8/16, RGB8/12/16 (16-bit palette corpus), RGBA8/16. Fixtures use unassociated alpha; the internal result retains the alpha-associated flag without conversion.",
+    "RCT and zero-predictor/no-delta palette8/16 reversal",
+    "Responsive2-pass Squeeze including17groups and3nonemptyDCsections; single-group multi-pass also covered",
+    "Each section gets a bounded reader; short group cannot borrow following bytes; trailing/truncated input rejects",
+    "Cancellation rejects before workspace allocation; low workspace/dimension limits reject",
+    "Restored channel geometry/count and unsigned precision checked before returning; no partial frame returned"
+  ],
+  "correctionsDuringValidation": [
+    "Initial8of10 images passed; responsive inputs exposed the need for downsample/lastPass bracket decoding. Added full tested pass ordering instead of excluding these inputs.",
+    "Expanded true multi-groupRGBA16 exposed4-byte state in empty global rANS stream. Pinned libjxl unconditionally creates/finalises that reader; decoder now explicitly validates the empty initial/final state.",
+    "Global channels form a prefix ending at first oversized normal channel; corrected predecessor all-small-channel filtering."
+  ],
+  "memoryAndLifetime": "Planes, geometry descriptors, names, predictor rows, LZ77 history, section buffers and repeated ANS tables receive cumulative conservative operation reservations. Group writes are sequential scoped borrows into admitted planes. Convenience decoder currently returns full Int32 algorithm planes; it is NOT the public require-sharing identity path. No peak RSS or no-copy claim.",
+  "baselineScope": "Pinned predecessor source and earlier scalar/transform baselines reused; independent encoder provides full-image correctness evidence. Entire predecessor decodeModular was not freshly executed for this15-image corpus; no fabricated predecessor pass count.",
+  "remaining": [
+    "Refactor preparation and direct multi-channel strided storage; identity decode must avoid a full-image staging copy",
+    "Encoder multi-channel source integration and memory admission; independently check native multi-group empty-global rANS emission",
+    "Public capability/API/CLI updates and owning-memory/copy/lifetime validation",
+    "Release whole-operation benchmarks/allocation evidence, malformed/fuzz breadth, platform/hosted CI and full PR review",
+    "Broader float/extra/ICC/frame/VarDCT/release gates; no production cutover authorised"
+  ]
+}

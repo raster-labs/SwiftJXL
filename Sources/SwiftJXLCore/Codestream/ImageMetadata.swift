@@ -187,6 +187,9 @@ package struct ImageMetadata: Sendable {
             .offset(constant: 1, extraBits: 12)
         ))
         if r.scalarProfile && numExtra != 0 { throw ScalarModularError.unsupportedProfile }
+        if numExtra > 0 {
+            try r.budget?.reserveWorkspace(Int(numExtra) * 2 * MemoryLayout<ExtraChannelInfo>.stride + 128)
+        }
         var extras: [ExtraChannelInfo] = []
         extras.reserveCapacity(Int(numExtra))
         for _ in 0..<Int(numExtra) {

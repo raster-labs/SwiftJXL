@@ -95,9 +95,10 @@
       "licence": "Apache-2.0",
       "changes": [
         "Package-only visibility",
-        "Successor provenance header"
+        "Successor provenance header",
+        "General Modular integration: shared bounded tree parser or admission before extra-channel descriptor/name allocation; see ModularColour/decoder-validation.json"
       ],
-      "destinationSHA256": "4d4e0dfeae35490240096d5cc45c8e773a4993a22cf34feb0418b0a39338f65e"
+      "destinationSHA256": "aabd7f4ebfc5eaaa597488fa3ebc4c76391482ec274717230962b40da5506753"
     },
     {
       "source": "Sources/JXLSwift/Codestream/FrameHeader.swift",
@@ -121,9 +122,10 @@
         "Package-only visibility",
         "Successor provenance header",
         "Reject unimplemented nonzero extensions",
-        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable",
+        "General Modular integration: shared bounded tree parser or admission before extra-channel descriptor/name allocation; see ModularColour/decoder-validation.json"
       ],
-      "destinationSHA256": "8d7a58a964f8f47bedc6323a43d065ae05f160804f93e84fdf5d1b46e282df5a"
+      "destinationSHA256": "324627dd9c2a697a7d90e0add1c6afca63e434da3aa6e6e31d04dcbb2c638fc6"
     },
     {
       "source": "Sources/JXLSwift/Codestream/Signature.swift",
@@ -472,9 +474,10 @@
         "Adapt sample access to scoped caller storage; separate frame preparation from final pixel writes",
         "Thread operation deadline and bounded nesting through decoding and container processing",
         "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate",
-        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable",
+        "General Modular integration: shared bounded tree parser or admission before extra-channel descriptor/name allocation; see ModularColour/decoder-validation.json"
       ],
-      "destinationSHA256": "9eb6904c722ced95c1833795dda5579874309e56b0ce726ed188843604a65e74"
+      "destinationSHA256": "8279571ee84c1bf2c908641a460b4f0abc516a6187570562d29c81bb667a4067"
     },
     {
       "source": "Sources/JXLSwift/Codec/ParallelMap.swift",
@@ -1075,6 +1078,18 @@
         "Use admitted working planes and explicit expanded transform chain; reject partial results on failure",
         "Preserve actual 8\u201316-bit palette precision and correctly restore first-normal/meta channel counts",
         "Static delta lookup table; reject predicted/delta palettes; admit RCT COW costs before mutating"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+      "sourceSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+      "destination": "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift",
+      "destinationSHA256": "7f18446aa51d4bd6363b7a21cd24789b53f8a9cdf6666ae4f58153966a8b880f",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Adapt integer colour/alpha decoder with TOC-bounded sections, ordered global prefix and DC/AC group assembly",
+        "Use pinned libjxl downsample brackets and empty rANS state semantics; retain expanded inverse transforms",
+        "Admit workspace/metadata before allocation, validate restored dimensions/precision, keep public capabilities unchanged pending owning-storage integration"
       ]
     }
   ],
