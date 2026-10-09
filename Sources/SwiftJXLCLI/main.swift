@@ -10,8 +10,8 @@ import Glibc
 
 private let tool = "swiftjxl-cli"
 private let version = "2.1.0-dev.2"
-private let reserved = ["encode", "decode", "transcode"]
-private let active = ["inspect", "validate"]
+private let reserved = ["transcode"]
+private let active = ["inspect", "validate", "encode", "decode"]
 private let valueOptions: Set<String> = ["--input", "-i", "--output", "-o", "--input-format", "--output-format",
     "--mode", "--max-error", "--backend", "--copy-policy", "--threads", "--max-memory", "--timeout"]
 
@@ -137,6 +137,46 @@ private func help(_ command: String?) -> String {
               \(tool) capabilities --verbose=+++
             """ + "\n"
         }
+        if command == "encode" || command == "decode" {
+            return """
+            USAGE: \(tool) \(command) --input PATH \(command == "encode" ? "--input-format nrrd" : "--output-format nrrd") [OPTIONS]
+
+            \(command == "encode" ? "Encode attached raw full-precision UInt16 NRRD to lossless JPEG XL." : "Decode supported 16-bit greyscale JPEG XL to attached raw UInt16 NRRD.")
+            NRRD0005, 2D greyscale, explicit little/big endian; x is the fastest axis.
+            This explicit profile assigns D65/sRGB/default intent on encode. Decode
+            rejects sub-16-bit precision or interpretation metadata NRRD cannot preserve.
+            Encode dimensions <=512; decode <=1024. Input <=4194304 bytes.
+            NRRD header <=16384 bytes, 64 lines, 1024 bytes/line. Detached references,
+            compressed encodings, spatial metadata and custom fields are unsupported.
+
+            COMMAND OPTIONS
+              -i, --input PATH          Required regular file/pipe; '-' means stdin.
+              -o, --output PATH         Final binary file; default '-' means stdout.
+              --input-format FORMAT    encode: nrrd required; decode: jxl/jpeg-xl optional.
+              --output-format FORMAT   decode: nrrd required; encode: jxl/jpeg-xl optional.
+              --mode lossless          Encode only; the only supported mode and default.
+              --json                   Write final JSON report to stderr after binary output.
+              --overwrite              Atomically replace an existing regular output file.
+              --backend NAME           automatic (default), scalar-cpu; accelerated returns 4.
+              --copy-policy POLICY     require-sharing (default) or allow-copy.
+              --threads N              Worker ceiling 1..8; scalar implementation uses one.
+              --max-memory BYTES       Positive aggregate ceiling; default 1073741824.
+              --timeout SECONDS        Deadline >0..31536000 seconds; default 120.
+            No intermediate image file or full-image serialisation buffer is created.
+            Pipe bytes still incur OS copies; this is not shared memory between processes.
+            Stdout may contain partial binary output on I/O failure. File publication is
+            atomic; failures before publication preserve an existing output. Ctrl-C: 130.
+            JSON stderr may also contain requested verbosity lines; no success report is
+            emitted on payload failure. A report failure after publication returns 6.
+
+            \(common)
+
+            EXAMPLES
+              \(tool) encode -i image.nrrd --input-format nrrd -o image.jxl
+              \(tool) decode -i image.jxl --output-format nrrd -o restored.nrrd
+              cat image.nrrd | \(tool) encode -i - --input-format nrrd | \(tool) decode -i - --output-format nrrd > restored.nrrd
+            """ + "\n"
+        }
         if active.contains(command) {
             return """
             USAGE: \(tool) \(command) --input PATH [OPTIONS]
@@ -201,13 +241,14 @@ private func help(_ command: String?) -> String {
     COMMANDS
       capabilities [--json]      Report executable command support.
       inspect, validate         Inspect headers or validate the supported scalar frame.
+      encode, decode            Full-precision UInt16 NRRD/JPEG XL file and pipe conversion.
       help [command]             Show global or command-specific help.
       version                    Show the development version.
       \(reserved.joined(separator: ", "))
                                 Reserved; codec algorithms are unavailable (exit 4).
 
     Requires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.
-    Inspection and validation are available. Encoding/decoding file adapters remain unavailable.
+    Bounded scalar inspection/validation and UInt16 NRRD encode/decode are available.
 
     \(common)
 
@@ -254,20 +295,22 @@ private func write(_ text: String, to handle: FileHandle) throws {
         try write("\(tool): unsupported feature: CLI codec commands are not integrated; no input/output opened.\n", to: .standardError)
         return 4
     }
-    // CLI file commands remain reserved even though the library scalar API is available.
-    let encoder = CodecCapabilities.contractOnly
+    // Executable support is narrower than the public library precision profile.
+    let encoder = Encoder.capabilities
     let decoder = Decoder.capabilities
-    let formats = Array(Set(encoder.formats + decoder.formats)).sorted()
+    let formats = Array(Set(encoder.formats + decoder.formats + ["nrrd"])).sorted()
     if options.json {
         let payload: [String: Any] = ["tool": tool, "version": version, "minimumAppleOS": "26.0",
-            "canEncode": encoder.canEncode, "canDecode": false,
+            "canEncode": encoder.canEncode, "canDecode": true,
+            "interchangeFormat": "nrrd", "interchangeMeaningfulBits": 16,
+            "maximumEncodeDimension": 512, "maximumDecodeDimension": 1024,
             "canInspect": decoder.canInspect, "canValidate": true, "formats": formats,
             "profile": "single-frame/group unsigned greyscale Modular; 8..16 bits; maximum dimension 1024",
             "maximumCompressedBytes": CommandIO.maximumInput]
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
         try FileHandle.standardOutput.write(contentsOf: data + Data([10]))
     } else {
-        try write("\(tool) \(version)\nencode: \(encoder.canEncode)\ndecode: false\ninspect: \(decoder.canInspect)\nvalidate: true\nformats: \(formats.isEmpty ? "none" : formats.joined(separator: ", "))\n", to: .standardOutput)
+        try write("\(tool) \(version)\nencode: \(encoder.canEncode)\ndecode: true\ninspect: \(decoder.canInspect)\nvalidate: true\nformats: \(formats.isEmpty ? "none" : formats.joined(separator: ", "))\n", to: .standardOutput)
     }
     try diagnostic(3, "advertised formats: \(formats.count); CLI capabilities; library scalar API is separately available")
     try diagnostic(4, "elapsed seconds: \(ProcessInfo.processInfo.systemUptime - start)")
@@ -292,14 +335,34 @@ private func status(for error: CodecError) -> Int32 {
     guard let input = values["--input"], !input.isEmpty else {
         throw CodecError(.invalidArgument, "--input is required.")
     }
-    guard values["--mode"] == nil, values["--max-error"] == nil, values["--output-format"] == nil else {
-        throw CodecError(.invalidArgument, "Mode, max-error and output-format do not apply to this command.")
+    let binaryCommand = command == "encode" || command == "decode"
+    if binaryCommand {
+        guard values["--max-error"] == nil, command == "encode" || values["--mode"] == nil else {
+            throw CodecError(.invalidArgument, "Compression options do not apply to this command.")
+        }
+        if let mode = values["--mode"], mode != "lossless" {
+            throw CodecError(["near-lossless", "lossy"].contains(mode) ? .unsupportedFeature : .invalidArgument,
+                             "Only lossless encoding is supported.")
+        }
+        let required = command == "encode" ? "--input-format" : "--output-format"
+        guard let format = values[required] else {
+            throw CodecError(.invalidArgument, "Select the NRRD interchange format explicitly.")
+        }
+        guard format == "nrrd" else { throw CodecError(.unsupportedFormat, "Unsupported interchange format.") }
+        let optional = command == "encode" ? "--output-format" : "--input-format"
+        if let format = values[optional], !["jxl", "jpeg-xl"].contains(format) {
+            throw CodecError(.unsupportedFormat, "Unsupported compressed format.")
+        }
+    } else {
+        guard values["--mode"] == nil, values["--max-error"] == nil, values["--output-format"] == nil else {
+            throw CodecError(.invalidArgument, "Mode, max-error and output-format do not apply to this command.")
+        }
     }
     let output = values["--output"] ?? "-"
     guard !output.isEmpty, !options.overwrite || output != "-" else {
         throw CodecError(.invalidArgument, "--overwrite requires an output file.")
     }
-    if let format = values["--input-format"], !["jxl", "jpeg-xl"].contains(format) {
+    if !binaryCommand, let format = values["--input-format"], !["jxl", "jpeg-xl"].contains(format) {
         throw CodecError(.unsupportedFormat, "Input format is unsupported.")
     }
     func integer(_ key: String, default defaultValue: Int) throws -> Int {
@@ -346,6 +409,44 @@ private func status(for error: CodecError) -> Int32 {
         maximumMemoryBytes: available)
     let decodeOptions = DecodeOptions(resourceLimits: limits, executionPolicy: backend, copyPolicy: copy)
     let decoder = try Decoder()
+    if binaryCommand {
+        let descriptor: ImageDescriptor
+        var outputBytes = 0
+        if command == "encode" {
+            let header = try NRRD.parse(data, io: io)
+            let image = try header.image(data, limits: limits)
+            descriptor = image.descriptor
+            try io.checkpoint()
+            let encoded = try await Encoder().encode(image, options: EncodeOptions(resourceLimits: limits,
+                executionPolicy: backend, copyPolicy: copy))
+            outputBytes = encoded.data.count
+            try diagnostic(3, "full-precision NRRD source shared with scalar encoder")
+            try diagnostic(4, "elapsed seconds before publication: \(ProcessInfo.processInfo.systemUptime - start)")
+            try diagnostic(5, "final encoded payload ready for publication")
+            try io.publish(encoded.data, path: output, inputPath: input, overwrite: options.overwrite)
+        } else {
+            let info = try decoder.inspect(data, options: decodeOptions)
+            try NRRD.requireRepresentable(info.descriptor, metadata: info.metadata)
+            let decoded = try await decoder.decode(data, options: decodeOptions)
+            descriptor = decoded.image.descriptor
+            try diagnostic(3, "full-precision decoded storage serialised directly to final NRRD")
+            try diagnostic(4, "elapsed seconds before publication: \(ProcessInfo.processInfo.systemUptime - start)")
+            try diagnostic(5, "final decoded payload ready for publication")
+            try io.publish(path: output, inputPath: input, overwrite: options.overwrite) { fd in
+                try NRRD.write(decoded.image, fd: fd, io: io)
+            }
+            outputBytes = descriptor.width * descriptor.height * 2
+        }
+        if options.json {
+            let report: [String: Any] = ["tool": tool, "version": version, "operation": command,
+                "format": command == "encode" ? "jpeg-xl" : "nrrd", "width": descriptor.width,
+                "height": descriptor.height, "meaningfulBits": 16, "fidelity": "exact-samples",
+                "outputSampleBytes": descriptor.width * descriptor.height * 2,
+                "encodedBytes": command == "encode" ? outputBytes : data.count]
+            try io.writeBytes(JSONSerialization.data(withJSONObject: report, options: [.sortedKeys]) + Data([10]), fd: STDERR_FILENO)
+        }
+        return 0
+    }
     let descriptor: ImageDescriptor
     let hasMetadata: Bool
     if command == "validate" {

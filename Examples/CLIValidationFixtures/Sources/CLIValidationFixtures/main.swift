@@ -19,6 +19,13 @@ import SwiftJXL
             }
             let encoded = try await Encoder().encode(image).data
             try encoded.write(to: root.appendingPathComponent("scalar-\(bits).jxl"))
+            if bits == 16 {
+                let tagged = try Image(descriptor: image.descriptor, storage: image.storage,
+                    metadata: ImageMetadata(entries: ["jpegXL.renderingIntent": Data([3])],
+                                            requiredKeys: ["jpegXL.renderingIntent"]))
+                let taggedBytes = try await Encoder().encode(tagged).data
+                try taggedBytes.write(to: root.appendingPathComponent("scalar-16-intent.jxl"))
+            }
             if bits == 12 {
                 // Find a payload-only corruption, keeping supported headers
                 // inspectable. Store its exact offset/mask for reproducibility.

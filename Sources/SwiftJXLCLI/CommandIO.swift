@@ -113,28 +113,35 @@ struct CommandIO {
         return data
     }
     func writeBytes(_ data: Data, fd: Int32) throws {
+        try data.withUnsafeBytes { try writeRaw($0, fd: fd) }
+    }
+    /// Synchronous borrow only; pointer never escapes or crosses an await.
+    func writeRaw(_ bytes: UnsafeRawBufferPointer, fd: Int32) throws {
         let flags = fcntl(fd, F_GETFL)
         guard flags >= 0, fcntl(fd, F_SETFL, flags | O_NONBLOCK) == 0 else {
             throw CodecError(.ioFailure, "Cannot configure output stream.")
         }
         defer { _ = fcntl(fd, F_SETFL, flags) }
-        try data.withUnsafeBytes { bytes in
-            var offset = 0
-            while offset < bytes.count {
-                try ready(fd, events: Int16(POLLOUT))
-                let count = write(fd, bytes.baseAddress?.advanced(by: offset), bytes.count - offset)
-                if count < 0 {
-                    if errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK { continue }
-                    throw CodecError(.ioFailure, "Output I/O failure.")
-                }
-                guard count > 0 else { throw CodecError(.ioFailure, "Output made no progress.") }
-                offset += count
+        var offset = 0
+        while offset < bytes.count {
+            try ready(fd, events: Int16(POLLOUT))
+            let count = write(fd, bytes.baseAddress?.advanced(by: offset), bytes.count - offset)
+            if count < 0 {
+                if errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK { continue }
+                throw CodecError(.ioFailure, "Output I/O failure.")
             }
+            guard count > 0 else { throw CodecError(.ioFailure, "Output made no progress.") }
+            offset += count
         }
     }
     func publish(_ data: Data, path: String, inputPath: String, overwrite: Bool) throws {
+        try publish(path: path, inputPath: inputPath, overwrite: overwrite) { fd in
+            try writeBytes(data, fd: fd)
+        }
+    }
+    func publish(path: String, inputPath: String, overwrite: Bool, body: (Int32) throws -> Void) throws {
         try checkpoint()
-        if path == "-" { try writeBytes(data, fd: STDOUT_FILENO); return }
+        if path == "-" { try body(STDOUT_FILENO); return }
         var existing = stat()
         if lstat(path, &existing) == 0 {
             guard existing.st_mode & mode_t(S_IFMT) == mode_t(S_IFREG), overwrite else {
@@ -157,7 +164,7 @@ struct CommandIO {
             if openFD { _ = close(fd) }
             _ = unlink(temporary)
         }
-        try writeBytes(data, fd: fd)
+        try body(fd)
         guard fsync(fd) == 0 else { throw CodecError(.ioFailure, "Cannot flush report transaction.") }
         let closed = close(fd); openFD = false
         guard closed == 0 else { throw CodecError(.ioFailure, "Cannot close report transaction.") }

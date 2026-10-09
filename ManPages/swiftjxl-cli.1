@@ -8,7 +8,7 @@ swiftjxl-cli \- inspection, validation and capability reporting for SwiftJXL
 This development tool inspects headers and validates the complete supported
 scalar JPEG XL frame using the public decoder. It also provides help, version
 and executable capability reporting. This is not a general JPEG XL validator.
-Reserved encode, decode and native transcode return 4 without opening input,
+Native transcode remains reserved and returns 4 without opening input,
 consuming standard input or creating output.
 Build with Swift 6.2 or later in Swift 6 language mode.
 Apple OS minimum is 26.0.
@@ -18,7 +18,8 @@ coverage.
 .TP
 .B capabilities [\-\-json]
 Report executable support. Inspect and validate are available; encode and
-decode file adapters remain unavailable. JSON is one document on stdout.
+decode accept the explicit full-precision UInt16 NRRD profile.
+JSON is one document on stdout.
 .TP
 .B help [command]
 Show global or command-specific help. No arguments also show global help.
@@ -49,6 +50,25 @@ cooperatively across input, codec and output. Pipe polling checks every 25 ms;
 filesystem
 calls depend on operating-system scheduling. Ctrl+C returns 130.
 Mode, max-error and output-format do not apply to these two commands.
+.TP
+.B encode, decode
+Encode requires \-\-input-format nrrd; decode requires \-\-output-format nrrd.
+The compressed endpoint defaults to jxl; jpeg-xl is also accepted.
+Use \-i/\-\-input and optional \-o/\-\-output; a hyphen denotes a stream.
+Encode dimensions are at most 512; decode dimensions at most 1024.
+The explicit NRRD0005 profile is attached, raw, 2D, full-precision UInt16,
+with little/big endian and x as fastest axis. Encode assigns D65/sRGB and
+default intent. Decode rejects lower meaningful precision or metadata
+that this profile cannot preserve. Header limits: 16384 bytes, 64 lines,
+1024 bytes per line. Detached data, spatial metadata and custom keys reject.
+Lossless mode is the only encode mode and default; max-error is unsupported.
+Memory, worker, timeout, backend and copy-policy limits are as above.
+Output is binary; JSON success reports go to stderr after publication.
+Requested verbosity also uses stderr. Reporting failure cannot retract
+published output. Broken binary output never emits a success report.
+Encoding shares retained input bytes with the codec; decoding writes borrowed
+rows directly. No extra full-image serialisation array is created.
+Shell pipes still copy bytes and do not share allocations between processes.
 .SH OPTIONS
 .TP
 .B \-h, \-\-help
@@ -80,16 +100,9 @@ stream returns I/O failure (6). Final error messages are best effort and cannot
 block the original failure, deadline (5) or cancellation (130) exit status.
 No payload bytes, metadata, raw addresses or input/output paths are logged.
 .SH RESERVED CODEC SYNTAX
-Codec command help lists reserved \-i/\-\-input, \-o/\-\-output,
-\-\-input-format, \-\-output-format, \-\-mode, \-\-max-error,
-\-\-backend, \-\-copy-policy, \-\-threads, \-\-max-memory,
-\-\-timeout, \-\-overwrite and \-\-json.
-Encode/decode/transcode are not implemented payload operations. A hyphen denotes
-standard
-input/output for inspect and validate. Default future mode is lossless and
-copy
-policy is require-sharing. No private intermediate image format is
-implemented.
+Native transcode remains unavailable. Its help describes reserved syntax
+without opening input or creating output. No private intermediate image
+format is implemented.
 .SH EXIT STATUS
 0 success/help/version; 2 invalid usage; 3 malformed input;
 4 unsupported feature/layout/backend/format; 5 resource/deadline;

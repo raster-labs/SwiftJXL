@@ -1,0 +1,585 @@
+{
+  "status": "passed",
+  "pynrrd": "1.1.3",
+  "numpy": "2.0.2",
+  "binary_sha256": "845286efefbc81921e0414759b86f19319ddb85c8ee814c1a7adbcfc8151e8bb",
+  "script_sha256": "d1315bf1bb57fbc062956d75214f22d209c373b8003bb59023843d924014090b",
+  "checks": [
+    {
+      "check": "encode --help",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "help encode",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "decode --help",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "help decode",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "encode -i - --input-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":29,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"height\":1,\"meaningfulBits\":16,\"operation\":\"encode\",\"outputSampleBytes\":2,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":1}\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":29,\"fidelity\":\"exact-samples\",\"format\":\"nrrd\",\"height\":1,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":2,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":1}\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":29,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"height\":1,\"meaningfulBits\":16,\"operation\":\"encode\",\"outputSampleBytes\":2,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":1}\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":29,\"fidelity\":\"exact-samples\",\"format\":\"nrrd\",\"height\":1,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":2,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":1}\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":942,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"height\":1,\"meaningfulBits\":16,\"operation\":\"encode\",\"outputSampleBytes\":1024,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":512}\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":942,\"fidelity\":\"exact-samples\",\"format\":\"nrrd\",\"height\":1,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":1024,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":512}\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":942,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"height\":1,\"meaningfulBits\":16,\"operation\":\"encode\",\"outputSampleBytes\":1024,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":512}\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":942,\"fidelity\":\"exact-samples\",\"format\":\"nrrd\",\"height\":1,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":1024,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":512}\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":78,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"height\":5,\"meaningfulBits\":16,\"operation\":\"encode\",\"outputSampleBytes\":70,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":7}\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":78,\"fidelity\":\"exact-samples\",\"format\":\"nrrd\",\"height\":5,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":70,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":7}\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":78,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"height\":5,\"meaningfulBits\":16,\"operation\":\"encode\",\"outputSampleBytes\":70,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":7}\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":78,\"fidelity\":\"exact-samples\",\"format\":\"nrrd\",\"height\":5,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":70,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":7}\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":577,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"height\":17,\"meaningfulBits\":16,\"operation\":\"encode\",\"outputSampleBytes\":1054,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":31}\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":577,\"fidelity\":\"exact-samples\",\"format\":\"nrrd\",\"height\":17,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":1054,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":31}\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":577,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"height\":17,\"meaningfulBits\":16,\"operation\":\"encode\",\"outputSampleBytes\":1054,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":31}\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd --json",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": "{\"encodedBytes\":577,\"fidelity\":\"exact-samples\",\"format\":\"nrrd\",\"height\":17,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":1054,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":31}\n"
+    },
+    {
+      "check": "binary pipeline producer",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "binary pipeline consumer",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "decode -i - --output-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "decode -i - --output-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "decode -i - --output-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "decode -i - --output-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "decode -i - --output-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "decode -i - --output-format nrrd",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Truncated NRRD header.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Expected the attached NRRD0005 profile.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Truncated NRRD header.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: NRRD payload length does not match its dimensions.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: NRRD payload length does not match its dimensions.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Expected the attached NRRD0005 profile.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Duplicate NRRD field.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: NRRD is missing a required field.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: NRRD dimensions must be positive.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid NRRD sizes.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: NRRD dimensions exceed admission limits.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Only 2D raw full-precision UInt16 NRRD is supported.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Only 2D raw full-precision UInt16 NRRD is supported.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Only 2D raw full-precision UInt16 NRRD is supported.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Only 2D raw full-precision UInt16 NRRD is supported.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: NRRD dimension must precede per-axis fields.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD field is outside the bounded profile.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD field is outside the bounded profile.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD field is outside the bounded profile.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD custom metadata is not representable.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Only 2D raw full-precision UInt16 NRRD is supported.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: NRRD header limit exceeded.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: NRRD header has too many lines.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: NRRD header must contain ASCII text.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: NRRD header limit exceeded.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Scalar encoding is limited to dimensions at most 512.\n"
+    },
+    {
+      "check": "encode -i - --input-format nrrd",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: NRRD dimensions exceed admission limits.\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "check": "decode -i - --output-format nrrd",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Select the NRRD interchange format explicitly.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --input-format nrrd --backend accelerated",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Accelerated backend is unavailable.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --input-format nrrd --max-memory 1",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Memory limit is too small for command I/O.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --input-format nrrd --max-memory 266027",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Scalar operation exceeded its memory or work limit.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --input-format nrrd --timeout 1e-100",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Operation deadline exceeded.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --input-format nrrd --max-error 1",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Compression options do not apply to this command.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --input-format nrrd --mode lossy",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Only lossless encoding is supported.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --input-format nrrd -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/encode-final",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output already exists or is not a regular file.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --input-format nrrd -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/encode-final --overwrite",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "encode -i - --input-format nrrd -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/encode-final --overwrite",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Truncated NRRD header.\n"
+    },
+    {
+      "check": "encode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --input-format nrrd -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/private image \u03bb.nrrd --overwrite",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input and output refer to the same file.\n"
+    },
+    {
+      "check": "encode: input deadline",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting encode\nswiftjxl-cli: Operation deadline exceeded.\n"
+    },
+    {
+      "check": "encode: input cancellation",
+      "exit_code": 130,
+      "expected": 130,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting encode\nswiftjxl-cli: cancelled.\n"
+    },
+    {
+      "check": "encode: broken output",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output I/O failure.\n"
+    },
+    {
+      "check": "encode: output deadline",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting encode\n[3] swiftjxl-cli: full-precision NRRD source shared with scalar encoder\n[4] swiftjxl-cli: elapsed seconds before publication: 0.011155416665133089\n[5] swiftjxl-cli: final encoded payload ready for publication\nswiftjxl-cli: Operation deadline exceeded.\n"
+    },
+    {
+      "check": "encode: output cancellation",
+      "exit_code": 130,
+      "expected": 130,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting encode\n[3] swiftjxl-cli: full-precision NRRD source shared with scalar encoder\n[4] swiftjxl-cli: elapsed seconds before publication: 0.012694458331679925\n[5] swiftjxl-cli: final encoded payload ready for publication\nswiftjxl-cli: cancelled.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Select the NRRD interchange format explicitly.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --output-format nrrd --backend accelerated",
+      "exit_code": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Accelerated backend is unavailable.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --output-format nrrd --max-memory 1",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Memory limit is too small for command I/O.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --output-format nrrd --max-memory 263876",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Scalar operation exceeded its memory or work limit.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --output-format nrrd --timeout 1e-100",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Operation deadline exceeded.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --output-format nrrd --max-error 1",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Compression options do not apply to this command.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --output-format nrrd --mode lossless",
+      "exit_code": 2,
+      "expected": 2,
+      "stderr": "swiftjxl-cli: Compression options do not apply to this command.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --output-format nrrd -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/decode-final",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output already exists or is not a regular file.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --output-format nrrd -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/decode-final --overwrite",
+      "exit_code": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "check": "decode -i - --output-format nrrd -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/decode-final --overwrite",
+      "exit_code": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid or unsupported scalar JPEG XL payload.\n"
+    },
+    {
+      "check": "decode -i /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --output-format nrrd -o /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/nrrd-asan/image.jxl --overwrite",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Input and output refer to the same file.\n"
+    },
+    {
+      "check": "decode: input deadline",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting decode\nswiftjxl-cli: Operation deadline exceeded.\n"
+    },
+    {
+      "check": "decode: input cancellation",
+      "exit_code": 130,
+      "expected": 130,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting decode\nswiftjxl-cli: cancelled.\n"
+    },
+    {
+      "check": "decode: broken output",
+      "exit_code": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output I/O failure.\n"
+    },
+    {
+      "check": "decode: output deadline",
+      "exit_code": 5,
+      "expected": 5,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting decode\n[3] swiftjxl-cli: full-precision decoded storage serialised directly to final NRRD\n[4] swiftjxl-cli: elapsed seconds before publication: 0.002554916667577345\n[5] swiftjxl-cli: final decoded payload ready for publication\nswiftjxl-cli: Operation deadline exceeded.\n"
+    },
+    {
+      "check": "decode: output cancellation",
+      "exit_code": 130,
+      "expected": 130,
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting decode\n[3] swiftjxl-cli: full-precision decoded storage serialised directly to final NRRD\n[4] swiftjxl-cli: elapsed seconds before publication: 0.0037769166665384546\n[5] swiftjxl-cli: final decoded payload ready for publication\nswiftjxl-cli: cancelled.\n"
+    }
+  ]
+}
