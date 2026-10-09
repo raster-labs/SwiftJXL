@@ -365,9 +365,10 @@
       "changes": [
         "Package-only visibility",
         "Successor provenance header",
-        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable",
+        "Correct Squeeze wire format against pinned libjxl0.12.0 and admit transform descriptor allocations; see ModularColour/wire-validation.json"
       ],
-      "destinationSHA256": "4dcf47c505e332b29b4928aec41961b3ffc811bd0a0049d65ee61c3c96c44109"
+      "destinationSHA256": "c1b1e5141011b1b2d18c1c59744537104fcf8432bde1a55c6fef4b71e5a50076"
     },
     {
       "source": "Sources/JXLSwift/Modular/LibjxlPredictor.swift",
@@ -1045,11 +1046,12 @@
       "source": "Sources/JXLSwift/Modular/ModularImage.swift",
       "sourceSHA256": "d7404d49ad03899521a51a940412081d35dc985a45fa26c401e7da03c4cc88e1",
       "destination": "Sources/SwiftJXLCore/Modular/ModularImage.swift",
-      "destinationSHA256": "f601eae2b4e9c70dd84f90fea65440fd688b3b877be671f8f2d5847bae15e591",
+      "destinationSHA256": "5b17d7ee0b892fb79126749d18bc80b10bf15573a4658a68da427a7f58b6e9ee",
       "licence": "Apache-2.0 AND BSD-3-Clause",
       "changes": [
         "Checked immutable channel geometry without eager pixel allocation; cumulative workspace admission before buffers and descriptor growth",
-        "Retain expanded implicit squeeze steps; bounded transform/channel counts; reject meta/normal overlap and unsupported palettes"
+        "Retain expanded implicit squeeze steps; bounded transform/channel counts; reject meta/normal overlap and unsupported palettes",
+        "Reject equal-geometry RCT ranges crossing the meta/normal boundary, matching libjxl CheckEqualChannels"
       ]
     },
     {

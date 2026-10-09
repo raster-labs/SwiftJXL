@@ -78,6 +78,9 @@ package struct ModularImage: Sendable, Equatable {
     }
 
     package func checkEqual(_ range: Range<Int>) throws {
+        guard range.lowerBound >= nbMetaChannels || range.upperBound <= nbMetaChannels else {
+            throw ModularGeometryError.invalidMetaChannels
+        }
         let first = channels[range.lowerBound]
         for c in range where !first.sameGeometry(as: channels[c]) {
             throw ModularGeometryError.unequalChannels
