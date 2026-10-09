@@ -742,7 +742,7 @@
       ]
     }
   ],
-  "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. Internal target is used by tests only; no new public product or public codec capability.",
+  "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. The package-internal SwiftJXLCore target now supports the public SwiftJXL scalar greyscale encoder, decoder and inspector; it is not a separately exposed library product. Public profile limits and operation admission are documented in MIGRATION.md and RESOURCE_ADMISSION.md.",
   "thirdParty": [
     {
       "material": "Special-distance lookup table in TokenStreamReader.swift",
@@ -785,7 +785,7 @@
       "destination": "Sources/SwiftJXLCore/Codec/ScalarDecodePolicy.swift",
       "destinationSHA256": "1a9cbd91a40814f87515de3315a880bbc5adb0d196d0bb7ee79adfa6963f9a23",
       "licence": "Apache-2.0",
-      "purpose": "Internal caller-controlled dimension, pixel, compressed-input, nesting and monotonic deadline limits; workspace integration remains outstanding",
+      "purpose": "Internal caller-controlled dimension, pixel, compressed-input, nesting and monotonic deadline limits, integrated with the public operation workspace and aggregate memory budget",
       "changes": [
         "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate",
         "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"

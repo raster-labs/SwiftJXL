@@ -1,0 +1,198 @@
+{
+  "main_base": "77451c7f8954c1d70964e1abb11576c824b5b2c7",
+  "integration_commit": "85759a316eb8136ff9349176b850a9caa0420cd9",
+  "source_state": "integration commit plus new regression tests; exact hashes below",
+  "checks": [
+    {
+      "suite": "debug-nrrd",
+      "passed_process_checks": 111,
+      "failed": 0,
+      "report_sha256": "c3d0a63ad3935f6912ad1d449318d4efe96bd10c833372f648cb3c67ec1575a6",
+      "binary_sha256": "e1a6c40eb317c375711732398fb7fc53249807e1a95f6769cea2a7d573cc5d76"
+    },
+    {
+      "suite": "asan-nrrd",
+      "passed_process_checks": 106,
+      "failed": 0,
+      "report_sha256": "b6c23c82ce22b9affb4eab642326ddbf9356df6347eed9a95ff45436ad67e0a1",
+      "binary_sha256": "084216f4c9ec974ed80a18747b234dc09ba735d8e79184bfe3f4b793c9f86918"
+    },
+    {
+      "suite": "tsan-nrrd",
+      "passed_process_checks": 106,
+      "failed": 0,
+      "report_sha256": "5c47779da5832136dac784f25fbfcfa83cadec2d7e4db72467c789455679a29c",
+      "binary_sha256": "cc4d8fdb56167f2974989ebd83376ebf94b1a76989914dfeb2eeccda4c5958a3"
+    },
+    {
+      "suite": "debug-inspect",
+      "passed_process_checks": 104,
+      "failed": 0,
+      "report_sha256": "17a23c160b87308b67ef61be36622c41b49e27b9fbc6b16447d216a74da47627",
+      "binary_sha256": "e1a6c40eb317c375711732398fb7fc53249807e1a95f6769cea2a7d573cc5d76"
+    },
+    {
+      "suite": "asan-inspect",
+      "passed_process_checks": 104,
+      "failed": 0,
+      "report_sha256": "c5ee5208873c4a501cd95f8947f7243e32eeeede2e6b00e28298ed04db876edc",
+      "binary_sha256": "084216f4c9ec974ed80a18747b234dc09ba735d8e79184bfe3f4b793c9f86918"
+    },
+    {
+      "suite": "tsan-inspect",
+      "passed_process_checks": 104,
+      "failed": 0,
+      "report_sha256": "03244c9821ffbe8f04e473d52b7127a070440d5927a001ee67a7bc2798f16f16",
+      "binary_sha256": "cc4d8fdb56167f2974989ebd83376ebf94b1a76989914dfeb2eeccda4c5958a3"
+    },
+    {
+      "suite": "foundation",
+      "passed_process_checks": 97,
+      "failed": 0,
+      "report_sha256": "9d67776c0dda1441b11b296f34b5bc91e6a4c6fba98c72961d7c1d1217bcee6c",
+      "binary_sha256": "e1a6c40eb317c375711732398fb7fc53249807e1a95f6769cea2a7d573cc5d76"
+    }
+  ],
+  "commands": [
+    {
+      "configuration": "asan",
+      "phase": "build",
+      "command": [
+        "xcrun",
+        "swift",
+        "build",
+        "--disable-sandbox",
+        "--scratch-path",
+        "../evidence/cli-validation-qualification/build/asan",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--sanitize",
+        "address",
+        "--product",
+        "swiftjxl-cli"
+      ],
+      "exit": 0,
+      "seconds": 6.296704624999999
+    },
+    {
+      "configuration": "asan",
+      "phase": "nrrd",
+      "command": [
+        "../evidence/nrrd-oracle-env/bin/python",
+        "Scripts/test-cli-nrrd.py",
+        "--binary",
+        "../evidence/cli-validation-qualification/build/asan/out/Products/Debug/swiftjxl-cli",
+        "--fixtures",
+        "../evidence/nrrd-fixtures",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/pr16-review/asan-nrrd"
+      ],
+      "exit": 0,
+      "seconds": 5.206836042
+    },
+    {
+      "configuration": "asan",
+      "phase": "inspect",
+      "command": [
+        "python3",
+        "Scripts/test-cli-payload.py",
+        "--binary",
+        "../evidence/cli-validation-qualification/build/asan/out/Products/Debug/swiftjxl-cli",
+        "--fixtures",
+        "../evidence/nrrd-fixtures",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/pr16-review/asan-inspect"
+      ],
+      "exit": 0,
+      "seconds": 3.1609483750000003
+    },
+    {
+      "configuration": "tsan",
+      "phase": "build",
+      "command": [
+        "xcrun",
+        "swift",
+        "build",
+        "--disable-sandbox",
+        "--scratch-path",
+        "../evidence/cli-validation-qualification/build/tsan",
+        "--cache-path",
+        ".build/cache",
+        "--config-path",
+        ".build/config",
+        "--security-path",
+        ".build/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--sanitize",
+        "thread",
+        "--product",
+        "swiftjxl-cli"
+      ],
+      "exit": 0,
+      "seconds": 5.383061333000001
+    },
+    {
+      "configuration": "tsan",
+      "phase": "nrrd",
+      "command": [
+        "../evidence/nrrd-oracle-env/bin/python",
+        "Scripts/test-cli-nrrd.py",
+        "--binary",
+        "../evidence/cli-validation-qualification/build/tsan/out/Products/Debug/swiftjxl-cli",
+        "--fixtures",
+        "../evidence/nrrd-fixtures",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/pr16-review/tsan-nrrd"
+      ],
+      "exit": 0,
+      "seconds": 224.70585004199998
+    },
+    {
+      "configuration": "tsan",
+      "phase": "inspect",
+      "command": [
+        "python3",
+        "Scripts/test-cli-payload.py",
+        "--binary",
+        "../evidence/cli-validation-qualification/build/tsan/out/Products/Debug/swiftjxl-cli",
+        "--fixtures",
+        "../evidence/nrrd-fixtures",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/pr16-review/tsan-inspect"
+      ],
+      "exit": 0,
+      "seconds": 218.35246395900003
+    }
+  ],
+  "debug_commands": [
+    "xcrun swift build --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --product swiftjxl-cli",
+    "../evidence/nrrd-oracle-env/bin/python Scripts/test-cli-nrrd.py --binary .build/out/Products/Debug/swiftjxl-cli --fixtures ../evidence/nrrd-fixtures --output ../pr16-review/debug-nrrd --reference-tools /opt/homebrew/bin",
+    "python3 Scripts/test-cli-payload.py --binary .build/out/Products/Debug/swiftjxl-cli --fixtures ../evidence/nrrd-fixtures --output ../pr16-review/debug-inspect",
+    "python3 Scripts/test-cli.py --binary .build/out/Products/Debug/swiftjxl-cli --output ../pr16-review/foundation",
+    "mandoc -Tlint ManPages/swiftjxl-cli.1"
+  ],
+  "source_sha256": {
+    "Sources/SwiftJXLCLI/NRRD.swift": "4f463b65df4e466f1bf6387492930fbd277e629ed6a75243fc98cfdd0e3aa798",
+    "Sources/SwiftJXLCLI/main.swift": "13070e453cb2a85e2d501c71de52783aa3f062215683047cfc315acab512905a",
+    "Sources/SwiftJXLCLI/CommandIO.swift": "333921a26aff5c5008f2122fc42e410e8f00ac8b9bfd152aa8f0f2650222b2b3",
+    "Scripts/test-cli-nrrd.py": "8894a724ac960199ea428017a74174c676089eab18e0785101e1c38e106ec25a",
+    "Scripts/test-cli-payload.py": "b7d18fb56e1ab18e173ec85199d0d0910d7f7314624ad253161a30baa7b5c212",
+    "Scripts/test-cli.py": "6d0d5eefac3f3c791c290d8c217320ae18cff4e01c384f908c6201aa3f88ed83",
+    "Package.swift": "2b8fd442110cf33b97e1e94869bdb259fd992db85a4e4ef0dcda20c5a1785622"
+  },
+  "library_source_and_package_identical_to_main": true,
+  "manual_lint_exit": 0,
+  "merge_authorised": false,
+  "hosted_ci": "pending publication"
+}

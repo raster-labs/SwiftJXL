@@ -1,0 +1,9 @@
+{
+  "code_commit": "f8adb16c6649f6fd113d74696e794036fa73ca3c",
+  "binary_sha256": "c0958d98b872066b2f125a9ffd29e4f7afe53742cb637d9887e029ee9f28ca3c",
+  "case": "stalled stdin deadline with full stderr pipe",
+  "expected_exit": 5,
+  "observed_exit": -9,
+  "outcome": "hung beyond 0.15-second deadline; killed by test after 2 seconds",
+  "elapsed_seconds": 2.011395916
+}

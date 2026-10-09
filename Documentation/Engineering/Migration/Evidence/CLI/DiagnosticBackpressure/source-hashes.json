@@ -1,0 +1,7 @@
+{
+  "Sources/SwiftJXLCLI/main.swift": "673f32653d876abfee203bf87e73b4b50e9efd482a20a3eaf9fc3b9239314ef6",
+  "Sources/SwiftJXLCLI/CommandIO.swift": "e5b0a19b5b93085b08d1df0e576d4a4a4b29984292ceeffc2e65e849bd87d4f6",
+  "Scripts/test-cli-payload.py": "b7d18fb56e1ab18e173ec85199d0d0910d7f7314624ad253161a30baa7b5c212",
+  "CLI.md": "17ce7acdb98a691d26ef442a66b9d17fe5224aa45b3c7ff2a41dc6941befe4c8",
+  "ManPages/swiftjxl-cli.1": "9bce2c65f1444f278f728c15a99791781d4ea08f3b6785e5457deeaa5f7535cf"
+}
