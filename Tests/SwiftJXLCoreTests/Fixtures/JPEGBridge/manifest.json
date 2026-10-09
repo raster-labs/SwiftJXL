@@ -1,0 +1,62 @@
+{
+  "licence": "Apache-2.0; authored synthetic test images, quant16 derives from the existing Apache-2.0 gray fixture",
+  "fixtures": [
+    {
+      "name": "multigroup-420",
+      "width": 257,
+      "height": 513,
+      "sha256": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2",
+      "generator": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "85",
+        "-sample",
+        "2x2,1x1,1x1",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-420.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/bridge-frame-fixtures/multigroup-420.pnm"
+      ],
+      "pnm_sha256": "71a59742d775b97a6b56a4089246a04e884f05e9c5008ca75fe3d9a1ec6caed4"
+    },
+    {
+      "name": "multigroup-progressive-422",
+      "width": 513,
+      "height": 257,
+      "sha256": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026",
+      "generator": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "85",
+        "-progressive",
+        "-sample",
+        "2x1,1x1,1x1",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-progressive-422.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/bridge-frame-fixtures/multigroup-progressive-422.pnm"
+      ],
+      "pnm_sha256": "0840eb8672e68e794f3f79a0bc61ce17f1daf47136784e9a89d2c1cec258de2a"
+    },
+    {
+      "name": "wide-gray",
+      "width": 2048,
+      "height": 17,
+      "sha256": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271",
+      "generator": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "85",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/wide-gray.jpg",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/native-jpeg-audit/bridge-frame-fixtures/wide-gray.pnm"
+      ],
+      "pnm_sha256": "abc0196f852b25e1537bd067140a7d87b13513df22a8ced42f78784597fc7993"
+    },
+    {
+      "name": "quant16",
+      "sha256": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89",
+      "generator": "Existing synthetic gray JPEG: SOF0 to SOF1, quantisation entries multiplied by 257 and encoded as 16-bit DQT; entropy unchanged"
+    }
+  ],
+  "pixel_formula": "PNM value(x,y,c) = (13*x + 29*y + 71*c + floor(x*y/7)) modulo 256",
+  "tool": "libjpeg-turbo cjpeg 3.2.0"
+}

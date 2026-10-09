@@ -796,6 +796,110 @@
         "Validate active quantisation bindings, complete scan histories and coefficient representability before publishing output",
         "Declare the output initializer explicitly for Swift 6.2 access-control compatibility"
       ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGToJXLAdapter.swift",
+      "sourceSHA256": "215b3c978599df540e9a28b5130ea23c08271ad0f1e303294f00bf434a76812d",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeCoefficients.swift",
+      "destinationSHA256": "475399e7168dff3cc0b3aa975e39fb91803c93a801d3d59534788819ff51d195",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Codec/VarDCTBitstreamWriter.swift",
+      "sourceSHA256": "87bb11fa445d65220326b673962daef53e0089a1c51208a38553775f45e529e7",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JXLBridgeEncoder.swift",
+      "sourceSHA256": "4d8cf46c5441a3bff7d9d74e6a332aae995ba317adfae607e1d44c046eeb8593",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/ModularSubImage.swift",
+      "sourceSHA256": "0703c27bb324d6fc95ae22b266865cd4466d4859a8bbb8f813ad0deab43285bb",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/ACDecoder.swift",
+      "sourceSHA256": "4026b7ebeb63a2a181b9ca0bcc852331d4c83dd89e5ab9f25f4323e0550b82bc",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/QuantEncodingBitstream.swift",
+      "sourceSHA256": "b189591a7d0b6ae3a7ace8c0eadc1a2c7530dea2c190a88a1c6a582088ae6d55",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/DequantMatricesDC.swift",
+      "sourceSHA256": "a6532563a8cefbd8c546754365056fc2f8673b82d68763b417f084412110c936",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/VarDCT/QuantizerParams.swift",
+      "sourceSHA256": "022c0aa6efb3a1da1a9ebdb09a00d0090cfb5a948518711dae4b51b25c0ef060",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "destinationSHA256": "adcf9b063981cd32f1e0a83681e8ccff18563f3bae047f0ac2313992d678978b",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Retain immutable flat coefficient owners; transpose one bounded scratch block and represent greyscale chroma implicitly",
+        "Use streaming prefix-code histogram passes with row-bounded DC predictor storage, without frame-sized token or coefficient copies",
+        "Validate resource ceilings and cancel bounded work; preserve native JPEG coefficient and quantisation values",
+        "Native forward frame profile retains predecessor single-DC-group limit (2048 pixels per side); reverse/public integration remains open"
+      ]
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. The package-internal SwiftJXLCore target now supports the public SwiftJXL scalar greyscale encoder, decoder and inspector; it is not a separately exposed library product. Public profile limits and operation admission are documented in MIGRATION.md and RESOURCE_ADMISSION.md.",
@@ -833,6 +937,14 @@
       "notice": "Documentation/ThirdParty/libjxl-LICENSE.txt",
       "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
       "sourceSHA256": "411aff6becf196e7859460e2258fbe091f9aaa710d87801b8c1857cf5d91e656"
+    },
+    {
+      "material": "JPEG-to-JXL coefficient channel mapping, transposition and quantisation/DC adjustment",
+      "upstream": "https://github.com/libjxl/libjxl/blob/a7a9c787341cf703dede03c2009fa460cae5e5df/lib/jxl/enc_frame.cc",
+      "licence": "BSD-3-Clause",
+      "notice": "Documentation/ThirdParty/libjxl-LICENSE.txt",
+      "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+      "sourceSHA256": "8dbb152d70d0e991186527bf9a73715d5ea3fdd05e54e3b07be5f51acd889b40"
     }
   ],
   "authoredSuccessorFiles": [

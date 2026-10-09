@@ -1,0 +1,74 @@
+{
+  "fixtures" : [
+    {
+      "codestreamBytes" : 605,
+      "fixture" : "gray",
+      "iterationsPerTrial" : 40,
+      "medianMicroseconds" : 537.61042500000008,
+      "samplesMicroseconds" : [
+        922.24792500000001,
+        631.43957499999999,
+        549.911475,
+        519.60727500000007,
+        527.35207500000001,
+        526.24585000000002,
+        537.61042500000008
+      ],
+      "sourceJPEGBytes" : 683,
+      "warmups" : 3
+    },
+    {
+      "codestreamBytes" : 556,
+      "fixture" : "progressive-edge",
+      "iterationsPerTrial" : 40,
+      "medianMicroseconds" : 507.33019999999999,
+      "samplesMicroseconds" : [
+        530.78022499999997,
+        490.07709999999997,
+        492.44792500000005,
+        529.96457499999997,
+        507.33019999999999,
+        491.70415000000003,
+        516.07082500000001
+      ],
+      "sourceJPEGBytes" : 834,
+      "warmups" : 3
+    },
+    {
+      "codestreamBytes" : 779,
+      "fixture" : "quant16",
+      "iterationsPerTrial" : 40,
+      "medianMicroseconds" : 521.026025,
+      "samplesMicroseconds" : [
+        494.07187499999998,
+        550.49894999999992,
+        530.359375,
+        527.56769999999995,
+        494.23855000000003,
+        499.35624999999999,
+        521.026025
+      ],
+      "sourceJPEGBytes" : 747,
+      "warmups" : 3
+    },
+    {
+      "codestreamBytes" : 115606,
+      "fixture" : "multigroup-420",
+      "iterationsPerTrial" : 3,
+      "medianMicroseconds" : 18177.25,
+      "samplesMicroseconds" : [
+        18736.666666666668,
+        18177.25,
+        18262.833333333332,
+        17862.236000000001,
+        18475.888999999999,
+        17695.833333333332,
+        17097.069333333333
+      ],
+      "sourceJPEGBytes" : 89074,
+      "warmups" : 3
+    }
+  ],
+  "scope" : "Native coefficient-to-JXL frame writer with byte comparison; JPEG decoding and reconstruction metadata excluded",
+  "trials" : 7
+}
