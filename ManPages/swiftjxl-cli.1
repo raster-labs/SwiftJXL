@@ -75,6 +75,9 @@ Default 0 reports errors only. Levels are cumulative:
 5 bounded trace. Invalid levels or totals above 5 return 2.
 Explicit levels set and repeated flags increment in argument order.
 Diagnostics use stderr. Requested help/version/capability data uses stdout.
+Diagnostic writes do not wait for stderr to drain. An unavailable diagnostic
+stream returns I/O failure (6). Final error messages are best effort and cannot
+block the original failure, deadline (5) or cancellation (130) exit status.
 No payload bytes, metadata, raw addresses or input/output paths are logged.
 .SH RESERVED CODEC SYNTAX
 Codec command help lists reserved \-i/\-\-input, \-o/\-\-output,

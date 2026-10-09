@@ -16,6 +16,29 @@ struct CommandIO {
     static let overhead = 256 * 1024
     static let maximumInput = 4 * 1024 * 1024
 
+    /// Diagnostics must never prevent deadline/cancellation errors from reaching
+    /// the process boundary. Do not poll here: a full or closed stderr is an I/O
+    /// failure for ordinary diagnostics, and final error reporting is best effort.
+    /// This synchronous CLI boundary has one writer and retains no buffer pointer.
+    static func writeDiagnostic(_ data: Data) throws {
+        let fd = STDERR_FILENO
+        let flags = fcntl(fd, F_GETFL)
+        guard flags >= 0, fcntl(fd, F_SETFL, flags | O_NONBLOCK) == 0 else {
+            throw CodecError(.ioFailure, "Cannot configure diagnostic stream.")
+        }
+        defer { _ = fcntl(fd, F_SETFL, flags) }
+        try data.withUnsafeBytes { bytes in
+            var offset = 0
+            while offset < bytes.count {
+                let count = write(fd, bytes.baseAddress?.advanced(by: offset), bytes.count - offset)
+                // Even EINTR is a failed diagnostic attempt; retrying forever
+                // would defeat the bounded final-error path.
+                guard count > 0 else { throw CodecError(.ioFailure, "Diagnostic output unavailable.") }
+                offset += count
+            }
+        }
+    }
+
     func checkpoint() throws {
         try Task.checkCancellation()
         guard ContinuousClock.now < deadline else {

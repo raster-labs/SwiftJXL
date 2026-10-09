@@ -220,7 +220,12 @@ private func help(_ command: String?) -> String {
 }
 
 private func write(_ text: String, to handle: FileHandle) throws {
-    try handle.write(contentsOf: Data(text.utf8))
+    let data = Data(text.utf8)
+    if handle.fileDescriptor == STDERR_FILENO {
+        try CommandIO.writeDiagnostic(data)
+    } else {
+        try handle.write(contentsOf: data)
+    }
 }
 
 @concurrent private func run() async throws -> Int32 {
