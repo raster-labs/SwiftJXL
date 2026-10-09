@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Public scalar integration — 8 October 2026
+
+Connected public lossless greyscale encode, inspect and both decode call shapes on the feature branch, from predecessor pin `57e81cb9e2411d1efac435b429a306a031744c1e`. Added aggregate memory admission, bounded output assembly, encoder deadlines, required rendering-intent preservation, storage allocation instrumentation and public independent-oracle coverage. See the current resource audit and migration record for executed evidence and remaining release gates. This is not a release or production cutover.
+
 ## Documentation foundation — 17 September 2026
 
 The owner chose four fresh repositories under Raster-Lab, with independent codecs, a common API and memory contract, MIT licensing and an optional adapter-based umbrella. The previous proposal for a new shared-foundation package, SwiftCompressionFamily 2.0.0, was superseded. The intended first stable release here is 2.0.0; no library version has been released or tagged by this foundation.

@@ -109,10 +109,15 @@ def main() -> int:
     frameworks = ["--enable-swift-testing", "--enable-xctest" if xctest else "--disable-xctest"]
     report["xctest_detected"] = xctest
     inventory: dict[str, list[str]] = {}
+    # Inventory every local test module. Codec migration adds internal targets;
+    # assuming a single <Package>Tests module would omit their discovered tests.
+    test_modules = set(re.findall(r'\.testTarget\s*\(\s*name:\s*"([^"]+)"', manifest))
+    if not test_modules:
+        raise RuntimeError("No named local test targets in the package manifest")
 
     def discover(label: str, config: str, extra: list[str]) -> list[str]:
         text = run(label + "-discovery", swift("test", label) + ["-c", config] + extra + ["list"] + frameworks)
-        names = [line.strip() for line in text.splitlines() if line.startswith(name + "Tests.")]
+        names = [line.strip() for line in text.splitlines() if line.split(".", 1)[0] in test_modules]
         if not names:
             raise RuntimeError(f"{label}: zero discovered tests")
         inventory[label] = names
@@ -206,8 +211,8 @@ def main() -> int:
             (consumer / "Sources/Consumer").mkdir(parents=True)
             package_path = json.dumps(str(repo))
             (consumer / "Package.swift").write_text(
-                '// swift-tools-version: 6.4\nimport PackageDescription\n'
-                'let package = Package(name: "FreshConsumer", platforms: [.macOS(.v27)],\n'
+                '// swift-tools-version: 6.2\nimport PackageDescription\n'
+                'let package = Package(name: "FreshConsumer", platforms: [.macOS("26.0")],\n'
                 f' dependencies: [.package(path: {package_path})],\n'
                 f' targets: [.executableTarget(name: "Consumer", dependencies: [.product(name: "{name}", package: "{name}")])],\n'
                 ' swiftLanguageModes: [.v6])\n')
@@ -217,9 +222,9 @@ def main() -> int:
                 'let image = try ImageDestination.allocate(descriptor: d).writeUInt16 { x, _ in [UInt16(0), 65535, 4095][x] }\n'
                 'guard try image.sampleUInt16(x: 1, y: 0) == 65535 else { throw CodecError(.internalFailure, "Sample mismatch") }\n'
                 'let encoder = try Encoder()\n'
-                'guard !encoder.capabilities.canEncode else { throw CodecError(.internalFailure, "Update this Milestone 1 consumer") }\n'
-                'do { _ = try await encoder.encode(image); throw CodecError(.internalFailure, "Unexpected codec success") }\n'
-                'catch let error as CodecError where error.category == .unsupportedFeature {}\n'
+                'let encoded = try await encoder.encode(image)\n'
+                'let decoded = try await Decoder().decode(encoded.data)\n'
+                'guard try decoded.image.sampleUInt16(x: 1, y: 0) == 65535 else { throw CodecError(.internalFailure, "Round trip mismatch") }\n'
                 'print("Fresh independent consumer passed")\n')
             run("fresh-local-consumer", swift("run", "consumer", consumer) + ["Consumer"])
             report["open_gates"].append("Fresh URL-based consumer resolution is separate from this local consumer check")

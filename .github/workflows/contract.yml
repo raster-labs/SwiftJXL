@@ -1,4 +1,4 @@
-name: Milestone 1 contract
+name: SwiftJXL migration checks
 
 # Contract 0.5.0 PLAT-01: Swift 6.2 is the manifest minimum and Swift 6.4 the
 # qualified primary toolchain, so both are built and tested here. A gate that
@@ -67,6 +67,8 @@ jobs:
       - run: xcodebuild -version
       - run: swift build
       - run: swift test
+      - name: CLI and staged manual installation
+        run: python3 Scripts/test-cli.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-evidence"
       - name: Address sanitizer
         run: swift test --scratch-path .build/asan --sanitize address
       - name: Thread sanitizer
@@ -98,9 +100,52 @@ jobs:
             echo '    name: "Consumer",'
             echo "    dependencies: [.package(path: \"$GITHUB_WORKSPACE/package\")],"
             echo '    targets: [.executableTarget(name: "Consumer", dependencies: ['
-            echo "        .product(name: \"$NAME\", package: \"$NAME\")])]"
+            echo "        .product(name: \"$NAME\", package: \"package\")])]"
             echo ')'
           } > Package.swift
-          printf 'import %s\nprint("consumer built")\n' "$NAME" > Sources/Consumer/main.swift
+          cp "$GITHUB_WORKSPACE/package/Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift" Sources/Consumer/Consumer.swift
           swift build
           swift run Consumer
+
+  independent-oracle:
+    name: Pinned libjxl 0.12.0 interoperability / Swift 6.4
+    runs-on: ubuntu-24.04
+    container: swift:6.4-noble
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Build pinned test-only reference tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          apt-get update
+          apt-get install -y --no-install-recommends python3 cmake ninja-build pkg-config libjpeg-dev libpng-dev
+          git init "$RUNNER_TEMP/libjxl"
+          git -C "$RUNNER_TEMP/libjxl" remote add origin https://github.com/libjxl/libjxl.git
+          git -C "$RUNNER_TEMP/libjxl" fetch --depth 1 origin a7a9c787341cf703dede03c2009fa460cae5e5df
+          git -C "$RUNNER_TEMP/libjxl" checkout --detach FETCH_HEAD
+          test "$(git -C "$RUNNER_TEMP/libjxl" rev-parse HEAD)" = a7a9c787341cf703dede03c2009fa460cae5e5df
+          git -C "$RUNNER_TEMP/libjxl" submodule update --init --depth 1 third_party/brotli third_party/highway third_party/lcms
+          cmake -S "$RUNNER_TEMP/libjxl" -B "$RUNNER_TEMP/libjxl/build" -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF \
+            -DJPEGXL_ENABLE_TOOLS=ON -DJPEGXL_ENABLE_BENCHMARK=OFF \
+            -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_MANPAGES=OFF \
+            -DJPEGXL_ENABLE_DOXYGEN=OFF -DJPEGXL_ENABLE_JNI=OFF \
+            -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_ENABLE_OPENEXR=OFF \
+            -DJPEGXL_ENABLE_SKCMS=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_BUNDLE_LIBPNG=OFF
+          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl --parallel 2
+          mkdir -p .build
+          git -C "$RUNNER_TEMP/libjxl" submodule status > .build/oracle-source-pins.txt
+      - name: Require debug and release oracle tests
+        run: python3 Scripts/validate-oracle.py --tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/oracle-evidence
+      - name: Preserve oracle evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: independent-oracle-evidence
+          path: |
+            .build/oracle-evidence
+            .build/oracle-source-pins.txt
+          if-no-files-found: warn

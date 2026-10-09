@@ -1,0 +1,98 @@
+SWIFTJXL-CLI(1)          Swift Image Compression Suite         SWIFTJXL-CLI(1)
+
+NAME
+     swiftjxl-cli - help, version and capability reporting for SwiftJXL
+
+SYNOPSIS
+     swiftjxl-cli [options] command [options]
+
+DESCRIPTION
+     This development tool provides help, version and truthful library
+     capability reporting.  Codec algorithms are not implemented. Reserved
+     encode, decode, inspect and validate commands and native transcode return
+     4 without opening input, consuming standard input or creating output.
+     Build with Swift 6.2 or later in Swift 6 language mode.  Apple OS minimum
+     is 26.0.  CLI hosts are macOS and Linux; consult qualification records
+     for executed coverage.
+
+COMMANDS
+     capabilities [--json]
+            Report actual library encode/decode/inspect support. JSON is one
+            document on stdout.  False support values and empty formats mean
+            unavailable algorithms.
+
+     help [command]
+            Show global or command-specific help. No arguments also show
+            global help.
+
+     version
+            Show the development version.
+
+OPTIONS
+     -h, --help
+            Show help, including after a command.
+
+     --version
+            Show the development version.
+
+     -v, -vv, -vvv, -vvvv, -vvvvv
+            Increase diagnostic verbosity, up to 5.
+
+     --verbose LEVEL, --verbose=LEVEL
+            Set level to 1 through 5, or + through +++++. Bare verbose
+            increments once.
+
+     -verbose: LEVEL, -verbose:LEVEL
+            Equivalent explicit verbosity spelling; bare -verbose increments
+            once.
+
+     -q, --quiet
+            Suppress optional diagnostics; errors remain visible. Conflicts
+            with verbosity.
+
+DIAGNOSTIC LEVELS
+     Default 0 reports errors only. Levels are cumulative: 1 summary; 2
+     stages; 3 capability/configuration details; 4 elapsed timing; 5 bounded
+     trace. Invalid levels or totals above 5 return 2.  Explicit levels set
+     and repeated flags increment in argument order.  Diagnostics use stderr.
+     Requested help/version/capability data uses stdout.  No payload bytes,
+     metadata, raw addresses or input/output paths are logged.
+
+RESERVED CODEC SYNTAX
+     Codec command help lists reserved -i/--input, -o/--output, --input-
+     format, --output-format, --mode, --max-error, --backend, --copy-policy,
+     --threads, --max-memory, --timeout, --overwrite and --json.  These are
+     not implemented payload operations. A single hyphen will denote standard
+     input/output in a future codec command. Default future mode is lossless
+     and copy policy is require-sharing. No private intermediate image format
+     is implemented.
+
+EXIT STATUS
+     0 success/help/version; 2 invalid usage; 4 unsupported operation; 6
+     output I/O failure including a closed pipe.  Future codec statuses
+     reserve 3 malformed input, 5 resource/deadline, 7 internal failure and
+     130 user cancellation.
+
+EXAMPLES
+     swiftjxl-cli -h
+     swiftjxl-cli help capabilities
+     swiftjxl-cli capabilities --json -vv
+     swiftjxl-cli capabilities -verbose: 3
+     swiftjxl-cli capabilities --verbose=+++++
+
+INSTALLATION
+     Scripts/install-cli.sh installs or updates the executable and this page
+     together.  Use --prefix for an absolute prefix (default /usr/local),
+     --destdir or DESTDIR for staging, and --binary for a prebuilt binary
+     matching VERSION.  Files are PREFIX/bin/swiftjxl-cli and
+     PREFIX/share/man/man1/swiftjxl-cli.1.  For custom prefixes use man -M
+     PREFIX/share/man swiftjxl-cli, or configure MANPATH.  No index refresh is
+     needed for direct lookup; no sudo runs automatically.
+
+SEE ALSO
+     man(1)
+
+     CLI.md and Documentation/Engineering/OS27CLI/README.md in the SwiftJXL
+     repository.
+
+2.1.0-dev.2                   September 19, 2026               SWIFTJXL-CLI(1)

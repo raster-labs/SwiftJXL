@@ -26,7 +26,7 @@ def main():
         save();assert r.returncode==expected,(argv,r.returncode,r.stderr);return r
     def cli(*values,expected=0):return run([binary,*values],expected)
     def document(r):
-        d=json.loads(r.stdout);assert d['version']==version and d['minimumAppleOS']=='27.0'
+        d=json.loads(r.stdout);assert d['version']==version and d['minimumAppleOS']=='26.0'
         assert d['canEncode'] is False and d['canDecode'] is False and d['canInspect'] is False and d['formats']==[]
         return d
     try:
@@ -57,7 +57,7 @@ def main():
         with tempfile.TemporaryDirectory(prefix='cli stage spaces ',dir=out) as temp:
             temp=Path(temp);payload=temp/'private image λ.raw';payload.write_bytes(b'unchanged')
             verbs=['encode','decode','inspect','validate']
-            if tool in ['swiftj2k','swiftjxl']:verbs.append('transcode')
+            if tool in ['swiftj2k-cli','swiftjxl-cli']:verbs.append('transcode')
             else:cli('transcode',expected=2)
             for verb in verbs:
                 assert 'UNAVAILABLE:' in cli(verb,'--help').stdout

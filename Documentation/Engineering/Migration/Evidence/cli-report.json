@@ -1,0 +1,1331 @@
+{
+  "binary": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+  "binary_sha256": "c3aa17d774a71d8ab1e3095da768386e8a583f74b9189a515385b5202418ebb5",
+  "installer_sha256": "2ec55c5025e69e18e92ba76f738bee4fe5c9df4ea6b332ae9ec7140b8b55e693",
+  "test_runner_sha256": "07f1694ab27ffe528da80a58fa954a41f0d3ca92f2a84dabafe0ee18660b857a",
+  "version": "2.1.0-dev.2",
+  "manual_sha256": "7d32e7934f6f662b04fc93935a39dbc074d3bdc5500c38bddaf3927968588615",
+  "commands": [
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report actual library support (currently empty).\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  encode, decode, inspect, validate, transcode\n                            Reserved; codec algorithms are unavailable (exit 4).\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nThis development tool provides help/version/capabilities, not compression yet.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report actual library support (currently empty).\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  encode, decode, inspect, validate, transcode\n                            Reserved; codec algorithms are unavailable (exit 4).\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nThis development tool provides help/version/capabilities, not compression yet.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "-h"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report actual library support (currently empty).\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  encode, decode, inspect, validate, transcode\n                            Reserved; codec algorithms are unavailable (exit 4).\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nThis development tool provides help/version/capabilities, not compression yet.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report actual library support (currently empty).\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  encode, decode, inspect, validate, transcode\n                            Reserved; codec algorithms are unavailable (exit 4).\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nThis development tool provides help/version/capabilities, not compression yet.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli capabilities [--json] [OPTIONS]\n\nReport this library's current encode/decode/inspect support without reading files.\n--json writes one JSON document to stdout; diagnostics stay on stderr.\nEmpty formats and false support values mean codec algorithms are unavailable.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli capabilities --json\n  swiftjxl-cli capabilities --verbose=+++\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "help",
+        "capabilities"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli capabilities [--json] [OPTIONS]\n\nReport this library's current encode/decode/inspect support without reading files.\n--json writes one JSON document to stdout; diagnostics stay on stderr.\nEmpty formats and false support values mean codec algorithms are unavailable.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli capabilities --json\n  swiftjxl-cli capabilities --verbose=+++\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "-h"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli capabilities [--json] [OPTIONS]\n\nReport this library's current encode/decode/inspect support without reading files.\n--json writes one JSON document to stdout; diagnostics stay on stderr.\nEmpty formats and false support values mean codec algorithms are unavailable.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli capabilities --json\n  swiftjxl-cli capabilities --verbose=+++\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--version",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "+"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=+"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "+++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=+++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vvvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0016997083330352325\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0017520416658953764\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0017404583340976387\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0017932500013557728\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.001861000000644708\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.00168929166829912\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0017679583361314144\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.001763791668054182\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vvvvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0016910000013012905\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v",
+        "-v",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0017672499998298008\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0017097916679631453\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.001702583336737007\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0017921250000654254\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0017147500002465677\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "+++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0017847916678874753\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=+++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 0.0018997500010300428\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--verbose",
+        "capabilities",
+        "--json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "-verbose",
+        "capabilities",
+        "--json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "-v",
+        "--verbose",
+        "2",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\nencode: false\ndecode: false\ninspect: false\nformats: none\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "-vv",
+        "-vvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\nencode: false\ndecode: false\ninspect: false\nformats: none\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 0; capability values read from the library\n[4] swiftjxl-cli: elapsed seconds: 7.579166776849888e-05\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":false,\"canEncode\":false,\"canInspect\":false,\"formats\":[],\"minimumAppleOS\":\"26.0\",\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--help",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report actual library support (currently empty).\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  encode, decode, inspect, validate, transcode\n                            Reserved; codec algorithms are unavailable (exit 4).\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nThis development tool provides help/version/capabilities, not compression yet.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=0"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=6"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=10"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=99999999999999999999999999999"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=abc"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=++++++"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=+2"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose=\u0661"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--verbose="
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--verbose=5",
+        "-v"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity exceeds the maximum level 5.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "-vvvvvv"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity exceeds the maximum level 5.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "-v",
+        "--quiet"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --quiet and verbosity cannot be combined.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--quiet",
+        "--verbose=1"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --quiet and verbosity cannot be combined.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--quiet",
+        "--verbose=0"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--unknown"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unknown option. Use swiftjxl-cli --help.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "bogus"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unknown command. Use swiftjxl-cli --help.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "help",
+        "bogus"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unknown command. Use swiftjxl-cli --help.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "extra"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unexpected positional argument. Use --input or --output for future codec commands.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--verbose:"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--json"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --json requires capabilities or a codec command.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--input",
+        "some-path"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Input/output and codec options require a codec command.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--output",
+        "x"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Input/output and codec options require a codec command.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "capabilities",
+        "--version"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --version cannot be combined with a command or command options.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--input"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "encode",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli encode [OPTIONS]\n\nUNAVAILABLE: encode is reserved for a future codec milestone (exit 4).\nNo input is opened, no standard input is consumed and no output file is created.\nHelp describes reserved syntax, not working compression or validation.\n\nRESERVED CODEC OPTIONS\n  -i, --input PATH           Input file; '-' will mean standard input.\n  -o, --output PATH          Final output; '-' will mean standard output.\n  --input-format FORMAT     Explicit source format.\n  --output-format FORMAT    Explicit target format.\n  --mode MODE               lossless (default), near-lossless or lossy when supported.\n  --max-error N             Supported near-lossless error in integer sample units.\n  --backend NAME            Explicit supported backend.\n  --copy-policy POLICY      require-sharing (default) or allow-copy.\n  --threads N               Worker limit; --max-memory BYTES; --timeout SECONDS.\n  --overwrite               Permit replacing final output only when implemented.\n  --json                    Structured report; no binary stdout contamination.\nCommand-specific applicability and value validation require codec implementation.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "encode",
+        "--input",
+        "-",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "-vvvvv"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting encode\nswiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "encode",
+        "--input",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/must not exist"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "decode",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli decode [OPTIONS]\n\nUNAVAILABLE: decode is reserved for a future codec milestone (exit 4).\nNo input is opened, no standard input is consumed and no output file is created.\nHelp describes reserved syntax, not working compression or validation.\n\nRESERVED CODEC OPTIONS\n  -i, --input PATH           Input file; '-' will mean standard input.\n  -o, --output PATH          Final output; '-' will mean standard output.\n  --input-format FORMAT     Explicit source format.\n  --output-format FORMAT    Explicit target format.\n  --mode MODE               lossless (default), near-lossless or lossy when supported.\n  --max-error N             Supported near-lossless error in integer sample units.\n  --backend NAME            Explicit supported backend.\n  --copy-policy POLICY      require-sharing (default) or allow-copy.\n  --threads N               Worker limit; --max-memory BYTES; --timeout SECONDS.\n  --overwrite               Permit replacing final output only when implemented.\n  --json                    Structured report; no binary stdout contamination.\nCommand-specific applicability and value validation require codec implementation.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "decode",
+        "--input",
+        "-",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "-vvvvv"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting decode\nswiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "decode",
+        "--input",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/must not exist"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "inspect",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli inspect [OPTIONS]\n\nUNAVAILABLE: inspect is reserved for a future codec milestone (exit 4).\nNo input is opened, no standard input is consumed and no output file is created.\nHelp describes reserved syntax, not working compression or validation.\n\nRESERVED CODEC OPTIONS\n  -i, --input PATH           Input file; '-' will mean standard input.\n  -o, --output PATH          Final output; '-' will mean standard output.\n  --input-format FORMAT     Explicit source format.\n  --output-format FORMAT    Explicit target format.\n  --mode MODE               lossless (default), near-lossless or lossy when supported.\n  --max-error N             Supported near-lossless error in integer sample units.\n  --backend NAME            Explicit supported backend.\n  --copy-policy POLICY      require-sharing (default) or allow-copy.\n  --threads N               Worker limit; --max-memory BYTES; --timeout SECONDS.\n  --overwrite               Permit replacing final output only when implemented.\n  --json                    Structured report; no binary stdout contamination.\nCommand-specific applicability and value validation require codec implementation.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "inspect",
+        "--input",
+        "-",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "-vvvvv"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting inspect\nswiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "inspect",
+        "--input",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/must not exist"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "validate",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli validate [OPTIONS]\n\nUNAVAILABLE: validate is reserved for a future codec milestone (exit 4).\nNo input is opened, no standard input is consumed and no output file is created.\nHelp describes reserved syntax, not working compression or validation.\n\nRESERVED CODEC OPTIONS\n  -i, --input PATH           Input file; '-' will mean standard input.\n  -o, --output PATH          Final output; '-' will mean standard output.\n  --input-format FORMAT     Explicit source format.\n  --output-format FORMAT    Explicit target format.\n  --mode MODE               lossless (default), near-lossless or lossy when supported.\n  --max-error N             Supported near-lossless error in integer sample units.\n  --backend NAME            Explicit supported backend.\n  --copy-policy POLICY      require-sharing (default) or allow-copy.\n  --threads N               Worker limit; --max-memory BYTES; --timeout SECONDS.\n  --overwrite               Permit replacing final output only when implemented.\n  --json                    Structured report; no binary stdout contamination.\nCommand-specific applicability and value validation require codec implementation.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "validate",
+        "--input",
+        "-",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "-vvvvv"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting validate\nswiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "validate",
+        "--input",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/must not exist"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli transcode [OPTIONS]\n\nUNAVAILABLE: transcode is reserved for a future codec milestone (exit 4).\nNo input is opened, no standard input is consumed and no output file is created.\nHelp describes reserved syntax, not working compression or validation.\n\nRESERVED CODEC OPTIONS\n  -i, --input PATH           Input file; '-' will mean standard input.\n  -o, --output PATH          Final output; '-' will mean standard output.\n  --input-format FORMAT     Explicit source format.\n  --output-format FORMAT    Explicit target format.\n  --mode MODE               lossless (default), near-lossless or lossy when supported.\n  --max-error N             Supported near-lossless error in integer sample units.\n  --backend NAME            Explicit supported backend.\n  --copy-policy POLICY      require-sharing (default) or allow-copy.\n  --threads N               Worker limit; --max-memory BYTES; --timeout SECONDS.\n  --overwrite               Permit replacing final output only when implemented.\n  --json                    Structured report; no binary stdout contamination.\nCommand-specific applicability and value validation require codec implementation.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success/help/version; 2 invalid usage; 4 unsupported codec operation;\n  6 output I/O failure (including a closed pipe). Future codec errors additionally\n  use 3 malformed input, 5 resource/deadline, 7 internal failure, 130 cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "--input",
+        "-",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "-vvvvv"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting transcode\nswiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "transcode",
+        "--input",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/private image \u03bb.raw",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/must not exist"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: unsupported feature: codec algorithms are not implemented; no input/output opened.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--help"
+      ],
+      "condition": "stdout pipe with no readers",
+      "exit_code": 6,
+      "expected_exit_code": 6,
+      "stderr": "swiftjxl-cli: output I/O failure.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "Installed /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/bin/swiftjxl-cli\nManual: /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\nRead with: man -M \"/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man\" swiftjxl-cli\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "Installed /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/bin/swiftjxl-cli\nManual: /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\nRead with: man -M \"/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man\" swiftjxl-cli\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/bin/swiftjxl-cli",
+        "--version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/man",
+        "-M",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man",
+        "-w",
+        "swiftjxl-cli"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/mandoc",
+        "-T",
+        "lint",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/mandoc",
+        "-T",
+        "ascii",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "SWIFTJXL-CLI(1)          Swift Image Compression Suite         SWIFTJXL-CLI(1)\n\nN\bNA\bAM\bME\bE\n     swiftjxl-cli - help, version and capability reporting for SwiftJXL\n\nS\bSY\bYN\bNO\bOP\bPS\bSI\bIS\bS\n     s\bsw\bwi\bif\bft\btj\bjx\bxl\bl-\b-c\bcl\bli\bi [_\bo_\bp_\bt_\bi_\bo_\bn_\bs] _\bc_\bo_\bm_\bm_\ba_\bn_\bd [_\bo_\bp_\bt_\bi_\bo_\bn_\bs]\n\nD\bDE\bES\bSC\bCR\bRI\bIP\bPT\bTI\bIO\bON\bN\n     This development tool provides help, version and truthful library\n     capability reporting.  Codec algorithms are not implemented. Reserved\n     encode, decode, inspect and validate commands and native transcode return\n     4 without opening input, consuming standard input or creating output.\n     Build with Swift 6.2 or later in Swift 6 language mode.  Apple OS minimum\n     is 26.0.  CLI hosts are macOS and Linux; consult qualification records\n     for executed coverage.\n\nC\bCO\bOM\bMM\bMA\bAN\bND\bDS\bS\n     c\bca\bap\bpa\bab\bbi\bil\bli\bit\bti\bie\bes\bs [\b[-\b--\b-j\bjs\bso\bon\bn]\b]\n            Report actual library encode/decode/inspect support. JSON is one\n            document on stdout.  False support values and empty formats mean\n            unavailable algorithms.\n\n     h\bhe\bel\blp\bp [\b[c\bco\bom\bmm\bma\ban\bnd\bd]\b]\n            Show global or command-specific help. No arguments also show\n            global help.\n\n     v\bve\ber\brs\bsi\bio\bon\bn\n            Show the development version.\n\nO\bOP\bPT\bTI\bIO\bON\bNS\bS\n     -\b-h\bh,\b, -\b--\b-h\bhe\bel\blp\bp\n            Show help, including after a command.\n\n     -\b--\b-v\bve\ber\brs\bsi\bio\bon\bn\n            Show the development version.\n\n     -\b-v\bv,\b, -\b-v\bvv\bv,\b, -\b-v\bvv\bvv\bv,\b, -\b-v\bvv\bvv\bvv\bv,\b, -\b-v\bvv\bvv\bvv\bvv\bv\n            Increase diagnostic verbosity, up to 5.\n\n     -\b--\b-v\bve\ber\brb\bbo\bos\bse\be L\bLE\bEV\bVE\bEL\bL,\b, -\b--\b-v\bve\ber\brb\bbo\bos\bse\be=\b=L\bLE\bEV\bVE\bEL\bL\n            Set level to 1 through 5, or + through +++++. Bare verbose\n            increments once.\n\n     -\b-v\bve\ber\brb\bbo\bos\bse\be:\b: L\bLE\bEV\bVE\bEL\bL,\b, -\b-v\bve\ber\brb\bbo\bos\bse\be:\b:L\bLE\bEV\bVE\bEL\bL\n            Equivalent explicit verbosity spelling; bare -verbose increments\n            once.\n\n     -\b-q\bq,\b, -\b--\b-q\bqu\bui\bie\bet\bt\n            Suppress optional diagnostics; errors remain visible. Conflicts\n            with verbosity.\n\nD\bDI\bIA\bAG\bGN\bNO\bOS\bST\bTI\bIC\bC L\bLE\bEV\bVE\bEL\bLS\bS\n     Default 0 reports errors only. Levels are cumulative: 1 summary; 2\n     stages; 3 capability/configuration details; 4 elapsed timing; 5 bounded\n     trace. Invalid levels or totals above 5 return 2.  Explicit levels set\n     and repeated flags increment in argument order.  Diagnostics use stderr.\n     Requested help/version/capability data uses stdout.  No payload bytes,\n     metadata, raw addresses or input/output paths are logged.\n\nR\bRE\bES\bSE\bER\bRV\bVE\bED\bD C\bCO\bOD\bDE\bEC\bC S\bSY\bYN\bNT\bTA\bAX\bX\n     Codec command help lists reserved -i/--input, -o/--output, --input-\n     format, --output-format, --mode, --max-error, --backend, --copy-policy,\n     --threads, --max-memory, --timeout, --overwrite and --json.  These are\n     not implemented payload operations. A single hyphen will denote standard\n     input/output in a future codec command. Default future mode is lossless\n     and copy policy is require-sharing. No private intermediate image format\n     is implemented.\n\nE\bEX\bXI\bIT\bT S\bST\bTA\bAT\bTU\bUS\bS\n     0 success/help/version; 2 invalid usage; 4 unsupported operation; 6\n     output I/O failure including a closed pipe.  Future codec statuses\n     reserve 3 malformed input, 5 resource/deadline, 7 internal failure and\n     130 user cancellation.\n\nE\bEX\bXA\bAM\bMP\bPL\bLE\bES\bS\n     swiftjxl-cli -h\n     swiftjxl-cli help capabilities\n     swiftjxl-cli capabilities --json -vv\n     swiftjxl-cli capabilities -verbose: 3\n     swiftjxl-cli capabilities --verbose=+++++\n\nI\bIN\bNS\bST\bTA\bAL\bLL\bLA\bAT\bTI\bIO\bON\bN\n     Scripts/install-cli.sh installs or updates the executable and this page\n     together.  Use --prefix for an absolute prefix (default /usr/local),\n     --destdir or DESTDIR for staging, and --binary for a prebuilt binary\n     matching VERSION.  Files are PREFIX/bin/swiftjxl-cli and\n     PREFIX/share/man/man1/swiftjxl-cli.1.  For custom prefixes use man -M\n     PREFIX/share/man swiftjxl-cli, or configure MANPATH.  No index refresh is\n     needed for direct lookup; no sudo runs automatically.\n\nS\bSE\bEE\bE A\bAL\bLS\bSO\bO\n     m\bma\ban\bn(1)\n\n     CLI.md and Documentation/Engineering/OS27CLI/README.md in the SwiftJXL\n     repository.\n\n2.1.0-dev.2                   September 19, 2026               SWIFTJXL-CLI(1)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--prefix",
+        "relative",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Prefix and nonempty staging root must be absolute.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Missing option value.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/wrong version",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Binary version does not match this source and manual.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "Installed /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/bin/swiftjxl-cli\nManual: /Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\nRead with: man -M \"/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces/opt/suite tools/share/man\" swiftjxl-cli\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stale source/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Manual version does not match VERSION.\n"
+    },
+    {
+      "argv": [
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/.build/out/Products/Debug/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/cli-preflight-final/cli stage spaces yrhb5prf/stage with spaces"
+      ],
+      "exit_code": 6,
+      "expected_exit_code": 6,
+      "stdout": "",
+      "stderr": "Refusing to replace a symlink or directory; choose a separate prefix.\n"
+    }
+  ],
+  "status": "passed",
+  "checks": 109
+}

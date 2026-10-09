@@ -1,0 +1,13 @@
+{
+  "allocatingAfterBytes" : 410416,
+  "allocatingBeforeBytes" : 262720,
+  "build" : "ordinary, no sanitizers",
+  "callerAfterBytes" : 558320,
+  "callerBeforeBytes" : 558272,
+  "dimensions" : [
+    256,
+    256
+  ],
+  "finalPixelBytes" : 131072,
+  "note" : "Process heap snapshots; not peak workspace or an exact per-operation allocation count"
+}

@@ -27,18 +27,12 @@ struct ContractConsumer {
             throw ConsumerFailure.unexpectedResult
         }
         let encoder = try SwiftJXL.Encoder(configuration: .init())
-        do {
-            _ = try await encoder.encode(image, options: .init())
-            throw ConsumerFailure.unexpectedResult
-        } catch let error as SwiftJXL.CodecError {
-            guard error.category == .unsupportedFeature else { throw error }
-        }
+        let encoded = try await encoder.encode(image)
         let decoder = try SwiftJXL.Decoder(configuration: .init())
-        do {
-            _ = try await decoder.decode(Data(), options: .init())
+        let decoded = try await decoder.decode(encoded.data)
+        guard try decoded.image.sampleUInt16(x: 2, y: 1) == 4095,
+              decoded.image.descriptor.meaningfulBits == 12 else {
             throw ConsumerFailure.unexpectedResult
-        } catch let error as SwiftJXL.CodecError {
-            guard error.category == .unsupportedFeature else { throw error }
         }
         let transcoder = try SwiftJXL.Transcoder(configuration: .init())
         do {
@@ -47,6 +41,6 @@ struct ContractConsumer {
         } catch let error as SwiftJXL.CodecError {
             guard error.category == .unsupportedFeature else { throw error }
         }
-        print("Public consumer passed: owning UInt16 samples and explicit codec unavailability.")
+        print("Public consumer passed: owning UInt16 samples and lossless scalar JPEG XL.")
     }
 }

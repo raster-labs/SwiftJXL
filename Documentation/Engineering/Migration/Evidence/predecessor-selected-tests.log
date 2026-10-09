@@ -1,0 +1,229 @@
+Fetching https://github.com/apple/swift-argument-parser.git
+[1/19083] Fetching swift-argument-parser
+Fetched https://github.com/apple/swift-argument-parser.git (2.30s)
+Computing version for https://github.com/apple/swift-argument-parser.git
+Computed https://github.com/apple/swift-argument-parser.git at 1.8.2 (2.85s)
+Creating working copy for https://github.com/apple/swift-argument-parser.git
+Working copy of https://github.com/apple/swift-argument-parser.git resolved at 1.8.2
+Building for production...
+[Pre-planning 1 / 329]
+[Planning deferred tasks]
+[66 / 133]
+[69 / 135] ArgumentParserToolInfo
+[71 / 146]
+[75 / 146]
+[80 / 190]
+[83 / 190]
+[85 / 190]
+[88 / 190]
+[91 / 190]
+[94 / 190]
+[97 / 190]
+[106 / 190]
+[110 / 190]
+[117 / 191] ArgumentParser
+[121 / 191]
+[124 / 200]
+[128 / 200]
+[129 / 200]
+[132 / 200]
+[136 / 200]
+[138 / 200]
+[142 / 200]
+[144 / 200]
+[145 / 200]
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Sources/JXLSwift/Codec/JXLDecoder.swift:1436:21: warning: initialization of immutable value 'groupRowIdx' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+1434 |             }
+1435 |             for by in byStart..<byEnd {
+1436 |                 let groupRowIdx = by - byStart
+     |                     `- warning: initialization of immutable value 'groupRowIdx' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+1437 |                 for bx in bxStart..<bxEnd {
+1438 |                     let groupColIdx = bx - bxStart
+
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Sources/JXLSwift/Codec/JXLDecoder.swift:1438:25: warning: initialization of immutable value 'groupColIdx' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+1436 |                 let groupRowIdx = by - byStart
+1437 |                 for bx in bxStart..<bxEnd {
+1438 |                     let groupColIdx = bx - bxStart
+     |                         `- warning: initialization of immutable value 'groupColIdx' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+1439 |                     // Per-cell strategy lookup. Skip non-first-block
+1440 |                     // cells (covered by a multi-block transform whose
+
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Sources/JXLSwift/JPEG/JPEGScanEncoder.swift:374:9: warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]
+372 |     ) throws {
+373 |         var capturedWriter = writer
+374 |         try forEachDCBlock(
+    |         `- warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]
+375 |             components: components, frameComponents: frameComponents,
+376 |             scanComponents: scanComponents,
+
+[#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>
+[#UnnecessaryEffectMarker]: <https://docs.swift.org/compiler/documentation/diagnostics/unnecessary-effect-marker>
+[151 / 200] JXLSwift
+[159 / 202]
+[163 / 204]
+[167 / 205] jxl-tool-product
+[170 / 206] JXLSwiftContract
+[170 / 206] jxl-tool-product
+[171 / 206] jxl-product
+[176 / 207]
+[188 / 208] JXLSwift-product
+[193 / 235]
+[199 / 235]
+[203 / 235]
+[206 / 235]
+[207 / 235]
+[209 / 235]
+[211 / 235]
+[212 / 235]
+[215 / 235]
+[221 / 235] JXLSwiftContractTests-product
+[223 / 235] JXLSwiftContractTests-product
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:1806:17: warning: variable 's' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+1804 |                   bytes[i] == 0x20 || bytes[i] == 0x0a
+1805 |                     || bytes[i] == 0x09 || bytes[i] == 0x0d { i += 1 }
+1806 |             var s = i
+     |                 `- warning: variable 's' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+1807 |             while i < bytes.count,
+1808 |                   !(bytes[i] == 0x20 || bytes[i] == 0x0a
+
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/RobustnessTests.swift:258:21: warning: variable 's' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+256 |             while toks.count < 3 {
+257 |                 while idx < data.count, data[idx] == 0x20 || data[idx] == 0x0a || data[idx] == 0x09 || data[idx] == 0x0d { idx += 1 }
+258 |                 var s = idx
+    |                     `- warning: variable 's' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+259 |                 while idx < data.count, !(data[idx] == 0x20 || data[idx] == 0x0a || data[idx] == 0x09 || data[idx] == 0x0d) { idx += 1 }
+260 |                 toks.append(Int(String(decoding: data[s..<idx], as: UTF8.self)) ?? 0)
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[226 / 235] JXLSwiftTests-product
+[231 / 235] JXLSwiftTests-product
+[233 / 235] JXLSwiftTests-product
+Build complete! (106.44 sec)
+Test Suite 'Selected tests' started at 2026-10-07 16:58:12.658.
+Test Suite 'JXLSwiftTests.xctest' started at 2026-10-07 16:58:12.664.
+Test Suite 'FoundationTests' started at 2026-10-07 16:58:12.664.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_ArbitraryDims_Lossless_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_ArbitraryDims_Lossless_DjxlRoundTrip]' passed (0.554 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_BeyondOldCap_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_BeyondOldCap_DjxlRoundTrip]' passed (0.397 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_ConstantGrayscale_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_ConstantGrayscale_DjxlRoundTrip]' passed (0.341 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_ConstantGrayscale_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_ConstantGrayscale_RoundTrip]' passed (0.004 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_ConstantImage_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_ConstantImage_DjxlRoundTrip]' passed (0.379 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_EdgeDimensions_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_EdgeDimensions_RoundTrip]' passed (0.150 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_EffortKnob_MonotonicAndLossless]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_EffortKnob_MonotonicAndLossless]' passed (0.633 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale10_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale10_RoundTrip]' passed (0.002 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale16_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale16_DjxlRoundTrip]' passed (0.069 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale16_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale16_RoundTrip]' passed (0.005 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale8_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale8_DjxlRoundTrip]' passed (0.137 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale8_MultiGroup_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale8_MultiGroup_DjxlRoundTrip]' passed (0.433 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale8_MultiGroup_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale8_MultiGroup_RoundTrip]' passed (0.455 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale8_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_Grayscale8_RoundTrip]' passed (0.005 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GrayscaleAlpha16_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GrayscaleAlpha16_DjxlRoundTrip]' passed (0.067 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GrayscaleAlpha8_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GrayscaleAlpha8_DjxlRoundTrip]' passed (0.067 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GreedyMultiProperty_MultiGroup_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GreedyMultiProperty_MultiGroup_DjxlRoundTrip]' passed (0.891 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GreedyMultiProperty_SingleSection_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GreedyMultiProperty_SingleSection_DjxlRoundTrip]' passed (0.355 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GreedySubsample_LargeRGB_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_GreedySubsample_LargeRGB_DjxlRoundTrip]' passed (0.607 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_LearnedMultiBin_MultiGroup_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_LearnedMultiBin_MultiGroup_DjxlRoundTrip]' passed (0.862 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_LearnedThreshold_MultiGroup_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_LearnedThreshold_MultiGroup_DjxlRoundTrip]' passed (0.739 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_MultiContext_8Bin_MultiGroup_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_MultiContext_8Bin_MultiGroup_DjxlRoundTrip]' passed (0.869 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_MultiContext_MultiGroup_Bimodal16_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_MultiContext_MultiGroup_Bimodal16_DjxlRoundTrip]' passed (0.520 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_MultiDcGroup_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_MultiDcGroup_DjxlRoundTrip]' passed (0.414 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB16_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB16_DjxlRoundTrip]' passed (0.069 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB16_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB16_RoundTrip]' passed (0.005 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB8_2x2Groups_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB8_2x2Groups_DjxlRoundTrip]' passed (0.768 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB8_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB8_DjxlRoundTrip]' passed (0.066 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB8_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGB8_RoundTrip]' passed (0.007 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGBA16_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGBA16_RoundTrip]' passed (0.004 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGBA8_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGBA8_DjxlRoundTrip]' passed (0.071 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGBA8_RoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_RGBA8_RoundTrip]' passed (0.004 seconds).
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_WP_StructuredGrayscale16_DjxlRoundTrip]' started.
+Test Case '-[JXLSwiftTests.FoundationTests testSpecModularEncoder_WP_StructuredGrayscale16_DjxlRoundTrip]' passed (0.505 seconds).
+Test Suite 'FoundationTests' passed at 2026-10-07 16:58:23.119.
+	 Executed 33 tests, with 0 failures (0 unexpected) in 10.453 (10.455) seconds
+Test Suite 'PublicAPILosslessJPEGTests' started at 2026-10-07 16:58:23.119.
+Test Case '-[JXLSwiftTests.PublicAPILosslessJPEGTests testPublicAPI_DecodeLosslessJPEG_NonBridgeInput_Throws]' started.
+Test Case '-[JXLSwiftTests.PublicAPILosslessJPEGTests testPublicAPI_DecodeLosslessJPEG_NonBridgeInput_Throws]' passed (0.002 seconds).
+Test Case '-[JXLSwiftTests.PublicAPILosslessJPEGTests testPublicAPI_LosslessJPEGRoundTrip_ByteIdentical]' started.
+Test Case '-[JXLSwiftTests.PublicAPILosslessJPEGTests testPublicAPI_LosslessJPEGRoundTrip_ByteIdentical]' passed (0.220 seconds).
+Test Suite 'PublicAPILosslessJPEGTests' passed at 2026-10-07 16:58:23.342.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.222 (0.222) seconds
+Test Suite 'JXLSwiftTests.xctest' passed at 2026-10-07 16:58:23.342.
+	 Executed 35 tests, with 0 failures (0 unexpected) in 10.675 (10.678) seconds
+Test Suite 'Selected tests' passed at 2026-10-07 16:58:23.342.
+	 Executed 35 tests, with 0 failures (0 unexpected) in 10.675 (10.683) seconds
+Test Suite 'Selected tests' started at 2026-10-07 16:58:23.431.
+Test Suite 'JXLSwiftContractTests.xctest' started at 2026-10-07 16:58:23.435.
+Test Suite 'JXLSwiftContractTests.xctest' passed at 2026-10-07 16:58:23.435.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-07 16:58:23.435.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Contract image layer" started.
+◇ Test rowPaddingNeverReachesTheCodestream() started.
+◇ Test capabilitiesReportWhatIsImplemented() started.
+◇ Test inspectionDescribesWhatDecodeProduces() started.
+◇ Test layoutsOutsideTheSharedProfileAreRefused() started.
+◇ Test roundTripThroughTheContractSurfaceOnly() started.
+◇ Test theAllocatingConvenienceAgreesWithTheDestinationPath() started.
+◇ Test preflightRejectionLeavesTheDestinationReusable() started.
+◇ Test aNonZeroPlaneOffsetIsHonoured() started.
+◇ Test aFailureDuringTheWriteInvalidatesTheDestination() started.
+◇ Test resourceLimitsAreEnforced() started.
+◇ Test mismatchedDestinationsAreRefused() started.
+◇ Test aDestinationGrantsOneWriteOnly() started.
+◇ Test decodeWritesTheCallerDestinationExactly(pad:) started.
+◇ Test contractEncodeMatchesTheEstablishedEncoderByteForByte(pad:) started.
+◇ Test case passing 1 argument pad → 0 to decodeWritesTheCallerDestinationExactly(pad:) started.
+◇ Test case passing 1 argument pad → 6 to decodeWritesTheCallerDestinationExactly(pad:) started.
+◇ Test case passing 1 argument pad → 64 to decodeWritesTheCallerDestinationExactly(pad:) started.
+◇ Test case passing 1 argument pad → 0 to contractEncodeMatchesTheEstablishedEncoderByteForByte(pad:) started.
+◇ Test case passing 1 argument pad → 6 to contractEncodeMatchesTheEstablishedEncoderByteForByte(pad:) started.
+✔ Test capabilitiesReportWhatIsImplemented() passed after 0.011 seconds.
+◇ Test case passing 1 argument pad → 64 to contractEncodeMatchesTheEstablishedEncoderByteForByte(pad:) started.
+✔ Test layoutsOutsideTheSharedProfileAreRefused() passed after 0.011 seconds.
+✔ Test resourceLimitsAreEnforced() passed after 0.011 seconds.
+✔ Test mismatchedDestinationsAreRefused() passed after 0.012 seconds.
+✔ Test preflightRejectionLeavesTheDestinationReusable() passed after 0.012 seconds.
+✔ Test aFailureDuringTheWriteInvalidatesTheDestination() passed after 0.012 seconds.
+✔ Test roundTripThroughTheContractSurfaceOnly() passed after 0.012 seconds.
+✔ Test aNonZeroPlaneOffsetIsHonoured() passed after 0.012 seconds.
+✔ Test inspectionDescribesWhatDecodeProduces() passed after 0.012 seconds.
+✔ Test theAllocatingConvenienceAgreesWithTheDestinationPath() passed after 0.012 seconds.
+✔ Test aDestinationGrantsOneWriteOnly() passed after 0.012 seconds.
+✔ Test rowPaddingNeverReachesTheCodestream() passed after 0.012 seconds.
+✔ Test decodeWritesTheCallerDestinationExactly(pad:) with 3 test cases passed after 0.029 seconds.
+✔ Test contractEncodeMatchesTheEstablishedEncoderByteForByte(pad:) with 3 test cases passed after 0.036 seconds.
+✔ Suite "Contract image layer" passed after 0.037 seconds.
+✔ Test run with 14 tests in 1 suite passed after 0.037 seconds.

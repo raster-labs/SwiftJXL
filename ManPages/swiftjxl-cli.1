@@ -1,8 +1,8 @@
-.TH SWIFTJXL 1 "September 19, 2026" "2.1.0-dev.2" "Swift Image Compression Suite"
+.TH SWIFTJXL-CLI 1 "September 19, 2026" "2.1.0-dev.2" "Swift Image Compression Suite"
 .SH NAME
-swiftjxl \- help, version and capability reporting for SwiftJXL
+swiftjxl-cli \- help, version and capability reporting for SwiftJXL
 .SH SYNOPSIS
-.B swiftjxl
+.B swiftjxl-cli
 .RI [ options ] " command " [ options ]
 .SH DESCRIPTION
 This development tool provides help, version and truthful library capability
@@ -11,7 +11,8 @@ Codec algorithms are not implemented. Reserved encode, decode, inspect and
 validate
 commands and native transcode return 4 without opening input, consuming
 standard input or creating output.
-Build with Swift 6.4 in Swift 6 language mode. Apple OS minimum is 27.0.
+Build with Swift 6.2 or later in Swift 6 language mode.
+Apple OS minimum is 26.0.
 CLI hosts are macOS and Linux; consult qualification records for executed
 coverage.
 .SH COMMANDS
@@ -71,11 +72,11 @@ Future codec statuses reserve 3 malformed input, 5 resource/deadline,
 7 internal failure and 130 user cancellation.
 .SH EXAMPLES
 .nf
-swiftjxl \-h
-swiftjxl help capabilities
-swiftjxl capabilities \-\-json \-vv
-swiftjxl capabilities \-verbose: 3
-swiftjxl capabilities \-\-verbose=+++++
+swiftjxl-cli \-h
+swiftjxl-cli help capabilities
+swiftjxl-cli capabilities \-\-json \-vv
+swiftjxl-cli capabilities \-verbose: 3
+swiftjxl-cli capabilities \-\-verbose=+++++
 .fi
 .SH INSTALLATION
 Scripts/install-cli.sh installs or updates the executable and this page
@@ -83,8 +84,8 @@ together.
 Use \-\-prefix for an absolute prefix (default /usr/local), \-\-destdir or
 DESTDIR
 for staging, and \-\-binary for a prebuilt binary matching VERSION.
-Files are PREFIX/bin/swiftjxl and PREFIX/share/man/man1/swiftjxl.1.
-For custom prefixes use man \-M PREFIX/share/man swiftjxl, or configure
+Files are PREFIX/bin/swiftjxl-cli and PREFIX/share/man/man1/swiftjxl-cli.1.
+For custom prefixes use man \-M PREFIX/share/man swiftjxl-cli, or configure
 MANPATH.
 No index refresh is needed for direct lookup; no sudo runs automatically.
 .SH SEE ALSO

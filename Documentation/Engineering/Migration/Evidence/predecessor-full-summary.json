@@ -1,0 +1,52 @@
+{
+  "predecessor_revision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "command": "xcrun swift test --disable-sandbox --cache-path \"$PWD/.build/cache\" --config-path \"$PWD/.build/config\" --security-path \"$PWD/.build/security\" --build-system swiftbuild --jobs 2 -c release --skip-build",
+  "environment": {
+    "CLANG_MODULE_CACHE_PATH": "$PWD/.build/module-cache",
+    "SWIFTPM_MODULECACHE_OVERRIDE": "$PWD/.build/module-cache"
+  },
+  "exit_code": 0,
+  "xctest": {
+    "executed": 717,
+    "passed": 694,
+    "skipped": 23,
+    "failed": 0
+  },
+  "swift_testing": {
+    "declarations": 14,
+    "argument_cases": 18,
+    "failed": 0,
+    "skipped": 0
+  },
+  "log_sha256": "9a754fa24bfc88278797ec3f9216d9c86deb07914fcfbb15ab56d854db28dc9c",
+  "skips": [
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/ConformanceTests.swift:263: -[JXLSwiftTests.ConformanceTests testConformance_KnownGaps_DegradeGracefully] : Test skipped - no known-gap conformance vectors present (set JXL_CONFORMANCE_DIR)",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/IntegrationTests.swift:17815: -[JXLSwiftTests.FoundationTests testCrossValidate_Cjxl_ANSHistograms_ModularTree] : Test skipped - prefix-code path \u2014 out of scope here",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/IntegrationTests.swift:16784: -[JXLSwiftTests.FoundationTests testCrossValidate_Cjxl_DecodeFirstChannelStructural] : Test skipped - GroupHeader decode reached an unexpected pattern: unsupportedTransform(3)",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/IntegrationTests.swift:16474: -[JXLSwiftTests.FoundationTests testCrossValidate_Cjxl_GroupHeader] : Test skipped - GroupHeader decode reached an unexpected pattern: unsupportedTransform(3)",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/IntegrationTests.swift:16659: -[JXLSwiftTests.FoundationTests testCrossValidate_Cjxl_ModularFirstPixelToken] : Test skipped - GroupHeader decode reached an unexpected pattern: unsupportedTransform(3)",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/IntegrationTests.swift:1179: -[JXLSwiftTests.FoundationTests testInspect_ParsesMetadataWithoutTrapping_OnRealFile] : Test skipped - no real cjxl-produced .jxl on this machine",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/IntegrationTests.swift:172: -[JXLSwiftTests.FoundationTests testInspect_RealLibjxlFile_DimensionsMatch] : Test skipped - no real .jxl test artefact on this machine",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/IntegrationTests.swift:10996: -[JXLSwiftTests.FoundationTests testJXLDecoder_MultiFrameDecodeProbe] : Test skipped - set JXL_PRINT_MF_DECODE to run",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/IntegrationTests.swift:10768: -[JXLSwiftTests.FoundationTests testVarDCTBitstreamWriter_EncodePerformance] : Test skipped - set JXL_PRINT_ENC_PERF to run",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/IntegrationTests.swift:10827: -[JXLSwiftTests.FoundationTests testVarDCTBitstreamWriter_EncodeQualityMatrix] : Test skipped - set JXL_PRINT_ENC_QUALITY to run",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:5157: -[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlExifPayload_InspectMarkerTypes] : Test skipped - EXIF jbrd payload not present at /tmp/cjxl-ref-420-exif.jbrd",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:5232: -[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlPayload_DistributeBrotliPayload] : Test skipped - jbrd payload not present at /tmp/cjxl-ref-420.jbrd",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:5087: -[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlPayload_FullBundleParsed] : Test skipped - jbrd payload not present at /tmp/cjxl-ref-420.jbrd \u2014 extract from a cjxl-encoded JXL file's `jbrd` box first",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:5185: -[JXLSwiftTests.JBRDBoxReaderTests testJBRDReader_RealCjxlPayload_TrailingBrotliShape] : Test skipped - jbrd payload not present at /tmp/cjxl-ref-420.jbrd",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:5279: -[JXLSwiftTests.JBRDBoxReaderTests testJBRDWriter_RoundTripsRealCjxlPayload] : Test skipped - jbrd payload not present at /tmp/cjxl-ref-420.jbrd",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:5015: -[JXLSwiftTests.JPEGFoundationTests testDiagnostic_CompareBridgeToCjxlReference] : Test skipped - diagnostic files not present",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:4991: -[JXLSwiftTests.JPEGFoundationTests testDiagnostic_DecodeOurBridgeBytes] : Test skipped - diagnostic file not present (generate via JXLSWIFT_BRIDGE_DJXL_DIAG=1 swift test --filter testJXLEncoder_FromJPEGCoefficients_DjxlAccepts)",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:4955: -[JXLSwiftTests.JPEGFoundationTests testDiagnostic_Dump420BridgeBytes] : Test skipped - 4:2:0 diagnostic fixture not present",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:4971: -[JXLSwiftTests.JPEGFoundationTests testDiagnostic_Dump44416BridgeBytes] : Test skipped - 4:4:4 16\u00d716 diagnostic fixture not present",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:7858: -[JXLSwiftTests.JXLToJPEGAdapterTests testEndToEnd_ByteIdenticalReconstruct_RealCjxlPayload] : Test skipped - fixtures not present (jpg/jbrd at /tmp/)",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:7055: -[JXLSwiftTests.JXLToJPEGAdapterTests testEndToEnd_ContainerDrivenReconstruct_ExifJPEG] : Test skipped - EXIF JPEG + cjxl reference required",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:7177: -[JXLSwiftTests.JXLToJPEGAdapterTests testEndToEnd_ContainerDrivenReconstruct_RealCjxl] : Test skipped - JXL container + source JPEG required",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/JXLSwift/Tests/JXLSwiftTests/JPEGTests.swift:6768: -[JXLSwiftTests.JXLToJPEGAdapterTests testEndToEnd_ICCProfileJPEG_LimitationDocumented] : Test skipped - Superseded by testEndToEnd_AutonomousReverseTranscode_ICCProfile (ICC codestream extractor landed in v0.12.0hd)."
+  ],
+  "diagnostic_failures": [
+    "[SWEEP d=10] frontier: VarDCT decode: DC group 0 ACMeta local tree read failed: contextMap(JXLSwift.ContextMapError.innerHeader(JXLSwift.EntropySectionHeaderError.hybridConfig(JXLSwift.HybridUintConfigError.msbOutOfRange(msb: 5, split: 4))))",
+    "[BYTE-DIFF d=10] decode failed: notImplemented(\"VarDCT decode: DC group 0 ACMeta local tree read failed: contextMap(JXLSwift.ContextMapError.innerHeader(JXLSwift.EntropySectionHeaderError.hybridConfig(JXLSwift.HybridUintConfigError.msbOutOfRange(msb: 5, split: 4))))\")"
+  ],
+  "limitation": "The exit status does not qualify skipped coverage or diagnostic-only failures."
+}

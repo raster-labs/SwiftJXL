@@ -1,0 +1,2522 @@
+{
+  "tools": [
+    {
+      "name": "cjxl",
+      "path": "/opt/homebrew/Cellar/jpeg-xl/0.12.0/bin/cjxl",
+      "sha256": "582c6dea494b08639ce0aff765b7b6feae1a5d8f1f1a856685f107dac3304320",
+      "version": "cjxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project",
+      "exitCode": 0
+    },
+    {
+      "name": "djxl",
+      "path": "/opt/homebrew/Cellar/jpeg-xl/0.12.0/bin/djxl",
+      "sha256": "25e0a5a5ad107352f7e91a1a9c824576e56d2aca2d53708e5d3dc90eeb621566",
+      "version": "djxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project",
+      "exitCode": 0
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/128x129-native.jxl",
+      "bytes": 20457,
+      "sha256": "fe029abf44e9f15df915865adb65cffe2858ed97f1f3eaa73daa3ed1b80f6d8d"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/128x129-oracle.jxl",
+      "bytes": 21265,
+      "sha256": "228e252b7de10b28749666b9543086b0745d0cee92b76fc8c50c5d06fe978e55"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "6ddc43accf0e0a5d34020c8539b97265fbc82cdffef91fae0fe68ce787692448"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/1x1-oracle.jxl",
+      "bytes": 177,
+      "sha256": "587c8daaa68e2430169a2d7c4818acb1e8d6f255bad96e7720ccceaccfb2876b"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/1x1.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/255x17-native.jxl",
+      "bytes": 5387,
+      "sha256": "86b55ed40ccb4c5bf86b5c471b63203b5cd06134a8d71a2c4a7961344337e243"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/255x17-oracle.jxl",
+      "bytes": 7245,
+      "sha256": "d65b79b8421da8803d68448da1433fe884b1cd4968afbf569a86af3718f532e8"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "387e4bc154bc74702e5f06dc26dc399330379c44c936ee197365cc5351ca4bf0"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/2x3-oracle.jxl",
+      "bytes": 187,
+      "sha256": "61c4dee7b82ff2462473dea00f807043d01180b6a66171b138930b9fe82189bc"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/2x3.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/31x17-native.jxl",
+      "bytes": 640,
+      "sha256": "3a901b644a498c18fd6fd2eb52cb9c4ca729127a312291cb427309930b5eabed"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/31x17-oracle.jxl",
+      "bytes": 1268,
+      "sha256": "9e3e00ca1204eeef7af04ed56c80f8de85563f762be38b64272e245ef1d2f351"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-10-0E4DDADC-23F2-4892-AA25-AA3794B1DEE3/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/128x129-native.jxl",
+      "bytes": 20457,
+      "sha256": "fe029abf44e9f15df915865adb65cffe2858ed97f1f3eaa73daa3ed1b80f6d8d"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/128x129-oracle.jxl",
+      "bytes": 21265,
+      "sha256": "228e252b7de10b28749666b9543086b0745d0cee92b76fc8c50c5d06fe978e55"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "6ddc43accf0e0a5d34020c8539b97265fbc82cdffef91fae0fe68ce787692448"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/1x1-oracle.jxl",
+      "bytes": 177,
+      "sha256": "587c8daaa68e2430169a2d7c4818acb1e8d6f255bad96e7720ccceaccfb2876b"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/1x1.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/255x17-native.jxl",
+      "bytes": 5387,
+      "sha256": "86b55ed40ccb4c5bf86b5c471b63203b5cd06134a8d71a2c4a7961344337e243"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/255x17-oracle.jxl",
+      "bytes": 7245,
+      "sha256": "d65b79b8421da8803d68448da1433fe884b1cd4968afbf569a86af3718f532e8"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "387e4bc154bc74702e5f06dc26dc399330379c44c936ee197365cc5351ca4bf0"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/2x3-oracle.jxl",
+      "bytes": 187,
+      "sha256": "61c4dee7b82ff2462473dea00f807043d01180b6a66171b138930b9fe82189bc"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/2x3.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/31x17-native.jxl",
+      "bytes": 640,
+      "sha256": "3a901b644a498c18fd6fd2eb52cb9c4ca729127a312291cb427309930b5eabed"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/31x17-oracle.jxl",
+      "bytes": 1268,
+      "sha256": "9e3e00ca1204eeef7af04ed56c80f8de85563f762be38b64272e245ef1d2f351"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-10-158F1589-CDC6-4C98-BB2C-E7525F24146C/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/128x129-native.jxl",
+      "bytes": 20457,
+      "sha256": "fe029abf44e9f15df915865adb65cffe2858ed97f1f3eaa73daa3ed1b80f6d8d"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/128x129-oracle.jxl",
+      "bytes": 21265,
+      "sha256": "228e252b7de10b28749666b9543086b0745d0cee92b76fc8c50c5d06fe978e55"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "6ddc43accf0e0a5d34020c8539b97265fbc82cdffef91fae0fe68ce787692448"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/1x1-oracle.jxl",
+      "bytes": 177,
+      "sha256": "587c8daaa68e2430169a2d7c4818acb1e8d6f255bad96e7720ccceaccfb2876b"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/1x1.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/255x17-native.jxl",
+      "bytes": 5387,
+      "sha256": "86b55ed40ccb4c5bf86b5c471b63203b5cd06134a8d71a2c4a7961344337e243"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/255x17-oracle.jxl",
+      "bytes": 7245,
+      "sha256": "d65b79b8421da8803d68448da1433fe884b1cd4968afbf569a86af3718f532e8"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "387e4bc154bc74702e5f06dc26dc399330379c44c936ee197365cc5351ca4bf0"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/2x3-oracle.jxl",
+      "bytes": 187,
+      "sha256": "61c4dee7b82ff2462473dea00f807043d01180b6a66171b138930b9fe82189bc"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/2x3.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/31x17-native.jxl",
+      "bytes": 640,
+      "sha256": "3a901b644a498c18fd6fd2eb52cb9c4ca729127a312291cb427309930b5eabed"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/31x17-oracle.jxl",
+      "bytes": 1268,
+      "sha256": "9e3e00ca1204eeef7af04ed56c80f8de85563f762be38b64272e245ef1d2f351"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-10-B58C77CB-80A5-4471-9DCB-919AFEF12E53/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/128x129-native.jxl",
+      "bytes": 20457,
+      "sha256": "fe029abf44e9f15df915865adb65cffe2858ed97f1f3eaa73daa3ed1b80f6d8d"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/128x129-oracle.jxl",
+      "bytes": 21265,
+      "sha256": "228e252b7de10b28749666b9543086b0745d0cee92b76fc8c50c5d06fe978e55"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "6ddc43accf0e0a5d34020c8539b97265fbc82cdffef91fae0fe68ce787692448"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/1x1-oracle.jxl",
+      "bytes": 177,
+      "sha256": "587c8daaa68e2430169a2d7c4818acb1e8d6f255bad96e7720ccceaccfb2876b"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/1x1.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/255x17-native.jxl",
+      "bytes": 5387,
+      "sha256": "86b55ed40ccb4c5bf86b5c471b63203b5cd06134a8d71a2c4a7961344337e243"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/255x17-oracle.jxl",
+      "bytes": 7245,
+      "sha256": "d65b79b8421da8803d68448da1433fe884b1cd4968afbf569a86af3718f532e8"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "387e4bc154bc74702e5f06dc26dc399330379c44c936ee197365cc5351ca4bf0"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/2x3-oracle.jxl",
+      "bytes": 187,
+      "sha256": "61c4dee7b82ff2462473dea00f807043d01180b6a66171b138930b9fe82189bc"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/2x3.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/31x17-native.jxl",
+      "bytes": 640,
+      "sha256": "3a901b644a498c18fd6fd2eb52cb9c4ca729127a312291cb427309930b5eabed"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/31x17-oracle.jxl",
+      "bytes": 1268,
+      "sha256": "9e3e00ca1204eeef7af04ed56c80f8de85563f762be38b64272e245ef1d2f351"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-10-EACC6EFF-2904-4603-9FC2-19128BD496B3/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/128x129-native.jxl",
+      "bytes": 20457,
+      "sha256": "fe029abf44e9f15df915865adb65cffe2858ed97f1f3eaa73daa3ed1b80f6d8d"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/128x129-oracle.jxl",
+      "bytes": 21265,
+      "sha256": "228e252b7de10b28749666b9543086b0745d0cee92b76fc8c50c5d06fe978e55"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "3a2abd6eeb1f352d6b9f3a5f71c27cf845d0589303f49a01e61fea97d872f7f0"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "6ddc43accf0e0a5d34020c8539b97265fbc82cdffef91fae0fe68ce787692448"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/1x1-oracle.jxl",
+      "bytes": 177,
+      "sha256": "587c8daaa68e2430169a2d7c4818acb1e8d6f255bad96e7720ccceaccfb2876b"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/1x1.pgm",
+      "bytes": 14,
+      "sha256": "fd9964e6ba73f1783a311efe1e73d675241e70a3efe7dc8ad15fe15b823c98bc"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/255x17-native.jxl",
+      "bytes": 5387,
+      "sha256": "86b55ed40ccb4c5bf86b5c471b63203b5cd06134a8d71a2c4a7961344337e243"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/255x17-oracle.jxl",
+      "bytes": 7245,
+      "sha256": "d65b79b8421da8803d68448da1433fe884b1cd4968afbf569a86af3718f532e8"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "4fbf71ad1155a6920b986bf36d4bc58a9e7bcf139ae5d0a16521012a02f364c3"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "387e4bc154bc74702e5f06dc26dc399330379c44c936ee197365cc5351ca4bf0"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/2x3-oracle.jxl",
+      "bytes": 187,
+      "sha256": "61c4dee7b82ff2462473dea00f807043d01180b6a66171b138930b9fe82189bc"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/2x3.pgm",
+      "bytes": 24,
+      "sha256": "94c926046f19e646ab72e70a2be506b693cc56b76f1b31d444bfa3fa1a8cfa3b"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/31x17-native.jxl",
+      "bytes": 640,
+      "sha256": "3a901b644a498c18fd6fd2eb52cb9c4ca729127a312291cb427309930b5eabed"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/31x17-oracle.jxl",
+      "bytes": 1268,
+      "sha256": "9e3e00ca1204eeef7af04ed56c80f8de85563f762be38b64272e245ef1d2f351"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-10-EBA89396-24BC-4311-A3C9-529A1761A5CC/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "cc6618cc03aa577ccbd8ba8e9438aaa0a243214926a9d144c76bf301f3adfb89"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/128x129-native.jxl",
+      "bytes": 23044,
+      "sha256": "d51d2fa30787e02f985245431a671f6829dd284d1a8eaf9ebf995211511609ca"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/128x129-oracle.jxl",
+      "bytes": 23836,
+      "sha256": "47378e0258dd6bfa8666e2f6b016fd5fdc6e3f5f32b17a4fd7e630b0611358d2"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "46705caf5f087e49a3f3ea7b12ef1479b3fbdbcba9f716334af798bec727965b"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/1x1-oracle.jxl",
+      "bytes": 176,
+      "sha256": "219dc8fb589e8196b454c0612cd51ede87d54ca30eaa851c015af1399f43a484"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/1x1.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/255x17-native.jxl",
+      "bytes": 5506,
+      "sha256": "5b3d0d0cb31a7aa46082d233878db57f00b9448ec5111162341fa77c26445cb0"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/255x17-oracle.jxl",
+      "bytes": 7425,
+      "sha256": "9ace416d9d77a567a26b1f940f2ea69ee8d0ff43d519033c5bb8a7c26881fd8f"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/2x3-native.jxl",
+      "bytes": 39,
+      "sha256": "fbbe9d48b0f9b9eeecdf1fb16852df3abe3ef0126688a49d89c70fb097b94fcd"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/2x3-oracle.jxl",
+      "bytes": 188,
+      "sha256": "76e9ff4888ab9476b03c77d73b8e1074fa0a049c48c5081daf5b3d237f57c6b0"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/2x3.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/31x17-native.jxl",
+      "bytes": 627,
+      "sha256": "d6379e885df01462315d9fd964496a4c96005a408805f532cca3533fb636e904"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/31x17-oracle.jxl",
+      "bytes": 1244,
+      "sha256": "940e44a00c03b2b3120b0067c5ccb28af61d3d150c58dbf95855fad1421fb3f3"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-12-7ABC4D13-C255-40BF-8FB2-42994DBB5D9C/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/128x129-native.jxl",
+      "bytes": 23044,
+      "sha256": "d51d2fa30787e02f985245431a671f6829dd284d1a8eaf9ebf995211511609ca"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/128x129-oracle.jxl",
+      "bytes": 23836,
+      "sha256": "47378e0258dd6bfa8666e2f6b016fd5fdc6e3f5f32b17a4fd7e630b0611358d2"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "46705caf5f087e49a3f3ea7b12ef1479b3fbdbcba9f716334af798bec727965b"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/1x1-oracle.jxl",
+      "bytes": 176,
+      "sha256": "219dc8fb589e8196b454c0612cd51ede87d54ca30eaa851c015af1399f43a484"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/1x1.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/255x17-native.jxl",
+      "bytes": 5506,
+      "sha256": "5b3d0d0cb31a7aa46082d233878db57f00b9448ec5111162341fa77c26445cb0"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/255x17-oracle.jxl",
+      "bytes": 7425,
+      "sha256": "9ace416d9d77a567a26b1f940f2ea69ee8d0ff43d519033c5bb8a7c26881fd8f"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/2x3-native.jxl",
+      "bytes": 39,
+      "sha256": "fbbe9d48b0f9b9eeecdf1fb16852df3abe3ef0126688a49d89c70fb097b94fcd"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/2x3-oracle.jxl",
+      "bytes": 188,
+      "sha256": "76e9ff4888ab9476b03c77d73b8e1074fa0a049c48c5081daf5b3d237f57c6b0"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/2x3.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/31x17-native.jxl",
+      "bytes": 627,
+      "sha256": "d6379e885df01462315d9fd964496a4c96005a408805f532cca3533fb636e904"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/31x17-oracle.jxl",
+      "bytes": 1244,
+      "sha256": "940e44a00c03b2b3120b0067c5ccb28af61d3d150c58dbf95855fad1421fb3f3"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-12-91642DDB-6086-4D7B-B806-2C2253274DE8/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/128x129-native.jxl",
+      "bytes": 23044,
+      "sha256": "d51d2fa30787e02f985245431a671f6829dd284d1a8eaf9ebf995211511609ca"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/128x129-oracle.jxl",
+      "bytes": 23836,
+      "sha256": "47378e0258dd6bfa8666e2f6b016fd5fdc6e3f5f32b17a4fd7e630b0611358d2"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "46705caf5f087e49a3f3ea7b12ef1479b3fbdbcba9f716334af798bec727965b"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/1x1-oracle.jxl",
+      "bytes": 176,
+      "sha256": "219dc8fb589e8196b454c0612cd51ede87d54ca30eaa851c015af1399f43a484"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/1x1.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/255x17-native.jxl",
+      "bytes": 5506,
+      "sha256": "5b3d0d0cb31a7aa46082d233878db57f00b9448ec5111162341fa77c26445cb0"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/255x17-oracle.jxl",
+      "bytes": 7425,
+      "sha256": "9ace416d9d77a567a26b1f940f2ea69ee8d0ff43d519033c5bb8a7c26881fd8f"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/2x3-native.jxl",
+      "bytes": 39,
+      "sha256": "fbbe9d48b0f9b9eeecdf1fb16852df3abe3ef0126688a49d89c70fb097b94fcd"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/2x3-oracle.jxl",
+      "bytes": 188,
+      "sha256": "76e9ff4888ab9476b03c77d73b8e1074fa0a049c48c5081daf5b3d237f57c6b0"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/2x3.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/31x17-native.jxl",
+      "bytes": 627,
+      "sha256": "d6379e885df01462315d9fd964496a4c96005a408805f532cca3533fb636e904"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/31x17-oracle.jxl",
+      "bytes": 1244,
+      "sha256": "940e44a00c03b2b3120b0067c5ccb28af61d3d150c58dbf95855fad1421fb3f3"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-12-97D063F6-20F7-4722-B913-49A697906894/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/128x129-native.jxl",
+      "bytes": 23044,
+      "sha256": "d51d2fa30787e02f985245431a671f6829dd284d1a8eaf9ebf995211511609ca"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/128x129-oracle.jxl",
+      "bytes": 23836,
+      "sha256": "47378e0258dd6bfa8666e2f6b016fd5fdc6e3f5f32b17a4fd7e630b0611358d2"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "46705caf5f087e49a3f3ea7b12ef1479b3fbdbcba9f716334af798bec727965b"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/1x1-oracle.jxl",
+      "bytes": 176,
+      "sha256": "219dc8fb589e8196b454c0612cd51ede87d54ca30eaa851c015af1399f43a484"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/1x1.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/255x17-native.jxl",
+      "bytes": 5506,
+      "sha256": "5b3d0d0cb31a7aa46082d233878db57f00b9448ec5111162341fa77c26445cb0"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/255x17-oracle.jxl",
+      "bytes": 7425,
+      "sha256": "9ace416d9d77a567a26b1f940f2ea69ee8d0ff43d519033c5bb8a7c26881fd8f"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/2x3-native.jxl",
+      "bytes": 39,
+      "sha256": "fbbe9d48b0f9b9eeecdf1fb16852df3abe3ef0126688a49d89c70fb097b94fcd"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/2x3-oracle.jxl",
+      "bytes": 188,
+      "sha256": "76e9ff4888ab9476b03c77d73b8e1074fa0a049c48c5081daf5b3d237f57c6b0"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/2x3.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/31x17-native.jxl",
+      "bytes": 627,
+      "sha256": "d6379e885df01462315d9fd964496a4c96005a408805f532cca3533fb636e904"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/31x17-oracle.jxl",
+      "bytes": 1244,
+      "sha256": "940e44a00c03b2b3120b0067c5ccb28af61d3d150c58dbf95855fad1421fb3f3"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-12-F159C5DD-BC84-462C-8AD9-7CD9B04EE03D/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/128x129-native.jxl",
+      "bytes": 23044,
+      "sha256": "d51d2fa30787e02f985245431a671f6829dd284d1a8eaf9ebf995211511609ca"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/128x129-oracle.jxl",
+      "bytes": 23836,
+      "sha256": "47378e0258dd6bfa8666e2f6b016fd5fdc6e3f5f32b17a4fd7e630b0611358d2"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/128x129-oracle.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/128x129.pgm",
+      "bytes": 33040,
+      "sha256": "05829d0e897be2b0ffe7e9becba940de5460b8983db4f0d83289d4760dee7c78"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/1x1-native.jxl",
+      "bytes": 31,
+      "sha256": "46705caf5f087e49a3f3ea7b12ef1479b3fbdbcba9f716334af798bec727965b"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/1x1-oracle.jxl",
+      "bytes": 176,
+      "sha256": "219dc8fb589e8196b454c0612cd51ede87d54ca30eaa851c015af1399f43a484"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/1x1-oracle.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/1x1.pgm",
+      "bytes": 14,
+      "sha256": "798f1591c981f72a7b7201b43c2d914157e447cbf7762081d4f87b007ea9c7b2"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/255x17-native.jxl",
+      "bytes": 5506,
+      "sha256": "5b3d0d0cb31a7aa46082d233878db57f00b9448ec5111162341fa77c26445cb0"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/255x17-oracle.jxl",
+      "bytes": 7425,
+      "sha256": "9ace416d9d77a567a26b1f940f2ea69ee8d0ff43d519033c5bb8a7c26881fd8f"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/255x17-oracle.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/255x17.pgm",
+      "bytes": 8685,
+      "sha256": "3d123ac0561f5654c578b4eb20260f7d83c02b2c66a2632757963a90de0e3107"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/2x3-native.jxl",
+      "bytes": 39,
+      "sha256": "fbbe9d48b0f9b9eeecdf1fb16852df3abe3ef0126688a49d89c70fb097b94fcd"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/2x3-oracle.jxl",
+      "bytes": 188,
+      "sha256": "76e9ff4888ab9476b03c77d73b8e1074fa0a049c48c5081daf5b3d237f57c6b0"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/2x3-oracle.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/2x3.pgm",
+      "bytes": 24,
+      "sha256": "2a28939f8f42b0144caead1d42ee00767858f72f34c0b9e040d6d7cbd969478d"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/31x17-native.jxl",
+      "bytes": 627,
+      "sha256": "d6379e885df01462315d9fd964496a4c96005a408805f532cca3533fb636e904"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/31x17-oracle.jxl",
+      "bytes": 1244,
+      "sha256": "940e44a00c03b2b3120b0067c5ccb28af61d3d150c58dbf95855fad1421fb3f3"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/31x17-oracle.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-12-F81AE695-843B-4584-86FF-7E48FFB83B21/31x17.pgm",
+      "bytes": 1068,
+      "sha256": "44d4985fe3073711020ef2b319ccdfd208bdbd98a369f66d2ddab92e0372bbc1"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/128x129-native.jxl",
+      "bytes": 27956,
+      "sha256": "d4c71e2b96528886106831c40af1aa4b7204f0e9d798cc6598bb662dbb9a1bd6"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/128x129-oracle.jxl",
+      "bytes": 30685,
+      "sha256": "1216c682f64b3f03534c79097e3a09e4b93dec9bc654836833435b794fceaadb"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "db14fb8ddd2e3e85ae31a561418a35b24005cf74770ea2eda17f12cac3abb219"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/1x1-oracle.jxl",
+      "bytes": 237,
+      "sha256": "fa212c42f5b37dfbc4888c42714990f595c38d982acf8bec257dd75d548b29d2"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/1x1.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/255x17-native.jxl",
+      "bytes": 7865,
+      "sha256": "399a996a7a8230c6e7195f6284d2c2b5c48b2a00ab7da7e922f1271e01001772"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/255x17-oracle.jxl",
+      "bytes": 10435,
+      "sha256": "e892a91968799b7959d1bf8703677bf636650d04156ad13de0744a3d5cc1db1b"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/2x3-native.jxl",
+      "bytes": 41,
+      "sha256": "e090e0f0dc0ab31b120eff9702b97fe543e424ca5f2145662394df077a8c3ef2"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/2x3-oracle.jxl",
+      "bytes": 250,
+      "sha256": "bfe187d078b7205c8bbfb01c37f45f5619a28f44396a5364e27c099581e01c73"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/2x3.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/31x17-native.jxl",
+      "bytes": 755,
+      "sha256": "c78b6e59be989d9f008a5a380a909affd47a32f2ea4107c26dfc3a5ad2c9aa88"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/31x17-oracle.jxl",
+      "bytes": 1148,
+      "sha256": "fef44e7eae41b7644ed06cad4a60231ca9e8fd54fe52bff4dd3e31c816ca3fb2"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-14-6DC68DA1-474C-41A0-BCB9-85EE3A8A0A4A/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/128x129-native.jxl",
+      "bytes": 27956,
+      "sha256": "d4c71e2b96528886106831c40af1aa4b7204f0e9d798cc6598bb662dbb9a1bd6"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/128x129-oracle.jxl",
+      "bytes": 30685,
+      "sha256": "1216c682f64b3f03534c79097e3a09e4b93dec9bc654836833435b794fceaadb"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "db14fb8ddd2e3e85ae31a561418a35b24005cf74770ea2eda17f12cac3abb219"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/1x1-oracle.jxl",
+      "bytes": 237,
+      "sha256": "fa212c42f5b37dfbc4888c42714990f595c38d982acf8bec257dd75d548b29d2"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/1x1.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/255x17-native.jxl",
+      "bytes": 7865,
+      "sha256": "399a996a7a8230c6e7195f6284d2c2b5c48b2a00ab7da7e922f1271e01001772"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/255x17-oracle.jxl",
+      "bytes": 10435,
+      "sha256": "e892a91968799b7959d1bf8703677bf636650d04156ad13de0744a3d5cc1db1b"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/2x3-native.jxl",
+      "bytes": 41,
+      "sha256": "e090e0f0dc0ab31b120eff9702b97fe543e424ca5f2145662394df077a8c3ef2"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/2x3-oracle.jxl",
+      "bytes": 250,
+      "sha256": "bfe187d078b7205c8bbfb01c37f45f5619a28f44396a5364e27c099581e01c73"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/2x3.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/31x17-native.jxl",
+      "bytes": 755,
+      "sha256": "c78b6e59be989d9f008a5a380a909affd47a32f2ea4107c26dfc3a5ad2c9aa88"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/31x17-oracle.jxl",
+      "bytes": 1148,
+      "sha256": "fef44e7eae41b7644ed06cad4a60231ca9e8fd54fe52bff4dd3e31c816ca3fb2"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-14-C580158D-11DD-47D8-B289-041573E6774B/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/128x129-native.jxl",
+      "bytes": 27956,
+      "sha256": "d4c71e2b96528886106831c40af1aa4b7204f0e9d798cc6598bb662dbb9a1bd6"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/128x129-oracle.jxl",
+      "bytes": 30685,
+      "sha256": "1216c682f64b3f03534c79097e3a09e4b93dec9bc654836833435b794fceaadb"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "db14fb8ddd2e3e85ae31a561418a35b24005cf74770ea2eda17f12cac3abb219"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/1x1-oracle.jxl",
+      "bytes": 237,
+      "sha256": "fa212c42f5b37dfbc4888c42714990f595c38d982acf8bec257dd75d548b29d2"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/1x1.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/255x17-native.jxl",
+      "bytes": 7865,
+      "sha256": "399a996a7a8230c6e7195f6284d2c2b5c48b2a00ab7da7e922f1271e01001772"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/255x17-oracle.jxl",
+      "bytes": 10435,
+      "sha256": "e892a91968799b7959d1bf8703677bf636650d04156ad13de0744a3d5cc1db1b"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/2x3-native.jxl",
+      "bytes": 41,
+      "sha256": "e090e0f0dc0ab31b120eff9702b97fe543e424ca5f2145662394df077a8c3ef2"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/2x3-oracle.jxl",
+      "bytes": 250,
+      "sha256": "bfe187d078b7205c8bbfb01c37f45f5619a28f44396a5364e27c099581e01c73"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/2x3.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/31x17-native.jxl",
+      "bytes": 755,
+      "sha256": "c78b6e59be989d9f008a5a380a909affd47a32f2ea4107c26dfc3a5ad2c9aa88"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/31x17-oracle.jxl",
+      "bytes": 1148,
+      "sha256": "fef44e7eae41b7644ed06cad4a60231ca9e8fd54fe52bff4dd3e31c816ca3fb2"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-14-E1DC7743-57A5-48FE-B56A-493A619C832E/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/128x129-native.jxl",
+      "bytes": 27956,
+      "sha256": "d4c71e2b96528886106831c40af1aa4b7204f0e9d798cc6598bb662dbb9a1bd6"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/128x129-oracle.jxl",
+      "bytes": 30685,
+      "sha256": "1216c682f64b3f03534c79097e3a09e4b93dec9bc654836833435b794fceaadb"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "db14fb8ddd2e3e85ae31a561418a35b24005cf74770ea2eda17f12cac3abb219"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/1x1-oracle.jxl",
+      "bytes": 237,
+      "sha256": "fa212c42f5b37dfbc4888c42714990f595c38d982acf8bec257dd75d548b29d2"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/1x1.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/255x17-native.jxl",
+      "bytes": 7865,
+      "sha256": "399a996a7a8230c6e7195f6284d2c2b5c48b2a00ab7da7e922f1271e01001772"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/255x17-oracle.jxl",
+      "bytes": 10435,
+      "sha256": "e892a91968799b7959d1bf8703677bf636650d04156ad13de0744a3d5cc1db1b"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/2x3-native.jxl",
+      "bytes": 41,
+      "sha256": "e090e0f0dc0ab31b120eff9702b97fe543e424ca5f2145662394df077a8c3ef2"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/2x3-oracle.jxl",
+      "bytes": 250,
+      "sha256": "bfe187d078b7205c8bbfb01c37f45f5619a28f44396a5364e27c099581e01c73"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/2x3.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/31x17-native.jxl",
+      "bytes": 755,
+      "sha256": "c78b6e59be989d9f008a5a380a909affd47a32f2ea4107c26dfc3a5ad2c9aa88"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/31x17-oracle.jxl",
+      "bytes": 1148,
+      "sha256": "fef44e7eae41b7644ed06cad4a60231ca9e8fd54fe52bff4dd3e31c816ca3fb2"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-14-ECDA72A3-150B-44A6-A8DE-6C1C3B663246/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/128x129-native.jxl",
+      "bytes": 27956,
+      "sha256": "d4c71e2b96528886106831c40af1aa4b7204f0e9d798cc6598bb662dbb9a1bd6"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/128x129-oracle.jxl",
+      "bytes": 30685,
+      "sha256": "1216c682f64b3f03534c79097e3a09e4b93dec9bc654836833435b794fceaadb"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "f9db9824bb096a74e9b399867d158c2553147bce3d50bc891353dcccd48379b3"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "db14fb8ddd2e3e85ae31a561418a35b24005cf74770ea2eda17f12cac3abb219"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/1x1-oracle.jxl",
+      "bytes": 237,
+      "sha256": "fa212c42f5b37dfbc4888c42714990f595c38d982acf8bec257dd75d548b29d2"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/1x1.pgm",
+      "bytes": 15,
+      "sha256": "955c19ea40ae296ef4019191c235fb33a3f4838ac45553493b01d367c428dd86"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/255x17-native.jxl",
+      "bytes": 7865,
+      "sha256": "399a996a7a8230c6e7195f6284d2c2b5c48b2a00ab7da7e922f1271e01001772"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/255x17-oracle.jxl",
+      "bytes": 10435,
+      "sha256": "e892a91968799b7959d1bf8703677bf636650d04156ad13de0744a3d5cc1db1b"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "762281bfe927d5528bd34fa5ae6462449d64856a50b2964ac6b1554ea67e593a"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/2x3-native.jxl",
+      "bytes": 41,
+      "sha256": "e090e0f0dc0ab31b120eff9702b97fe543e424ca5f2145662394df077a8c3ef2"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/2x3-oracle.jxl",
+      "bytes": 250,
+      "sha256": "bfe187d078b7205c8bbfb01c37f45f5619a28f44396a5364e27c099581e01c73"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/2x3.pgm",
+      "bytes": 25,
+      "sha256": "1255696dd0f60c5864e9c6beef69bf5f8890ff3e8815c13dbf172e7ea2af251d"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/31x17-native.jxl",
+      "bytes": 755,
+      "sha256": "c78b6e59be989d9f008a5a380a909affd47a32f2ea4107c26dfc3a5ad2c9aa88"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/31x17-oracle.jxl",
+      "bytes": 1148,
+      "sha256": "fef44e7eae41b7644ed06cad4a60231ca9e8fd54fe52bff4dd3e31c816ca3fb2"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-14-EFFAEA8D-119C-49B2-A50B-01AEB9FD5779/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "35cea0038e74f39ff5b4dec4900ec52a326533dd06be33803fd6fa47f1018eb9"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/128x129-native.jxl",
+      "bytes": 30791,
+      "sha256": "8d38e70d815e66ca616e01273157e662ac28228afd8211e2adfc08ad003ff71d"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/128x129-oracle.jxl",
+      "bytes": 38222,
+      "sha256": "3c1e8f219a14bbae201198c878ea17148e229d8bc4fbae98e63b09528c276305"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/1x1-native.jxl",
+      "bytes": 33,
+      "sha256": "9e7f7037641c5cf577d227d63f0f64af695508c6adf43d76da8f43923c362363"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/1x1-oracle.jxl",
+      "bytes": 235,
+      "sha256": "f7e386760a703e7fcc38f2451fe17c0061d1289d3f83787cced8a77c2d4ba7d9"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/1x1.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/255x17-native.jxl",
+      "bytes": 7090,
+      "sha256": "89eb7b66b02984d0098fc08c83c36ae43abb2c1068232152bb10437ceaca4ba6"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/255x17-oracle.jxl",
+      "bytes": 8819,
+      "sha256": "8be9b316e2958e72920d8a9323e29065f2de86d38c49479c22331d7380e42863"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/2x3-native.jxl",
+      "bytes": 45,
+      "sha256": "68b3d29c7c47dc55afca4fd0d21a2046b994ab593581505c7f78f5a0c4f549af"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/2x3-oracle.jxl",
+      "bytes": 251,
+      "sha256": "9ef350ac586f7a12aff2c1276fc78f8af69d8d565af2ad4f8731e5a65b56bdab"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/2x3.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/31x17-native.jxl",
+      "bytes": 886,
+      "sha256": "a954dc46a9a622760cc42e6821632d2df167c909f2adb4521bad3132c49458c1"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/31x17-oracle.jxl",
+      "bytes": 1262,
+      "sha256": "4b9e4e5d67bfeaebbbbd2dfeda4ca655a57737a8948dc50f83f9f7cb693845ee"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-16-385326C7-E982-467B-A1E1-6FD6BDE29F8B/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/128x129-native.jxl",
+      "bytes": 30791,
+      "sha256": "8d38e70d815e66ca616e01273157e662ac28228afd8211e2adfc08ad003ff71d"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/128x129-oracle.jxl",
+      "bytes": 38222,
+      "sha256": "3c1e8f219a14bbae201198c878ea17148e229d8bc4fbae98e63b09528c276305"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/1x1-native.jxl",
+      "bytes": 33,
+      "sha256": "9e7f7037641c5cf577d227d63f0f64af695508c6adf43d76da8f43923c362363"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/1x1-oracle.jxl",
+      "bytes": 235,
+      "sha256": "f7e386760a703e7fcc38f2451fe17c0061d1289d3f83787cced8a77c2d4ba7d9"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/1x1.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/255x17-native.jxl",
+      "bytes": 7090,
+      "sha256": "89eb7b66b02984d0098fc08c83c36ae43abb2c1068232152bb10437ceaca4ba6"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/255x17-oracle.jxl",
+      "bytes": 8819,
+      "sha256": "8be9b316e2958e72920d8a9323e29065f2de86d38c49479c22331d7380e42863"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/2x3-native.jxl",
+      "bytes": 45,
+      "sha256": "68b3d29c7c47dc55afca4fd0d21a2046b994ab593581505c7f78f5a0c4f549af"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/2x3-oracle.jxl",
+      "bytes": 251,
+      "sha256": "9ef350ac586f7a12aff2c1276fc78f8af69d8d565af2ad4f8731e5a65b56bdab"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/2x3.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/31x17-native.jxl",
+      "bytes": 886,
+      "sha256": "a954dc46a9a622760cc42e6821632d2df167c909f2adb4521bad3132c49458c1"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/31x17-oracle.jxl",
+      "bytes": 1262,
+      "sha256": "4b9e4e5d67bfeaebbbbd2dfeda4ca655a57737a8948dc50f83f9f7cb693845ee"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-16-4A98E916-51AA-4412-8939-CECD883D5050/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/128x129-native.jxl",
+      "bytes": 30791,
+      "sha256": "8d38e70d815e66ca616e01273157e662ac28228afd8211e2adfc08ad003ff71d"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/128x129-oracle.jxl",
+      "bytes": 38222,
+      "sha256": "3c1e8f219a14bbae201198c878ea17148e229d8bc4fbae98e63b09528c276305"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/1x1-native.jxl",
+      "bytes": 33,
+      "sha256": "9e7f7037641c5cf577d227d63f0f64af695508c6adf43d76da8f43923c362363"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/1x1-oracle.jxl",
+      "bytes": 235,
+      "sha256": "f7e386760a703e7fcc38f2451fe17c0061d1289d3f83787cced8a77c2d4ba7d9"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/1x1.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/255x17-native.jxl",
+      "bytes": 7090,
+      "sha256": "89eb7b66b02984d0098fc08c83c36ae43abb2c1068232152bb10437ceaca4ba6"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/255x17-oracle.jxl",
+      "bytes": 8819,
+      "sha256": "8be9b316e2958e72920d8a9323e29065f2de86d38c49479c22331d7380e42863"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/2x3-native.jxl",
+      "bytes": 45,
+      "sha256": "68b3d29c7c47dc55afca4fd0d21a2046b994ab593581505c7f78f5a0c4f549af"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/2x3-oracle.jxl",
+      "bytes": 251,
+      "sha256": "9ef350ac586f7a12aff2c1276fc78f8af69d8d565af2ad4f8731e5a65b56bdab"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/2x3.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/31x17-native.jxl",
+      "bytes": 886,
+      "sha256": "a954dc46a9a622760cc42e6821632d2df167c909f2adb4521bad3132c49458c1"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/31x17-oracle.jxl",
+      "bytes": 1262,
+      "sha256": "4b9e4e5d67bfeaebbbbd2dfeda4ca655a57737a8948dc50f83f9f7cb693845ee"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-16-520692B0-33A0-4A67-942C-D11F37DD25DD/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/128x129-native.jxl",
+      "bytes": 30791,
+      "sha256": "8d38e70d815e66ca616e01273157e662ac28228afd8211e2adfc08ad003ff71d"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/128x129-oracle.jxl",
+      "bytes": 38222,
+      "sha256": "3c1e8f219a14bbae201198c878ea17148e229d8bc4fbae98e63b09528c276305"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/1x1-native.jxl",
+      "bytes": 33,
+      "sha256": "9e7f7037641c5cf577d227d63f0f64af695508c6adf43d76da8f43923c362363"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/1x1-oracle.jxl",
+      "bytes": 235,
+      "sha256": "f7e386760a703e7fcc38f2451fe17c0061d1289d3f83787cced8a77c2d4ba7d9"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/1x1.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/255x17-native.jxl",
+      "bytes": 7090,
+      "sha256": "89eb7b66b02984d0098fc08c83c36ae43abb2c1068232152bb10437ceaca4ba6"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/255x17-oracle.jxl",
+      "bytes": 8819,
+      "sha256": "8be9b316e2958e72920d8a9323e29065f2de86d38c49479c22331d7380e42863"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/2x3-native.jxl",
+      "bytes": 45,
+      "sha256": "68b3d29c7c47dc55afca4fd0d21a2046b994ab593581505c7f78f5a0c4f549af"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/2x3-oracle.jxl",
+      "bytes": 251,
+      "sha256": "9ef350ac586f7a12aff2c1276fc78f8af69d8d565af2ad4f8731e5a65b56bdab"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/2x3.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/31x17-native.jxl",
+      "bytes": 886,
+      "sha256": "a954dc46a9a622760cc42e6821632d2df167c909f2adb4521bad3132c49458c1"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/31x17-oracle.jxl",
+      "bytes": 1262,
+      "sha256": "4b9e4e5d67bfeaebbbbd2dfeda4ca655a57737a8948dc50f83f9f7cb693845ee"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-16-8571E8EA-035A-4BE4-974C-0309456A22F7/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/128x129-native.jxl",
+      "bytes": 30791,
+      "sha256": "8d38e70d815e66ca616e01273157e662ac28228afd8211e2adfc08ad003ff71d"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/128x129-oracle.jxl",
+      "bytes": 38222,
+      "sha256": "3c1e8f219a14bbae201198c878ea17148e229d8bc4fbae98e63b09528c276305"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/128x129-oracle.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/128x129.pgm",
+      "bytes": 33041,
+      "sha256": "cad0c3997e551ab5d093541c527ab6bcdc42ab99e4e61bf5931b76fc51f601ce"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/1x1-native.jxl",
+      "bytes": 33,
+      "sha256": "9e7f7037641c5cf577d227d63f0f64af695508c6adf43d76da8f43923c362363"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/1x1-oracle.jxl",
+      "bytes": 235,
+      "sha256": "f7e386760a703e7fcc38f2451fe17c0061d1289d3f83787cced8a77c2d4ba7d9"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/1x1-oracle.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/1x1.pgm",
+      "bytes": 15,
+      "sha256": "9ed7cb3531838771cb9db512e1ccb15b7efd8dd30c77b1905da25c64557072f4"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/255x17-native.jxl",
+      "bytes": 7090,
+      "sha256": "89eb7b66b02984d0098fc08c83c36ae43abb2c1068232152bb10437ceaca4ba6"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/255x17-oracle.jxl",
+      "bytes": 8819,
+      "sha256": "8be9b316e2958e72920d8a9323e29065f2de86d38c49479c22331d7380e42863"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/255x17-oracle.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/255x17.pgm",
+      "bytes": 8686,
+      "sha256": "680f9dd02ef243a8f7be534b15cfae10c6d97a640c51edfb77ac3d6b57c44de9"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/2x3-native.jxl",
+      "bytes": 45,
+      "sha256": "68b3d29c7c47dc55afca4fd0d21a2046b994ab593581505c7f78f5a0c4f549af"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/2x3-oracle.jxl",
+      "bytes": 251,
+      "sha256": "9ef350ac586f7a12aff2c1276fc78f8af69d8d565af2ad4f8731e5a65b56bdab"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/2x3-oracle.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/2x3.pgm",
+      "bytes": 25,
+      "sha256": "9fa4046b2395beffe6b020bf4c2560b80bc7e130f838785c15df62df9af21736"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/31x17-native.jxl",
+      "bytes": 886,
+      "sha256": "a954dc46a9a622760cc42e6821632d2df167c909f2adb4521bad3132c49458c1"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/31x17-oracle.jxl",
+      "bytes": 1262,
+      "sha256": "4b9e4e5d67bfeaebbbbd2dfeda4ca655a57737a8948dc50f83f9f7cb693845ee"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/31x17-oracle.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-16-DB676CD8-5D7A-4FE7-9636-1555F874140A/31x17.pgm",
+      "bytes": 1069,
+      "sha256": "c4cb88366f404f916754c5821daec2f87762cd98e2511f58177ce6af634e16da"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/128x129-native.jxl",
+      "bytes": 19215,
+      "sha256": "8f4fd912197308f87a05afe2ed3ff8120bf140603bccfc21a09f110803e25356"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/128x129-oracle.jxl",
+      "bytes": 19708,
+      "sha256": "d15c7c1b53c4077f8fc392b84b4e9ca8611b98bd10fbfc2d60ed89f093881d8d"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/128x129-oracle.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/128x129.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "7a5097040f87e701f52f9e3014bf6d115b68269c86286820996e8b33700229ba"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/1x1-oracle.jxl",
+      "bytes": 175,
+      "sha256": "037481d9530276e1d5f7e40bebe58cdca82b681ba18946ba34669141c6e246da"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/1x1-oracle.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/1x1.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/255x17-native.jxl",
+      "bytes": 5164,
+      "sha256": "7ad7a43989558a4a0275d1441f6c63d475b3e2fdb7bdd19743795ce798e940e9"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/255x17-oracle.jxl",
+      "bytes": 6993,
+      "sha256": "2c73d277c4543c83bd7829d6d1f3675c58176863a687b01dc5bf97f0ca071d92"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/255x17-oracle.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/255x17.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "97dba0b736939d86ebb38e667e6e7f0d74a696cc53e42e7ecce23bfdeb3c5eb4"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/2x3-oracle.jxl",
+      "bytes": 185,
+      "sha256": "9a020f01635ae71146ea6d636b67e93b0565ce643ed102d1378f52e944735207"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/2x3-oracle.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/2x3.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/31x17-native.jxl",
+      "bytes": 641,
+      "sha256": "78f5ae040fcff7fa9cc07427dad3732ee6c30da2698d2559ed06fcae4e3cb332"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/31x17-oracle.jxl",
+      "bytes": 1188,
+      "sha256": "85a155c3ec9ed16aac0fa58b256fa1c65d1729aaa6cc5aaec71d9e8cb245c82e"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/31x17-oracle.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    },
+    {
+      "path": "scalar-9-503D2E72-0335-42E9-B143-56CC1661C846/31x17.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/128x129-native.jxl",
+      "bytes": 19215,
+      "sha256": "8f4fd912197308f87a05afe2ed3ff8120bf140603bccfc21a09f110803e25356"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/128x129-oracle.jxl",
+      "bytes": 19708,
+      "sha256": "d15c7c1b53c4077f8fc392b84b4e9ca8611b98bd10fbfc2d60ed89f093881d8d"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/128x129-oracle.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/128x129.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "7a5097040f87e701f52f9e3014bf6d115b68269c86286820996e8b33700229ba"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/1x1-oracle.jxl",
+      "bytes": 175,
+      "sha256": "037481d9530276e1d5f7e40bebe58cdca82b681ba18946ba34669141c6e246da"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/1x1-oracle.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/1x1.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/255x17-native.jxl",
+      "bytes": 5164,
+      "sha256": "7ad7a43989558a4a0275d1441f6c63d475b3e2fdb7bdd19743795ce798e940e9"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/255x17-oracle.jxl",
+      "bytes": 6993,
+      "sha256": "2c73d277c4543c83bd7829d6d1f3675c58176863a687b01dc5bf97f0ca071d92"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/255x17-oracle.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/255x17.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "97dba0b736939d86ebb38e667e6e7f0d74a696cc53e42e7ecce23bfdeb3c5eb4"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/2x3-oracle.jxl",
+      "bytes": 185,
+      "sha256": "9a020f01635ae71146ea6d636b67e93b0565ce643ed102d1378f52e944735207"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/2x3-oracle.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/2x3.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/31x17-native.jxl",
+      "bytes": 641,
+      "sha256": "78f5ae040fcff7fa9cc07427dad3732ee6c30da2698d2559ed06fcae4e3cb332"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/31x17-oracle.jxl",
+      "bytes": 1188,
+      "sha256": "85a155c3ec9ed16aac0fa58b256fa1c65d1729aaa6cc5aaec71d9e8cb245c82e"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/31x17-oracle.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    },
+    {
+      "path": "scalar-9-79FED019-8BBF-4236-8A40-7EF8AD24FF09/31x17.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/128x129-native.jxl",
+      "bytes": 19215,
+      "sha256": "8f4fd912197308f87a05afe2ed3ff8120bf140603bccfc21a09f110803e25356"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/128x129-oracle.jxl",
+      "bytes": 19708,
+      "sha256": "d15c7c1b53c4077f8fc392b84b4e9ca8611b98bd10fbfc2d60ed89f093881d8d"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/128x129-oracle.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/128x129.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "7a5097040f87e701f52f9e3014bf6d115b68269c86286820996e8b33700229ba"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/1x1-oracle.jxl",
+      "bytes": 175,
+      "sha256": "037481d9530276e1d5f7e40bebe58cdca82b681ba18946ba34669141c6e246da"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/1x1-oracle.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/1x1.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/255x17-native.jxl",
+      "bytes": 5164,
+      "sha256": "7ad7a43989558a4a0275d1441f6c63d475b3e2fdb7bdd19743795ce798e940e9"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/255x17-oracle.jxl",
+      "bytes": 6993,
+      "sha256": "2c73d277c4543c83bd7829d6d1f3675c58176863a687b01dc5bf97f0ca071d92"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/255x17-oracle.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/255x17.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "97dba0b736939d86ebb38e667e6e7f0d74a696cc53e42e7ecce23bfdeb3c5eb4"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/2x3-oracle.jxl",
+      "bytes": 185,
+      "sha256": "9a020f01635ae71146ea6d636b67e93b0565ce643ed102d1378f52e944735207"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/2x3-oracle.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/2x3.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/31x17-native.jxl",
+      "bytes": 641,
+      "sha256": "78f5ae040fcff7fa9cc07427dad3732ee6c30da2698d2559ed06fcae4e3cb332"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/31x17-oracle.jxl",
+      "bytes": 1188,
+      "sha256": "85a155c3ec9ed16aac0fa58b256fa1c65d1729aaa6cc5aaec71d9e8cb245c82e"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/31x17-oracle.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    },
+    {
+      "path": "scalar-9-AE35FA0E-BE57-4C4C-8ED7-CB939DAC00FB/31x17.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/128x129-native.jxl",
+      "bytes": 19215,
+      "sha256": "8f4fd912197308f87a05afe2ed3ff8120bf140603bccfc21a09f110803e25356"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/128x129-oracle.jxl",
+      "bytes": 19708,
+      "sha256": "d15c7c1b53c4077f8fc392b84b4e9ca8611b98bd10fbfc2d60ed89f093881d8d"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/128x129-oracle.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/128x129.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "7a5097040f87e701f52f9e3014bf6d115b68269c86286820996e8b33700229ba"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/1x1-oracle.jxl",
+      "bytes": 175,
+      "sha256": "037481d9530276e1d5f7e40bebe58cdca82b681ba18946ba34669141c6e246da"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/1x1-oracle.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/1x1.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/255x17-native.jxl",
+      "bytes": 5164,
+      "sha256": "7ad7a43989558a4a0275d1441f6c63d475b3e2fdb7bdd19743795ce798e940e9"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/255x17-oracle.jxl",
+      "bytes": 6993,
+      "sha256": "2c73d277c4543c83bd7829d6d1f3675c58176863a687b01dc5bf97f0ca071d92"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/255x17-oracle.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/255x17.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "97dba0b736939d86ebb38e667e6e7f0d74a696cc53e42e7ecce23bfdeb3c5eb4"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/2x3-oracle.jxl",
+      "bytes": 185,
+      "sha256": "9a020f01635ae71146ea6d636b67e93b0565ce643ed102d1378f52e944735207"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/2x3-oracle.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/2x3.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/31x17-native.jxl",
+      "bytes": 641,
+      "sha256": "78f5ae040fcff7fa9cc07427dad3732ee6c30da2698d2559ed06fcae4e3cb332"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/31x17-oracle.jxl",
+      "bytes": 1188,
+      "sha256": "85a155c3ec9ed16aac0fa58b256fa1c65d1729aaa6cc5aaec71d9e8cb245c82e"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/31x17-oracle.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    },
+    {
+      "path": "scalar-9-D5EFB746-F662-4307-B1A6-6296D5FB203F/31x17.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/128x129-native.jxl",
+      "bytes": 19215,
+      "sha256": "8f4fd912197308f87a05afe2ed3ff8120bf140603bccfc21a09f110803e25356"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/128x129-oracle.jxl",
+      "bytes": 19708,
+      "sha256": "d15c7c1b53c4077f8fc392b84b4e9ca8611b98bd10fbfc2d60ed89f093881d8d"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/128x129-oracle.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/128x129.pgm",
+      "bytes": 33039,
+      "sha256": "7af09d01bfea521f1b00a0b414255c693c73e26cb22a40da3d3ce064bb9814c2"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/1x1-native.jxl",
+      "bytes": 32,
+      "sha256": "7a5097040f87e701f52f9e3014bf6d115b68269c86286820996e8b33700229ba"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/1x1-oracle.jxl",
+      "bytes": 175,
+      "sha256": "037481d9530276e1d5f7e40bebe58cdca82b681ba18946ba34669141c6e246da"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/1x1-oracle.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/1x1.pgm",
+      "bytes": 13,
+      "sha256": "a3df170a322b119fe5099b74448b29eab0eff59f979c47c460df6461d238fdcd"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/255x17-native.jxl",
+      "bytes": 5164,
+      "sha256": "7ad7a43989558a4a0275d1441f6c63d475b3e2fdb7bdd19743795ce798e940e9"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/255x17-oracle.jxl",
+      "bytes": 6993,
+      "sha256": "2c73d277c4543c83bd7829d6d1f3675c58176863a687b01dc5bf97f0ca071d92"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/255x17-oracle.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/255x17.pgm",
+      "bytes": 8684,
+      "sha256": "f9bba2b74f7f98b4de02578350a53fe99581681403dcb878932f9ea3b7a3955f"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/2x3-native.jxl",
+      "bytes": 38,
+      "sha256": "97dba0b736939d86ebb38e667e6e7f0d74a696cc53e42e7ecce23bfdeb3c5eb4"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/2x3-oracle.jxl",
+      "bytes": 185,
+      "sha256": "9a020f01635ae71146ea6d636b67e93b0565ce643ed102d1378f52e944735207"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/2x3-oracle.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/2x3.pgm",
+      "bytes": 23,
+      "sha256": "9a7932ae02cbbb0fcb45724a0f918358dc2e1b630974b4fea9cd8056f8934b21"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/31x17-native.jxl",
+      "bytes": 641,
+      "sha256": "78f5ae040fcff7fa9cc07427dad3732ee6c30da2698d2559ed06fcae4e3cb332"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/31x17-oracle.jxl",
+      "bytes": 1188,
+      "sha256": "85a155c3ec9ed16aac0fa58b256fa1c65d1729aaa6cc5aaec71d9e8cb245c82e"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/31x17-oracle.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    },
+    {
+      "path": "scalar-9-E916D2CD-7B5D-43E3-9ADA-A68F7DA6BD2F/31x17.pgm",
+      "bytes": 1067,
+      "sha256": "5f9b5b1904ae8b66763b3fc2e90a92c4bcb711d84d4d1bb49cb1bfb2d1d4b8d7"
+    }
+  ],
+  "fixtureGenerator": "Tests/SwiftJXLCoreTests/ScalarOracleTests.swift",
+  "note": "Fixtures are synthetic generated evidence. Multiple directories correspond to debug/release/sanitizer and harness attempts; test success is determined by the associated qualification report, not the number of files."
+}

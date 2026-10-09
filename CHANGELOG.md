@@ -1,5 +1,33 @@
 # Change log
 
+## Unreleased — decoder admission and CI interoperability, 2026-10-08
+
+- Bound cumulative entropy-table admission before large table construction.
+- Thread internal size, nesting and monotonic deadline limits through scalar decoding and container work, including prepared-frame lifetime checks.
+- Add a mandatory independent CI oracle gate built from pinned libjxl source; preserve executable and fixture hashes for debug/release comparisons.
+- Public workspace policy and codec availability remain unimplemented; broader migration is still in progress.
+
+## Unreleased — internal caller-storage integration, 2026-10-08
+
+- Decode the restricted scalar profile directly into caller storage, preserving offsets, strides, byte order, padding and allocation identity.
+- Encode from a scoped immutable source borrow into the codec's Int32 working plane; verify exact codestream equivalence and concurrent reads.
+- Qualify 45 test declarations / 59 argument cases in debug, release and both sanitizers, including 25 independent oracle fixtures. Public resource accounting, measured allocations and public codec integration remain outstanding.
+
+## Unreleased — internal scalar migration, 2026-10-08
+
+- Adapt the pinned predecessor’s native bitstream, container, entropy and Modular algorithms into a package-internal test target, with path-level hashes and retained notices.
+- Verify exact lossless samples and precision with independent tools in both directions across 25 greyscale images; add malformed-input, cancellation and container regressions.
+- Remove payload tracing and pointer-based worker dispatch; harden selected parser bounds and entropy completion. Full resource-policy, storage, performance and security qualification remains outstanding.
+- Expand evidence discovery to include every local test target. Public codec capabilities, production consumers and release tags remain unchanged.
+
+## Unreleased — migration preflight, 2026-10-07
+
+- Reject reentrant storage access before attempting a non-recursive mutex, fixing the Swift 6.2 Linux trap while retaining exclusive mutable borrows and concurrent sealed readers.
+- Apply contract 0.10.0's executable name `swiftjxl-cli` across the product, help, installer and manual. Report the actual Apple 26.0 deployment floor.
+- Repair the isolated consumer's package identity and exercise its public storage/API behaviour in CI; run CLI installation checks on macOS.
+- Align the example and generated consumer with the Swift 6.2 manifest minimum and record pinned predecessor, baseline failures and remaining migration gates in `Documentation/Engineering/Migration/README.md`.
+- No codec source, production consumer dependency or stable release changes in this preflight.
+
 ## 2.1.0-dev.1 — Swift 6.4 upgrade, 2026-09-19 (unreleased)
 
 - Require Swift tools/compiler 6.4, retaining Swift 6 language mode and OS 26 deployment floors.

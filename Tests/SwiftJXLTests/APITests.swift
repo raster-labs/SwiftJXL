@@ -18,14 +18,14 @@ func expectAsyncCodecError(_ category: CodecError.Category,
 
 @Suite("Public API feasibility")
 struct APITests {
-    @Test func capabilitiesDoNotAdvertiseSyntheticSamplesAsJPEGXL() throws {
+    @Test func capabilitiesAdvertiseOnlyTheScalarProfile() throws {
         let encoder = try Encoder()
         let decoder = try Decoder()
         #expect(encoder.configuration.mode == .lossless)
-        #expect(encoder.capabilities.formats.isEmpty)
-        #expect(!encoder.capabilities.canEncode)
-        #expect(!decoder.capabilities.canDecode)
-        #expect(!decoder.capabilities.canInspect)
+        #expect(encoder.capabilities.formats == ["jpeg-xl"])
+        #expect(encoder.capabilities.canEncode)
+        #expect(decoder.capabilities.canDecode)
+        #expect(decoder.capabilities.canInspect)
         #expect(try Transcoder().capabilities.isEmpty)
         #expect(EncodeOptions().copyPolicy == .requireSharedStorage)
         #expect(DecodeOptions().metadataPolicy == .preserve)
@@ -78,16 +78,16 @@ struct APITests {
         expectCodecError(.invalidArgument) { _ = try valid.sampleUInt16(x: -1, y: 0) }
     }
 
-    @Test func allCodecCallShapesRejectWithoutTouchingDestination() async throws {
+    @Test func malformedInputRejectsWithoutTouchingDestination() async throws {
         let descriptor = try ImageDescriptor.greyscale16(width: 1, height: 1)
         let image = try ImageDestination.allocate(descriptor: descriptor).writeUInt16 { _, _ in 65535 }
         let encoder = try Encoder()
         let decoder = try Decoder()
         let destination = try ImageDestination.allocate(descriptor: descriptor)
-        expectCodecError(.unsupportedFeature) { _ = try decoder.inspect(Data()) }
-        await expectAsyncCodecError(.unsupportedFeature) { _ = try await encoder.encode(image) }
-        await expectAsyncCodecError(.unsupportedFeature) { _ = try await decoder.decode(Data()) }
-        await expectAsyncCodecError(.unsupportedFeature) { _ = try await decoder.decode(Data(), into: destination) }
+        expectCodecError(.malformedInput) { _ = try decoder.inspect(Data()) }
+        _ = try await encoder.encode(image)
+        await expectAsyncCodecError(.malformedInput) { _ = try await decoder.decode(Data()) }
+        await expectAsyncCodecError(.malformedInput) { _ = try await decoder.decode(Data(), into: destination) }
         #expect(try destination.writeUInt16 { _, _ in 42 }.sampleUInt16(x: 0, y: 0) == 42)
         for target in TranscodeTarget.allCases {
             await expectAsyncCodecError(.unsupportedFeature) {
