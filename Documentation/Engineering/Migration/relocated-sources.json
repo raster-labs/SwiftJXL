@@ -740,6 +740,20 @@
         "Implement block switching and context maps; reject overlong insert/copy/dictionary expansion",
         "Preserve libbrotli MIT attribution; no runtime reference-library dependency"
       ]
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JBRDExtractor.swift",
+      "sourceSHA256": "1789ea3bcbf8d667d871d750300c77d0d6872ea2f867020c4b34a569ae222fef",
+      "destination": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionMetadata.swift",
+      "destinationSHA256": "05a23379c920833f19de78e19cf44dc9198b20e5eff239170cde04fdff94ad42",
+      "licence": "Apache-2.0",
+      "changes": [
+        "Build self-contained native JBRD metadata from validated coefficient owners; no original-JPEG fallback",
+        "Preserve scan reconstruction events, noncanonical padding, marker fill, tail and active quantisation binding",
+        "Admit aggregate source/coefficient/metadata/header/body owners before copies and check cancellation through publication",
+        "Use native stored Brotli payloads; explicitly reject repeated DRI and restart fill not representable by this reconstruction profile",
+        "Reject valid JPEG quantisation redefinitions that leave the first JBRD table unused; do not misclassify them as malformed input"
+      ]
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. The package-internal SwiftJXLCore target now supports the public SwiftJXL scalar greyscale encoder, decoder and inspector; it is not a separately exposed library product. Public profile limits and operation admission are documented in MIGRATION.md and RESOURCE_ADMISSION.md.",
