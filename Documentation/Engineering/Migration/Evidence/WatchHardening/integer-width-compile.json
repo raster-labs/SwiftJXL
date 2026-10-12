@@ -1,0 +1,25 @@
+{
+  "command": [
+    "xcrun",
+    "swiftc",
+    "-module-cache-path",
+    "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-integer-check/module-cache",
+    "-target",
+    "arm64_32-apple-watchos26.0",
+    "-sdk",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/WatchOS.platform/Developer/SDKs/WatchOS27.0.sdk",
+    "-O",
+    "-emit-ir",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Documentation/Engineering/Migration/Evidence/WatchHardening/IntWidth.swift",
+    "-o",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Documentation/Engineering/Migration/Evidence/WatchHardening/IntWidth.ll"
+  ],
+  "environment": {
+    "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/WatchOS.platform/Developer/SDKs/WatchOS27.0.sdk",
+    "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-integer-check/module-cache"
+  },
+  "exitCode": 0,
+  "sourceSHA256": "99078020c15323a4296af2b6dd3cc17b1a2ca7b4a1524a40dae9131d749644c0",
+  "irSHA256": "09040362f6d96294a955d97589730c90fc61dff6c2c121cff8496db476a35215",
+  "observation": "Compiler emits ret i32 32 for Int.bitWidth on arm64_32-apple-watchos26.0; no Watch runtime execution."
+}

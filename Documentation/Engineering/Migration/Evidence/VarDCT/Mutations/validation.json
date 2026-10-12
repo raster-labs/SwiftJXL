@@ -1,0 +1,34 @@
+{
+  "sourceRevision": "7472e2e4e0a6260b988cb135c35d605958486bc2",
+  "contract": "0.10.0",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "method": "Three separate one-hour deterministic mutation campaigns after all 73 conformant seeds were accepted. Fresh ASan process per input, bounded API resource admission and outer timeout. No coverage guidance or security certification. Exact binary, script, seed and probe hashes retained.",
+  "runs": [
+    {
+      "entry": "inspect",
+      "status": "passed",
+      "elapsedSeconds": 3600.014651459,
+      "iterations": 121846,
+      "reportSHA256": "e9b65106fa07b350b862cad2961c4d08d1dcb48f60a336d1489558cd3c44fd22"
+    },
+    {
+      "entry": "decode",
+      "status": "passed",
+      "elapsedSeconds": 3600.030422542,
+      "iterations": 80887,
+      "reportSHA256": "439ae88203320c7e29f3721556857454080f15d4bfd93a279f664c0403c6df53"
+    },
+    {
+      "entry": "caller",
+      "status": "passed",
+      "elapsedSeconds": 3601.087887417,
+      "iterations": 81064,
+      "reportSHA256": "693a474a81b87ae2dd188688912567f6fd8f1e19ac02cd5858db53e1ada7a18a"
+    }
+  ],
+  "totalIterations": 283797,
+  "failures": 0,
+  "scopeNote": "Historical one-hour still-image inspection/allocating decode/caller-storage decode at snapshot 7472e2e. The later Watch hardening modifies shared parser code. These original reports retain their exact scope; dedicated regressions, fresh sanitizer tests and supplementary mutation runs qualify the fixes.",
+  "driverSHA256": "c51a952c253948c17b5ae736bcf4834a0ea00f06085dca2b888b0ffb06983cb5",
+  "probeSHA256": "0e9e0761f9fde19dd7af069ccb59456546cf2b00a2c0ed1bb9d29bda42f7745b"
+}

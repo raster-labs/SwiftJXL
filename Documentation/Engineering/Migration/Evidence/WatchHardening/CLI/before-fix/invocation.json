@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/test-cli-vardct-encode.py",
+    "--binary",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/.build/out/Products/Debug/swiftjxl-cli",
+    "--output",
+    "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/cli-before"
+  ],
+  "exitCode": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/test-cli-vardct-encode.py\", line 29, in <module>\n    assert caps['maximumLossyAlphaDimension'] == caps['maximumEncodeDimension'] == 1024\nAssertionError\n"
+}

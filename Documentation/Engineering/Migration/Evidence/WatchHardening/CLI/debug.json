@@ -1,0 +1,588 @@
+{
+  "status": "passed",
+  "binarySHA256": "61e4a8d775685070e7dadd355b0e5d0ba980807e484223548f96908ebacf4711",
+  "scriptSHA256": "ee975ab8abca38112539ceed06f69ef47768f3b061867fe5f66e7912f60d9261",
+  "checks": [
+    {
+      "bits": 8,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 249,
+      "exactAlpha": false,
+      "encodedSHA256": "141b226f5ee5ff3a042b44d642887e7fd1d3eeb4d0ec6aa9bcd0b81b985821aa"
+    },
+    {
+      "bits": 8,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 180,
+      "exactAlpha": false,
+      "encodedSHA256": "117ff2823b482a4135513ea9334a5f2231921162048a70afbde041ee0855eafb"
+    },
+    {
+      "bits": 8,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 385,
+      "exactAlpha": true,
+      "encodedSHA256": "744e4d5cdd2a319a5970298ca3cb915ab76334ca7aa33c0d336e54394527b324"
+    },
+    {
+      "bits": 8,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 335,
+      "exactAlpha": true,
+      "encodedSHA256": "f08d3430b7c34cda5b8366affeb47da6c234689f6cc6a96da5eb087fe39c01a5"
+    },
+    {
+      "bits": 8,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 485,
+      "exactAlpha": false,
+      "encodedSHA256": "46cce50d5544979c12fd627997f9e6e3064247afc68bbb567cdd26e2f254c265"
+    },
+    {
+      "bits": 8,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 370,
+      "exactAlpha": false,
+      "encodedSHA256": "6560652ef54b0cc8ef31539533afc890392063770d38dbd1cedb787ca618bfc7"
+    },
+    {
+      "bits": 8,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 695,
+      "exactAlpha": true,
+      "encodedSHA256": "6d5902188df4481f9f6d357896ef33564c7a12340d24b2494055faaae2f4953f"
+    },
+    {
+      "bits": 8,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 587,
+      "exactAlpha": true,
+      "encodedSHA256": "31593be006bca2ed387a715641144f6ac6c97f2099e73a048fb9bfdfe127f077"
+    },
+    {
+      "bits": 9,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 250,
+      "exactAlpha": false,
+      "encodedSHA256": "5d29a26a05143b8b4d149e89387d9b36455842939d926d2d9c098384221eaa62"
+    },
+    {
+      "bits": 9,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 181,
+      "exactAlpha": false,
+      "encodedSHA256": "1d2d2f69a1ef4422d4c9b77ceee7badb1e54b4ff0de93916c251930f8fbc644a"
+    },
+    {
+      "bits": 9,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 400,
+      "exactAlpha": true,
+      "encodedSHA256": "d676fac9c88fb65402651ff838736b3a15b03ca1233319f7179e5f0885068344"
+    },
+    {
+      "bits": 9,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 351,
+      "exactAlpha": true,
+      "encodedSHA256": "1c0a2de0786a1edbe2404f9d2d0dd2dc50c8763abaf6cbd09eb8e3b2efbbadab"
+    },
+    {
+      "bits": 9,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 486,
+      "exactAlpha": false,
+      "encodedSHA256": "dcc730ac0f235a30aaa42cc6c09c75afd14df858eca793e4f5c393696c7660d2"
+    },
+    {
+      "bits": 9,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 371,
+      "exactAlpha": false,
+      "encodedSHA256": "7748a9e6427d34a87d2c42ae46aaafcb54d8415e8b27d200a16700c6e6c558af"
+    },
+    {
+      "bits": 9,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 716,
+      "exactAlpha": true,
+      "encodedSHA256": "037d64c51d62a1a5d2c8c50e7dbe6deb43c4363b4175ac1b9fca8a5d1dc89002"
+    },
+    {
+      "bits": 9,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 620,
+      "exactAlpha": true,
+      "encodedSHA256": "63795db3490d64d225f47b55fa35556b179764f45e4802260b80a2d9a3fbd44c"
+    },
+    {
+      "bits": 10,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 249,
+      "exactAlpha": false,
+      "encodedSHA256": "c87a320aa8124518be3f6369413dfa7f066df78c8dab0fc5b0f13544b0973d9a"
+    },
+    {
+      "bits": 10,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 180,
+      "exactAlpha": false,
+      "encodedSHA256": "fb26adf837b881bcd065fc0b91504daeed42b5725a6397d7faa468aa83d5e52b"
+    },
+    {
+      "bits": 10,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 410,
+      "exactAlpha": true,
+      "encodedSHA256": "bef03afc0fa99cfd68deadf1858cf6693b47b1fe141f91be5cf0e455bce37cf6"
+    },
+    {
+      "bits": 10,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 361,
+      "exactAlpha": true,
+      "encodedSHA256": "8870ab2b75568c34a35879bf0f1edb4a257f40c6a250d199591dfce1e851d569"
+    },
+    {
+      "bits": 10,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 485,
+      "exactAlpha": false,
+      "encodedSHA256": "2543bc6884f896fd23c218ad5bd5e96007b36f6250f26e5f123ffd9be0272e90"
+    },
+    {
+      "bits": 10,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 370,
+      "exactAlpha": false,
+      "encodedSHA256": "99bb55fb6b64e5f522071d5c945770bebe9bfb4cbf1916a789947d784e45336a"
+    },
+    {
+      "bits": 10,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 734,
+      "exactAlpha": true,
+      "encodedSHA256": "cfdbdc3adfd2b23db6777170d6ebddafb74b86c55b1f6024b84f22848ebeb9f8"
+    },
+    {
+      "bits": 10,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 626,
+      "exactAlpha": true,
+      "encodedSHA256": "c266b137302a0f0ec0a931b848171463f65ab9053a96de404ce1150e52c6c764"
+    },
+    {
+      "bits": 11,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 250,
+      "exactAlpha": false,
+      "encodedSHA256": "1043ad1f9e2b63934cb320d2604a7b5291d4021a3aa5773a80e964ed5f3f3b8d"
+    },
+    {
+      "bits": 11,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 180,
+      "exactAlpha": false,
+      "encodedSHA256": "7159f1a7988bed33b116bbba6778b612852f980121a06db8d337791949c246b3"
+    },
+    {
+      "bits": 11,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 425,
+      "exactAlpha": true,
+      "encodedSHA256": "add230bfbdb8fabd5e2032a26f03d406cff9c37784bebe2122c35a6494a0d3ce"
+    },
+    {
+      "bits": 11,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 375,
+      "exactAlpha": true,
+      "encodedSHA256": "04b2d3ad9f64e6d31a40d36eb346126655daa3414746283b0030b6a0e6e45b54"
+    },
+    {
+      "bits": 11,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 486,
+      "exactAlpha": false,
+      "encodedSHA256": "04c9af6653d7e0a88266905e9a2f4a407113949022b3269ba350350bf34bd509"
+    },
+    {
+      "bits": 11,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 371,
+      "exactAlpha": false,
+      "encodedSHA256": "bf4b386e2420cdfb5eecb6ded976f6585ab8a0192eec54d86392859068cdb3c7"
+    },
+    {
+      "bits": 11,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 753,
+      "exactAlpha": true,
+      "encodedSHA256": "9eda43db27a4a75362566fd6cbd4a3f52179f810b2658c978ea1b5722a369cf3"
+    },
+    {
+      "bits": 11,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 656,
+      "exactAlpha": true,
+      "encodedSHA256": "fdc7d45a8584a884fce4b647cd1a43c08dac6510a4d4687c0ee1b815bc987880"
+    },
+    {
+      "bits": 12,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 249,
+      "exactAlpha": false,
+      "encodedSHA256": "45efc0cd0c610083c800fae4b7fddbe6f62c532311fbbacc33a8d97c9aef8bd9"
+    },
+    {
+      "bits": 12,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 179,
+      "exactAlpha": false,
+      "encodedSHA256": "752d717d12736251ca0de331c717a820ea65169a38ff1fe77f4af1ab8f5bd9d6"
+    },
+    {
+      "bits": 12,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 435,
+      "exactAlpha": true,
+      "encodedSHA256": "18dec3311c064f00379849aa1155817df9387573dee71a595eed10df5bc62959"
+    },
+    {
+      "bits": 12,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 385,
+      "exactAlpha": true,
+      "encodedSHA256": "fca01e854325b5d747fdd6b2e0b56fb8bb46cd072ba8ae3917b95d7c8f5eb942"
+    },
+    {
+      "bits": 12,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 485,
+      "exactAlpha": false,
+      "encodedSHA256": "249e3846d4186efebd9544c17575c71ff12fc3abd3f976fb66e27cd1b06f423d"
+    },
+    {
+      "bits": 12,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 370,
+      "exactAlpha": false,
+      "encodedSHA256": "6abe81bbc4c3da42fcd147e73e6226b05e59cb98b4ed462cce57bf88561fa36b"
+    },
+    {
+      "bits": 12,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 771,
+      "exactAlpha": true,
+      "encodedSHA256": "0625fb8cc94662e7c24dedf953af237a6c83918802915716aef26feb5ffdd2d6"
+    },
+    {
+      "bits": 12,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 673,
+      "exactAlpha": true,
+      "encodedSHA256": "97a85dcad58ec6e24fb1c10d1870d628e86bac42e2459ada4c8a934dd389b623"
+    },
+    {
+      "bits": 13,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 250,
+      "exactAlpha": false,
+      "encodedSHA256": "246e53bb390b86e35b704965f01ecd3b463bc806d81674e42745e0ad271fbce9"
+    },
+    {
+      "bits": 13,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 180,
+      "exactAlpha": false,
+      "encodedSHA256": "57f4d78c948501283e8f5d3d5246d4ca78353e05ca87b657eb01112c6ea4ac80"
+    },
+    {
+      "bits": 13,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 449,
+      "exactAlpha": true,
+      "encodedSHA256": "7866d0a1ea2916a9a0cbb431b59dffa1531593618e629e785e599d0ee66c1750"
+    },
+    {
+      "bits": 13,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 400,
+      "exactAlpha": true,
+      "encodedSHA256": "b92093819875ebe6b5f141300ac43c1e8e9290aa7a8130eda293b849292a9070"
+    },
+    {
+      "bits": 13,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 486,
+      "exactAlpha": false,
+      "encodedSHA256": "86adf29e8943d140a4aa10d894590185ec0f13e36b057a335988d6a05736318a"
+    },
+    {
+      "bits": 13,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 371,
+      "exactAlpha": false,
+      "encodedSHA256": "68e876a2babeac9b90b3e18c6a4c801715eece57ef7f89c62baa032a98c641b1"
+    },
+    {
+      "bits": 13,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 790,
+      "exactAlpha": true,
+      "encodedSHA256": "33233406466e23d2736b7368d16bf1af4b76c11d20d68f6593c574ccb14482f2"
+    },
+    {
+      "bits": 13,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 693,
+      "exactAlpha": true,
+      "encodedSHA256": "62fd80c369c4cdd2b7b98034f3d953c9f7838af1f469d0945b6d73a202a1bdbb"
+    },
+    {
+      "bits": 14,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 250,
+      "exactAlpha": false,
+      "encodedSHA256": "5ffc92683ca27d28123736a0ce336d110fc622af4022ef7cac21a4f24a5a35ac"
+    },
+    {
+      "bits": 14,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 180,
+      "exactAlpha": false,
+      "encodedSHA256": "66726ed222e9e8973a41d3af4b3a4a207c6b60086aa050a944fea548b6fc425a"
+    },
+    {
+      "bits": 14,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 461,
+      "exactAlpha": true,
+      "encodedSHA256": "a9f58842ada2b25caeab1bec14d38a3b09efbf343f4153287f1e337ad233774a"
+    },
+    {
+      "bits": 14,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 412,
+      "exactAlpha": true,
+      "encodedSHA256": "7d18eae96ce1f00b5c1af2fcf5f755528d873f327db4a2fcf696bf1029a72618"
+    },
+    {
+      "bits": 14,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 486,
+      "exactAlpha": false,
+      "encodedSHA256": "709ba0e7131a581772708d4ed15cf69b0c434cd315f003a1d8d3d9c7cb1a6919"
+    },
+    {
+      "bits": 14,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 371,
+      "exactAlpha": false,
+      "encodedSHA256": "6ec6eea0c8c5084df2e47a29838aa908da193f3e9fe7ad3441a38e7c8f6c9664"
+    },
+    {
+      "bits": 14,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 808,
+      "exactAlpha": true,
+      "encodedSHA256": "d07b1763a64802493c06452b228f4da734e505d0aea9adaa9adee6a302cdd760"
+    },
+    {
+      "bits": 14,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 711,
+      "exactAlpha": true,
+      "encodedSHA256": "d126b31039670b2e09f83abdb5aa5cd0bdd73beb99a5d2be4302b2979f031582"
+    },
+    {
+      "bits": 15,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 250,
+      "exactAlpha": false,
+      "encodedSHA256": "c3a179d9e6b32fc319ce2028da59b1f465524294ac063b7ab8de33241bb0f954"
+    },
+    {
+      "bits": 15,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 180,
+      "exactAlpha": false,
+      "encodedSHA256": "841e53e94e1cf2a19b03b669a0ac5c26b9279b473b5acc1887ec1979eed30b84"
+    },
+    {
+      "bits": 15,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 474,
+      "exactAlpha": true,
+      "encodedSHA256": "6b872dd7c9b0956b25934f5862aef291d19afef93a413d862ed688cec7efa080"
+    },
+    {
+      "bits": 15,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 424,
+      "exactAlpha": true,
+      "encodedSHA256": "928a80ef2fde5c3586683bc02d8ee55e992ed396f5f9056f6d1be31999dae6ad"
+    },
+    {
+      "bits": 15,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 486,
+      "exactAlpha": false,
+      "encodedSHA256": "b17cef577e297bdcb92ba07ace936af2038d44be8c3bfbf1dc934cced3c0c3f9"
+    },
+    {
+      "bits": 15,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 371,
+      "exactAlpha": false,
+      "encodedSHA256": "6f7f6597192443af3d40970ff058879b4de63647b73b142bffcb3e94a121b170"
+    },
+    {
+      "bits": 15,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 827,
+      "exactAlpha": true,
+      "encodedSHA256": "dee80e474c40f83b16c9523d1b3393c2c72a200c3419b53ca703cb07a5f4968c"
+    },
+    {
+      "bits": 15,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 729,
+      "exactAlpha": true,
+      "encodedSHA256": "cd4a4239163a096363f036e672f1c6b00c323ae81b0d1e7216d99cd39fc7c3e8"
+    },
+    {
+      "bits": 16,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 250,
+      "exactAlpha": false,
+      "encodedSHA256": "e9e2be90a1132340dbaf342126968c507f4d991738aaccdcfd9ff7a2f391293d"
+    },
+    {
+      "bits": 16,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 181,
+      "exactAlpha": false,
+      "encodedSHA256": "68b2023e8a62d0829a1489d071918bccb5d3bf7f7df3da3e757850fa73647d29"
+    },
+    {
+      "bits": 16,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 486,
+      "exactAlpha": true,
+      "encodedSHA256": "da20145220873e5a8415ce57fc37612422a1ea0daaddb9c144fdf750ed3edf51"
+    },
+    {
+      "bits": 16,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 436,
+      "exactAlpha": true,
+      "encodedSHA256": "c0ba640e835faa3a22ea76072d895037f272ea83082c9b14e1fa347df8864618"
+    },
+    {
+      "bits": 16,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 486,
+      "exactAlpha": false,
+      "encodedSHA256": "b0c7aa4d132875f242c6902d63c561d2cadea186bc76ecf1f44f3fd9ab30e011"
+    },
+    {
+      "bits": 16,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 371,
+      "exactAlpha": false,
+      "encodedSHA256": "a4680b864b6f827a54fd5fd4756fd0469e98aa4c627f8b24145e8e40ab61bbce"
+    },
+    {
+      "bits": 16,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 846,
+      "exactAlpha": true,
+      "encodedSHA256": "0f32735692956c4d88f1126f10734fee35f9c3d48cc06716610e31b8e36ee842"
+    },
+    {
+      "bits": 16,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 747,
+      "exactAlpha": true,
+      "encodedSHA256": "282827c8b241ab084a38145b858c599064a9308800449cae1c39cb0ec28ccf0b"
+    }
+  ],
+  "alphaDimensionChecks": {
+    "acceptedWidth": 257,
+    "exactAlpha": true,
+    "rejectedWidth": 1025
+  }
+}

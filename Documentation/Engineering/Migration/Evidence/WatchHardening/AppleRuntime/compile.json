@@ -1,0 +1,134 @@
+[
+  {
+    "platform": "ios",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-parse-as-library",
+      "-target",
+      "arm64-apple-ios26.0-simulator",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+      "-I",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/ios-simulator/out/Products/Debug-iphonesimulator",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/TestSupport/apple-runtime-probe.swift",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/ios-simulator/out/Products/Debug-iphonesimulator/SwiftJXL.o",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/ios-simulator/out/Products/Debug-iphonesimulator/SwiftJXLCore.o",
+      "-o",
+      "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/ios-probe"
+    ],
+    "exitCode": 0,
+    "binary": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/ios-probe",
+    "environment": {
+      "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+      "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/module-cache"
+    },
+    "objects": {
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/ios-simulator/out/Products/Debug-iphonesimulator/SwiftJXL.o": "4b76ff27bb42d732c7e505d5acda198826ebe145b6ee1342a05637c3ba0b1be2",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/ios-simulator/out/Products/Debug-iphonesimulator/SwiftJXLCore.o": "30a990e1abffc1b74188df5062a9d791485718320276d3a9ffdbe5513e708d2f"
+    },
+    "binarySHA256": "046702664467c55f22a4486a34d9c9f5909df2057e85d2d042447ba134c816db"
+  },
+  {
+    "platform": "tvos",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-parse-as-library",
+      "-target",
+      "arm64-apple-tvos26.0-simulator",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/SDKs/AppleTVSimulator27.0.sdk",
+      "-I",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/tvos-simulator/out/Products/Debug-appletvsimulator",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/TestSupport/apple-runtime-probe.swift",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/tvos-simulator/out/Products/Debug-appletvsimulator/SwiftJXL.o",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/tvos-simulator/out/Products/Debug-appletvsimulator/SwiftJXLCore.o",
+      "-o",
+      "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/tvos-probe"
+    ],
+    "exitCode": 0,
+    "binary": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/tvos-probe",
+    "environment": {
+      "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/SDKs/AppleTVSimulator27.0.sdk",
+      "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/module-cache"
+    },
+    "objects": {
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/tvos-simulator/out/Products/Debug-appletvsimulator/SwiftJXL.o": "a976abbfe18409fe4407a29a351cfb437413ba043571d1c064982dd8cc3f798c",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/tvos-simulator/out/Products/Debug-appletvsimulator/SwiftJXLCore.o": "4cebf9752d480a18fe7ae0f14ede2f7137f8a101c71827da27ccf25ea931d6d7"
+    },
+    "binarySHA256": "621fe2ade4f306a92ca8b6945d453f5598488ccdc31d11c0fc2b81ff4c09a6b4"
+  },
+  {
+    "platform": "watchos",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-parse-as-library",
+      "-target",
+      "arm64-apple-watchos26.0-simulator",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator27.0.sdk",
+      "-I",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/watchos-simulator/out/Products/Debug-watchsimulator",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/TestSupport/apple-runtime-probe.swift",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/watchos-simulator/out/Products/Debug-watchsimulator/SwiftJXL.o",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/watchos-simulator/out/Products/Debug-watchsimulator/SwiftJXLCore.o",
+      "-o",
+      "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/watchos-probe"
+    ],
+    "exitCode": 0,
+    "binary": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/watchos-probe",
+    "environment": {
+      "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator27.0.sdk",
+      "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/module-cache"
+    },
+    "objects": {
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/watchos-simulator/out/Products/Debug-watchsimulator/SwiftJXL.o": "74806289594dfa3e2d570cbfdd1e1ff2e9a034b53938d08f637ac05ad2bb8778",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/watchos-simulator/out/Products/Debug-watchsimulator/SwiftJXLCore.o": "a813421d3f706d2e51a45540e36ae0224e5507054508e030a499cee77b6e0c34"
+    },
+    "binarySHA256": "cc5e7d8726b669dfe979c46a075023402e953c815637222eb57f29e592e3533b"
+  },
+  {
+    "platform": "visionos",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-parse-as-library",
+      "-target",
+      "arm64-apple-xros26.0-simulator",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/XRSimulator.platform/Developer/SDKs/XRSimulator27.0.sdk",
+      "-I",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/visionos-simulator/out/Products/Debug-xrsimulator",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/TestSupport/apple-runtime-probe.swift",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/visionos-simulator/out/Products/Debug-xrsimulator/SwiftJXL.o",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/visionos-simulator/out/Products/Debug-xrsimulator/SwiftJXLCore.o",
+      "-o",
+      "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/visionos-probe"
+    ],
+    "exitCode": 0,
+    "binary": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/visionos-probe",
+    "environment": {
+      "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/XRSimulator.platform/Developer/SDKs/XRSimulator27.0.sdk",
+      "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/module-cache"
+    },
+    "objects": {
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/visionos-simulator/out/Products/Debug-xrsimulator/SwiftJXL.o": "6e5ed9cbf44c110f641d22af510ea9dcd18db7d2cfde9e9e043f74322002ad4c",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/apple-sdk-qualification/visionos-simulator/out/Products/Debug-xrsimulator/SwiftJXLCore.o": "e5efde95a63dd581bfe1871c56db80cbe1efacfe076ad9886c2c94f3be50a75b"
+    },
+    "binarySHA256": "20dda6cdedb68293eb0c5623c4e76c04d9d9c6a4bbe58fcd6816ac2d9721197c"
+  }
+]

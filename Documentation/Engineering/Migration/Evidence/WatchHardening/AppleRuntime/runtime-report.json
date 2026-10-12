@@ -1,0 +1,854 @@
+{
+  "deviceSet": "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "create",
+        "SwiftJXL-Smoke-ios",
+        "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+        "com.apple.CoreSimulator.SimRuntime.iOS-26-5"
+      ],
+      "exitCode": 0,
+      "stdout": "4F973794-1F7F-4C59-9470-A21E0CBA3800\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "boot",
+        "4f973794-1f7f-4c59-9470-a21e0cba3800"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "bootstatus",
+        "4f973794-1f7f-4c59-9470-a21e0cba3800",
+        "-b"
+      ],
+      "exitCode": 0,
+      "stdout": "Monitoring boot status for SwiftJXL-Smoke-ios (4F973794-1F7F-4C59-9470-A21E0CBA3800).\n[2026-10-12 10:27:44 +0000] Status=1, isTerminal=NO, Elapsed=00:03.\n\tWaiting on BackBoard\n\n[2026-10-12 10:27:46 +0000] Status=2, isTerminal=NO, Elapsed=00:04.\n\tWaiting on Data Migration\n\t\tReason:Gathering plugins\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-12 10:27:46 +0000] Status=2, isTerminal=NO, Elapsed=00:04.\n\tWaiting on Data Migration\n\t\tReason:Gathering plugins\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-12 10:27:46 +0000] Status=2, isTerminal=NO, Elapsed=00:05.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-12 10:27:47 +0000] Status=2, isTerminal=NO, Elapsed=00:06.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:01 seconds\n\n[2026-10-12 10:27:49 +0000] Status=2, isTerminal=NO, Elapsed=00:08.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:02 seconds\n\n[2026-10-12 10:27:49 +0000] Status=2, isTerminal=NO, Elapsed=00:08.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:03 seconds\n\n[2026-10-12 10:27:51 +0000] Status=2, isTerminal=NO, Elapsed=00:09.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:04 seconds\n\n[2026-10-12 10:27:51 +0000] Status=2, isTerminal=NO, Elapsed=00:10.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:05 seconds\n\n[2026-10-12 10:27:52 +0000] Status=2, isTerminal=NO, Elapsed=00:11.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:06 seconds\n\n[2026-10-12 10:27:53 +0000] Status=2, isTerminal=NO, Elapsed=00:12.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:07 seconds\n\n[2026-10-12 10:27:54 +0000] Status=2, isTerminal=NO, Elapsed=00:13.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:08 seconds\n\n[2026-10-12 10:27:55 +0000] Status=2, isTerminal=NO, Elapsed=00:14.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:09 seconds\n\n[2026-10-12 10:27:56 +0000] Status=2, isTerminal=NO, Elapsed=00:15.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:10 seconds\n\n[2026-10-12 10:27:57 +0000] Status=2, isTerminal=NO, Elapsed=00:16.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:11 seconds\n\n[2026-10-12 10:27:58 +0000] Status=2, isTerminal=NO, Elapsed=00:17.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:12 seconds\n\n[2026-10-12 10:27:59 +0000] Status=2, isTerminal=NO, Elapsed=00:18.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:13 seconds\n\n[2026-10-12 10:28:00 +0000] Status=2, isTerminal=NO, Elapsed=00:19.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:14 seconds\n\n[2026-10-12 10:28:01 +0000] Status=2, isTerminal=NO, Elapsed=00:20.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:15 seconds\n\n[2026-10-12 10:28:03 +0000] Status=2, isTerminal=NO, Elapsed=00:21.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:16 seconds\n\n[2026-10-12 10:28:03 +0000] Status=2, isTerminal=NO, Elapsed=00:22.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:17 seconds\n\n[2026-10-12 10:28:04 +0000] Status=2, isTerminal=NO, Elapsed=00:23.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:18 seconds\n\n[2026-10-12 10:28:05 +0000] Status=2, isTerminal=NO, Elapsed=00:24.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:19 seconds\n\n[2026-10-12 10:28:06 +0000] Status=2, isTerminal=NO, Elapsed=00:25.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:20 seconds\n\n[2026-10-12 10:28:07 +0000] Status=2, isTerminal=NO, Elapsed=00:26.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:21 seconds\n\n[2026-10-12 10:28:08 +0000] Status=2, isTerminal=NO, Elapsed=00:27.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:22 seconds\n\n[2026-10-12 10:28:09 +0000] Status=2, isTerminal=NO, Elapsed=00:28.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:23 seconds\n\n[2026-10-12 10:28:10 +0000] Status=2, isTerminal=NO, Elapsed=00:29.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:24 seconds\n\n[2026-10-12 10:28:11 +0000] Status=2, isTerminal=NO, Elapsed=00:30.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:25 seconds\n\n[2026-10-12 10:28:12 +0000] Status=2, isTerminal=NO, Elapsed=00:31.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:26 seconds\n\n[2026-10-12 10:28:13 +0000] Status=2, isTerminal=NO, Elapsed=00:32.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:27 seconds\n\n[2026-10-12 10:28:14 +0000] Status=2, isTerminal=NO, Elapsed=00:33.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:28 seconds\n\n[2026-10-12 10:28:15 +0000] Status=2, isTerminal=NO, Elapsed=00:34.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:29 seconds\n\n[2026-10-12 10:28:16 +0000] Status=2, isTerminal=NO, Elapsed=00:35.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:30 seconds\n\n[2026-10-12 10:28:17 +0000] Status=2, isTerminal=NO, Elapsed=00:36.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:31 seconds\n\n[2026-10-12 10:28:18 +0000] Status=2, isTerminal=NO, Elapsed=00:37.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:32 seconds\n\n[2026-10-12 10:28:19 +0000] Status=2, isTerminal=NO, Elapsed=00:38.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:33 seconds\n\n[2026-10-12 10:28:20 +0000] Status=2, isTerminal=NO, Elapsed=00:39.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:34 seconds\n\n[2026-10-12 10:28:21 +0000] Status=2, isTerminal=NO, Elapsed=00:40.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:35 seconds\n\n[2026-10-12 10:28:22 +0000] Status=2, isTerminal=NO, Elapsed=00:41.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:36 seconds\n\n[2026-10-12 10:28:23 +0000] Status=2, isTerminal=NO, Elapsed=00:42.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:37 seconds\n\n[2026-10-12 10:28:24 +0000] Status=2, isTerminal=NO, Elapsed=00:43.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:38 seconds\n\n[2026-10-12 10:28:25 +0000] Status=2, isTerminal=NO, Elapsed=00:44.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:39 seconds\n\n[2026-10-12 10:28:26 +0000] Status=2, isTerminal=NO, Elapsed=00:45.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:40 seconds\n\n[2026-10-12 10:28:27 +0000] Status=2, isTerminal=NO, Elapsed=00:46.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:41 seconds\n\n[2026-10-12 10:28:28 +0000] Status=2, isTerminal=NO, Elapsed=00:47.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:42 seconds\n\n[2026-10-12 10:28:29 +0000] Status=2, isTerminal=NO, Elapsed=00:48.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:43 seconds\n\n[2026-10-12 10:28:30 +0000] Status=2, isTerminal=NO, Elapsed=00:49.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:44 seconds\n\n[2026-10-12 10:28:31 +0000] Status=2, isTerminal=NO, Elapsed=00:50.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:45 seconds\n\n[2026-10-12 10:28:34 +0000] Status=2, isTerminal=NO, Elapsed=00:52.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.securityd.KeychainMigrator (KeychainMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:46 seconds\n\n[2026-10-12 10:28:35 +0000] Status=2, isTerminal=NO, Elapsed=00:53.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:48 seconds\n\n[2026-10-12 10:28:35 +0000] Status=2, isTerminal=NO, Elapsed=00:54.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:49 seconds\n\n[2026-10-12 10:28:36 +0000] Status=2, isTerminal=NO, Elapsed=00:55.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:50 seconds\n\n[2026-10-12 10:28:37 +0000] Status=2, isTerminal=NO, Elapsed=00:56.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:51 seconds\n\n[2026-10-12 10:28:38 +0000] Status=2, isTerminal=NO, Elapsed=00:56.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:52 seconds\n\n[2026-10-12 10:28:39 +0000] Status=2, isTerminal=NO, Elapsed=00:57.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:52 seconds\n\n[2026-10-12 10:28:39 +0000] Status=2, isTerminal=NO, Elapsed=00:58.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:53 seconds\n\n[2026-10-12 10:28:40 +0000] Status=2, isTerminal=NO, Elapsed=00:59.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.WebBookmarks.migrator (WebBookmarks.migrator)\n\t\tMigration Elapsed:00:54 seconds\n\n[2026-10-12 10:28:42 +0000] Status=2, isTerminal=NO, Elapsed=01:00.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:00:55 seconds\n\n[2026-10-12 10:28:42 +0000] Status=2, isTerminal=NO, Elapsed=01:01.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:00:56 seconds\n\n[2026-10-12 10:28:43 +0000] Status=2, isTerminal=NO, Elapsed=01:02.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:00:57 seconds\n\n[2026-10-12 10:28:44 +0000] Status=2, isTerminal=NO, Elapsed=01:03.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:00:58 seconds\n\n[2026-10-12 10:28:45 +0000] Status=2, isTerminal=NO, Elapsed=01:04.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:00:59 seconds\n\n[2026-10-12 10:28:46 +0000] Status=2, isTerminal=NO, Elapsed=01:05.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:00 seconds\n\n[2026-10-12 10:28:47 +0000] Status=2, isTerminal=NO, Elapsed=01:06.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:01 seconds\n\n[2026-10-12 10:28:48 +0000] Status=2, isTerminal=NO, Elapsed=01:07.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:02 seconds\n\n[2026-10-12 10:28:49 +0000] Status=2, isTerminal=NO, Elapsed=01:08.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:03 seconds\n\n[2026-10-12 10:28:50 +0000] Status=2, isTerminal=NO, Elapsed=01:09.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:04 seconds\n\n[2026-10-12 10:28:51 +0000] Status=2, isTerminal=NO, Elapsed=01:10.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:05 seconds\n\n[2026-10-12 10:28:52 +0000] Status=2, isTerminal=NO, Elapsed=01:11.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:06 seconds\n\n[2026-10-12 10:28:53 +0000] Status=2, isTerminal=NO, Elapsed=01:12.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:07 seconds\n\n[2026-10-12 10:28:54 +0000] Status=2, isTerminal=NO, Elapsed=01:13.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:08 seconds\n\n[2026-10-12 10:28:55 +0000] Status=2, isTerminal=NO, Elapsed=01:14.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:09 seconds\n\n[2026-10-12 10:28:56 +0000] Status=2, isTerminal=NO, Elapsed=01:15.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:10 seconds\n\n[2026-10-12 10:28:57 +0000] Status=2, isTerminal=NO, Elapsed=01:16.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:11 seconds\n\n[2026-10-12 10:28:58 +0000] Status=2, isTerminal=NO, Elapsed=01:17.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:12 seconds\n\n[2026-10-12 10:28:59 +0000] Status=2, isTerminal=NO, Elapsed=01:18.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:13 seconds\n\n[2026-10-12 10:29:00 +0000] Status=2, isTerminal=NO, Elapsed=01:19.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:14 seconds\n\n[2026-10-12 10:29:01 +0000] Status=2, isTerminal=NO, Elapsed=01:20.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:15 seconds\n\n[2026-10-12 10:29:02 +0000] Status=2, isTerminal=NO, Elapsed=01:21.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:16 seconds\n\n[2026-10-12 10:29:03 +0000] Status=2, isTerminal=NO, Elapsed=01:22.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:17 seconds\n\n[2026-10-12 10:29:04 +0000] Status=2, isTerminal=NO, Elapsed=01:23.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:18 seconds\n\n[2026-10-12 10:29:05 +0000] Status=2, isTerminal=NO, Elapsed=01:24.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:19 seconds\n\n[2026-10-12 10:29:06 +0000] Status=2, isTerminal=NO, Elapsed=01:25.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:20 seconds\n\n[2026-10-12 10:29:07 +0000] Status=2, isTerminal=NO, Elapsed=01:26.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:21 seconds\n\n[2026-10-12 10:29:08 +0000] Status=2, isTerminal=NO, Elapsed=01:27.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:22 seconds\n\n[2026-10-12 10:29:09 +0000] Status=2, isTerminal=NO, Elapsed=01:28.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:23 seconds\n\n[2026-10-12 10:29:10 +0000] Status=2, isTerminal=NO, Elapsed=01:29.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:24 seconds\n\n[2026-10-12 10:29:11 +0000] Status=2, isTerminal=NO, Elapsed=01:30.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:25 seconds\n\n[2026-10-12 10:29:12 +0000] Status=2, isTerminal=NO, Elapsed=01:31.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:26 seconds\n\n[2026-10-12 10:29:13 +0000] Status=2, isTerminal=NO, Elapsed=01:32.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:27 seconds\n\n[2026-10-12 10:29:14 +0000] Status=2, isTerminal=NO, Elapsed=01:33.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:28 seconds\n\n[2026-10-12 10:29:15 +0000] Status=2, isTerminal=NO, Elapsed=01:34.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:29 seconds\n\n[2026-10-12 10:29:16 +0000] Status=2, isTerminal=NO, Elapsed=01:35.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:30 seconds\n\n[2026-10-12 10:29:17 +0000] Status=2, isTerminal=NO, Elapsed=01:36.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:31 seconds\n\n[2026-10-12 10:29:18 +0000] Status=2, isTerminal=NO, Elapsed=01:37.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:32 seconds\n\n[2026-10-12 10:29:19 +0000] Status=2, isTerminal=NO, Elapsed=01:38.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:33 seconds\n\n[2026-10-12 10:29:20 +0000] Status=2, isTerminal=NO, Elapsed=01:39.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:34 seconds\n\n[2026-10-12 10:29:21 +0000] Status=2, isTerminal=NO, Elapsed=01:40.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:35 seconds\n\n[2026-10-12 10:29:22 +0000] Status=2, isTerminal=NO, Elapsed=01:41.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:36 seconds\n\n[2026-10-12 10:29:23 +0000] Status=2, isTerminal=NO, Elapsed=01:42.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:37 seconds\n\n[2026-10-12 10:29:24 +0000] Status=2, isTerminal=NO, Elapsed=01:43.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:38 seconds\n\n[2026-10-12 10:29:25 +0000] Status=2, isTerminal=NO, Elapsed=01:44.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:39 seconds\n\n[2026-10-12 10:29:26 +0000] Status=2, isTerminal=NO, Elapsed=01:45.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:40 seconds\n\n[2026-10-12 10:29:27 +0000] Status=2, isTerminal=NO, Elapsed=01:46.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:41 seconds\n\n[2026-10-12 10:29:28 +0000] Status=2, isTerminal=NO, Elapsed=01:47.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:42 seconds\n\n[2026-10-12 10:29:29 +0000] Status=2, isTerminal=NO, Elapsed=01:48.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:43 seconds\n\n[2026-10-12 10:29:30 +0000] Status=2, isTerminal=NO, Elapsed=01:49.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:44 seconds\n\n[2026-10-12 10:29:31 +0000] Status=2, isTerminal=NO, Elapsed=01:50.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:45 seconds\n\n[2026-10-12 10:29:32 +0000] Status=2, isTerminal=NO, Elapsed=01:51.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:46 seconds\n\n[2026-10-12 10:29:33 +0000] Status=2, isTerminal=NO, Elapsed=01:52.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:47 seconds\n\n[2026-10-12 10:29:34 +0000] Status=2, isTerminal=NO, Elapsed=01:53.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.locationd.migrator (CoreLocationMigrator.migrator)\n\t\tMigration Elapsed:01:48 seconds\n\n[2026-10-12 10:29:35 +0000] Status=2, isTerminal=NO, Elapsed=01:54.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.mdm.migrator (MCMDM.migrator)\n\t\tMigration Elapsed:01:49 seconds\n\n[2026-10-12 10:29:37 +0000] Status=2, isTerminal=NO, Elapsed=01:55.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.CloudTabsMigrator.migrator (CloudTabsMigrator.migrator)\n\t\tMigration Elapsed:01:50 seconds\n\n[2026-10-12 10:29:37 +0000] Status=4, isTerminal=NO, Elapsed=01:56.\n\tWaiting on System App\n\n[2026-10-12 10:29:38 +0000] Status=4, isTerminal=NO, Elapsed=01:57.\n\tWaiting on System App\n\n[2026-10-12 10:29:39 +0000] Status=4, isTerminal=NO, Elapsed=01:58.\n\tWaiting on System App\n\n[2026-10-12 10:29:40 +0000] Status=4, isTerminal=NO, Elapsed=01:59.\n\tWaiting on System App\n\n[2026-10-12 10:29:41 +0000] Status=4, isTerminal=NO, Elapsed=02:00.\n\tWaiting on System App\n\n[2026-10-12 10:29:43 +0000] Status=4, isTerminal=NO, Elapsed=02:01.\n\tWaiting on System App\n\n[2026-10-12 10:29:44 +0000] Status=4, isTerminal=NO, Elapsed=02:02.\n\tWaiting on System App\n\n[2026-10-12 10:29:46 +0000] Status=4294967295, isTerminal=YES, Elapsed=02:04.\n\tFinished\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "spawn",
+        "4f973794-1f7f-4c59-9470-a21e0cba3800",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/ios-probe",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/fixtures"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"checks\":[\"12-bit lossless\",\"caller destination owner\",\"shared-storage reports\",\"exact animation timing\",\"separate retained frame owners\",\"independent VarDCT12\",\"independent RGBA16 animation\",\"low-memory rejection\",\"cancellation\"],\"memoryCeilingBytes\":33554432,\"status\":\"passed\",\"varDCTPeakLSB\":0,\"varDCTRMSLSB\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "shutdown",
+        "4f973794-1f7f-4c59-9470-a21e0cba3800"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "delete",
+        "4f973794-1f7f-4c59-9470-a21e0cba3800"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "create",
+        "SwiftJXL-Smoke-tvos",
+        "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-3rd-generation-4K",
+        "com.apple.CoreSimulator.SimRuntime.tvOS-26-5"
+      ],
+      "exitCode": 0,
+      "stdout": "D23DE351-975C-4595-8CD3-09217DCBFC90\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "boot",
+        "d23de351-975c-4595-8cd3-09217dcbfc90"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "bootstatus",
+        "d23de351-975c-4595-8cd3-09217dcbfc90",
+        "-b"
+      ],
+      "exitCode": 0,
+      "stdout": "Monitoring boot status for SwiftJXL-Smoke-tvos (D23DE351-975C-4595-8CD3-09217DCBFC90).\n[2026-10-12 10:30:02 +0000] Status=1, isTerminal=NO, Elapsed=00:03.\n\tWaiting on BackBoard\n\n[2026-10-12 10:30:03 +0000] Status=2, isTerminal=NO, Elapsed=00:03.\n\tWaiting on Data Migration\n\t\tReason:(null)\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-12 10:30:04 +0000] Status=2, isTerminal=NO, Elapsed=00:04.\n\tWaiting on Data Migration\n\t\tReason:Gathering plugins\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-12 10:30:05 +0000] Status=2, isTerminal=NO, Elapsed=00:05.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:01 seconds\n\n[2026-10-12 10:30:05 +0000] Status=2, isTerminal=NO, Elapsed=00:06.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:02 seconds\n\n[2026-10-12 10:30:06 +0000] Status=2, isTerminal=NO, Elapsed=00:07.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:03 seconds\n\n[2026-10-12 10:30:08 +0000] Status=2, isTerminal=NO, Elapsed=00:08.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:04 seconds\n\n[2026-10-12 10:30:08 +0000] Status=2, isTerminal=NO, Elapsed=00:09.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:05 seconds\n\n[2026-10-12 10:30:09 +0000] Status=2, isTerminal=NO, Elapsed=00:10.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:06 seconds\n\n[2026-10-12 10:30:10 +0000] Status=2, isTerminal=NO, Elapsed=00:11.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:07 seconds\n\n[2026-10-12 10:30:11 +0000] Status=2, isTerminal=NO, Elapsed=00:12.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:08 seconds\n\n[2026-10-12 10:30:12 +0000] Status=2, isTerminal=NO, Elapsed=00:12.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:09 seconds\n\n[2026-10-12 10:30:13 +0000] Status=2, isTerminal=NO, Elapsed=00:14.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:10 seconds\n\n[2026-10-12 10:30:14 +0000] Status=2, isTerminal=NO, Elapsed=00:14.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:11 seconds\n\n[2026-10-12 10:30:15 +0000] Status=2, isTerminal=NO, Elapsed=00:16.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:12 seconds\n\n[2026-10-12 10:30:16 +0000] Status=2, isTerminal=NO, Elapsed=00:16.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:13 seconds\n\n[2026-10-12 10:30:17 +0000] Status=4, isTerminal=NO, Elapsed=00:18.\n\tWaiting on System App\n\n[2026-10-12 10:30:18 +0000] Status=4, isTerminal=NO, Elapsed=00:19.\n\tWaiting on System App\n\n[2026-10-12 10:30:20 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:20.\n\tFinished\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "spawn",
+        "d23de351-975c-4595-8cd3-09217dcbfc90",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/tvos-probe",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/fixtures"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"checks\":[\"12-bit lossless\",\"caller destination owner\",\"shared-storage reports\",\"exact animation timing\",\"separate retained frame owners\",\"independent VarDCT12\",\"independent RGBA16 animation\",\"low-memory rejection\",\"cancellation\"],\"memoryCeilingBytes\":33554432,\"status\":\"passed\",\"varDCTPeakLSB\":0,\"varDCTRMSLSB\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "shutdown",
+        "d23de351-975c-4595-8cd3-09217dcbfc90"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "delete",
+        "d23de351-975c-4595-8cd3-09217dcbfc90"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "create",
+        "SwiftJXL-Smoke-visionos",
+        "com.apple.CoreSimulator.SimDeviceType.Apple-Vision-Pro-4K",
+        "com.apple.CoreSimulator.SimRuntime.xrOS-26-5"
+      ],
+      "exitCode": 0,
+      "stdout": "388612AF-4535-4F47-A708-116B674F3535\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "boot",
+        "388612af-4535-4f47-a708-116b674f3535"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "bootstatus",
+        "388612af-4535-4f47-a708-116b674f3535",
+        "-b"
+      ],
+      "exitCode": 0,
+      "stdout": "Monitoring boot status for SwiftJXL-Smoke-visionos (388612AF-4535-4F47-A708-116B674F3535).\n[2026-10-12 10:30:34 +0000] Status=1, isTerminal=NO, Elapsed=00:07.\n\tWaiting on BackBoard\n\n[2026-10-12 10:30:36 +0000] Status=2, isTerminal=NO, Elapsed=00:08.\n\tWaiting on Data Migration\n\t\tReason:Preparing to migrate\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-12 10:30:37 +0000] Status=2, isTerminal=NO, Elapsed=00:09.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.MobileContainerManager.ContainerMigrator (ContainerMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:01 seconds\n\n[2026-10-12 10:30:38 +0000] Status=2, isTerminal=NO, Elapsed=00:10.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:02 seconds\n\n[2026-10-12 10:30:38 +0000] Status=2, isTerminal=NO, Elapsed=00:11.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:03 seconds\n\n[2026-10-12 10:30:40 +0000] Status=2, isTerminal=NO, Elapsed=00:12.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:04 seconds\n\n[2026-10-12 10:30:41 +0000] Status=2, isTerminal=NO, Elapsed=00:13.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:05 seconds\n\n[2026-10-12 10:30:42 +0000] Status=2, isTerminal=NO, Elapsed=00:14.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:06 seconds\n\n[2026-10-12 10:30:43 +0000] Status=2, isTerminal=NO, Elapsed=00:15.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:07 seconds\n\n[2026-10-12 10:30:44 +0000] Status=2, isTerminal=NO, Elapsed=00:16.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:08 seconds\n\n[2026-10-12 10:30:45 +0000] Status=2, isTerminal=NO, Elapsed=00:17.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:09 seconds\n\n[2026-10-12 10:30:46 +0000] Status=2, isTerminal=NO, Elapsed=00:18.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:10 seconds\n\n[2026-10-12 10:30:47 +0000] Status=2, isTerminal=NO, Elapsed=00:19.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:11 seconds\n\n[2026-10-12 10:30:48 +0000] Status=2, isTerminal=NO, Elapsed=00:20.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:12 seconds\n\n[2026-10-12 10:30:50 +0000] Status=2, isTerminal=NO, Elapsed=00:22.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:13 seconds\n\n[2026-10-12 10:30:50 +0000] Status=2, isTerminal=NO, Elapsed=00:22.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:14 seconds\n\n[2026-10-12 10:30:51 +0000] Status=2, isTerminal=NO, Elapsed=00:23.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:15 seconds\n\n[2026-10-12 10:30:52 +0000] Status=2, isTerminal=NO, Elapsed=00:24.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:16 seconds\n\n[2026-10-12 10:30:53 +0000] Status=2, isTerminal=NO, Elapsed=00:25.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:17 seconds\n\n[2026-10-12 10:30:53 +0000] Status=2, isTerminal=NO, Elapsed=00:26.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:18 seconds\n\n[2026-10-12 10:30:55 +0000] Status=2, isTerminal=NO, Elapsed=00:27.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:19 seconds\n\n[2026-10-12 10:30:56 +0000] Status=2, isTerminal=NO, Elapsed=00:28.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:20 seconds\n\n[2026-10-12 10:30:57 +0000] Status=2, isTerminal=NO, Elapsed=00:29.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:21 seconds\n\n[2026-10-12 10:30:58 +0000] Status=2, isTerminal=NO, Elapsed=00:30.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:22 seconds\n\n[2026-10-12 10:30:59 +0000] Status=2, isTerminal=NO, Elapsed=00:31.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:23 seconds\n\n[2026-10-12 10:31:00 +0000] Status=2, isTerminal=NO, Elapsed=00:32.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:24 seconds\n\n[2026-10-12 10:31:01 +0000] Status=2, isTerminal=NO, Elapsed=00:33.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:25 seconds\n\n[2026-10-12 10:31:02 +0000] Status=2, isTerminal=NO, Elapsed=00:34.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:26 seconds\n\n[2026-10-12 10:31:03 +0000] Status=2, isTerminal=NO, Elapsed=00:35.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:27 seconds\n\n[2026-10-12 10:31:03 +0000] Status=2, isTerminal=NO, Elapsed=00:36.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:28 seconds\n\n[2026-10-12 10:31:04 +0000] Status=2, isTerminal=NO, Elapsed=00:37.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:29 seconds\n\n[2026-10-12 10:31:05 +0000] Status=2, isTerminal=NO, Elapsed=00:38.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:30 seconds\n\n[2026-10-12 10:31:06 +0000] Status=2, isTerminal=NO, Elapsed=00:39.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:31 seconds\n\n[2026-10-12 10:31:07 +0000] Status=2, isTerminal=NO, Elapsed=00:40.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:32 seconds\n\n[2026-10-12 10:31:08 +0000] Status=2, isTerminal=NO, Elapsed=00:41.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:33 seconds\n\n[2026-10-12 10:31:09 +0000] Status=2, isTerminal=NO, Elapsed=00:42.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:34 seconds\n\n[2026-10-12 10:31:10 +0000] Status=2, isTerminal=NO, Elapsed=00:43.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:35 seconds\n\n[2026-10-12 10:31:11 +0000] Status=2, isTerminal=NO, Elapsed=00:44.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:36 seconds\n\n[2026-10-12 10:31:12 +0000] Status=2, isTerminal=NO, Elapsed=00:45.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:37 seconds\n\n[2026-10-12 10:31:13 +0000] Status=2, isTerminal=NO, Elapsed=00:46.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:38 seconds\n\n[2026-10-12 10:31:14 +0000] Status=2, isTerminal=NO, Elapsed=00:47.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:39 seconds\n\n[2026-10-12 10:31:15 +0000] Status=2, isTerminal=NO, Elapsed=00:48.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:40 seconds\n\n[2026-10-12 10:31:16 +0000] Status=2, isTerminal=NO, Elapsed=00:49.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:41 seconds\n\n[2026-10-12 10:31:17 +0000] Status=2, isTerminal=NO, Elapsed=00:50.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:42 seconds\n\n[2026-10-12 10:31:18 +0000] Status=2, isTerminal=NO, Elapsed=00:51.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:43 seconds\n\n[2026-10-12 10:31:19 +0000] Status=2, isTerminal=NO, Elapsed=00:52.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:44 seconds\n\n[2026-10-12 10:31:20 +0000] Status=2, isTerminal=NO, Elapsed=00:53.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:45 seconds\n\n[2026-10-12 10:31:21 +0000] Status=2, isTerminal=NO, Elapsed=00:54.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:46 seconds\n\n[2026-10-12 10:31:22 +0000] Status=2, isTerminal=NO, Elapsed=00:55.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:47 seconds\n\n[2026-10-12 10:31:25 +0000] Status=2, isTerminal=NO, Elapsed=00:57.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.securityd.KeychainMigrator (KeychainMigrator.migrator, user-agnostic)\n\t\tMigration Elapsed:00:48 seconds\n\n[2026-10-12 10:31:25 +0000] Status=2, isTerminal=NO, Elapsed=00:57.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:49 seconds\n\n[2026-10-12 10:31:25 +0000] Status=2, isTerminal=NO, Elapsed=00:58.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:50 seconds\n\n[2026-10-12 10:31:27 +0000] Status=2, isTerminal=NO, Elapsed=00:59.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:51 seconds\n\n[2026-10-12 10:31:28 +0000] Status=2, isTerminal=NO, Elapsed=01:00.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:52 seconds\n\n[2026-10-12 10:31:28 +0000] Status=2, isTerminal=NO, Elapsed=01:01.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:53 seconds\n\n[2026-10-12 10:31:29 +0000] Status=2, isTerminal=NO, Elapsed=01:02.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:54 seconds\n\n[2026-10-12 10:31:30 +0000] Status=2, isTerminal=NO, Elapsed=01:03.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:55 seconds\n\n[2026-10-12 10:31:31 +0000] Status=2, isTerminal=NO, Elapsed=01:04.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:56 seconds\n\n[2026-10-12 10:31:32 +0000] Status=2, isTerminal=NO, Elapsed=01:05.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:57 seconds\n\n[2026-10-12 10:31:33 +0000] Status=2, isTerminal=NO, Elapsed=01:06.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)\n\t\tMigration Elapsed:00:58 seconds\n\n[2026-10-12 10:31:34 +0000] Status=2, isTerminal=NO, Elapsed=01:07.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.addressbook.migrator (AddressBookLegacy.migrator)\n\t\tMigration Elapsed:00:59 seconds\n\n[2026-10-12 10:31:35 +0000] Status=2, isTerminal=NO, Elapsed=01:08.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.WebBookmarks.migrator (WebBookmarks.migrator)\n\t\tMigration Elapsed:01:00 seconds\n\n[2026-10-12 10:31:36 +0000] Status=2, isTerminal=NO, Elapsed=01:09.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.preferences.InternationalSupportMigrator (InternationalSupportMigrator.migrator)\n\t\tMigration Elapsed:01:01 seconds\n\n[2026-10-12 10:31:37 +0000] Status=2, isTerminal=NO, Elapsed=01:10.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.cleanup.migrator (MCCleanup.migrator)\n\t\tMigration Elapsed:01:02 seconds\n\n[2026-10-12 10:31:38 +0000] Status=2, isTerminal=NO, Elapsed=01:11.\n\tWaiting on Data Migration\n\t\tReason:Running plugin com.apple.managedconfiguration.cleanup.migrator (MCCleanup.migrator)\n\t\tMigration Elapsed:01:03 seconds\n\n[2026-10-12 10:31:39 +0000] Status=4, isTerminal=NO, Elapsed=01:12.\n\tWaiting on System App\n\n[2026-10-12 10:31:40 +0000] Status=4294967295, isTerminal=YES, Elapsed=01:13.\n\tFinished\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "spawn",
+        "388612af-4535-4f47-a708-116b674f3535",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/visionos-probe",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/fixtures"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"checks\":[\"12-bit lossless\",\"caller destination owner\",\"shared-storage reports\",\"exact animation timing\",\"separate retained frame owners\",\"independent VarDCT12\",\"independent RGBA16 animation\",\"low-memory rejection\",\"cancellation\"],\"memoryCeilingBytes\":33554432,\"status\":\"passed\",\"varDCTPeakLSB\":0,\"varDCTRMSLSB\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "shutdown",
+        "388612af-4535-4f47-a708-116b674f3535"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "delete",
+        "388612af-4535-4f47-a708-116b674f3535"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "--set",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/apple-runtime/devices-e1846cd1-a59b-4a62-95b7-bc67cc66cca0",
+        "list",
+        "devices",
+        "-j"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"devices\" : {\n    \"com.apple.CoreSimulator.SimRuntime.tvOS-26-5\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.xrOS-26-5\" : [\n\n    ],\n    \"com.apple.CoreSimulator.SimRuntime.iOS-26-5\" : [\n\n    ]\n  }\n}\n",
+      "stderr": ""
+    }
+  ],
+  "runs": [
+    {
+      "platform": "ios",
+      "runtime": {
+        "isAvailable": true,
+        "version": "26.5",
+        "isInternal": false,
+        "buildversion": "23F77",
+        "supportedArchitectures": [
+          "arm64"
+        ],
+        "supportedDeviceTypes": [
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17 Pro.simdevicetype",
+            "name": "iPhone 17 Pro",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17 Pro Max.simdevicetype",
+            "name": "iPhone 17 Pro Max",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro-Max"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17e.simdevicetype",
+            "name": "iPhone 17e",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17e"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone Air.simdevicetype",
+            "name": "iPhone Air",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-Air"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17.simdevicetype",
+            "name": "iPhone 17",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 16 Pro.simdevicetype",
+            "name": "iPhone 16 Pro",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 16 Pro Max.simdevicetype",
+            "name": "iPhone 16 Pro Max",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro-Max"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 16e.simdevicetype",
+            "name": "iPhone 16e",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-16e"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 16.simdevicetype",
+            "name": "iPhone 16",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-16"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 16 Plus.simdevicetype",
+            "name": "iPhone 16 Plus",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Plus"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 15 Pro.simdevicetype",
+            "name": "iPhone 15 Pro",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 15 Pro Max.simdevicetype",
+            "name": "iPhone 15 Pro Max",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro-Max"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 15.simdevicetype",
+            "name": "iPhone 15",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-15"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 15 Plus.simdevicetype",
+            "name": "iPhone 15 Plus",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-15-Plus"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 14 Pro.simdevicetype",
+            "name": "iPhone 14 Pro",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-14-Pro"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 14 Pro Max.simdevicetype",
+            "name": "iPhone 14 Pro Max",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-14-Pro-Max"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 14.simdevicetype",
+            "name": "iPhone 14",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-14"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 14 Plus.simdevicetype",
+            "name": "iPhone 14 Plus",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-14-Plus"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone SE (3rd generation).simdevicetype",
+            "name": "iPhone SE (3rd generation)",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-SE-3rd-generation"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 13 Pro.simdevicetype",
+            "name": "iPhone 13 Pro",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-13-Pro"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 13 Pro Max.simdevicetype",
+            "name": "iPhone 13 Pro Max",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-13-Pro-Max"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 13.simdevicetype",
+            "name": "iPhone 13",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-13"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 13 mini.simdevicetype",
+            "name": "iPhone 13 mini",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-13-mini"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 12 Pro.simdevicetype",
+            "name": "iPhone 12 Pro",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-12-Pro"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 12 Pro Max.simdevicetype",
+            "name": "iPhone 12 Pro Max",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-12-Pro-Max"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 12.simdevicetype",
+            "name": "iPhone 12",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-12"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 12 mini.simdevicetype",
+            "name": "iPhone 12 mini",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-12-mini"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone SE (2nd generation).simdevicetype",
+            "name": "iPhone SE (2nd generation)",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-SE--2nd-generation-"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 11 Pro.simdevicetype",
+            "name": "iPhone 11 Pro",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-11-Pro"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 11 Pro Max.simdevicetype",
+            "name": "iPhone 11 Pro Max",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-11-Pro-Max"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 11.simdevicetype",
+            "name": "iPhone 11",
+            "productFamily": "iPhone",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-11"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro 13-inch (M5) (16GB).simdevicetype",
+            "name": "iPad Pro 13-inch (M5) (16GB)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro 13-inch (M5).simdevicetype",
+            "name": "iPad Pro 13-inch (M5)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro 11-inch (M5) (16GB).simdevicetype",
+            "name": "iPad Pro 11-inch (M5) (16GB)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-11-inch-M5-16GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro 11-inch (M5).simdevicetype",
+            "name": "iPad Pro 11-inch (M5)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-11-inch-M5-12GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro 11-inch (M4) (16GB).simdevicetype",
+            "name": "iPad Pro 11-inch (M4) (16GB)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-11-inch-M4-16GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro 11-inch (M4).simdevicetype",
+            "name": "iPad Pro 11-inch (M4)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-11-inch-M4-8GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro 13-inch (M4) (16GB).simdevicetype",
+            "name": "iPad Pro 13-inch (M4) (16GB)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-16GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro 13-inch (M4).simdevicetype",
+            "name": "iPad Pro 13-inch (M4)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-8GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Air 13-inch (M4).simdevicetype",
+            "name": "iPad Air 13-inch (M4)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-13-inch-M4"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Air 11-inch (M4).simdevicetype",
+            "name": "iPad Air 11-inch (M4)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M4"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad (A16).simdevicetype",
+            "name": "iPad (A16)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-A16"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Air 13-inch (M3).simdevicetype",
+            "name": "iPad Air 13-inch (M3)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-13-inch-M3"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Air 11-inch (M3).simdevicetype",
+            "name": "iPad Air 11-inch (M3)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M3"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Air 11-inch (M2).simdevicetype",
+            "name": "iPad Air 11-inch (M2)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M2"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Air 13-inch (M2).simdevicetype",
+            "name": "iPad Air 13-inch (M2)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-13-inch-M2"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad mini (A17 Pro).simdevicetype",
+            "name": "iPad mini (A17 Pro)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-A17-Pro"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (11-inch) (4th generation) (16GB).simdevicetype",
+            "name": "iPad Pro (11-inch) (4th generation) (16GB)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-11-inch-4th-generation-16GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (11-inch) (4th generation).simdevicetype",
+            "name": "iPad Pro (11-inch) (4th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-11-inch-4th-generation-8GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (12.9-inch) (6th generation) (16GB).simdevicetype",
+            "name": "iPad Pro (12.9-inch) (6th generation) (16GB)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-12-9-inch-6th-generation-16GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (12.9-inch) (6th generation).simdevicetype",
+            "name": "iPad Pro (12.9-inch) (6th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-12-9-inch-6th-generation-8GB"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad (10th generation).simdevicetype",
+            "name": "iPad (10th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-10th-generation"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Air (5th generation).simdevicetype",
+            "name": "iPad Air (5th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-5th-generation"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad mini (6th generation).simdevicetype",
+            "name": "iPad mini (6th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-6th-generation"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (11-inch) (3rd generation).simdevicetype",
+            "name": "iPad Pro (11-inch) (3rd generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-11-inch-3rd-generation"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (12.9-inch) (5th generation).simdevicetype",
+            "name": "iPad Pro (12.9-inch) (5th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-12-9-inch-5th-generation"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad (9th generation).simdevicetype",
+            "name": "iPad (9th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-9th-generation"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Air (4th generation).simdevicetype",
+            "name": "iPad Air (4th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air--4th-generation-"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad (8th generation).simdevicetype",
+            "name": "iPad (8th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad--8th-generation-"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Air (3rd generation).simdevicetype",
+            "name": "iPad Air (3rd generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air--3rd-generation-"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad mini (5th generation).simdevicetype",
+            "name": "iPad mini (5th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-mini--5th-generation-"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (11-inch) (2nd generation).simdevicetype",
+            "name": "iPad Pro (11-inch) (2nd generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--11-inch---2nd-generation-"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (12.9-inch) (4th generation).simdevicetype",
+            "name": "iPad Pro (12.9-inch) (4th generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---4th-generation-"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (11-inch) (1st generation).simdevicetype",
+            "name": "iPad Pro (11-inch) (1st generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--11-inch-"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro (12.9-inch) (3rd generation).simdevicetype",
+            "name": "iPad Pro (12.9-inch) (3rd generation)",
+            "productFamily": "iPad",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---3rd-generation-"
+          }
+        ],
+        "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+        "platform": "iOS",
+        "bundlePath": "/Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime",
+        "runtimeRoot": "/Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot",
+        "lastUsage": {
+          "arm64": "2026-09-05T11:20:47Z"
+        },
+        "name": "iOS 26.5"
+      },
+      "deviceUUID": "4f973794-1f7f-4c59-9470-a21e0cba3800",
+      "result": {
+        "checks": [
+          "12-bit lossless",
+          "caller destination owner",
+          "shared-storage reports",
+          "exact animation timing",
+          "separate retained frame owners",
+          "independent VarDCT12",
+          "independent RGBA16 animation",
+          "low-memory rejection",
+          "cancellation"
+        ],
+        "memoryCeilingBytes": 33554432,
+        "status": "passed",
+        "varDCTPeakLSB": 0,
+        "varDCTRMSLSB": 0
+      }
+    },
+    {
+      "platform": "tvos",
+      "runtime": {
+        "isAvailable": true,
+        "version": "26.5",
+        "isInternal": false,
+        "buildversion": "23L470",
+        "supportedArchitectures": [
+          "arm64"
+        ],
+        "supportedDeviceTypes": [
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/Apple TV 4K (3rd generation).simdevicetype",
+            "name": "Apple TV 4K (3rd generation)",
+            "productFamily": "Apple TV",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-3rd-generation-4K"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/Apple TV 4K (3rd generation) (at 1080p).simdevicetype",
+            "name": "Apple TV 4K (3rd generation) (at 1080p)",
+            "productFamily": "Apple TV",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-3rd-generation-1080p"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/Apple TV 4K (2nd generation).simdevicetype",
+            "name": "Apple TV 4K (2nd generation)",
+            "productFamily": "Apple TV",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-2nd-generation-4K"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/Apple TV 4K (2nd generation) (at 1080p).simdevicetype",
+            "name": "Apple TV 4K (2nd generation) (at 1080p)",
+            "productFamily": "Apple TV",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-2nd-generation-1080p"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/Apple TV 4K.simdevicetype",
+            "name": "Apple TV 4K",
+            "productFamily": "Apple TV",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-4K"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/Apple TV 4K (at 1080p).simdevicetype",
+            "name": "Apple TV 4K (at 1080p)",
+            "productFamily": "Apple TV",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-TV-4K-1080p"
+          },
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/Apple TV.simdevicetype",
+            "name": "Apple TV",
+            "productFamily": "Apple TV",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-TV-1080p"
+          }
+        ],
+        "identifier": "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+        "platform": "tvOS",
+        "bundlePath": "/Library/Developer/CoreSimulator/Volumes/tvOS_23L470/Library/Developer/CoreSimulator/Profiles/Runtimes/tvOS 26.5.simruntime",
+        "runtimeRoot": "/Library/Developer/CoreSimulator/Volumes/tvOS_23L470/Library/Developer/CoreSimulator/Profiles/Runtimes/tvOS 26.5.simruntime/Contents/Resources/RuntimeRoot",
+        "lastUsage": {
+          "arm64": "0001-01-01T00:00:00Z"
+        },
+        "name": "tvOS 26.5"
+      },
+      "deviceUUID": "d23de351-975c-4595-8cd3-09217dcbfc90",
+      "result": {
+        "checks": [
+          "12-bit lossless",
+          "caller destination owner",
+          "shared-storage reports",
+          "exact animation timing",
+          "separate retained frame owners",
+          "independent VarDCT12",
+          "independent RGBA16 animation",
+          "low-memory rejection",
+          "cancellation"
+        ],
+        "memoryCeilingBytes": 33554432,
+        "status": "passed",
+        "varDCTPeakLSB": 0,
+        "varDCTRMSLSB": 0
+      }
+    },
+    {
+      "platform": "visionos",
+      "runtime": {
+        "isAvailable": true,
+        "version": "26.5",
+        "isInternal": false,
+        "buildversion": "23O470",
+        "supportedArchitectures": [
+          "arm64"
+        ],
+        "supportedDeviceTypes": [
+          {
+            "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/Apple Vision Pro.simdevicetype",
+            "name": "Apple Vision Pro",
+            "productFamily": "Apple Vision",
+            "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-Vision-Pro-4K"
+          }
+        ],
+        "identifier": "com.apple.CoreSimulator.SimRuntime.xrOS-26-5",
+        "platform": "xrOS",
+        "bundlePath": "/Library/Developer/CoreSimulator/Volumes/xrOS_23O470/Library/Developer/CoreSimulator/Profiles/Runtimes/xrOS 26.5.simruntime",
+        "runtimeRoot": "/Library/Developer/CoreSimulator/Volumes/xrOS_23O470/Library/Developer/CoreSimulator/Profiles/Runtimes/xrOS 26.5.simruntime/Contents/Resources/RuntimeRoot",
+        "lastUsage": {
+          "arm64": "0001-01-01T00:00:00Z"
+        },
+        "name": "visionOS 26.5"
+      },
+      "deviceUUID": "388612af-4535-4f47-a708-116b674f3535",
+      "result": {
+        "checks": [
+          "12-bit lossless",
+          "caller destination owner",
+          "shared-storage reports",
+          "exact animation timing",
+          "separate retained frame owners",
+          "independent VarDCT12",
+          "independent RGBA16 animation",
+          "low-memory rejection",
+          "cancellation"
+        ],
+        "memoryCeilingBytes": 33554432,
+        "status": "passed",
+        "varDCTPeakLSB": 0,
+        "varDCTRMSLSB": 0
+      }
+    }
+  ],
+  "watchOS": "Runtime unavailable; compiler-only qualification.",
+  "cleanup": [
+    {
+      "uuid": "4f973794-1f7f-4c59-9470-a21e0cba3800",
+      "shutdownExit": 0,
+      "deleteExit": 0
+    },
+    {
+      "uuid": "d23de351-975c-4595-8cd3-09217dcbfc90",
+      "shutdownExit": 0,
+      "deleteExit": 0
+    },
+    {
+      "uuid": "388612af-4535-4f47-a708-116b674f3535",
+      "shutdownExit": 0,
+      "deleteExit": 0
+    }
+  ],
+  "status": "passed",
+  "finalDevices": {
+    "devices": {
+      "com.apple.CoreSimulator.SimRuntime.tvOS-26-5": [],
+      "com.apple.CoreSimulator.SimRuntime.xrOS-26-5": [],
+      "com.apple.CoreSimulator.SimRuntime.iOS-26-5": []
+    }
+  }
+}

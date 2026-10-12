@@ -1,0 +1,40 @@
+{
+  "sourceRevision": "4205dd59b7892103fb887ad1af53554f0359eb0d",
+  "runs": [
+    {
+      "entry": "animation-count",
+      "status": "passed",
+      "iterations": 109570,
+      "elapsedSeconds": 3600.028813208,
+      "binarySHA256": "45c686198260af8098f776f9ff5891bdb131b5f0657d39efedcddb41aba698c5",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    },
+    {
+      "entry": "animation-inspect",
+      "status": "passed",
+      "iterations": 108954,
+      "elapsedSeconds": 3600.033352708,
+      "binarySHA256": "45c686198260af8098f776f9ff5891bdb131b5f0657d39efedcddb41aba698c5",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    },
+    {
+      "entry": "animation-frame",
+      "status": "passed",
+      "iterations": 103433,
+      "elapsedSeconds": 3600.0362135,
+      "binarySHA256": "45c686198260af8098f776f9ff5891bdb131b5f0657d39efedcddb41aba698c5",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    },
+    {
+      "entry": "animation-all",
+      "status": "passed",
+      "iterations": 101400,
+      "elapsedSeconds": 3600.0228805409997,
+      "binarySHA256": "45c686198260af8098f776f9ff5891bdb131b5f0657d39efedcddb41aba698c5",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    }
+  ],
+  "scopeNote": "Historical one-hour qualification before Watch integer hardening. Subsequent fixes are covered by dedicated boundary regressions, sanitizer tests and supplementary mutation runs; these reports are not relabelled as final-source campaigns.",
+  "totalIterations": 423357,
+  "findings": 0
+}

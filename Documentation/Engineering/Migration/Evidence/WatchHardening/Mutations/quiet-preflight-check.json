@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/mutations/still-probe",
+    "decode",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/GroupedDecoder-grouped-257-259-4-8.jxl"
+  ],
+  "exitCode": 0,
+  "stdout": "accepted\n",
+  "stderr": "",
+  "elapsedSeconds": 3.290483792
+}
