@@ -1,0 +1,30 @@
+--- work/JXLSwift/Sources/JXLSwift/Codec/JXLDecoder.swift	2026-10-07 16:51:52
++++ work/vardct-preflight/BoundaryDiagnosticDecoder.swift	2026-10-12 11:04:47
+@@ -13,6 +13,7 @@
+ // `inspect(_:)` exposes the foundation work without the codec layer.
+ 
+ import Foundation
++import JXLSwift
+ 
+ public enum DecoderError: Error, LocalizedError, Sendable {
+     case notImplemented(String)
+@@ -3480,10 +3481,16 @@
+         //   (same for Y and B; identical to our `Gaborish.defaultWeight*`)
+         //
+         // EPF is deferred until later in v0.6.0.
++        func filterVisible(_ plane: inout [Float]) {
++            var tight = [Float](repeating: 0, count: xsize * ysize)
++            for y in 0..<ysize { for x in 0..<xsize { tight[y*xsize+x] = plane[y*planeWidth+x] } }
++            Gaborish.apply(to: &tight, width: xsize, height: ysize)
++            for y in 0..<ysize { for x in 0..<xsize { plane[y*planeWidth+x] = tight[y*xsize+x] } }
++        }
+         if fh.loopFilter.gab && !skipPhaseR {
+-            Gaborish.apply(to: &planeX, width: planeWidth, height: planeHeight)
+-            Gaborish.apply(to: &planeY, width: planeWidth, height: planeHeight)
+-            Gaborish.apply(to: &planeB, width: planeWidth, height: planeHeight)
++            filterVisible(&planeX)
++            filterVisible(&planeY)
++            filterVisible(&planeB)
+             if trace {
+                 FileHandle.standardError.write(Data(
+                     "TRACE Gaborish applied to all 3 channels (\(planeWidth)×\(planeHeight))\n".utf8

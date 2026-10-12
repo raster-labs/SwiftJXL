@@ -1,0 +1,83 @@
+{
+  "baseline": "6cfe674c59f19695f9556bd5cc17eb4ff1df1c29",
+  "originalHostedRun": 38239310898,
+  "originalSDKJob": 114777987320,
+  "originalMacOSJob": 114777986869,
+  "scope": "CI-only correction; runtime sources and tests unchanged. Local Swift 6.4 reproduction does not substitute for hosted Swift 6.2 verification.",
+  "before": [
+    {
+      "profile": "visionos-device",
+      "exitCode": 0,
+      "identities": [
+        {
+          "target": "arm64-apple-xros26.026.0",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS27.0.sdk",
+          "descriptionSHA256": "e0d8f360efac3d4516c275d26e0749313473479b0582923ab8076dedc5cd5cda",
+          "module": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/native-vision-identity/visionos-device/arm64-apple-xros26.0/debug/Modules/SwiftJXL.swiftmodule",
+          "moduleSHA256": "2232eebe86798c94ffc52dca4756b66bd86049a505c2e8eea070c421a2eba09c"
+        }
+      ],
+      "identityFailure": "Missing native compiler/module identity for arm64-apple-xros26.0"
+    },
+    {
+      "profile": "visionos-simulator",
+      "exitCode": 0,
+      "identities": [
+        {
+          "target": "arm64-apple-xros26.026.0-simulator",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/XRSimulator.platform/Developer/SDKs/XRSimulator27.0.sdk",
+          "descriptionSHA256": "30538825671550ca3a02f21aaab5c792effb495c936696af0dacbaa36ec16c8a",
+          "module": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/native-vision-identity/visionos-simulator/arm64-apple-xros26.0-simulator/debug/Modules/SwiftJXL.swiftmodule",
+          "moduleSHA256": "9bea819dd8d537d28eb830de2f253ee120f09dfbdf9c743bc12e2ba3ab37297a"
+        }
+      ],
+      "identityFailure": "Missing native compiler/module identity for arm64-apple-xros26.0-simulator"
+    }
+  ],
+  "after": [
+    {
+      "profile": "visionos-device",
+      "exitCode": 0,
+      "identities": [
+        {
+          "target": "arm64-apple-xros26.0",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS27.0.sdk",
+          "descriptionSHA256": "c1533f7770e10fa8c98b2bb0744bdc059d52b9a3ffd9f4fc54e2e8c1996ec8ad",
+          "module": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/native-vision-corrected/visionos-device/arm64-apple-xros/debug/Modules/SwiftJXL.swiftmodule",
+          "moduleSHA256": "13e44175e96060aa068aab4029b02998f8407d80b81be8d87001481a97df44fa"
+        }
+      ]
+    },
+    {
+      "profile": "visionos-simulator",
+      "exitCode": 0,
+      "identities": [
+        {
+          "target": "arm64-apple-xros26.0-simulator",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/XRSimulator.platform/Developer/SDKs/XRSimulator27.0.sdk",
+          "descriptionSHA256": "2676f8b00379d8b87b29d655a8e155db514cb1ebde4f032b01bd1d9c5bc30d53",
+          "module": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/native-vision-corrected/visionos-simulator/arm64-apple-xros-simulator/debug/Modules/SwiftJXL.swiftmodule",
+          "moduleSHA256": "b67eece10e57e5fdd6127598698912be0e07306cc588741e64ba4241d74dbb99"
+        }
+      ]
+    }
+  ],
+  "workflowValidation": {
+    "yamlParsed": true,
+    "bashSyntaxBlocks": 32,
+    "aggregateOutcomeCombinations": 16,
+    "onlyBothSuccessPasses": true,
+    "sanitizerMatrix": [
+      "address",
+      "thread"
+    ],
+    "retainedCLI": [
+      "test-cli-payload.py",
+      "test-cli-vardct.py",
+      "test-cli-vardct-encode.py",
+      "test-cli-nrrd.py"
+    ],
+    "timeoutMinutesPerMacOSJob": 45
+  },
+  "hostedAfterFix": "pending"
+}

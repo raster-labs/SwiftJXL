@@ -1,0 +1,19 @@
+{
+  "headRevision": "e760a84d43f55e19b7879baca97a179675246a5c",
+  "runId": 38229611047,
+  "job": {
+    "id": 114745570050,
+    "head_sha": "e760a84d43f55e19b7879baca97a179675246a5c",
+    "name": "macOS 26 / Swift 6.2",
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "logTruncated": true,
+  "retainedFailureLines": [
+    "2026-10-12T09:30:05.6040020Z ✘ Test sharedPlanAccountsForConcurrentScratch() recorded an issue at VarDCTTransformTests.swift:120:6: Caught error: .resourceLimit",
+    "2026-10-12T09:30:05.6049570Z ✘ Test sharedPlanAccountsForConcurrentScratch() failed after 100.761 seconds with 1 issue.",
+    "2026-10-12T09:30:17.3037180Z ✘ Suite VarDCTTransformTests failed after 100.833 seconds with 1 issue.",
+    "2026-10-12T09:30:17.3085420Z ✘ Test run with 275 tests in 62 suites failed after 113.543 seconds with 1 issue."
+  ],
+  "diagnosis": "The concurrent-task case exceeded its 60-second operation deadline during unrestricted suite-level CPU contention. Full serial local debug/release passed unchanged assertions. Runner concurrency is now bounded with --no-parallel; task groups and worker concurrency inside tests remain active. Hosted retry must pass before merge."
+}

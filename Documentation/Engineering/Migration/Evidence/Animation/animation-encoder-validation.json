@@ -1,0 +1,145 @@
+{
+  "status": "passed",
+  "scope": "Independent full-canvas animation encoding and explicit owning decode; no compositing, dependencies, zero-duration or timecode support.",
+  "declarations": 7,
+  "argumentCases": 15,
+  "skips": 0,
+  "oracle": "Cached separately built scalar libjxl Float32 all-frame decoder; source retained with animation fixtures. Not the original NEON oracle.",
+  "oracleResults": [
+    {
+      "stream": "enc-lossless-16-3.jxl",
+      "sha256": "61d49c53b8580205048802675adb8a4ee66003bb6ca8ff841eae00587eaac746",
+      "frames": 3,
+      "bits": 16,
+      "channels": 3,
+      "peakLSB": 0,
+      "rmsLSB": 0.0,
+      "timing": [
+        "clock 100/1 loops 3",
+        "frame 0 duration 10 last 0",
+        "frame 1 duration 300 last 0",
+        "frame 2 duration 4294967295 last 1"
+      ]
+    },
+    {
+      "stream": "enc-lossless-16-4.jxl",
+      "sha256": "2ccebc5d008f656041d068baebcb795427e0aca73f17209bad2d4511de48f656",
+      "frames": 3,
+      "bits": 16,
+      "channels": 4,
+      "peakLSB": 0,
+      "rmsLSB": 0.0,
+      "timing": [
+        "clock 100/1 loops 3",
+        "frame 0 duration 10 last 0",
+        "frame 1 duration 300 last 0",
+        "frame 2 duration 4294967295 last 1"
+      ]
+    },
+    {
+      "stream": "enc-lossless-8-3.jxl",
+      "sha256": "b31626590e99b1e9612e559d03f2016db85bcdd772f37382e2c62e27fd00ef1e",
+      "frames": 3,
+      "bits": 8,
+      "channels": 3,
+      "peakLSB": 0,
+      "rmsLSB": 0.0,
+      "timing": [
+        "clock 100/1 loops 3",
+        "frame 0 duration 10 last 0",
+        "frame 1 duration 300 last 0",
+        "frame 2 duration 4294967295 last 1"
+      ]
+    },
+    {
+      "stream": "enc-lossless-8-4.jxl",
+      "sha256": "4984fb63c2a225462c8380b59d3d03fb350da30e68f8600be71eab81958edcec",
+      "frames": 3,
+      "bits": 8,
+      "channels": 4,
+      "peakLSB": 0,
+      "rmsLSB": 0.0,
+      "timing": [
+        "clock 100/1 loops 3",
+        "frame 0 duration 10 last 0",
+        "frame 1 duration 300 last 0",
+        "frame 2 duration 4294967295 last 1"
+      ]
+    },
+    {
+      "stream": "enc-lossy-16-3.jxl",
+      "sha256": "46f4367eaa4ed7632dd45bd935d64f82e5e0e3b28eee8056e6789abf891481a4",
+      "frames": 3,
+      "bits": 16,
+      "channels": 3,
+      "peakLSB": 1,
+      "rmsLSB": 0.14433756729740643,
+      "timing": [
+        "clock 100/1 loops 3",
+        "frame 0 duration 10 last 0",
+        "frame 1 duration 300 last 0",
+        "frame 2 duration 4294967295 last 1"
+      ]
+    },
+    {
+      "stream": "enc-lossy-16-4.jxl",
+      "sha256": "aed12865030dda65668149cdd26ea8759938b1608254b9e8205c70dc9075a6ef",
+      "frames": 3,
+      "bits": 16,
+      "channels": 4,
+      "peakLSB": 1,
+      "rmsLSB": 0.12266334536566453,
+      "timing": [
+        "clock 100/1 loops 3",
+        "frame 0 duration 10 last 0",
+        "frame 1 duration 300 last 0",
+        "frame 2 duration 4294967295 last 1"
+      ]
+    },
+    {
+      "stream": "enc-lossy-8-3.jxl",
+      "sha256": "f2bcd75e8e8edb48b6095ac8ace046885e291fed24374ffb7994b29b0d6fb6bc",
+      "frames": 3,
+      "bits": 8,
+      "channels": 3,
+      "peakLSB": 0,
+      "rmsLSB": 0.0,
+      "timing": [
+        "clock 100/1 loops 3",
+        "frame 0 duration 10 last 0",
+        "frame 1 duration 300 last 0",
+        "frame 2 duration 4294967295 last 1"
+      ]
+    },
+    {
+      "stream": "enc-lossy-8-4.jxl",
+      "sha256": "dbb082d9ec305938c55efbe1037adc88bafbde77b7b8b6115b535967a8369c03",
+      "frames": 3,
+      "bits": 8,
+      "channels": 4,
+      "peakLSB": 0,
+      "rmsLSB": 0.0,
+      "timing": [
+        "clock 100/1 loops 3",
+        "frame 0 duration 10 last 0",
+        "frame 1 duration 300 last 0",
+        "frame 2 duration 4294967295 last 1"
+      ]
+    }
+  ],
+  "limits": "Aggregate source pixels, owned storage bytes and metadata; bounded compressed assembly; one deadline; cancellation; completed callback once; still fallback and singleton timing covered.",
+  "remainingGates": [
+    "Parent-run final sanitizer and one-hour decode-entry mutation campaigns",
+    "No release or tag created"
+  ],
+  "sourceSHA256": {
+    "Sources/SwiftJXL/AnimationEncoding.swift": "42ac0a50808d3758294e7fb81fb7f6b4c7a69f5b218e02acb0c0da236533253e",
+    "Sources/SwiftJXLCore/Codec/AnimationCodestreamBuilder.swift": "15accacc4cbe666db7fc8687ff933e1ac06003c5301e1dc424c612dfd8f261f6",
+    "Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift": "9b615b7dc00c976c8ae239e6c3f5cd2a97595dff14f5ea4f9a72a534598d3134"
+  },
+  "command": "SWIFTJXL_ANIMATION_OUTPUT=$PWD/../vardct-preflight/animation-encoded CLANG_MODULE_CACHE_PATH=$PWD/.build/module-cache SWIFTPM_MODULECACHE_OVERRIDE=$PWD/.build/module-cache swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --filter 'AnimationEncoderTests|AnimationPublicTests|AnimationFrameIndexTests'",
+  "oracleCommand": "../vardct-preflight/animation-oracle INPUT.jxl OUTPUT.float",
+  "comparison": "Read own .decoded export as UInt16 little-endian (including 8-bit source); oracle as Float32 little-endian; clamp each oracle sample to [0,1], multiply by (2^bits-1), round floor(x+0.5). Compare every sample across all three frames; require peak<=2 and RMS<=0.5, all lossless samples exact and alpha exact.",
+  "log": "animation-encoder-debug-2.log",
+  "logSHA256": "5e089f9818ee337501afbc50d40f265acc1bee04774d1c9f21f23ae880a56f00"
+}

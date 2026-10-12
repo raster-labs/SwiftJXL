@@ -1,0 +1,169 @@
+{
+  "status": "passed",
+  "entry": "animation-count",
+  "requestedSeconds": 3600.0,
+  "host": "macOS-27.0.1-arm64-arm-64bit",
+  "python": "3.9.6",
+  "randomSeed": 20261009,
+  "binarySHA256": "45c686198260af8098f776f9ff5891bdb131b5f0657d39efedcddb41aba698c5",
+  "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed",
+  "preflight": [
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-16-3.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-16-4.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-8-3.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-8-4.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-16-3.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-16-4.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-8-3.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-8-4.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossless-rgba16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossless.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossy-epf0.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossy-rgba16-epf0.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/precision-16-4.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/precision-8-1.jxl",
+      "outcome": "accepted"
+    }
+  ],
+  "seeds": [
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-16-3.jxl",
+      "sha256": "61d49c53b8580205048802675adb8a4ee66003bb6ca8ff841eae00587eaac746",
+      "bytes": 895
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-16-4.jxl",
+      "sha256": "2ccebc5d008f656041d068baebcb795427e0aca73f17209bad2d4511de48f656",
+      "bytes": 1464
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-8-3.jxl",
+      "sha256": "b31626590e99b1e9612e559d03f2016db85bcdd772f37382e2c62e27fd00ef1e",
+      "bytes": 799
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-8-4.jxl",
+      "sha256": "4984fb63c2a225462c8380b59d3d03fb350da30e68f8600be71eab81958edcec",
+      "bytes": 942
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-16-3.jxl",
+      "sha256": "46f4367eaa4ed7632dd45bd935d64f82e5e0e3b28eee8056e6789abf891481a4",
+      "bytes": 532
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-16-4.jxl",
+      "sha256": "aed12865030dda65668149cdd26ea8759938b1608254b9e8205c70dc9075a6ef",
+      "bytes": 1223
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-8-3.jxl",
+      "sha256": "f2bcd75e8e8edb48b6095ac8ace046885e291fed24374ffb7994b29b0d6fb6bc",
+      "bytes": 1247
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-8-4.jxl",
+      "sha256": "dbb082d9ec305938c55efbe1037adc88bafbde77b7b8b6115b535967a8369c03",
+      "bytes": 1389
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossless-rgba16.jxl",
+      "sha256": "78d5efc7e259f1537fd3880af5a84bc4763ee23ac13f6e229063deff8c740d78",
+      "bytes": 1568
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossless.jxl",
+      "sha256": "7691ed8baf546b213deac5d9af7dd41aed19da8dbe5dc45b4901b1146903abc9",
+      "bytes": 924
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossy-epf0.jxl",
+      "sha256": "ee3b59d5a9fb1d3059b65edd2b981bfe29c067d61f39576cbf03d5a516ef58cd",
+      "bytes": 812
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossy-rgba16-epf0.jxl",
+      "sha256": "7edb34482e0e249b4b35c564889431a7cb7c212e6bc1e048662d808d568a53e0",
+      "bytes": 1192
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/precision-16-4.jxl",
+      "sha256": "64368d61c1309fe5b87471cd1fa2ea371d8c185d4f07609bf17fbeb40c296c6e",
+      "bytes": 895
+    },
+    {
+      "path": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/precision-8-1.jxl",
+      "sha256": "cf34cbfcb9375601af8e68a06b3c63145d153e2d7e52ce8e67a2480272311722",
+      "bytes": 272
+    }
+  ],
+  "iterations": 109570,
+  "outcomes": {
+    "accepted": 26788,
+    "rejected:malformedInput": 70273,
+    "rejected:unsupportedFeature": 12304,
+    "rejected:resourceLimitExceeded": 205
+  },
+  "mutations": {
+    "0": 13697,
+    "1": 13697,
+    "2": 13696,
+    "3": 13696,
+    "4": 13696,
+    "5": 13696,
+    "6": 13696,
+    "7": 13696
+  },
+  "elapsedSeconds": 3600.028813208,
+  "method": "Fresh ASan process per input, 15-second outer timeout; deterministic PRNG and saved current input. Per-entry campaign clock starts after all conformant seeds are accepted. No coverage guidance.",
+  "memoryNote": "Child-process peak RSS includes sanitizer/runtime/startup. API and CLI additionally enforce resource admission; this is not peak algorithm workspace.",
+  "currentCommand": [
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-probe",
+    "animation-count",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/mutations-animation-count/current-input.bin"
+  ],
+  "currentSeed": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossless.jxl",
+  "currentSHA256": "6fd6a011e0bab580660edcc30b00900e6ce1886e40806e937c8257a8bcc59d96",
+  "currentMutation": "1",
+  "childPeakRSSNativeUnits": 31326208
+}

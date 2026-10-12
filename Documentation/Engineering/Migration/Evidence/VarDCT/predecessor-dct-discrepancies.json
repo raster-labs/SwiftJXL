@@ -1,0 +1,44 @@
+[
+  {
+    "rows": 64,
+    "cols": 64,
+    "pattern": 1,
+    "backend": "inverse",
+    "maximumToleranceRatio": 2.035992646421268
+  },
+  {
+    "rows": 64,
+    "cols": 64,
+    "pattern": 1,
+    "backend": "scalarInverse",
+    "maximumToleranceRatio": 2.054329883639579
+  },
+  {
+    "rows": 64,
+    "cols": 64,
+    "pattern": 2,
+    "backend": "inverse",
+    "maximumToleranceRatio": 3.879593898928509
+  },
+  {
+    "rows": 64,
+    "cols": 64,
+    "pattern": 2,
+    "backend": "scalarInverse",
+    "maximumToleranceRatio": 3.8943519962060447
+  },
+  {
+    "rows": 32,
+    "cols": 16,
+    "pattern": 2,
+    "backend": "inverse",
+    "maximumToleranceRatio": 1.58338333117688
+  },
+  {
+    "rows": 32,
+    "cols": 16,
+    "pattern": 2,
+    "backend": "scalarInverse",
+    "maximumToleranceRatio": 1.5726208610282513
+  }
+]

@@ -1,0 +1,572 @@
+[
+  {
+    "name": "writer-5",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 3072,
+      "peakLSB": 1,
+      "rmsLSB": 0.018042195912175804,
+      "differentSamples": 1
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 3072,
+      "peakLSB": 28,
+      "rmsLSB": 1.8157298807917437,
+      "differentSamples": 767
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 3072,
+          "peakLSB": 28,
+          "rmsLSB": 1.8197591701925835,
+          "differentSamples": 763
+        },
+        "vsArmInteger": {
+          "samples": 3072,
+          "peakLSB": 28,
+          "rmsLSB": 1.8200274723201295,
+          "differentSamples": 763
+        },
+        "vsSavedSwift": {
+          "samples": 3072,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 3072,
+          "peakLSB": 1,
+          "rmsLSB": 0.13134916888456763,
+          "differentSamples": 53
+        },
+        "vsArmInteger": {
+          "samples": 3072,
+          "peakLSB": 1,
+          "rmsLSB": 0.13258252147247765,
+          "differentSamples": 54
+        },
+        "vsSavedSwift": {
+          "samples": 3072,
+          "peakLSB": 29,
+          "rmsLSB": 1.8159091501687705,
+          "differentSamples": 764
+        }
+      }
+    }
+  },
+  {
+    "name": "writer-6",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 384,
+      "peakLSB": 0,
+      "rmsLSB": 0.0,
+      "differentSamples": 0
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 384,
+      "peakLSB": 18,
+      "rmsLSB": 1.6313976625376578,
+      "differentSamples": 116
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 384,
+          "peakLSB": 17,
+          "rmsLSB": 1.595893166850463,
+          "differentSamples": 114
+        },
+        "vsArmInteger": {
+          "samples": 384,
+          "peakLSB": 17,
+          "rmsLSB": 1.595893166850463,
+          "differentSamples": 114
+        },
+        "vsSavedSwift": {
+          "samples": 384,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 384,
+          "peakLSB": 1,
+          "rmsLSB": 0.13501543121683043,
+          "differentSamples": 7
+        },
+        "vsArmInteger": {
+          "samples": 384,
+          "peakLSB": 1,
+          "rmsLSB": 0.13501543121683043,
+          "differentSamples": 7
+        },
+        "vsSavedSwift": {
+          "samples": 384,
+          "peakLSB": 17,
+          "rmsLSB": 1.60646480405475,
+          "differentSamples": 118
+        }
+      }
+    }
+  },
+  {
+    "name": "writer-7",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 384,
+      "peakLSB": 1,
+      "rmsLSB": 0.05103103630798288,
+      "differentSamples": 1
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 384,
+      "peakLSB": 17,
+      "rmsLSB": 1.5844294451526286,
+      "differentSamples": 117
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 384,
+          "peakLSB": 18,
+          "rmsLSB": 1.6088945480256518,
+          "differentSamples": 115
+        },
+        "vsArmInteger": {
+          "samples": 384,
+          "peakLSB": 18,
+          "rmsLSB": 1.6097036476734883,
+          "differentSamples": 116
+        },
+        "vsSavedSwift": {
+          "samples": 384,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 384,
+          "peakLSB": 1,
+          "rmsLSB": 0.13501543121683043,
+          "differentSamples": 7
+        },
+        "vsArmInteger": {
+          "samples": 384,
+          "peakLSB": 1,
+          "rmsLSB": 0.14433756729740643,
+          "differentSamples": 8
+        },
+        "vsSavedSwift": {
+          "samples": 384,
+          "peakLSB": 18,
+          "rmsLSB": 1.6161618627682892,
+          "differentSamples": 120
+        }
+      }
+    }
+  },
+  {
+    "name": "writer-8",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 768,
+      "peakLSB": 1,
+      "rmsLSB": 0.03608439182435161,
+      "differentSamples": 1
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 768,
+      "peakLSB": 15,
+      "rmsLSB": 1.08313299429633,
+      "differentSamples": 166
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 768,
+          "peakLSB": 14,
+          "rmsLSB": 1.0795205340026346,
+          "differentSamples": 166
+        },
+        "vsArmInteger": {
+          "samples": 768,
+          "peakLSB": 14,
+          "rmsLSB": 1.0789172813520043,
+          "differentSamples": 165
+        },
+        "vsSavedSwift": {
+          "samples": 768,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 768,
+          "peakLSB": 1,
+          "rmsLSB": 0.14877975892797604,
+          "differentSamples": 17
+        },
+        "vsArmInteger": {
+          "samples": 768,
+          "peakLSB": 1,
+          "rmsLSB": 0.15309310892394862,
+          "differentSamples": 18
+        },
+        "vsSavedSwift": {
+          "samples": 768,
+          "peakLSB": 15,
+          "rmsLSB": 1.0728660991319778,
+          "differentSamples": 163
+        }
+      }
+    }
+  },
+  {
+    "name": "writer-9",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 768,
+      "peakLSB": 1,
+      "rmsLSB": 0.03608439182435161,
+      "differentSamples": 1
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 768,
+      "peakLSB": 15,
+      "rmsLSB": 1.103970108290981,
+      "differentSamples": 173
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 768,
+          "peakLSB": 14,
+          "rmsLSB": 1.1080905122476834,
+          "differentSamples": 173
+        },
+        "vsArmInteger": {
+          "samples": 768,
+          "peakLSB": 14,
+          "rmsLSB": 1.1086778913041726,
+          "differentSamples": 174
+        },
+        "vsSavedSwift": {
+          "samples": 768,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 768,
+          "peakLSB": 1,
+          "rmsLSB": 0.10206207261596575,
+          "differentSamples": 8
+        },
+        "vsArmInteger": {
+          "samples": 768,
+          "peakLSB": 1,
+          "rmsLSB": 0.10825317547305482,
+          "differentSamples": 9
+        },
+        "vsSavedSwift": {
+          "samples": 768,
+          "peakLSB": 15,
+          "rmsLSB": 1.0962768430769059,
+          "differentSamples": 172
+        }
+      }
+    }
+  },
+  {
+    "name": "writer-10",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 1536,
+      "peakLSB": 1,
+      "rmsLSB": 0.03608439182435161,
+      "differentSamples": 2
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 1536,
+      "peakLSB": 22,
+      "rmsLSB": 1.2515615246562992,
+      "differentSamples": 457
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 1536,
+          "peakLSB": 23,
+          "rmsLSB": 1.269893778366259,
+          "differentSamples": 457
+        },
+        "vsArmInteger": {
+          "samples": 1536,
+          "peakLSB": 23,
+          "rmsLSB": 1.269893778366259,
+          "differentSamples": 457
+        },
+        "vsSavedSwift": {
+          "samples": 1536,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 1536,
+          "peakLSB": 1,
+          "rmsLSB": 0.11967838846954226,
+          "differentSamples": 22
+        },
+        "vsArmInteger": {
+          "samples": 1536,
+          "peakLSB": 1,
+          "rmsLSB": 0.11967838846954226,
+          "differentSamples": 22
+        },
+        "vsSavedSwift": {
+          "samples": 1536,
+          "peakLSB": 22,
+          "rmsLSB": 1.2642417852873977,
+          "differentSamples": 456
+        }
+      }
+    }
+  },
+  {
+    "name": "writer-11",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 1536,
+      "peakLSB": 1,
+      "rmsLSB": 0.03608439182435161,
+      "differentSamples": 2
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 1536,
+      "peakLSB": 17,
+      "rmsLSB": 1.2175474836736349,
+      "differentSamples": 457
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 1536,
+          "peakLSB": 17,
+          "rmsLSB": 1.2313716098995733,
+          "differentSamples": 456
+        },
+        "vsArmInteger": {
+          "samples": 1536,
+          "peakLSB": 17,
+          "rmsLSB": 1.231900209026689,
+          "differentSamples": 458
+        },
+        "vsSavedSwift": {
+          "samples": 1536,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 1536,
+          "peakLSB": 1,
+          "rmsLSB": 0.142064392676936,
+          "differentSamples": 31
+        },
+        "vsArmInteger": {
+          "samples": 1536,
+          "peakLSB": 1,
+          "rmsLSB": 0.14657549249448218,
+          "differentSamples": 33
+        },
+        "vsSavedSwift": {
+          "samples": 1536,
+          "peakLSB": 17,
+          "rmsLSB": 1.221018188507717,
+          "differentSamples": 459
+        }
+      }
+    }
+  },
+  {
+    "name": "writer-18",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 12288,
+      "peakLSB": 1,
+      "rmsLSB": 0.03252603124165832,
+      "differentSamples": 13
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 12288,
+      "peakLSB": 36,
+      "rmsLSB": 1.5221615917695248,
+      "differentSamples": 3615
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 12288,
+          "peakLSB": 36,
+          "rmsLSB": 1.5273653957332323,
+          "differentSamples": 3609
+        },
+        "vsArmInteger": {
+          "samples": 12288,
+          "peakLSB": 36,
+          "rmsLSB": 1.52760514333984,
+          "differentSamples": 3609
+        },
+        "vsSavedSwift": {
+          "samples": 12288,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 12288,
+          "peakLSB": 2,
+          "rmsLSB": 0.14959798558692783,
+          "differentSamples": 266
+        },
+        "vsArmInteger": {
+          "samples": 12288,
+          "peakLSB": 2,
+          "rmsLSB": 0.14986973510352247,
+          "differentSamples": 267
+        },
+        "vsSavedSwift": {
+          "samples": 12288,
+          "peakLSB": 35,
+          "rmsLSB": 1.5192182491471284,
+          "differentSamples": 3624
+        }
+      }
+    }
+  },
+  {
+    "name": "writer-19",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 6144,
+      "peakLSB": 1,
+      "rmsLSB": 0.03125,
+      "differentSamples": 6
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 6144,
+      "peakLSB": 23,
+      "rmsLSB": 1.3544270582980835,
+      "differentSamples": 1796
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 6144,
+          "peakLSB": 23,
+          "rmsLSB": 1.3638873861442276,
+          "differentSamples": 1790
+        },
+        "vsArmInteger": {
+          "samples": 6144,
+          "peakLSB": 23,
+          "rmsLSB": 1.3643646453264122,
+          "differentSamples": 1790
+        },
+        "vsSavedSwift": {
+          "samples": 6144,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 6144,
+          "peakLSB": 1,
+          "rmsLSB": 0.1368117243392052,
+          "differentSamples": 115
+        },
+        "vsArmInteger": {
+          "samples": 6144,
+          "peakLSB": 1,
+          "rmsLSB": 0.1368117243392052,
+          "differentSamples": 115
+        },
+        "vsSavedSwift": {
+          "samples": 6144,
+          "peakLSB": 23,
+          "rmsLSB": 1.362036427253936,
+          "differentSamples": 1795
+        }
+      }
+    }
+  },
+  {
+    "name": "writer-20",
+    "armIntegerVsArmFloatNearest": {
+      "samples": 6144,
+      "peakLSB": 1,
+      "rmsLSB": 0.02209708691207961,
+      "differentSamples": 3
+    },
+    "scalarVsArmFloatNearest": {
+      "samples": 6144,
+      "peakLSB": 25,
+      "rmsLSB": 1.3666888971769204,
+      "differentSamples": 1835
+    },
+    "variants": {
+      "original": {
+        "vsArmFloatNearest": {
+          "samples": 6144,
+          "peakLSB": 23,
+          "rmsLSB": 1.3608409241470265,
+          "differentSamples": 1825
+        },
+        "vsArmInteger": {
+          "samples": 6144,
+          "peakLSB": 23,
+          "rmsLSB": 1.3609007242447921,
+          "differentSamples": 1823
+        },
+        "vsSavedSwift": {
+          "samples": 6144,
+          "peakLSB": 0,
+          "rmsLSB": 0.0,
+          "differentSamples": 0
+        }
+      },
+      "approx-unfused": {
+        "vsArmFloatNearest": {
+          "samples": 6144,
+          "peakLSB": 2,
+          "rmsLSB": 0.14320549046737,
+          "differentSamples": 120
+        },
+        "vsArmInteger": {
+          "samples": 6144,
+          "peakLSB": 2,
+          "rmsLSB": 0.14490028899212037,
+          "differentSamples": 123
+        },
+        "vsSavedSwift": {
+          "samples": 6144,
+          "peakLSB": 25,
+          "rmsLSB": 1.3650206042400972,
+          "differentSamples": 1840
+        }
+      }
+    }
+  }
+]

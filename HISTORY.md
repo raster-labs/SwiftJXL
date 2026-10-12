@@ -1,5 +1,44 @@
 # History and provenance — SwiftJXL
 
+## Grouped VarDCT, reusable scratch and animation decoding — 12 October 2026
+
+Extended public lossy encoding to multiple DC/AC regions and straight alpha within 4096 pixels per dimension and 4,194,304 pixels. Eight independently accepted grouped streams are reproduced byte-for-byte through padded planar public source storage; exact alpha and source ownership are retained. Operation-local noncopyable transform scratch reduces cumulative admission without weakening resource limits; all twelve tested 128–512 pixel admission cases now pass. Combined core ASan/TSan each pass 30 declarations / 110 cases. The preceding public hierarchy/grouped-decoder snapshot passes both sanitizers with 33 declarations. These are scoped checkpoints, not final combined-head qualification.
+
+Added bounded owning animation decoding, indexed selection and structural timing inspection for independent full-canvas frames. Four pinned scalar-reference streams cover twelve RGB8/RGBA16 lossless/lossy frames, timing, exact alpha and aggregate resource/cancellation checks. Unsupported frame dependencies and filter rewrites reject. Subsequent animation encoding preserves exact rational timing and matches the explicit still-image fidelity mode. Eight emitted sequences (24 frames) pass the pinned scalar reference with lossless samples and alpha exact; selected animation checks pass seven declarations / fifteen cases. Final combined safety checks, broader interoperability, hosted platform checks and release gates remain open.
+
+## Public VarDCT encoder and intermediate precision — 12 October 2026
+
+Added explicit lossy encoding through owning source storage, with validated distance and preparation controls, plus CLI options. Public decode now accepts every integer precision from 8 through 16. Thirty-six precision streams pass the unchanged separate scalar reference limits (peak one level, RMS ≤0.187) with exact alpha; a failing-before regression records 28 rejected intermediate-precision cases. Full debug passes 246 declarations / 988 cases without skips; affected ASan and TSan each pass 32 declarations / 221 cases. Hierarchical public defaults, wider groups, original ARM integer-oracle differences and final qualification remain open. See [checkpoint evidence](Documentation/Engineering/Migration/Evidence/VarDCT/PublicEncoder/validation.json).
+
+## Public VarDCT decoder integration — 12 October 2026
+
+Connected the bounded sRGB 8/16-bit VarDCT decoder through the public owning-storage API and CLI. Shared header preparation parses once under the existing admission bounds; allocating output and caller destinations preserve precision, roles, byte order, padding and owner identity. Lossy fidelity is reported explicitly, including CLI JSON. ICC and associated-alpha VarDCT output reject. Full local debug with the independent oracle enabled passed 230 declarations / 883 cases without skips, and CLI inspection, validation, sRGB output and transfer-mismatch rejection passed all 32 retained streams. Final affected sanitizer evidence, original ARM oracle differences and broader migration gates are recorded separately; this is not complete interoperability or release readiness.
+
+
+## VarDCT single-cell strategy search — 12 October 2026
+
+Added ten bounded forward transform choices with the predecessor cost heuristic and tie priority. All 650 direct pinned libjxl forward vectors pass; twenty mixed streams are independently accepted and meet the separate scalar numerical limits with exact alpha. Affected debug, ASan and TSan each pass 11 declarations / 54 cases. Larger hierarchical strategy search and final integration remain pending. See [exact evidence](Documentation/Engineering/Migration/Evidence/VarDCT/EncoderSmall/validation.json).
+
+## VarDCT encoder preparation — 12 October 2026
+
+Added explicit inverse Gaborish, adaptive quantisation and DC-smoothing controls to the internal DCT8 encoder. The filter agrees with 45 directly generated pinned libjxl plane vectors, including tiny and edge inputs. Twenty prepared streams pass independent acceptance and the separate unchanged scalar numerical limits, with exact alpha. Initial no-control fixture bytes remain unchanged. Full strategy search, public integration and final qualification remain open. See [preparation evidence](Documentation/Engineering/Migration/Evidence/VarDCT/EncoderPrepared/validation.json).
+
+## Internal DCT8 encoder checkpoint — 12 October 2026
+
+Adapted bounded source borrowing, DCT8 analysis and frame entropy writing from the pinned predecessor. Twenty emitted streams are independently accepted; all pass the separate scalar same-stream numerical limits with exact alpha. Affected debug, ASan and TSan each pass 4 declarations / 16 cases. Original NEON integer failures remain recorded. This is a partial internal encoder: inverse Gaborish, adaptive quantisation, mixed strategy search, wider grouping and public integration remain pending. See [exact evidence](Documentation/Engineering/Migration/Evidence/VarDCT/EncoderDCT8/validation.json).
+
+## VarDCT ICC reference extension — 12 October 2026
+
+Preserved bounded ICC metadata for internal XYB reconstruction and qualified the pinned official grayscale/grayscale_5 samples in their prescribed linear-grey Float32 domain. Both meet the original RMS/peak limits; the expanded affected debug suite passes 27 declarations / 110 cases, with ICC-specific ASan/TSan each passing 2 declarations / 3 cases. Public VarDCT and integer ICC output remain unsupported; this does not claim full conformance or silently convert the original profile. See [exact evidence](Documentation/Engineering/Migration/Evidence/VarDCT/ICC/validation.json).
+
+## Internal VarDCT pixel integration — 12 October 2026
+
+Adapted the bounded single-pass default-matrix XYB pipeline from pinned JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e` under contract 0.10.0: coefficient entropy, strategy mapping, DCT/small/AFV reconstruction, restoration and synchronous borrowed integer output. Full debug passed 207 declarations / 805 cases; affected ASan and TSan each passed 25 declarations / 107 cases. All 32 retained frames pass a separately pinned scalar Float32/nearest-integer oracle; the original ARM integer oracle still has ten recorded failures. This is a scalar numerical milestone, not complete interoperability or public VarDCT support. Official corpus scope, source provenance and remaining gates are in [the updated preflight](Documentation/Engineering/Migration/VARDCT_PREFLIGHT.md).
+
+## VarDCT primitive preparation — 12 October 2026
+
+Adapted bounded scaled DCT, visible-boundary Gaborish and default opsin primitives from pinned JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e` under contract 0.10.0. Independent mathematical references expose and correct three inherited large-transform precision failures without widening thresholds. Pixel baseline diagnostics identify padded-edge filtering errors; four 16-bit colour cases remain outside the declared limits. Public VarDCT remains disabled. Full debug passed 192 declarations / 721 cases; affected ASan and TSan each passed 10 declarations / 23 cases. See [preflight](Documentation/Engineering/Migration/VARDCT_PREFLIGHT.md) and [exact validation](Documentation/Engineering/Migration/Evidence/VarDCT/primitive-validation.json). Frame, entropy, storage integration and full qualification remain open.
+
 ## Modular review and qualification — 12 October 2026
 
 Added bounded encoder workers with joined ordered results, inherited resource/allocation contexts and a live cancellation signal. The nine-case controlled encoder comparison preserves exact serial-successor bytes and independent samples; several native-predecessor latency gaps remain. A single-gradient-leaf decode specialisation passed signed-extreme, layout, malformed-input and cancellation equivalence checks, then improved both timing blocks in all five measured cases (15–27% median reduction). The rejected row-address experiment remains archived separately. Source review also removed a reachable Select-predictor signed-magnitude trap and retained a public malformed-input regression. Final combined validation and hosted CI are recorded separately from the earlier experimental binaries.

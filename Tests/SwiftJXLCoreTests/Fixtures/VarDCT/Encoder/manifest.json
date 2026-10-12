@@ -1,0 +1,185 @@
+{
+  "source": "Synthetic predecessor-manifest source samples for17x9/64x64;257x9 defined by successor-encode.swift",
+  "generator": "work/vardct-preflight/successor-encode.swift, initial boundedDCT8 encoder source snapshot; migration evidence retains source hashes",
+  "reference": "libjxl0.12.0@a7a9c787341cf703dede03c2009fa460cae5e5df scalar-only Float32 explicit sRGB, nearest original integer precision",
+  "oracleRequirements": "Independent decoder accepts emitted bytes; exact byte regression links runtime emitted streams to those independently decoded fixtures; decoded colour maximum2LSB/RMS0.5, alpha exact",
+  "licence": "Apache-2.0 synthetic samples; test-only libjxl outputs do not add a runtime dependency",
+  "files": [
+    {
+      "path": "enc-17-1-8.jxl",
+      "sha256": "e19d8d7eab22b5d27ec3a07ca19b46313714500596a0fadd352e9718b79b97b4"
+    },
+    {
+      "path": "enc-17-1-8.scalar",
+      "sha256": "e812c2d538e0cade14908a60674d80cd77f7d0472c85333334f33e7a01fca6f1"
+    },
+    {
+      "path": "enc-17-1-16.jxl",
+      "sha256": "e0bae18a3805337929867e1571b0715f8c54c028505123a25fdd89bde2a53286"
+    },
+    {
+      "path": "enc-17-1-16.scalar",
+      "sha256": "e812c2d538e0cade14908a60674d80cd77f7d0472c85333334f33e7a01fca6f1"
+    },
+    {
+      "path": "enc-17-2-8.jxl",
+      "sha256": "ab19f26f2923b496c99d57749cff7d70e21cab7690f4953f815e010fb6548f25"
+    },
+    {
+      "path": "enc-17-2-8.scalar",
+      "sha256": "d94daba36d20a2c24ae6bdf7a55ba6d27f1ac2522aeddcc5131058db64cf28ad"
+    },
+    {
+      "path": "enc-17-2-16.jxl",
+      "sha256": "6b503fe9fbf4572d56024851722ba4276dc08f4fc0811f3b05360ed0fe25475b"
+    },
+    {
+      "path": "enc-17-2-16.scalar",
+      "sha256": "7d2b1fbbf2f1e954f9718818f39c5da69f3cf83a1ee100674895bf9187edd205"
+    },
+    {
+      "path": "enc-17-3-8.jxl",
+      "sha256": "b89e93b5061ff31e0af9f967bd95e542d36638734fb1dbe71945b6aa93cb544b"
+    },
+    {
+      "path": "enc-17-3-8.scalar",
+      "sha256": "c45f2ef28401946cf0ffede278b80da02bd138e0a4ca41e698d87d3b48dd7abc"
+    },
+    {
+      "path": "enc-17-3-16.jxl",
+      "sha256": "abe1fd1427066d036db8104506038e8a491c4b0ed33462c912e2240cce6e94fd"
+    },
+    {
+      "path": "enc-17-3-16.scalar",
+      "sha256": "c45f2ef28401946cf0ffede278b80da02bd138e0a4ca41e698d87d3b48dd7abc"
+    },
+    {
+      "path": "enc-17-4-8.jxl",
+      "sha256": "e3f264946818d3307c9ac183104f4710305467c9ce898e50c8dbe16ef5493c85"
+    },
+    {
+      "path": "enc-17-4-8.scalar",
+      "sha256": "9373514ddf49b7102a73831f06cf2e06d9feae404102df2e1b3d537e2af814b7"
+    },
+    {
+      "path": "enc-17-4-16.jxl",
+      "sha256": "ab43b8c3b879df7319b4e4cfc701de368d0b0ce49165419d161451f3aac77d47"
+    },
+    {
+      "path": "enc-17-4-16.scalar",
+      "sha256": "a202854708018962d4ad494ae5eabef2f77934a0e6edb4e15e891d25ae321c93"
+    },
+    {
+      "path": "enc-64-1-8.jxl",
+      "sha256": "6a9ea3cefa0307279d8f42a1f657b6ce3357fca9aa0e633bcfa1eff7e89c846e"
+    },
+    {
+      "path": "enc-64-1-8.scalar",
+      "sha256": "025fc1180d0be63c4033f0dfdb7c2f2672094bbac23f024b8a8eaa5c69b18a39"
+    },
+    {
+      "path": "enc-64-1-16.jxl",
+      "sha256": "b7d4341ac3aeb38aed9da8a0aeee72e94293ca3b16baaa55238a8256abef631b"
+    },
+    {
+      "path": "enc-64-1-16.scalar",
+      "sha256": "025fc1180d0be63c4033f0dfdb7c2f2672094bbac23f024b8a8eaa5c69b18a39"
+    },
+    {
+      "path": "enc-64-2-8.jxl",
+      "sha256": "918d23965ec12345539b106b6f0e6d6a8e5bb9cae00ac2d795128fe0d6041760"
+    },
+    {
+      "path": "enc-64-2-8.scalar",
+      "sha256": "dcd78a7108ee422b4d695adb506d43ceb10922d2c9bfb7931fcc389c43a7e34e"
+    },
+    {
+      "path": "enc-64-2-16.jxl",
+      "sha256": "3edae1127e28df33142eeca8048a4a994d2c50a51fa6e93ad1e41aa42d31fa23"
+    },
+    {
+      "path": "enc-64-2-16.scalar",
+      "sha256": "ed11917354a572422df52c7c0695b02d7ed878e9919a1c837497052beaad463c"
+    },
+    {
+      "path": "enc-64-3-8.jxl",
+      "sha256": "e43f71a7c817efdfee417d5674eb2e6c735e08427afa868ec471a0013b5d08f1"
+    },
+    {
+      "path": "enc-64-3-8.scalar",
+      "sha256": "e1453c479d951b264fbb0d1597be2ef3de2b7d830922a6d15acd15c3ed10bf23"
+    },
+    {
+      "path": "enc-64-3-16.jxl",
+      "sha256": "dbf53c5c7ab978f5793d6ea29d1ea46ca54b480f2803f8aa39c2a18816581020"
+    },
+    {
+      "path": "enc-64-3-16.scalar",
+      "sha256": "e1453c479d951b264fbb0d1597be2ef3de2b7d830922a6d15acd15c3ed10bf23"
+    },
+    {
+      "path": "enc-64-4-8.jxl",
+      "sha256": "0e3c41b31ffa82f4555a940bcc09eebd268910e9c418577996494725f529193b"
+    },
+    {
+      "path": "enc-64-4-8.scalar",
+      "sha256": "654d2a99fbfc40fc1f82329161c4fe76ee41d9586c1bab1135208bca712819a5"
+    },
+    {
+      "path": "enc-64-4-16.jxl",
+      "sha256": "1b756963c1638118c7dcd0470ae970ade6047ca9564b219c1c207e3db97d18d8"
+    },
+    {
+      "path": "enc-64-4-16.scalar",
+      "sha256": "7b96c91e8cd64ba2d1a52c113cee7d73d6cbcac77f958a11e7b96b788ca7e99c"
+    },
+    {
+      "path": "enc-257-1-8.jxl",
+      "sha256": "86ab1455279b3696430594c8465b690e59215c009cc0d87977335ef726f37965"
+    },
+    {
+      "path": "enc-257-1-8.scalar",
+      "sha256": "8858c9666d00619c1de262c30e3b49c5142ba02af5e6aa3408e66db69dcdf9b4"
+    },
+    {
+      "path": "enc-257-1-8.input",
+      "sha256": "953a425888a32a6ca685c29f513b422b1fab629a2ed6943f56faec58742edc39"
+    },
+    {
+      "path": "enc-257-1-16.jxl",
+      "sha256": "a545d1783c72688a37bf4d421829443e9b60084304f824317650365c1c6955de"
+    },
+    {
+      "path": "enc-257-1-16.scalar",
+      "sha256": "8858c9666d00619c1de262c30e3b49c5142ba02af5e6aa3408e66db69dcdf9b4"
+    },
+    {
+      "path": "enc-257-1-16.input",
+      "sha256": "add1ee01daf5d2704691e511857a59c7d9d0e74cb9699ef86adafb747ca7750f"
+    },
+    {
+      "path": "enc-257-3-8.jxl",
+      "sha256": "ac7075704cd353660c66df520509bf9a87ab74b9dc9c0de3c1186934a3845f26"
+    },
+    {
+      "path": "enc-257-3-8.scalar",
+      "sha256": "c8ab2411e819ce822b6a29ed8ec04592733c57c71185a941dd671e23234bbf7a"
+    },
+    {
+      "path": "enc-257-3-8.input",
+      "sha256": "7ab66afe6afa601a10dbb8e6efbac89dd274285341f16be1b838574154d02c42"
+    },
+    {
+      "path": "enc-257-3-16.jxl",
+      "sha256": "733c17c7b44509345e05cfdf238acb61c670f0b60e12869b0db8ecff7aaf567f"
+    },
+    {
+      "path": "enc-257-3-16.scalar",
+      "sha256": "c8ab2411e819ce822b6a29ed8ec04592733c57c71185a941dd671e23234bbf7a"
+    },
+    {
+      "path": "enc-257-3-16.input",
+      "sha256": "022063c3ea5ef4f02a50a855700dd5c317a3beb9d92dd16097225820a9354beb"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "scope": "Read-only ARM oracle discrepancy audit; no runtime edits, oracle reruns, builds, benchmarks or tolerance changes. Saved-pixel arithmetic only.",
+  "pinnedLibjxl": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "findings": [
+    {
+      "classification": "UINT8 output conversion",
+      "conclusion": "Pinned writer adds channel-offset blue-noise dither only for UINT8, then clamps and NearestInt. Swift output clamps and rounds without dither. Retained NEON float output with explicit nearest conversion removes the early DCT8 eight-bit RMS failures.",
+      "references": [
+        "libjxl-a7a9c787341cf703dede03c2009fa460cae5e5df/lib/jxl/render_pipeline/stage_write.cc:265-285",
+        "SwiftJXL/Sources/SwiftJXLCore/VarDCT/VarDCTPixelDecoder.swift:61",
+        "float-oracle-diagnostic.md",
+        "arm-oracle-retained-pixel-check.json"
+      ],
+      "limit": "Does not explain sixteen-bit errors; nearest tie behavior is also different but not isolated here."
+    },
+    {
+      "classification": "Scalar versus SIMD coefficient arithmetic",
+      "conclusion": "Pinned quantizer uses ApproximateReciprocal and NegMulAdd for magnitudes greater than one. Highway scalar reciprocal is division; ARM NEON uses vrecpe. Swift uses exact division. Offline recheck confirms early 64x64 RGB16 error falls from peak14/RMS0.763123 to peak1/RMS0.168769 when the retained reciprocal diagnostic is compared with the same NEON float oracle; RGBA falls from14/0.767960 to1/0.163628. All eight retained sixteen-bit diagnostic cases peak<=1/RMS<=0.168770.",
+      "references": [
+        "libjxl-a7a9c787341cf703dede03c2009fa460cae5e5df/lib/jxl/quantizer-inl.h:35-66",
+        "/opt/homebrew/include/hwy/ops/arm_neon-inl.h:2702",
+        "/opt/homebrew/include/hwy/ops/scalar-inl.h:747-753",
+        "SwiftJXL/Sources/SwiftJXLCore/VarDCT/VarDCTReconstruction.swift:111-119",
+        "reconstruction-reciprocal-diagnostic.swift:99-100",
+        "arm-oracle-retained-pixel-check.json"
+      ],
+      "limit": "Diagnostic jointly changes approximate reciprocal and fused multiply-add. It isolates coefficient-bias arithmetic as a unit, not reciprocal versus fusion separately. Evidence covers early DCT8 cases, not every later mixed/large transform."
+    },
+    {
+      "classification": "Remaining mixed/large differences",
+      "conclusion": "All31 emitted mixed/forced-large streams pass pinned scalar float-nearest, while ARM integer passes15/20 mixed and0/11 forced-large. This supports a backend arithmetic explanation but is not decisive proof for every failure. Writer4 retains ARM peak44/RMS2.379382 versus scalar peak1/RMS0.088388. No successor defect is demonstrated by this evidence, and all remaining discrepancies are not yet exonerated.",
+      "references": [
+        "encoder-large/independent-oracles.json",
+        "encoder-large-writer/independent-oracles.json"
+      ],
+      "limit": "No retained ARM float counterpart for forced-large corpus was located; output conversion and reconstruction have not been separated for those fixtures."
+    }
+  ],
+  "configurationCaveats": [
+    "Original oracle loads Homebrew libjxl0.12; scalar oracle loader log proves local scalar build. Scalar build uses HWY_COMPILE_ONLY_SCALAR and JXL_HIGH_PRECISION=1; pinned common.h defaults precision1, so the explicit flag alone is not a proven confound. Installed build flags remain unaudited.",
+    "SetSupportedTargetsForTest(HWY_SCALAR) on installed ARM library did not select scalar because no scalar target was compiled. Do not repeat as decisive scalar experiment."
+  ],
+  "smallestDecisiveNextExperiment": {
+    "first": "Use existing pixel-oracle-float binary on only encoder-large-writer/writer-4.jxl, explicit sRGB FLOAT. Preserve output separately. Compare nearest-converted ARM float against retained ARM integer, Swift integer and pinned scalar float. Do not overwrite original acceptance records.",
+    "interpretation": "If ARM integer and nearest ARM float differ at most one while Swift still differs by tens of LSB, output conversion is excluded and the remaining discrepancy is reconstruction/backend arithmetic. If it collapses, conversion is implicated.",
+    "secondOnlyIfNeeded": "Run a scratch-only four-way coefficient-bias diagnostic for that same stream: exact/approximate reciprocal crossed with fused/unfused multiply-add, holding all other reconstruction stages fixed. Compare to retained ARM float output. This distinguishes reciprocal versus FMA and tests whether the early DCT8 explanation extends to a large transform. No runtime patch or tolerance change is warranted before this evidence."
+  }
+}

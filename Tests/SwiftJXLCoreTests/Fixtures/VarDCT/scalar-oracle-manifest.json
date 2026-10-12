@@ -1,0 +1,145 @@
+{
+  "reference": "libjxl 0.12.0 a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "compileFlags": [
+    "HWY_COMPILE_ONLY_SCALAR",
+    "JXL_HIGH_PRECISION=1"
+  ],
+  "output": "JXL_TYPE_FLOAT, little-endian Float32, explicit sRGB, interleaved original colour/alpha channels",
+  "integerConversion": "clamp 0...1, multiply by (1<<bits)-1, round nearest with positive ties upward",
+  "scope": "Separate scalar numerical test. Does not overwrite original NEON integer oracle or its recorded threshold failures.",
+  "limits": {
+    "maxLSB": 2,
+    "rmsLSB": 0.5,
+    "alpha": "exact"
+  },
+  "files": [
+    {
+      "path": "pred-17-1-16.scalar-oracle",
+      "sha256": "196e9b1d5441d224696d1ad2fd6ee36cd8aed8bc54d8c9ceb4992bf9986ca66e"
+    },
+    {
+      "path": "pred-17-1-16.independent.scalar-oracle",
+      "sha256": "3b30eae97b62bbdad08320b105bbe3468ab4aed04348de147bf731c2cba3bba5"
+    },
+    {
+      "path": "pred-17-1-8.scalar-oracle",
+      "sha256": "196e9b1d5441d224696d1ad2fd6ee36cd8aed8bc54d8c9ceb4992bf9986ca66e"
+    },
+    {
+      "path": "pred-17-1-8.independent.scalar-oracle",
+      "sha256": "3b30eae97b62bbdad08320b105bbe3468ab4aed04348de147bf731c2cba3bba5"
+    },
+    {
+      "path": "pred-17-2-16.scalar-oracle",
+      "sha256": "8aeafda59fbb6ba43c03f858133f3bda6dcc7500846ebbb327001d77101e4b13"
+    },
+    {
+      "path": "pred-17-2-16.independent.scalar-oracle",
+      "sha256": "f55ba5ff7b3ad74553a8a5b8aef1fd2c6a6efc246df9934fd52def4fd7f9a52f"
+    },
+    {
+      "path": "pred-17-2-8.scalar-oracle",
+      "sha256": "5d7d075735e64b5c1c12affaf613710b1397fde8d34d4ded090947db39fff471"
+    },
+    {
+      "path": "pred-17-2-8.independent.scalar-oracle",
+      "sha256": "a5e41d001ca6a2965d7083471bdbad2869a6319fe1ba62b02edaa62b09503eb9"
+    },
+    {
+      "path": "pred-17-3-16.scalar-oracle",
+      "sha256": "a885c68eca8912660e8f36d254ca029853faf60343b42497ea8cf70239427937"
+    },
+    {
+      "path": "pred-17-3-16.independent.scalar-oracle",
+      "sha256": "a8500ef4b683969ca7e03fd6f7b3a52ec2013bc9cfd07011accd170a2053bb2f"
+    },
+    {
+      "path": "pred-17-3-8.scalar-oracle",
+      "sha256": "a885c68eca8912660e8f36d254ca029853faf60343b42497ea8cf70239427937"
+    },
+    {
+      "path": "pred-17-3-8.independent.scalar-oracle",
+      "sha256": "a8500ef4b683969ca7e03fd6f7b3a52ec2013bc9cfd07011accd170a2053bb2f"
+    },
+    {
+      "path": "pred-17-4-16.scalar-oracle",
+      "sha256": "ee956cf5ee402e7b2b29fb68f8948d0ee35ab5e85ed7f0dcf3df02461d910042"
+    },
+    {
+      "path": "pred-17-4-16.independent.scalar-oracle",
+      "sha256": "5ac5c801169d388be0f8c29b597a5a9a219e63907440ee0127a2c5393ef01f8e"
+    },
+    {
+      "path": "pred-17-4-8.scalar-oracle",
+      "sha256": "aa789f704c61a75af6e3ce8bff9fc6cc0fbb4861b37369516dfab32987a73a78"
+    },
+    {
+      "path": "pred-17-4-8.independent.scalar-oracle",
+      "sha256": "dc9944d54cffa7bcf00eabca741e4f42b05dcee6ef1a719eda2ba065a427604d"
+    },
+    {
+      "path": "pred-64-1-16.scalar-oracle",
+      "sha256": "e5a17c3156bb9fa08ba6cd2e88b15c97ecc8f16a25fd384bf040e0e5260ebb64"
+    },
+    {
+      "path": "pred-64-1-16.independent.scalar-oracle",
+      "sha256": "aae25d082963ec5e24fbca97c504f9d0c5f446000fcecfffbda23a5d23872353"
+    },
+    {
+      "path": "pred-64-1-8.scalar-oracle",
+      "sha256": "e5a17c3156bb9fa08ba6cd2e88b15c97ecc8f16a25fd384bf040e0e5260ebb64"
+    },
+    {
+      "path": "pred-64-1-8.independent.scalar-oracle",
+      "sha256": "aae25d082963ec5e24fbca97c504f9d0c5f446000fcecfffbda23a5d23872353"
+    },
+    {
+      "path": "pred-64-2-16.scalar-oracle",
+      "sha256": "063e2d88c7df46f88dddc1650c90e69e48e6d508519b56100e8069a700469371"
+    },
+    {
+      "path": "pred-64-2-16.independent.scalar-oracle",
+      "sha256": "87a241394976288c41e021cdc7d33146a6b4532945312d537b04a941717b7033"
+    },
+    {
+      "path": "pred-64-2-8.scalar-oracle",
+      "sha256": "0fbe117b174efab719745c02ea3de26f020e4779244e1f60d76102c32ee1a902"
+    },
+    {
+      "path": "pred-64-2-8.independent.scalar-oracle",
+      "sha256": "761f007fe795a4bef4da3479770534cba19e2b46cf1e64e1f0f6595f497d7208"
+    },
+    {
+      "path": "pred-64-3-16.scalar-oracle",
+      "sha256": "14599c0ad782aa03c395a00abbee4ac76e179fd7d3822496438d6922eaccfc37"
+    },
+    {
+      "path": "pred-64-3-16.independent.scalar-oracle",
+      "sha256": "b713ea117ac81875967cf86d3f59b294480f8073a85514de8755805dfd3ae16e"
+    },
+    {
+      "path": "pred-64-3-8.scalar-oracle",
+      "sha256": "14599c0ad782aa03c395a00abbee4ac76e179fd7d3822496438d6922eaccfc37"
+    },
+    {
+      "path": "pred-64-3-8.independent.scalar-oracle",
+      "sha256": "b713ea117ac81875967cf86d3f59b294480f8073a85514de8755805dfd3ae16e"
+    },
+    {
+      "path": "pred-64-4-16.scalar-oracle",
+      "sha256": "a657ae8da11f1eab9686dc1c01809aa05b6983d8222945e8cb2d1830ec4f52c8"
+    },
+    {
+      "path": "pred-64-4-16.independent.scalar-oracle",
+      "sha256": "e7f6a9a3f93e835b7cda175dc02399e2d3849ec215b8b4bf8be270fc6a014d5d"
+    },
+    {
+      "path": "pred-64-4-8.scalar-oracle",
+      "sha256": "2867df128dda541e032907283b7be0bbb4f6a67b6f146868bc6527d057438606"
+    },
+    {
+      "path": "pred-64-4-8.independent.scalar-oracle",
+      "sha256": "90a5d3d067f424106a16a27bcfccce44ff72796459a53b9920587e88547c917f"
+    }
+  ]
+}

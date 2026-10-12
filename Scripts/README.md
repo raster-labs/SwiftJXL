@@ -32,3 +32,7 @@ This script covers local macOS validation of the existing Milestone 1 API/storag
 ## CLI checks
 
 Active packages and generated consumers require Apple OS 26.0. The owner-approved CLI foundation is a separate executable product, with no main entry point in library tests. After building its release binary, run `python3 Scripts/test-cli.py --binary /absolute/path/to/the/tool --output /new/evidence/directory` for process-level help/verbosity/stream and staged install/man-page checks. The check requires `man` and `mandoc`; missing manual tools fail explicitly. `install-cli.sh --help` describes install/update and DESTDIR staging. Read [CLI.md](../CLI.md) and [migration preflight evidence](../Documentation/Engineering/Migration/README.md).
+
+## Apple library SDK build matrix
+
+`python3 Scripts/validate-apple-sdks.py --output <directory>` explicitly uses Swift Build and compiles the public library for ten OS 26 device/simulator/Intel targets. `--profile` selects a subset. The baseline Swift 6.2 CI job explicitly chooses `--build-system native`; this is a recorded engine selection, not an automatic fallback. Each report retains compiler/SDK identities, exact commands, emitted module hashes and unchanged source hashes. Missing SDKs, failed builds and mismatched module targets fail the check. These builds do not establish native device or simulator runtime correctness.

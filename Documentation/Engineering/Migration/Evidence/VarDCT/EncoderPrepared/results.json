@@ -1,0 +1,202 @@
+[
+  {
+    "admittedWorkspaceBytes" : "4642648",
+    "bits" : "8",
+    "channels" : "1",
+    "encodedBytes" : "252",
+    "height" : "9",
+    "name" : "enc-17-1-8",
+    "status" : "accepted",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "4642648",
+    "bits" : "16",
+    "channels" : "1",
+    "encodedBytes" : "253",
+    "height" : "9",
+    "name" : "enc-17-1-16",
+    "status" : "accepted",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "4642648",
+    "bits" : "8",
+    "channels" : "2",
+    "encodedBytes" : "410",
+    "height" : "9",
+    "name" : "enc-17-2-8",
+    "status" : "accepted",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "4642648",
+    "bits" : "16",
+    "channels" : "2",
+    "encodedBytes" : "566",
+    "height" : "9",
+    "name" : "enc-17-2-16",
+    "status" : "accepted",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "4642648",
+    "bits" : "8",
+    "channels" : "3",
+    "encodedBytes" : "479",
+    "height" : "9",
+    "name" : "enc-17-3-8",
+    "status" : "accepted",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "4642648",
+    "bits" : "16",
+    "channels" : "3",
+    "encodedBytes" : "480",
+    "height" : "9",
+    "name" : "enc-17-3-16",
+    "status" : "accepted",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "4642648",
+    "bits" : "8",
+    "channels" : "4",
+    "encodedBytes" : "635",
+    "height" : "9",
+    "name" : "enc-17-4-8",
+    "status" : "accepted",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "4642648",
+    "bits" : "16",
+    "channels" : "4",
+    "encodedBytes" : "789",
+    "height" : "9",
+    "name" : "enc-17-4-16",
+    "status" : "accepted",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "bits" : "8",
+    "channels" : "1",
+    "encodedBytes" : "4254",
+    "height" : "64",
+    "name" : "enc-64-1-8",
+    "status" : "accepted",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "bits" : "16",
+    "channels" : "1",
+    "encodedBytes" : "4255",
+    "height" : "64",
+    "name" : "enc-64-1-16",
+    "status" : "accepted",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "bits" : "8",
+    "channels" : "2",
+    "encodedBytes" : "8398",
+    "height" : "64",
+    "name" : "enc-64-2-8",
+    "status" : "accepted",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "bits" : "16",
+    "channels" : "2",
+    "encodedBytes" : "12411",
+    "height" : "64",
+    "name" : "enc-64-2-16",
+    "status" : "accepted",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "bits" : "8",
+    "channels" : "3",
+    "encodedBytes" : "8026",
+    "height" : "64",
+    "name" : "enc-64-3-8",
+    "status" : "accepted",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "bits" : "16",
+    "channels" : "3",
+    "encodedBytes" : "8027",
+    "height" : "64",
+    "name" : "enc-64-3-16",
+    "status" : "accepted",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "bits" : "8",
+    "channels" : "4",
+    "encodedBytes" : "12681",
+    "height" : "64",
+    "name" : "enc-64-4-8",
+    "status" : "accepted",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "bits" : "16",
+    "channels" : "4",
+    "encodedBytes" : "16689",
+    "height" : "64",
+    "name" : "enc-64-4-16",
+    "status" : "accepted",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "5186008",
+    "bits" : "8",
+    "channels" : "1",
+    "encodedBytes" : "2942",
+    "height" : "9",
+    "name" : "enc-257-1-8",
+    "status" : "accepted",
+    "width" : "257"
+  },
+  {
+    "admittedWorkspaceBytes" : "5186008",
+    "bits" : "16",
+    "channels" : "1",
+    "encodedBytes" : "2943",
+    "height" : "9",
+    "name" : "enc-257-1-16",
+    "status" : "accepted",
+    "width" : "257"
+  },
+  {
+    "admittedWorkspaceBytes" : "5186008",
+    "bits" : "8",
+    "channels" : "3",
+    "encodedBytes" : "5634",
+    "height" : "9",
+    "name" : "enc-257-3-8",
+    "status" : "accepted",
+    "width" : "257"
+  },
+  {
+    "admittedWorkspaceBytes" : "5186008",
+    "bits" : "16",
+    "channels" : "3",
+    "encodedBytes" : "5635",
+    "height" : "9",
+    "name" : "enc-257-3-16",
+    "status" : "accepted",
+    "width" : "257"
+  }
+]

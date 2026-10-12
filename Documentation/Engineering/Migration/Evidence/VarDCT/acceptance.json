@@ -1,0 +1,16 @@
+{
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "transformDomain": "normalised Float samples/coefficient blocks, maximum axis64",
+  "transformAbsoluteTolerance": 0.0002,
+  "transformRelativeTolerance": 2e-05,
+  "roundTripAbsoluteTolerance": 0.0002,
+  "pixelDomain": "encoded sRGB integer samples, no display/CMS conversion",
+  "pixelDecodeAgainstLibjxlMaximumErrorLSB": 2,
+  "pixelDecodeAgainstLibjxlRMSErrorLSB": 0.5,
+  "alpha": "exact",
+  "notes": [
+    "Compare decode of the same codestream, not lossy output to original.",
+    "Record predecessor failures; do not loosen limits to conceal them.",
+    "Transform tolerance does not qualify complete pixel decode."
+  ]
+}

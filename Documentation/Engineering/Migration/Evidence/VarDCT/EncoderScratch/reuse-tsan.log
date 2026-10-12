@@ -1,0 +1,197 @@
+Building for debugging...
+[Pre-planning 1 / 212]
+[Planning deferred tasks]
+[2 / 28] SwiftJXLCoreTests-product
+[7 / 38] SwiftJXLCore
+[10 / 49] SwiftJXLCore
+[11 / 50] SwiftJXLCore
+[12 / 50] SwiftJXLCore
+[13 / 51] SwiftJXLCore
+[17 / 54] SwiftJXLCore
+[23 / 57] SwiftJXL
+[25 / 58] SwiftJXL
+[28 / 56] SwiftJXLCore
+[33 / 54] swiftjxl-cli-product
+[39 / 55] swiftjxl-cli-product
+[44 / 59] SwiftJXLTests-product
+[45 / 68] SwiftJXLCoreTests-product
+[47 / 68] SwiftJXLCoreTests-product
+[49 / 68] SwiftJXLTests-product
+[51 / 68] SwiftJXLCoreTests-product
+[58 / 67] SwiftJXLCoreTests-product
+[61 / 67] SwiftJXLTests-product
+[63 / 69] SwiftJXLCoreTests-product
+[65 / 69] SwiftJXLCoreTests-product
+Build complete! (5.32 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTEncoderPreparationTests started.
+◇ Test pinnedIndependentPrefilter() started.
+✔ Test pinnedIndependentPrefilter() passed after 0.021 seconds.
+◇ Test invalidPrefilterAndAdmission() started.
+✔ Test invalidPrefilterAndAdmission() passed after 0.001 seconds.
+◇ Test adaptiveQuantisationAnchors() started.
+✔ Test adaptiveQuantisationAnchors() passed after 0.001 seconds.
+✔ Suite VarDCTEncoderPreparationTests passed after 0.022 seconds.
+◇ Suite VarDCTEncoderTests started.
+◇ Test independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to independentReferenceStreams(_:_:) started.
+✔ Test independentReferenceStreams(_:_:) with 12 test cases passed after 4.992 seconds.
+◇ Test preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to preparedReferenceStreams(_:_:) started.
+✔ Test preparedReferenceStreams(_:_:) with 12 test cases passed after 6.001 seconds.
+◇ Test smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to smallStrategyReferenceStreams(_:_:) started.
+✔ Test smallStrategyReferenceStreams(_:_:) with 12 test cases passed after 16.446 seconds.
+◇ Test largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to largeStrategyReferenceStreams(_:_:) started.
+✔ Test largeStrategyReferenceStreams(_:_:) with 12 test cases passed after 48.803 seconds.
+◇ Test paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 1 argument bits → 8 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 1 argument bits → 16 to paddedPlanarSourceIsBorrowed(_:) started.
+✔ Test paddedPlanarSourceIsBorrowed(_:) with 2 test cases passed after 0.081 seconds.
+◇ Test invalidPoliciesAndCumulativeAdmission() started.
+✔ Test invalidPoliciesAndCumulativeAdmission() passed after 0.037 seconds.
+◇ Test cancellationRejectsBeforeSourceRead() started.
+✔ Test cancellationRejectsBeforeSourceRead() passed after 0.001 seconds.
+✔ Suite VarDCTEncoderTests passed after 76.363 seconds.
+◇ Suite VarDCTGroupedDecoderTests started.
+◇ Test independentGroupedPixels(_:) started.
+◇ Test case passing 1 argument name → "grouped-257-17-4-8" to independentGroupedPixels(_:) started.
+◇ Test case passing 1 argument name → "grouped-17-257-2-16" to independentGroupedPixels(_:) started.
+◇ Test case passing 1 argument name → "grouped-257-259-4-8" to independentGroupedPixels(_:) started.
+◇ Test case passing 1 argument name → "grouped-2057-9-3-8" to independentGroupedPixels(_:) started.
+◇ Test case passing 1 argument name → "grouped-9-2057-1-16" to independentGroupedPixels(_:) started.
+◇ Test case passing 1 argument name → "grouped-2057-9-4-16" to independentGroupedPixels(_:) started.
+✔ Test independentGroupedPixels(_:) with 6 test cases passed after 17.573 seconds.
+◇ Test truncatedGroupedStreamsReject(_:) started.
+◇ Test case passing 1 argument name → "grouped-257-259-4-8" to truncatedGroupedStreamsReject(_:) started.
+◇ Test case passing 1 argument name → "grouped-2057-9-4-16" to truncatedGroupedStreamsReject(_:) started.
+✔ Test truncatedGroupedStreamsReject(_:) with 2 test cases passed after 0.001 seconds.
+◇ Test inconsistentDCPrecisionRejects() started.
+✔ Test inconsistentDCPrecisionRejects() passed after 0.027 seconds.
+◇ Test groupedWorkspaceRejectsBeforePublication() started.
+✔ Test groupedWorkspaceRejectsBeforePublication() passed after 0.001 seconds.
+✔ Suite VarDCTGroupedDecoderTests passed after 17.602 seconds.
+◇ Suite VarDCTGroupedEncoderTests started.
+◇ Test independentGroupedWriter(_:) started.
+◇ Test case passing 1 argument name → "encgroup-257-17-4-8-0" to independentGroupedWriter(_:) started.
+◇ Test case passing 1 argument name → "encgroup-17-257-2-16-0" to independentGroupedWriter(_:) started.
+◇ Test case passing 1 argument name → "encgroup-257-259-4-8-0" to independentGroupedWriter(_:) started.
+◇ Test case passing 1 argument name → "encgroup-2057-9-3-8-0" to independentGroupedWriter(_:) started.
+◇ Test case passing 1 argument name → "encgroup-9-2057-1-16-0" to independentGroupedWriter(_:) started.
+◇ Test case passing 1 argument name → "encgroup-2057-9-4-16-1" to independentGroupedWriter(_:) started.
+◇ Test case passing 1 argument name → "encgroup-4096-9-4-8-0" to independentGroupedWriter(_:) started.
+◇ Test case passing 1 argument name → "encgroup-9-4096-2-16-1" to independentGroupedWriter(_:) started.
+✔ Test independentGroupedWriter(_:) with 8 test cases passed after 37.357 seconds.
+◇ Test groupedPlanarBorrowPreservesPadding() started.
+✔ Test groupedPlanarBorrowPreservesPadding() passed after 0.259 seconds.
+◇ Test rejectsUnqualifiedGeometry(_:) started.
+◇ Test case passing 1 argument geometry → (4097, 1) to rejectsUnqualifiedGeometry(_:) started.
+◇ Test case passing 1 argument geometry → (2049, 2049) to rejectsUnqualifiedGeometry(_:) started.
+✔ Test rejectsUnqualifiedGeometry(_:) with 2 test cases passed after 0.001 seconds.
+◇ Test groupedWorkspaceRejects() started.
+✔ Test groupedWorkspaceRejects() passed after 0.007 seconds.
+✔ Suite VarDCTGroupedEncoderTests passed after 37.625 seconds.
+◇ Suite VarDCTHierarchicalAnalysisTests started.
+◇ Test uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 16 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 32 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 64 to uniformRegionsSelectLargeTransforms(_:) started.
+✔ Test uniformRegionsSelectLargeTransforms(_:) with 3 test cases passed after 4.102 seconds.
+◇ Test nestedQuantisationAndGroupBoundaries() started.
+✔ Test nestedQuantisationAndGroupBoundaries() passed after 16.101 seconds.
+◇ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 4 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 5 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 6 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 7 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 8 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 9 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 10 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 11 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 18 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 19 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 20 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+✔ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) with 11 test cases passed after 1.808 seconds.
+◇ Test invalidAndExhaustedSearch() started.
+✔ Test invalidAndExhaustedSearch() passed after 0.001 seconds.
+✔ Suite VarDCTHierarchicalAnalysisTests passed after 22.013 seconds.
+◇ Suite VarDCTLargeAnalysisTests started.
+◇ Test independentLargeTransformsAndDC() started.
+✔ Test independentLargeTransformsAndDC() passed after 1.577 seconds.
+◇ Test unsupportedAndExhausted() started.
+✔ Test unsupportedAndExhausted() passed after 0.001 seconds.
+✔ Suite VarDCTLargeAnalysisTests passed after 1.578 seconds.
+◇ Suite VarDCTSmallAnalysisTests started.
+◇ Test pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 0 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 1 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 2 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 3 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 12 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 13 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 14 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 15 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 16 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 17 to pinnedIndependentForwardBasis(_:) started.
+✔ Test pinnedIndependentForwardBasis(_:) with 10 test cases passed after 0.632 seconds.
+◇ Test invalidAndCumulativeAdmission() started.
+✔ Test invalidAndCumulativeAdmission() passed after 0.002 seconds.
+✔ Suite VarDCTSmallAnalysisTests passed after 0.635 seconds.
+◇ Suite VarDCTWorkspaceTests started.
+◇ Test smallScratchReusesAdmissionAndOverwritesEveryStrategy() started.
+✔ Test smallScratchReusesAdmissionAndOverwritesEveryStrategy() passed after 0.026 seconds.
+◇ Test largeScratchReusesAdmissionAcrossShapes() started.
+✔ Test largeScratchReusesAdmissionAcrossShapes() passed after 1.537 seconds.
+◇ Test scratchCannotCrossBudgetsOrAdmitInsufficientCapacity() started.
+✔ Test scratchCannotCrossBudgetsOrAdmitInsufficientCapacity() passed after 0.001 seconds.
+◇ Test cancellationDoesNotOverwriteAdmittedScratch() started.
+✔ Test cancellationDoesNotOverwriteAdmittedScratch() passed after 0.001 seconds.
+✔ Suite VarDCTWorkspaceTests passed after 1.566 seconds.
+✔ Test run with 30 tests in 8 suites passed after 157.408 seconds.

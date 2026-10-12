@@ -1,0 +1,86 @@
+[
+  {
+    "name": "encgroup-17-257-2-16-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "encgroup-2057-9-3-8-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "encgroup-2057-9-4-16-1",
+    "peakLSB": 1,
+    "rmsLSB": 0.1580298771933382,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "encgroup-257-17-4-8-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "encgroup-257-259-4-8-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "encgroup-4096-9-4-8-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "encgroup-9-2057-1-16-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "encgroup-9-4096-2-16-1",
+    "peakLSB": 1,
+    "rmsLSB": 0.071602745233685,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "enczero-257-9-2-16-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "enczero-257-9-2-8-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "enczero-257-9-4-16-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  },
+  {
+    "name": "enczero-257-9-4-8-0",
+    "peakLSB": 0,
+    "rmsLSB": 0.0,
+    "alphaExact": true,
+    "passed": true
+  }
+]

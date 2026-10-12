@@ -32,7 +32,8 @@ Require \-i/\-\-input PATH; a hyphen reads stdin. Inspect reports supported
 headers, without checking pixel integrity. Validate decodes the entire
 supported frame in memory and discards pixels. Supports unsigned
 greyscale/RGB Modular with optional alpha,
-8 through 16 meaningful bits, dimensions up to 1024, one frame
+1 through 16 meaningful bits, or bounded sRGB VarDCT at 8 through 16 bits,
+dimensions up to 1024, one frame
 and compressed input at most 4 MiB. Unsupported profiles return 4.
 Optional \-o/\-\-output PATH writes a report; the default is stdout.
 Use \-\-json for structured output, including pixelPayloadValidated.
@@ -43,7 +44,8 @@ Failure preserves any previous report; partial stdout cannot be rolled back.
 .B Inspection and validation limits
 Input format is jxl or jpeg-xl. Backend is automatic (default) or scalar-cpu;
 accelerated is unavailable. Copy policy defaults to require-sharing;
-allow-copy is accepted. Threads is a ceiling from 1 to 8; one worker is used.
+allow-copy is accepted. Threads is a ceiling from 1 to 8.
+Modular encoding uses bounded workers; decoding and VarDCT encoding are serial.
 Maximum memory is positive bytes, default 1073741824, including command
 buffers and codec admission; it is not a process RSS ceiling.
 Timeout is positive finite seconds, at most 31536000, default 120, checked
@@ -63,7 +65,18 @@ with little/big endian and x as fastest axis. Encode assigns D65/sRGB and
 default intent. Decode rejects lower meaningful precision or metadata
 that this profile cannot preserve. Header limits: 16384 bytes, 64 lines,
 1024 bytes per line. Detached data, spatial metadata and custom keys reject.
-Lossless mode is the only encode mode and default; max-error is unsupported.
+Lossless mode is the default; explicit \-\-mode lossy selects VarDCT.
+Lossy requires pnm-srgb (8 through 16 bits) or nrrd (16-bit greyscale),
+with optional
+straight alpha preserved exactly. All CLI images, including alpha images,
+are limited to 1024 pixels per axis and 1,048,576 pixels within resource limits.
+Standard BT.709 pnm rejects.
+\-\-distance FLOAT selects positive finite JPEG XL perceptual distance,
+default 1; it is not a maximum sample-error guarantee.
+\-\-gaborish on|off, \-\-adaptive-quantisation on|off and
+\-\-dc-smoothing on|off default to on. These controls require explicit
+encode \-\-mode lossy; incompatible use returns 2 before opening input.
+Near-lossless and max-error are unsupported. JSON reports lossy fidelity.
 Memory, worker, timeout, backend and copy-policy limits are as above.
 Output is binary; JSON success reports go to stderr after publication.
 Requested verbosity also uses stderr. Reporting failure cannot retract

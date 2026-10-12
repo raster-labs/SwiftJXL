@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-12",
+  "platform": "macOS27.0.1(26A434) arm64; AppleSwift6.4 swiftlang-6.4.0.34.1 clang-2100.3.34.1",
+  "build": "SwiftBuild Release -O; no sanitizers, tracing or coverage",
+  "fixture": "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/pred-64-4-8.input",
+  "fixtureSHA256": "994d1aefd1f8b452e2d572d5fa124012839ff1b1037568da71c70b8069c341de",
+  "controls": "distance1;gaborish/adaptiveQF/DCsmoothing true;fivewarmups per mode;20timed iterations per mode, cyclic interleave. Parent and sibling agents confirmed build/test/probe processes quiet.",
+  "results": {
+    "fixedDCT8": {
+      "count": 20,
+      "medianMilliseconds": 1.837625,
+      "p95Milliseconds": 1.888667,
+      "minimumMilliseconds": 1.767417,
+      "maximumMilliseconds": 1.918708,
+      "spreadMilliseconds": 0.15129100000000006,
+      "pixelsPerSecond": 2228964.0160533297,
+      "encodedBytes": 12681,
+      "cumulativeWorkspaceAdmissionBytes": 5212416
+    },
+    "singleCell": {
+      "count": 20,
+      "medianMilliseconds": 4.85475,
+      "p95Milliseconds": 5.006208,
+      "minimumMilliseconds": 4.782417,
+      "maximumMilliseconds": 5.036459,
+      "spreadMilliseconds": 0.2540420000000001,
+      "pixelsPerSecond": 843709.7687831506,
+      "encodedBytes": 12740,
+      "cumulativeWorkspaceAdmissionBytes": 14399680
+    },
+    "hierarchical": {
+      "count": 20,
+      "medianMilliseconds": 11.546562999999999,
+      "p95Milliseconds": 11.806083,
+      "minimumMilliseconds": 11.27075,
+      "maximumMilliseconds": 12.138125,
+      "spreadMilliseconds": 0.8673750000000009,
+      "pixelsPerSecond": 354737.59594088735,
+      "encodedBytes": 11366,
+      "cumulativeWorkspaceAdmissionBytes": 18029504
+    }
+  },
+  "limits": [
+    "Single synthetic64x64RGBA8 case is a local hot-path measurement, not broad speedup or release-performance qualification.",
+    "Hardware model and combined peakRSS unavailable because sandbox blocked sysctl. Probe completed60timed rows; outer /usr/bin/time -l exited1 only on kern.clockrate read after probe completed.",
+    "Pixel/workspace allocation peaks, copy bytes and allocation count not instrumented; cumulative conservative admission is reported separately and is not peakmemory."
+  ],
+  "rawSHA256": "6d735238658a95229b350cb6ea0828dde5e54e0b963a305dd0e46ceb55627404"
+}

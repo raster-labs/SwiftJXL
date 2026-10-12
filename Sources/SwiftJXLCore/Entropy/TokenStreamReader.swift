@@ -295,9 +295,10 @@ package struct TokenStreamReader: Sendable {
         let lenSym = lengthSymbol &- header.lz77.minSymbol
         let length: UInt32
         do {
-            length = try header.lz77.lengthUintConfig.decode(
-                token: lenSym, from: &r
-            ) &+ header.lz77.minLength
+            let baseLength = try header.lz77.lengthUintConfig.decode(token: lenSym, from: &r)
+            let sum = baseLength.addingReportingOverflow(header.lz77.minLength)
+            guard !sum.overflow else { throw TokenStreamReaderError.lz77InvalidLength }
+            length = sum.partialValue
         } catch let e as HybridUintConfigError {
             throw TokenStreamReaderError.hybridUint(e)
         } catch let e as BitstreamError {
@@ -345,14 +346,15 @@ package struct TokenStreamReader: Sendable {
                 ? UInt32(kNumSpecialDistances) : 0
             distance = rawDist &+ 1 &- numSpecial
         }
-        // 3. Validate against history.
-        if Int(distance) > history.count {
+        // Validate before narrowing on Watch arm64_32; a wrapped zero
+        // distance must never address history[history.count].
+        guard distance > 0, UInt64(distance) <= UInt64(history.count) else {
             throw TokenStreamReaderError.lz77InvalidDistance(
                 distance: distance, historySize: history.count
             )
         }
         copyRemaining = length
-        copyReadPos = history.count &- Int(distance)
+        copyReadPos = history.count - Int(distance)
         // 4. Emit the first value and recurse into the drain branch.
         let v = history[copyReadPos]
         copyReadPos &+= 1

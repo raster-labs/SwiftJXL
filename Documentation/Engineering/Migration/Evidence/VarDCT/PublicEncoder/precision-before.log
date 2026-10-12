@@ -1,0 +1,111 @@
+Building for debugging...
+[Planning 32 / 212]
+[Planning deferred tasks]
+[10 / 44] SwiftJXL_SwiftJXLCoreTests
+[13 / 49] SwiftJXLCore
+[15 / 49] SwiftJXLCore
+[16 / 50] SwiftJXLCore
+[17 / 50] SwiftJXLCore
+[23 / 52] SwiftJXLCore
+[26 / 60] SwiftJXL
+[33 / 62] SwiftJXLCoreTests-product
+[35 / 65] swiftjxl-cli-product
+[37 / 65] swiftjxl-cli-product
+[38 / 65] swiftjxl-cli-product
+[39 / 65] swiftjxl-cli-product
+[41 / 65] SwiftJXL
+[45 / 65] SwiftJXL
+[49 / 65] SwiftJXLCoreTests-product
+[50 / 74] SwiftJXLCoreTests-product
+[52 / 85] SwiftJXLTests-product
+[53 / 85] SwiftJXLTests-product
+[55 / 85] SwiftJXLTests-product
+[56 / 85] SwiftJXLTests-product
+[62 / 84] SwiftJXLTests-product
+[66 / 84] SwiftJXLCoreTests-product
+[68 / 84] SwiftJXLCoreTests-product
+[69 / 84] SwiftJXLTests-product
+[73 / 87] SwiftJXLTests-product
+[75 / 87] SwiftJXLTests-product
+[77 / 87] SwiftJXLCoreTests-product
+[79 / 87] SwiftJXLCoreTests-product
+[80 / 87] SwiftJXLCoreTests-product
+[81 / 87] SwiftJXL-product
+[83 / 89] SwiftJXLCoreTests-product
+[85 / 89] SwiftJXLCoreTests-product
+[87 / 89] SwiftJXLCoreTests-product
+Build complete! (55.02 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTPublicEncoderTests started.
+◇ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 9, channels → 2 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 9, channels → 1 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 10, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 9, channels → 3 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 11, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 9, channels → 4 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 11, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 10, channels → 1 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 11, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 11, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 10, channels → 2 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 12, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 10, channels → 3 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 13, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 12, channels → 1 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 13, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 11, channels → 2 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 13, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 10, channels → 4 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 13, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 11, channels → 1 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 14, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 11, channels → 3 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 14, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 11, channels → 4 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 14, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 12, channels → 2 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 14, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 12, channels → 3 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 15, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 12, channels → 4 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 15, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 13, channels → 1 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 14, channels → 2 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 15, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 15, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 13, channels → 2 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 16, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 14, channels → 4 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 16, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 13, channels → 4 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 16, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 13, channels → 3 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+◇ Test case passing 2 arguments bits → 16, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 14, channels → 3 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 14, channels → 1 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 15, channels → 1 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 15, channels → 4 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 15, channels → 3 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) recorded an issue with 2 arguments bits → 15, channels → 2 at VarDCTPublicEncoderTests.swift:62:6: Caught error: CodecError(category: SwiftJXL.CodecError.Category.unsupportedFeature, message: "JPEG XL input is outside the supported scalar profile.")
+✘ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) with 36 test cases failed after 0.207 seconds with 28 issues.
+✘ Suite VarDCTPublicEncoderTests failed after 0.207 seconds with 28 issues.
+✘ Test run with 1 test in 1 suite failed after 0.207 seconds with 28 issues.
+Note: Some test targets reported failures:
+  - SwiftJXLCoreTests (Swift Testing)

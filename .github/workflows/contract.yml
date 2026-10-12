@@ -51,9 +51,9 @@ jobs:
           persist-credentials: false
       - run: swift --version
       - run: swift build
-      - run: swift test
+      - run: swift test --no-parallel
       - run: swift build -c release
-      - run: swift test -c release
+      - run: swift test -c release --no-parallel
       - name: CLI stream and report checks (debug and release)
         run: |
           apt-get update
@@ -62,7 +62,11 @@ jobs:
           "$RUNNER_TEMP/nrrd-oracle/bin/python" -m pip install --only-binary=:all: -r Scripts/nrrd-oracle-requirements.txt
           swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
           python3 Scripts/test-cli-payload.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-debug"
+          python3 Scripts/test-cli-vardct.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-debug"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-encode-debug"
           python3 Scripts/test-cli-payload.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-release"
+          python3 Scripts/test-cli-vardct.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-release"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-encode-release"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-debug"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-release"
       - name: Preserve CLI evidence
@@ -73,10 +77,12 @@ jobs:
           path: ${{ runner.temp }}/cli-*/report.json
           if-no-files-found: warn
 
-  macos:
-    name: macOS 26 / Swift 6.2
+  macos-debug:
+    name: macOS 26 debug / Swift 6.2
     runs-on: macos-26
-    timeout-minutes: 30
+    # Keep per-operation deadlines meaningful: CPU-heavy cases run serially,
+    # while task-group and worker concurrency inside each case remains tested.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -84,7 +90,7 @@ jobs:
       - run: swift --version
       - run: xcodebuild -version
       - run: swift build
-      - run: swift test
+      - run: swift test --no-parallel
       - name: Python for pinned NRRD test oracle
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
@@ -99,24 +105,112 @@ jobs:
         run: |
           swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
           python3 Scripts/test-cli-payload.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-debug"
+          python3 Scripts/test-cli-vardct.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-debug"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-encode-debug"
       - name: NRRD CLI interoperability
         run: '"$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-debug"'
-      - name: Address sanitizer
-        run: swift test --scratch-path .build/asan --sanitize address
-      - name: Thread sanitizer
-        run: swift test --scratch-path .build/tsan --sanitize thread
-      - name: CLI sanitizer stream checks
-        run: |
-          python3 Scripts/test-cli-payload.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-asan"
-          python3 Scripts/test-cli-payload.py --binary "$(swift build --scratch-path .build/tsan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-tsan"
-          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-asan"
-          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --scratch-path .build/tsan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-tsan"
       - name: Preserve CLI evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: cli-macos
           path: ${{ runner.temp }}/cli-*/report.json
+          if-no-files-found: warn
+
+  macos-sanitizers:
+    name: macOS 26 ${{ matrix.sanitizer }} sanitizer / Swift 6.2
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - sanitizer: address
+            timeout: 45
+          - sanitizer: thread
+            timeout: 75
+    runs-on: macos-26
+    # TSan's complete suite passed in 16 minutes, but serial CLI process checks
+    # took the combined job beyond 45 minutes. Individual deadlines stay fixed.
+    timeout-minutes: ${{ matrix.timeout }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - run: swift --version
+      - run: xcodebuild -version
+      # Each sanitizer retains the complete serial suite and CLI matrix. Split
+      # their runner budgets without changing per-operation limits or cases.
+      - name: Full sanitizer suite
+        run: swift test --scratch-path .build/${{ matrix.sanitizer }} --sanitize ${{ matrix.sanitizer }} --no-parallel
+      - name: Python for pinned NRRD test oracle
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install test-only NRRD oracle
+        run: |
+          python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" -m pip install --only-binary=:all: -r Scripts/nrrd-oracle-requirements.txt
+      - name: Generate CLI fixtures
+        run: swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
+      - name: CLI sanitizer payload checks
+        run: |
+          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
+          python3 Scripts/test-cli-payload.py --binary "$binary" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-${{ matrix.sanitizer }}"
+      - name: CLI sanitizer VarDCT decode checks
+        run: |
+          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
+          python3 Scripts/test-cli-vardct.py --binary "$binary" --output "$RUNNER_TEMP/cli-vardct-${{ matrix.sanitizer }}"
+      - name: CLI sanitizer VarDCT encode checks
+        run: |
+          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$binary" --output "$RUNNER_TEMP/cli-vardct-encode-${{ matrix.sanitizer }}"
+      - name: CLI sanitizer NRRD interoperability
+        run: |
+          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$binary" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-${{ matrix.sanitizer }}"
+      - name: Preserve CLI evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: cli-macos-${{ matrix.sanitizer }}
+          path: ${{ runner.temp }}/cli-*/report.json
+          if-no-files-found: warn
+
+  macos:
+    # Preserve the existing check name as an explicit gate over all three jobs.
+    name: macOS 26 / Swift 6.2
+    needs: [macos-debug, macos-sanitizers]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require debug and both sanitizers to pass
+        env:
+          DEBUG_RESULT: ${{ needs.macos-debug.result }}
+          SANITIZER_RESULT: ${{ needs.macos-sanitizers.result }}
+        run: |
+          test "$DEBUG_RESULT" = success
+          test "$SANITIZER_RESULT" = success
+
+  apple-sdk-builds:
+    name: Apple OS 26 library SDK builds / Swift 6.2
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      # Baseline 6.2 uses its native engine explicitly. The separate local 6.4
+      # qualification uses Swift Build. Neither command falls back silently.
+      - name: Compile every Apple device/simulator library target
+        run: python3 Scripts/validate-apple-sdks.py --build-system native --output "$RUNNER_TEMP/apple-sdk-builds"
+      - name: Preserve SDK identities, commands and outcomes
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: apple-sdk-builds
+          path: |
+            ${{ runner.temp }}/apple-sdk-builds/report.json
+            ${{ runner.temp }}/apple-sdk-builds/*.log
           if-no-files-found: warn
 
   independent-consumer:

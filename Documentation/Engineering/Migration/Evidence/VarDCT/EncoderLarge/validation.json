@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "7502dd0",
+  "contract": "0.10.0",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "reference": "libjxl a7a9c787341cf703dede03c2009fa460cae5e5df scalar",
+  "scope": "11 larger transform kernels through64x64, hierarchical square/rectangle search with region-wide QF, compact metadata and natural-order writer; opt-in internal control leaves all historical fixture bytes unchanged",
+  "qualification": {
+    "debug": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'VarDCTEncoder|VarDCTSmallAnalysis|VarDCTLargeAnalysis|VarDCTHierarchicalAnalysis'",
+      "exitCode": 0,
+      "encoderDeclarations": 18,
+      "encoderCases": 84,
+      "note": "Debug preceding removal of unused DCT8 allocations from hierarchy path; final allocation placement then passed ASan and TSan."
+    },
+    "asan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --no-parallel --filter 'VarDCTEncoder|VarDCTSmallAnalysis|VarDCTLargeAnalysis|VarDCTHierarchicalAnalysis|VarDCTGroupedDecoder'",
+      "exitCode": 0,
+      "encoderDeclarations": 18,
+      "encoderCases": 84,
+      "totalDeclarations": 22,
+      "note": "Grouped decoder source subsequently changed and separately requalified by its owner."
+    },
+    "tsan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --no-parallel --filter 'VarDCTEncoder|VarDCTSmallAnalysis|VarDCTLargeAnalysis|VarDCTHierarchicalAnalysis|VarDCTGroupedDecoder'",
+      "exitCode": 0,
+      "encoderDeclarations": 18,
+      "encoderCases": 84,
+      "totalDeclarations": 22,
+      "note": "Grouped decoder source subsequently changed and separately requalified by its owner."
+    }
+  },
+  "initialASanFailure": "Concurrent admission probe plus parallel test execution hit30second operation deadlines in3cases (2mixed encoder,1directkernel); no sanitizer memory finding. Owned probe stopped and serial rerun passed without weakening deadlines. Failure log retained.",
+  "independent": {
+    "forward": "44/44 direct pinned scalar forward+DC cases pass abs2e-6+rel2e-6, peak6.146729e-8",
+    "mixedEncoder": "20/20 scalar streams pass unchanged peak2LSB/RMS0.5 thresholds with exact alpha; fixture bytes reproduced in tests",
+    "largeWriter": "11/11 scalar streams cover all large identifiers and asymmetric DC/full natural scans; same thresholds",
+    "retainedNEON": "Mixed15/20 and writer0/11 meet same numerical thresholds. Known ARM NEON quant-bias reciprocal and output rounding divergence remains unresolved; scalar success is not full interoperability."
+  },
+  "ownership": "Source pixels remain synchronously borrowed; owned analysis/DC/AC/search buffers, no raw pointer retained; all arrays admitted before allocation via cumulative budget. No runtime oracle calls.",
+  "review": "Root source review found no blocking ordering/DC/bounds defect; requested removing unused DCT8 plans/arrays from hierarchy path, applied before final sanitizer qualification.",
+  "remaining": [
+    "Content-dependent cumulative transient admission:512textured sample rejects default512MiB; scalability remains open",
+    "Grouped alpha/multiple DC encoder writer",
+    "Broad fuzz, complete cross-platform qualification, original NEON numerical disposition",
+    "Broader controlled performance and peakallocation/copy telemetry remain unqualified"
+  ],
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/VarDCT/VarDCTLargeAnalysis.swift": "b7c522f3ecd92fecf3dd3f86c88c884d206d848fced5072a6effe13fb4e545ed",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift": "32b765be62db1cbed60481fb687dbc0678c78f02cb951ca7b1155270f3e381c8",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTPixelEncoder.swift": "18066e60c91f9d088dff1c51f96406047906a4bdb2672c8a18effc4726a476b7",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTFrameWriter.swift": "3e2484ad180f11e1ca9dab97dcb8e0c4209c3a2f56658dd1ede68e5f7406888b",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderTests.swift": "76ca65aef5fb7ba9fdfbf8bd59e08215dedeafc2e07fecf2cbaff00ef084a7d4",
+    "Tests/SwiftJXLCoreTests/VarDCTLargeAnalysisTests.swift": "6763338c1a1f4bc77e49d00d001fe0f5f01395fc2e208f258e6a05c7e282b501",
+    "Tests/SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests.swift": "59d9526d2b5cea0e74186f08a1803c19f232c40a95501ee9e416668fe37a5f4c"
+  },
+  "admission": {
+    "command": "large-release-probe large-admission-release.json admission",
+    "maximumWorkspaceBytes": 536870912,
+    "maximumMemoryBytes": 1073741824,
+    "result": "128/256 square flat and textured samples accepted;512flat accepted at286325696B cumulativeworkspace,512textured rejected at536866972B. Not a universal dimension guarantee or peak-memory measurement."
+  },
+  "performance": "Quiet-host5warmups+20timedinterleaved Release iterations/mode archived in performance.json and raw samples; single64x64RGBA8 synthetic case, not broad performance gate. PeakRSS/allocations/copy counts unavailable.",
+  "logSHA256": {}
+}

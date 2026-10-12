@@ -1,0 +1,221 @@
+Building for debugging...
+[Pre-planning 1 / 212]
+[Planning deferred tasks]
+[18 / 77] SwiftJXL_SwiftJXLCoreTests
+[20 / 77] SwiftJXL_SwiftJXLCoreTests
+[27 / 77] SwiftJXLCore
+[29 / 86] SwiftJXL_SwiftJXLCoreTests
+[30 / 86] SwiftJXLCore
+[32 / 85] SwiftJXLCore
+[38 / 85] SwiftJXLCore
+[39 / 85] SwiftJXLCore
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/mutants/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:114:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+112 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+113 |         }
+114 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+115 |         return result
+116 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[41 / 88] SwiftJXL
+[43 / 96] SwiftJXL
+[45 / 96] SwiftJXLCore
+[49 / 99] SwiftJXL
+[55 / 101] SwiftJXLTests-product
+[57 / 104] swiftjxl-cli-product
+[58 / 104] SwiftJXL
+[61 / 104] swiftjxl-cli-product
+[62 / 104] SwiftJXLTests-product
+[64 / 104] SwiftJXL
+[69 / 104] SwiftJXL
+[75 / 103] SwiftJXLCoreTests-product
+[78 / 111] SwiftJXLCoreTests-product
+[85 / 110] SwiftJXLCoreTests-product
+[87 / 110] SwiftJXLCoreTests-product
+[89 / 110]
+[92 / 112] swiftjxl-cli-product
+[97 / 112]
+[102 / 113] SwiftJXLTests-product
+[109 / 113] SwiftJXLTests-product
+Build complete! (10.95 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Test cancellationInProviderFinalisationPreventsPublication(_:) started.
+◇ Test case passing 1 argument point → .validatingSealedStorage to cancellationInProviderFinalisationPreventsPublication(_:) started.
+◇ Test case passing 1 argument point → .sealing to cancellationInProviderFinalisationPreventsPublication(_:) started.
+✔ Test cancellationInProviderFinalisationPreventsPublication(_:) with 2 test cases passed after 0.001 seconds.
+✔ Test run with 1 test in 0 suites passed after 0.001 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite PixelFrameHeaderTests started.
+◇ Suite VarDCTPixelStorageTests started.
+◇ Suite ModularICCTests started.
+◇ Suite ModularStorageTests started.
+◇ Suite VarDCTPublicTests started.
+◇ Test cancellationBetweenHeaderAndProfileRejects(_:) started.
+◇ Test malformedProfileAndTruncatedStreamReject() started.
+◇ Test independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test profileLimitsAndDestinationMeaningReject() started.
+◇ Test rejectsInvalidDestinationBeforeWriting() started.
+◇ Test sharedPreparationRejectsBoundsAndTruncation() started.
+◇ Test selectedProfileStillEnforcesICCLimits(_:) started.
+◇ Test dispatchAndConveniencePreserveAdmission(_:_:) started.
+◇ Test eightBitAdmissionUsesActualCallerCapacity() started.
+◇ Test mismatchedPrecisionOrCapacityRejectsBeforeTouchingBytes() started.
+◇ Test cancellationRejectsBeforeWriting() started.
+◇ Test alphaMismatchRejectsBeforeWritingAndMalformedPixelsInvalidate() started.
+◇ Test paddedCallerStorage(_:_:) started.
+◇ Test independentAssociatedAlphaInput(_:_:) started.
+◇ Test callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 1 argument xyb → false to cancellationBetweenHeaderAndProfileRejects(_:) started.
+◇ Test paddedOwningDestination(_:_:) started.
+◇ Test case passing 1 argument xyb → true to cancellationBetweenHeaderAndProfileRejects(_:) started.
+◇ Test publicOwningColourDestination(_:_:) started.
+◇ Test publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test resourceAndInterpretationRejectionsStayDefined() started.
+◇ Test cancellationBeforeSealingInvalidatesDestination() started.
+◇ Test case passing 1 argument xyb → false to selectedProfileStillEnforcesICCLimits(_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments xyb → false, icc → false to dispatchAndConveniencePreserveAdmission(_:_:) started.
+◇ Test case passing 1 argument xyb → true to selectedProfileStillEnforcesICCLimits(_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments xyb → false, icc → true to dispatchAndConveniencePreserveAdmission(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments xyb → true, icc → false to dispatchAndConveniencePreserveAdmission(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 1 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 1 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments xyb → true, icc → true to dispatchAndConveniencePreserveAdmission(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 2 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 2 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 3 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 3 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 4 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 4 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 1 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 1 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 2 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 2 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 3 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 4 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 3 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 4 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 2 to paddedCallerStorage(_:_:) started.
+✔ Test sharedPreparationRejectsBoundsAndTruncation() passed after 18.356 seconds.
+✔ Test rejectsInvalidDestinationBeforeWriting() passed after 18.356 seconds.
+✔ Test alphaMismatchRejectsBeforeWritingAndMalformedPixelsInvalidate() passed after 18.356 seconds.
+✔ Test mismatchedPrecisionOrCapacityRejectsBeforeTouchingBytes() passed after 18.356 seconds.
+✔ Test dispatchAndConveniencePreserveAdmission(_:_:) with 4 test cases passed after 18.356 seconds.
+✔ Test independentSamplesAndProfileArePreserved(_:_:) with 12 test cases passed after 18.357 seconds.
+✔ Test independentAssociatedAlphaInput(_:_:) with 6 test cases passed after 18.356 seconds.
+✔ Test eightBitAdmissionUsesActualCallerCapacity() passed after 18.357 seconds.
+✔ Test selectedProfileStillEnforcesICCLimits(_:) with 2 test cases passed after 18.357 seconds.
+✔ Test callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) with 8 test cases passed after 18.356 seconds.
+✔ Test profileLimitsAndDestinationMeaningReject() passed after 18.357 seconds.
+✔ Test paddedOwningDestination(_:_:) with 8 test cases passed after 18.357 seconds.
+✔ Test malformedProfileAndTruncatedStreamReject() passed after 18.358 seconds.
+✔ Test publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) with 8 test cases passed after 18.354 seconds.
+✔ Test resourceAndInterpretationRejectionsStayDefined() passed after 18.354 seconds.
+✔ Test cancellationBetweenHeaderAndProfileRejects(_:) with 2 test cases passed after 18.365 seconds.
+✔ Test cancellationRejectsBeforeWriting() passed after 18.365 seconds.
+✔ Suite ModularICCTests passed after 18.365 seconds.
+✔ Suite PixelFrameHeaderTests passed after 18.366 seconds.
+✔ Suite VarDCTPixelStorageTests passed after 18.366 seconds.
+✔ Test cancellationBeforeSealingInvalidatesDestination() passed after 18.417 seconds.
+✔ Suite VarDCTPublicTests passed after 18.421 seconds.
+✔ Test paddedCallerStorage(_:_:) with 48 test cases passed after 21.128 seconds.
+✔ Test publicOwningColourDestination(_:_:) with 20 test cases passed after 21.375 seconds.
+✔ Suite ModularStorageTests passed after 21.376 seconds.
+✔ Test run with 20 tests in 5 suites passed after 21.377 seconds.

@@ -1,0 +1,31 @@
+{
+  "scope": "Publicfixed/singlecell/hierarchical selection and groupeddecoder admission",
+  "debug": {
+    "exitCode": 0,
+    "declarations": 10,
+    "cases": 75,
+    "skips": 0
+  },
+  "CLI": "72variants8...16bits1...4channelscontrols on/off, pinned scalaroracle72/72 max1/RMS.228665 exactalpha",
+  "remaining": [
+    "fullcombinedfinalhead",
+    "broaderqualification"
+  ],
+  "sourceSHA256": {
+    "Sources/SwiftJXL/CodecAPI.swift": "94a625eb21026b5e9bc5349add89a8932d1604edc23fd2ca7b4b18b410f1773a",
+    "Tests/SwiftJXLCoreTests/VarDCTPublicEncoderTests.swift": "4d629d040b8b097e18ee40d962bcad805a535d4a638147fc2176ca95c603f8ad",
+    "Tests/SwiftJXLCoreTests/VarDCTPublicGroupedTests.swift": "a3c59e051f1b2e95a4baf29b4ddf6fdf52c6572304ecc5f5d4bab54e3b380675"
+  },
+  "sanitizers": {
+    "sourceRevision": "7472e2e4e0a6260b988cb135c35d605958486bc2",
+    "address": {
+      "exitCode": 0,
+      "declarations": 33
+    },
+    "thread": {
+      "exitCode": 0,
+      "declarations": 33
+    },
+    "details": "sanitizer-validation.json"
+  }
+}

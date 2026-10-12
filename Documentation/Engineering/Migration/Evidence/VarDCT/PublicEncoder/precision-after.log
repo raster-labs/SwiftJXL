@@ -1,0 +1,138 @@
+Building for debugging...
+[1 / 2] SwiftJXLCore
+[2 / 18] SwiftJXL
+[4 / 20] SwiftJXL
+[10 / 26] swiftjxl-cli-product
+[12 / 28] SwiftJXL
+[17 / 27] SwiftJXLCoreTests-product
+[19 / 28] swiftjxl-cli-product
+[20 / 28] SwiftJXLTests-product
+[24 / 35] SwiftJXLTests-product
+[24 / 36] SwiftJXLTests-product
+[28 / 33] SwiftJXLTests-product
+[33 / 35] SwiftJXLCoreTests-product
+Build complete! (2.63 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Public API feasibility" started.
+◇ Suite ScalarPublicAPITests started.
+◇ Test resourceLimitsRejectBeforeDestinationWrite() started.
+◇ Test malformedInputRejectsWithoutTouchingDestination() started.
+◇ Test paddedBigEndianDestinationAndExactEncoderBytes() started.
+◇ Test cancellationRetainsItsStandardErrorAndInvalidatesPartialWrite() started.
+◇ Test metadataMustBePreservedOrExplicitlyDiscarded() started.
+◇ Test validatesConfigurationAndFiniteResourceLimits() started.
+◇ Test progressIsSerialOutsideStorageBorrowAndCancellationIsPreserved() started.
+◇ Test safeWriterRejectsOutOfRangeSamplesAndInvalidatesDestination() started.
+◇ Test capabilitiesAdvertiseQualifiedProfiles() started.
+◇ Test rejectsInputLimitRequiredBackendAndDestructiveMetadataPolicy() started.
+◇ Test admissionBoundariesAndMetadataAreChecked() started.
+◇ Test reportUnknownMeasurementsRemainUnknown() started.
+◇ Test metadataSharesTheCallerAdmissionBudgetWithPixels() started.
+✔ Test capabilitiesAdvertiseQualifiedProfiles() passed after 0.001 seconds.
+✔ Test rejectsInputLimitRequiredBackendAndDestructiveMetadataPolicy() passed after 0.001 seconds.
+✔ Test admissionBoundariesAndMetadataAreChecked() passed after 0.001 seconds.
+✔ Test validatesConfigurationAndFiniteResourceLimits() passed after 0.001 seconds.
+✔ Test safeWriterRejectsOutOfRangeSamplesAndInvalidatesDestination() passed after 0.001 seconds.
+✔ Test metadataSharesTheCallerAdmissionBudgetWithPixels() passed after 0.001 seconds.
+✔ Test reportUnknownMeasurementsRemainUnknown() passed after 0.001 seconds.
+✔ Test cancellationRetainsItsStandardErrorAndInvalidatesPartialWrite() passed after 0.001 seconds.
+✔ Test progressIsSerialOutsideStorageBorrowAndCancellationIsPreserved() passed after 0.004 seconds.
+✔ Test malformedInputRejectsWithoutTouchingDestination() passed after 0.004 seconds.
+✔ Suite "Public API feasibility" passed after 0.004 seconds.
+✔ Test metadataMustBePreservedOrExplicitlyDiscarded() passed after 0.005 seconds.
+✔ Test paddedBigEndianDestinationAndExactEncoderBytes() passed after 0.008 seconds.
+✔ Test resourceLimitsRejectBeforeDestinationWrite() passed after 0.010 seconds.
+✔ Suite ScalarPublicAPITests passed after 0.010 seconds.
+✔ Test run with 13 tests in 2 suites passed after 0.010 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTPublicEncoderTests started.
+◇ Suite VarDCTPublicTests started.
+◇ Test groupedAlphaRejects() started.
+◇ Test distanceMetadataLimitsAndCancellation() started.
+◇ Test publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test defaultsAreExplicitAndInvalidOptionsReject() started.
+◇ Test callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test cancellationBeforeSealingInvalidatesDestination() started.
+◇ Test resourceAndInterpretationRejectionsStayDefined() started.
+◇ Test publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 1 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 2 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 3 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 4 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 1 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 2 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 3 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 4 to callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 11, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 11, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 11, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 11, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 13, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 13, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 13, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 13, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 14, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 14, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 14, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 14, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 15, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 15, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 15, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 15, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✔ Test defaultsAreExplicitAndInvalidOptionsReject() passed after 1.269 seconds.
+✔ Test groupedAlphaRejects() passed after 1.269 seconds.
+✔ Test resourceAndInterpretationRejectionsStayDefined() passed after 1.277 seconds.
+✔ Test callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:) with 8 test cases passed after 1.277 seconds.
+✔ Test publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) with 12 test cases passed after 1.282 seconds.
+✔ Test cancellationBeforeSealingInvalidatesDestination() passed after 1.294 seconds.
+✔ Test distanceMetadataLimitsAndCancellation() passed after 1.299 seconds.
+✔ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) with 36 test cases passed after 1.314 seconds.
+✔ Suite VarDCTPublicEncoderTests passed after 1.314 seconds.
+✔ Test publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:) with 8 test cases passed after 1.514 seconds.
+✔ Suite VarDCTPublicTests passed after 1.514 seconds.
+✔ Test run with 9 tests in 2 suites passed after 1.514 seconds.

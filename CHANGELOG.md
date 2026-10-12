@@ -1,5 +1,48 @@
 # Change log
 
+## Unreleased — grouped encoding and animation support, 2026-10-12
+
+- Add grouped VarDCT encoding with straight alpha, bounded to 4096 pixels per dimension and 4,194,304 pixels, plus hierarchical strategy selection through 64×64.
+- Reuse admitted transform scratch while preserving historical encoded bytes and resource enforcement.
+- Add owning independent-frame animation encoding/decoding, exact rational timing, inspection and bounded indexed access; retain explicit unsupported profiles.
+- Extend public storage regressions and lossy CLI checks in hosted CI. Final combined qualification remains pending.
+
+## Unreleased — public lossy encoding, 2026-10-12
+
+- Add explicit lossy VarDCT configuration and CLI distance/preparation controls; retain lossless defaults and reject incompatible metadata.
+- Qualify all 8–16-bit public precisions, direct source layouts and exact alpha against retained independent scalar references. Larger search/grouping and final release qualification remain in progress.
+
+## Unreleased — public VarDCT decoding, 2026-10-12
+
+- Dispatch Modular and bounded VarDCT through a shared prepared header without retrying parsers or duplicating compressed storage.
+- Decode single-pass sRGB 8/16-bit grey/RGB with optional straight alpha into owning or caller storage, preserving explicit layouts and invalidating failed destinations.
+- Report VarDCT output as lossy in the API and CLI; retain explicit unsupported ICC/associated-alpha/profile boundaries.
+- Add public scalar-reference, ownership, cancellation and CLI regressions. Broader profiles, public encoding, original ARM oracle differences and full qualification remain open.
+
+
+## Unreleased — internal VarDCT single-cell strategy search, 2026-10-12
+
+- Add DCT4, DCT2, Hornuss, split DCT and AFV analysis and bounded selection alongside DCT8, qualified against 650 direct reference vectors and twenty emitted streams. Larger hierarchical search remains in progress.
+
+## Unreleased — internal VarDCT encoder preparation, 2026-10-12
+
+- Add explicit inverse Gaborish, adaptive quantisation and DC-smoothing controls. Match the pinned reference filter at visible image boundaries, including tiny dimensions; retain the initial fixed-control profile unchanged. Mixed strategy search and public capability remain pending.
+
+## Unreleased — internal DCT8 encoder checkpoint, 2026-10-12
+
+- Add bounded synchronous source analysis and frame writing, with twenty independently accepted streams and exact unassociated alpha. Public VarDCT remains disabled; predecessor encoder controls and mixed strategy search are still being integrated.
+
+## Unreleased — internal VarDCT pixel pipeline, 2026-10-12
+
+- Add bounded single-pass coefficient parsing, mixed transform reconstruction and default restoration with direct output into borrowed integer storage. Public VarDCT remains disabled.
+- Preserve bounded ICC metadata for internal XYB reconstruction and pass two official linear-grey numerical references. Integer ICC output remains explicitly unsupported pending qualified interpretation handling.
+- Verify the separate scalar numerical oracle and independent transform bases without replacing original ARM oracle failures. Record unsupported official conformance profiles and predecessor acceptance separately.
+
+## Unreleased — internal VarDCT primitives, 2026-10-12
+
+- Add operation-budgeted scalar transforms, visible-boundary Gaborish and default opsin conversion with independent mathematical and predecessor references.
+- Record baseline pixel discrepancies and corrected transform precision without changing acceptance thresholds. Public VarDCT encoding and decoding remain unavailable pending complete integration and qualification.
+
 ## Unreleased — Modular review and qualification, 2026-10-12
 
 - Bound parallel encoding by the caller's worker ceiling, capped at eight, with ordered joined results, per-worker resource admission and cancellation propagated into workers.

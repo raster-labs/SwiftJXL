@@ -1,0 +1,68 @@
+{
+  "sourceRevision": "54a1d4df9a9df2fb0407b2445104266c0f57e5e9",
+  "runs": [
+    {
+      "entry": "inspect",
+      "status": "passed",
+      "iterations": 11468,
+      "elapsedSeconds": 600.01504,
+      "binarySHA256": "a59076473d7d04779645d70cd24618689a7535d089dad57da3932812ff9960b8",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    },
+    {
+      "entry": "decode",
+      "status": "passed",
+      "iterations": 19468,
+      "elapsedSeconds": 600.014437458,
+      "binarySHA256": "a59076473d7d04779645d70cd24618689a7535d089dad57da3932812ff9960b8",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    },
+    {
+      "entry": "caller",
+      "status": "passed",
+      "iterations": 19468,
+      "elapsedSeconds": 600.0030382499999,
+      "binarySHA256": "a59076473d7d04779645d70cd24618689a7535d089dad57da3932812ff9960b8",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    },
+    {
+      "entry": "animation-count",
+      "status": "passed",
+      "iterations": 11533,
+      "elapsedSeconds": 600.0220032909999,
+      "binarySHA256": "b37ce5ffd4fc9378f9a7b3152852982cbf25eb0a58a971deab584fac25e764bb",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    },
+    {
+      "entry": "animation-inspect",
+      "status": "passed",
+      "iterations": 11403,
+      "elapsedSeconds": 600.007539042,
+      "binarySHA256": "b37ce5ffd4fc9378f9a7b3152852982cbf25eb0a58a971deab584fac25e764bb",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    },
+    {
+      "entry": "animation-frame",
+      "status": "passed",
+      "iterations": 10905,
+      "elapsedSeconds": 600.040510875,
+      "binarySHA256": "b37ce5ffd4fc9378f9a7b3152852982cbf25eb0a58a971deab584fac25e764bb",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    },
+    {
+      "entry": "animation-all",
+      "status": "passed",
+      "iterations": 10662,
+      "elapsedSeconds": 600.0330715,
+      "binarySHA256": "b37ce5ffd4fc9378f9a7b3152852982cbf25eb0a58a971deab584fac25e764bb",
+      "scriptSHA256": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed"
+    }
+  ],
+  "totalIterations": 94907,
+  "findings": 0,
+  "initialPreflightAttempts": {
+    "decode": "resource deadline under concurrent heavy load; completed retry with same binary, seeds and limits",
+    "caller": "resource deadline under concurrent heavy load; completed retry with same binary, seeds and limits"
+  },
+  "scope": "Each supplementary campaign exceeded600seconds after conformant seed preflight; separate from historical one-hour campaigns. The same ASan instrumented library source54a1d4d was used throughout. Later CLI-only metadata fix does not change these public decode probes."
+}

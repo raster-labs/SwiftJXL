@@ -1,0 +1,45 @@
+{
+  "revision": "cd60774f3f8aab162aa3a0cb8bc28483745de35a",
+  "url": "https://github.com/raster-labs/SwiftJXL.git",
+  "command": [
+    "xcrun",
+    "swift",
+    "run",
+    "-c",
+    "release",
+    "--disable-sandbox",
+    "--cache-path",
+    "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/url-consumer-pr19/cache",
+    "--config-path",
+    "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/url-consumer-pr19/config",
+    "--security-path",
+    "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/url-consumer-pr19/security",
+    "--build-system",
+    "swiftbuild",
+    "--jobs",
+    "2",
+    "ContractConsumer"
+  ],
+  "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "manifestSHA256": "bca9e2298e23901527f8f564b5490b4ee4f386242d3458cf6b6bc5d19eaa04be",
+  "consumerSHA256": "ca5197faa0dd385397699bf2c52259d0123c2853332b3cba8c9b1afc1a0c89cb",
+  "scope": "Fresh URL/revision-pinned independent consumer, Swift6.2 manifest floor built/run using local Swift6.4 Swift Build release. No stable tag or release.",
+  "exitCode": 0,
+  "elapsedSeconds": 84.335777375,
+  "logSHA256": "5a630385afff14607d33fd7dbf1fb6acb39af03661c7a0b05dffb5e0f044fc83",
+  "resolved": {
+    "originHash": "bca9e2298e23901527f8f564b5490b4ee4f386242d3458cf6b6bc5d19eaa04be",
+    "pins": [
+      {
+        "identity": "swiftjxl",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/raster-labs/SwiftJXL.git",
+        "state": {
+          "revision": "cd60774f3f8aab162aa3a0cb8bc28483745de35a"
+        }
+      }
+    ],
+    "version": 3
+  }
+}

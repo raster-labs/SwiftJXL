@@ -1,0 +1,20 @@
+{
+  "head": "38dd95db38734f6129731fb0641869cedb3186db",
+  "run": 38249362903,
+  "job": 114811748266,
+  "logTruncated": true,
+  "currentExcerpt": [
+    "2026-10-12T12:57:54.1097500Z ◇ Test nestedQuantisationAndGroupBoundaries() started.",
+    "2026-10-12T12:57:54.1098330Z ✘ Test nestedQuantisationAndGroupBoundaries() recorded an issue at VarDCTHierarchicalAnalysisTests.swift:25:6: Caught error: .resourceLimit",
+    "2026-10-12T12:57:54.1099790Z ✘ Test nestedQuantisationAndGroupBoundaries() failed after 30.029 seconds with 1 issue.",
+    "2026-10-12T13:02:34.5256800Z ✘ Test run with 283 tests in 63 suites failed after 958.436 seconds with 1 issue.",
+    "2026-10-12T13:02:34.5371250Z ##[error]Process completed with exit code 1."
+  ],
+  "previousHostedJob": 114777986869,
+  "previousExcerpt": [
+    "2026-10-12T11:23:59.0303100Z ◇ Test nestedQuantisationAndGroupBoundaries() started.",
+    "2026-10-12T11:23:59.0384100Z ✔ Test nestedQuantisationAndGroupBoundaries() passed after 28.898 seconds.",
+    "2026-10-12T11:28:38.2619700Z ✔ Test run with 283 tests in 63 suites passed after 876.766 seconds."
+  ],
+  "assessment": "One resourceLimit at 30.029 seconds; same source/test passed at 28.898 seconds on prior hosted TSan run. No race report in returned log. One unchanged bounded retry to distinguish runner variability; do not weaken deadlines or tests."
+}

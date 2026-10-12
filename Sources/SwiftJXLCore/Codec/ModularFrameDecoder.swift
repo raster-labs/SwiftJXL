@@ -79,31 +79,25 @@ package enum ModularFrameDecoder {
                                 maximumNestingDepth: Int = 32,
                                 maximumICCBytes: Int = 4 * 1024 * 1024,
                                 maximumMetadataBytes: Int = 16 * 1024 * 1024) throws -> Prepared {
+        let header = try PixelFrameHeader.read(data, budget: budget,
+            maximumDimension: maximumDimension, maximumPixels: maximumPixels,
+            maximumNestingDepth: maximumNestingDepth)
+        return try prepare(header, maximumICCBytes: maximumICCBytes, maximumMetadataBytes: maximumMetadataBytes)
+    }
+
+    package static func prepare(_ preparedHeader: PixelFrameHeader,
+                                maximumICCBytes: Int = 4 * 1024 * 1024,
+                                maximumMetadataBytes: Int = 16 * 1024 * 1024) throws -> Prepared {
+        let budget = preparedHeader.budget
         try budget.checkpoint()
-        guard maximumNestingDepth > 0, data.count <= budget.maximumCompressedBytes else { throw ScalarModularError.resourceLimit }
-        // Container extraction, BitReader byte copies, and aggregate section
-        // copies are all bounded by the admitted compressed input length.
-        try budget.reserveWorkspace(ScalarOperationBudget.sum(ScalarOperationBudget.product(data.count, 6),
-            ScalarOperationBudget.sum(256 * min(4096, data.count / 8), 64 * 1024)))
-        let codestream: Data
-        switch try parseJXLContainer(data, checkpoint: budget.checkpoint) {
-        case .naked: codestream = data
-        case .iso(let boxes):
-            guard boxes.allSatisfy({ ["ftyp", "jxll", "jxlc", "jxlp"].contains($0.type) }) else {
-                throw ScalarModularError.unsupportedProfile
-            }
-            codestream = try extractCodestream(from: boxes, in: data, checkpoint: budget.checkpoint)
-        }
-        guard hasCodestreamSignature(codestream) else { throw ScalarModularError.invalidInput("Missing codestream signature") }
-        var reader = makeReader(codestream, budget: budget, startingAt: 16, maximumNestingDepth: maximumNestingDepth)
-        let size = try SizeHeader.read(from: &reader)
-        let width = Int(size.xsize), height = Int(size.ysize)
+        // Preserve the original six-input-length cumulative allowance: three
+        // lengths were admitted by shared preparation, three cover sections.
+        try budget.reserveWorkspace(ScalarOperationBudget.product(preparedHeader.inputByteCount, 3))
+        let codestream = preparedHeader.codestream, metadata = preparedHeader.metadata
+        let width = preparedHeader.width, height = preparedHeader.height
         let pixels = try ScalarOperationBudget.product(width, height)
-        guard width > 0, height > 0, width <= min(maximumDimension, 16384),
-              height <= min(maximumDimension, 16384), pixels <= maximumPixels else {
-            throw ScalarModularError.resourceLimit
-        }
-        let metadata = try ImageMetadata.read(from: &reader)
+        let maximumNestingDepth = preparedHeader.maximumNestingDepth
+        var reader = preparedHeader.reader
         let gray = metadata.colorEncoding.colorSpace == .grayscale
         guard !metadata.bitDepth.floatingPoint, (1...16).contains(metadata.bitDepth.bitsPerSample),
               !metadata.xybEncoded, gray || metadata.colorEncoding.colorSpace == .rgb,

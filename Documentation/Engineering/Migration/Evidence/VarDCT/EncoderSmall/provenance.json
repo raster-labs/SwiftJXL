@@ -1,0 +1,12 @@
+{
+  "sourceRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "sourceFiles": {
+    "Codec/VarDCTEncoder.swift": "4b69e7535253ec51540df144a2d2cb2efd1980995d51dca41dca3510a86fef3a",
+    "VarDCT/AFV.swift": "fdcd658a63d576117145a8a9e29d0ca25e8e0de0d3c83501701172dc246e5bfe"
+  },
+  "independentRevision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "reference": "Direct TransformFromPixels scalar invocation,650 vectors(64impulses+1pattern)\u00d710strategyIDs; abs2e-6+rel2e-6 tolerance, plus forward/inverse reconstruction",
+  "referenceHeaderSHA256": "648dd4badf5c2d2368a8e8cf4e2a2f0b31e9a738409a58e00878c31da7423727",
+  "vectorSHA256": "c042a5d86233c8a5bc0930d13cce1554f58e98a682239e68673400196483a3af",
+  "licence": "Apache-2.0 AND BSD-3-Clause; pinned third-party notices retained"
+}

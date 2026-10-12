@@ -1,0 +1,62 @@
+Building for debugging...
+[Using on-disk description]
+[2 / 29] SwiftJXLCore
+[4 / 31] SwiftJXLCore
+[11 / 36] SwiftJXLCore
+[18 / 48] SwiftJXL
+[24 / 46] SwiftJXL
+[24 / 46] swiftjxl-cli-product
+[29 / 51] swiftjxl-cli-product
+[37 / 51] swiftjxl-cli-product
+[37 / 51] SwiftJXLTests-product
+[45 / 59] SwiftJXLTests-product
+[47 / 59] SwiftJXLCoreTests-product
+[48 / 70] SwiftJXLTests-product
+[50 / 70] SwiftJXLCoreTests-product
+[50 / 71] SwiftJXLTests-product
+[52 / 71] swiftjxl-cli-product
+[54 / 71] SwiftJXLCoreTests-product
+[56 / 71] SwiftJXLCoreTests-product
+[58 / 71] SwiftJXLCoreTests-product
+[61 / 70] SwiftJXLTests-product
+[67 / 73] SwiftJXLCoreTests-product
+[69 / 75] SwiftJXLCoreTests-product
+[71 / 75] SwiftJXLCoreTests-product
+[73 / 75] SwiftJXLCoreTests-product
+Build complete! (111.52 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite AnimationPublicTests started.
+◇ Suite AnimationFrameIndexTests started.
+◇ Suite AnimationEncoderTests started.
+◇ Test truncationAndLimits(_:) started.
+◇ Test owningSequenceRoundTrip(_:_:) started.
+◇ Test publicFramesMatchAllFrameScalarOracle(_:) started.
+◇ Test malformedAndUnsupportedHeaders() started.
+◇ Test independentAnimationIndex(_:) started.
+◇ Test limitsSingletonAndCancellation() started.
+◇ Test aggregateLimitsAndCancellation() started.
+◇ Test case passing 1 argument name → "libjxl-lossy-epf0" to publicFramesMatchAllFrameScalarOracle(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossless" to publicFramesMatchAllFrameScalarOracle(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossy" to truncationAndLimits(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossless" to independentAnimationIndex(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossless" to truncationAndLimits(_:) started.
+◇ Test case passing 2 arguments lossy → false, bits → 8 to owningSequenceRoundTrip(_:_:) started.
+◇ Test case passing 2 arguments lossy → false, bits → 16 to owningSequenceRoundTrip(_:_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossy" to independentAnimationIndex(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossless-rgba16" to publicFramesMatchAllFrameScalarOracle(_:) started.
+◇ Test case passing 2 arguments lossy → true, bits → 8 to owningSequenceRoundTrip(_:_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossy-rgba16-epf0" to publicFramesMatchAllFrameScalarOracle(_:) started.
+◇ Test case passing 2 arguments lossy → true, bits → 16 to owningSequenceRoundTrip(_:_:) started.
+✔ Test malformedAndUnsupportedHeaders() passed after 0.037 seconds.
+✔ Test independentAnimationIndex(_:) with 2 test cases passed after 0.037 seconds.
+✔ Test aggregateLimitsAndCancellation() passed after 0.044 seconds.
+✔ Test limitsSingletonAndCancellation() passed after 0.052 seconds.
+✔ Test truncationAndLimits(_:) with 2 test cases passed after 0.083 seconds.
+✔ Suite AnimationFrameIndexTests passed after 0.083 seconds.
+✔ Test publicFramesMatchAllFrameScalarOracle(_:) with 4 test cases passed after 0.106 seconds.
+✔ Suite AnimationPublicTests passed after 0.106 seconds.
+✔ Test owningSequenceRoundTrip(_:_:) with 4 test cases passed after 0.512 seconds.
+✔ Suite AnimationEncoderTests passed after 0.512 seconds.
+✔ Test run with 7 tests in 3 suites passed after 0.513 seconds.

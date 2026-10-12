@@ -174,7 +174,9 @@ package struct UInt32Distribution: Sendable, Equatable {
         }
         if value < constant { return nil }
         let offset = value - constant
-        let max: UInt32 = (1 &<< UInt32(extraBits)) &- 1
+        // Masking shifts wrap the shift count at 32, so 1 &<< 32 is 1,
+        // not 2^32. Full-width distributions admit every UInt32 offset.
+        let max: UInt32 = extraBits == 32 ? .max : (1 &<< UInt32(extraBits)) &- 1
         if offset > max { return nil }
         return offset
     }

@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "de6ca17",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "scope": "Actual reusable scratch for hierarchical forward DCT/small/large analysis; global cumulative budget semantics unchanged. Dimensionguard aligned with concurrently qualified grouped writer:4096peraxis and4Mpixels.",
+  "ownership": "Noncopyable workspaces own private arrays; scalar getters expose values only. Workspaces are bound to one ScalarOperationBudget and rejected by otherplans/budgets. Synchronous inputborrows retain owners and do not escape. Scratch allocation is admitted once; every retained candidate and returned allocating-API copy remains admitted. Existing allocating ScaledDCT/decode path unchanged. Small/Large allocating APIs wrap the shared kernels and explicitly charge their return copies.",
+  "review": "Root reviewed noncopyable ownership, budgetbinding and alternating-shape tests; no blocking finding. Requested SmallAnalysis blankline cleanup applied after qualification (whitespaceonly).",
+  "qualification": {
+    "debug": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'VarDCTWorkspace|VarDCTHierarchicalAnalysis|VarDCTLargeAnalysis|VarDCTSmallAnalysis'",
+      "exitCode": 0,
+      "declarations": 12,
+      "cases": 33
+    },
+    "asan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --no-parallel --filter 'VarDCTEncoder|VarDCTSmallAnalysis|VarDCTLargeAnalysis|VarDCTHierarchicalAnalysis|VarDCTWorkspace|VarDCTGroupedEncoder|VarDCTGroupedDecoder'",
+      "exitCode": 0,
+      "declarations": 30,
+      "cases": 110
+    },
+    "tsan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --no-parallel --filter 'VarDCTEncoder|VarDCTSmallAnalysis|VarDCTLargeAnalysis|VarDCTHierarchicalAnalysis|VarDCTWorkspace|VarDCTGroupedEncoder|VarDCTGroupedDecoder'",
+      "exitCode": 0,
+      "declarations": 30,
+      "cases": 110
+    }
+  },
+  "independent": "650small and44large pinned scalar vector cases preserved; existing DCT8/prepared/small/hierarchical fixture bytes unchanged against independently qualified corpus. Combined sanitizer runs also include groupedwriter12fixture profiles with separate provenance under its checkpoint. No independentoracle rebuild required.",
+  "initialRun": "First combineddebug during concurrent groupedfixture authoring had8missing-fixture failures; other tests passed. Final sanitizer runs include populated fixtures and pass all110cases. Initial noncopyable nestedinitializer ordering compile issue was corrected before executed qualification.",
+  "admission": {
+    "command": "reuse-release-probe reuse-admission.json admission",
+    "exitCode": 0,
+    "limits": "512MiBworkspace,1GiBtotalmemory; admission-only samples do not claim decoding/fidelity qualification at every size",
+    "result": "12/12 encode samples128/256/512square \u00d7grey/RGB \u00d7flat/textured accepted. Formerly rejected512texturedgrey now116335248B;512texturedRGB116592320B.512flat now87838400B versus286325696B priorcheckpoint. Not a universal size guarantee and not peakRSS."
+  },
+  "remaining": [
+    "Content-dependent cumulative retained-candidate and frame admission remains;4MPmaximum does not guarantee defaultlimit acceptance for all inputs.",
+    "Original NEON numerical differences remain; scalar qualification is not a full interoperability claim.",
+    "Broadfuzz,completeplatformsuite and broadperformance/allocationtelemetry remain separate migrationgates."
+  ],
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/VarDCT/ScaledDCT.swift": "2d261b81cd504ff090a0a0acac29b68828efd39dc5303b4bebc05d31362abcfa",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTAFV.swift": "fb96fc493b8e6af097a60119065cd74b67fcb1c679f43761ef343d94af974220",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift": "bcfef8884b04761536bc6e327889bb220ff6b2c83b32227bf1d0030021a32c2b",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTLargeAnalysis.swift": "2ea31a0f1909bc158dab487da5d547372f73388683e9d0365339c4fd8106a2fd",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift": "78e632330a2caf23204ce6bb139562faa04af4878954ff7869d66803de956108",
+    "Tests/SwiftJXLCoreTests/VarDCTWorkspaceTests.swift": "0528b56fb6a737ccaf0a9ea025518f311a9e07d33ef2d9a314787bfb2d1fb40b"
+  },
+  "evidenceSHA256": {
+    "reuse-release-probe.swift": "35617e9d3f08e108549e165c8b38c9dc10c15904176d85306c4a3b3f177aa0f8",
+    "reuse-final-debug.log": "adf24176a6f0b0105ee14dca3245e8c2e8c6d99bc9fe2b77d7b7d2501f7df435",
+    "reuse-tsan.log": "27f44dd15cbd20cc8c8c32176f498c4460eb267d0375ffd08c3adb2417e6ebb1",
+    "reuse-admission.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "performance.json": "47916fb2f2b22a96f4b07751996fd4917739c204cbdcb3972e3d21fc3cac2f31",
+    "reuse-asan.log": "9a66885bb366aaf353adb523771e974cf1f9cc8fe13a7e7483cec71d66d9af30",
+    "reuse-performance.json": "a9d7420112b2510d36fc7dbae287957f6dcc6acbbc22f09719c798d454e580e4",
+    "reuse-admission.json": "00a3451e198695bbd540de6111b58cc7545d5cf315491b97051c5660cdb9fee1",
+    "reuse-release-build.log": "91ad019897cd5ffc73e6a6056cb7c142bb76c6d172012f4cfa24900370bb0c8a",
+    "reuse-performance.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

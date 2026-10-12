@@ -1,0 +1,93 @@
+Building for debugging...
+[3 / 21] SwiftJXL_SwiftJXLCoreTests
+[3 / 21] SwiftJXL
+[5 / 22] SwiftJXL
+[10 / 24] swiftjxl-cli-product
+[12 / 25] SwiftJXL_SwiftJXLCoreTests
+[16 / 22] swiftjxl-cli-product
+[19 / 25] SwiftJXLCoreTests-product
+[21 / 29] SwiftJXLCoreTests-product
+[28 / 33] SwiftJXLCoreTests-product
+[33 / 36] SwiftJXLCoreTests-product
+[36 / 38] SwiftJXLCoreTests-product
+Build complete! (2.12 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTSmallAnalysisTests started.
+◇ Suite VarDCTEncoderPreparationTests started.
+◇ Suite VarDCTEncoderTests started.
+◇ Test invalidAndCumulativeAdmission() started.
+◇ Test pinnedIndependentPrefilter() started.
+◇ Test pinnedIndependentForwardBasis(_:) started.
+◇ Test invalidPrefilterAndAdmission() started.
+◇ Test adaptiveQuantisationAnchors() started.
+◇ Test independentReferenceStreams(_:_:) started.
+◇ Test preparedReferenceStreams(_:_:) started.
+◇ Test smallStrategyReferenceStreams(_:_:) started.
+◇ Test cancellationRejectsBeforeSourceRead() started.
+◇ Test paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test invalidPoliciesAndCumulativeAdmission() started.
+◇ Test case passing 1 argument identifier → 3 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 12 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 2 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 0 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 1 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 13 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 14 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 15 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 16 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 17 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 1 argument bits → 8 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 1 argument bits → 16 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to smallStrategyReferenceStreams(_:_:) started.
+✔ Test adaptiveQuantisationAnchors() passed after 0.921 seconds.
+✔ Test invalidPrefilterAndAdmission() passed after 0.921 seconds.
+✔ Test invalidAndCumulativeAdmission() passed after 0.921 seconds.
+✔ Test pinnedIndependentPrefilter() passed after 0.921 seconds.
+✔ Test pinnedIndependentForwardBasis(_:) with 10 test cases passed after 0.921 seconds.
+✔ Test paddedPlanarSourceIsBorrowed(_:) with 2 test cases passed after 0.921 seconds.
+✔ Test invalidPoliciesAndCumulativeAdmission() passed after 0.921 seconds.
+✔ Suite VarDCTEncoderPreparationTests passed after 0.921 seconds.
+✔ Suite VarDCTSmallAnalysisTests passed after 0.923 seconds.
+✔ Test cancellationRejectsBeforeSourceRead() passed after 0.922 seconds.
+✔ Test independentReferenceStreams(_:_:) with 12 test cases passed after 0.952 seconds.
+✔ Test preparedReferenceStreams(_:_:) with 12 test cases passed after 1.227 seconds.
+✔ Test smallStrategyReferenceStreams(_:_:) with 12 test cases passed after 1.587 seconds.
+✔ Suite VarDCTEncoderTests passed after 1.587 seconds.
+✔ Test run with 11 tests in 3 suites passed after 1.587 seconds.

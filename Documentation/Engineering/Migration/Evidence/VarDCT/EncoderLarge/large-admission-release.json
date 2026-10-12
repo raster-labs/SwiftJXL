@@ -1,0 +1,42 @@
+[
+  {
+    "admittedWorkspaceBytes" : "22597568",
+    "compressedBytes" : "301",
+    "size" : "128",
+    "status" : "accepted",
+    "textured" : "false"
+  },
+  {
+    "admittedWorkspaceBytes" : "56907408",
+    "compressedBytes" : "13319",
+    "size" : "128",
+    "status" : "accepted",
+    "textured" : "true"
+  },
+  {
+    "admittedWorkspaceBytes" : "75303872",
+    "compressedBytes" : "1086",
+    "size" : "256",
+    "status" : "accepted",
+    "textured" : "false"
+  },
+  {
+    "admittedWorkspaceBytes" : "212915856",
+    "compressedBytes" : "53802",
+    "size" : "256",
+    "status" : "accepted",
+    "textured" : "true"
+  },
+  {
+    "admittedWorkspaceBytes" : "286325696",
+    "compressedBytes" : "4235",
+    "size" : "512",
+    "status" : "accepted",
+    "textured" : "false"
+  },
+  {
+    "size" : "512",
+    "status" : "rejected: resourceLimit",
+    "textured" : "true"
+  }
+]

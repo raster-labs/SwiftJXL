@@ -1,0 +1,46 @@
+{
+  "sourceRevision": "54a1d4d",
+  "parentDimensionFix": "257afcb",
+  "findingsResolved": [
+    "Pixel header dimension narrowing",
+    "VarDCT order end token narrowing/addition",
+    "TOC permutation end token narrowing",
+    "Context-map error diagnostic narrowing",
+    "LZ77 distance narrowing and wrapped-zero history address",
+    "LZ77 length addition overflow",
+    "ICC variable integer narrowing before output admission",
+    "ICC width-four prediction and tag arithmetic narrowing"
+  ],
+  "focusedTests": {
+    "exitCode": 0,
+    "declarations": 15,
+    "suites": 3,
+    "command": [
+      "xcrun",
+      "swift",
+      "test",
+      "--disable-sandbox",
+      "--cache-path",
+      ".build/cache",
+      "--config-path",
+      ".build/config",
+      "--security-path",
+      ".build/security",
+      "--build-system",
+      "swiftbuild",
+      "--jobs",
+      "2",
+      "--filter",
+      "IntegerBoundaryTests|ICCStreamTests|PixelFrameHeaderTests",
+      "--no-parallel"
+    ]
+  },
+  "review": {
+    "watchFixes": "No blocking findings after read-only review of the six related sites and wire-level regressions.",
+    "publicVarDCT": "No actionable finding in dispatch, layouts, fidelity, metadata admission, grouped reader/writer or operation-local scratch ownership.",
+    "animation": "No actionable finding in cumulative admission, owner retention, cancellation, indexed bounds and duration/loop preservation.",
+    "cli": "Stale advertised alpha limit corrected in1632246. Regression failed before the change; debug/release CLI each passed72variants, exact alpha above256 and rejection above1024. Help/manual and executable capabilities now agree."
+  },
+  "scope": "Host regressions execute on64-bit Apple Silicon. Watch arm64_32 is compile-qualified; no Watch runtime is installed. The LLVM width probe proves Int.bitWidth32 at compilation, not execution of the regression suite on Watch.",
+  "remainingActionableReviewFindings": 0
+}

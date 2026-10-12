@@ -1,0 +1,23 @@
+{
+  "contract": "0.10.0",
+  "coreCommits": [
+    "652c661",
+    "69b945a"
+  ],
+  "debug": {
+    "exitCode": 0,
+    "declarations": 5,
+    "cases": 58,
+    "skips": 0
+  },
+  "scope": "Eight independent grouped streams reproduced byte-for-byte through padded planar big-endian public source owners; exact alpha and unmodified source bytes, no final pixel allocation during encode. Historical profiles and all integer precisions retained.",
+  "sourceSHA256": {
+    "Sources/SwiftJXL/CodecAPI.swift": "ab97742855f060cc4bd7cf7d3649ce08a34a1d41a87831e75857d8b7c13e5c3d",
+    "Tests/SwiftJXLCoreTests/VarDCTPublicEncoderTests.swift": "5d43b97977b0f4d3856ae196270e80361fe689b563d2826374dc1e474c8a9774"
+  },
+  "remaining": [
+    "final combined public sanitizer qualification",
+    "hosted platform checks",
+    "broader dimensions, resource and performance qualification"
+  ]
+}

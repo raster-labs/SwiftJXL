@@ -1,0 +1,34 @@
+{
+  "sourceRevision": "1632246eb18d346d6799b46d994c50262341b3b1",
+  "commands": [
+    [
+      "python3",
+      "Scripts/test-cli-vardct-encode.py",
+      "--binary",
+      ".build/out/Products/Debug/swiftjxl-cli",
+      "--output",
+      "../vardct-preflight/watch-cli-debug"
+    ],
+    [
+      "python3",
+      "Scripts/test-cli-vardct-encode.py",
+      "--binary",
+      ".build/out/Products/Release/swiftjxl-cli",
+      "--output",
+      "../vardct-preflight/watch-cli-release"
+    ]
+  ],
+  "exitCodes": [
+    0,
+    0
+  ],
+  "manualLint": {
+    "command": [
+      "mandoc",
+      "-Tlint",
+      "ManPages/swiftjxl-cli.1"
+    ],
+    "exitCode": 0
+  },
+  "scope": "Capability/help/manual correction only; no library source or pixel path changed after the54a1d4d qualification. The new capability assertion failed on the prior CLI. Both builds then passed72variants, real257-wide alpha roundtrip and1025-wide rejection."
+}

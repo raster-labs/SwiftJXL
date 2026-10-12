@@ -1,0 +1,839 @@
+{
+  "status": "passed",
+  "binarySHA256": "c3fb368def64c912b74139797aff515df18e493c064d8e4522d7c9569e41688f",
+  "scriptSHA256": "e15986e7836c7a8f1469370bab3f11c0c99f1b27651fa2a19ffa38cb9915de72",
+  "checks": [
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "capabilities",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    }
+  ]
+}

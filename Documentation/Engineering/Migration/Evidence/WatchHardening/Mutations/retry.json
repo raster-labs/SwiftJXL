@@ -1,0 +1,41 @@
+{
+  "reason": "Initial preflight hit the unchanged5-second API deadline during concurrent heavy builds/tests. Both original and patched binaries rejected the same seed at5.08seconds. A follow-up patched-binary check accepted it in3.29seconds. No limit or seed was changed.",
+  "runs": [
+    {
+      "entry": "decode",
+      "command": [
+        "python3",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/test-modular-mutations.py",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/mutations/still-probe",
+        "--entry",
+        "decode",
+        "--seeds",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/mutations/decode-retry",
+        "--seconds",
+        "600"
+      ],
+      "exitCode": 0
+    },
+    {
+      "entry": "caller",
+      "command": [
+        "python3",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/test-modular-mutations.py",
+        "--binary",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/mutations/still-probe",
+        "--entry",
+        "caller",
+        "--seeds",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/watch-final/mutations/caller-retry",
+        "--seconds",
+        "600"
+      ],
+      "exitCode": 0
+    }
+  ]
+}

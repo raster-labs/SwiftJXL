@@ -1,0 +1,44 @@
+{
+  "licence": "Apache-2.0; synthetic generated pixels, no external media",
+  "oracle": "Pinned scalar libjxl 0.12.0 a7a9c787341cf703dede03c2009fa460cae5e5df; all-frame Float32 explicit sRGB coalesced output, little endian; exact clock100/1 loops3 durations10/20/30.",
+  "generation": "clang generate.c -I<cached-build>/lib/include -L<cached-build>/lib -Wl,-rpath,<cached-build>/lib -ljxl -o generate; generate libjxl-lossless.jxl 1; generate libjxl-lossy.jxl 0; generate libjxl-lossy-epf0.jxl 0 0; generate libjxl-lossless-rgba16.jxl 1 0 16 4; generate libjxl-lossy-rgba16-epf0.jxl 0 0 16 4. oracle INPUT.jxl OUTPUT.float (oracle.c links same cached scalar library).",
+  "profile": {
+    "width": 16,
+    "height": 9,
+    "bits": 8,
+    "channels": 3,
+    "frames": 3,
+    "durationTicks": [
+      10,
+      20,
+      30
+    ],
+    "ticksPerSecond": [
+      100,
+      1
+    ],
+    "loops": 3
+  },
+  "independentInspection": "Installed jxlinfo accepted both, reported3 full-image frames100/200/300ms, animation length1.800s including3loops. Structural index fixtures, not pixel comparison qualification.",
+  "sha256": {
+    "generate.c": "05a5947d45d0cdbdd52c11183deda5787186b06ad7a14477cde323253eaf8b62",
+    "libjxl-lossless-rgba16.float": "3d4ef9e33871713bcb87c8a97f6a8444a61fec7f163dbd354fb5b2406e2ea97d",
+    "libjxl-lossless-rgba16.jxl": "78d5efc7e259f1537fd3880af5a84bc4763ee23ac13f6e229063deff8c740d78",
+    "libjxl-lossless.float": "66999922ff94274338bc6f1082478bb6b9c84389f5ca617ae10e72595f5d592c",
+    "libjxl-lossless.jxl": "7691ed8baf546b213deac5d9af7dd41aed19da8dbe5dc45b4901b1146903abc9",
+    "libjxl-lossy-epf0.float": "1120debb513170c7e82689060ceefff557c54762abb3d76ef9e6b0568d3e8429",
+    "libjxl-lossy-epf0.jxl": "ee3b59d5a9fb1d3059b65edd2b981bfe29c067d61f39576cbf03d5a516ef58cd",
+    "libjxl-lossy-rgba16-epf0.float": "0f8a03cbb61b985fcc66842f6ff7657f336c262a00086dc1ea98a3683bb20e65",
+    "libjxl-lossy-rgba16-epf0.jxl": "7edb34482e0e249b4b35c564889431a7cb7c212e6bc1e048662d808d568a53e0",
+    "libjxl-lossy.float": "1120debb513170c7e82689060ceefff557c54762abb3d76ef9e6b0568d3e8429",
+    "libjxl-lossy.jxl": "13fbec19431f9e400324ea20099ad91444c43cef1913b582f85b451eb0a09bc3",
+    "oracle.c": "76f0747acfca9a13b69c1f58c956ef85b68495cbbda1fe046c9f69c9e6253e9c"
+  },
+  "profiles": {
+    "libjxl-lossless": "RGB8 lossless",
+    "libjxl-lossy": "RGB8 default lossy: structurally indexed, unsupported filter rewrite for public decoding",
+    "libjxl-lossy-epf0": "RGB8 lossy EPF0",
+    "libjxl-lossless-rgba16": "RGBA16 lossless",
+    "libjxl-lossy-rgba16-epf0": "RGBA16 lossy EPF0"
+  }
+}

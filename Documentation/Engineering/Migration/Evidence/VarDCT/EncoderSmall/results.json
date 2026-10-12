@@ -1,0 +1,222 @@
+[
+  {
+    "admittedWorkspaceBytes" : "5282840",
+    "bits" : "8",
+    "channels" : "1",
+    "encodedBytes" : "231",
+    "height" : "9",
+    "name" : "enc-17-1-8",
+    "status" : "accepted",
+    "strategies" : "0,2,13,17",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "5282840",
+    "bits" : "16",
+    "channels" : "1",
+    "encodedBytes" : "232",
+    "height" : "9",
+    "name" : "enc-17-1-16",
+    "status" : "accepted",
+    "strategies" : "0,2,13,17",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "5282840",
+    "bits" : "8",
+    "channels" : "2",
+    "encodedBytes" : "389",
+    "height" : "9",
+    "name" : "enc-17-2-8",
+    "status" : "accepted",
+    "strategies" : "0,2,13,17",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "5282840",
+    "bits" : "16",
+    "channels" : "2",
+    "encodedBytes" : "545",
+    "height" : "9",
+    "name" : "enc-17-2-16",
+    "status" : "accepted",
+    "strategies" : "0,2,13,17",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "5400088",
+    "bits" : "8",
+    "channels" : "3",
+    "encodedBytes" : "479",
+    "height" : "9",
+    "name" : "enc-17-3-8",
+    "status" : "accepted",
+    "strategies" : "0",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "5400088",
+    "bits" : "16",
+    "channels" : "3",
+    "encodedBytes" : "480",
+    "height" : "9",
+    "name" : "enc-17-3-16",
+    "status" : "accepted",
+    "strategies" : "0",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "5400088",
+    "bits" : "8",
+    "channels" : "4",
+    "encodedBytes" : "635",
+    "height" : "9",
+    "name" : "enc-17-4-8",
+    "status" : "accepted",
+    "strategies" : "0",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "5400088",
+    "bits" : "16",
+    "channels" : "4",
+    "encodedBytes" : "789",
+    "height" : "9",
+    "name" : "enc-17-4-16",
+    "status" : "accepted",
+    "strategies" : "0",
+    "width" : "17"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "bits" : "8",
+    "channels" : "1",
+    "encodedBytes" : "3876",
+    "height" : "64",
+    "name" : "enc-64-1-8",
+    "status" : "accepted",
+    "strategies" : "0,2,12,13,14,15,16,17",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "bits" : "16",
+    "channels" : "1",
+    "encodedBytes" : "3877",
+    "height" : "64",
+    "name" : "enc-64-1-16",
+    "status" : "accepted",
+    "strategies" : "0,2,12,13,14,15,16,17",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "bits" : "8",
+    "channels" : "2",
+    "encodedBytes" : "8533",
+    "height" : "64",
+    "name" : "enc-64-2-8",
+    "status" : "accepted",
+    "strategies" : "0,2,12,13,14,15,16,17",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "bits" : "16",
+    "channels" : "2",
+    "encodedBytes" : "12545",
+    "height" : "64",
+    "name" : "enc-64-2-16",
+    "status" : "accepted",
+    "strategies" : "0,2,12,13,14,15,16,17",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "bits" : "8",
+    "channels" : "3",
+    "encodedBytes" : "8085",
+    "height" : "64",
+    "name" : "enc-64-3-8",
+    "status" : "accepted",
+    "strategies" : "0,2,14,17",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "bits" : "16",
+    "channels" : "3",
+    "encodedBytes" : "8086",
+    "height" : "64",
+    "name" : "enc-64-3-16",
+    "status" : "accepted",
+    "strategies" : "0,2,14,17",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "bits" : "8",
+    "channels" : "4",
+    "encodedBytes" : "12740",
+    "height" : "64",
+    "name" : "enc-64-4-8",
+    "status" : "accepted",
+    "strategies" : "0,2,14,17",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "bits" : "16",
+    "channels" : "4",
+    "encodedBytes" : "16747",
+    "height" : "64",
+    "name" : "enc-64-4-16",
+    "status" : "accepted",
+    "strategies" : "0,2,14,17",
+    "width" : "64"
+  },
+  {
+    "admittedWorkspaceBytes" : "13533080",
+    "bits" : "8",
+    "channels" : "1",
+    "encodedBytes" : "2904",
+    "height" : "9",
+    "name" : "enc-257-1-8",
+    "status" : "accepted",
+    "strategies" : "0,12,13,14,15,17",
+    "width" : "257"
+  },
+  {
+    "admittedWorkspaceBytes" : "13533080",
+    "bits" : "16",
+    "channels" : "1",
+    "encodedBytes" : "2905",
+    "height" : "9",
+    "name" : "enc-257-1-16",
+    "status" : "accepted",
+    "strategies" : "0,12,13,14,15,17",
+    "width" : "257"
+  },
+  {
+    "admittedWorkspaceBytes" : "14119320",
+    "bits" : "8",
+    "channels" : "3",
+    "encodedBytes" : "5563",
+    "height" : "9",
+    "name" : "enc-257-3-8",
+    "status" : "accepted",
+    "strategies" : "0,1,2,13,14,17",
+    "width" : "257"
+  },
+  {
+    "admittedWorkspaceBytes" : "14119320",
+    "bits" : "16",
+    "channels" : "3",
+    "encodedBytes" : "5564",
+    "height" : "9",
+    "name" : "enc-257-3-16",
+    "status" : "accepted",
+    "strategies" : "0,1,2,13,14,17",
+    "width" : "257"
+  }
+]

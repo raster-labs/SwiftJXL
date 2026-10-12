@@ -1,0 +1,7 @@
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/inverse-gaborish-oracle.cc:11:54: error: invalid argument type 'StatusOr<Image3<float>>' to unary expression
+   11 |    auto created=jxl::Image3F::Create(nullptr,w,h);if(!created)return 3;auto im=std::move(created).value();
+      |                                                      ^~~~~~~~
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/inverse-gaborish-oracle.cc:11:99: error: no member named 'value' in 'jxl::StatusOr<jxl::Image3<float>>'
+   11 |    auto created=jxl::Image3F::Create(nullptr,w,h);if(!created)return 3;auto im=std::move(created).value();
+      |                                                                                ~~~~~~~~~~~~~~~~~~ ^
+2 errors generated.

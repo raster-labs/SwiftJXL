@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "23cc0a0",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "scope": "Internal one-DC-group, single-pass XYB/sRGB decode and borrowed integer output only; public VarDCT remains disabled",
+  "buildBeforeSkipBuild": "Affected swift test --filter VarDCT with same SwiftPM arguments compiled both test targets; passed 25 declarations / 107 cases, exit 0",
+  "runs": {
+    "debug": {
+      "command": "SWIFTJXL_ORACLE_BIN=/opt/homebrew/bin CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --skip-build",
+      "exitCode": 0,
+      "declarations": 207,
+      "cases": 805,
+      "skips": 0,
+      "logSHA256": "9925f4b1aead339acfc0c1ced49f4b76d79da51d8dba87d139f9d42ed25afbcb"
+    },
+    "asan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter VarDCT",
+      "exitCode": 0,
+      "declarations": 25,
+      "cases": 107,
+      "skips": 0,
+      "logSHA256": "cebd633ef008e39eeebc3307f4097a77e436c1828950a59984fcc0a598e959d5"
+    },
+    "tsan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter VarDCT",
+      "exitCode": 0,
+      "declarations": 25,
+      "cases": 107,
+      "skips": 0,
+      "logSHA256": "d1f45b55958aefe08466571c28feee7822fba3d4839906bf6a01c5b1587d2c05"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/VarDCT/VarDCTCoefficients.swift": "fde7d7480fb50950147dce1eb9f4dfbbdd02ce28511fc6587f2822df931c9073",
+    "Sources/SwiftJXLCore/VarDCT/EdgePreservingFilter.swift": "615143d86df2bc457274008a7a3cf00686db388c6da74193b12b9251956bd27c",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTQuantWeights.swift": "b813d3c408362bf2c17667e548dc46252ff754bc18701ee540b3c3c9327e7604",
+    "Sources/SwiftJXLCore/VarDCT/DefaultOpsin.swift": "3874a0e9d236c4fff54dbab9407dc722dfc3bbbe6d2c313f4b454c4e92700f1d",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTAFV.swift": "c90a4ada2e1833842da26937ab304d0d9cf4686081e00c93cd2aca1f599271dd",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTReconstruction.swift": "fa96be76e1fd7d8502ff8f4b91ecb74b22eb1c369d8617f7db58144dbe1d0358",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTFrameEnvelope.swift": "ac6dd1adfaa3b29cca1f010bccdca3639d61f97c94c2dec3fb2e3e3606eef56c",
+    "Sources/SwiftJXLCore/VarDCT/ScaledDCT.swift": "49fd24b1525b8eacaa94cdc6747a8a38404816d45e4ed23a217b9edf36dc2b42",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift": "18c9b2bde05f55eb12624fe874ee3cfc9e8945b5d3181f1194d3413cd615b267",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTPixelDecoder.swift": "3cd67e1ff99050febb7243e5e4d37f6e27ddcbb28c3ef19c141fc73b4f061f3e",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTStrategyMap.swift": "c9be670d7b1d0b94c37d69a6d5269041990f1a139b63d89d27e2b095d6190aa7",
+    "Sources/SwiftJXLCore/VarDCT/Gaborish.swift": "b1828243688d81fe5152ae872536b89a876f19ccd975df3ea024b83e0cf7a31b",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallTransforms.swift": "5766555f0147c3eddb7f00640b3d899b305c3a68b5780d02aec98e01dbec68f9",
+    "Sources/SwiftJXLCore/Codestream/FrameHeader.swift": "6a489a38db5dea01fb360725a3f68b9b3dd004026edba8267d820c79a02838c1",
+    "Tests/SwiftJXLCoreTests/VarDCTPixelStorageTests.swift": "87b8c74014151fb666b80185ccc72a46b511df59a4ff7ddc5895d4a7358ecd1c",
+    "Tests/SwiftJXLCoreTests/VarDCTSmallTransformTests.swift": "cde74e4809fff16bb659fba27f4201cc4eedfa061542e6854c4ed04a8451724a",
+    "Tests/SwiftJXLCoreTests/VarDCTEPFTests.swift": "5a66433b869c1bafa97d2761c56a2c546695b3d57c69b3d40335c932c82d9b5d",
+    "Tests/SwiftJXLCoreTests/VarDCTStrategyTests.swift": "7cb5b278662cbee6ea58dab459669f90d42bedc137fc9ab73688868e1f6c5075",
+    "Tests/SwiftJXLCoreTests/VarDCTFrameTests.swift": "76ae0d1a3e8dab6c8cc54afc2a9799a7740034f7a26120d4b143a5792b3c84cc",
+    "Tests/SwiftJXLCoreTests/VarDCTFilterTests.swift": "e5e80e4cfbc3057bd3c827158f32a0e354958069a2d7a5b12e2fa3e069ef10d9",
+    "Tests/SwiftJXLCoreTests/VarDCTTransformTests.swift": "8d07a8c5ccd68d3941d147b3317e659909082aaf0f74ba940a2346834fde2382",
+    "Tests/SwiftJXLCoreTests/VarDCTColourTests.swift": "14807bcfdc3c1e3ad20ce89357f5e24eb2c5de561e6e65884a12de8c2b02de6d"
+  },
+  "independentEvidence": {
+    "scalarFloatNearest": "32/32 retained frame cases pass maximum 2 LSB / RMS 0.5 with exact alpha; observed max 1 / RMS <=0.172",
+    "originalARMInteger": "22/32 pass; 10 original threshold failures remain retained",
+    "smallTransformOracle": "585 vectors, 64 samples each, IDs 1/2/3/12/13/14/15/16/17, absolute 2e-6 + relative 2e-6",
+    "publicAndOfficialConformance": "Not achieved"
+  },
+  "unexecuted": [
+    "controlled release performance and memory peaks",
+    "extended malformed-input/fuzz campaigns",
+    "full platform matrix and hosted CI",
+    "public operation publication/report integration",
+    "encoder integration"
+  ]
+}

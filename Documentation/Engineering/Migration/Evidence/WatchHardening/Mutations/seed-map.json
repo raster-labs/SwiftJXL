@@ -1,0 +1,597 @@
+[
+  {
+    "sha256": "8cac1988d38c80ec69681e5d0f1e8120355083d0e87d010b14381e54c4f25735",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-17-1-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-17-1-16.jxl"
+    ]
+  },
+  {
+    "sha256": "fa56cec49e9108f50c0530f083bdb272648c56e823676d768c27818bbe5d13c9",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-17-1-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-17-1-8.jxl"
+    ]
+  },
+  {
+    "sha256": "1917107bcceb5727ca4ff685ad6a60da19e14c875d7466e5671eec5a318ed05c",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-17-2-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-17-2-16.jxl"
+    ]
+  },
+  {
+    "sha256": "c6ecd008f09d35d80bb39e0138a846442c3a721a35e9b90fb2788759be9f9bd8",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-17-2-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-17-2-8.jxl"
+    ]
+  },
+  {
+    "sha256": "ec0235426a69a164b31dd2bdfe6bf757dbadaa37035c3542e82c99e9ed567b96",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-17-3-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-17-3-16.jxl"
+    ]
+  },
+  {
+    "sha256": "17e3dcf81444ef5935045e529a399efd4411a4f45c7b24e4c0bbe0960a3d227b",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-17-3-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-17-3-8.jxl"
+    ]
+  },
+  {
+    "sha256": "b9d8f145c6a60e978bfae45c0ec3f2099a8042f0ce82a30b5ef01072f8e19f65",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-17-4-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-17-4-16.jxl"
+    ]
+  },
+  {
+    "sha256": "46809127fe782f68b64b563929a5d4a4bf8399f9ce4a55f6a2097bed51cd4692",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-17-4-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-17-4-8.jxl"
+    ]
+  },
+  {
+    "sha256": "364a375251acd2eac166f5b1e15260e73474f1a3e168770a57c51ff1b9d4af61",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-257-1-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-257-1-16.jxl"
+    ]
+  },
+  {
+    "sha256": "448ce63cb7a11a353f86c429c68c5cc2091a09c3900ab45cb9ec494168b88316",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-257-1-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-257-1-8.jxl"
+    ]
+  },
+  {
+    "sha256": "36407d94752c8b92409cfcc11f478e0c1bf9f49d3b4958cb18e7505c5ab8854b",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-257-3-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-257-3-16.jxl"
+    ]
+  },
+  {
+    "sha256": "9130c366c89b55567a6559a59eed6201d054399461f492f4f08205a891524ecd",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-257-3-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-257-3-8.jxl"
+    ]
+  },
+  {
+    "sha256": "1dca734b74fb7c580b3ef84df27d92a5c66e50d175adf2f13ec5b0c1a288c7aa",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-64-1-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-64-1-16.jxl"
+    ]
+  },
+  {
+    "sha256": "4686372812f2e12bb16dd13cfc0c8bf2496e0e68461a049023fbe239a8a12e80",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-64-1-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-64-1-8.jxl"
+    ]
+  },
+  {
+    "sha256": "fba84b01e33ceb728c35eb82b96e40b0e1d291e0e3cd802fc5f1515f260044c6",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-64-2-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-64-2-16.jxl"
+    ]
+  },
+  {
+    "sha256": "10e79bb71dac5f8be041588acd1757dbb0c8c242c4156947261104352c86828b",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-64-2-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-64-2-8.jxl"
+    ]
+  },
+  {
+    "sha256": "c18c48a5af5baf8aee82d261054a98eaee6931d12e2cada77a5e62aa6183ef87",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-64-3-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-64-3-16.jxl"
+    ]
+  },
+  {
+    "sha256": "10135fc5d4a4094544c82f7476e608c7b1583acd96c52945d0a8fa91ad6ec592",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-64-3-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-64-3-8.jxl"
+    ]
+  },
+  {
+    "sha256": "742248cddb95763c93d5b15435c093b82868b264b9accde151b589b01bc8c9ee",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-64-4-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-64-4-16.jxl"
+    ]
+  },
+  {
+    "sha256": "18b11e91376ecc6df719b1dd946c147de8deb225624ba3a8287035bfa6a6df38",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-enc-64-4-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/enc-64-4-8.jxl"
+    ]
+  },
+  {
+    "sha256": "eb2362586c9b54fe04adf419af242e97fdac682ebeba8c0ab5a5aa6738e0c2d1",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-10.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-10.jxl"
+    ]
+  },
+  {
+    "sha256": "9b1c714a8a2069bc349e069835f645d051b57c537d7949e84a21e06f7af946ad",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-11.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-11.jxl"
+    ]
+  },
+  {
+    "sha256": "539d78069876c4bf784e015f44df2cc620d41a3be008949cb6c0f1d35f9ed250",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-18.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-18.jxl"
+    ]
+  },
+  {
+    "sha256": "13b0bfb97b3e7d33aca5e937177613ba73fcd1716433468f06b3c3a95c4f9a5b",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-19.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-19.jxl"
+    ]
+  },
+  {
+    "sha256": "701ebf59b1db2fd26fc6b53c60e2d65b56e4d78c871d2fb587be81801845b73d",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-20.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-20.jxl"
+    ]
+  },
+  {
+    "sha256": "46c5df9665b759baff9513f9a166538dc854931010628f4b580e47b6dac5ac4f",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-4.jxl"
+    ]
+  },
+  {
+    "sha256": "03b86422ffe4e8c55075f6b32460f547771f9e6926d5400afbc243d73cff42d8",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-5.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-5.jxl"
+    ]
+  },
+  {
+    "sha256": "9795f1c8c5e5c93ad0a037031e091e89fea849060c5824ea2691f0f1377b3e3e",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-6.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-6.jxl"
+    ]
+  },
+  {
+    "sha256": "478b26c5cc2b60c1f7ea28051e9166fc9f314ee39cc73543e5a3178ffecd5b01",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-7.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-7.jxl"
+    ]
+  },
+  {
+    "sha256": "d2fbea25aab4621b011cc5e938c67a515dede65ab901b40fbdb56ca4ad3a8ffb",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-8.jxl"
+    ]
+  },
+  {
+    "sha256": "f5bd1b5617978066fb109e57410776ca323ed1ecdcd0c03cc385f7c6845713e1",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderLarge-writer-9.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderLarge/writer-9.jxl"
+    ]
+  },
+  {
+    "sha256": "aaa69d819afc3bfb55889f920f73d32db2575478c3f53a9db39c0d43af223f89",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-10-1.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-10-1.jxl"
+    ]
+  },
+  {
+    "sha256": "700a2510cc2d36999e910a04c6c5c97b5e4d42409c1f5ee9d0b5a38562836fb9",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-10-2.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-10-2.jxl"
+    ]
+  },
+  {
+    "sha256": "494352588d0f5a26134318bfb69160c014da419c7539d1d4e9003809047ceb94",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-10-3.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-10-3.jxl"
+    ]
+  },
+  {
+    "sha256": "d5be6753229fca71acb50d36516e954a3220c11f47ebaef07954109a6b5e974d",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-10-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-10-4.jxl"
+    ]
+  },
+  {
+    "sha256": "57f6baf85a4d86b4d698c429ddfba941c80ef5cd9e14a94bdbddfbfcf36b5cf1",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-11-1.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-11-1.jxl"
+    ]
+  },
+  {
+    "sha256": "5eb30cfef5a5603d5205bd1a7633c8850fdd6b31a5c2fa6f0890db9874eb428d",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-11-2.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-11-2.jxl"
+    ]
+  },
+  {
+    "sha256": "2a6865f386e76bfed3e906951430fb8e40f7e5b95ee2348993bf59a0835b92d3",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-11-3.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-11-3.jxl"
+    ]
+  },
+  {
+    "sha256": "27fe12b8c690ffd4259161b6c5c82be7e9363ef0fc6ffb54bd3815860d2f9c91",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-11-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-11-4.jxl"
+    ]
+  },
+  {
+    "sha256": "13caff2fe3d0277e93173b8c8dc57865cd3b2a51480ca46ffe17d7d19c6e9640",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-12-1.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-12-1.jxl"
+    ]
+  },
+  {
+    "sha256": "266e79b2e55f4b3cf72cc4e68d6e64af9598f706c8e5f3281c24a7329e9e3998",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-12-2.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-12-2.jxl"
+    ]
+  },
+  {
+    "sha256": "092b294e3dea1254a45ae5a97b60413b6494b6534b9fcddb4eea71fa02197a17",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-12-3.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-12-3.jxl"
+    ]
+  },
+  {
+    "sha256": "3500edf59a9953f1a74e59cd50a92c99c3119139645efbb7953941d78b28220d",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-12-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-12-4.jxl"
+    ]
+  },
+  {
+    "sha256": "91804aa42e6fcd3717c22543c9818b8998648c2d34b852b7d66866fa42329886",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-13-1.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-13-1.jxl"
+    ]
+  },
+  {
+    "sha256": "2c6777d19ad8bd2c163fac4c3cbb5cef1b0ee4c3a264851d8fdcc261d2034c31",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-13-2.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-13-2.jxl"
+    ]
+  },
+  {
+    "sha256": "93cbdc2368b2641c3ee8282c87d726be41d841de13ee10975a151feadab721d2",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-13-3.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-13-3.jxl"
+    ]
+  },
+  {
+    "sha256": "7f837f9fcaa14334188a8429a40e17b1b1129933aca6019f0b6cb5f55a90e308",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-13-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-13-4.jxl"
+    ]
+  },
+  {
+    "sha256": "ee074df7717e1e75800844e7acac29be6d0d70e8cf31559d102b457853e7c503",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-14-1.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-14-1.jxl"
+    ]
+  },
+  {
+    "sha256": "63bc8dd0eb9b16b4bbb08a79568c4e557fe39042c80139930c75e67e985b50ef",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-14-2.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-14-2.jxl"
+    ]
+  },
+  {
+    "sha256": "171e9bf93e52503e80240cac4ac2a93e85b38ffaa8ffb81df090e2df04af7910",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-14-3.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-14-3.jxl"
+    ]
+  },
+  {
+    "sha256": "8e51ceee98f8a3b338dada2abcf32ea17c4ebd1d5403ab0153ba4c7ead1734ba",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-14-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-14-4.jxl"
+    ]
+  },
+  {
+    "sha256": "eea968846c7faf97cfdff97111725d5aaca567f9a991121b05bdf813479a6972",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-15-1.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-15-1.jxl"
+    ]
+  },
+  {
+    "sha256": "42120948c441c1b65cb6d4522b2253ec7c71665272bd9bf0db8f3df257b95021",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-15-2.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-15-2.jxl"
+    ]
+  },
+  {
+    "sha256": "bd825968c7319d40cb684ffc5ad7749d42783a0745055cc1385ebad24edb2e7a",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-15-3.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-15-3.jxl"
+    ]
+  },
+  {
+    "sha256": "3e3695d6888ee5338e332594423efde460695879bacc779d2618858e907c6eba",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-15-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-15-4.jxl"
+    ]
+  },
+  {
+    "sha256": "96509396b1bb6fa0562c50c20b79421be8eed353bc3b7888c8da17245cb65e66",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-16-1.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-16-1.jxl"
+    ]
+  },
+  {
+    "sha256": "ec46d6f55c7a74f01aa97b411fae6bbc9a00b87a2fef54b9bfbaacedc8ba47df",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-16-2.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-16-2.jxl"
+    ]
+  },
+  {
+    "sha256": "545ba78671dd3b3a07dcfff505f8f66cdc4a5da38af270671f25585e6ae44efd",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-16-3.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-16-3.jxl"
+    ]
+  },
+  {
+    "sha256": "64368d61c1309fe5b87471cd1fa2ea371d8c185d4f07609bf17fbeb40c296c6e",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/precision-16-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-16-4.jxl"
+    ]
+  },
+  {
+    "sha256": "cf34cbfcb9375601af8e68a06b3c63145d153e2d7e52ce8e67a2480272311722",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/precision-8-1.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-8-1.jxl"
+    ]
+  },
+  {
+    "sha256": "14a88e17d9a0e2aa253f863075d70dff7f99c1cd51aeba773e5395a6891677f3",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-8-2.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-8-2.jxl"
+    ]
+  },
+  {
+    "sha256": "fd1cca104c5c5eb22375ff4894e4658ae7660df93100d563027c7304e236d5be",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-8-3.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-8-3.jxl"
+    ]
+  },
+  {
+    "sha256": "31688bb65d9ad16cf19c869ed0beab4c55ac2db40bbfac4890a7d475c9e1a9be",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-8-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-8-4.jxl"
+    ]
+  },
+  {
+    "sha256": "3a650b47e1a74395023f44e2cb0ecbc62e4293a7f1c2a787d3ab5341b66bc838",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-9-1.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-9-1.jxl"
+    ]
+  },
+  {
+    "sha256": "6590a4666436aec990123ebaad5f30e9ae8a4eb5e8b01364d442da0b58984d02",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-9-2.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-9-2.jxl"
+    ]
+  },
+  {
+    "sha256": "cce229903c3a44e1c46219988ca04cd91ea438bba7060d06e6cd5d1761799a07",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-9-3.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-9-3.jxl"
+    ]
+  },
+  {
+    "sha256": "7ed26e61373248fb0a87991edda1871d3172680559c3c0b2e07e11b015e92f1a",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/EncoderPrecision-precision-9-4.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/EncoderPrecision/precision-9-4.jxl"
+    ]
+  },
+  {
+    "sha256": "ed66ca965859be0ad2d100da5ffe779bba68345545b12544d2099fe0889106e0",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/GroupedDecoder-grouped-17-257-2-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-17-257-2-16.jxl"
+    ]
+  },
+  {
+    "sha256": "9d962c2f6ad45e700b05242b2e14d9550e7f14af65f1ef9c168427bed428806c",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/GroupedDecoder-grouped-2057-9-3-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-2057-9-3-8.jxl"
+    ]
+  },
+  {
+    "sha256": "97bcc8945d09db843db322deb60f5684e2de6eaae04fc7e4e0da436b4c03f013",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/GroupedDecoder-grouped-2057-9-4-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-2057-9-4-16.jxl"
+    ]
+  },
+  {
+    "sha256": "14d2047e07434c1ebca404633e88815ae3d9798c13e5f5f5083137c83c47b990",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/GroupedDecoder-grouped-257-17-4-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-257-17-4-8.jxl"
+    ]
+  },
+  {
+    "sha256": "6bc3d19d3f492e86a2a252efd4c162d7e9befc843875db9f3f2fe04faee9e7ab",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/GroupedDecoder-grouped-257-259-4-8.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-257-259-4-8.jxl"
+    ]
+  },
+  {
+    "sha256": "67568052693c3a619e6ff8ea107757c62f461cb67d810b09f089882808b187b6",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/vardct-mutation-seeds/GroupedDecoder-grouped-9-2057-1-16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-9-2057-1-16.jxl"
+    ]
+  },
+  {
+    "sha256": "61d49c53b8580205048802675adb8a4ee66003bb6ca8ff841eae00587eaac746",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-16-3.jxl",
+    "repositoryPaths": [
+      "Documentation/Engineering/Migration/Evidence/Animation/enc-lossless-16-3.jxl"
+    ]
+  },
+  {
+    "sha256": "2ccebc5d008f656041d068baebcb795427e0aca73f17209bad2d4511de48f656",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-16-4.jxl",
+    "repositoryPaths": [
+      "Documentation/Engineering/Migration/Evidence/Animation/enc-lossless-16-4.jxl"
+    ]
+  },
+  {
+    "sha256": "b31626590e99b1e9612e559d03f2016db85bcdd772f37382e2c62e27fd00ef1e",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-8-3.jxl",
+    "repositoryPaths": [
+      "Documentation/Engineering/Migration/Evidence/Animation/enc-lossless-8-3.jxl"
+    ]
+  },
+  {
+    "sha256": "4984fb63c2a225462c8380b59d3d03fb350da30e68f8600be71eab81958edcec",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossless-8-4.jxl",
+    "repositoryPaths": [
+      "Documentation/Engineering/Migration/Evidence/Animation/enc-lossless-8-4.jxl"
+    ]
+  },
+  {
+    "sha256": "46f4367eaa4ed7632dd45bd935d64f82e5e0e3b28eee8056e6789abf891481a4",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-16-3.jxl",
+    "repositoryPaths": [
+      "Documentation/Engineering/Migration/Evidence/Animation/enc-lossy-16-3.jxl"
+    ]
+  },
+  {
+    "sha256": "aed12865030dda65668149cdd26ea8759938b1608254b9e8205c70dc9075a6ef",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-16-4.jxl",
+    "repositoryPaths": [
+      "Documentation/Engineering/Migration/Evidence/Animation/enc-lossy-16-4.jxl"
+    ]
+  },
+  {
+    "sha256": "f2bcd75e8e8edb48b6095ac8ace046885e291fed24374ffb7994b29b0d6fb6bc",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-8-3.jxl",
+    "repositoryPaths": [
+      "Documentation/Engineering/Migration/Evidence/Animation/enc-lossy-8-3.jxl"
+    ]
+  },
+  {
+    "sha256": "dbb082d9ec305938c55efbe1037adc88bafbde77b7b8b6115b535967a8369c03",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/enc-lossy-8-4.jxl",
+    "repositoryPaths": [
+      "Documentation/Engineering/Migration/Evidence/Animation/enc-lossy-8-4.jxl"
+    ]
+  },
+  {
+    "sha256": "78d5efc7e259f1537fd3880af5a84bc4763ee23ac13f6e229063deff8c740d78",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossless-rgba16.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossless-rgba16.jxl"
+    ]
+  },
+  {
+    "sha256": "7691ed8baf546b213deac5d9af7dd41aed19da8dbe5dc45b4901b1146903abc9",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossless.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossless.jxl"
+    ]
+  },
+  {
+    "sha256": "ee3b59d5a9fb1d3059b65edd2b981bfe29c067d61f39576cbf03d5a516ef58cd",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossy-epf0.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossy-epf0.jxl"
+    ]
+  },
+  {
+    "sha256": "7edb34482e0e249b4b35c564889431a7cb7c212e6bc1e048662d808d568a53e0",
+    "originalPath": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/animation-mutation-seeds/libjxl-lossy-rgba16-epf0.jxl",
+    "repositoryPaths": [
+      "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossy-rgba16-epf0.jxl"
+    ]
+  }
+]
