@@ -1,0 +1,802 @@
+[
+  {
+    "admittedWorkspaceBytes": "1694304",
+    "bits": "16",
+    "channels": "1",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "9",
+    "name": "pred-17-1-16.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.28005601680560194,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1642279",
+    "bits": "16",
+    "channels": "1",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "9",
+    "name": "pred-17-1-16",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.1143323900950059,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1694301",
+    "bits": "8",
+    "channels": "1",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "9",
+    "name": "pred-17-1-8.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.4714045207910317,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1642276",
+    "bits": "8",
+    "channels": "1",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "9",
+    "name": "pred-17-1-8",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.48507125007266594,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1969658",
+    "bits": "16",
+    "channels": "2",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "9",
+    "name": "pred-17-2-16.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.28005601680560194,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1662097",
+    "bits": "16",
+    "channels": "2",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "9",
+    "name": "pred-17-2-16",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.1143323900950059,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1962342",
+    "bits": "8",
+    "channels": "2",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "9",
+    "name": "pred-17-2-8.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.4714045207910317,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1655321",
+    "bits": "8",
+    "channels": "2",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "9",
+    "name": "pred-17-2-8",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.48507125007266594,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1698517",
+    "bits": "16",
+    "channels": "3",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "9",
+    "name": "pred-17-3-16.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 2,
+      "rms": 0.5581638119392959,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.1476024809233492,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1610616",
+    "bits": "16",
+    "channels": "3",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "9",
+    "name": "pred-17-3-16",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 6,
+      "rms": 0.6085806194501846,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.1143323900950059,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1698511",
+    "bits": "8",
+    "channels": "3",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "9",
+    "name": "pred-17-3-8.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.44526068837257776,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1610357",
+    "bits": "8",
+    "channels": "3",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "9",
+    "name": "pred-17-3-8",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.45494140013842754,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1973811",
+    "bits": "16",
+    "channels": "4",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "9",
+    "name": "pred-17-4-16.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 2,
+      "rms": 0.5581638119392959,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.1476024809233492,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1630158",
+    "bits": "16",
+    "channels": "4",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "9",
+    "name": "pred-17-4-16",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 6,
+      "rms": 0.6085806194501846,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.1143323900950059,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1966776",
+    "bits": "8",
+    "channels": "4",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "9",
+    "name": "pred-17-4-8.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.44526068837257776,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "1623397",
+    "bits": "8",
+    "channels": "4",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "9",
+    "name": "pred-17-4-8",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "17",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.45494140013842754,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "3642470",
+    "bits": "16",
+    "channels": "1",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "64",
+    "name": "pred-64-1-16.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.34053897996411514,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.07493486755176124,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "2510100",
+    "bits": "16",
+    "channels": "1",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "64",
+    "name": "pred-64-1-16",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.16237976320958225,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.08699631816921909,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "3642467",
+    "bits": "8",
+    "channels": "1",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "64",
+    "name": "pred-64-1-8.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.5070306481121235,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.02209708691207961,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "2509841",
+    "bits": "8",
+    "channels": "1",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "64",
+    "name": "pred-64-1-8",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.49853300417324425,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "4498221",
+    "bits": "16",
+    "channels": "2",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "64",
+    "name": "pred-64-2-16.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.33693529145074724,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.07328774624724109,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "2894424",
+    "bits": "16",
+    "channels": "2",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "64",
+    "name": "pred-64-2-16",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.16237976320958225,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.08699631816921909,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "4409734",
+    "bits": "8",
+    "channels": "2",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "64",
+    "name": "pred-64-2-8.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.5153882032022076,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "2745583",
+    "bits": "8",
+    "channels": "2",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "64",
+    "name": "pred-64-2-8",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.49853300417324425,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "3370255",
+    "bits": "16",
+    "channels": "3",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "64",
+    "name": "pred-64-3-16.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 14,
+      "rms": 0.7632296713637383,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.16634082731949282,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "2469042",
+    "bits": "16",
+    "channels": "3",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "64",
+    "name": "pred-64-3-16",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 10,
+      "rms": 0.6669514365754077,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.15831962659969442,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "3370249",
+    "bits": "8",
+    "channels": "3",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "64",
+    "name": "pred-64-3-8.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.4745303324955459,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.023867581744561668,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "2469039",
+    "bits": "8",
+    "channels": "3",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "64",
+    "name": "pred-64-3-8",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.4764984588117783,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "4294023",
+    "bits": "16",
+    "channels": "4",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "64",
+    "name": "pred-64-4-16.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 14,
+      "rms": 0.7680128579652817,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.1716380943050425,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "2853356",
+    "bits": "16",
+    "channels": "4",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "64",
+    "name": "pred-64-4-16",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 10,
+      "rms": 0.6669514365754077,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": false
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.15831962659969442,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "4205240",
+    "bits": "8",
+    "channels": "4",
+    "decode": "accepted",
+    "filters": "gab=false,epf=1,flags=0",
+    "height": "64",
+    "name": "pred-64-4-8.independent",
+    "quant": "[8813, 10, 0]",
+    "sharpness": "[4]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.4794779333208846,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 1,
+      "rms": 0.018042195912175804,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  },
+  {
+    "admittedWorkspaceBytes": "2704781",
+    "bits": "8",
+    "channels": "4",
+    "decode": "accepted",
+    "filters": "gab=true,epf=0,flags=0",
+    "height": "64",
+    "name": "pred-64-4-8",
+    "quant": "[5111, 17, 0]",
+    "sharpness": "[0]",
+    "stage": "pixels",
+    "width": "64",
+    "originalInteger": {
+      "maximum": 1,
+      "rms": 0.4764984588117783,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    },
+    "pinnedScalarFloatNearest": {
+      "maximum": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "withinUnchangedNumericalLimits": true
+    }
+  }
+]

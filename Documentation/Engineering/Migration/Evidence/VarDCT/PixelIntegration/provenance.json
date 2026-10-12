@@ -1,0 +1,168 @@
+{
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "adaptedFiles": [
+    {
+      "destination": "Sources/SwiftJXLCore/VarDCT/VarDCTFrameEnvelope.swift",
+      "destinationSHA256": "ac6dd1adfaa3b29cca1f010bccdca3639d61f97c94c2dec3fb2e3e3606eef56c",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "sources": [
+        {
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e"
+        }
+      ]
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/VarDCT/VarDCTCoefficients.swift",
+      "destinationSHA256": "fde7d7480fb50950147dce1eb9f4dfbbdd02ce28511fc6587f2822df931c9073",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "sources": [
+        {
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e"
+        },
+        {
+          "path": "Sources/JXLSwift/VarDCT/ACGroupDecoder.swift",
+          "sha256": "dea24626db3e945feed6dbe2e60e237f0f86a66d677eaf5723f0b012fa1696a9"
+        },
+        {
+          "path": "Sources/JXLSwift/VarDCT/ColorCorrelationMap.swift",
+          "sha256": "e2befc9b1141ec86857d84e2e2d412d87dac0fd85b2e967693dbd5fd30ac42ad"
+        }
+      ]
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift",
+      "destinationSHA256": "18c9b2bde05f55eb12624fe874ee3cfc9e8945b5d3181f1194d3413cd615b267",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "sources": [
+        {
+          "path": "Sources/JXLSwift/VarDCT/ACContext.swift",
+          "sha256": "687b06ca4c12ef328b4f8d37714fe1502b5bcc9fe43d2fd2f5a5b20f785b54d2"
+        },
+        {
+          "path": "Sources/JXLSwift/VarDCT/ACDecoder.swift",
+          "sha256": "4026b7ebeb63a2a181b9ca0bcc852331d4c83dd89e5ab9f25f4323e0550b82bc"
+        },
+        {
+          "path": "Sources/JXLSwift/VarDCT/CoeffOrders.swift",
+          "sha256": "0c0beb6d6e03af08a060315ccbd5e676ba1398753be01a6abf8d52de7be4a424"
+        }
+      ]
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/VarDCT/VarDCTStrategyMap.swift",
+      "destinationSHA256": "c9be670d7b1d0b94c37d69a6d5269041990f1a139b63d89d27e2b095d6190aa7",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "sources": [
+        {
+          "path": "Sources/JXLSwift/VarDCT/ACStrategy.swift",
+          "sha256": "041f3cdfe2909ca475abccb3f239d5c78af00e2496afdf7709dcdd81857f79fa"
+        },
+        {
+          "path": "Sources/JXLSwift/VarDCT/ACStrategyImage.swift",
+          "sha256": "030c2a25d42bf0906bc3f20ea694e12e82b09b49a4609f945ba06da53538936a"
+        }
+      ]
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/VarDCT/VarDCTReconstruction.swift",
+      "destinationSHA256": "fa96be76e1fd7d8502ff8f4b91ecb74b22eb1c369d8617f7db58144dbe1d0358",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "sources": [
+        {
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e"
+        },
+        {
+          "path": "Sources/JXLSwift/VarDCT/AdjustQuantBias.swift",
+          "sha256": "08dc48b2ed7d326b8d7f1ba4d0682479db82721dc4dbfe4897c3ac095a6a632f"
+        },
+        {
+          "path": "Sources/JXLSwift/VarDCT/AdaptiveDCSmoothing.swift",
+          "sha256": "27a2d35ace2864d2bb4cab8da7ffd07221a913c926a3311ef2e4e1bc233ac8c8"
+        },
+        {
+          "path": "Sources/JXLSwift/VarDCT/LowestFrequenciesFromDC.swift",
+          "sha256": "6b606e133f108dddd6e73353540657e86a71a958d06d380fb84318dfc891b4d7"
+        }
+      ]
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/VarDCT/VarDCTQuantWeights.swift",
+      "destinationSHA256": "b813d3c408362bf2c17667e548dc46252ff754bc18701ee540b3c3c9327e7604",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "sources": [
+        {
+          "path": "Sources/JXLSwift/VarDCT/QuantWeights.swift",
+          "sha256": "ccf09139ad305f19474a548503579ab5d27e622a11d5dd88f3edeb381e620f5e"
+        }
+      ]
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/VarDCT/VarDCTAFV.swift",
+      "destinationSHA256": "c90a4ada2e1833842da26937ab304d0d9cf4686081e00c93cd2aca1f599271dd",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "sources": [
+        {
+          "path": "Sources/JXLSwift/VarDCT/AFV.swift",
+          "sha256": "fdcd658a63d576117145a8a9e29d0ca25e8e0de0d3c83501701172dc246e5bfe"
+        }
+      ]
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/VarDCT/VarDCTSmallTransforms.swift",
+      "destinationSHA256": "5766555f0147c3eddb7f00640b3d899b305c3a68b5780d02aec98e01dbec68f9",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "sources": [
+        {
+          "path": "Sources/JXLSwift/VarDCT/SmallACTransforms.swift",
+          "sha256": "d258cfe434b33010accf343f8861426852fe37a33aab3399704a04d4145ece19"
+        },
+        {
+          "path": "Sources/JXLSwift/VarDCT/IdentityTransform.swift",
+          "sha256": "0fc8dd014756c1c32dc710f7021c08d01fb3a9509905166279f4e5ecaea75ede"
+        },
+        {
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e"
+        }
+      ]
+    },
+    {
+      "destination": "Sources/SwiftJXLCore/VarDCT/EdgePreservingFilter.swift",
+      "destinationSHA256": "615143d86df2bc457274008a7a3cf00686db388c6da74193b12b9251956bd27c",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "sources": [
+        {
+          "path": "Sources/JXLSwift/VarDCT/EPF.swift",
+          "sha256": "bb8f2c539b6a4964bc11f361ea22962490206bda46fe7f3d6b4e96fcbf0e326b"
+        }
+      ]
+    }
+  ],
+  "authoredSuccessorFile": {
+    "path": "Sources/SwiftJXLCore/VarDCT/VarDCTPixelDecoder.swift",
+    "licence": "Apache-2.0",
+    "purpose": "Checked synchronous borrowed destination integration, explicit sRGB integer output, no retained pointer or second packed image"
+  },
+  "externalReference": {
+    "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+    "licence": "BSD-3-Clause",
+    "notice": "Documentation/ThirdParty/libjxl-LICENSE.txt",
+    "sourceSHA256": {
+      "lib/jxl/dec_transforms-inl.h": "60646470e8a00996715e6c7b39ebbf881d91daf222a710b6ed393c4ef6102be0",
+      "lib/jxl/quantizer-inl.h": "779434597da11f97b869ca1f12dc3dcbb5489e83529232186ee12cf3a8393643",
+      "lib/jxl/dct_scales.h": "a092ad88f8cf8247b094c63abfdc190584cb6b7562453a93e2af602ea5fd6fdb",
+      "lib/jxl/render_pipeline/stage_epf.cc": "3db8946a019e651af60d897465d6f7ae81dde1e24bac08c85c4c07b3b477e1af",
+      "lib/jxl/render_pipeline/stage_write.cc": "a005ca60dff721b32b3daa8fb59b9d47a10f7b628cefdd8622ed0e616d4cd823"
+    }
+  },
+  "changes": [
+    "Checked geometry, TOC sections, transform placement and entropy counts; cumulative operation budgets and cancellation",
+    "Generic strategy/order dispatch with bounded transform scratch and exact scalar division",
+    "Visible-boundary restoration and independent basis reference validation",
+    "Explicit rejection of unsupported profiles; public capabilities unchanged"
+  ]
+}

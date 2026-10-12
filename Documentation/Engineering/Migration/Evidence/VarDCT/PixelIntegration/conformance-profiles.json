@@ -1,0 +1,236 @@
+[
+  {
+    "dimensions" : "1024x1024",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=12,xyb=false,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "alpha_nonpremultiplied"
+  },
+  {
+    "dimensions" : "1024x1024",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=12,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "alpha_premultiplied"
+  },
+  {
+    "dimensions" : "1024x1024",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=9,xyb=false,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "alpha_triangles"
+  },
+  {
+    "dimensions" : "128x128",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=true,intensity=255.0",
+    "name" : "animation_icos4d"
+  },
+  {
+    "dimensions" : "128x128",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=true,intensity=255.0",
+    "name" : "animation_icos4d_5"
+  },
+  {
+    "dimensions" : "480x360",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=true,intensity=255.0",
+    "name" : "animation_newtons_cradle"
+  },
+  {
+    "dimensions" : "320x320",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=0,animation=true,intensity=255.0",
+    "name" : "animation_spline"
+  },
+  {
+    "dimensions" : "320x320",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=0,animation=true,intensity=255.0",
+    "name" : "animation_spline_5"
+  },
+  {
+    "dimensions" : "500x606",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=true,space=rgb,transfer=srgb,orientation=5,extras=0,animation=false,intensity=255.0",
+    "name" : "bench_oriented_brg"
+  },
+  {
+    "dimensions" : "500x606",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=true,space=rgb,transfer=srgb,orientation=5,extras=0,animation=false,intensity=255.0",
+    "name" : "bench_oriented_brg_5"
+  },
+  {
+    "dimensions" : "1024x631",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "bicycles"
+  },
+  {
+    "dimensions" : "2048x2560",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=bt709,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "bike"
+  },
+  {
+    "dimensions" : "2048x2560",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=bt709,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "bike_5"
+  },
+  {
+    "dimensions" : "1024x1024",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=12,xyb=false,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "blendmodes"
+  },
+  {
+    "dimensions" : "1024x1024",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=12,xyb=false,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "blendmodes_5"
+  },
+  {
+    "dimensions" : "1280x1600",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=true,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "cafe"
+  },
+  {
+    "dimensions" : "1280x1600",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=true,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "cafe_5"
+  },
+  {
+    "dimensions" : "512x512",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=true,space=rgb,transfer=srgb,orientation=1,extras=2,animation=false,intensity=255.0",
+    "name" : "cmyk_layers"
+  },
+  {
+    "dimensions" : "555x751",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "delta_palette"
+  },
+  {
+    "dimensions" : "200x200",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=true,space=grayscale,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "grayscale"
+  },
+  {
+    "dimensions" : "200x200",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=true,space=grayscale,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "grayscale_5"
+  },
+  {
+    "dimensions" : "200x200",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=true,space=grayscale,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "grayscale_jpeg"
+  },
+  {
+    "dimensions" : "200x200",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=true,space=grayscale,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "grayscale_jpeg_5"
+  },
+  {
+    "dimensions" : "2880x1620",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=false,space=grayscale,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "grayscale_public_university"
+  },
+  {
+    "dimensions" : "500x500",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=32,xyb=false,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "lossless_pfm"
+  },
+  {
+    "dimensions" : "834x244",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=false,space=rgb,transfer=gamma(4545500),orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "lz77_flower"
+  },
+  {
+    "dimensions" : "500x606",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "noise"
+  },
+  {
+    "dimensions" : "500x606",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "noise_5"
+  },
+  {
+    "dimensions" : "500x606",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "opsin_inverse"
+  },
+  {
+    "dimensions" : "500x606",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "opsin_inverse_5"
+  },
+  {
+    "dimensions" : "1600x1096",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=true,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "patches"
+  },
+  {
+    "dimensions" : "1600x1096",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=true,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "patches_5"
+  },
+  {
+    "dimensions" : "1600x1096",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=false,ICC=true,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "patches_lossless"
+  },
+  {
+    "dimensions" : "4064x2704",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=true,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "progressive"
+  },
+  {
+    "dimensions" : "4064x2704",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=true,space=rgb,transfer=srgb,orientation=1,extras=0,animation=false,intensity=255.0",
+    "name" : "progressive_5"
+  },
+  {
+    "dimensions" : "600x400",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=16,xyb=false,ICC=true,space=rgb,transfer=srgb,orientation=1,extras=3,animation=false,intensity=255.0",
+    "name" : "spot"
+  },
+  {
+    "dimensions" : "1386x924",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=10,xyb=false,ICC=false,space=rgb,transfer=srgb,orientation=7,extras=1,animation=false,intensity=255.0",
+    "name" : "sunset_logo"
+  },
+  {
+    "dimensions" : "800x600",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "upsampling"
+  },
+  {
+    "dimensions" : "800x600",
+    "envelope" : "rejected: unsupportedProfile",
+    "metadata" : "bits=8,xyb=true,ICC=false,space=rgb,transfer=srgb,orientation=1,extras=1,animation=false,intensity=255.0",
+    "name" : "upsampling_5"
+  }
+]

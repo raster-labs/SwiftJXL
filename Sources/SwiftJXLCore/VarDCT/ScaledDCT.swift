@@ -5,7 +5,8 @@
 // See Documentation/ThirdParty/libjxl-LICENSE.txt.
 import Foundation
 
-package enum VarDCTError: Error { case invalidTransform, nonFiniteSample }
+package enum VarDCTError: Error, Equatable { case invalidTransform, nonFiniteSample
+    case unsupportedStrategy(Int) }
 
 /// Operation-owned scalar transform matrices. No global cache or unsafe borrow.
 /// Axes are powers of two from 2 through 64; DC is the sample mean. This is

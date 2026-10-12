@@ -1,0 +1,338 @@
+[
+  {
+    "admittedWorkspaceBytes" : "1677008",
+    "bits" : "16",
+    "channels" : "1",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "9",
+    "name" : "pred-17-1-16.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(17)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-17-1-16",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "1677005",
+    "bits" : "8",
+    "channels" : "1",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "9",
+    "name" : "pred-17-1-8.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(17)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-17-1-8",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "1952362",
+    "bits" : "16",
+    "channels" : "2",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "9",
+    "name" : "pred-17-2-16.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(17)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-17-2-16",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "1945046",
+    "bits" : "8",
+    "channels" : "2",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "9",
+    "name" : "pred-17-2-8.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(17)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-17-2-8",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "1681221",
+    "bits" : "16",
+    "channels" : "3",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "9",
+    "name" : "pred-17-3-16.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(7)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-17-3-16",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "1681215",
+    "bits" : "8",
+    "channels" : "3",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "9",
+    "name" : "pred-17-3-8.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(7)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-17-3-8",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "1956515",
+    "bits" : "16",
+    "channels" : "4",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "9",
+    "name" : "pred-17-4-16.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(7)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-17-4-16",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "1949480",
+    "bits" : "8",
+    "channels" : "4",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "9",
+    "name" : "pred-17-4-8.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(7)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-17-4-8",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "3445606",
+    "bits" : "16",
+    "channels" : "1",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "64",
+    "name" : "pred-64-1-16.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(18)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-64-1-16",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "3445603",
+    "bits" : "8",
+    "channels" : "1",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "64",
+    "name" : "pred-64-1-8.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(18)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-64-1-8",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "4301357",
+    "bits" : "16",
+    "channels" : "2",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "64",
+    "name" : "pred-64-2-16.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(18)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-64-2-16",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "4212870",
+    "bits" : "8",
+    "channels" : "2",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "64",
+    "name" : "pred-64-2-8.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(18)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-64-2-8",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "3173391",
+    "bits" : "16",
+    "channels" : "3",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "64",
+    "name" : "pred-64-3-16.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(20)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-64-3-16",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "3173385",
+    "bits" : "8",
+    "channels" : "3",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "64",
+    "name" : "pred-64-3-8.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(20)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-64-3-8",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "4097159",
+    "bits" : "16",
+    "channels" : "4",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "64",
+    "name" : "pred-64-4-16.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(20)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-64-4-16",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  },
+  {
+    "admittedWorkspaceBytes" : "4008376",
+    "bits" : "8",
+    "channels" : "4",
+    "decode" : "accepted",
+    "filters" : "gab=false,epf=1,flags=0",
+    "height" : "64",
+    "name" : "pred-64-4-8.independent",
+    "quant" : "[8813, 10, 0]",
+    "sharpness" : "[4]",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(20)",
+    "filters" : "gab=true,epf=0,flags=0",
+    "name" : "pred-64-4-8",
+    "quant" : "[5111, 17, 0]",
+    "sharpness" : "[0]",
+    "stage" : "coefficients"
+  }
+]

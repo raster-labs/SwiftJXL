@@ -1,0 +1,22 @@
+[
+  {
+    "decode" : "rejected: paletteRangeInvalid(begin: 1, numC: 3571, channels: 3)",
+    "name" : "bike.independent.jxl"
+  },
+  {
+    "decode" : "rejected: paletteRangeInvalid(begin: 1, numC: 3571, channels: 3)",
+    "name" : "bike_5.independent.jxl"
+  },
+  {
+    "bits" : "8",
+    "channels" : "1",
+    "decode" : "accepted",
+    "name" : "grayscale.independent.jxl"
+  },
+  {
+    "bits" : "8",
+    "channels" : "1",
+    "decode" : "accepted",
+    "name" : "grayscale_5.independent.jxl"
+  }
+]
