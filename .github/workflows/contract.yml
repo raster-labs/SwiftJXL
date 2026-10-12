@@ -63,8 +63,10 @@ jobs:
           swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
           python3 Scripts/test-cli-payload.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-debug"
           python3 Scripts/test-cli-vardct.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-debug"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-encode-debug"
           python3 Scripts/test-cli-payload.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-release"
           python3 Scripts/test-cli-vardct.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-release"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-encode-release"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-debug"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-release"
       - name: Preserve CLI evidence
@@ -102,6 +104,7 @@ jobs:
           swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
           python3 Scripts/test-cli-payload.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-debug"
           python3 Scripts/test-cli-vardct.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-debug"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-encode-debug"
       - name: NRRD CLI interoperability
         run: '"$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-debug"'
       - name: Address sanitizer
@@ -112,8 +115,10 @@ jobs:
         run: |
           python3 Scripts/test-cli-payload.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-asan"
           python3 Scripts/test-cli-vardct.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-asan"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-encode-asan"
           python3 Scripts/test-cli-payload.py --binary "$(swift build --scratch-path .build/tsan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-tsan"
           python3 Scripts/test-cli-vardct.py --binary "$(swift build --scratch-path .build/tsan --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-tsan"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$(swift build --scratch-path .build/tsan --show-bin-path)/swiftjxl-cli" --output "$RUNNER_TEMP/cli-vardct-encode-tsan"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-asan"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --scratch-path .build/tsan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-tsan"
       - name: Preserve CLI evidence

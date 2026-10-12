@@ -158,9 +158,8 @@ public struct Encoder: Sendable {
                 if configuration.mode == .lossy {
                     guard transfer == .srgb, intent == .relative,
                           image.descriptor.alpha != .premultiplied,
-                          image.descriptor.width <= 2048, image.descriptor.height <= 2048,
-                          image.descriptor.alpha == .absent ||
-                            (image.descriptor.width <= 256 && image.descriptor.height <= 256) else {
+                          image.descriptor.width <= 4096, image.descriptor.height <= 4096,
+                          try checkedMultiply(image.descriptor.width, image.descriptor.height) <= 4 * 1024 * 1024 else {
                         throw CodecError(.unsupportedFeature, "VarDCT requires bounded sRGB input with relative intent and optional straight alpha.")
                     }
                 }
@@ -208,8 +207,9 @@ public struct Encoder: Sendable {
 /// greyscale or RGB with optional straight/premultiplied alpha. Supports bounded
 /// groups, RCT, simple palettes and Squeeze. Caller storage may be planar or
 /// interleaved, 8/16-bit, padded and either byte order. Embedded grey/RGB ICC
-/// bytes are preserved without colour conversion. Ancillary boxes, animation
-/// and display transformations are not supported. VarDCT decoding additionally
+/// bytes are preserved without colour conversion. The still-image calls reject
+/// animation; separate animation methods support independent full-canvas frames.
+/// Ancillary boxes and display transformations are unsupported. VarDCT decoding additionally
 /// accepts bounded single-frame, single-pass sRGB 8–16-bit grey/RGB with optional
 /// straight alpha and default opsin/restoration parameters. It uses nearest
 /// integer output and reports lossy fidelity. ICC VarDCT output is unsupported.
@@ -266,7 +266,7 @@ private extension CodecCapabilities {
     static let pixelEncoding = Self(formats: ["jpeg-xl"], compressionModes: [.lossless, .lossy],
         sampleTypes: [.unsignedInteger], meaningfulPrecision: 8...16,
         layouts: ["Modular: greyscale/RGB, optional alpha; fixed effort 3",
-                  "VarDCT: sRGB greyscale/RGB, optional straight alpha; maximum 2048 per axis, 256 with alpha",
+                  "VarDCT: sRGB greyscale/RGB, optional straight alpha; maximum 4096 per axis and 4,194,304 pixels",
                   "Planar/interleaved UInt8/UInt16; explicit byte order, offsets and strides"],
         availableBackends: [.scalarCPU], canInspect: false, canEncode: true, canDecode: false)
 }

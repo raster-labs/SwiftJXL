@@ -1,0 +1,105 @@
+Building for debugging...
+[Pre-planning 1 / 212]
+[Planning deferred tasks]
+[7 / 35] SwiftJXL_SwiftJXLCoreTests
+[7 / 35] SwiftJXLCore
+[8 / 43] SwiftJXL_SwiftJXLCoreTests
+[10 / 45] SwiftJXLCore
+[12 / 45] SwiftJXLCore
+[13 / 45] SwiftJXLCore
+[14 / 45] SwiftJXLCore
+[16 / 49] SwiftJXLCore
+[22 / 51] SwiftJXLCore
+[23 / 51]
+[25 / 53] SwiftJXL_SwiftJXLCoreTests
+[29 / 56] SwiftJXLCore
+[33 / 55] swiftjxl-cli-product
+[34 / 55] SwiftJXL
+[39 / 55] SwiftJXLTests-product
+[45 / 57] swiftjxl-cli-product
+[46 / 61] SwiftJXLTests-product
+[47 / 71] SwiftJXLTests-product
+[50 / 71] SwiftJXLCoreTests-product
+[53 / 71] SwiftJXLCoreTests-product
+[54 / 71] SwiftJXLCoreTests-product
+[56 / 70] SwiftJXLCoreTests-product
+[60 / 70] SwiftJXLCoreTests-product
+[61 / 70] SwiftJXLCoreTests-product
+[62 / 70] SwiftJXLTests-product
+[63 / 70] SwiftJXLCoreTests-product
+[66 / 72] SwiftJXLCoreTests-product
+[68 / 72] SwiftJXLCoreTests-product
+[70 / 72] SwiftJXLCoreTests-product
+Build complete! (8.13 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTPublicEncoderTests started.
+◇ Test publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test defaultsAreExplicitAndInvalidOptionsReject() started.
+◇ Test distanceMetadataLimitsAndCancellation() started.
+◇ Test publicGroupedEncodingMatchesIndependentStreams(_:) started.
+◇ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 1 argument name → "encgroup-257-17-4-8-0" to publicGroupedEncodingMatchesIndependentStreams(_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 1 argument name → "encgroup-17-257-2-16-0" to publicGroupedEncodingMatchesIndependentStreams(_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 1 argument name → "encgroup-257-259-4-8-0" to publicGroupedEncodingMatchesIndependentStreams(_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 1 argument name → "encgroup-2057-9-3-8-0" to publicGroupedEncodingMatchesIndependentStreams(_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 1 argument name → "encgroup-9-2057-1-16-0" to publicGroupedEncodingMatchesIndependentStreams(_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 1 argument name → "encgroup-2057-9-4-16-1" to publicGroupedEncodingMatchesIndependentStreams(_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 1 argument name → "encgroup-4096-9-4-8-0" to publicGroupedEncodingMatchesIndependentStreams(_:) started.
+◇ Test case passing 1 argument name → "encgroup-9-4096-2-16-1" to publicGroupedEncodingMatchesIndependentStreams(_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 10, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 11, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 11, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 11, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 11, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 13, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 13, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 13, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 13, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 14, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 14, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 14, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 14, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 15, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 15, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 15, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 15, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 1 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 2 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 3 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 4 to allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) started.
+✔ Test defaultsAreExplicitAndInvalidOptionsReject() passed after 5.101 seconds.
+✔ Test allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:) with 36 test cases passed after 5.125 seconds.
+✔ Test distanceMetadataLimitsAndCancellation() passed after 5.222 seconds.
+✔ Test publicEncodingMatchesIndependentlyAcceptedStreams(_:_:) with 12 test cases passed after 8.845 seconds.
+✔ Test publicGroupedEncodingMatchesIndependentStreams(_:) with 8 test cases passed after 8.936 seconds.
+✔ Suite VarDCTPublicEncoderTests passed after 8.936 seconds.
+✔ Test run with 5 tests in 1 suite passed after 8.936 seconds.

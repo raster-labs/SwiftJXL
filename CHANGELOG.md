@@ -1,5 +1,12 @@
 # Change log
 
+## Unreleased — grouped encoding and animation decoding, 2026-10-12
+
+- Add grouped VarDCT encoding with straight alpha, bounded to 4096 pixels per dimension and 4,194,304 pixels, plus hierarchical strategy selection through 64×64.
+- Reuse admitted transform scratch while preserving historical encoded bytes and resource enforcement.
+- Add owning independent-frame animation decoding, timing inspection and bounded indexed access; retain explicit unsupported profiles.
+- Extend public storage regressions and lossy CLI checks in hosted CI. Final combined qualification remains pending.
+
 ## Unreleased — public lossy encoding, 2026-10-12
 
 - Add explicit lossy VarDCT configuration and CLI distance/preparation controls; retain lossless defaults and reject incompatible metadata.

@@ -10,8 +10,8 @@ struct VarDCTPublicEncoderTests {
     }
     private func image(_ input: Data, width: Int, channels: Int, bits: Int,
                        planar: Bool = false, littleEndian: Bool = true,
-                       metadata: SwiftJXL.ImageMetadata = .empty) throws -> Image {
-        let height = width == 64 ? 64 : 9, storageBits = bits <= 8 ? 8 : 16
+                       metadata: SwiftJXL.ImageMetadata = .empty, height explicitHeight: Int? = nil) throws -> Image {
+        let height = explicitHeight ?? (width == 64 ? 64 : 9), storageBits = bits <= 8 ? 8 : 16
         let step = storageBits / 8
         let roles: [ComponentRole] = (channels <= 2 ? [.grey] : [.red, .green, .blue]) + (channels % 2 == 0 ? [.alpha] : [])
         let stride = planar ? step : channels * step, row = width * stride + 8, planeBytes = row * height + 12
@@ -35,7 +35,7 @@ struct VarDCTPublicEncoderTests {
     }
     @Test(arguments: [17, 64, 257], [1, 2, 3, 4])
     func publicEncodingMatchesIndependentlyAcceptedStreams(_ width: Int, _ channels: Int) async throws {
-        if width == 257 && channels % 2 == 0 { return } // explicit profile rejection is tested separately
+        if width == 257 && channels % 2 == 0 { return } // Historical corpus has no alpha fixture; grouped alpha is covered below.
         for bits in [8, 16] {
             let name = "enc-\(width)-\(channels)-\(bits)"
             let input = try width == 257 ? fixture(name, suffix: "input", directory: "VarDCT/Encoder")
@@ -157,12 +157,45 @@ struct VarDCTPublicEncoderTests {
         do { _ = try await task.value; Issue.record("Cancelled encoded result returned") }
         catch is CancellationError {}
     }
-    @Test func groupedAlphaRejects() async throws {
-        let input = Data(repeating: 0, count: 257 * 9 * 2)
-        let source = try image(input, width: 257, channels: 2, bits: 8)
-        do {
-            _ = try await Encoder(configuration: .init(mode: .lossy)).encode(source)
-            Issue.record("Unimplemented grouped alpha was encoded")
-        } catch let error as CodecError { #expect(error.category == .unsupportedFeature) }
+    @Test(arguments: ["encgroup-257-17-4-8-0", "encgroup-17-257-2-16-0", "encgroup-257-259-4-8-0",
+                      "encgroup-2057-9-3-8-0", "encgroup-9-2057-1-16-0", "encgroup-2057-9-4-16-1",
+                      "encgroup-4096-9-4-8-0", "encgroup-9-4096-2-16-1"])
+    func publicGroupedEncodingMatchesIndependentStreams(_ name: String) async throws {
+        let parts = name.split(separator: "-").dropFirst().compactMap { Int($0) }
+        let w = parts[0], h = parts[1], channels = parts[2], bits = parts[3], prepared = parts[4] == 1
+        let step = bits / 8
+        var input = Data(count: w * h * channels * step)
+        for y in 0..<h { for x in 0..<w { for c in 0..<channels {
+            let value = channels % 2 == 0 && c == channels - 1 ? (x * 17 + y * 31) % 256 : (x / 8 + y / 8 + c * 37) % 256
+            let sample = value * (bits == 16 ? 257 : 1), i = ((y * w + x) * channels + c) * step
+            input[i] = UInt8(truncatingIfNeeded: sample)
+            if step == 2 { input[i + 1] = UInt8(sample >> 8) }
+        } } }
+        let source = try image(input, width: w, channels: channels, bits: bits,
+                               planar: true, littleEndian: false, height: h)
+        let before = try source.storage.withUnsafeBytes { Data($0) }
+        let controls = try VarDCTEncodingOptions(gaborish: prepared, adaptiveQuantisation: prepared,
+            dcSmoothing: prepared, strategySearch: prepared ? .hierarchical : .fixedDCT8)
+        let encoder = try Encoder(configuration: .init(mode: .lossy, codecOptions: .init(varDCT: controls)))
+        let audit = ScalarStorageAudit()
+        let result = try await ScalarStorageAudit.$current.withValue(audit) { try await encoder.encode(source) }
+        #expect(try result.data == fixture(name, suffix: "jxl", directory: "VarDCT/GroupedEncoder"))
+        #expect(result.report.fidelity == .lossy && result.report.copyEvents.isEmpty)
+        #expect(audit.snapshot.finalPixelAllocations == 0)
+        #expect(try source.storage.withUnsafeBytes { Data($0) } == before)
+        let decoded = try await Decoder().decode(result.data)
+        #expect(decoded.image.descriptor.width == w && decoded.image.descriptor.height == h)
+        if channels % 2 == 0 {
+            let alphaExact = try decoded.image.storage.withUnsafeBytes { bytes in
+                for i in 0..<(w * h) {
+                    let index = i * channels + channels - 1
+                    let actual = Int(bytes[index * 2]) | Int(bytes[index * 2 + 1]) << 8
+                    let original = Int(input[index * step]) | (step == 2 ? Int(input[index * step + 1]) << 8 : 0)
+                    if actual != original { return false }
+                }
+                return true
+            }
+            #expect(alphaExact)
+        }
     }
 }

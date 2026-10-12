@@ -1,5 +1,11 @@
 # History and provenance — SwiftJXL
 
+## Grouped VarDCT, reusable scratch and animation decoding — 12 October 2026
+
+Extended public lossy encoding to multiple DC/AC regions and straight alpha within 4096 pixels per dimension and 4,194,304 pixels. Eight independently accepted grouped streams are reproduced byte-for-byte through padded planar public source storage; exact alpha and source ownership are retained. Operation-local noncopyable transform scratch reduces cumulative admission without weakening resource limits; all twelve tested 128–512 pixel admission cases now pass. Combined core ASan/TSan each pass 30 declarations / 110 cases. The preceding public hierarchy/grouped-decoder snapshot passes both sanitizers with 33 declarations. These are scoped checkpoints, not final combined-head qualification.
+
+Added bounded owning animation decoding, indexed selection and structural timing inspection for independent full-canvas frames. Four pinned scalar-reference streams cover twelve RGB8/RGBA16 lossless/lossy frames, timing, exact alpha and aggregate resource/cancellation checks. Unsupported frame dependencies and filter rewrites reject. Animation encoding, broader interoperability, hosted platform checks and release gates remain open.
+
 ## Public VarDCT encoder and intermediate precision — 12 October 2026
 
 Added explicit lossy encoding through owning source storage, with validated distance and preparation controls, plus CLI options. Public decode now accepts every integer precision from 8 through 16. Thirty-six precision streams pass the unchanged separate scalar reference limits (peak one level, RMS ≤0.187) with exact alpha; a failing-before regression records 28 rejected intermediate-precision cases. Full debug passes 246 declarations / 988 cases without skips; affected ASan and TSan each pass 32 declarations / 221 cases. Hierarchical public defaults, wider groups, original ARM integer-oracle differences and final qualification remain open. See [checkpoint evidence](Documentation/Engineering/Migration/Evidence/VarDCT/PublicEncoder/validation.json).
