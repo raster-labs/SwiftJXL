@@ -51,9 +51,9 @@ jobs:
           persist-credentials: false
       - run: swift --version
       - run: swift build
-      - run: swift test
+      - run: swift test --no-parallel
       - run: swift build -c release
-      - run: swift test -c release
+      - run: swift test -c release --no-parallel
       - name: CLI stream and report checks (debug and release)
         run: |
           apt-get update
@@ -80,7 +80,9 @@ jobs:
   macos:
     name: macOS 26 / Swift 6.2
     runs-on: macos-26
-    timeout-minutes: 30
+    # Keep per-operation deadlines meaningful: CPU-heavy cases run serially,
+    # while task-group and worker concurrency inside each case remains tested.
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -88,7 +90,7 @@ jobs:
       - run: swift --version
       - run: xcodebuild -version
       - run: swift build
-      - run: swift test
+      - run: swift test --no-parallel
       - name: Python for pinned NRRD test oracle
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
@@ -108,9 +110,9 @@ jobs:
       - name: NRRD CLI interoperability
         run: '"$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-debug"'
       - name: Address sanitizer
-        run: swift test --scratch-path .build/asan --sanitize address
+        run: swift test --scratch-path .build/asan --sanitize address --no-parallel
       - name: Thread sanitizer
-        run: swift test --scratch-path .build/tsan --sanitize thread
+        run: swift test --scratch-path .build/tsan --sanitize thread --no-parallel
       - name: CLI sanitizer stream checks
         run: |
           python3 Scripts/test-cli-payload.py --binary "$(swift build --scratch-path .build/asan --show-bin-path)/swiftjxl-cli" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-asan"

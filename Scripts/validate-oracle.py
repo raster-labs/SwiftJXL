@@ -52,7 +52,7 @@ def main():
                      for p in (repo / 'Tests').rglob('*.swift'))
         frameworks = ['--enable-swift-testing', '--enable-xctest' if xctest else '--disable-xctest']
         for config in ('debug', 'release'):
-            command = ['swift', 'test', '-c', config, '--jobs', '2'] + frameworks
+            command = ['swift', 'test', '-c', config, '--jobs', '2', '--no-parallel'] + frameworks
             listing = run(config + '-discovery', command + ['list'])
             names = [line for line in listing.splitlines() if line.split('.', 1)[0] in modules]
             if not names:

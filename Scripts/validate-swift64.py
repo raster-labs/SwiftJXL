@@ -132,7 +132,7 @@ def main() -> int:
             if not names:
                 raise RuntimeError("Repetition filter selected zero discovered tests")
         xml = output / f"{label}-tests.xml"
-        argv = swift("test", label) + ["-c", config] + extra + frameworks + ["--skip-build", "--xunit-output", str(xml)]
+        argv = swift("test", label) + ["-c", config] + extra + frameworks + ["--skip-build", "--no-parallel", "--xunit-output", str(xml)]
         repetitions = args.repetitions if repeat else 1
         if repeat:
             argv += ["--filter", REPETITION_FILTER, "--maximum-repetitions", str(repetitions)]
