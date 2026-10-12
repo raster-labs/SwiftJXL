@@ -31,7 +31,7 @@ package enum TOCPermutationError: Error, Sendable, Equatable {
     case header(String)
     case codebook(String)
     case ansToken(String)
-    case invalidEnd(end: UInt32, size: Int)
+    case invalidEnd(end: UInt64, size: Int)
     case invalidLehmer(value: UInt32, position: Int, size: Int)
 }
 
@@ -58,6 +58,9 @@ package func coeffOrderContext(_ val: UInt32) -> Int {
 package func decodeTOCPermutation(
     from r: inout BitReader, size: Int, skip: Int = 0
 ) throws -> [Int] {
+    guard size >= 0, size <= UInt32.max, skip >= 0, skip <= size else {
+        throw TOCPermutationError.invalidEnd(end: UInt64(clamping: skip), size: size)
+    }
     // 1. Inner entropy section: 8 contexts.
     let hdr: EntropySectionHeader
     do {
@@ -84,10 +87,10 @@ package func decodeTOCPermutation(
     } catch let e as TokenStreamReaderError {
         throw TOCPermutationError.ansToken(String(describing: e))
     }
-    let end = Int(endToken) &+ skip
-    if end > size {
-        throw TOCPermutationError.invalidEnd(end: UInt32(end), size: size)
+    guard endToken <= UInt32(size - skip) else {
+        throw TOCPermutationError.invalidEnd(end: UInt64(endToken) + UInt64(skip), size: size)
     }
+    let end = Int(endToken) + skip
 
     // 3. Read `lehmer[skip..end]`. Indices outside [skip, end) stay 0.
     var lehmer = [UInt32](repeating: 0, count: size)

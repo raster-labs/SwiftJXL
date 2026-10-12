@@ -138,7 +138,7 @@ package enum ICCStream {
         var n = value
         repeat { let byte = UInt8(n & 127); n >>= 7; output.append(byte | (n == 0 ? 0 : 128)) } while n != 0
     }
-    private static func variable(_ bytes: [UInt8], _ cursor: inout Int, end: Int) throws -> Int {
+    private static func variable32(_ bytes: [UInt8], _ cursor: inout Int, end: Int) throws -> UInt32 {
         var value: UInt64 = 0
         for i in 0..<10 {
             guard cursor < end else { throw ICCStreamError.malformed }
@@ -147,17 +147,23 @@ package enum ICCStream {
             value |= UInt64(byte & 127) << (i * 7)
             if byte < 128 {
                 guard value <= UInt32.max else { throw ICCStreamError.malformed }
-                return Int(value)
+                return UInt32(value)
             }
         }
         throw ICCStreamError.malformed
+    }
+    private static func variable(_ bytes: [UInt8], _ cursor: inout Int, end: Int) throws -> Int {
+        guard let value = Int(exactly: try variable32(bytes, &cursor, end: end)) else {
+            throw ICCStreamError.malformed
+        }
+        return value
     }
     private static func decodeUint32(_ bytes: [UInt8], _ size: Int, _ offset: Int) -> UInt32 {
         guard offset >= 0, offset <= size, size - offset >= 4 else { return 0 }
         return (UInt32(bytes[offset]) << 24) | (UInt32(bytes[offset + 1]) << 16)
             | (UInt32(bytes[offset + 2]) << 8) | UInt32(bytes[offset + 3])
     }
-    private static func append32(_ n: Int, to bytes: inout [UInt8]) throws {
+    private static func append32(_ n: Int64, to bytes: inout [UInt8]) throws {
         guard n >= 0, n <= UInt32.max else { throw ICCStreamError.malformed }
         for shift in [24,16,8,0] { bytes.append(UInt8(truncatingIfNeeded: n >> shift)) }
     }
@@ -186,8 +192,8 @@ package enum ICCStream {
     }
 
     private static func predictValue(
-        _ p1: Int, _ p2: Int, _ p3: Int, _ order: Int
-    ) -> Int {
+        _ p1: Int64, _ p2: Int64, _ p3: Int64, _ order: Int
+    ) -> Int64 {
         if order == 0 { return p1 }
         if order == 1 { return 2 * p1 - p2 }
         if order == 2 { return 3 * p1 - 3 * p2 + p3 }
@@ -226,25 +232,25 @@ package enum ICCStream {
     ) -> UInt8 {
         let pos = start + i
         if width == 1 {
-            let p1 = Int(data[pos - stride])
-            let p2 = Int(data[pos - stride * 2])
-            let p3 = Int(data[pos - stride * 3])
+            let p1 = Int64(data[pos - stride])
+            let p2 = Int64(data[pos - stride * 2])
+            let p3 = Int64(data[pos - stride * 3])
             return UInt8(truncatingIfNeeded: predictValue(p1, p2, p3, order))
         } else if width == 2 {
             let p = start + (i & ~1)
-            let p1 = (Int(data[p - stride]) << 8) + Int(data[p - stride + 1])
-            let p2 = (Int(data[p - stride * 2]) << 8)
-                + Int(data[p - stride * 2 + 1])
-            let p3 = (Int(data[p - stride * 3]) << 8)
-                + Int(data[p - stride * 3 + 1])
+            let p1 = (Int64(data[p - stride]) << 8) + Int64(data[p - stride + 1])
+            let p2 = (Int64(data[p - stride * 2]) << 8)
+                + Int64(data[p - stride * 2 + 1])
+            let p3 = (Int64(data[p - stride * 3]) << 8)
+                + Int64(data[p - stride * 3 + 1])
             let pred = predictValue(p1, p2, p3, order)
             return UInt8(truncatingIfNeeded:
                 (i & 1) != 0 ? (pred & 255) : ((pred >> 8) & 255))
         } else {
             let p = start + (i & ~3)
-            let p1 = Int(decodeUint32(data, pos, p - stride))
-            let p2 = Int(decodeUint32(data, pos, p - stride * 2))
-            let p3 = Int(decodeUint32(data, pos, p - stride * 3))
+            let p1 = Int64(decodeUint32(data, pos, p - stride))
+            let p2 = Int64(decodeUint32(data, pos, p - stride * 2))
+            let p3 = Int64(decodeUint32(data, pos, p - stride * 3))
             let pred = predictValue(p1, p2, p3, order)
             let shiftbytes = 3 - (i & 3)
             return UInt8(truncatingIfNeeded: (pred >> (shiftbytes * 8)) & 255)
@@ -256,8 +262,9 @@ package enum ICCStream {
                                   admit: (Int) throws -> Void = { _ in },
                                   checkpoint: () throws -> Void) throws -> Data {
         var pos = 0
-        let outputSize = try variable(encoded, &pos, end: encoded.count)
-        guard outputSize <= maximumBytes else { throw JPEGEntropyError.resourceLimit }
+        let rawOutputSize = try variable32(encoded, &pos, end: encoded.count)
+        guard maximumBytes >= 0, UInt64(rawOutputSize) <= UInt64(maximumBytes),
+              let outputSize = Int(exactly: rawOutputSize) else { throw JPEGEntropyError.resourceLimit }
         let commandSize = try variable(encoded, &pos, end: encoded.count)
         guard commandSize <= encoded.count - pos else { throw ICCStreamError.malformed }
         var cursor = pos; let commandEnd = pos + commandSize; pos = commandEnd
@@ -276,10 +283,10 @@ package enum ICCStream {
             result.append(encoded[pos] &+ header[i]); pos += 1
         }
         if outputSize > 128 {
-            let tagCount = try variable(encoded, &cursor, end: commandEnd)
+            let tagCount = Int64(try variable32(encoded, &cursor, end: commandEnd))
             if tagCount != 0 {
                 try room(4); try append32(tagCount - 1, to: &result)
-                var previousStart = 128 + (tagCount - 1) * 12, previousSize = 0
+                var previousStart: Int64 = 128 + (tagCount - 1) * 12, previousSize: Int64 = 0
                 while cursor < commandEnd {
                     try checkpoint()
                     let command = Int(encoded[cursor]); cursor += 1
@@ -298,8 +305,8 @@ package enum ICCStream {
                     try room(triples ? 36 : 12)
                     var size = previousSize
                     if [kRxyzTag,kGxyzTag,kBxyzTag,kKxyzTag,kWtptTag,kBkptTag,kLumiTag].contains(tag) { size = 20 }
-                    let start = command & 64 != 0 ? try variable(encoded, &cursor, end: commandEnd) : previousStart + previousSize
-                    if command & 128 != 0 { size = try variable(encoded, &cursor, end: commandEnd) }
+                    let start = command & 64 != 0 ? Int64(try variable32(encoded, &cursor, end: commandEnd)) : previousStart + previousSize
+                    if command & 128 != 0 { size = Int64(try variable32(encoded, &cursor, end: commandEnd)) }
                     result.append(contentsOf: tag); try append32(start, to: &result); try append32(size, to: &result)
                     previousStart = start; previousSize = size
                     if triples {

@@ -79,8 +79,9 @@ package enum VarDCTOrders {
             for _ in 0..<3 {
                 guard used & (1 << bucket) != 0 else { orders.append(natural); continue }
                 guard var tokens = stream else { throw VarDCTError.invalidTransform }
-                let end = Int(try tokens.readToken(context: context(UInt32(size)), from: &r)) + skip
-                guard end <= size else { throw VarDCTError.invalidTransform }
+                let endToken = try tokens.readToken(context: context(UInt32(size)), from: &r)
+                guard endToken <= UInt32(size - skip) else { throw VarDCTError.invalidTransform }
+                let end = Int(endToken) + skip
                 var lehmer = [Int](repeating: 0, count: size), last: UInt32 = 0
                 for i in skip..<end {
                     if i & 255 == 0 { try budget.checkpoint() }

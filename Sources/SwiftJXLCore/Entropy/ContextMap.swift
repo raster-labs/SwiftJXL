@@ -52,7 +52,7 @@
 import Foundation
 
 package indirect enum ContextMapError: Error, Sendable, Equatable {
-    case clusterIndexOutOfRange(index: Int, max: Int)
+    case clusterIndexOutOfRange(index: Int64, max: Int)
     case bitsPerEntryTooSmall(needed: Int, encoded: Int)
     case fullPathNotImplemented
     case bitstream(BitstreamError)
@@ -115,12 +115,12 @@ package struct ContextMap: Sendable, Equatable {
 
     package init(numClusters: Int, useMTF: Bool = false, map: [UInt8]) throws {
         guard numClusters >= 1 && numClusters <= 256 else {
-            throw ContextMapError.clusterIndexOutOfRange(index: numClusters, max: 256)
+            throw ContextMapError.clusterIndexOutOfRange(index: Int64(numClusters), max: 256)
         }
         for (i, c) in map.enumerated() {
             guard Int(c) < numClusters else {
                 throw ContextMapError.clusterIndexOutOfRange(
-                    index: Int(c), max: numClusters - 1
+                    index: Int64(c), max: numClusters - 1
                 )
             }
             _ = i
@@ -402,7 +402,7 @@ extension ContextMap {
             }
             if sym >= 256 {
                 throw ContextMapError.clusterIndexOutOfRange(
-                    index: Int(sym), max: 255
+                    index: Int64(sym), max: 255
                 )
             }
             map[i] = UInt8(sym)
