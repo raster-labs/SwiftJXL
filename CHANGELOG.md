@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — embedded ICC pixel decoding, 2026-10-12
+
+- Preserve embedded grey/RGB ICC bytes in public inspect, allocating decode and caller-storage decode without colour conversion. Bound ICC decoding by profile, metadata and operation memory limits. Reject mismatched caller profiles.
+- Inspect/validate reports identify ICC interpretation; PNM/NRRD export rejects profiles it cannot preserve. ICC encoding remains unsupported.
+
 ## Unreleased — integer Modular colour and owning storage, 2026-10-09
 
 - Added bounded integer greyscale/RGB encoding and decoding with optional straight or premultiplied alpha, 8–16 meaningful bits and explicit planar/interleaved sample layout. Encode reads retained source storage; decode writes directly to the supplied destination, using admitted algorithm planes when transforms require them.

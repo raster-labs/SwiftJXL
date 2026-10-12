@@ -1,0 +1,350 @@
+{
+  "status": "passed",
+  "entry": "decode",
+  "requestedSeconds": 3600.0,
+  "host": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.9.6",
+  "randomSeed": 20261009,
+  "binarySHA256": "ec0dce053eb9b369a901aa4431b12d4d5513375c25e4392edc49c29169d55462",
+  "scriptSHA256": "c51a952c253948c17b5ae736bcf4834a0ea00f06085dca2b888b0ffb06983cb5",
+  "preflight": [
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/gray8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/grayalpha16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/grayalpha8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-grayalpha16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-rgb8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-rgba16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/palette-rgb16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/palette-rgb8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-gray8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-rgb8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-small-rgb8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-wide-rgb8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgb12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgb8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgba16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgba8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-8.jxl",
+      "outcome": "accepted"
+    }
+  ],
+  "seeds": [
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-12.jxl",
+      "sha256": "5bcbfc29d85f215ce4aeaa8e3e7785687a1085d9cd9977aae1465ce3884e8ee5",
+      "bytes": 3571
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-16.jxl",
+      "sha256": "e5233f913855dfc680405f87f6aedc528fbbe807b0c3659e2506e5dbc31fb17c",
+      "bytes": 2495
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-8.jxl",
+      "sha256": "67a7bf46e8ac6f1bcffdbe16ed5e9d6f09259f8477d8264412dcf2b318795410",
+      "bytes": 1914
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-12.jxl",
+      "sha256": "ce0351285d94d7bcbfe304b50004de22cfbe74be826ac3115afe86f7a0b96235",
+      "bytes": 5145
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-16.jxl",
+      "sha256": "d095e509e891a64a06e185c5a7e372cd84694dbb134a3cedd7de38e14d6d3328",
+      "bytes": 3229
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-8.jxl",
+      "sha256": "2fe05bbedc54692c2e72dee3344e012f2894f847513ff977cbabf599a2043fc3",
+      "bytes": 2586
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/gray8.jxl",
+      "sha256": "90fccff8fa50f522bf149b7a90118d230b7c5b49bfed80337950c8e9110b4bfb",
+      "bytes": 585
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/grayalpha16.jxl",
+      "sha256": "09bb0a903106ab99f62cb0b40392f5b1004525a6fc9392b4d2e256497182d131",
+      "bytes": 929
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/grayalpha8.jxl",
+      "sha256": "981ab7f484f4228aeb6758f89154e2f56d9e128c6404b6d6cfd03bf210282e9e",
+      "bytes": 1112
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-grayalpha16.jxl",
+      "sha256": "32d1cfe0a0f16e59396d854fd20ec2ca9b2d39e010f5f6777bf502b0f9aa8455",
+      "bytes": 23032
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-rgb8.jxl",
+      "sha256": "5848ba808f98a4b0ee77cf9456c7748b0aa349bff4d4a716680326f6b7533ccf",
+      "bytes": 134848
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-rgba16.jxl",
+      "sha256": "2375aaf59bfd4790f646bb6ebb56f7ae5717d7ea1c995764a200c69f5b702177",
+      "bytes": 24210
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/palette-rgb16.jxl",
+      "sha256": "c726e86ccf4f7059a1077488ee094f120a097853c84120ec745d6a823c6ac21d",
+      "bytes": 134
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/palette-rgb8.jxl",
+      "sha256": "19e474ee97f8720d0afda58e8c03ec4cc1835a8cc4042528a2146d887116ad52",
+      "bytes": 84
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-gray8.jxl",
+      "sha256": "530b8e42c08a3176fdfe7c8cb3c4da0869c39cb81cc4159065c0d1434df66c38",
+      "bytes": 119925
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-rgb8.jxl",
+      "sha256": "161b8cdf3d9a8750a32ed37f2c2c9a1f5ae95ec9a1827433dad9c17efa6a3a7f",
+      "bytes": 389491
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-small-rgb8.jxl",
+      "sha256": "a176a0ad1ba2e7515c1ee2ddade5058dfe85f48110ced0ee03346da391a55108",
+      "bytes": 1787
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-wide-rgb8.jxl",
+      "sha256": "d8faa6c9335a47935dc4e4bda20b691c470b89eb2c9ea7ae9ff8afca9f2de7de",
+      "bytes": 225342
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgb12.jxl",
+      "sha256": "8c6c87e99a1f7b0401606aece593a44d24770352030cc283ff21ff41f0822c4d",
+      "bytes": 939
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgb8.jxl",
+      "sha256": "b16eb67b23df4f2665b912a75895287f616eb506e758f425f0304cffee9d2e25",
+      "bytes": 1540
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgba16.jxl",
+      "sha256": "f1d299e63fd54331ea6faaf9587f63ef8ce0a67ca396ff7bba18c117822ab151",
+      "bytes": 1168
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgba8.jxl",
+      "sha256": "346fb581fb60dca20b886787165da5abba0ac47fa81189471d9435c6944adf81",
+      "bytes": 2118
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-12.jxl",
+      "sha256": "515cd13e29fa566efbecf2b1bd5bd17626d15b5ed8339d7bf258a937be399541",
+      "bytes": 1138
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-16.jxl",
+      "sha256": "f436dd74d301bf662bdbbac4efc154e1de4761c155a28cd465c9dc0e50a45b2c",
+      "bytes": 1045
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-8.jxl",
+      "sha256": "9a880e3c0faabe8ecdad9e8d67ff1d470c5e98a1af58d4ac5e033b20bb3ee68e",
+      "bytes": 1454
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-12.jxl",
+      "sha256": "1e74464f93af2def7cb0dbeb42d19bf46ce7ada44b9d5d6d019ed57d90e4f2b4",
+      "bytes": 2197
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-16.jxl",
+      "sha256": "e2b57722b26401cca0b694e2dea101246e92f6a5fafd5d92e1a4f9dcec9adc5a",
+      "bytes": 1982
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-8.jxl",
+      "sha256": "c08ce297313c7da3532c33ab9636c2ed66b6ef60b8b40bd16c705b4cd722e12a",
+      "bytes": 2843
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-12.jxl",
+      "sha256": "df89c23a2fb69a573b43df39576e99e5d294c844df0e140c5ca7e363fd46f1ff",
+      "bytes": 2084
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-16.jxl",
+      "sha256": "82f267c696d5b22abf5af536eb5f8082cc4a6d908352cb8ea1e6d932fa11c2f6",
+      "bytes": 1218
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-8.jxl",
+      "sha256": "d0ff2cca696915e25b409a0877258cc2b2cfca426e990689c4c7a850b065de9e",
+      "bytes": 3710
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-12.jxl",
+      "sha256": "f18159914687a6654e586b255be6cad7f3aff2b087ca092ac1d7ad9ad9721108",
+      "bytes": 3120
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-16.jxl",
+      "sha256": "47886176506f285eae52d7b2b79ff0c33311a914cc51d7da592f6bd13e4db21c",
+      "bytes": 2137
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-8.jxl",
+      "sha256": "6882b42c527c93393a49c87dceebd4b888677f23203f1ea3b1f5d7e3587b63b5",
+      "bytes": 5413
+    }
+  ],
+  "iterations": 90315,
+  "outcomes": {
+    "rejected:malformedInput": 85082,
+    "accepted": 4081,
+    "rejected:unsupportedFeature": 996,
+    "rejected:resourceLimitExceeded": 156
+  },
+  "mutations": {
+    "0": 11290,
+    "1": 11290,
+    "2": 11290,
+    "3": 11289,
+    "4": 11289,
+    "5": 11289,
+    "6": 11289,
+    "7": 11289
+  },
+  "elapsedSeconds": 3600.0173415,
+  "method": "Fresh ASan process per input, 15-second outer timeout; deterministic PRNG and saved current input. Per-entry campaign clock starts after all conformant seeds are accepted. No coverage guidance.",
+  "memoryNote": "Child-process peak RSS includes sanitizer/runtime/startup. API and CLI additionally enforce resource admission; this is not peak algorithm workspace.",
+  "currentCommand": [
+    "../modular-preflight/modular-mutation-probe",
+    "decode",
+    "../modular-preflight/mutation-hour-decode/current-input.bin"
+  ],
+  "currentSeed": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-8.jxl",
+  "currentSHA256": "227b612f8e0aaab41041a1d2079e08874cc94d4d1e100a88fc99c6de2de7c32a",
+  "currentMutation": "2",
+  "childPeakRSSNativeUnits": 222298112,
+  "reportSHA256": "7af4b75b82a7fbee1c6bbcb36537047528249065c2645114fdbf2b8b68a2f6ac"
+}

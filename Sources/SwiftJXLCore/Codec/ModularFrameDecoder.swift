@@ -7,7 +7,7 @@
 import Foundation
 
 /// Internal integer Modular preparation. Public storage/capability integration
-/// is separate. ICC, animation, subsampled extras and display conversion are
+/// is separate. Animation, subsampled extras and display conversion are
 /// explicit rejections, never silently discarded or transformed.
 package struct ModularDecodedFrame: Sendable {
     package let width: Int, height: Int, bitsPerSample: Int
@@ -15,6 +15,7 @@ package struct ModularDecodedFrame: Sendable {
     package let alphaAssociated: Bool?
     package let renderingIntent: RenderingIntent
     package let transferFunction: TransferFunction
+    package let iccProfile: Data?
     package let image: ModularImage
 }
 
@@ -24,7 +25,7 @@ package enum ModularFrameDecoder {
         let channel: Int, x: Int, y: Int, width: Int, height: Int
     }
 
-    /// Immutable preparation contains compressed input and geometry only.
+    /// Immutable preparation contains compressed input, colour metadata and geometry.
     /// No pointer or decoded sample allocation survives in this Sendable value.
     package struct Prepared: Sendable {
         package let width: Int, height: Int, bitsPerSample: Int
@@ -32,6 +33,7 @@ package enum ModularFrameDecoder {
         package let alphaAssociated: Bool?
         package let renderingIntent: RenderingIntent
         package let transferFunction: TransferFunction
+        package let iccProfile: Data?
         fileprivate let codestream: Data, toc: TOC, start: Int
         fileprivate let budget: ScalarOperationBudget, maximumNestingDepth: Int
         fileprivate let globalReader: BitReader, global: Entropy?, selected: Entropy
@@ -74,7 +76,9 @@ package enum ModularFrameDecoder {
 
     package static func prepare(_ data: Data, budget: ScalarOperationBudget,
                                 maximumDimension: Int = 16384, maximumPixels: Int = 64 * 1024 * 1024,
-                                maximumNestingDepth: Int = 32) throws -> Prepared {
+                                maximumNestingDepth: Int = 32,
+                                maximumICCBytes: Int = 4 * 1024 * 1024,
+                                maximumMetadataBytes: Int = 16 * 1024 * 1024) throws -> Prepared {
         try budget.checkpoint()
         guard maximumNestingDepth > 0, data.count <= budget.maximumCompressedBytes else { throw ScalarModularError.resourceLimit }
         // Container extraction, BitReader byte copies, and aggregate section
@@ -103,10 +107,11 @@ package enum ModularFrameDecoder {
         let gray = metadata.colorEncoding.colorSpace == .grayscale
         guard !metadata.bitDepth.floatingPoint, (8...16).contains(metadata.bitDepth.bitsPerSample),
               !metadata.xybEncoded, gray || metadata.colorEncoding.colorSpace == .rgb,
-              !metadata.colorEncoding.useICC, metadata.orientation == 1,
+              metadata.orientation == 1,
               metadata.preview == nil, metadata.animation == nil, metadata.intrinsicSize == nil,
-              metadata.colorEncoding.whitePoint == .d65, [TransferFunction.srgb, .bt709].contains(metadata.colorEncoding.transferFunction),
-              gray || metadata.colorEncoding.primaries == .srgb,
+              metadata.colorEncoding.useICC || (metadata.colorEncoding.whitePoint == .d65 &&
+                  [TransferFunction.srgb, .bt709].contains(metadata.colorEncoding.transferFunction) &&
+                  (gray || metadata.colorEncoding.primaries == .srgb)),
               metadata.intensityTarget == 255, metadata.minNits == 0,
               !metadata.relativeToMaxDisplay, metadata.linearBelow == 0,
               metadata.extraChannels.count <= 1 else { throw ScalarModularError.unsupportedProfile }
@@ -117,6 +122,25 @@ package enum ModularFrameDecoder {
         }
         let channels = (gray ? 1 : 3) + metadata.extraChannels.count
         guard try reader.readBit() else { throw ScalarModularError.unsupportedProfile }
+        let iccProfile: Data?
+        if metadata.colorEncoding.useICC {
+            // Enforce both metadata ceilings before profile allocation. ICCStream
+            // charges compressed commands, prediction scratch and retained bytes
+            // to this same operation budget, including during inspection.
+            do {
+                iccProfile = try ICCStream.decode(from: &reader,
+                    maximumBytes: min(maximumICCBytes, maximumMetadataBytes, 4 * 1024 * 1024),
+                    checkpoint: budget.checkpoint)
+            } catch JPEGEntropyError.resourceLimit { throw ScalarModularError.resourceLimit }
+            if let profile = iccProfile {
+                guard profile.count >= 128,
+                      profile.prefix(4).reduce(0, { ($0 << 8) | Int($1) }) == profile.count,
+                      profile[36..<40] == Data("acsp".utf8),
+                      profile[16..<20] == Data((gray ? "GRAY" : "RGB ").utf8) else {
+                    throw ScalarModularError.invalidInput("ICC header does not match the image colour model")
+                }
+            }
+        } else { iccProfile = nil }
         try reader.expectZeroPadding()
         let frame = try FrameHeader.read(from: &reader, context: .init(xybEncoded: false,
             numExtraChannels: metadata.extraChannels.count))
@@ -170,7 +194,8 @@ package enum ModularFrameDecoder {
         try budget.checkpoint()
         return Prepared(width: width, height: height, bitsPerSample: Int(metadata.bitDepth.bitsPerSample),
             grayscale: gray, alphaAssociated: metadata.extraChannels.first?.alphaAssociated,
-            renderingIntent: metadata.colorEncoding.renderingIntent, transferFunction: metadata.colorEncoding.transferFunction, codestream: codestream, toc: toc, start: start,
+            renderingIntent: metadata.colorEncoding.renderingIntent, transferFunction: metadata.colorEncoding.transferFunction,
+            iccProfile: iccProfile, codestream: codestream, toc: toc, start: start,
             budget: budget, maximumNestingDepth: maximumNestingDepth, globalReader: globalReader,
             global: global, selected: selected, header: header, geometry: image, transforms: transforms,
             groupDimension: groupDimension, groupsX: groupsX, groupCount: groupCount,
@@ -255,7 +280,8 @@ package enum ModularFrameDecoder {
         }
         return ModularDecodedFrame(width: width, height: height, bitsPerSample: plan.bitsPerSample,
             grayscale: plan.grayscale, alphaAssociated: plan.alphaAssociated,
-            renderingIntent: plan.renderingIntent, transferFunction: plan.transferFunction, image: image)
+            renderingIntent: plan.renderingIntent, transferFunction: plan.transferFunction,
+            iccProfile: plan.iccProfile, image: image)
     }
 
     /// Modular pass brackets use downsample/lastPass, not the VarDCT

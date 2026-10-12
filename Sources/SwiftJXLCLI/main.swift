@@ -536,7 +536,8 @@ private func status(for error: CodecError) -> Int32 {
     try io.checkpoint()
     let colour = descriptor.colour == .rgb ? "rgb" : "greyscale"
     let alpha = descriptor.alpha == .absent ? "absent" : (descriptor.alpha == .straight ? "straight" : "premultiplied")
-    let colourTransfer = metadata.entries["jpegXL.transferFunction"] == Data([1]) ? "bt709" : "srgb"
+    let colourTransfer = descriptor.iccProfile != nil ? "icc"
+        : (metadata.entries["jpegXL.transferFunction"] == Data([1]) ? "bt709" : "srgb")
     let validated = command == "validate"
     let report: Data
     if options.json {
@@ -546,7 +547,9 @@ private func status(for error: CodecError) -> Int32 {
             "componentCount": descriptor.components.count,
             "width": descriptor.width, "height": descriptor.height,
             "sampleType": "unsigned-integer", "meaningfulBits": descriptor.meaningfulBits,
-            "storageBits": descriptor.storageBits, "hasMetadata": !metadata.entries.isEmpty,
+            "storageBits": descriptor.storageBits,
+            "hasMetadata": !metadata.entries.isEmpty || descriptor.iccProfile != nil,
+            "iccProfileBytes": descriptor.iccProfile?.count ?? 0,
             "pixelPayloadValidated": validated]
         report = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys]) + Data([10])
     } else {

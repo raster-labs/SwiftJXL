@@ -1,0 +1,17 @@
+{
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "sources": {
+    "Sources/JXLSwift/Codec/JXLDecoder.swift": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+    "Sources/JXLSwift/Codec/JXLEncoder.swift": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+    "Sources/JXLSwift/Codestream/ICCStream.swift": "9dab111c2ed044ea3db047aa03d1b5f91a7c97fce615efa6218ecbe2747faa65"
+  },
+  "findings": [
+    "Pinned predecessor rejects all12independentICCModular streams with a frameencoding error. Source-level best-effortinspection ICC consumption is not proof of successful public pixeldecoding.",
+    "Pinned predecessor encoder explicitly rejects ICC. Successor decode will preserve exact ICCbytes without display conversion; ICC encoding remains unsupported.",
+    "Reuse alreadyqualified nativeJPEG ICCStream with cumulativeworkspace admission; extend publicdescriptor/profileownership and callerprofilematching."
+  ],
+  "baselineNote": "Initial probe let the predecessor thrown error escape main, causingSwift top-level termination. Correctedprobe catches and reports each definedrejection; no claim of a codec trap is made.",
+  "fixtureBuild": "xcrun clang -Wall -Wextra -Werror -I/opt/homebrew/include Scripts/TestSupport/modular-icc-fixtures.c -L/opt/homebrew/lib -ljxl -o ../modular-preflight/modular-icc-fixtures",
+  "independentFixtureManifest": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/manifest.json"
+}

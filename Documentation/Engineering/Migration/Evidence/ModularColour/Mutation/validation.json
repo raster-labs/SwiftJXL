@@ -1,0 +1,39 @@
+{
+  "runtimeCommit": "ed4da8f6c3fee7bd6416c9d51e5cc166edd4165c",
+  "harnessCommit": "526d6bb942a89cb7b4de16419659365634c6cb54",
+  "campaigns": [
+    {
+      "entry": "inspect",
+      "iterations": 152768,
+      "elapsedSeconds": 3600.017388125,
+      "status": "passed"
+    },
+    {
+      "entry": "decode",
+      "iterations": 90315,
+      "elapsedSeconds": 3600.0173415,
+      "status": "passed"
+    },
+    {
+      "entry": "caller",
+      "iterations": 89494,
+      "elapsedSeconds": 3600.013459625,
+      "status": "passed"
+    },
+    {
+      "entry": "pnm",
+      "iterations": 138581,
+      "elapsedSeconds": 3600.008241125,
+      "status": "passed"
+    }
+  ],
+  "totalMutations": 471158,
+  "scope": "Deterministic ASan mutation testing, one hour per entry. No reported crashes, outer timeouts, sanitizer diagnostics or invariant failures; not coverage-guided.",
+  "hostedCI": {
+    "head": "526d6bb942a89cb7b4de16419659365634c6cb54",
+    "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/37937457275",
+    "passedJobs": 8,
+    "includes": "macOS26 Swift6.2, Linux x86_64/ARM64 Swift6.2/6.4, independent consumer, pinnedlibjxl, contractbyteidentity"
+  },
+  "remaining": "Controlled performance regressions, peak-memory/widerplatform coverage, additionalcodecprofiles and finalrelease gates."
+}

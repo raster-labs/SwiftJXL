@@ -90,6 +90,17 @@ try:
     # Associated alpha cannot be exported as unassociated PAM.
     alpha=fixtures.parent/'Alpha/premult-4-16.jxl'
     decode(alpha.read_bytes(),'pnm-srgb',expected=4)
+    # Embedded profiles can be inspected/validated, but plain interchange
+    # formats cannot preserve them. Never export by silently assuming sRGB.
+    icc_inputs=sorted((fixtures.parent/'ICC').glob('*.jxl'))
+    assert len(icc_inputs)==12, 'Required independent ICC corpus is missing'
+    for path in icc_inputs:
+        stream=path.read_bytes()
+        for command in ['inspect','validate']:
+            info=json.loads(run([command,'-i','-','--json'],stream))
+            assert info['colourTransfer']=='icc' and info['iccProfileBytes']>=128 and info['hasMetadata']
+        for fmt in ['pnm','pnm-srgb','nrrd']:
+            decode(stream,fmt,expected=4)
     report['status']='passed'
 except BaseException as e:
     report['status']='failed';report['failure']=repr(e);raise
