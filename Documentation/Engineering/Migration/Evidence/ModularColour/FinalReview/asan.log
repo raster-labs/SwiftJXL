@@ -1,0 +1,333 @@
+Building for debugging...
+[Planning deferred tasks]
+[2 / 5] SwiftJXLCore
+[3 / 6] SwiftJXLCore
+[9 / 12] SwiftJXL
+[10 / 13] SwiftJXL
+[21 / 24] SwiftJXL_SwiftJXLCoreTests
+[25 / 31] SwiftJXLCore
+[26 / 32] SwiftJXLCore
+[28 / 42] SwiftJXLCore
+[29 / 42] SwiftJXLCore
+[31 / 42] SwiftJXLCore
+[33 / 42] SwiftJXLCore
+[34 / 42] SwiftJXLCore
+[35 / 42] SwiftJXLCore
+[37 / 42] SwiftJXLCore
+[38 / 42] SwiftJXLCore
+[39 / 42] SwiftJXLCore
+[44 / 51] SwiftJXL
+[47 / 51] SwiftJXL
+[48 / 51] SwiftJXL
+[56 / 65] SwiftJXLCoreTests-product
+[59 / 76] SwiftJXLCoreTests-product
+[61 / 75] SwiftJXLCoreTests-product
+[66 / 75] SwiftJXLCoreTests-product
+[67 / 75] SwiftJXLCoreTests-product
+[68 / 75] SwiftJXLCoreTests-product
+[70 / 75] SwiftJXLCoreTests-product
+[71 / 75] SwiftJXLCoreTests-product
+[73 / 75] SwiftJXLCoreTests-product
+[77 / 81] swiftjxl-cli-product
+[80 / 86] swiftjxl-cli-product
+[82 / 86] swiftjxl-cli-product
+[83 / 86] swiftjxl-cli-product
+[85 / 86] swiftjxl-cli-product
+Build complete! (10.80 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ModularParallelTests started.
+◇ Suite ModularGradientTests started.
+◇ Suite ScalarMemoryTests started.
+◇ Suite ModularTransformTests started.
+◇ Suite ModularPredictorSafetyTests started.
+◇ Suite ModularEncoderTests started.
+◇ Suite ModularLowPrecisionTests started.
+◇ Suite ModularUnsupportedPaletteTests started.
+◇ Test boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_:) started.
+◇ Suite ModularICCTests started.
+◇ Test zeroBitTokensStillObserveCancellationWithin256Writes(_:) started.
+◇ Test oneAndEightWorkersProduceIdenticalStreamsAndAllocationEvents(_:_:) started.
+◇ Test publicCancellationReachesRunningGroupWorkersAndJoinsThem() started.
+◇ Test concurrentEncodesShareTheImmutableSource() started.
+◇ Test entropyCheckpointsBoundLatchedFailure(_:) started.
+◇ Test specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Suite ModularStorageTests started.
+◇ Test boundedWriterStopsGrowthAndThrowsBeforePublication() started.
+◇ Test entropyCheckpointsBoundCancellation(_:) started.
+◇ Test errorsAreOrderedAfterJoiningAndAdmissionPrecedesCallbacks() started.
+◇ Test selectPredictorAcceptsEverySignedDifferenceMagnitude() started.
+◇ Test metaPaletteAndSqueezeRestoreMetaChannelCountAndShifts() started.
+◇ Test directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test publicSharedStorageUsesOnlyTheRequiredFinalAllocation() started.
+◇ Test aggregateAdmissionIsCheckedAndOverflowCannotWrap() started.
+◇ Test groupedBorrowedSource(_:_:) started.
+◇ Test associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test rctChainPreservesOtherOwnersAndRejectsCancelledWork() started.
+◇ Test independentSmallPrecisionSamples(_:_:) started.
+◇ Test directionSpecificCapabilities() started.
+◇ Test malformedResidualsAndMissingPlanesRejectBeforeAllocation() started.
+◇ Test geometryRejectsOverflowAndMetaMixWithoutPixelAllocation() started.
+◇ Test channelExpansionAndUnsupportedPalettesAreBounded() started.
+◇ Test precisionAndTruncationRejectOnBothPaths(_:) started.
+◇ Test publicTransformedPlaneRejectsOutOfPrecisionSamplesWithoutTrapping(_:) started.
+◇ Test publicPaletteErrorsDistinguishUnsupportedFromMalformed(_:_:) started.
+◇ Test paletteUsesActualPrecisionAndRestoresFirstNormalChannel() started.
+◇ Test implicitSqueezeRetainsOriginalPlanAndRestoresGeometry() started.
+◇ Test squeezeMatchesPinnedPredecessorWithOddTailsAndExtremes(_:) started.
+◇ Test case passing 1 argument branching → false to zeroBitTokensStillObserveCancellationWithin256Writes(_:) started.
+◇ Test case passing 1 argument branching → true to zeroBitTokensStillObserveCancellationWithin256Writes(_:) started.
+◇ Test case passing 1 argument workers → 1 to boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_:) started.
+◇ Test case passing 2 arguments width → 31, channels → 1 to oneAndEightWorkersProduceIdenticalStreamsAndAllocationEvents(_:_:) started.
+◇ Test case passing 1 argument workers → 2 to boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_:) started.
+◇ Test case passing 1 argument prefix → false to entropyCheckpointsBoundLatchedFailure(_:) started.
+◇ Test case passing 2 arguments width → 1, variant → 0 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 1 argument prefix → false to entropyCheckpointsBoundCancellation(_:) started.
+◇ Test resourceAndDeadlineLimitsApplyBeforePlanesAreAllocated() started.
+◇ Test case passing 1 argument prefix → true to entropyCheckpointsBoundLatchedFailure(_:) started.
+◇ Test case passing 2 arguments width → 31, channels → 4 to oneAndEightWorkersProduceIdenticalStreamsAndAllocationEvents(_:_:) started.
+◇ Test case passing 1 argument prefix → true to entropyCheckpointsBoundCancellation(_:) started.
+◇ Test case passing 1 argument workers → 8 to boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_:) started.
+◇ Test case passing 2 arguments width → 1025, channels → 1 to oneAndEightWorkersProduceIdenticalStreamsAndAllocationEvents(_:_:) started.
+◇ Test case passing 2 arguments width → 1, variant → 1 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 1 argument workers → 100 to boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_:) started.
+◇ Test case passing 2 arguments width → 1025, channels → 4 to oneAndEightWorkersProduceIdenticalStreamsAndAllocationEvents(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments width → 1, mode → 0 to directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments width → 1, variant → 2 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments width → 1, mode → 1 to directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 1 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 1 argument branching → false to precisionAndTruncationRejectOnBothPaths(_:) started.
+◇ Test case passing 1 argument malformed → false to publicTransformedPlaneRejectsOutOfPrecisionSamplesWithoutTrapping(_:) started.
+◇ Test case passing 2 arguments width → 1, variant → 3 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments delta → false, invalidRange → false to publicPaletteErrorsDistinguishUnsupportedFromMalformed(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 2 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument branching → true to precisionAndTruncationRejectOnBothPaths(_:) started.
+◇ Test malformedProfileAndTruncatedStreamReject() started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 1 argument malformed → true to publicTransformedPlaneRejectsOutOfPrecisionSamplesWithoutTrapping(_:) started.
+◇ Test case passing 2 arguments width → 1, mode → 2 to directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test profileLimitsAndDestinationMeaningReject() started.
+◇ Test independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments delta → false, invalidRange → true to publicPaletteErrorsDistinguishUnsupportedFromMalformed(_:_:) started.
+◇ Test case passing 2 arguments width → 2, variant → 0 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 1 argument horizontal → true to squeezeMatchesPinnedPredecessorWithOddTailsAndExtremes(_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 3 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 1 argument horizontal → false to squeezeMatchesPinnedPredecessorWithOddTailsAndExtremes(_:) started.
+◇ Test case passing 2 arguments delta → true, invalidRange → false to publicPaletteErrorsDistinguishUnsupportedFromMalformed(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 4 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments width → 2, variant → 1 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments width → 3, mode → 0 to directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test case passing 2 arguments delta → true, invalidRange → true to publicPaletteErrorsDistinguishUnsupportedFromMalformed(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 5 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments width → 2, variant → 2 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test eightBitAdmissionUsesActualCallerCapacity() started.
+◇ Test case passing 2 arguments width → 3, mode → 1 to directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test alphaMismatchRejectsBeforeWritingAndMalformedPixelsInvalidate() started.
+◇ Test independentAssociatedAlphaInput(_:_:) started.
+◇ Test paddedCallerStorage(_:_:) started.
+◇ Test mismatchedPrecisionOrCapacityRejectsBeforeTouchingBytes() started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 6 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments width → 2, variant → 3 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments width → 3, mode → 2 to directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 7 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments width → 7, variant → 0 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments width → 513, mode → 0 to directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 1 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments width → 7, variant → 1 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments width → 513, mode → 1 to directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 2 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments width → 7, variant → 2 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+✔ Test boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_:) with 4 test cases passed after 0.676 seconds.
+◇ Test case passing 2 arguments width → 513, mode → 2 to directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 3 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments width → 7, variant → 3 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 4 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments width → 513, variant → 0 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to groupedBorrowedSource(_:_:) started.
+✔ Test boundedWriterStopsGrowthAndThrowsBeforePublication() passed after 0.817 seconds.
+◇ Test case passing 2 arguments width → 513, variant → 1 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+✔ Test selectPredictorAcceptsEverySignedDifferenceMagnitude() passed after 0.838 seconds.
+◇ Test case passing 2 arguments channels → 2, bits → 5 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments width → 513, variant → 2 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to groupedBorrowedSource(_:_:) started.
+✔ Test errorsAreOrderedAfterJoiningAndAdmissionPrecedesCallbacks() passed after 0.919 seconds.
+◇ Test case passing 2 arguments width → 513, variant → 3 to specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to groupedBorrowedSource(_:_:) started.
+✔ Test entropyCheckpointsBoundLatchedFailure(_:) with 2 test cases passed after 1.197 seconds.
+◇ Test case passing 2 arguments channels → 2, bits → 6 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 7 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 1 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 2 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 3 to independentSmallPrecisionSamples(_:_:) started.
+✔ Test specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:) with 16 test cases passed after 1.357 seconds.
+◇ Test case passing 2 arguments channels → 3, bits → 4 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 5 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 6 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 7 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 1 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 2 to independentSmallPrecisionSamples(_:_:) started.
+✔ Test metaPaletteAndSqueezeRestoreMetaChannelCountAndShifts() passed after 1.461 seconds.
+◇ Test case passing 2 arguments channels → 4, bits → 3 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 4 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 5 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 6 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 7 to independentSmallPrecisionSamples(_:_:) started.
+✔ Test aggregateAdmissionIsCheckedAndOverflowCannotWrap() passed after 1.540 seconds.
+✔ Test precisionExtremaAndInvalidHighBits(_:_:) with 12 test cases passed after 1.540 seconds.
+✔ Test directionSpecificCapabilities() passed after 1.539 seconds.
+✔ Test directStoragePreservesRowsCropsEndiannessAndGuards(_:_:) with 9 test cases passed after 1.540 seconds.
+✔ Test malformedResidualsAndMissingPlanesRejectBeforeAllocation() passed after 1.539 seconds.
+✔ Test geometryRejectsOverflowAndMetaMixWithoutPixelAllocation() passed after 1.539 seconds.
+✔ Test channelExpansionAndUnsupportedPalettesAreBounded() passed after 1.540 seconds.
+✔ Test oneAndEightWorkersProduceIdenticalStreamsAndAllocationEvents(_:_:) with 4 test cases passed after 1.541 seconds.
+✔ Test associatedAlphaAndRenderingIntent(_:_:) with 6 test cases passed after 1.540 seconds.
+✔ Test publicTransformedPlaneRejectsOutOfPrecisionSamplesWithoutTrapping(_:) with 2 test cases passed after 1.539 seconds.
+✔ Test precisionAndTruncationRejectOnBothPaths(_:) with 2 test cases passed after 1.539 seconds.
+✔ Test paletteUsesActualPrecisionAndRestoresFirstNormalChannel() passed after 1.539 seconds.
+✔ Test publicPaletteErrorsDistinguishUnsupportedFromMalformed(_:_:) with 4 test cases passed after 1.539 seconds.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+✔ Test squeezeMatchesPinnedPredecessorWithOddTailsAndExtremes(_:) with 2 test cases passed after 1.854 seconds.
+✔ Test implicitSqueezeRetainsOriginalPlanAndRestoresGeometry() passed after 1.854 seconds.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 2 to paddedCallerStorage(_:_:) started.
+✔ Test publicSharedStorageUsesOnlyTheRequiredFinalAllocation() passed after 8.510 seconds.
+✔ Test groupedBorrowedSource(_:_:) with 12 test cases passed after 8.947 seconds.
+✔ Test resourceAndDeadlineLimitsApplyBeforePlanesAreAllocated() passed after 9.071 seconds.
+✔ Test independentSmallPrecisionSamples(_:_:) with 28 test cases passed after 9.077 seconds.
+✔ Test malformedProfileAndTruncatedStreamReject() passed after 8.938 seconds.
+✔ Test profileLimitsAndDestinationMeaningReject() passed after 8.926 seconds.
+✔ Test independentSamplesAndProfileArePreserved(_:_:) with 12 test cases passed after 8.927 seconds.
+✔ Test zeroBitTokensStillObserveCancellationWithin256Writes(_:) with 2 test cases passed after 9.078 seconds.
+✔ Test eightBitAdmissionUsesActualCallerCapacity() passed after 8.808 seconds.
+✔ Test alphaMismatchRejectsBeforeWritingAndMalformedPixelsInvalidate() passed after 8.807 seconds.
+✔ Test independentAssociatedAlphaInput(_:_:) with 6 test cases passed after 8.807 seconds.
+✔ Test mismatchedPrecisionOrCapacityRejectsBeforeTouchingBytes() passed after 8.806 seconds.
+✔ Suite ModularPredictorSafetyTests passed after 9.079 seconds.
+✔ Test entropyCheckpointsBoundCancellation(_:) with 2 test cases passed after 9.078 seconds.
+✔ Suite ModularEncoderTests passed after 9.079 seconds.
+✔ Test rctChainPreservesOtherOwnersAndRejectsCancelledWork() passed after 9.077 seconds.
+✔ Suite ModularUnsupportedPaletteTests passed after 9.079 seconds.
+✔ Suite ModularLowPrecisionTests passed after 9.079 seconds.
+✔ Suite ModularICCTests passed after 9.079 seconds.
+✔ Suite ModularGradientTests passed after 9.079 seconds.
+✔ Suite ScalarMemoryTests passed after 9.079 seconds.
+✔ Suite ModularTransformTests passed after 9.079 seconds.
+✔ Test concurrentEncodesShareTheImmutableSource() passed after 9.229 seconds.
+✔ Test paddedCallerStorage(_:_:) with 48 test cases passed after 9.078 seconds.
+✔ Test publicCancellationReachesRunningGroupWorkersAndJoinsThem() passed after 9.757 seconds.
+✔ Suite ModularParallelTests passed after 9.757 seconds.
+✔ Test publicOwningColourDestination(_:_:) with 20 test cases passed after 12.231 seconds.
+✔ Suite ModularStorageTests passed after 12.491 seconds.
+✔ Test run with 40 tests in 10 suites passed after 12.492 seconds.

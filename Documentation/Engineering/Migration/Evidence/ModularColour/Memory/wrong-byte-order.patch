@@ -1,0 +1,29 @@
+--- a/Sources/SwiftJXLCore/Codec/ModularSampleStorage.swift
++++ b/Sources/SwiftJXLCore/Codec/ModularSampleStorage.swift
+@@ -54,14 +54,14 @@
+             let first = Int32(bytes[p])
+             if layout.storageBits == 8 { return first }
+             let second = Int32(bytes[p + 1])
+-            return layout.littleEndian ? first | (second << 8) : (first << 8) | second
++            return false ? first | (second << 8) : (first << 8) | second
+         }
+         set {
+             let p = layout.offset + (index / layout.width) * layout.rowBytes + (index % layout.width) * layout.pixelStride
+             let low = UInt8(truncatingIfNeeded: newValue), high = UInt8(truncatingIfNeeded: newValue >> 8)
+             if layout.storageBits == 8 { bytes[p] = low; return }
+-            bytes[p] = layout.littleEndian ? low : high
+-            bytes[p + 1] = layout.littleEndian ? high : low
++            bytes[p] = false ? low : high
++            bytes[p + 1] = false ? high : low
+         }
+     }
+ }
+@@ -93,7 +93,7 @@
+                         let p = layout.offset + y * layout.rowBytes + x * layout.pixelStride
+                         var value = Int32(bytes[p])
+                         if layout.storageBits == 16 {
+-                            value = layout.littleEndian ? value | (Int32(bytes[p + 1]) << 8) : (value << 8) | Int32(bytes[p + 1])
++                            value = false ? value | (Int32(bytes[p + 1]) << 8) : (value << 8) | Int32(bytes[p + 1])
+                         }
+                         guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                         plane[y * first.width + x] = value

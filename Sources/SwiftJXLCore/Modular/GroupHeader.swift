@@ -20,13 +20,9 @@
 // header collapses to 4 bits: `1` (use global tree) + `1` (default
 // wp header) + `0,0` (zero transforms).
 //
-// **Scope:** the reader handles the all-default branches of the
-// nested `WeightedPredictorHeader` and `ModularTransform` blocks.
-// Non-default `WeightedPredictorHeader` (custom p1C/p2C/p3Cx weights)
-// is parsed but its fields are not yet exposed; non-default
-// `ModularTransform` (RCT/Palette/Squeeze) is parsed enough to
-// recognise the kind and consumed bits, but full transform-driven
-// pixel application is the next chain milestone.
+// Transform fields follow libjxl v0.12.0 Transform::VisitFields and
+// SqueezeParams::VisitFields. Internal geometry/inverse implementations are
+// qualified separately from public codec capability admission.
 
 import Foundation
 
@@ -176,6 +172,12 @@ package struct ModularTransform: Sendable, Equatable {
         self.squeezes = squeezes
     }
 
+    private static let squeezeCountDistribution: (UInt32Distribution, UInt32Distribution,
+                                                  UInt32Distribution, UInt32Distribution) = (
+        .literal(0), .offset(constant: 1, extraBits: 4),
+        .offset(constant: 9, extraBits: 6), .offset(constant: 41, extraBits: 8)
+    )
+
     /// Per-step squeeze parameters when the transform is a Squeeze.
     package struct SqueezeParams: Sendable, Equatable {
         package let horizontal: Bool
@@ -257,30 +259,20 @@ package struct ModularTransform: Sendable, Equatable {
             ))
             w.write(bits: 4, value: palettePredictor)
         case .squeeze:
-            // u(1) "isDefault" flag; emit `1` for the empty-params
-            // (default-squeeze) form. Custom params not yet emitted.
-            if squeezes.isEmpty {
-                w.writeBit(true)
-            } else {
-                w.writeBit(false)
-                try w.writeU32(UInt32(squeezes.count), distributions: (
-                    .literal(0), .literal(1), .literal(2),
-                    .offset(constant: 1, extraBits: 4)
+            // Empty parameters are encoded as U32 value zero, with no
+            // separate default flag (libjxl Transform::VisitFields).
+            guard squeezes.count <= 296 else { throw GroupHeaderError.unsupportedTransform(id.rawValue) }
+            try w.writeU32(UInt32(squeezes.count), distributions: Self.squeezeCountDistribution)
+            for sp in squeezes {
+                w.writeBit(sp.horizontal)
+                w.writeBit(sp.inPlace)
+                try w.writeU32(sp.beginC, distributions: (
+                    .bits(3), .offset(constant: 8, extraBits: 6),
+                    .offset(constant: 72, extraBits: 10), .offset(constant: 1096, extraBits: 13)
                 ))
-                for sp in squeezes {
-                    w.writeBit(sp.horizontal)
-                    w.writeBit(sp.inPlace)
-                    try w.writeU32(sp.beginC, distributions: (
-                        .bits(3),
-                        .offset(constant: 8, extraBits: 6),
-                        .offset(constant: 72, extraBits: 10),
-                        .offset(constant: 1096, extraBits: 13)
-                    ))
-                    try w.writeU32(sp.numC, distributions: (
-                        .literal(1), .literal(2), .literal(3),
-                        .offset(constant: 4, extraBits: 4)
-                    ))
-                }
+                try w.writeU32(sp.numC, distributions: (
+                    .literal(1), .literal(2), .literal(3), .offset(constant: 4, extraBits: 4)
+                ))
             }
         }
     }
@@ -359,26 +351,11 @@ package struct ModularTransform: Sendable, Equatable {
                 palettePredictor: pred
             )
         case .squeeze:
-            // First a count via U32(Val(0), Bits(4)+1, Bits(6)+17, Bits(8)+81)
-            // Hmm — looking at libjxl, squeeze starts with a count byte. Let me
-            // fall back to the simple "default squeeze" form: u(1) flag for
-            // "empty squeezes vector", then if flag==0 read a count + entries.
-            let isDefault: Bool
-            do { isDefault = try r.readBit() }
-            catch let e as BitstreamError { throw GroupHeaderError.bitstream(e) }
-            if isDefault {
-                return ModularTransform(id: .squeeze, squeezes: [])
-            }
-            // Count = U32(Val(0), Val(1), Val(2), 1+u(4)) per libjxl
-            // (transform.cc — best effort; full validation pending).
             let count: UInt32
-            do {
-                count = try r.readU32((
-                    .literal(0), .literal(1), .literal(2),
-                    .offset(constant: 1, extraBits: 4)
-                ))
-            } catch let e as BitstreamError {
-                throw GroupHeaderError.bitstream(e)
+            do { count = try r.readU32(Self.squeezeCountDistribution) }
+            catch let e as BitstreamError { throw GroupHeaderError.bitstream(e) }
+            if count > 0 {
+                try r.budget?.reserveWorkspace(Int(count) * 2 * MemoryLayout<SqueezeParams>.stride + 128)
             }
             var squeezes: [SqueezeParams] = []
             squeezes.reserveCapacity(Int(count))
@@ -426,6 +403,9 @@ package struct GroupHeader: Sendable, Equatable {
             throw GroupHeaderError.bitstream(e)
         }
         if r.scalarProfile && numTransforms != 0 { throw ScalarModularError.unsupportedProfile }
+        if numTransforms > 0 {
+            try r.budget?.reserveWorkspace(Int(numTransforms) * 2 * MemoryLayout<ModularTransform>.stride + 128)
+        }
         var transforms: [ModularTransform] = []
         transforms.reserveCapacity(Int(numTransforms))
         for _ in 0..<Int(numTransforms) {
@@ -439,10 +419,8 @@ package struct GroupHeader: Sendable, Equatable {
     }
 
     /// Spec-compliant write of a GroupHeader. Inverse of `read`.
-    /// Writing the WP header's custom form and complex transforms
-    /// (Palette, Squeeze with custom params) is a placeholder for
-    /// future encoder work — the all-default branches that lossless
-    /// cjxl typically emits are fully supported.
+    /// Serialises the parsed predictor and transform fields. This does not
+    /// imply that every declared transform is supported by a public codec.
     package func write(to w: inout BitWriter) throws {
         w.writeBit(useGlobalTree)
         try wpHeader.write(to: &w)

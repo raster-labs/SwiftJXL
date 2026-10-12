@@ -1,0 +1,214 @@
+{
+  "generator": "Scripts/TestSupport/modular-icc-fixtures.c",
+  "generatorSHA256": "f839e153e62d61e5dfa8ea05b143a93412512a04a8530a374c08a11a3be01d86",
+  "libjxl": "0.12.0 a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "licence": "Apache-2.0 synthetic samples; ICC profile provenance remains in Fixtures/JPEGBridge; libjxl is test-only BSD-3-Clause.",
+  "expected": "(pixelIndex*71+(pixelIndex/513)*37+channel*113)&((1<<bits)-1); straight alpha when present. Profile bytes must be retained exactly.",
+  "fixtures": [
+    {
+      "file": "icc-1-8.jxl",
+      "channels": 1,
+      "bits": 8,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc",
+      "profileSHA256": "4b97c5eef9f552e1868dc36e9c3822eb1d681599a22cc8c4b71d9f903434c0df",
+      "sha256": "0cee7590c613f762ee0034934febc6e12120da2a80283b24853643bbb5be2de8",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-8.jxl",
+        "1",
+        "8",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc"
+      ]
+    },
+    {
+      "file": "icc-1-12.jxl",
+      "channels": 1,
+      "bits": 12,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc",
+      "profileSHA256": "4b97c5eef9f552e1868dc36e9c3822eb1d681599a22cc8c4b71d9f903434c0df",
+      "sha256": "b64b0f37545eb96e226a6be4b4e684b134bd51fd9f93ac3f289ec443c6d7a3b1",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-12.jxl",
+        "1",
+        "12",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc"
+      ]
+    },
+    {
+      "file": "icc-1-16.jxl",
+      "channels": 1,
+      "bits": 16,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc",
+      "profileSHA256": "4b97c5eef9f552e1868dc36e9c3822eb1d681599a22cc8c4b71d9f903434c0df",
+      "sha256": "b5c5ef9031f5e930865528ea6566c0aad55343bb35e38ddd0596df911fed252b",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-16.jxl",
+        "1",
+        "16",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc"
+      ]
+    },
+    {
+      "file": "icc-2-8.jxl",
+      "channels": 2,
+      "bits": 8,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc",
+      "profileSHA256": "4b97c5eef9f552e1868dc36e9c3822eb1d681599a22cc8c4b71d9f903434c0df",
+      "sha256": "6e681ee18f92c4f10d5c44c0551a84463906f4945c0baeaddff209fa7e2e6a8d",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-8.jxl",
+        "2",
+        "8",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc"
+      ]
+    },
+    {
+      "file": "icc-2-12.jxl",
+      "channels": 2,
+      "bits": 12,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc",
+      "profileSHA256": "4b97c5eef9f552e1868dc36e9c3822eb1d681599a22cc8c4b71d9f903434c0df",
+      "sha256": "d695b618973782ff508cca64323009ebfdb0d1ffb5ebd3b9f5cd19f1311322a5",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-12.jxl",
+        "2",
+        "12",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc"
+      ]
+    },
+    {
+      "file": "icc-2-16.jxl",
+      "channels": 2,
+      "bits": 16,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc",
+      "profileSHA256": "4b97c5eef9f552e1868dc36e9c3822eb1d681599a22cc8c4b71d9f903434c0df",
+      "sha256": "6e2ff6b7fa6f61001f64b21f4b22168748bb4dacd43c979138a4730f4f134e69",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-16.jxl",
+        "2",
+        "16",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/gray-gamma22.icc"
+      ]
+    },
+    {
+      "file": "icc-3-8.jxl",
+      "channels": 3,
+      "bits": 8,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc",
+      "profileSHA256": "81d313ce695fe3d921806c24018e87561b90127a69057797cfe20f9b508359b8",
+      "sha256": "f5c7a6da6ea4de1b0bfd292ebca55bb65cd4c67ccc2964f4641680b411fbb5b6",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-8.jxl",
+        "3",
+        "8",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc"
+      ]
+    },
+    {
+      "file": "icc-3-12.jxl",
+      "channels": 3,
+      "bits": 12,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc",
+      "profileSHA256": "81d313ce695fe3d921806c24018e87561b90127a69057797cfe20f9b508359b8",
+      "sha256": "7064cda17d06cd665c31dc4933abe167216e51a7b97e00cbeca7378c03c81488",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-12.jxl",
+        "3",
+        "12",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc"
+      ]
+    },
+    {
+      "file": "icc-3-16.jxl",
+      "channels": 3,
+      "bits": 16,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc",
+      "profileSHA256": "81d313ce695fe3d921806c24018e87561b90127a69057797cfe20f9b508359b8",
+      "sha256": "d17a62b824af4f9a2739e3a9fa3da94e6dbc7aa60817caac2dcde353c4cf44d8",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-16.jxl",
+        "3",
+        "16",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc"
+      ]
+    },
+    {
+      "file": "icc-4-8.jxl",
+      "channels": 4,
+      "bits": 8,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc",
+      "profileSHA256": "81d313ce695fe3d921806c24018e87561b90127a69057797cfe20f9b508359b8",
+      "sha256": "12749778ff13cc062af1a95436d5c8b769e3d1c9a65230add215cdd071b53976",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-8.jxl",
+        "4",
+        "8",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc"
+      ]
+    },
+    {
+      "file": "icc-4-12.jxl",
+      "channels": 4,
+      "bits": 12,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc",
+      "profileSHA256": "81d313ce695fe3d921806c24018e87561b90127a69057797cfe20f9b508359b8",
+      "sha256": "168fc9f7ad8e9b9615a32ad38eb2ed83b2302f034c3f380ca943a263ce2234fc",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-12.jxl",
+        "4",
+        "12",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc"
+      ]
+    },
+    {
+      "file": "icc-4-16.jxl",
+      "channels": 4,
+      "bits": 16,
+      "width": 513,
+      "height": 3,
+      "profile": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc",
+      "profileSHA256": "81d313ce695fe3d921806c24018e87561b90127a69057797cfe20f9b508359b8",
+      "sha256": "47c3bc819114a23ed3a409e93b384574e94bb82a395120f92e1949ad9638a0cc",
+      "command": [
+        "../modular-preflight/modular-icc-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-16.jxl",
+        "4",
+        "16",
+        "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/srgb.icc"
+      ]
+    }
+  ],
+  "buildCommand": "xcrun clang -Wall -Wextra -Werror -I/opt/homebrew/include Scripts/TestSupport/modular-icc-fixtures.c -L/opt/homebrew/lib -ljxl -o ../modular-preflight/modular-icc-fixtures"
+}

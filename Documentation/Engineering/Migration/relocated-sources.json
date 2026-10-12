@@ -95,9 +95,10 @@
       "licence": "Apache-2.0",
       "changes": [
         "Package-only visibility",
-        "Successor provenance header"
+        "Successor provenance header",
+        "General Modular integration: shared bounded tree parser or admission before extra-channel descriptor/name allocation; see ModularColour/decoder-validation.json"
       ],
-      "destinationSHA256": "4d4e0dfeae35490240096d5cc45c8e773a4993a22cf34feb0418b0a39338f65e"
+      "destinationSHA256": "aabd7f4ebfc5eaaa597488fa3ebc4c76391482ec274717230962b40da5506753"
     },
     {
       "source": "Sources/JXLSwift/Codestream/FrameHeader.swift",
@@ -121,9 +122,10 @@
         "Package-only visibility",
         "Successor provenance header",
         "Reject unimplemented nonzero extensions",
-        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable",
+        "General Modular integration: shared bounded tree parser or admission before extra-channel descriptor/name allocation; see ModularColour/decoder-validation.json"
       ],
-      "destinationSHA256": "8d7a58a964f8f47bedc6323a43d065ae05f160804f93e84fdf5d1b46e282df5a"
+      "destinationSHA256": "324627dd9c2a697a7d90e0add1c6afca63e434da3aa6e6e31d04dcbb2c638fc6"
     },
     {
       "source": "Sources/JXLSwift/Codestream/Signature.swift",
@@ -365,9 +367,10 @@
       "changes": [
         "Package-only visibility",
         "Successor provenance header",
-        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable",
+        "Correct Squeeze wire format against pinned libjxl0.12.0 and admit transform descriptor allocations; see ModularColour/wire-validation.json"
       ],
-      "destinationSHA256": "4dcf47c505e332b29b4928aec41961b3ffc811bd0a0049d65ee61c3c96c44109"
+      "destinationSHA256": "c1b1e5141011b1b2d18c1c59744537104fcf8432bde1a55c6fef4b71e5a50076"
     },
     {
       "source": "Sources/JXLSwift/Modular/LibjxlPredictor.swift",
@@ -471,9 +474,10 @@
         "Adapt sample access to scoped caller storage; separate frame preparation from final pixel writes",
         "Thread operation deadline and bounded nesting through decoding and container processing",
         "Cumulative conservative entropy-table admission before codebook construction; total workspace accounting remains separate",
-        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable"
+        "Public scalar integration: operation memory admission, bounded work/output and interpretation preservation where applicable",
+        "General Modular integration: shared bounded tree parser or admission before extra-channel descriptor/name allocation; see ModularColour/decoder-validation.json"
       ],
-      "destinationSHA256": "9eb6904c722ced95c1833795dda5579874309e56b0ce726ed188843604a65e74"
+      "destinationSHA256": "8279571ee84c1bf2c908641a460b4f0abc516a6187570562d29c81bb667a4067"
     },
     {
       "source": "Sources/JXLSwift/Codec/ParallelMap.swift",
@@ -1028,6 +1032,77 @@
         "Admission before profile allocations; caller ICC limit capped at 4 MiB; public native JPEG integration"
       ],
       "destinationSHA256": "5045a7cfc79a94e085873b6fbe091d680e22a22e27e31575343812b1b927c073"
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/SpecRCT.swift",
+      "sourceSHA256": "d97b53f96a5efce68a3125168106b4b9f964bace73cb19e3b7efa11418e65d2e",
+      "destination": "Sources/SwiftJXLCore/Modular/SpecRCT.swift",
+      "destinationSHA256": "47d23658646337819adbbf2942862f033a58279ab90df9c9c06542c63ca65602",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Reuses the three admitted working planes; removes temporary output/permutation arrays",
+        "Checked type/length admission and bounded cancellation/deadline callback",
+        "Internal Modular expansion preparation; public scalar profile unchanged"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/ModularImage.swift",
+      "sourceSHA256": "d7404d49ad03899521a51a940412081d35dc985a45fa26c401e7da03c4cc88e1",
+      "destination": "Sources/SwiftJXLCore/Modular/ModularImage.swift",
+      "destinationSHA256": "5b17d7ee0b892fb79126749d18bc80b10bf15573a4658a68da427a7f58b6e9ee",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Checked immutable channel geometry without eager pixel allocation; cumulative workspace admission before buffers and descriptor growth",
+        "Retain expanded implicit squeeze steps; bounded transform/channel counts; reject meta/normal overlap and unsupported palettes",
+        "Reject equal-geometry RCT ranges crossing the meta/normal boundary, matching libjxl CheckEqualChannels"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/SpecSqueeze.swift",
+      "sourceSHA256": "d96667940ca74ae309f4dd6b7af50c8f454ba61c76274e7ea3a8605eb1d1e469",
+      "destination": "Sources/SwiftJXLCore/Modular/SpecSqueeze.swift",
+      "destinationSHA256": "04300d869d668cb59a6d27d2269b0133337eb71dcdc4518a397bb2f36b330768",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Validate paired dimensions, shifts and sample counts before allocation",
+        "Admitted output plane and bounded cancellation; scoped buffer borrows; preserve meta shifts"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Modular/InverseTransforms.swift",
+      "sourceSHA256": "df8e30898eae31d3562e065a5f51abc8daaeafd5b6d3820e68a1b26264f10845",
+      "destination": "Sources/SwiftJXLCore/Modular/InverseTransforms.swift",
+      "destinationSHA256": "16c979ba2891aa6db659d84e437ae719682291e1dab06aadbed30000e379e4c9",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Use admitted working planes and explicit expanded transform chain; reject partial results on failure",
+        "Preserve actual 8\u201316-bit palette precision and correctly restore first-normal/meta channel counts",
+        "Static delta lookup table; reject predicted/delta palettes; admit RCT COW costs before mutating"
+      ]
+    },
+    {
+      "source": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+      "sourceSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+      "destination": "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift",
+      "destinationSHA256": "7f18446aa51d4bd6363b7a21cd24789b53f8a9cdf6666ae4f58153966a8b880f",
+      "licence": "Apache-2.0 AND BSD-3-Clause",
+      "changes": [
+        "Adapt integer colour/alpha decoder with TOC-bounded sections, ordered global prefix and DC/AC group assembly",
+        "Use pinned libjxl downsample brackets and empty rANS state semantics; retain expanded inverse transforms",
+        "Admit workspace/metadata before allocation, validate restored dimensions/precision, keep public capabilities unchanged pending owning-storage integration"
+      ]
+    },
+    {
+      "source": "Sources/JXLTool/PNM.swift",
+      "sourceSHA256": "79a19a9bbf2e65dda77e84d8a6365139251cc1f0a1019853d48530e9190023d0",
+      "destination": "Sources/SwiftJXLCLI/PNM.swift",
+      "destinationSHA256": "7de27c8066fe2522befb8ba1845673360d534b81a1435721deec41e88174b3eb",
+      "licence": "Apache-2.0",
+      "changes": [
+        "New bounded adapter replacing predecessor parser/serialiser; same P5/P6/P7 product direction, not a source copy.",
+        "Explicit BT.709 versus sRGB transfer, validated PAM tuples and precision; retained owning storage with bounded row serialisation."
+      ],
+      "evidence": "Documentation/Engineering/Migration/PNM_PROFILE.md"
     }
   ],
   "scope": "39 relocated algorithm files, one rewritten scalar scheduling helper, and one adapted scalar decoder. The package-internal SwiftJXLCore target now supports the public SwiftJXL scalar greyscale encoder, decoder and inspector; it is not a separately exposed library product. Public profile limits and operation admission are documented in MIGRATION.md and RESOURCE_ADMISSION.md.",

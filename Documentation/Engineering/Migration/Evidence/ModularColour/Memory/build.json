@@ -1,0 +1,30 @@
+{
+  "command": [
+    "xcrun",
+    "swiftc",
+    "-O",
+    "-parse-as-library",
+    "-swift-version",
+    "6",
+    "-strict-concurrency=complete",
+    "-package-name",
+    "swiftjxl_modular_colour",
+    "-module-cache-path",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/module-cache",
+    "-I",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/scalar-storage-qualification-v2-release/build/release/out/Intermediates.noindex/SwiftJXL.build/Release/SwiftJXL-t.build/Objects-normal/arm64",
+    "-I",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/scalar-storage-qualification-v2-release/build/release/out/Intermediates.noindex/SwiftJXL.build/Release/SwiftJXLCore-t.build/Objects-normal/arm64",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-modular-colour/Documentation/Engineering/Migration/Evidence/ModularColour/Memory/owning-memory-probe.swift",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/scalar-storage-qualification-v2-release/build/release/out/Products/Release/SwiftJXL.o",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/evidence/scalar-storage-qualification-v2-release/build/release/out/Products/Release/SwiftJXLCore.o",
+    "-o",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/owning-memory-probe"
+  ],
+  "sourceSHA256": "cf55573a11044a4db90d9e747d14b9f245fc2baed9444a81c33f19a0c1a06c23",
+  "objectSHA256": {
+    "SwiftJXL.o": "db50a756b3a8e9285119ab11bf9504559e38ebf80aabad069404d276c6b3ef34",
+    "SwiftJXLCore.o": "ed43cc48f7421d5da0fffb431b38e96b9b54596c10333bdddf6f9651604d950b"
+  },
+  "exitCode": 0
+}

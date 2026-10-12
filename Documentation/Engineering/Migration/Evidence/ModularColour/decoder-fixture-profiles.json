@@ -1,0 +1,269 @@
+[
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "gray8",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": []
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "grayalpha16",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": []
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "grayalpha8",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": []
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 6,
+    "name": "groups-rgb8",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": [
+      {
+        "id": 1,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 5,
+    "name": "groups-rgba16",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": [
+      {
+        "id": 0,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "palette-rgb16",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": [
+      {
+        "id": 1,
+        "paletteColors": 4,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "palette-rgb8",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": [
+      {
+        "id": 1,
+        "paletteColors": 4,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 6,
+    "name": "responsive-gray8",
+    "nonemptyDCSections": 0,
+    "passes": 2,
+    "transforms": [
+      {
+        "id": 2,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 6,
+    "name": "responsive-rgb8",
+    "nonemptyDCSections": 0,
+    "passes": 2,
+    "transforms": [
+      {
+        "id": 0,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      },
+      {
+        "id": 2,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "responsive-small-rgb8",
+    "nonemptyDCSections": 0,
+    "passes": 2,
+    "transforms": [
+      {
+        "id": 0,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      },
+      {
+        "id": 2,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 3,
+    "groups": 17,
+    "name": "responsive-wide-rgb8",
+    "nonemptyDCSections": 3,
+    "passes": 2,
+    "transforms": [
+      {
+        "id": 0,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      },
+      {
+        "id": 2,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "rgb12",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": [
+      {
+        "id": 0,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "rgb8",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": [
+      {
+        "id": 0,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "rgba16",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": [
+      {
+        "id": 0,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  },
+  {
+    "customDefault": true,
+    "dcGroups": 1,
+    "groups": 1,
+    "name": "rgba8",
+    "nonemptyDCSections": 0,
+    "passes": 1,
+    "transforms": [
+      {
+        "id": 0,
+        "paletteColors": 256,
+        "paletteDeltas": 0,
+        "predictor": 0,
+        "rct": 6,
+        "squeezeSteps": 0
+      }
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "dateUTC": "2026-10-12T07:46:11.709700+00:00",
+  "base": "a2a3c1ef93390003657894d5eab9ac64e69c24f7",
+  "failure": {
+    "run": 38217995853,
+    "job": 114707259326,
+    "configuration": "Swift 6.2 / Linux ARM release",
+    "logSHA256": "d6f21243c8392bf6592a07696afe887659e3926c736c55a0784ab10d5caf3288",
+    "cause": "Polling for an allocation event did not guarantee cancellation preceded completion. An optimised encoder may complete before the polling task is scheduled."
+  },
+  "change": "Replace scheduling-dependent test with deterministic cancellation inside a parallel worker (signal observed, callbacks joined) and public cancellation from completion callback (result not published, source retained). These separately validate worker and public publication boundaries; no claim of end-to-end mid-worker task cancellation timing is made.",
+  "codecSourcesUnchanged": true,
+  "validation": {
+    "command": "xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter ModularParallelTests",
+    "exitCode": 0,
+    "declarations": 6,
+    "cases": 12,
+    "skips": 0,
+    "logSHA256": "fe292ce6037d8f97774111d1c7b6c0c95a4115e9eae6abc6003e6fda042fc821"
+  },
+  "remaining": "Fresh final-head CI including macOS required."
+}

@@ -1,5 +1,32 @@
 # Change log
 
+## Unreleased — Modular review and qualification, 2026-10-12
+
+- Bound parallel encoding by the caller's worker ceiling, capped at eight, with ordered joined results, per-worker resource admission and cancellation propagated into workers.
+- Specialise single-leaf gradient decoding to read only its three required neighbours while preserving signed arithmetic, precision rejection and cancellation checks. Controlled five-case decode medians improved by 15–27% against the prior successor; remaining predecessor gaps and release qualification stay open.
+- Prevent a signed-magnitude overflow trap in the Select predictor for malformed transformed samples; preserve defined malformed-input rejection and destination invalidation.
+- Report known unsupported delta/predicted palette modes as `unsupportedFeature`, after validating their geometry; invalid channel ranges remain malformed input. Add public inspect/decode regression coverage.
+- Record additional ICC/low-precision mutation campaigns and larger owning-storage, cancellation and concurrency evidence. Prove the storage tests detect deliberately wrong row strides and byte order.
+
+## Unreleased — low-precision Modular decoding, 2026-10-12
+
+- Restore predecessor-compatible 1–7-bit greyscale/RGB/alpha decoding without rescaling, with exact UInt16 allocating output or shared UInt8 caller output. Encoding remains 8–16-bit and file adapters reject unrepresentable precision.
+- Add 28 independent fixtures verified against the pinned predecessor, direction-specific capability checks and CLI inspect/validate regressions.
+
+## Unreleased — embedded ICC pixel decoding, 2026-10-12
+
+- Preserve embedded grey/RGB ICC bytes in public inspect, allocating decode and caller-storage decode without colour conversion. Bound ICC decoding by profile, metadata and operation memory limits. Reject mismatched caller profiles.
+- Inspect/validate reports identify ICC interpretation; PNM/NRRD export rejects profiles it cannot preserve. ICC encoding remains unsupported.
+
+## Unreleased — integer Modular colour and owning storage, 2026-10-09
+
+- Added bounded integer greyscale/RGB encoding and decoding with optional straight or premultiplied alpha, 8–16 meaningful bits and explicit planar/interleaved sample layout. Encode reads retained source storage; decode writes directly to the supplied destination, using admitted algorithm planes when transforms require them.
+- Adapted grouped/progressive decoding, reversible colour transforms, simple palettes and Squeeze. Corrected empty global rANS state emission and rejected malformed UTF-8 names.
+- Added independent alpha fixtures, precision-extrema and strided-source checks. Expanded the UInt16 greyscale NRRD CLI dimension limit consistently to 1024.
+- Preserved BT.709 transfer explicitly through required colour metadata. Added bounded P5/P6/P7 colour CLI import/export with explicit BT.709 or sRGB interpretation, 8–16 meaningful bits and optional straight alpha; no sample rescaling or implicit colour conversion.
+- Profiled and reduced entropy-checkpoint overhead while retaining cancellation within 256 tokens and immediate output-growth limits. Remaining predecessor performance regressions, full feature/platform qualification and release gates remain open.
+- Isolated reader deadline checks from ordinary token/bit reads without changing check frequency; retained measured decoder improvement and full local regression coverage.
+
 ## Unreleased — native JPEG public transcoder, 2026-10-09
 
 - Connected native coefficient-frame writing/reading and exact JPEG reconstruction to the public Transcoder and atomic CLI transcode operation. No source-JPEG lookup, pixel fallback or external runtime codec is used.

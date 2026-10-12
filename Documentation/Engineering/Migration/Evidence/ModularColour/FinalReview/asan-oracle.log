@@ -1,0 +1,42 @@
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ModularEncoderTests started.
+◇ Test precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test groupedBorrowedSource(_:_:) started.
+◇ Test associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to groupedBorrowedSource(_:_:) started.
+✔ Test precisionExtremaAndInvalidHighBits(_:_:) with 12 test cases passed after 1.129 seconds.
+✔ Test associatedAlphaAndRenderingIntent(_:_:) with 6 test cases passed after 1.129 seconds.
+✔ Test groupedBorrowedSource(_:_:) with 12 test cases passed after 3.146 seconds.
+✔ Suite ModularEncoderTests passed after 3.147 seconds.
+✔ Test run with 3 tests in 1 suite passed after 3.147 seconds.

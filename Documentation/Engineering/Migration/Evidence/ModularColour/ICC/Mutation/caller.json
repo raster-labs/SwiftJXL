@@ -1,0 +1,151 @@
+{
+  "status": "passed",
+  "entry": "caller",
+  "requestedSeconds": 3600.0,
+  "host": "macOS-27.0.1-arm64-arm-64bit",
+  "python": "3.9.6",
+  "randomSeed": 20261012,
+  "binarySHA256": "d06ff0f31f3ad36c184790907be3b929c179f610212715deb3f0f0958a6c5ff9",
+  "scriptSHA256": "c51a952c253948c17b5ae736bcf4834a0ea00f06085dca2b888b0ffb06983cb5",
+  "preflight": [
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-8.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-12.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-16.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-8.jxl",
+      "outcome": "accepted"
+    }
+  ],
+  "seeds": [
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-12.jxl",
+      "sha256": "b64b0f37545eb96e226a6be4b4e684b134bd51fd9f93ac3f289ec443c6d7a3b1",
+      "bytes": 1269
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-16.jxl",
+      "sha256": "b5c5ef9031f5e930865528ea6566c0aad55343bb35e38ddd0596df911fed252b",
+      "bytes": 1175
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-8.jxl",
+      "sha256": "0cee7590c613f762ee0034934febc6e12120da2a80283b24853643bbb5be2de8",
+      "bytes": 1585
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-12.jxl",
+      "sha256": "d695b618973782ff508cca64323009ebfdb0d1ffb5ebd3b9f5cd19f1311322a5",
+      "bytes": 2328
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-16.jxl",
+      "sha256": "6e2ff6b7fa6f61001f64b21f4b22168748bb4dacd43c979138a4730f4f134e69",
+      "bytes": 2113
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-8.jxl",
+      "sha256": "6e681ee18f92c4f10d5c44c0551a84463906f4945c0baeaddff209fa7e2e6a8d",
+      "bytes": 2974
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-12.jxl",
+      "sha256": "7064cda17d06cd665c31dc4933abe167216e51a7b97e00cbeca7378c03c81488",
+      "bytes": 2315
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-16.jxl",
+      "sha256": "d17a62b824af4f9a2739e3a9fa3da94e6dbc7aa60817caac2dcde353c4cf44d8",
+      "bytes": 1449
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-8.jxl",
+      "sha256": "f5c7a6da6ea4de1b0bfd292ebca55bb65cd4c67ccc2964f4641680b411fbb5b6",
+      "bytes": 3941
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-12.jxl",
+      "sha256": "168fc9f7ad8e9b9615a32ad38eb2ed83b2302f034c3f380ca943a263ce2234fc",
+      "bytes": 3351
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-16.jxl",
+      "sha256": "47c3bc819114a23ed3a409e93b384574e94bb82a395120f92e1949ad9638a0cc",
+      "bytes": 2368
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-8.jxl",
+      "sha256": "12749778ff13cc062af1a95436d5c8b769e3d1c9a65230add215cdd071b53976",
+      "bytes": 5644
+    }
+  ],
+  "iterations": 93940,
+  "outcomes": {
+    "rejected:malformedInput": 87910,
+    "accepted": 4631,
+    "rejected:unsupportedFeature": 1197,
+    "rejected:resourceLimitExceeded": 202
+  },
+  "mutations": {
+    "0": 11743,
+    "1": 11743,
+    "2": 11743,
+    "3": 11743,
+    "4": 11742,
+    "5": 11742,
+    "6": 11742,
+    "7": 11742
+  },
+  "elapsedSeconds": 3600.029729209,
+  "method": "Fresh ASan process per input, 15-second outer timeout; deterministic PRNG and saved current input. Per-entry campaign clock starts after all conformant seeds are accepted. No coverage guidance.",
+  "memoryNote": "Child-process peak RSS includes sanitizer/runtime/startup. API and CLI additionally enforce resource admission; this is not peak algorithm workspace.",
+  "currentCommand": [
+    "../modular-preflight/modular-mutation-probe-icc",
+    "caller",
+    "../modular-preflight/icc-mutation-hour-caller/current-input.bin"
+  ],
+  "currentSeed": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-16.jxl",
+  "currentSHA256": "fa8c28c6f2a5bf4e3489b4deb04817043dbb73ee3e6b470c57372249fcd82311",
+  "currentMutation": "3",
+  "childPeakRSSNativeUnits": 74874880
+}

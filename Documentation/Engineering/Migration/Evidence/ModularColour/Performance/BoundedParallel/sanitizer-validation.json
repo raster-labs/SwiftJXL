@@ -1,0 +1,98 @@
+{
+  "started_utc": "2026-10-12T06:53:55.324977+00:00",
+  "platform": "Darwin rasteradmins-MacBook-Air.local 27.0.0 Darwin Kernel Version 27.0.0: Tue Aug 11 21:02:57 PDT 2026; root:xnu-13432.1.9~1/RELEASE_ARM64_T8132 arm64",
+  "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "oracle_version": "djxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project",
+  "runs": [
+    {
+      "configuration": "asan",
+      "started_utc": "2026-10-12T06:53:55.446743+00:00",
+      "cwd": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/cache",
+        "--config-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/config",
+        "--security-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/security",
+        "--scratch-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--sanitize",
+        "address"
+      ],
+      "environment": {
+        "SWIFTJXL_ORACLE_BIN": "/opt/homebrew/bin",
+        "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/module-cache",
+        "SWIFTPM_MODULECACHE_OVERRIDE": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/module-cache"
+      },
+      "log": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/asan.log",
+      "exit_code": 0,
+      "elapsed_seconds": 30.451003708,
+      "finished_utc": "2026-10-12T06:54:25.898122+00:00",
+      "log_sha256": "69b648b9190519aa39658f09b6c68bd5bbbf6a2f7ee9799258006a655ebc4764",
+      "passed_declarations": 20,
+      "passed_argument_cases": 129,
+      "skipped": 0,
+      "sanitizer_diagnostics": false,
+      "terminal_summary": [
+        "\u2714 Test run with 20 tests in 5 suites passed after 13.755 seconds."
+      ]
+    },
+    {
+      "configuration": "tsan",
+      "started_utc": "2026-10-12T06:54:25.898730+00:00",
+      "cwd": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-tsan/cache",
+        "--config-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-tsan/config",
+        "--security-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-tsan/security",
+        "--scratch-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-tsan",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--sanitize",
+        "thread"
+      ],
+      "environment": {
+        "SWIFTJXL_ORACLE_BIN": "/opt/homebrew/bin",
+        "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-tsan/module-cache",
+        "SWIFTPM_MODULECACHE_OVERRIDE": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-tsan/module-cache"
+      },
+      "log": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/tsan.log",
+      "exit_code": 0,
+      "elapsed_seconds": 52.16165529199999,
+      "finished_utc": "2026-10-12T06:55:18.060759+00:00",
+      "log_sha256": "9c3536d02ee2a2f4369d6ebf29ec3216a9accca4c7d863840a60845c68a09f2f",
+      "passed_declarations": 20,
+      "passed_argument_cases": 129,
+      "skipped": 0,
+      "sanitizer_diagnostics": false,
+      "terminal_summary": [
+        "\u2714 Test run with 20 tests in 5 suites passed after 32.109 seconds."
+      ]
+    }
+  ],
+  "finished_utc": "2026-10-12T06:55:18.061451+00:00",
+  "parent_recheck": {
+    "utc": "2026-10-12T06:55:46.075600+00:00",
+    "mismatches": []
+  },
+  "inputs_manifest_sha256": "3ab9464c0a340e06aca0d02a0e7b9c7c906277f989424cf6050f976889a8a84e"
+}

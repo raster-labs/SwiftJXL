@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "runtimeBase": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+  "cases": [
+    {
+      "name": "small-rgb8",
+      "serialisationChangedPredecessorBytes": false,
+      "successorSizeDelta": 0
+    },
+    {
+      "name": "gray16",
+      "serialisationChangedPredecessorBytes": false,
+      "successorSizeDelta": 0
+    },
+    {
+      "name": "rgb8",
+      "serialisationChangedPredecessorBytes": false,
+      "successorSizeDelta": 0
+    },
+    {
+      "name": "group-rgb8",
+      "serialisationChangedPredecessorBytes": false,
+      "successorSizeDelta": 4
+    },
+    {
+      "name": "group-rgba16",
+      "serialisationChangedPredecessorBytes": false,
+      "successorSizeDelta": 4
+    },
+    {
+      "name": "flat-gray16",
+      "serialisationChangedPredecessorBytes": false,
+      "successorSizeDelta": 0
+    },
+    {
+      "name": "noise-rgb8",
+      "serialisationChangedPredecessorBytes": false,
+      "successorSizeDelta": 4
+    },
+    {
+      "name": "large-gray16",
+      "serialisationChangedPredecessorBytes": false,
+      "successorSizeDelta": 4
+    },
+    {
+      "name": "large-gray8",
+      "serialisationChangedPredecessorBytes": false,
+      "successorSizeDelta": 4
+    }
+  ],
+  "notes": [
+    "All 27 generated files decoded with pinned libjxl with exact samples.",
+    "Serial control replaces only predecessor ParallelMap; the predecessor checkout is unchanged.",
+    "Multigroup successor emission adds a 32-bit empty global ANS terminal state: the four-byte difference is format emission, not an input stride or sample change.",
+    "No latency or comparative peak claim is made from this preflight, which ran alongside other validation."
+  ]
+}

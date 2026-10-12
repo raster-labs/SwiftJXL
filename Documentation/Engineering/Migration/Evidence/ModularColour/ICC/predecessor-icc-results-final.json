@@ -1,0 +1,74 @@
+[
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-12.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-16.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-8.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-12.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-16.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-8.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-12.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-16.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-8.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-12.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-16.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  },
+  {
+    "file": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-8.jxl",
+    "exit": 0,
+    "output": "rejected: notImplemented(\"decodeModular requires a Modular frame; got varDCT\")",
+    "error": ""
+  }
+]

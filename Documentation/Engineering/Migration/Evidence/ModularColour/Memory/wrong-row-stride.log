@@ -1,0 +1,339 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 212]
+[Planning deferred tasks]
+[55 / 122] SwiftJXLCore
+[60 / 123] SwiftJXL_SwiftJXLCoreTests
+[63 / 123] SwiftJXL_SwiftJXLCoreTests
+[64 / 123] SwiftJXL_SwiftJXLCoreTests
+[65 / 123]
+[67 / 125] SwiftJXLCore
+[70 / 125] SwiftJXLCore
+[79 / 126] SwiftJXL
+[99 / 129] swiftjxl-cli-product
+[102 / 131] SwiftJXLCoreTests-product
+[105 / 135] swiftjxl-cli-product
+[109 / 135] SwiftJXLTests-product
+[118 / 135] SwiftJXLCoreTests-product
+[122 / 135] SwiftJXLTests-product
+[123 / 135] SwiftJXLTests-product
+[127 / 135]
+[129 / 135] SwiftJXLCoreTests-product
+[131 / 135] SwiftJXLCoreTests-product
+Build complete! (9.88 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ModularStorageTests started.
+◇ Test paddedCallerStorage(_:_:) started.
+◇ Test publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "gray8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 0, 165, 165, 71, 0, 165, 165, 142, 0, 165, 165, 213, 0, 165, 165, 28, 0, 165, 165, 99, 0, 165, 165, 170, 0, 165, 165, 241,  [large diagnostic omitted: 10074 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 0, 165, 165, 71, 0, 165, 165, 142, 0, 165, 165, 213, 0, 165, 165, 28, 0, 165, 165, 99, 0, 165, 165, 170, 0, 165, 165, 241 [large diagnostic omitted: 10076 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "gray8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 0, 165, 165, 0, 71, 165, 165, 0, 142, 165, 165, 0, 213, 165, 165, 0, 28, 165, 165, 0, 99, 165, 165, 0, 170, 165, 165, 0, 24 [large diagnostic omitted: 10074 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 0, 165, 165, 0, 71, 165, 165, 0, 142, 165, 165, 0, 213, 165, 165, 0, 28, 165, 165, 0, 99, 165, 165, 0, 170, 165, 165, 0,  [large diagnostic omitted: 10076 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "gray8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 165, 165, 71, 165, 165, 142, 165, 165, 213, 165, 165, 28, 165, 165, 99, 165, 165, 170, 165, 165, 241, 165, 165, 56, 165, 16 [large diagnostic omitted: 8493 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 165, 165, 71, 165, 165, 142, 165, 165, 213, 165, 165, 28, 165, 165, 99, 165, 165, 170, 165, 165, 241, 165, 165, 56, 165,  [large diagnostic omitted: 8495 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "grayalpha8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 165, 165, 184, 71, 165, 165, 255, 142, 165, 165, 70, 213, 165, 165, 141, 28, 165, 165, 212, 99, 165, 165, 27, 170, 165 [large diagnostic omitted: 10910 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 165, 165, 184, 71, 165, 165, 255, 142, 165, 165, 70, 213, 165, 165, 141, 28, 165, 165, 212, 99, 165, 165, 27, 170, 1 [large diagnostic omitted: 10912 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "grayalpha8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 113, 0, 0, 165, 165, 0, 184, 0, 71, 165, 165, 0, 255, 0, 142, 165, 165, 0, 70, 0, 213, 165, 165, 0, 141, 0, 28, 165, 165, 0 [large diagnostic omitted: 14072 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 113, 0, 0, 165, 165, 0, 184, 0, 71, 165, 165, 0, 255, 0, 142, 165, 165, 0, 70, 0, 213, 165, 165, 0, 141, 0, 28, 165, 165, [large diagnostic omitted: 14074 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "grayalpha8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 165, 165, 184, 0, 165, 165, 255, 0, 165, 165, 70, 0, 165, 165, 141, 0, 165, 165, 212, 0, 165, 165, 27, 0, 165, 165, 98 [large diagnostic omitted: 20062 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 165, 165, 184, 0, 165, 165, 255, 0, 165, 165, 70, 0, 165, 165, 141, 0, 165, 165, 212, 0, 165, 165, 27, 0, 165, 165,  [large diagnostic omitted: 20064 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "grayalpha16", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 113, 0, 0, 165, 165, 0, 184, 0, 71, 165, 165, 0, 255, 0, 142, 165, 165, 1, 70, 0, 213, 165, 165, 1, 141, 1, 28, 165, 165, 1 [large diagnostic omitted: 15401 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 113, 0, 0, 165, 165, 0, 184, 0, 71, 165, 165, 0, 255, 0, 142, 165, 165, 1, 70, 0, 213, 165, 165, 1, 141, 1, 28, 165, 165, [large diagnostic omitted: 15403 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "rgb12", planar → false to publicOwningColourDestination(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "grayalpha16", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "grayalpha16", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 0, 0, 165, 165, 184, 0, 71, 0, 165, 165, 255, 0, 142, 0, 165, 165, 70, 1, 213, 0, 165, 165, 141, 1, 28, 1, 165, 165, 2 [large diagnostic omitted: 15401 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 0, 0, 165, 165, 184, 0, 71, 0, 165, 165, 255, 0, 142, 0, 165, 165, 70, 1, 213, 0, 165, 165, 141, 1, 28, 1, 165, 165, [large diagnostic omitted: 15403 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "grayalpha16", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "rgb12", planar → true to publicOwningColourDestination(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "grayalpha8", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "grayalpha8", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "grayalpha16", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 165, 165, 184, 0, 165, 165, 255, 0, 165, 165, 70, 1, 165, 165, 141, 1, 165, 165, 212, 1, 165, 165, 27, 2, 165, 165, 98 [large diagnostic omitted: 21391 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 165, 165, 184, 0, 165, 165, 255, 0, 165, 165, 70, 1, 165, 165, 141, 1, 165, 165, 212, 1, 165, 165, 27, 2, 165, 165,  [large diagnostic omitted: 21393 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "rgb8", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgb8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 212 [large diagnostic omitted: 13315 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 2 [large diagnostic omitted: 13317 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "rgb8", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "rgba8", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "rgba16", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgb8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165,  [large diagnostic omitted: 18058 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165 [large diagnostic omitted: 18060 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "rgba8", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgb8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165, 21 [large diagnostic omitted: 30038 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165,  [large diagnostic omitted: 30040 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "rgba16", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgba8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 83, 226, 113, 0, 165, 165, 154, 41, 184, 71, 165, 165, 225, 112, 255, 142, 165, 165, 40, 183, 70, 213, 165, 165, 111, 254, 141 [large diagnostic omitted: 15718 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 83, 226, 113, 0, 165, 165, 154, 41, 184, 71, 165, 165, 225, 112, 255, 142, 165, 165, 40, 183, 70, 213, 165, 165, 111, 254, 1 [large diagnostic omitted: 15720 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "rgba8", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgba8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 83, 0, 226, 0, 113, 0, 0, 165, 165, 0, 154, 0, 41, 0, 184, 0, 71, 165, 165, 0, 225, 0, 112, 0, 255, 0, 142, 165, 165, 0, 40 [large diagnostic omitted: 22042 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 83, 0, 226, 0, 113, 0, 0, 165, 165, 0, 154, 0, 41, 0, 184, 0, 71, 165, 165, 0, 225, 0, 112, 0, 255, 0, 142, 165, 165, 0,  [large diagnostic omitted: 22044 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "rgb12", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "rgb12", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "rgb12", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgb12", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 113, 0, 0, 0, 165, 165, 41, 1, 184, 0, 71, 0, 165, 165, 112, 1, 255, 0, 142, 0, 165, 165, 183, 1, 70, 1, 213, 0, 165,  [large diagnostic omitted: 18632 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 113, 0, 0, 0, 165, 165, 41, 1, 184, 0, 71, 0, 165, 165, 112, 1, 255, 0, 142, 0, 165, 165, 183, 1, 70, 1, 213, 0, 165 [large diagnostic omitted: 18634 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "rgb12", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgba8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 83, 0, 165, 165, 154, 0, 165, 165, 225, 0, 165, 165, 40, 0, 165, 165, 111, 0, 165, 165, 182, 0, 165, 165, 253, 0, 165, 165, 68 [large diagnostic omitted: 40012 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 83, 0, 165, 165, 154, 0, 165, 165, 225, 0, 165, 165, 40, 0, 165, 165, 111, 0, 165, 165, 182, 0, 165, 165, 253, 0, 165, 165,  [large diagnostic omitted: 40014 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → false to publicOwningColourDestination(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgb12", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 1, 41, 0, 184, 0, 71, 165, 165, 1, 112, 0, 255, 0, 142, 165, 165, 1, 183, 1, 70, 0, 213, 165,  [large diagnostic omitted: 18632 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 1, 41, 0, 184, 0, 71, 165, 165, 1, 112, 0, 255, 0, 142, 165, 165, 1, 183, 1, 70, 0, 213, 165 [large diagnostic omitted: 18634 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "rgb12", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgb12", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 1, 165, 165, 112, 1, 165, 165, 183, 1, 165, 165, 254, 1, 165, 165, 69, 2, 165, 165, 140, 2, 165, 165, 21 [large diagnostic omitted: 30612 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 1, 165, 165, 112, 1, 165, 165, 183, 1, 165, 165, 254, 1, 165, 165, 69, 2, 165, 165, 140, 2, 165, 165,  [large diagnostic omitted: 30614 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → true to publicOwningColourDestination(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "palette-rgb16", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgba16", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 83, 1, 226, 0, 113, 0, 0, 0, 165, 165, 154, 1, 41, 1, 184, 0, 71, 0, 165, 165, 225, 1, 112, 1, 255, 0, 142, 0, 165, 165, 40, 2 [large diagnostic omitted: 24712 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 83, 1, 226, 0, 113, 0, 0, 0, 165, 165, 154, 1, 41, 1, 184, 0, 71, 0, 165, 165, 225, 1, 112, 1, 255, 0, 142, 0, 165, 165, 40, [large diagnostic omitted: 24714 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "palette-rgb16", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgba16", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 1, 83, 0, 226, 0, 113, 0, 0, 165, 165, 1, 154, 1, 41, 0, 184, 0, 71, 165, 165, 1, 225, 1, 112, 0, 255, 0, 142, 165, 165, 2, 40 [large diagnostic omitted: 24712 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 1, 83, 0, 226, 0, 113, 0, 0, 165, 165, 1, 154, 1, 41, 0, 184, 0, 71, 165, 165, 1, 225, 1, 112, 0, 255, 0, 142, 165, 165, 2,  [large diagnostic omitted: 24714 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "rgba16", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 83, 1, 165, 165, 154, 1, 165, 165, 225, 1, 165, 165, 40, 2, 165, 165, 111, 2, 165, 165, 182, 2, 165, 165, 253, 2, 165, 165, 68 [large diagnostic omitted: 42682 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 83, 1, 165, 165, 154, 1, 165, 165, 225, 1, 165, 165, 40, 2, 165, 165, 111, 2, 165, 165, 182, 2, 165, 165, 253, 2, 165, 165,  [large diagnostic omitted: 42684 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "groups-grayalpha16", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "groups-grayalpha16", planar → false at ModularStorageTests.swift:148:13: Expectation failed: matches
+↳ matches → <not evaluated>
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "groups-grayalpha16", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "groups-grayalpha16", planar → true at ModularStorageTests.swift:148:13: Expectation failed: matches
+↳ matches → <not evaluated>
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "groups-rgba16", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "groups-rgba16", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "groups-rgba16", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 83, 1, 226, 0, 113, 0, 0, 0, 165, 165, 154, 1, 41, 1, 184, 0, 71, 0, 165, 165, 225, 1, 112, 1, 255, 0, 142, 0, 165, 165, 40, 2 [large diagnostic omitted: 812003 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 83, 1, 226, 0, 113, 0, 0, 0, 165, 165, 154, 1, 41, 1, 184, 0, 71, 0, 165, 165, 225, 1, 112, 1, 255, 0, 142, 0, 165, 165, 40, [large diagnostic omitted: 812005 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "groups-grayalpha16", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 0, 0, 165, 165, 184, 0, 71, 0, 165, 165, 255, 0, 142, 0, 165, 165, 70, 1, 213, 0, 165, 165, 141, 1, 28, 1, 165, 165, 2 [large diagnostic omitted: 514561 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 0, 0, 165, 165, 184, 0, 71, 0, 165, 165, 255, 0, 142, 0, 165, 165, 70, 1, 213, 0, 165, 165, 141, 1, 28, 1, 165, 165, [large diagnostic omitted: 493529 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "groups-rgba16", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 1, 83, 0, 226, 0, 113, 0, 0, 165, 165, 1, 154, 1, 41, 0, 184, 0, 71, 165, 165, 1, 225, 1, 112, 0, 255, 0, 142, 165, 165, 2, 40 [large diagnostic omitted: 812003 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 1, 83, 0, 226, 0, 113, 0, 0, 165, 165, 1, 154, 1, 41, 0, 184, 0, 71, 165, 165, 1, 225, 1, 112, 0, 255, 0, 142, 165, 165, 2,  [large diagnostic omitted: 812005 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "groups-grayalpha16", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 113, 0, 0, 165, 165, 0, 184, 0, 71, 165, 165, 0, 255, 0, 142, 165, 165, 1, 70, 0, 213, 165, 165, 1, 141, 1, 28, 165, 165, 1 [large diagnostic omitted: 514561 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 113, 0, 0, 165, 165, 0, 184, 0, 71, 165, 165, 0, 255, 0, 142, 165, 165, 1, 70, 0, 213, 165, 165, 1, 141, 1, 28, 165, 165, [large diagnostic omitted: 493529 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "groups-rgba16", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 83, 1, 165, 165, 154, 1, 165, 165, 225, 1, 165, 165, 40, 2, 165, 165, 111, 2, 165, 165, 182, 2, 165, 165, 253, 2, 165, 165, 68 [large diagnostic omitted: 1336913 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 83, 1, 165, 165, 154, 1, 165, 165, 225, 1, 165, 165, 40, 2, 165, 165, 111, 2, 165, 165, 182, 2, 165, 165, 253, 2, 165, 165,  [large diagnostic omitted: 1336915 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "groups-grayalpha16", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 165, 165, 184, 0, 165, 165, 255, 0, 165, 165, 70, 1, 165, 165, 141, 1, 165, 165, 212, 1, 165, 165, 27, 2, 165, 165, 98 [large diagnostic omitted: 689531 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 113, 0, 165, 165, 184, 0, 165, 165, 255, 0, 165, 165, 70, 1, 165, 165, 141, 1, 165, 165, 212, 1, 165, 165, 27, 2, 165, 165,  [large diagnostic omitted: 668499 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "groups-rgb8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 212 [large diagnostic omitted: 3160892 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 2 [large diagnostic omitted: 3160894 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "responsive-wide-rgb8", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "responsive-wide-rgb8", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-gray8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 165, 165, 71, 165, 165, 142, 165, 165, 213, 165, 165, 28, 165, 165, 99, 165, 165, 170, 165, 165, 241, 165, 165, 56, 165, 16 [large diagnostic omitted: 1946404 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 165, 165, 71, 165, 165, 142, 165, 165, 213, 165, 165, 28, 165, 165, 99, 165, 165, 170, 165, 165, 241, 165, 165, 56, 165,  [large diagnostic omitted: 1946406 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "groups-rgb8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165,  [large diagnostic omitted: 4356695 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165 [large diagnostic omitted: 4356697 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "groups-rgb8", planar → false at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+✘ Test publicOwningColourDestination(_:_:) recorded an issue with 2 arguments name → "groups-rgb8", planar → true at ModularStorageTests.swift:139:9: Expectation failed: try result.image.storage.withUnsafeBytes { Array($0) } == expected
+↳ try result.image.storage.withUnsafeBytes { Array($0) } == expected → <not evaluated>
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-small-rgb8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 212 [large diagnostic omitted: 13315 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 2 [large diagnostic omitted: 13317 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-small-rgb8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165,  [large diagnostic omitted: 18058 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165 [large diagnostic omitted: 18060 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-small-rgb8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165, 21 [large diagnostic omitted: 30038 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165,  [large diagnostic omitted: 30040 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "palette-rgb8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 62, 31, 0, 165, 165, 109, 78, 47, 165, 165, 156, 125, 94, 165, 165, 203, 172, 141, 165, 165, 62, 31, 0, 165, 165, 109, 78, 47, [large diagnostic omitted: 13064 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 62, 31, 0, 165, 165, 109, 78, 47, 165, 165, 156, 125, 94, 165, 165, 203, 172, 141, 165, 165, 62, 31, 0, 165, 165, 109, 78, 4 [large diagnostic omitted: 13066 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "palette-rgb8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 62, 0, 31, 0, 0, 165, 165, 0, 109, 0, 78, 0, 47, 165, 165, 0, 156, 0, 125, 0, 94, 165, 165, 0, 203, 0, 172, 0, 141, 165, 16 [large diagnostic omitted: 17807 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 62, 0, 31, 0, 0, 165, 165, 0, 109, 0, 78, 0, 47, 165, 165, 0, 156, 0, 125, 0, 94, 165, 165, 0, 203, 0, 172, 0, 141, 165,  [large diagnostic omitted: 17809 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "palette-rgb8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 62, 0, 165, 165, 109, 0, 165, 165, 156, 0, 165, 165, 203, 0, 165, 165, 62, 0, 165, 165, 109, 0, 165, 165, 156, 0, 165, 165, 20 [large diagnostic omitted: 29787 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 62, 0, 165, 165, 109, 0, 165, 165, 156, 0, 165, 165, 203, 0, 165, 165, 62, 0, 165, 165, 109, 0, 165, 165, 156, 0, 165, 165,  [large diagnostic omitted: 29789 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 0 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-gray8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 0, 165, 165, 0, 71, 165, 165, 0, 142, 165, 165, 0, 213, 165, 165, 0, 28, 165, 165, 0, 99, 165, 165, 0, 170, 165, 165, 0, 24 [large diagnostic omitted: 2345005 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 0, 165, 165, 0, 71, 165, 165, 0, 142, 165, 165, 0, 213, 165, 165, 0, 28, 165, 165, 0, 99, 165, 165, 0, 170, 165, 165, 0,  [large diagnostic omitted: 2345007 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 1 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "palette-rgb16", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 62, 0, 31, 0, 0, 0, 165, 165, 109, 0, 78, 0, 47, 0, 165, 165, 156, 0, 125, 0, 94, 0, 165, 165, 203, 0, 172, 0, 141, 0, 165, 16 [large diagnostic omitted: 17807 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 62, 0, 31, 0, 0, 0, 165, 165, 109, 0, 78, 0, 47, 0, 165, 165, 156, 0, 125, 0, 94, 0, 165, 165, 203, 0, 172, 0, 141, 0, 165,  [large diagnostic omitted: 17809 characters; original log hash recorded]
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 2 to paddedCallerStorage(_:_:) started.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "palette-rgb16", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 62, 0, 31, 0, 0, 165, 165, 0, 109, 0, 78, 0, 47, 165, 165, 0, 156, 0, 125, 0, 94, 165, 165, 0, 203, 0, 172, 0, 141, 165, 16 [large diagnostic omitted: 17807 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 62, 0, 31, 0, 0, 165, 165, 0, 109, 0, 78, 0, 47, 165, 165, 0, 156, 0, 125, 0, 94, 165, 165, 0, 203, 0, 172, 0, 141, 165,  [large diagnostic omitted: 17809 characters; original log hash recorded]
+✘ Test publicOwningColourDestination(_:_:) with 20 test cases failed after 10.907 seconds with 22 issues.
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "palette-rgb16", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 62, 0, 165, 165, 109, 0, 165, 165, 156, 0, 165, 165, 203, 0, 165, 165, 62, 0, 165, 165, 109, 0, 165, 165, 156, 0, 165, 165, 20 [large diagnostic omitted: 29787 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 62, 0, 165, 165, 109, 0, 165, 165, 156, 0, 165, 165, 203, 0, 165, 165, 62, 0, 165, 165, 109, 0, 165, 165, 156, 0, 165, 165,  [large diagnostic omitted: 29789 characters; original log hash recorded]
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-gray8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 0, 165, 165, 71, 0, 165, 165, 142, 0, 165, 165, 213, 0, 165, 165, 28, 0, 165, 165, 99, 0, 165, 165, 170, 0, 165, 165, 241,  [large diagnostic omitted: 2345005 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 0, 165, 165, 71, 0, 165, 165, 142, 0, 165, 165, 213, 0, 165, 165, 28, 0, 165, 165, 99, 0, 165, 165, 170, 0, 165, 165, 241 [large diagnostic omitted: 2345007 characters; original log hash recorded]
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-wide-rgb8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 212 [large diagnostic omitted: 1652258 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 2 [large diagnostic omitted: 1652260 characters; original log hash recorded]
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "groups-rgb8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165, 21 [large diagnostic omitted: 7034835 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165,  [large diagnostic omitted: 7034837 characters; original log hash recorded]
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-rgb8", variant → 0 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 212 [large diagnostic omitted: 3160892 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 113, 0, 165, 165, 41, 184, 71, 165, 165, 112, 255, 142, 165, 165, 183, 70, 213, 165, 165, 254, 141, 28, 165, 165, 69, 2 [large diagnostic omitted: 3160894 characters; original log hash recorded]
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-wide-rgb8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165,  [large diagnostic omitted: 2279099 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165 [large diagnostic omitted: 2279101 characters; original log hash recorded]
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-wide-rgb8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165, 21 [large diagnostic omitted: 3673519 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165,  [large diagnostic omitted: 3673521 characters; original log hash recorded]
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-rgb8", variant → 1 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165,  [large diagnostic omitted: 4356695 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 0, 226, 0, 113, 0, 0, 165, 165, 0, 41, 0, 184, 0, 71, 165, 165, 0, 112, 0, 255, 0, 142, 165, 165, 0, 183, 0, 70, 0, 213, 165 [large diagnostic omitted: 4356697 characters; original log hash recorded]
+✘ Test paddedCallerStorage(_:_:) recorded an issue with 2 arguments name → "responsive-rgb8", variant → 2 at ModularStorageTests.swift:52:13: Expectation failed: actual == expected
+↳ actual == expected → false
+↳   actual → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165, 21 [large diagnostic omitted: 7034835 characters; original log hash recorded]
+↳   expected → [165, 165, 165, 165, 165, 165, 165, 165, 226, 0, 165, 165, 41, 0, 165, 165, 112, 0, 165, 165, 183, 0, 165, 165, 254, 0, 165, 165, 69, 0, 165, 165, 140, 0, 165, 165,  [large diagnostic omitted: 7034837 characters; original log hash recorded]
+✘ Test paddedCallerStorage(_:_:) with 48 test cases failed after 19.613 seconds with 48 issues.
+✘ Suite ModularStorageTests failed after 19.613 seconds with 70 issues.
+✘ Test run with 2 tests in 1 suite failed after 19.613 seconds with 70 issues.
+Note: Some test targets reported failures:
+  - SwiftJXLCoreTests (Swift Testing)

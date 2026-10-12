@@ -1,0 +1,64 @@
+--- a/Sources/SwiftJXLCore/Modular/ModularChannelDecoder.swift
++++ b/Sources/SwiftJXLCore/Modular/ModularChannelDecoder.swift
+@@ -64,6 +64,14 @@
+     guard width > 0, height > 0, !overflow, count == out.count, !tree.nodes.isEmpty else {
+         throw BitstreamError.malformedValue("Invalid channel geometry or tree")
+     }
++    // A single gradient leaf does not consult properties or WP state. Dispatch
++    // once per channel so its loop reads only the three required neighbours.
++    if tree.nodes.count == 1, tree.nodes[0].isLeaf, tree.nodes[0].rawPredictor == 5 {
++        try decodeSingleLeafGradient(width: width, height: height, staticChannel: staticChannel,
++            leaf: tree.nodes[0], stream: &stream, from: &r,
++            sampleMaximum: sampleMaximum, out: &out)
++        return
++    }
+     var wp = WeightedPredictor(header: wpHeader, xsize: width)
+     // Reused 16-element properties array — allocating a fresh
+     // `[Int32]` per pixel was a measurable hot spot.
+@@ -193,6 +201,46 @@
+     }
+ }
+ 
++
++/// Specialisation of the generic loop, preserving wrapping residual arithmetic,
++/// precision rejection and token/row cancellation checks. The caller has checked
++/// dimensions and sample count. Storage remains in its synchronous owner borrow.
++private func decodeSingleLeafGradient<Storage: ModularSampleBuffer>(
++    width: Int, height: Int, staticChannel: Int32, leaf: ModularTreeNode,
++    stream: inout TokenStreamReader, from r: inout BitReader,
++    sampleMaximum: Int32?, out: inout Storage
++) throws {
++    for y in 0..<height {
++        try Task.checkCancellation()
++        let rowBase = y * width, prevRow = (y - 1) * width
++        for x in 0..<width {
++            let left: Int32
++            if x > 0 { left = out[rowBase + x - 1] }
++            else if y > 0 { left = out[prevRow + x] }
++            else { left = 0 }
++            let top: Int32 = y > 0 ? out[prevRow + x] : left
++            let topLeft: Int32 = x > 0 && y > 0 ? out[prevRow + x - 1] : left
++            let token: UInt32
++            do { token = try stream.readToken(context: leaf.leafId, from: &r) }
++            catch let error as TokenStreamReaderError {
++                throw ModularChannelDecoderError.tokenAtPosition(
++                    x: x, y: y, channel: staticChannel, inner: error)
++            }
++            let gradient = left &+ top &- topLeft
++            let predicted = min(max(gradient, min(left, top)), max(left, top))
++            let signedRes = ZigZag.unpack(token)
++            let scaled = Int32(truncatingIfNeeded:
++                Int64(signedRes) &* Int64(leaf.multiplier))
++            let value = Int32(truncatingIfNeeded:
++                Int64(predicted) &+ Int64(leaf.predictorOffset) &+ Int64(scaled))
++            if let sampleMaximum, value < 0 || value > sampleMaximum {
++                throw BitstreamError.malformedValue("Sample outside declared precision")
++            }
++            out[rowBase + x] = value
++        }
++    }
++}
++
+ /// Convenience: decode one Modular channel into a fresh `[Int32]`
+ /// buffer. See `decodeModularChannel(...)` for parameter semantics.
+ package func decodeModularChannel(

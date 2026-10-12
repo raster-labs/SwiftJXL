@@ -5,6 +5,61 @@ import SwiftJXL
 import SwiftJXLCore
 
 struct ScalarMemoryTests {
+    /// Zero-bit symbols must still reach a cancellation/limit checkpoint.
+    private func emitTokens(prefix: Bool, afterFirst: () -> Void) throws {
+        let header = EntropySectionHeader(lz77: .disabled,
+            contextMap: .trivial(numContexts: 1), usePrefixCode: prefix,
+            logAlphaSize: 5, uintConfigs: [.raw4])
+        var bits = BitWriter()
+        if prefix {
+            let book = MultiClusterCodebook(huffmanTables: [try PrefixCodeTable(lengths: [0])],
+                ansCounts: [], alphabetSizes: [1])
+            let writer = TokenStreamWriter(header: header, codebook: book)
+            try writer.writeToken(context: 0, value: 0, to: &bits)
+            afterFirst()
+            for _ in 0..<256 { try writer.writeToken(context: 0, value: 0, to: &bits) }
+        } else {
+            let book = MultiClusterCodebook(huffmanTables: [],
+                ansCounts: [[Int32(ANSConstants.tabSize)]], alphabetSizes: [1])
+            var writer = try ANSTokenStreamWriter(header: header, codebook: book)
+            try writer.writeToken(context: 0, value: 0)
+            afterFirst()
+            for _ in 0..<256 { try writer.writeToken(context: 0, value: 0) }
+        }
+    }
+
+    @Test(arguments: [false, true])
+    func entropyCheckpointsBoundLatchedFailure(_ prefix: Bool) throws {
+        let budget = try ScalarOperationBudget(retainedBytes: 0, maximumWorkspaceBytes: 1024,
+            maximumMemoryBytes: 1024, maximumDecodedBytes: 1024, maximumCompressedBytes: 1,
+            deadline: .now.advanced(by: .seconds(10)))
+        let work = ScalarEncodingWork(budget: budget, writerByteLimit: 1)
+        ScalarEncodingWork.$current.withValue(work) {
+            #expect(throws: ScalarModularError.self) {
+                try emitTokens(prefix: prefix, afterFirst: { work.rejectGrowth() })
+            }
+        }
+        let expired = try ScalarOperationBudget(retainedBytes: 0, maximumWorkspaceBytes: 1024,
+            maximumMemoryBytes: 1024, maximumDecodedBytes: 1024, maximumCompressedBytes: 1,
+            deadline: .now.advanced(by: .seconds(-1)))
+        ScalarEncodingWork.$current.withValue(ScalarEncodingWork(budget: expired, writerByteLimit: 1)) {
+            #expect(throws: ScalarModularError.self) {
+                try emitTokens(prefix: prefix, afterFirst: { Issue.record("Expired work emitted a token") })
+            }
+        }
+    }
+
+    @Test(arguments: [false, true])
+    func entropyCheckpointsBoundCancellation(_ prefix: Bool) async throws {
+        let task = Task {
+            try emitTokens(prefix: prefix, afterFirst: { withUnsafeCurrentTask { $0?.cancel() } })
+        }
+        do {
+            try await task.value
+            Issue.record("Cancelled token emission succeeded")
+        } catch is CancellationError { }
+    }
+
     @Test func aggregateAdmissionIsCheckedAndOverflowCannotWrap() throws {
         let budget = try ScalarOperationBudget(retainedBytes: 10, maximumWorkspaceBytes: 20,
             maximumMemoryBytes: 40, maximumDecodedBytes: 10, maximumCompressedBytes: 10,

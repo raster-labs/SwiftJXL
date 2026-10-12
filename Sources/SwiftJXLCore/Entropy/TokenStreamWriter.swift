@@ -56,7 +56,7 @@ package struct TokenStreamWriter: Sendable {
     package func writeToken(
         context ctx: Int, value: UInt32, to w: inout BitWriter
     ) throws {
-        try ScalarEncodingWork.checkpoint()
+        try w.checkpointToken()
         if header.lz77.enabled {
             // The encoder side needs a back-reference search to
             // exploit LZ77; without one we'd fail to maintain the

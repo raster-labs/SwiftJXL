@@ -1,0 +1,47 @@
+[
+  {
+    "case": "small-rgb8",
+    "byteIdenticalToRetainedSerialSuccessor": true,
+    "independentHeadersAndSamplesExact": true
+  },
+  {
+    "case": "gray16",
+    "byteIdenticalToRetainedSerialSuccessor": true,
+    "independentHeadersAndSamplesExact": true
+  },
+  {
+    "case": "rgb8",
+    "byteIdenticalToRetainedSerialSuccessor": true,
+    "independentHeadersAndSamplesExact": true
+  },
+  {
+    "case": "group-rgb8",
+    "byteIdenticalToRetainedSerialSuccessor": true,
+    "independentHeadersAndSamplesExact": true
+  },
+  {
+    "case": "group-rgba16",
+    "byteIdenticalToRetainedSerialSuccessor": true,
+    "independentHeadersAndSamplesExact": true
+  },
+  {
+    "case": "flat-gray16",
+    "byteIdenticalToRetainedSerialSuccessor": true,
+    "independentHeadersAndSamplesExact": true
+  },
+  {
+    "case": "noise-rgb8",
+    "byteIdenticalToRetainedSerialSuccessor": true,
+    "independentHeadersAndSamplesExact": true
+  },
+  {
+    "case": "large-gray16",
+    "byteIdenticalToRetainedSerialSuccessor": true,
+    "independentHeadersAndSamplesExact": true
+  },
+  {
+    "case": "large-gray8",
+    "byteIdenticalToRetainedSerialSuccessor": true,
+    "independentHeadersAndSamplesExact": true
+  }
+]

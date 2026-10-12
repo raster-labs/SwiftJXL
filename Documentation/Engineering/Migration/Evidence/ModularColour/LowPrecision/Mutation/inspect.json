@@ -1,0 +1,295 @@
+{
+  "status": "passed",
+  "entry": "inspect",
+  "requestedSeconds": 3600.0,
+  "host": "macOS-27.0.1-arm64-arm-64bit",
+  "python": "3.9.6",
+  "randomSeed": 20261012,
+  "binarySHA256": "979e15225bb7b8ce776470397b218e4bbb41cd55ee5d3be31b96e357dbfa082d",
+  "scriptSHA256": "c51a952c253948c17b5ae736bcf4834a0ea00f06085dca2b888b0ffb06983cb5",
+  "preflight": [
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-2.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-3.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-4.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-5.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-6.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-2.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-3.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-4.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-5.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-6.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-2.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-3.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-4.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-5.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-6.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-2.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-3.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-4.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-5.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-6.jxl",
+      "outcome": "accepted"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+      "outcome": "accepted"
+    }
+  ],
+  "seeds": [
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+      "sha256": "0d2567d990b172482325c33f935b74015ae3c6cff496b6c7bd1ccea3e992caef",
+      "bytes": 245
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-2.jxl",
+      "sha256": "9e582a44b008ded7f76cbe13e63664ed212a7bbd9d93d95beaa1a8b709263bc4",
+      "bytes": 428
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-3.jxl",
+      "sha256": "c414771d7483bd848a80f2808235f8cfb02d420858950b1c166cef183391fc1b",
+      "bytes": 388
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-4.jxl",
+      "sha256": "59ff66dffb2514f8069cba9ea4ec93b078eb8fd729e5073e4cb04b60619ad6ec",
+      "bytes": 752
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-5.jxl",
+      "sha256": "71c3d5451e52f26c8f0fa77659287591629ce1244073a64833a59624d4bd9873",
+      "bytes": 676
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-6.jxl",
+      "sha256": "be0dc0748d0ac438806496f2c1635944db0fa173e0cc152baa0c9ce1817083d0",
+      "bytes": 951
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+      "sha256": "fd6328a7588b9a1730a63cf50677cd5f1b7ade5f282636d8adf051a6c31d3ada",
+      "bytes": 1391
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+      "sha256": "fada28978e768f2f15d56be7f5a37838d6581add9f3267529a5a0f9e834a37dc",
+      "bytes": 469
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-2.jxl",
+      "sha256": "1116c3d56b8312fc475949669a14fa3731d5ec352b8d7b9d71b4f2529446b251",
+      "bytes": 499
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-3.jxl",
+      "sha256": "675e9f56e4d155fc714430054c0299d235ac20283a756c648da801ce4650bd55",
+      "bytes": 792
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-4.jxl",
+      "sha256": "bfc59393463d4d881e422ee5d0e9b2286764eaaeef67002eaafb6630fee010ea",
+      "bytes": 712
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-5.jxl",
+      "sha256": "0bbfa916d1603bcf2dbe89c8d090e4564eb5a51ae2e8a94834736a2b10fc19d9",
+      "bytes": 920
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-6.jxl",
+      "sha256": "02d373b5c54f831d81054d05615c4bf38d34f9b76cc776bf0d86c941e110dba3",
+      "bytes": 763
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+      "sha256": "0747a5b0b4f14bb95fcb35c514396e987b53134bb9c423f6424f2d99dba1e5d6",
+      "bytes": 659
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+      "sha256": "82420f21c56196539851b6755fd58ac07b04ee293d1d0d00153feeb5e81f0230",
+      "bytes": 440
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-2.jxl",
+      "sha256": "e9696288f19b0a103fe200a8990b3c3b3b49f946821c403123c939264623da40",
+      "bytes": 500
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-3.jxl",
+      "sha256": "bc27a3d999c432d7053e208695cff9222e2a32bebc4ad746e8a00eb89a6c5f43",
+      "bytes": 523
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-4.jxl",
+      "sha256": "600fda64b47ca5896a1e2bdb1c62fe2602fda6a79a418d6d67ee5429df60d5a7",
+      "bytes": 867
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-5.jxl",
+      "sha256": "e00ccfa655579f75b0fb7988cafaaf9a03fa2d2f2de1f374f8c55d0652b09303",
+      "bytes": 1138
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-6.jxl",
+      "sha256": "2a13a97bd105aad5ff73675305449059623fecf66a31a84b66ff8e27e3e2b4d7",
+      "bytes": 1410
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+      "sha256": "1409423f47533c58d91babe89d2ddfbb69ecace906ec4ce850bb263a1d008630",
+      "bytes": 1839
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+      "sha256": "9352e137fa19ce1edc7e286774882ca27415b7d509a1996fb93b09d0c1980c3e",
+      "bytes": 412
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-2.jxl",
+      "sha256": "222a21acc9d8b7755ecc89e73181f07052df9ff5b34aa435e61f26e42c5fb87c",
+      "bytes": 514
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-3.jxl",
+      "sha256": "d7fae7908a0f589edc68e43643a6f7c6f3189035a1d4e29f2b09e3dfb9d9bedd",
+      "bytes": 666
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-4.jxl",
+      "sha256": "dcabeaac3738176ed07bf1800ab83b87cef7f9f9dc5a7cf51c4354902b907be7",
+      "bytes": 943
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-5.jxl",
+      "sha256": "e36dc498b86cd7147e6f59d7a190068b6745e108e0ddad58c58676c826069f1c",
+      "bytes": 1119
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-6.jxl",
+      "sha256": "98142bcc2356a723e92b48f86626105acd0a7764d19bb9b478bdb1ac2aa49e0e",
+      "bytes": 1475
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+      "sha256": "d7e938b9e506d7bee7f1034796c72d4005194f8364d2e7333cb939d98130ad44",
+      "bytes": 2024
+    }
+  ],
+  "iterations": 97614,
+  "outcomes": {
+    "rejected:malformedInput": 76757,
+    "accepted": 19377,
+    "rejected:unsupportedFeature": 1240,
+    "rejected:resourceLimitExceeded": 240
+  },
+  "mutations": {
+    "0": 12202,
+    "1": 12202,
+    "2": 12202,
+    "3": 12202,
+    "4": 12202,
+    "5": 12202,
+    "6": 12201,
+    "7": 12201
+  },
+  "elapsedSeconds": 3600.003116416,
+  "method": "Fresh ASan process per input, 15-second outer timeout; deterministic PRNG and saved current input. Per-entry campaign clock starts after all conformant seeds are accepted. No coverage guidance.",
+  "memoryNote": "Child-process peak RSS includes sanitizer/runtime/startup. API and CLI additionally enforce resource admission; this is not peak algorithm workspace.",
+  "currentCommand": [
+    "../modular-preflight/modular-mutation-probe-low",
+    "inspect",
+    "../modular-preflight/low-mutation-hour-inspect/current-input.bin"
+  ],
+  "currentSeed": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-2.jxl",
+  "currentSHA256": "9e5e00fb00b004195c1db410a6c05b36819c25cd675e72dedde2ac688d037c87",
+  "currentMutation": "5",
+  "childPeakRSSNativeUnits": 66519040
+}

@@ -1,0 +1,159 @@
+{
+  "status": "passed",
+  "entry": "pnm",
+  "requestedSeconds": 3600.0,
+  "host": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.9.6",
+  "randomSeed": 20261009,
+  "binarySHA256": "1fd1f847b86f795091992f163f205406801225c3141f6ea8a6c3e2a981fcbdee",
+  "scriptSHA256": "c51a952c253948c17b5ae736bcf4834a0ea00f06085dca2b888b0ffb06983cb5",
+  "preflight": [
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-1-12.pgm",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-1-16.pgm",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-1-8.pgm",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-2-12.pam",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-2-16.pam",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-2-8.pam",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-3-12.ppm",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-3-16.ppm",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-3-8.ppm",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-4-12.pam",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-4-16.pam",
+      "outcome": "accepted"
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-4-8.pam",
+      "outcome": "accepted"
+    }
+  ],
+  "seeds": [
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-1-12.pgm",
+      "sha256": "c352197b7822895ad846c955790b6c86088258ca1e6c8f4eaeb49757bbc8f7a5",
+      "bytes": 141
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-1-16.pgm",
+      "sha256": "0d67a2a4408b61ccbd8d51a1c23afbe8c236a2e72f03b425639a6093cefd3f20",
+      "bytes": 142
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-1-8.pgm",
+      "sha256": "fae7c6cb453383f21838a67aa7928014804f9b168e1adaf1375563f374bd37c8",
+      "bytes": 89
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-2-12.pam",
+      "sha256": "49b2d22d46141c2aa7cc13595ba912b4559571ea9d029e90ab772c583b477e71",
+      "bytes": 277
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-2-16.pam",
+      "sha256": "bd9e1008d7f5b5ff48ed3c895135d919ff0a39c5249ed5dc38286a654d4063fb",
+      "bytes": 278
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-2-8.pam",
+      "sha256": "2894fb48a516cd8c3b9880b9ced1009808ffca4add89a3adf91acf2019fe723b",
+      "bytes": 174
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-3-12.ppm",
+      "sha256": "e46b26c10cc89db4ed6e3fd45219d309f74091fbfa7299ef9d89005084f9a520",
+      "bytes": 345
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-3-16.ppm",
+      "sha256": "370067b042e9784e4042626951b1b3bce8b349a43e4f4a4bbc14849a37bd47f3",
+      "bytes": 346
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-3-8.ppm",
+      "sha256": "4251ffd3bdfdc400680c946b8bddd36fda8bae0d4d227c111a220ed205b45a3b",
+      "bytes": 191
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-4-12.pam",
+      "sha256": "3c55f12aa70094b29a08a3fc89c03015ae2363ee8c4e871a95c262f1ad39e5cf",
+      "bytes": 475
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-4-16.pam",
+      "sha256": "7da34ab320f0a5942d8774e83818e9b94fc7af112c8481e160586fa848d71a07",
+      "bytes": 476
+    },
+    {
+      "path": "../modular-preflight/pnm-mutation-seeds-final/bt709-4-8.pam",
+      "sha256": "5fc62393ad97cd6bcdd6ec4aa193561e2e40b682be622c239989f0a0126ea336",
+      "bytes": 270
+    }
+  ],
+  "iterations": 138581,
+  "outcomes": {
+    "rejected:exit-4": 7837,
+    "rejected:exit-3": 106497,
+    "accepted": 23938,
+    "rejected:exit-5": 309
+  },
+  "mutations": {
+    "0": 17323,
+    "1": 17323,
+    "2": 17323,
+    "3": 17323,
+    "4": 17323,
+    "5": 17322,
+    "6": 17322,
+    "7": 17322
+  },
+  "elapsedSeconds": 3600.008241125,
+  "method": "Fresh ASan process per input, 15-second outer timeout; deterministic PRNG and saved current input. Per-entry campaign clock starts after all conformant seeds are accepted. No coverage guidance.",
+  "memoryNote": "Child-process peak RSS includes sanitizer/runtime/startup. API and CLI additionally enforce resource admission; this is not peak algorithm workspace.",
+  "currentCommand": [
+    "../evidence/cli-validation-qualification/build/asan/out/Products/Debug/swiftjxl-cli",
+    "encode",
+    "-i",
+    "../modular-preflight/mutation-hour-pnm/current-input.bin",
+    "--input-format",
+    "pnm",
+    "--max-memory",
+    "134217728",
+    "--timeout",
+    "5"
+  ],
+  "currentSeed": "../modular-preflight/pnm-mutation-seeds-final/bt709-2-12.pam",
+  "currentSHA256": "b420aaf769153b606054c7629b32cd841c80a066b02d736a6e677fb7ec4e3a67",
+  "currentMutation": "4",
+  "childPeakRSSNativeUnits": 35979264,
+  "reportSHA256": "1cb2d74de4ab1da71e0f2347a98559cf3cfecf6887de69873b99d61cbb4da886"
+}

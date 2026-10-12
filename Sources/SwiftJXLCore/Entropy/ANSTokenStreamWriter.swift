@@ -125,7 +125,9 @@ package struct ANSTokenStreamWriter {
     package mutating func writeToken(
         context ctx: Int, value: UInt32
     ) throws {
-        try ScalarEncodingWork.checkpoint()
+        // Bound cancellation/deadline latency to 256 tokens, including
+        // zero-bit symbols. Avoid clock/task-local/lock work per sample.
+        if pending.count & 255 == 0 { try ScalarEncodingWork.checkpoint() }
         guard ctx >= 0 && ctx < header.contextMap.numContexts else {
             throw ANSTokenStreamWriterError.contextOutOfRange(
                 ctx, max: header.contextMap.numContexts - 1)
@@ -143,6 +145,7 @@ package struct ANSTokenStreamWriter {
     /// `w` (continuing the same bit position — the decoder reads the
     /// 32-bit state init immediately after the per-cluster codebook).
     package mutating func finish(to w: inout BitWriter) throws {
+        try ScalarEncodingWork.checkpoint()
         let range = UInt32(ANSConstants.tabSize)
         // Per-token refill word, or `noRefill` when the state needed no
         // renorm before encoding that token. The extra bits live in

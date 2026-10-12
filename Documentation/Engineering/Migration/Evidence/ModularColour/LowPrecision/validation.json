@@ -1,0 +1,86 @@
+{
+  "status": "Local library and CLI validation passed; all eight hosted checks passed at bfd12bc; three one-hour low-precision ASan mutation campaigns passed",
+  "baseCommit": "2a59e8a",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "library": {
+    "debug": {
+      "declarations": 182,
+      "cases": 698,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "SWIFTJXL_ORACLE_BIN=/opt/homebrew/bin CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2",
+      "logSHA256": "b0b7c8258973af3930044aca22762c66f2fe28927b8c96351cc58bbe2618675b"
+    },
+    "asan": {
+      "declarations": 14,
+      "cases": 53,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter 'ModularLowPrecisionTests|ModularICCTests|ModularTransformTests'",
+      "logSHA256": "77a5ad410c86dea6b06529027ac210e1ed035cde12f111a05fa333d77843ef71"
+    },
+    "tsan": {
+      "declarations": 14,
+      "cases": 53,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter 'ModularLowPrecisionTests|ModularICCTests|ModularTransformTests'",
+      "logSHA256": "558ce975d5927b380660f22b511a6aa0ea409211b868f8c61087e6113c9eb309"
+    }
+  },
+  "cli": {
+    "debug": {
+      "status": "passed",
+      "checks": 81,
+      "reportSHA256": "e44ae4f1c56513d45963a9d0d55221a832f3cd84d2ff02fd8e64c3c1c385c7bd",
+      "binarySHA256": "9b57d24744aaf99ed2baf04d1516900090266ec3c4cb3f234d13d449d3f35c7d"
+    },
+    "asan": {
+      "status": "passed",
+      "checks": 81,
+      "reportSHA256": "877dbe97d46cac769f3b853234d0f51aac5da1efe228507b0beae9b152e33f74",
+      "binarySHA256": "a703179f5982fb99e08b42677dd46b7c9914d8a2e3bb65ea4d39a4ea411f2c0c"
+    },
+    "tsan": {
+      "status": "passed",
+      "checks": 81,
+      "reportSHA256": "83d7a0048efe0d0362e457ed209fc903086cc6175a0190c2b3b23dc91b5efa98",
+      "binarySHA256": "1cc1778a45ac415908e1e4f028feb814e0719e3057c17828e507fc4e84834ab7"
+    },
+    "release": {
+      "status": "passed",
+      "checks": 81,
+      "reportSHA256": "e9e02ccd910edb8243da0b08b758024a52a630d7fdf03b6233d9a6e8c80069dc",
+      "binarySHA256": "ebc723af5b8125513c97961304c47ff01c25ee9cf6d7026f158b2b660cd087f7"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXL/CodecAPI.swift": "3430b1c0eef3161c325920a74db068114373c0ecb6b3436b46ea0463730cd7f0",
+    "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift": "38ef3fb2d896aab9051d21311d24d87cc5fd678767f00754f200511b8d604d75",
+    "Sources/SwiftJXLCore/Modular/InverseTransforms.swift": "7befaabbfea3c4ce765217737faa1af2be197af1f2cc0b91efcff2c214cd4821",
+    "Sources/SwiftJXLCLI/main.swift": "dd47fe8b070ca90ba386a273020ccbb7d1bbfafc9ef11b4ce78249b8ca3b1b55",
+    "Tests/SwiftJXLCoreTests/ModularLowPrecisionTests.swift": "a0f520f373718667b9bae466b7df1ba97389a0620ada506d9d052d84cfeb42bf",
+    "Scripts/test-cli-low-precision.py": "e15986e7836c7a8f1469370bab3f11c0c99f1b27651fa2a19ffa38cb9915de72",
+    "Scripts/TestSupport/modular-low-precision-fixtures.c": "90e7c1c4dd9be8b5e524fd05471bdb37dd6314ac6f3774e6af77714a32552a9a",
+    "Scripts/TestSupport/modular-mutation-probe.swift": "0e9e0761f9fde19dd7af069ccb59456546cf2b00a2c0ed1bb9d29bda42f7745b",
+    ".github/workflows/contract.yml": "32859bca1f18211f14aaa12c4bf546b49ef6c5a7176c59b9e4c2d29019bf352e"
+  },
+  "findings": [
+    "All28independent1..7bitstreams decodeexactlyinpredecessor andwere rejectedbeforeextension.",
+    "Both outerprofile and inversetransform guards neededthe same1..16decoderbound; firstpartialchange left21multicomponentcases failing; correctedscopes pass.",
+    "AllocateUInt16 orwritecallerUInt8 withoutsample scaling; encode stays8..16 andPNM/NRRDexportsrejectlowprecision.",
+    "ICCpreviousstage CLI completed299checks eachdebug/release/ASan/TSan; those reports remain scopedtoitsruntime.",
+    "Three one-hour low-precision ASan campaigns completed with 279975 mutations and no reported failures."
+  ],
+  "mutationCampaign": "Mutation/validation.json",
+  "hostedValidation": {
+    "head": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+    "run": 38207550527,
+    "passedJobs": 8,
+    "includesMacOS": true
+  }
+}

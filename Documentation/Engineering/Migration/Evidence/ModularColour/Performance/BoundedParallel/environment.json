@@ -1,0 +1,50 @@
+{
+  "observedUTC": "2026-10-12T06:57:22.160350+00:00",
+  "power": {
+    "command": [
+      "pmset",
+      "-g"
+    ],
+    "exitCode": 0,
+    "stdout": "System-wide power settings:\nCurrently in use:\n standby              1\n Sleep On Power Button 1\n hibernatefile        /var/vm/sleepimage\n powernap             1\n networkoversleep     0\n disksleep            10\n sleep                1 (sleep prevented by powerd, sharingd, useractivityd)\n hibernatemode        3\n ttyskeepawake        1\n displaysleep         180\n tcpkeepalive         1\n lowpowermode         0\n womp                 0\n",
+    "stderr": ""
+  },
+  "processes": {
+    "command": [
+      "ps",
+      "-Ao",
+      "pid,etime,pcpu,comm"
+    ],
+    "exitCode": 0,
+    "relevantCompilerOrProbeRows": [],
+    "note": "No swift-frontend, clang, xctest, swift-test or operation-probe rows at capture. Other migration agents explicitly held builds/probes during timing. Full local process list not published."
+  },
+  "cpu": {
+    "command": [
+      "sysctl",
+      "-n",
+      "machdep.cpu.brand_string"
+    ],
+    "exitCode": 0,
+    "stdout": "Apple M4\n",
+    "stderr": ""
+  },
+  "memory": {
+    "command": [
+      "sysctl",
+      "-n",
+      "hw.memsize"
+    ],
+    "exitCode": 0,
+    "stdout": "17179869184\n",
+    "stderr": ""
+  },
+  "os": {
+    "command": [
+      "sw_vers"
+    ],
+    "exitCode": 0,
+    "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+    "stderr": ""
+  }
+}

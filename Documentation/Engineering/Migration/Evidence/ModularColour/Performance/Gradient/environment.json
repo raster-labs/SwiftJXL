@@ -1,0 +1,23 @@
+{
+  "observedUTC": "2026-10-12T07:05:49.798283+00:00",
+  "captureScope": "At benchmark start; migration agents holding builds/probes; own operation benchmark process expected.",
+  "power": {
+    "command": [
+      "pmset",
+      "-g"
+    ],
+    "exitCode": 0,
+    "stdout": "System-wide power settings:\nCurrently in use:\n standby              1\n Sleep On Power Button 1\n hibernatefile        /var/vm/sleepimage\n powernap             1\n networkoversleep     0\n disksleep            10\n sleep                1 (sleep prevented by sharingd, powerd)\n hibernatemode        3\n ttyskeepawake        1\n displaysleep         180\n tcpkeepalive         1\n lowpowermode         0\n womp                 0\n",
+    "stderr": ""
+  },
+  "processes": {
+    "command": [
+      "ps",
+      "-Ao",
+      "pid,etime,pcpu,comm"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

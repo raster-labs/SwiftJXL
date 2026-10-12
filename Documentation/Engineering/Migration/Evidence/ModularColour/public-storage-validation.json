@@ -1,0 +1,65 @@
+{
+  "status": "Public integer Modular decoder and owning storage integrated locally; encoder and full feature-group qualification remain open. No PR/push yet.",
+  "baseCommit": "6560222c8b4dfcb0fdd0ae286c94855ce109733c",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "configurations": {
+    "debug": {
+      "declarations": 35,
+      "cases": 120,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'ModularStorageTests|ModularFrameDecoderTests|ScalarPublicAPITests|ScalarMemoryTests|ScalarLimitTests|ScalarStorageTests|StorageTests'",
+      "logSHA256": "583d8aa1d271e640f92451718534372a0a4d60a7e254a7454be56b117aae1554"
+    },
+    "asan": {
+      "declarations": 35,
+      "cases": 120,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter 'ModularStorageTests|ModularFrameDecoderTests|ScalarPublicAPITests|ScalarMemoryTests|ScalarLimitTests|ScalarStorageTests|StorageTests'",
+      "logSHA256": "50d93cf900e64c470b3809996925216706a98fb95bdde0e878e2c7ad9398060a"
+    },
+    "tsan": {
+      "declarations": 35,
+      "cases": 120,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter 'ModularStorageTests|ModularFrameDecoderTests|ScalarPublicAPITests|ScalarMemoryTests|ScalarLimitTests|ScalarStorageTests|StorageTests'",
+      "logSHA256": "6fd46d9f3948adda958ce4193da92e11e57a404c9b76f278502f3725734c263e"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXL/CodecAPI.swift": "486fe8a217e7a2191144534bec3ff7f226ac39c481f5f84e596d14b49d7dfb12",
+    "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift": "31e25d791217561ef14f93d024f346a6a926e1526f355924e06e2946ef3a3d1e",
+    "Sources/SwiftJXLCore/Codec/ModularSampleStorage.swift": "f8b369c8799e06a062831e9245871d33df48b1ec2fe0a445944c0912cc4cde5f",
+    "Sources/SwiftJXLCore/Modular/ModularImage.swift": "0960d79c30efbc3799abbe2c51e5136b6491fc6a75465c00da6cda65f7957f45",
+    "Sources/SwiftJXLCore/Modular/InverseTransforms.swift": "fba278ebe8d7a0707047a71dacd86017768e0e3c2fdb3443261cc13f87f473c9",
+    "Tests/SwiftJXLCoreTests/ModularStorageTests.swift": "1697dfd1013e87bd1caa75f34e68a173531088c39e9761cae7fb186e093baba1"
+  },
+  "fixtureManifestSHA256": "c9a44ea37f8000c0bc0090b23bd78cc15d25a1f7c4b14de0a58dea02763cc5b1",
+  "cli": {
+    "checks": 15,
+    "passed": 15,
+    "scope": "14 inspect/validate checks plus colour-to-NRRD rejection without output; debug binary only. CLI report-only changes followed library sanitizer runs.",
+    "evidenceSHA256": "d76f128d90fb6ad28ddb3bcc80002d1ec93996046c08ce4551aec46d5d881a30"
+  },
+  "evidence": [
+    "Inspection allocates no controlled pixel/working planes.",
+    "48 core caller-storage cases match every sample and guard/padding byte: 16 independent cjxl fixtures \u00d7 3 byte/layout variants.",
+    "20 public caller-storage cases plus corresponding allocating decodes: exact samples, retained allocation identity, explicit reversed component/plane mappings.",
+    "Identity grey/alpha, including 5-group grey-alpha16, allocates no full algorithm plane; transforms use admitted Int32 planes, no extra final-image staging.",
+    "Actual UInt8 caller capacity is admitted without a fictitious UInt16 destination.",
+    "Alpha mismatch rejects before writing; damaged pixel payload invalidates the destination. Existing scalar memory/resource/concurrency/owning-storage checks pass."
+  ],
+  "limitations": [
+    "Allocation-site audit is not allocator/RSS peak measurement; public unknown peak fields remain nil.",
+    "Premultiplied alpha metadata supported in code but independent associated-alpha fixture qualification remains pending.",
+    "New grouped identity fixture added; previous 15 input fixture bytes preserved.",
+    "Whole-operation release benchmarks, full corpus/fuzz/security review, platform/hosted CI and colour encoder/CLI export remain pending.",
+    "This milestone does not complete migration; production remains JXLSwift."
+  ]
+}

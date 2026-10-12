@@ -1,0 +1,27 @@
+{
+  "recordedUTC": "2026-10-12T06:21:12.295920+00:00",
+  "migrationWork": "All mutation campaigns and migration builds terminal. VarDCT is source-only; memory validation terminal. A separate project has an idle swift-test process; no swift-frontend was active at the scheduling check.",
+  "captureNote": "Initial save used the wrong working-directory-relative path and failed; this capture is during benchmark startup, not before process launch.",
+  "commands": {
+    "pmset -g custom": {
+      "exit": 0,
+      "stdout": "AC Power:\n Sleep On Power Button 1\n lowpowermode         0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         0\n womp                 1\n networkoversleep     0\n sleep                0\n tcpkeepalive         1\n disksleep            10\n",
+      "stderr": ""
+    },
+    "pmset -g batt": {
+      "exit": 0,
+      "stdout": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36634723)\t96%; discharging; 3:40 remaining present: true\n",
+      "stderr": ""
+    },
+    "sw_vers": {
+      "exit": 0,
+      "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+      "stderr": ""
+    },
+    "xcrun swift --version": {
+      "exit": 0,
+      "stdout": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+      "stderr": "swift-driver version: 1.168.6 "
+    }
+  }
+}

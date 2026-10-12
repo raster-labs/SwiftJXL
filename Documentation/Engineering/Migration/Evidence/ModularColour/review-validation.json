@@ -1,0 +1,25 @@
+{
+  "baseCommit": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+  "contract": "0.10.0",
+  "reviewScope": "Changed public Modular integration, frame/group parsing, ICC admission, low-precision samples, transforms, scoped pointer accesses and cancellation; separate memory review and performance qualification.",
+  "finding": "Valid unsupported delta/predicted palette modes were classified as malformed input. Geometry is now validated first, then unsupportedFeature is returned for the known unimplemented modes.",
+  "validation": {
+    "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter \"ModularUnsupportedPaletteTests|ModularTransformTests\"",
+    "exitCode": 0,
+    "declarations": 10,
+    "cases": 14,
+    "failures": 0,
+    "skips": 0,
+    "logSHA256": "e64f99250064cd0cb82ffa9a3ec45dc3ed42e77fae6867ff16ca7a48f81f91b0"
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/Modular/ModularImage.swift": "b5753bd68ba804b62d1bff6c64257589b4860732bcd5e6bd6a6408f7addadcd3",
+    "Tests/SwiftJXLCoreTests/ModularTransformTests.swift": "e8bbe2442653d137e950db87f025d83d98526ee971e5d2493960c775793ecf16",
+    "Tests/SwiftJXLCoreTests/ModularUnsupportedPaletteTests.swift": "9fb63d3c62cd450db0a6d2ba92663b0a8ff76f154a7f2e6fb66aa0a70d044d18"
+  },
+  "scopeNotes": [
+    "The public error tests use header-only probes; the unchanged entropy payload is deliberately not claimed valid after changing palette semantics. Preparation must reject before accessing it.",
+    "Existing sanitizer and one-hour mutation results retain their recorded runtime revisions. This correction changes a rejection category and validates channel geometry before rejection; it introduces no new decoded profile or allocation.",
+    "A later review found and corrected a Select-predictor signed-magnitude trap in transformed Int32 workspace; see Review/predictor-validation.json. Other review conclusions remain bounded to the inspected scope."
+  ]
+}

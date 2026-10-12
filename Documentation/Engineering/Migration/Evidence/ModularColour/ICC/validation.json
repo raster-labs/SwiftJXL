@@ -1,0 +1,86 @@
+{
+  "status": "ICC local library/CLI validation passed; all eight hosted checks passed at bfd12bc; three one-hour ICC ASan mutation campaigns passed",
+  "baseCommit": "526d6bb942a89cb7b4de16419659365634c6cb54",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "library": {
+    "debug": {
+      "declarations": 180,
+      "cases": 669,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "SWIFTJXL_ORACLE_BIN=/opt/homebrew/bin CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2",
+      "logSHA256": "db0f80070593c923c31b720bc9d51f206f383275334737af9baaaffa5af94eef"
+    },
+    "asan": {
+      "declarations": 19,
+      "cases": 115,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter 'ModularICCTests|ModularTransferTests|ICCStreamTests|ModularStorageTests|ScalarMemoryTests'",
+      "logSHA256": "b23ca0bcee3a82c29d28710a0f64d394abf5dc9bbec94f8c16c8a547009a0ffd"
+    },
+    "tsan": {
+      "declarations": 19,
+      "cases": 115,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter 'ModularICCTests|ModularTransferTests|ICCStreamTests|ModularStorageTests|ScalarMemoryTests'",
+      "logSHA256": "1a1cf494e89a5cf4f82a5fd78194fda119300c7b6cb16de26fb152e3a93c51dd"
+    }
+  },
+  "cli": {
+    "debug": {
+      "status": "passed",
+      "checks": 299,
+      "reportSHA256": "fc904c87d8f9000742d783f7bac104a7502d31fa19af09ac2fee232fadc3c748",
+      "binarySHA256": "7a9937e853ec74ebc6692e6b807232bd57c39e5f6d2eb39d5c5f790530b0dde8"
+    },
+    "asan": {
+      "status": "passed",
+      "checks": 299,
+      "reportSHA256": "cee2f5c0590657126375d973d9fcf5d6408f4c070851b82891c771ce4d87986d",
+      "binarySHA256": "272d5e2d8b45945b7373cfe5e73ed1677340081627a0b1c58aa96deb922362fe"
+    },
+    "tsan": {
+      "status": "passed",
+      "checks": 299,
+      "reportSHA256": "09757aeba141bc895bf00295e3255fe046682d27059a07996e1d9b48e2d03c4e",
+      "binarySHA256": "3b68403899cfc599d3211aaaa82d1f6e58e497e4879bbcada6067a5a1e6f2125"
+    },
+    "release": {
+      "status": "passed",
+      "checks": 299,
+      "reportSHA256": "2035dc7b2175e951172efc70f52d51d304a00a4458901c86270b0ccad6eb30fa",
+      "binarySHA256": "bac69c2e32316f182a2a45bb6cac64bc92df363a913829030d0d66b3ae0adf5d"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXL/CodecAPI.swift": "1448e73d7b02ec2dfdeadfe7e3e4a2f68fca897e03ce5e636c1b0570a8842ecf",
+    "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift": "89005eab5ec83ac1fff9cf8a20e40f34049f7cd497e160905c2ccb302ee8538b",
+    "Sources/SwiftJXLCore/Codestream/ICCStream.swift": "5045a7cfc79a94e085873b6fbe091d680e22a22e27e31575343812b1b927c073",
+    "Sources/SwiftJXLCLI/main.swift": "52b0af4f2894b14fe4ab72b590df0239c4e7ed20006f7fa7ee76545e3fd734eb",
+    "Tests/SwiftJXLCoreTests/ModularICCTests.swift": "4ae9afbd2a49534fe77ce668ffc188c45d475d2b0bc68926b44a811f65f5ff52",
+    "Scripts/test-cli-pnm.py": "55db46b995e5417dc5ecd0bd39ab3d654288f474a8351e978f3bf2d21d5a60d1",
+    "Scripts/TestSupport/modular-icc-fixtures.c": "f839e153e62d61e5dfa8ea05b143a93412512a04a8530a374c08a11a3be01d86",
+    "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/manifest.json": "1690893de287c2043543f6a6190ebd7af4744bab6c682d2fe6b7133b7154dbfc"
+  },
+  "notes": [
+    "Newtests initially rejectedall12ICCfixtures as unsupported at the previouscode.",
+    "Initial malformed-profile helper treated an ISOcontainer as a rawcodestream; corrected helper extracts codestreamfirst. Originalfailedlogs retained; corrected19declarations/115cases passdebug/ASan/TSan.",
+    "No newdecodedpixelcopies; retainedICC andICCprediction workspace chargedbeforeallocation. Callerprofilebytes also admitted. Peakalgorithmworkspace remains unmeasured.",
+    "ExistingnonICC471158mutationresults coverpreviousruntime. ThreeICC-specificonehourcampaigns are running independently; not yet claimedpassed.",
+    "Pinnedpredecessor rejectsall12ICCinputs withdefinedframeencodingerrors; initialprobe-top-leveltermination is notclassifiedascodec crash.",
+    "ICCencoding, float/newextras, displayconversion and broaderVarDCT/multiframe/platform/performance/release gates are notclaimedcompleted."
+  ],
+  "mutationCampaign": "Mutation/validation.json",
+  "hostedValidation": {
+    "head": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+    "run": 38207550527,
+    "passedJobs": 8,
+    "includesMacOS": true
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "command": [
+    "xcrun",
+    "swiftc",
+    "-O",
+    "-swift-version",
+    "6",
+    "-strict-concurrency=complete",
+    "-parse-as-library",
+    "-module-cache-path",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/module-cache",
+    "-I",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/gradient-release/out/Products/Release",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/gradient-experiment/modular-operation-benchmark.swift",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/gradient-release/out/Products/Release/SwiftJXL.o",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/gradient-release/out/Products/Release/SwiftJXLCore.o",
+    "-o",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-preflight/operation-gradient-experiment"
+  ],
+  "exit": 0,
+  "sourceSHA256": "c0a82bf0a7e9371158f753a27257e75289f13146a162ca474ccff887c5bb0474",
+  "objects": {
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/gradient-release/out/Products/Release/SwiftJXL.o": "8409f56df8b5660160d57e20e21b1262ff3b5379bf6a9239f28fbd430b45d8d6",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/gradient-release/out/Products/Release/SwiftJXLCore.o": "e6e706179a5cdbed57ae0ca36b2ff2fe018c7f501106c6d7acefcf30fa222834"
+  },
+  "binary": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-preflight/operation-gradient-experiment",
+  "binarySHA256": "92ea35417fc4746b65595306fc86739395de355b5d003bab17a603c86a397c27"
+}

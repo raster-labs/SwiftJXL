@@ -1,0 +1,101 @@
+{
+  "status": "Public integer Modular colour/alpha encoding integrated locally; full feature-group qualification and PR remain pending.",
+  "baseCommit": "51e9c63",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "configurations": {
+    "debug": {
+      "declarations": 21,
+      "cases": 112,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "SWIFTJXL_ORACLE_BIN=/opt/homebrew/bin CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'ModularEncoderTests|ModularNameTests|ScalarPublicAPITests|ScalarMemoryTests|ScalarStorageTests|ScalarOracleTests|ModularStorageTests'",
+      "logSHA256": "81b44c3bdba13259769c57945480853eb066c330074de333694fe3e4a75af77a"
+    },
+    "asan": {
+      "declarations": 21,
+      "cases": 112,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "SWIFTJXL_ORACLE_BIN=/opt/homebrew/bin CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter 'ModularEncoderTests|ModularNameTests|ScalarPublicAPITests|ScalarMemoryTests|ScalarStorageTests|ScalarOracleTests|ModularStorageTests'",
+      "logSHA256": "991cd2f9251e4894557c6b41cbcb4416c092fabb72da1476d7d3ec7db507d6a3"
+    },
+    "tsan": {
+      "declarations": 21,
+      "cases": 112,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "command": "SWIFTJXL_ORACLE_BIN=/opt/homebrew/bin CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter 'ModularEncoderTests|ModularNameTests|ScalarPublicAPITests|ScalarMemoryTests|ScalarStorageTests|ScalarOracleTests|ModularStorageTests'",
+      "logSHA256": "ee4b7a6b51fa3f0439858b7eb5efbb59859ed56b61345f3f7b103761af3ee8a7"
+    }
+  },
+  "cli": {
+    "debug": {
+      "checks": 119,
+      "status": "passed",
+      "exitCode": 0,
+      "reportSHA256": "8904f22603371307a3fee95ea494c61ccdf3d1d20a28f19671812d136af252ca",
+      "binarySHA256": "0cab4c4794a2079f9b12344b41bd6679718a700cebb6a2cfb63420e65b804fb0",
+      "command": "../evidence/nrrd-oracle-env/bin/python Scripts/test-cli-nrrd.py --binary .build/out/Products/Debug/swiftjxl-cli --fixtures ../evidence/nrrd-fixtures --output ../modular-preflight/encoder-nrrd-debug --reference-tools /opt/homebrew/bin"
+    },
+    "asan": {
+      "checks": 119,
+      "status": "passed",
+      "exitCode": 0,
+      "reportSHA256": "b0bdf9d1e5c4e9a037053444fcb96b48c3d70e10d4f2bb948e190db1e3fb3c88",
+      "binarySHA256": "1b1384bb90e330d43f67afeb9ee3cd97549f179d0079d1500ad1d0936f2978ff",
+      "command": "../evidence/nrrd-oracle-env/bin/python Scripts/test-cli-nrrd.py --binary ../evidence/cli-validation-qualification/build/asan/out/Products/Debug/swiftjxl-cli --fixtures ../evidence/nrrd-fixtures --output ../modular-preflight/encoder-nrrd-asan --reference-tools /opt/homebrew/bin"
+    },
+    "tsan": {
+      "checks": 119,
+      "status": "passed",
+      "exitCode": 0,
+      "reportSHA256": "d551d3af39bdc1671fe00f25197fa4fc0205f180987fa4504ec81d227602c48b",
+      "binarySHA256": "e971c2015ebec01ec1509f22514e125c2978e88a6b394e31e49169fe5c32389c",
+      "command": "../evidence/nrrd-oracle-env/bin/python Scripts/test-cli-nrrd.py --binary ../evidence/cli-validation-qualification/build/tsan/out/Products/Debug/swiftjxl-cli --fixtures ../evidence/nrrd-fixtures --output ../modular-preflight/encoder-nrrd-tsan --reference-tools /opt/homebrew/bin"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXL/CodecAPI.swift": "8cf6e2b741b5908851ba48fc21de948b06e315288f47a3f0b74ad313b1e108b9",
+    "Sources/SwiftJXLCore/Codec/ModularSampleStorage.swift": "7ad446e2a2f84cd64b95dcf4f7a5b6caa90a42ae336267c28fe5d6132cef68ec",
+    "Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift": "b0b8ddece921cd8bec119eeb6503944e5cb1e3a20cea6c3b54fdb26c5757a202",
+    "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift": "e3f05e35ebd306db6e2990fdaa1b3be1fbecca57683130ccd99db32864b30a1c",
+    "Sources/SwiftJXLCore/Codestream/ExtraChannelInfo.swift": "b4904bb8adf8801c4f9091f1c6680507c05d13b54d41ab9a675a7b866d527381",
+    "Sources/SwiftJXLCore/Codestream/FrameHeader.swift": "d1bb650acd765272e4b07a756152067aa5feb05f0c6ecf57fb807243b4476fc0",
+    "Sources/SwiftJXLCLI/main.swift": "eba135d661bd9d2528a03ee8048e9397ccadef06e1b5c7a423fc3767dadb4539",
+    "Sources/SwiftJXLCLI/NRRD.swift": "00203cf7a947f3c55cf457bdbe3344f45681940eaddbc64f9780ef3f40485977",
+    "Scripts/test-cli-nrrd.py": "fa021f1ce90d93d9bc0da83ebc43adb199e6b40b93ef84323c7b41c91d177bce",
+    "Scripts/TestSupport/modular-info-oracle.c": "e1edb2a9b1630a0ff4a11a8287331a6b0958d0c7839d63ded7dea4e3dfc09173",
+    "Tests/SwiftJXLCoreTests/ModularEncoderTests.swift": "b8f32c8ab9fc1256c85bdc5eeee688f5744a11589fc5da73f60a6db093903ffc",
+    "Tests/SwiftJXLCoreTests/ModularNameTests.swift": "cf40595bc9d6585c593b4240cff80a8e4d0c72f6ef99825cbdef51b44e89a896"
+  },
+  "oracle": {
+    "nativeSampleCases": 54,
+    "independentMetadataCases": 54,
+    "premultipliedCases": 6,
+    "verifiedGroupedEmptyANSStreams": 36,
+    "toolVersion": "djxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project",
+    "djxlSHA256": "25e0a5a5ad107352f7e91a1a9c824576e56d2aca2d53708e5d3dc90eeb621566",
+    "metadataToolSHA256": "74666a32cc2f49d919619d1a646b810057374c662461a53a7115de7cd17db814",
+    "metadataReportSHA256": "aee9986c72a3914ec50bf1300f46b4516c62ffef0eb77b971099e6261fbc548e",
+    "sectionProfilesSHA256": "f7ab185ee60e4002587c5e4485103036d64a46fa192fb6e2394d908920f315bd",
+    "metadataBuild": "xcrun clang -Wall -Wextra -Werror -I/opt/homebrew/include Scripts/TestSupport/modular-info-oracle.c -L/opt/homebrew/lib -ljxl -o ../modular-preflight/modular-info-oracle"
+  },
+  "findings": [
+    "Grouped rANS global stream was missing its32-bit terminal state; fixed both emission and analytic cost paths. Independent libjxl decodes36 exercised grouped rANS streams exactly.",
+    "Public encoding reads padded UInt8/UInt16 source into admitted Int32 planes, no extra packed source frame. Fixed effort3, dimensions<=16384 and caller resource limits.",
+    "RGB rendering intent and alpha association preserved. Independent metadata/sample checks include6 premultiplied/saturation cases.",
+    "Malformed UTF8 extra-channel/frame names reject instead of becoming empty. Frame-name storage is admitted before allocation.",
+    "NRRD CLI now consistently admits encode/decode dimensions<=1024;119 debug/ASan/TSan process checks each pass including513/1024-wide groups."
+  ],
+  "limitations": [
+    "Debug unit run precedes an indentation-only source adjustment; ASan/TSan library runs and all CLI binaries include that adjustment. CLI NRRD guard update was then separately rebuilt and checked in all3 configurations.",
+    "Operation reservation bounds are conservative, not peak heap/RSS measurements; report unknown peaks remain nil.",
+    "Further source precision/planar/reordered-input edge cases, independent associated-alpha input decoding, whole-operation release performance/memory, complete corpus/fuzz and platform/hosted CI remain open.",
+    "Higher effort options, colour file export, ICC/general extra channels/float/animation/VarDCT pixels remain outside this milestone.",
+    "No PR, push, merge, tag, release or production switch for this branch yet."
+  ]
+}

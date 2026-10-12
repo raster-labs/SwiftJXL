@@ -1,0 +1,57 @@
+[
+  {
+    "name": "512x512-1c-16bit",
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/owning-memory-probe",
+      "512",
+      "512",
+      "1",
+      "16"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "513x259-3c-16bit",
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/owning-memory-probe",
+      "513",
+      "259",
+      "3",
+      "16"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "513x259-4c-16bit",
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/owning-memory-probe",
+      "513",
+      "259",
+      "4",
+      "16"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "2048x2048-1c-12bit",
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/owning-memory-probe",
+      "2048",
+      "2048",
+      "1",
+      "12"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "1024x1025-4c-16bit",
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-memory-probe/owning-memory-probe",
+      "1024",
+      "1025",
+      "4",
+      "16"
+    ],
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,730 @@
+[
+  {
+    "channels": 1,
+    "bits": 1,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-1-1.jxl",
+      "1",
+      "1"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "0d2567d990b172482325c33f935b74015ae3c6cff496b6c7bd1ccea3e992caef",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-1-1.jxl",
+        "1",
+        "1"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 1,
+    "bits": 2,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-1-2.jxl",
+      "1",
+      "2"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "9e582a44b008ded7f76cbe13e63664ed212a7bbd9d93d95beaa1a8b709263bc4",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-1-2.jxl",
+        "1",
+        "2"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 1,
+    "bits": 3,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-1-3.jxl",
+      "1",
+      "3"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "c414771d7483bd848a80f2808235f8cfb02d420858950b1c166cef183391fc1b",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-1-3.jxl",
+        "1",
+        "3"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 1,
+    "bits": 4,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-1-4.jxl",
+      "1",
+      "4"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "59ff66dffb2514f8069cba9ea4ec93b078eb8fd729e5073e4cb04b60619ad6ec",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-1-4.jxl",
+        "1",
+        "4"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 1,
+    "bits": 5,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-1-5.jxl",
+      "1",
+      "5"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "71c3d5451e52f26c8f0fa77659287591629ce1244073a64833a59624d4bd9873",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-1-5.jxl",
+        "1",
+        "5"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 1,
+    "bits": 6,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-1-6.jxl",
+      "1",
+      "6"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "be0dc0748d0ac438806496f2c1635944db0fa173e0cc152baa0c9ce1817083d0",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-1-6.jxl",
+        "1",
+        "6"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 1,
+    "bits": 7,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-1-7.jxl",
+      "1",
+      "7"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "fd6328a7588b9a1730a63cf50677cd5f1b7ade5f282636d8adf051a6c31d3ada",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-1-7.jxl",
+        "1",
+        "7"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 2,
+    "bits": 1,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-2-1.jxl",
+      "2",
+      "1"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "fada28978e768f2f15d56be7f5a37838d6581add9f3267529a5a0f9e834a37dc",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-2-1.jxl",
+        "2",
+        "1"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 2,
+    "bits": 2,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-2-2.jxl",
+      "2",
+      "2"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "1116c3d56b8312fc475949669a14fa3731d5ec352b8d7b9d71b4f2529446b251",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-2-2.jxl",
+        "2",
+        "2"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 2,
+    "bits": 3,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-2-3.jxl",
+      "2",
+      "3"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "675e9f56e4d155fc714430054c0299d235ac20283a756c648da801ce4650bd55",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-2-3.jxl",
+        "2",
+        "3"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 2,
+    "bits": 4,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-2-4.jxl",
+      "2",
+      "4"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "bfc59393463d4d881e422ee5d0e9b2286764eaaeef67002eaafb6630fee010ea",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-2-4.jxl",
+        "2",
+        "4"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 2,
+    "bits": 5,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-2-5.jxl",
+      "2",
+      "5"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "0bbfa916d1603bcf2dbe89c8d090e4564eb5a51ae2e8a94834736a2b10fc19d9",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-2-5.jxl",
+        "2",
+        "5"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 2,
+    "bits": 6,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-2-6.jxl",
+      "2",
+      "6"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "02d373b5c54f831d81054d05615c4bf38d34f9b76cc776bf0d86c941e110dba3",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-2-6.jxl",
+        "2",
+        "6"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 2,
+    "bits": 7,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-2-7.jxl",
+      "2",
+      "7"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "0747a5b0b4f14bb95fcb35c514396e987b53134bb9c423f6424f2d99dba1e5d6",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-2-7.jxl",
+        "2",
+        "7"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 3,
+    "bits": 1,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-3-1.jxl",
+      "3",
+      "1"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "82420f21c56196539851b6755fd58ac07b04ee293d1d0d00153feeb5e81f0230",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-3-1.jxl",
+        "3",
+        "1"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 3,
+    "bits": 2,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-3-2.jxl",
+      "3",
+      "2"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "e9696288f19b0a103fe200a8990b3c3b3b49f946821c403123c939264623da40",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-3-2.jxl",
+        "3",
+        "2"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 3,
+    "bits": 3,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-3-3.jxl",
+      "3",
+      "3"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "bc27a3d999c432d7053e208695cff9222e2a32bebc4ad746e8a00eb89a6c5f43",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-3-3.jxl",
+        "3",
+        "3"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 3,
+    "bits": 4,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-3-4.jxl",
+      "3",
+      "4"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "600fda64b47ca5896a1e2bdb1c62fe2602fda6a79a418d6d67ee5429df60d5a7",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-3-4.jxl",
+        "3",
+        "4"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 3,
+    "bits": 5,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-3-5.jxl",
+      "3",
+      "5"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "e00ccfa655579f75b0fb7988cafaaf9a03fa2d2f2de1f374f8c55d0652b09303",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-3-5.jxl",
+        "3",
+        "5"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 3,
+    "bits": 6,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-3-6.jxl",
+      "3",
+      "6"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "2a13a97bd105aad5ff73675305449059623fecf66a31a84b66ff8e27e3e2b4d7",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-3-6.jxl",
+        "3",
+        "6"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 3,
+    "bits": 7,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-3-7.jxl",
+      "3",
+      "7"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "1409423f47533c58d91babe89d2ddfbb69ecace906ec4ce850bb263a1d008630",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-3-7.jxl",
+        "3",
+        "7"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 4,
+    "bits": 1,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-4-1.jxl",
+      "4",
+      "1"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "9352e137fa19ce1edc7e286774882ca27415b7d509a1996fb93b09d0c1980c3e",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-4-1.jxl",
+        "4",
+        "1"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 4,
+    "bits": 2,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-4-2.jxl",
+      "4",
+      "2"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "222a21acc9d8b7755ecc89e73181f07052df9ff5b34aa435e61f26e42c5fb87c",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-4-2.jxl",
+        "4",
+        "2"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 4,
+    "bits": 3,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-4-3.jxl",
+      "4",
+      "3"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "d7fae7908a0f589edc68e43643a6f7c6f3189035a1d4e29f2b09e3dfb9d9bedd",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-4-3.jxl",
+        "4",
+        "3"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 4,
+    "bits": 4,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-4-4.jxl",
+      "4",
+      "4"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "dcabeaac3738176ed07bf1800ab83b87cef7f9f9dc5a7cf51c4354902b907be7",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-4-4.jxl",
+        "4",
+        "4"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 4,
+    "bits": 5,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-4-5.jxl",
+      "4",
+      "5"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "e36dc498b86cd7147e6f59d7a190068b6745e108e0ddad58c58676c826069f1c",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-4-5.jxl",
+        "4",
+        "5"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 4,
+    "bits": 6,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-4-6.jxl",
+      "4",
+      "6"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "98142bcc2356a723e92b48f86626105acd0a7764d19bb9b478bdb1ac2aa49e0e",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-4-6.jxl",
+        "4",
+        "6"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  },
+  {
+    "channels": 4,
+    "bits": 7,
+    "command": [
+      "../modular-preflight/modular-low-precision-fixtures",
+      "../modular-preflight/low-precision-baseline/low-4-7.jxl",
+      "4",
+      "7"
+    ],
+    "generatorExit": 0,
+    "error": "",
+    "sha256": "d7e938b9e506d7bee7f1034796c72d4005194f8364d2e7333cb939d98130ad44",
+    "successorInspectExit": 4,
+    "successorError": "swiftjxl-cli: JPEG XL input is outside the supported scalar profile.\n",
+    "predecessor": {
+      "command": [
+        "../modular-preflight/predecessor-low-precision-probe",
+        "../modular-preflight/low-precision-baseline/low-4-7.jxl",
+        "4",
+        "7"
+      ],
+      "exit": 0,
+      "result": "exact",
+      "error": ""
+    }
+  }
+]

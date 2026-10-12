@@ -1,0 +1,104 @@
+{
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-O",
+        "-swift-version",
+        "6",
+        "-package-name",
+        "SwiftJXL",
+        "-module-cache-path",
+        ".build/module-cache",
+        "-D",
+        "BASELINE",
+        "../JXLSwift/Sources/JXLSwift/Modular/SpecRCT.swift",
+        "../modular-preflight/rct-benchmark.swift",
+        "-o",
+        "../modular-preflight/rct-bench-baseline"
+      ],
+      "exit": 0,
+      "source_sha256": "d97b53f96a5efce68a3125168106b4b9f964bace73cb19e3b7efa11418e65d2e"
+    },
+    {
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-O",
+        "-swift-version",
+        "6",
+        "-package-name",
+        "SwiftJXL",
+        "-module-cache-path",
+        ".build/module-cache",
+        "Sources/SwiftJXLCore/Modular/SpecRCT.swift",
+        "../modular-preflight/rct-benchmark.swift",
+        "-o",
+        "../modular-preflight/rct-bench-successor"
+      ],
+      "exit": 0,
+      "source_sha256": "47d23658646337819adbbf2942862f033a58279ab90df9c9c06542c63ca65602"
+    }
+  ],
+  "results": {
+    "baseline": {
+      "checksums": [
+        -395358797550,
+        -86805757562,
+        292658108070
+      ],
+      "cyclesPerTrial": 10,
+      "medianMicroseconds": 54.328125,
+      "microsecondsPerInverse": [
+        63.877075000000005,
+        61.345825000000005,
+        62.169799999999995,
+        54.328125,
+        54.005224999999996,
+        54.154174999999995,
+        49.8979
+      ],
+      "processHighWaterRSSBytes": 8224768,
+      "samplesPerChannel": 65536,
+      "scope": "Repeated transform kernel on three unique synthetic signed32 working planes; excludes entropy, image IO and public API. Process high-water RSS includes runtime/setup and is not per-call allocation telemetry.",
+      "trials": 7,
+      "types": [
+        6,
+        13,
+        35,
+        41
+      ],
+      "warmupCycles": 3
+    },
+    "successor": {
+      "checksums": [
+        -395358797550,
+        -86805757562,
+        292658108070
+      ],
+      "cyclesPerTrial": 10,
+      "medianMicroseconds": 36.838525,
+      "microsecondsPerInverse": [
+        36.838525,
+        36.4625,
+        51.828125,
+        54.284375,
+        38.914575,
+        35.409375,
+        35.861450000000005
+      ],
+      "processHighWaterRSSBytes": 6799360,
+      "samplesPerChannel": 65536,
+      "scope": "Repeated transform kernel on three unique synthetic signed32 working planes; excludes entropy, image IO and public API. Process high-water RSS includes runtime/setup and is not per-call allocation telemetry.",
+      "trials": 7,
+      "types": [
+        6,
+        13,
+        35,
+        41
+      ],
+      "warmupCycles": 3
+    }
+  }
+}

@@ -1,0 +1,29 @@
+--- a/Tests/SwiftJXLCoreTests/ModularStorageTests.swift
++++ b/Tests/SwiftJXLCoreTests/ModularStorageTests.swift
+@@ -49,7 +49,7 @@
+                 if bytesPerSample == 2 { expected[p + 1] = UInt8(truncatingIfNeeded: little ? value >> 8 : value) }
+             } }
+             try actual.withUnsafeMutableBytes { try plan.decode(into: $0, layouts: layouts) }
+-            #expect(actual == expected) // Includes every padding/gap/guard byte.
++            let buffersEqual = actual == expected; #expect(buffersEqual) // Includes every padding/gap/guard byte.
+             #expect(audit.snapshot.finalPixelAllocations == 0)
+             if ["gray8", "grayalpha8", "grayalpha16", "groups-grayalpha16"].contains(name) {
+                 #expect(audit.snapshot.workingPlaneAllocations == 0)
+@@ -126,7 +126,7 @@
+             try await Encoder().encode(result.image)
+         }
+         let canonicalEncoding = try await Encoder().encode(allocated.image)
+-        #expect(stridedEncoding.data == canonicalEncoding.data)
++        let streamsEqual = stridedEncoding.data == canonicalEncoding.data; #expect(streamsEqual)
+         #expect(stridedEncoding.report.copyEvents.isEmpty && sourceAudit.snapshot.finalPixelAllocations == 0)
+         #expect(result.image.storage.allocationID == owner.allocationID)
+         var expected = [UInt8](repeating: 0, count: capacity)
+@@ -136,7 +136,7 @@
+             expected[offset] = UInt8(truncatingIfNeeded: storageBits == 8 ? value : value >> 8)
+             if storageBits == 16 { expected[offset + 1] = UInt8(truncatingIfNeeded: value) }
+         } }
+-        #expect(try result.image.storage.withUnsafeBytes { Array($0) } == expected)
++        let callerBytesEqual = try result.image.storage.withUnsafeBytes { Array($0) } == expected; #expect(callerBytesEqual)
+         try allocated.image.storage.withUnsafeBytes { bytes in
+             var matches = true
+             for i in 0..<(f.width * f.height) { for c in 0..<f.channels {

@@ -1,0 +1,56 @@
+{
+  "status": "Internal Modular geometry/inverse-transform preparation only; public capabilities unchanged; full feature group incomplete",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "baseMain": "fe4d8f0603c6ea84b96240341f52fedd118457e2",
+  "contract": "0.10.0",
+  "configurations": {
+    "debug": {
+      "declarations": 12,
+      "cases": 54,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "logSHA256": "f733c465771e771022ef0d594ba661f53e379c897bf40f07510fb4ff9ed9cbe6"
+    },
+    "asan": {
+      "declarations": 12,
+      "cases": 54,
+      "failures": 0,
+      "skips": 0,
+      "exitCode": 0,
+      "logSHA256": "4cc9984d012fccac3919205e003a91a0549293ad8cb5bb8ae9031125ec7c978a"
+    }
+  },
+  "commands": {
+    "debug": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'ModularTransformTests|SpecRCTTests'",
+    "asan": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter 'ModularTransformTests|SpecRCTTests'"
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/Modular/ModularImage.swift": "f601eae2b4e9c70dd84f90fea65440fd688b3b877be671f8f2d5847bae15e591",
+    "Sources/SwiftJXLCore/Modular/SpecSqueeze.swift": "04300d869d668cb59a6d27d2269b0133337eb71dcdc4518a397bb2f36b330768",
+    "Sources/SwiftJXLCore/Modular/InverseTransforms.swift": "16c979ba2891aa6db659d84e437ae719682291e1dab06aadbed30000e379e4c9",
+    "Sources/SwiftJXLCore/Modular/SpecRCT.swift": "47d23658646337819adbbf2942862f033a58279ab90df9c9c06542c63ca65602"
+  },
+  "testsSHA256": "6522829c2c47c7246e82c873e20a85e65eb4d400abecb62c55dde3c1ac2a1a18",
+  "verified": [
+    "All 42 inverse RCT types retain pinned baseline coverage",
+    "12 squeeze vectors match pinned predecessor, both axes, even/odd/single extents and Int32 extremes",
+    "Implicit squeeze retains original expansion and restores geometry; no eager pixel allocation",
+    "Palette restores first normal/meta channel counts and uses actual 16-bit precision for synthetic fallback values",
+    "Malformed geometry/ranges/residual lengths, channel growth, unsupported palettes and operation limits reject",
+    "Shared input owners remain unchanged; cancelled work rejects before mutation; scoped pointers do not escape"
+  ],
+  "admission": "Cumulative conservative reservations before descriptor growth, pixel allocation and potential RCT COW. Descriptor reservation includes doubled storage plus128 bytes; planes4N+64 bytes. Not an RSS or allocator-peak measurement; decoder/encoder composition remains to be wired.",
+  "remaining": [
+    "General and multi-group entropy decoding and independently encoded transform corpus",
+    "Direct multi-channel strided owning storage, encoder integration and public/CLI declarations",
+    "Full operation oracle/lifetime/ASan/TSan/platform/benchmark validation and hosted PR checks",
+    "Palette and whole-decoder performance; broader migration/release gates"
+  ],
+  "limitations": [
+    "8\u201316-bit inverse palette scope; delta/predicted palettes rejected before decoding",
+    "4096 channel and256 transform/steps implementation bounds",
+    "Any transform failure invalidates the working image; never publish partial output",
+    "Squeeze vectors prove predecessor agreement, not independent libjxl conformance"
+  ]
+}

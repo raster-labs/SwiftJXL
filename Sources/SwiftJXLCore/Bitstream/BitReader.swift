@@ -63,13 +63,21 @@ package struct BitReader: Sendable {
     private var reservedEntropyTableBytes = 0
 
     /// Bounded checks also cover zero-bit symbols and nested context maps.
+    @inline(__always)
     package mutating func checkpoint() throws {
         operations += 1
         if operations == 1 || operations & 255 == 0 {
-            try Task.checkCancellation()
-            guard ContinuousClock.now < deadline else {
-                throw ScalarModularError.resourceLimit
-            }
+            try checkCancellationAndDeadline()
+        }
+    }
+
+    // Keep the opaque clock-value stack allocation and metadata lookup out of
+    // every token/bit read. The check frequency and deadline are unchanged.
+    @inline(never)
+    private func checkCancellationAndDeadline() throws {
+        try Task.checkCancellation()
+        guard ContinuousClock.now < deadline else {
+            throw ScalarModularError.resourceLimit
         }
     }
     package mutating func enterNesting() throws {

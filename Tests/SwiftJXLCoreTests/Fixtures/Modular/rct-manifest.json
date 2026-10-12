@@ -1,0 +1,9 @@
+{
+  "kind": "Pinned predecessor differential baseline, not independent conformance evidence",
+  "source_revision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "source": "Sources/JXLSwift/Modular/SpecRCT.swift",
+  "source_sha256": "d97b53f96a5efce68a3125168106b4b9f964bace73cb19e3b7efa11418e65d2e",
+  "fixture_sha256": "367767493946572bc3c59c056accecd667bb3107fd6d0c2ca5d53472bfd680f9",
+  "generator": "Scripts/TestSupport/rct-baseline.swift; compile with -D BASELINE and pinned predecessor SpecRCT.swift",
+  "licence": "Synthetic inputs and generated numeric vectors; Apache-2.0"
+}

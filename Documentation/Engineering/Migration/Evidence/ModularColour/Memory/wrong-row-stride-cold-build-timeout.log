@@ -1,0 +1,71 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 212]
+[Planning deferred tasks]
+[26 / 122] SwiftJXLCoreTests-product
+[60 / 122] SwiftJXL_SwiftJXLCoreTests
+[62 / 122] SwiftJXL_SwiftJXLCoreTests
+[63 / 122] SwiftJXL_SwiftJXLCoreTests
+[64 / 122]
+[67 / 122]
+[68 / 123] SwiftJXLCore
+[72 / 168]
+[76 / 168]
+[78 / 168]
+[80 / 168]
+[84 / 168]
+[86 / 168]
+[87 / 168]
+[90 / 168]
+[91 / 168]
+[93 / 168]
+[94 / 168]
+[96 / 168]
+[98 / 168]
+[99 / 168]
+[101 / 168]
+[102 / 168]
+[105 / 168] SwiftJXLCore
+[108 / 168] SwiftJXLCore
+[113 / 168] SwiftJXLCore
+[115 / 168] SwiftJXLCore
+[116 / 168] SwiftJXLCore
+[117 / 168] SwiftJXLCore
+[118 / 168] SwiftJXLCore
+[119 / 168] SwiftJXLCore
+[119 / 168] SwiftJXL
+[120 / 169]
+[122 / 177] SwiftJXL
+[123 / 177] SwiftJXL
+[124 / 177] SwiftJXLCore
+[132 / 177] SwiftJXLCore
+[133 / 177] SwiftJXLCore
+[134 / 177] SwiftJXL
+[135 / 177] SwiftJXL
+[136 / 177]
+[143 / 178]
+[150 / 179]
+[151 / 185] swiftjxl-cli-product
+[155 / 195] swiftjxl-cli-product
+[155 / 206]
+[157 / 206] swiftjxl-cli-product
+[158 / 206] swiftjxl-cli-product
+[160 / 206] swiftjxl-cli-product
+[162 / 206] swiftjxl-cli-product
+[169 / 206] swiftjxl-cli-product
+[171 / 206] SwiftJXLTests-product
+[177 / 206] SwiftJXLTests-product
+[178 / 206] SwiftJXLTests-product
+[179 / 206] SwiftJXLTests-product
+[180 / 206] SwiftJXLTests-product
+[181 / 206] SwiftJXLTests-product
+[182 / 206] SwiftJXLCoreTests-product
+[184 / 206] SwiftJXLCoreTests-product
+[186 / 206] SwiftJXLCoreTests-product
+[187 / 206] SwiftJXLCoreTests-product
+[190 / 206] SwiftJXLCoreTests-product
+[191 / 206] SwiftJXLCoreTests-product
+[192 / 206] SwiftJXLCoreTests-product
+[193 / 206] SwiftJXLCoreTests-product
+[194 / 206] SwiftJXLCoreTests-product
+[198 / 206]

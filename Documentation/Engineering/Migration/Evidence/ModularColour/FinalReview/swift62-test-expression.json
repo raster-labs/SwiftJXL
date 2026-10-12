@@ -1,0 +1,39 @@
+{
+  "command": [
+    "xcrun",
+    "swift",
+    "test",
+    "--disable-sandbox",
+    "--cache-path",
+    ".build/cache",
+    "--config-path",
+    ".build/config",
+    "--security-path",
+    ".build/security",
+    "--build-system",
+    "swiftbuild",
+    "--jobs",
+    "2",
+    "--filter",
+    "ModularGradientTests"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 3.2038300037384033,
+  "logSHA256": "aeb3ae18cdbb79e5e09245ca03179ea5e9f0fbc9c883210c8129ed7b2c1cd661",
+  "testSHA256": "480cb54c50f16419344df5a43a525f256d2e1a3db9f769b084c9aede86170d51",
+  "declarations": 4,
+  "cases": 29,
+  "failures": 0,
+  "skips": 0,
+  "codecSourcesUnchangedSince": "e639259aef3746755f1c25b76c09388863394d32",
+  "finding": "Swift6.2 type-checker timed out on the expected-sample map expression; explicitly typed intermediate values preserve the identical formula.",
+  "failedRun": 38216628517,
+  "failedJobs": [
+    114702781407,
+    114702781387
+  ],
+  "failureLogs": {
+    "ci-swift62-failed.log": "577f7249878c75e22d0ba70aafa3d6953677d26a2b96a924169754bbaa4aec31",
+    "ci-swift62-arm-failed.log": "521e13fd66674ae6836f92b522a75f2e4936b6c67ab94be4c8c3882bd62dc091"
+  }
+}

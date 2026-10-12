@@ -1,0 +1,871 @@
+{
+  "parent": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-modular-colour",
+  "parent_head": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+  "scope": [
+    "ModularParallelTests.swift",
+    "ScalarMemoryTests.swift",
+    "ModularStorageTests.swift",
+    "ModularEncoderTests.swift",
+    "ModularUnsupportedPaletteTests.swift"
+  ],
+  "manifest": "// swift-tools-version: 6.2\n// Diagnostic qualification package: copied runtime and selected unchanged tests.\nimport PackageDescription\nlet package = Package(name: \"SwiftJXL\", platforms: [.macOS(\"26.0\"), .iOS(\"26.0\"), .tvOS(\"26.0\"), .visionOS(\"26.0\"), .watchOS(\"26.0\")], products: [.library(name: \"SwiftJXL\", targets: [\"SwiftJXL\"])], targets: [.target(name: \"SwiftJXL\", dependencies: [\"SwiftJXLCore\"]), .target(name: \"SwiftJXLCore\"), .testTarget(name: \"SwiftJXLCoreTests\", dependencies: [\"SwiftJXLCore\", \"SwiftJXL\"], resources: [.copy(\"Fixtures/Modular\")])], swiftLanguageModes: [.v6])\n",
+  "manifest_sha256": "763f825c8a3625e21d0a2651e4e491621cb173e42f6d793a323098c0876d4c17",
+  "copied_files": [
+    {
+      "path": "Sources/SwiftJXL/CodecAPI.swift",
+      "sha256": "b8d185851238dda5adcbea0dd0be4a009b58e2b7cdc738a4b47c98ecb3bbf080",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXL/Errors.swift",
+      "sha256": "f71dd532405f2bca468ef39b29117513c686a89c64dd908ef598d1bca4f4fe6b",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXL/Image.swift",
+      "sha256": "c704f058b2fa726fb410bb094c3a319334b35e285205b46b79731bfaa35250e9",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXL/ImageDescriptor.swift",
+      "sha256": "44cf8b2f796c0c39a17a4ff11ea8e97dc08f1f496cddc0197696a822922a1656",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXL/ImageStorage.swift",
+      "sha256": "8cb882511ae13ab0347782a6e474bee82013b0812aa6756c4a0dba573d87cb3f",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXL/Options.swift",
+      "sha256": "dd43c63592bf4d74c53626374fb4494b0815315f0f64bc1a2831f9c066b5d787",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXL/Transcoding.swift",
+      "sha256": "a2bd0f22707fc98c4b3495d582f37b5adb9863edde66fef58f07a26a5bf26456",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Bitstream/BitReader.swift",
+      "sha256": "765f735a0d968536b3f119e766ca604aa17d7fad3e1c1736b5853ce2b1471274",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Bitstream/BitWriter.swift",
+      "sha256": "b8eb6701031791d30a9767790c95f9fa26845f5ecd2af37f464fad16680ef794",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Bitstream/SpecIntegers.swift",
+      "sha256": "13297330d46bd12e4e562be1b75d873e8c1cf6f730443723bc6fdb58ff22c65b",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Bitstream/VarLenUint.swift",
+      "sha256": "7108fbd46962aa4c908273f41c8a7ea80c9ccd3a083aee8fe409969125960fd7",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Brotli/BrotliContext.swift",
+      "sha256": "50771b1730fdb6e1da0b9f6e76cf32716ce494a2cdd2f5396deca809d55d7a83",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Brotli/BrotliDecoder.swift",
+      "sha256": "382dcbffb36fc19658a9a50f5be513435f126f9b27e5a56c90aae2faa498004b",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Brotli/BrotliEncoder.swift",
+      "sha256": "b91fbb1b12834baa7a8a9e7ec7dfd791b0d102f54351aeb175c717f7d0b11a65",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Brotli/BrotliMetaBlock.swift",
+      "sha256": "12ab12a63d852e8bbb0631ff702af8b27bed4d01d59efb26da24a876c1cdc56a",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Brotli/BrotliPolicy.swift",
+      "sha256": "66a5c77678638647dce9b8b102d7150c15229eff1ef59c1e3ad8094e7fc16c5b",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Brotli/BrotliPrefixCode.swift",
+      "sha256": "78ecd93b91a04f550b563e062641627abaeda8514c27c7960b8c3574dfd372d0",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Brotli/BrotliReader.swift",
+      "sha256": "8e89d7e2da1aa36d9a06b46edfb4b8845b5d96d4e70c34677351ad96064759ce",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Brotli/BrotliStaticDictionary.swift",
+      "sha256": "b671966ebf2defc427dc276e8d19793e1ab09e7a9132bbddf68405c0c58db6c7",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift",
+      "sha256": "38ef3fb2d896aab9051d21311d24d87cc5fd678767f00754f200511b8d604d75",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ModularSampleStorage.swift",
+      "sha256": "072911732953b26199ca3e6ef57ed9e37c22f933fdadbe2c7482edf2b4b9e2e2",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ScalarDecodePolicy.swift",
+      "sha256": "1a9cbd91a40814f87515de3315a880bbc5adb0d196d0bb7ee79adfa6963f9a23",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ScalarMap.swift",
+      "sha256": "c279d838f873a5d545cb76104c08fd2fd998acafd00e3c37a5f38954367b31fd",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ScalarModularDecoder.swift",
+      "sha256": "8279571ee84c1bf2c908641a460b4f0abc516a6187570562d29c81bb667a4067",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift",
+      "sha256": "558a1e4d329802837f7290689eb05fb6dcc450fde957aff7329cf5b42aa19c28",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ScalarSampleStorage.swift",
+      "sha256": "c73b2bb0ed3fa0eff698a7252246f45f9777ba5c3e032780074b7e24183cfb14",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift",
+      "sha256": "12b1bab79edb576cdc1ebcfdb857379e389b10c64353b2e385dac76b2e477370",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift",
+      "sha256": "12887bbe1e2562336c34676c756a4aad63af84e06bfcbf5f0b1da9c5879aaf48",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/BitDepth.swift",
+      "sha256": "e42b5435d9424b67c1b4bc8cc92b15443575f631187e19d8dce1718e3b26b6d6",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/ColorEncoding.swift",
+      "sha256": "dd25291342bbc115704b9cedcb5bd06243bed7b2ead2205cf7a1f1a360bde9f3",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/ExtraChannelInfo.swift",
+      "sha256": "b4904bb8adf8801c4f9091f1c6680507c05d13b54d41ab9a675a7b866d527381",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/FrameHeader.swift",
+      "sha256": "d1bb650acd765272e4b07a756152067aa5feb05f0c6ecf57fb807243b4476fc0",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/ICCStream.swift",
+      "sha256": "5045a7cfc79a94e085873b6fbe091d680e22a22e27e31575343812b1b927c073",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/ImageMetadata.swift",
+      "sha256": "324627dd9c2a697a7d90e0add1c6afca63e434da3aa6e6e31d04dcbb2c638fc6",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/Signature.swift",
+      "sha256": "665f0c4f00b91b10876dd772426b61ca6edd4961e7018dc96b3aae3120b772b2",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/SizeHeader.swift",
+      "sha256": "17155283b2a9ce6c93c714cedac44c7d25a9931f175912c44650c4b41a0ebfb7",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/TOC.swift",
+      "sha256": "db418153858b88b3489a9cd177abddfe2c0d927084ea862821e354247638ac31",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codestream/TOCPermutation.swift",
+      "sha256": "da7b2af7efd4192001c44dc2179ef7f4527a3af24bd8ae0d9a280fb3c12dc941",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Container/JXLContainer.swift",
+      "sha256": "92d0025833b4d612162d0fb17e513e21d0569f4f886121e7db3c4e5b7fcde667",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/ANSDistributionSerialisation.swift",
+      "sha256": "b22ee83cce90e7d5c6d90d208ffd72170026b7a66b40e688b5dc2255abd2dc22",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/ANSStreamDecoder.swift",
+      "sha256": "7a48e71d834f8f1f8d4de3c39633f07145e37460adc118fe06c940182a265dbd",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/ANSTokenStreamWriter.swift",
+      "sha256": "b689dee2dd794cbff4cb2b738c348f3542e56a1a0237be94f5f76810a682a105",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/AliasTable.swift",
+      "sha256": "c7efd360b73cd3ff1fe62df1d36cb68399af9eae150945e529be7567708fdec6",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/ContextMap.swift",
+      "sha256": "f5d371b7a8017ffb521632837ea57b422c1e4747e8efd3ecefd6e5237327d159",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/EntropySectionHeader.swift",
+      "sha256": "5ec3f1efb411edb8d7d9fe851d01286f0b28f7b7ee85ea8d0a794c5dea907c66",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/HybridUint.swift",
+      "sha256": "0c7d993964572861dee64a752795f9f68b68858d4ecadd13e41814aeb0383ea0",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/LZ77Config.swift",
+      "sha256": "78f4b8b1dd982028b0980f5f5d82dbd03aa30bf939a2555e5be0c8a0f814d083",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/MultiClusterCodebook.swift",
+      "sha256": "84769994e1858d5c37a5dd50f8514dfb4f0834ba18bf0963af4a6fe4fa13df4a",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/PrefixCode.swift",
+      "sha256": "f15a23133883a84a6606480917175547e5f76008f957e07e6b6db569f95f4f69",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/PrefixCodeSerialisation.swift",
+      "sha256": "782cd13bdcf37d50e818e35a8872386b643e2bb28c77bc486212df312a98fd47",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/RANS.swift",
+      "sha256": "8244a4e7f647474885f4e84892ebc96928b5c350f27e8ef877957eb685bafca3",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/SimpleEntropyStream.swift",
+      "sha256": "0c74618755ae5940aaadbc83222bfcda5808434dd63082144e0110f7a348c74f",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/SpecANSDistribution.swift",
+      "sha256": "eea19f53aedeca8ec0a98008fc4eed9d31fc026f6d0b61350e8743682558be8f",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/TokenStreamReader.swift",
+      "sha256": "a8c5accc169d700d7a4f5d597515058798f5829efa0e2ff2286fd1fe60a5fd88",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Entropy/TokenStreamWriter.swift",
+      "sha256": "65b2d54da8c97fd1804843aa8bbffe34a38c0ee26fd7982af83cff9ec1b6fcaa",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JBRDBox.swift",
+      "sha256": "864ae446db2ccc24c2e9afa4a7d136aa8055ec636d568bc893be954c114d7e46",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JBRDBoxWriter.swift",
+      "sha256": "fafee028686365f41e1435a412171a02b304f32cadbc9b437247ec9a81bcf9e4",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JBRDMetadata.swift",
+      "sha256": "8b35c21a89a5099903dfbaf3770afcf1b6bc88792cacfa76d92539949a6deafc",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JBRDPolicy.swift",
+      "sha256": "4a6b63c1c7f779972fb03dd69cadcb56882f99d00398c2ee712c0b5e3c1f6cd9",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGBridgeCoefficients.swift",
+      "sha256": "e87dd0a89b4090d3ca39086d77d5903532b2c6a8658b7c0a797ce63bf17b0fe5",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGBridgeEntropy.swift",
+      "sha256": "956ec59962f4d593db57286860ec1476829f4549a842ff6369ef1aa26416a468",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameReader.swift",
+      "sha256": "a6bd2d6a15573154b7ddb793eba417bc3b5fab89e61ca2ca433c593c8512a793",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift",
+      "sha256": "53977b7f5603fd5af1d18b533adee6a48d59f83db7a08634b16f9abed8d966c7",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGCoefficientDecoder.swift",
+      "sha256": "8bd5168bb41b82b7a81ec8f7b413adb246216792927f5f953ee68883e7077507",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGEntropyReader.swift",
+      "sha256": "6086dfe07260d8bc8639ed882e1f33692b15561c19779925e28fa1e91dd680ed",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGFrameLayout.swift",
+      "sha256": "754c38fbfd0a70e5843a9710ad7c1ebf668675d5421e777b3720b63c35eda655",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGNativeTranscode.swift",
+      "sha256": "8f2d40bcb54ded771b8355b41bf55efec4438a9fbb2a3d1a754f9a4ad96a969a",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionMetadata.swift",
+      "sha256": "05a23379c920833f19de78e19cf44dc9198b20e5eff239170cde04fdff94ad42",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGReconstructionWriter.swift",
+      "sha256": "89a9fe87c072d04eacebb2a4b3bc7bff6f814ae58b6d1fa0e1f79d56872837da",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/JPEG/JPEGSegmentReader.swift",
+      "sha256": "d5cd02b4901a2ff96cdbf77fb4a094e337431891f7c8de9cb1a954e47a094e94",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/GroupHeader.swift",
+      "sha256": "c1b1e5141011b1b2d18c1c59744537104fcf8432bde1a55c6fef4b71e5a50076",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/InverseTransforms.swift",
+      "sha256": "7befaabbfea3c4ce765217737faa1af2be197af1f2cc0b91efcff2c214cd4821",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/LibjxlPredictor.swift",
+      "sha256": "d22c53808f150333422db9f643ac882529e8f83e58200c4e1d085b9fd21da7e0",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/ModularChannelDecoder.swift",
+      "sha256": "9d4374a991ed236270933b2b578d2e651df5101ef9a7bc20bb9071b02340e468",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/ModularImage.swift",
+      "sha256": "b5753bd68ba804b62d1bff6c64257589b4860732bcd5e6bd6a6408f7addadcd3",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/ModularProperties.swift",
+      "sha256": "96de5718d84f02a6b1fd9e8e144da1b9e9176694855b8af8ba7465164eadb634",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/ModularTree.swift",
+      "sha256": "14ca65941e854e877d6b53c2fdb6df22fa15f42159ce0fc7a226b26bc5ac940b",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/Predictors.swift",
+      "sha256": "9e2fb94b4426b6bfa670bb06a2e5d9bea85795d3d14f96b7ff3c91ef644cbb65",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/RCT.swift",
+      "sha256": "a26c65214a57665d3c086df9e21f213cd965878eddcecdf882d369fabb208f6c",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/SpecRCT.swift",
+      "sha256": "47d23658646337819adbbf2942862f033a58279ab90df9c9c06542c63ca65602",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/SpecSqueeze.swift",
+      "sha256": "04300d869d668cb59a6d27d2269b0133337eb71dcdc4518a397bb2f36b330768",
+      "matches_parent": true
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Modular/WeightedPredictor.swift",
+      "sha256": "d1ca9f07c0d0a2411b80fb60c23e91bf2cb1d7a46cbc69dbd139838e43f0cac6",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/manifest.json",
+      "sha256": "317226fb1411b7dfaf60096be3604a13375f9d66bce1369138fc13fd4810ea09",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-12.jxl",
+      "sha256": "5bcbfc29d85f215ce4aeaa8e3e7785687a1085d9cd9977aae1465ce3884e8ee5",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-16.jxl",
+      "sha256": "e5233f913855dfc680405f87f6aedc528fbbe807b0c3659e2506e5dbc31fb17c",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-8.jxl",
+      "sha256": "67a7bf46e8ac6f1bcffdbe16ed5e9d6f09259f8477d8264412dcf2b318795410",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-12.jxl",
+      "sha256": "ce0351285d94d7bcbfe304b50004de22cfbe74be826ac3115afe86f7a0b96235",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-16.jxl",
+      "sha256": "d095e509e891a64a06e185c5a7e372cd84694dbb134a3cedd7de38e14d6d3328",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-8.jxl",
+      "sha256": "2fe05bbedc54692c2e72dee3344e012f2894f847513ff977cbabf599a2043fc3",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/gray8.jxl",
+      "sha256": "90fccff8fa50f522bf149b7a90118d230b7c5b49bfed80337950c8e9110b4bfb",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/grayalpha16.jxl",
+      "sha256": "09bb0a903106ab99f62cb0b40392f5b1004525a6fc9392b4d2e256497182d131",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/grayalpha8.jxl",
+      "sha256": "981ab7f484f4228aeb6758f89154e2f56d9e128c6404b6d6cfd03bf210282e9e",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-grayalpha16.jxl",
+      "sha256": "32d1cfe0a0f16e59396d854fd20ec2ca9b2d39e010f5f6777bf502b0f9aa8455",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-rgb8.jxl",
+      "sha256": "5848ba808f98a4b0ee77cf9456c7748b0aa349bff4d4a716680326f6b7533ccf",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/groups-rgba16.jxl",
+      "sha256": "2375aaf59bfd4790f646bb6ebb56f7ae5717d7ea1c995764a200c69f5b702177",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/manifest.json",
+      "sha256": "c9a44ea37f8000c0bc0090b23bd78cc15d25a1f7c4b14de0a58dea02763cc5b1",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/palette-rgb16.jxl",
+      "sha256": "c726e86ccf4f7059a1077488ee094f120a097853c84120ec745d6a823c6ac21d",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/palette-rgb8.jxl",
+      "sha256": "19e474ee97f8720d0afda58e8c03ec4cc1835a8cc4042528a2146d887116ad52",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-gray8.jxl",
+      "sha256": "530b8e42c08a3176fdfe7c8cb3c4da0869c39cb81cc4159065c0d1434df66c38",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-rgb8.jxl",
+      "sha256": "161b8cdf3d9a8750a32ed37f2c2c9a1f5ae95ec9a1827433dad9c17efa6a3a7f",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-small-rgb8.jxl",
+      "sha256": "a176a0ad1ba2e7515c1ee2ddade5058dfe85f48110ced0ee03346da391a55108",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/responsive-wide-rgb8.jxl",
+      "sha256": "d8faa6c9335a47935dc4e4bda20b691c470b89eb2c9ea7ae9ff8afca9f2de7de",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgb12.jxl",
+      "sha256": "8c6c87e99a1f7b0401606aece593a44d24770352030cc283ff21ff41f0822c4d",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgb8.jxl",
+      "sha256": "b16eb67b23df4f2665b912a75895287f616eb506e758f425f0304cffee9d2e25",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgba16.jxl",
+      "sha256": "f1d299e63fd54331ea6faaf9587f63ef8ce0a67ca396ff7bba18c117822ab151",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Decoder/rgba8.jxl",
+      "sha256": "346fb581fb60dca20b886787165da5abba0ac47fa81189471d9435c6944adf81",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-12.jxl",
+      "sha256": "b64b0f37545eb96e226a6be4b4e684b134bd51fd9f93ac3f289ec443c6d7a3b1",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-16.jxl",
+      "sha256": "b5c5ef9031f5e930865528ea6566c0aad55343bb35e38ddd0596df911fed252b",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-1-8.jxl",
+      "sha256": "0cee7590c613f762ee0034934febc6e12120da2a80283b24853643bbb5be2de8",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-12.jxl",
+      "sha256": "d695b618973782ff508cca64323009ebfdb0d1ffb5ebd3b9f5cd19f1311322a5",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-16.jxl",
+      "sha256": "6e2ff6b7fa6f61001f64b21f4b22168748bb4dacd43c979138a4730f4f134e69",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-2-8.jxl",
+      "sha256": "6e681ee18f92c4f10d5c44c0551a84463906f4945c0baeaddff209fa7e2e6a8d",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-12.jxl",
+      "sha256": "7064cda17d06cd665c31dc4933abe167216e51a7b97e00cbeca7378c03c81488",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-16.jxl",
+      "sha256": "d17a62b824af4f9a2739e3a9fa3da94e6dbc7aa60817caac2dcde353c4cf44d8",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-3-8.jxl",
+      "sha256": "f5c7a6da6ea4de1b0bfd292ebca55bb65cd4c67ccc2964f4641680b411fbb5b6",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-12.jxl",
+      "sha256": "168fc9f7ad8e9b9615a32ad38eb2ed83b2302f034c3f380ca943a263ce2234fc",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-16.jxl",
+      "sha256": "47c3bc819114a23ed3a409e93b384574e94bb82a395120f92e1949ad9638a0cc",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/icc-4-8.jxl",
+      "sha256": "12749778ff13cc062af1a95436d5c8b769e3d1c9a65230add215cdd071b53976",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/ICC/manifest.json",
+      "sha256": "1690893de287c2043543f6a6190ebd7af4744bab6c682d2fe6b7133b7154dbfc",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+      "sha256": "0d2567d990b172482325c33f935b74015ae3c6cff496b6c7bd1ccea3e992caef",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-2.jxl",
+      "sha256": "9e582a44b008ded7f76cbe13e63664ed212a7bbd9d93d95beaa1a8b709263bc4",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-3.jxl",
+      "sha256": "c414771d7483bd848a80f2808235f8cfb02d420858950b1c166cef183391fc1b",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-4.jxl",
+      "sha256": "59ff66dffb2514f8069cba9ea4ec93b078eb8fd729e5073e4cb04b60619ad6ec",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-5.jxl",
+      "sha256": "71c3d5451e52f26c8f0fa77659287591629ce1244073a64833a59624d4bd9873",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-6.jxl",
+      "sha256": "be0dc0748d0ac438806496f2c1635944db0fa173e0cc152baa0c9ce1817083d0",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+      "sha256": "fd6328a7588b9a1730a63cf50677cd5f1b7ade5f282636d8adf051a6c31d3ada",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+      "sha256": "fada28978e768f2f15d56be7f5a37838d6581add9f3267529a5a0f9e834a37dc",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-2.jxl",
+      "sha256": "1116c3d56b8312fc475949669a14fa3731d5ec352b8d7b9d71b4f2529446b251",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-3.jxl",
+      "sha256": "675e9f56e4d155fc714430054c0299d235ac20283a756c648da801ce4650bd55",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-4.jxl",
+      "sha256": "bfc59393463d4d881e422ee5d0e9b2286764eaaeef67002eaafb6630fee010ea",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-5.jxl",
+      "sha256": "0bbfa916d1603bcf2dbe89c8d090e4564eb5a51ae2e8a94834736a2b10fc19d9",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-6.jxl",
+      "sha256": "02d373b5c54f831d81054d05615c4bf38d34f9b76cc776bf0d86c941e110dba3",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+      "sha256": "0747a5b0b4f14bb95fcb35c514396e987b53134bb9c423f6424f2d99dba1e5d6",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+      "sha256": "82420f21c56196539851b6755fd58ac07b04ee293d1d0d00153feeb5e81f0230",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-2.jxl",
+      "sha256": "e9696288f19b0a103fe200a8990b3c3b3b49f946821c403123c939264623da40",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-3.jxl",
+      "sha256": "bc27a3d999c432d7053e208695cff9222e2a32bebc4ad746e8a00eb89a6c5f43",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-4.jxl",
+      "sha256": "600fda64b47ca5896a1e2bdb1c62fe2602fda6a79a418d6d67ee5429df60d5a7",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-5.jxl",
+      "sha256": "e00ccfa655579f75b0fb7988cafaaf9a03fa2d2f2de1f374f8c55d0652b09303",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-6.jxl",
+      "sha256": "2a13a97bd105aad5ff73675305449059623fecf66a31a84b66ff8e27e3e2b4d7",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+      "sha256": "1409423f47533c58d91babe89d2ddfbb69ecace906ec4ce850bb263a1d008630",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+      "sha256": "9352e137fa19ce1edc7e286774882ca27415b7d509a1996fb93b09d0c1980c3e",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-2.jxl",
+      "sha256": "222a21acc9d8b7755ecc89e73181f07052df9ff5b34aa435e61f26e42c5fb87c",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-3.jxl",
+      "sha256": "d7fae7908a0f589edc68e43643a6f7c6f3189035a1d4e29f2b09e3dfb9d9bedd",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-4.jxl",
+      "sha256": "dcabeaac3738176ed07bf1800ab83b87cef7f9f9dc5a7cf51c4354902b907be7",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-5.jxl",
+      "sha256": "e36dc498b86cd7147e6f59d7a190068b6745e108e0ddad58c58676c826069f1c",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-6.jxl",
+      "sha256": "98142bcc2356a723e92b48f86626105acd0a7764d19bb9b478bdb1ac2aa49e0e",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+      "sha256": "d7e938b9e506d7bee7f1034796c72d4005194f8364d2e7333cb939d98130ad44",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/manifest.json",
+      "sha256": "ddfb72744461653eb36b088b6115a8217d06673551b1730ab26208c5d5c3334b",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-12.jxl",
+      "sha256": "515cd13e29fa566efbecf2b1bd5bd17626d15b5ed8339d7bf258a937be399541",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-16.jxl",
+      "sha256": "f436dd74d301bf662bdbbac4efc154e1de4761c155a28cd465c9dc0e50a45b2c",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-1-8.jxl",
+      "sha256": "9a880e3c0faabe8ecdad9e8d67ff1d470c5e98a1af58d4ac5e033b20bb3ee68e",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-12.jxl",
+      "sha256": "1e74464f93af2def7cb0dbeb42d19bf46ce7ada44b9d5d6d019ed57d90e4f2b4",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-16.jxl",
+      "sha256": "e2b57722b26401cca0b694e2dea101246e92f6a5fafd5d92e1a4f9dcec9adc5a",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-2-8.jxl",
+      "sha256": "c08ce297313c7da3532c33ab9636c2ed66b6ef60b8b40bd16c705b4cd722e12a",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-12.jxl",
+      "sha256": "df89c23a2fb69a573b43df39576e99e5d294c844df0e140c5ca7e363fd46f1ff",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-16.jxl",
+      "sha256": "82f267c696d5b22abf5af536eb5f8082cc4a6d908352cb8ea1e6d932fa11c2f6",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-3-8.jxl",
+      "sha256": "d0ff2cca696915e25b409a0877258cc2b2cfca426e990689c4c7a850b065de9e",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-12.jxl",
+      "sha256": "f18159914687a6654e586b255be6cad7f3aff2b087ca092ac1d7ad9ad9721108",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-16.jxl",
+      "sha256": "47886176506f285eae52d7b2b79ff0c33311a914cc51d7da592f6bd13e4db21c",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/bt709-4-8.jxl",
+      "sha256": "6882b42c527c93393a49c87dceebd4b888677f23203f1ea3b1f5d7e3587b63b5",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/Transfer/manifest.json",
+      "sha256": "d0b7d6b28214abb6afb82f487630ad2d19afb47f67ce7c2090d0904c52b17301",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/rct-baseline.json",
+      "sha256": "367767493946572bc3c59c056accecd667bb3107fd6d0c2ca5d53472bfd680f9",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/rct-manifest.json",
+      "sha256": "75294ae791d2e5c37a7e157e87cccbb7140c5caf634c7baec4d1ae2a5aeef000",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/squeeze-baseline.json",
+      "sha256": "921596b745a3eebf012bff2a4ba50d5469da0306d7eeecdea4a3913c04f77c70",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/squeeze-manifest.json",
+      "sha256": "3a70f7350e488f46ebd3214c6d3b4ebfb0d073f4aef220a5eec9c43daafd7cdd",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/Modular/squeeze-wire.json",
+      "sha256": "4d7b3d38f8a2bc5258c770d6133d1331973361703c80ceaffeeef4a12e4404f5",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ModularEncoderTests.swift",
+      "sha256": "216726659f93cba145ae40be7d572d63f9dafd4530b1bbcdcb7d37f42e0d767f",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ModularParallelTests.swift",
+      "sha256": "cb67bdfa382cdf119724cd4b9e496d305feb5f8f17090b7c768388d9797fb368",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ModularStorageTests.swift",
+      "sha256": "636a959a3f85c7d88f1a06fe9279e062352ac8e9ed45558ddb3354ae102f47fd",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ModularUnsupportedPaletteTests.swift",
+      "sha256": "9fb63d3c62cd450db0a6d2ba92663b0a8ff76f154a7f2e6fb66aa0a70d044d18",
+      "matches_parent": true
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ScalarMemoryTests.swift",
+      "sha256": "edca9cf329803c989567c8c1a1573b3fcccdf34b0ce36716d002edf0291492bf",
+      "matches_parent": true
+    }
+  ],
+  "note": "Selected qualification only; no source or test edits, CLI target excluded. Debug compiler already validated parent runtime; ASan/TSan source and fixtures copied exactly."
+}

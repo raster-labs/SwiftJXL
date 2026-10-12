@@ -111,7 +111,7 @@ package enum ScalarModularDecoder {
             tree: selected.0, header: selected.1, codebook: selected.2, predictor: gh.wpHeader)
     }
 
-    private static func readTreeAndCodebook(from r: inout BitReader, pixelCount: Int)
+    package static func readTreeAndCodebook(from r: inout BitReader, pixelCount: Int)
         throws -> (ModularTree, EntropySectionHeader, MultiClusterCodebook) {
         // Tree nodes, growth overlap, and up to six LZ77 tokens per node.
         let limit = min(4096, 1024 + pixelCount / 16)

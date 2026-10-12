@@ -1,0 +1,80 @@
+{
+  "successorCommit": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+  "predecessorCommit": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "date": "2026-10-12",
+  "configuration": "ordinary -O, Swift 6, complete concurrency checking, no sanitizers",
+  "toolchain": "swift-driver version: 1.168.6 Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "system": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434",
+  "hardware": "Mac16,13 / M4 / 16 GiB, previously recorded host; hardware query unavailable in this sandbox",
+  "sourceSHA256": {
+    "Sources/SwiftJXL/CodecAPI.swift": "3430b1c0eef3161c325920a74db068114373c0ecb6b3436b46ea0463730cd7f0",
+    "Sources/SwiftJXL/Image.swift": "c704f058b2fa726fb410bb094c3a319334b35e285205b46b79731bfaa35250e9",
+    "Sources/SwiftJXL/ImageStorage.swift": "8cb882511ae13ab0347782a6e474bee82013b0812aa6756c4a0dba573d87cb3f",
+    "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift": "38ef3fb2d896aab9051d21311d24d87cc5fd678767f00754f200511b8d604d75",
+    "Sources/SwiftJXLCore/Codec/ModularSampleStorage.swift": "072911732953b26199ca3e6ef57ed9e37c22f933fdadbe2c7482edf2b4b9e2e2",
+    "Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift": "12b1bab79edb576cdc1ebcfdb857379e389b10c64353b2e385dac76b2e477370",
+    "Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift": "b0b8ddece921cd8bec119eeb6503944e5cb1e3a20cea6c3b54fdb26c5757a202",
+    "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift": "535341293557fdc5e3a749fd17b9ef72ba2752f8c50d2ade40c44e380fe180fb",
+    "Sources/SwiftJXLCore/Modular/ModularImage.swift": "0960d79c30efbc3799abbe2c51e5136b6491fc6a75465c00da6cda65f7957f45",
+    "Sources/SwiftJXLCore/Modular/InverseTransforms.swift": "7befaabbfea3c4ce765217737faa1af2be197af1f2cc0b91efcff2c214cd4821"
+  },
+  "evidenceSHA256": {
+    "wrong-byte-order.patch": "21f3d48f855724241c8c6ec8cc4f49ad2d0dfbba39cd1ae3b65b5254b317f5c5",
+    "wrong-row-stride-cold-build-timeout.log": "191f75bebe5cea5bc90ac18ba04862155c4bcaec95ccc0e57c3e1119555b08f3",
+    "diagnostic-assertions.patch": "2b352171104b6bf574b9aeee4d74385ef69329d865f76a992145d54a79fd7f47",
+    "implementation-mutants.json": "19f20d8e84c1edad3209bc7535192f57fdc4e0a3d256d4924472c039e2409d7d",
+    "1024x1025-4c-16bit.json": "a6af41b7e72b25108cc9856fd40d733e2ff7bc0af83c01bace9b7e74a3011b3a",
+    "cold-build-timeout.json": "e27cca25e4ab777d30611062ca4985b47a248fe63b56779e58a34a280e51c07b",
+    "2048x2048-1c-12bit.json": "bd9855a7d48c08f189994cf913cdd5128959e7f66611d476ea4a4c5d88a1d654",
+    "mutant-restoration.json": "3cd8fa1eb435256c6825470ffdac01b69cd0952447c165bd9a7d94c4e62912c1",
+    "512x512-1c-16bit.json": "40b01f4d9a6a4295d76948dffd173701a1969c4b07f22565edfd592edccd33be",
+    "wrong-row-stride.patch": "14d19111ae35a5f3280c4933b25e0ebbab062bd53512581481bc3f58b1be2983",
+    "513x259-3c-16bit.json": "5890ffec6cfdeab9302e761506b5caf16db04d0c6b558fc454fa26cb55fce527",
+    "README.md": "eb30c74c9d1505767664ace1da2cce57cea563c0e8363fd4cd29a7de62f7e698",
+    "513x259-4c-16bit.json": "c6f90e62c48f476344de60d930e1906da4a6641080de894669b8fb1c2d4bc452",
+    "owning-memory-probe.swift": "cf55573a11044a4db90d9e747d14b9f245fc2baed9444a81c33f19a0c1a06c23",
+    "restored.log": "a9772c9bed8123decd7a58deea851206edfc68e381a32f8bb1baa54b584ef304",
+    "wrong-row-stride.log": "a6138253ccc4ed1ad3b008429b4c213740916b772baa5ece7e98a902b1546800",
+    "runs.json": "f22599f7649cfd2895109df5126cfc7172d84ea8d875e06f950d546520ede7e5",
+    "wrong-byte-order.log": "6893f8d75a32d9b3557a5f8b73f0b23d07284fd48ccaa722fda924529879327f",
+    "build.json": "1484c62172454b6ac1eaad6c1254c81f635c25b0ed03c838d36c83c53589a451",
+    "build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "summary": {
+    "casesPassed": 5,
+    "casesFailed": 0,
+    "casesSkipped": 0,
+    "concurrentOperationsCompleted": 12,
+    "preflightDenialAndReuseCases": 5,
+    "cancellationAndInvalidationCases": 5,
+    "callerAdditionalFinalPixelAllocations": 0,
+    "encoderAdditionalFinalPixelAllocations": 0,
+    "allocatingDecodeFinalPixelAllocationsPerCase": 1
+  },
+  "limits": {
+    "maximumWorkspaceBytes": 1073741824,
+    "maximumMemoryBytes": 1610612736,
+    "maximumWorkersPerCodecOperation": 1,
+    "deadlineSeconds": 120,
+    "explicitCallerOverrides": true,
+    "productionDefaultsChanged": false
+  },
+  "limitations": [
+    "Allocation-site counters cover named final and algorithm planes, not all allocations or COW events.",
+    "Heap figures are live process snapshots, not peak workspace or a controlled comparison. Other host work was active.",
+    "Runtime peak-workspace metrics remain unknown; the core ledger is cumulative admission, not measured peak.",
+    "This probe supplements previously executed independent interoperability and sanitizer evidence; it does not replace either.",
+    "Four concurrent public operations are exercised for each smaller case; simultaneous operations are not run for the two larger cases."
+  ],
+  "binarySHA256": "2dc309c0f0c5233ec644dac77106e50c9a4849662e68dbe41801edb24d247cad",
+  "implementationMutants": {
+    "declarationsPerRun": 2,
+    "parameterCasesPerRun": 68,
+    "wrongStrideIssues": 70,
+    "wrongByteOrderIssues": 42,
+    "restoredIssues": 0,
+    "restoredExitCode": 0,
+    "scope": "Implementation mutations in isolated detached worktree; see implementation-mutants.json"
+  }
+}

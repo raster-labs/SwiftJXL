@@ -1,0 +1,151 @@
+{
+  "generator": "Scripts/TestSupport/modular-alpha-fixtures.c",
+  "generatorSHA256": "0d2648d125a3d8552926cb53603a4b75542224de65c7ec883e764976426b56cb",
+  "library": "libjxl 0.12.0, a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "compile": "xcrun clang -Wall -Wextra -Werror -I/opt/homebrew/include Scripts/TestSupport/modular-alpha-fixtures.c -L/opt/homebrew/lib -ljxl -o ../modular-preflight/modular-alpha-fixtures",
+  "expected": "alpha=(linearIndex*211)&((1<<bits)-1); colour[channel]=alpha*(channel+1)/channels, integer truncation",
+  "fixtures": [
+    {
+      "name": "premult-2-8",
+      "width": 513,
+      "height": 3,
+      "channels": 2,
+      "bits": 8,
+      "command": [
+        "../modular-preflight/modular-alpha-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-8.jxl",
+        "2",
+        "8"
+      ],
+      "sha256": "67a7bf46e8ac6f1bcffdbe16ed5e9d6f09259f8477d8264412dcf2b318795410",
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 1,
+        "alphaBits": 8,
+        "premultiplied": 1,
+        "renderingIntent": 1
+      }
+    },
+    {
+      "name": "premult-2-12",
+      "width": 513,
+      "height": 3,
+      "channels": 2,
+      "bits": 12,
+      "command": [
+        "../modular-preflight/modular-alpha-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-12.jxl",
+        "2",
+        "12"
+      ],
+      "sha256": "5bcbfc29d85f215ce4aeaa8e3e7785687a1085d9cd9977aae1465ce3884e8ee5",
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 1,
+        "alphaBits": 12,
+        "premultiplied": 1,
+        "renderingIntent": 1
+      }
+    },
+    {
+      "name": "premult-2-16",
+      "width": 513,
+      "height": 3,
+      "channels": 2,
+      "bits": 16,
+      "command": [
+        "../modular-preflight/modular-alpha-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-2-16.jxl",
+        "2",
+        "16"
+      ],
+      "sha256": "e5233f913855dfc680405f87f6aedc528fbbe807b0c3659e2506e5dbc31fb17c",
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 1,
+        "alphaBits": 16,
+        "premultiplied": 1,
+        "renderingIntent": 1
+      }
+    },
+    {
+      "name": "premult-4-8",
+      "width": 513,
+      "height": 3,
+      "channels": 4,
+      "bits": 8,
+      "command": [
+        "../modular-preflight/modular-alpha-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-8.jxl",
+        "4",
+        "8"
+      ],
+      "sha256": "2fe05bbedc54692c2e72dee3344e012f2894f847513ff977cbabf599a2043fc3",
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 3,
+        "alphaBits": 8,
+        "premultiplied": 1,
+        "renderingIntent": 1
+      }
+    },
+    {
+      "name": "premult-4-12",
+      "width": 513,
+      "height": 3,
+      "channels": 4,
+      "bits": 12,
+      "command": [
+        "../modular-preflight/modular-alpha-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-12.jxl",
+        "4",
+        "12"
+      ],
+      "sha256": "ce0351285d94d7bcbfe304b50004de22cfbe74be826ac3115afe86f7a0b96235",
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 3,
+        "alphaBits": 12,
+        "premultiplied": 1,
+        "renderingIntent": 1
+      }
+    },
+    {
+      "name": "premult-4-16",
+      "width": 513,
+      "height": 3,
+      "channels": 4,
+      "bits": 16,
+      "command": [
+        "../modular-preflight/modular-alpha-fixtures",
+        "Tests/SwiftJXLCoreTests/Fixtures/Modular/Alpha/premult-4-16.jxl",
+        "4",
+        "16"
+      ],
+      "sha256": "d095e509e891a64a06e185c5a7e372cd84694dbb134a3cedd7de38e14d6d3328",
+      "info": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 3,
+        "alphaBits": 16,
+        "premultiplied": 1,
+        "renderingIntent": 1
+      }
+    }
+  ],
+  "licence": "Apache-2.0; deterministic synthetic samples generated for SwiftJXL, with no third-party image input. Test-only libjxl retains its own licence.",
+  "sampleType": "unsignedInteger",
+  "byteOrder": "Generator supplies native-endian integers to libjxl; fixtures contain standard JPEG XL codestreams.",
+  "alpha": "premultiplied"
+}

@@ -1,0 +1,75 @@
+{
+  "scope": "Optimised inverse-squeeze kernel including allocation and successor admission/checkpoints;65536 output samples;3 warmup trials,7 measured trials,32 calls/trial. Sequential after local test build completed. No overall performance improvement claimed.",
+  "before": [
+    {
+      "checksum": 6349160,
+      "horizontal": true,
+      "median_us": 146.84765625,
+      "samples": 65536,
+      "trials_us": [
+        147.55859375,
+        143.71875,
+        149.34375,
+        146.84765625,
+        140.85678125,
+        136.42059375,
+        161.9245
+      ]
+    },
+    {
+      "checksum": 6330110,
+      "horizontal": false,
+      "median_us": 83.578125,
+      "samples": 65536,
+      "trials_us": [
+        81.10415625,
+        81.55078125,
+        82.306,
+        84.70703125,
+        84.1171875,
+        83.578125,
+        84.7421875
+      ]
+    }
+  ],
+  "after": [
+    {
+      "checksum": 6349160,
+      "horizontal": true,
+      "median_us": 151.62109375,
+      "samples": 65536,
+      "trials_us": [
+        151.87890625,
+        149.16275,
+        151.009125,
+        151.62109375,
+        151.290375,
+        151.9544375,
+        153.99609375
+      ]
+    },
+    {
+      "checksum": 6330110,
+      "horizontal": false,
+      "median_us": 79.4205625,
+      "samples": 65536,
+      "trials_us": [
+        79.4205625,
+        79.61328125,
+        79.4921875,
+        79.934875,
+        78.9986875,
+        78.74609375,
+        78.9375
+      ]
+    }
+  ],
+  "checksumsMatch": true,
+  "harnessSHA256": "1d664386e65d6c184ba1a169b6691e05a60c0d5c110fe1c2eac18b34b0b56385",
+  "compileBefore": "xcrun swiftc -O -D BASELINE -swift-version 6 -package-name baseline -module-cache-path .build/module-cache ../modular-preflight/transforms/TransformTypes.swift ../JXLSwift/Sources/JXLSwift/Modular/ModularImage.swift ../JXLSwift/Sources/JXLSwift/Modular/SpecSqueeze.swift ../modular-preflight/transforms/squeeze-benchmark.swift -o ../modular-preflight/transforms/benchmark-before",
+  "compileAfter": "xcrun swiftc -O -swift-version 6 -package-name successor -module-cache-path .build/module-cache ../modular-preflight/transforms/TransformTypes.swift ../modular-preflight/transforms/ScalarModularError.swift Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift Sources/SwiftJXLCore/Modular/ModularImage.swift Sources/SwiftJXLCore/Modular/SpecSqueeze.swift ../modular-preflight/transforms/squeeze-benchmark.swift -o ../modular-preflight/transforms/benchmark-after",
+  "exitCode": 0,
+  "compilerNote": "Successor direct compile required authorised sandbox escalation for Swift TaskLocal macro plugin. Initial sandboxed compile failed before execution.",
+  "execution": "../modular-preflight/transforms/benchmark-before; ../modular-preflight/transforms/benchmark-after",
+  "unqualified": "Full-operation allocations/RSS/copies, palette performance, public colour/alpha throughput"
+}

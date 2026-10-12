@@ -9,7 +9,7 @@ Pinned predecessor: 57e81cb9e2411d1efac435b429a306a031744c1e.
 In-house material is relocated under the owner-authorised Apache-2.0 terms.
 See Documentation/Engineering/Migration/relocated-sources.json.
 
-The special-distance lookup table, JPEG reconstruction events, entropy writer, ICC profile codec and coefficient-bridge algorithms retain the JPEG XL Project Authors'
+The special-distance lookup table, JPEG reconstruction events, entropy writer, ICC profile codec, Modular colour/palette/squeeze transforms and channel geometry and coefficient-bridge algorithms retain the JPEG XL Project Authors'
 BSD-3-Clause terms. See Documentation/ThirdParty/libjxl-LICENSE.txt.
 
 Native Brotli reconstruction code includes Brotli Authors dictionary, transforms,
