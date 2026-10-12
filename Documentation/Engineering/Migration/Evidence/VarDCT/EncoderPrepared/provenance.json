@@ -1,0 +1,16 @@
+{
+  "sourceRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "sourceFiles": {
+    "VarDCT/Gaborish.swift": "a49d49b602c58484293810226fcec9056503b4891b759d6d47d64c9df5198465",
+    "Codec/VarDCTEncoder.swift": "4b69e7535253ec51540df144a2d2cb2efd1980995d51dca41dca3510a86fef3a"
+  },
+  "independentRevision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "independentFiles": {
+    "lib/jxl/enc_gaborish.cc": "1ded3a77ae7a14125a77201a10d4791f870b33c66e5aa55e381766fe70a08078",
+    "lib/jxl/convolve_symmetric5.cc": "aa6ec457adb6fc53a29aa7d57fa1c80f5b46cac6e63106d1c92efe4a25b397e3",
+    "lib/jxl/image_ops.h": "1b5e0363b7464ec6784497211c9ea1664b5a195650ec2ca8d36f4d3ab9d3bc07"
+  },
+  "inverseVectors": "Direct libjxl GaborishInverse linked to pinned scalar objects;5 geometries \u00d73 patterns \u00d73 planes=45 vectors, tolerance abs2e-6+rel2e-6 before comparison",
+  "boundaryCorrection": "Predecessor uses reflection without repeated edge, unlike pinned libjxl WrapMirror; successor follows official repeating-edge boundary over visible rectangle and then extends for DCT. Tiny1-pixel input is valid.",
+  "vectorSHA256": "226a5d90cfee2cc5e8e423abded36358ec56bb368574e7f7f167bdae74175297"
+}

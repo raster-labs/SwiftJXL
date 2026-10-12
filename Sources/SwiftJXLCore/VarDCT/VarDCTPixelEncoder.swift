@@ -4,15 +4,16 @@
 // JPEG XL Project Authors retain BSD-3-Clause; see libjxl-LICENSE.txt.
 import Foundation
 
-/// Bounded DCT8 analysis stage. Mixed-strategy search, adaptive quantisation and
-/// inverse Gaborish are separate migration steps, not implied by this profile.
+/// Bounded DCT8 analysis with explicit predecessor prefilter and adaptive
+/// quantisation controls. Mixed-strategy search remains a separate migration step.
 package enum VarDCTPixelEncoder {
     struct Coefficients {
         let width: Int, height: Int, blocksX: Int, blocksY: Int
         let bits: Int, grayscale: Bool, hasAlpha: Bool
         let globalScale: UInt32
         let quantDC: UInt32 = 17
-        let quantAC: Int32 = 5
+        let quantAC: [Int32]
+        let gaborish: Bool, dcSmoothing: Bool
         let dc: [[Int32]], ac: [[Int32]]
     }
 
@@ -22,6 +23,7 @@ package enum VarDCTPixelEncoder {
     package static func encode(_ bytes: UnsafeRawBufferPointer,
                                layouts: [ModularChannelLayout], bitsPerSample: Int,
                                grayscale: Bool, alphaAssociated: Bool?, distance: Float,
+                               gaborish: Bool = false, adaptiveQuantisation: Bool = false, dcSmoothing: Bool = false,
                                budget: ScalarOperationBudget) throws -> Data {
         try budget.checkpoint()
         guard let first = layouts.first, (8...16).contains(bitsPerSample),
@@ -52,11 +54,38 @@ package enum VarDCTPixelEncoder {
         var dc = (0..<3).map { _ in [Int32](repeating: 0, count: blocks) }
         var ac = (0..<3).map { _ in [Int32](repeating: 0, count: padded) }
         var patch = (0..<3).map { _ in [Float](repeating: 0, count: 64) }
+        var quantAC = [Int32](repeating: 5, count: blocks)
+        var prepared: [[Float]]? = nil
+        if gaborish || adaptiveQuantisation {
+            let visible = try ScalarOperationBudget.product(first.width, first.height)
+            try budget.reserveWorkspace(ScalarOperationBudget.product(visible, 3 * MemoryLayout<Float>.stride))
+            var planes = (0..<3).map { _ in [Float](repeating: 0, count: visible) }
+            for y in 0..<first.height { for x in 0..<first.width {
+                if x & 255 == 0 { try budget.checkpoint() }
+                func linear(_ c: Int) throws -> Double {
+                    let v = Double(try source.sample(channel: c, x: x, y: y)) / Double(source.maximum)
+                    return v <= 0.04045 ? v / 12.92 : pow((v + 0.055) / 1.055, 2.4)
+                }
+                let r = try linear(0), g = try grayscale ? r : linear(1), b = try grayscale ? r : linear(2)
+                let p = try DefaultOpsin.forward((r,g,b)), i = y * first.width + x
+                planes[0][i] = Float(p.X); planes[1][i] = Float(p.Y); planes[2][i] = Float(p.B)
+            } }
+            if gaborish {
+                for c in 0..<3 { planes[c] = try VarDCTEncoderPreparation.inverseGaborish(planes[c],
+                    width: first.width, height: first.height, budget: budget) }
+            }
+            prepared = planes
+        }
         let dcScale: [Double] = [4096, 512, 256].map { Double(scale) * 17 * $0 / 65536 }
         for y in 0..<by { for x in 0..<bx {
             try budget.checkpoint()
             for py in 0..<8 { for px in 0..<8 {
                 let sx = min(first.width - 1, x * 8 + px), sy = min(first.height - 1, y * 8 + py)
+                if let prepared {
+                    let sourceIndex = sy * first.width + sx, target = py * 8 + px
+                    for c in 0..<3 { patch[c][target] = prepared[c][sourceIndex] }
+                    continue
+                }
                 func linear(_ channel: Int) throws -> Double {
                     let encoded = Double(try source.sample(channel: channel, x: sx, y: sy)) / Double(source.maximum)
                     return encoded <= 0.04045 ? encoded / 12.92 : pow((encoded + 0.055) / 1.055, 2.4)
@@ -66,6 +95,8 @@ package enum VarDCTPixelEncoder {
                 patch[0][i] = Float(p.X); patch[1][i] = Float(p.Y); patch[2][i] = Float(p.B - p.Y)
             } }
             let block = y * bx + x
+            if adaptiveQuantisation { quantAC[block] = try VarDCTEncoderPreparation.quantisation(patch, distance: distance) }
+            if prepared != nil { for k in 0..<64 { patch[2][k] -= patch[1][k] } }
             for c in 0..<3 {
                 let result = try transform.apply(patch[c])
                 dc[c][block] = try quantise(Double(result[0]) * dcScale[c])
@@ -73,12 +104,12 @@ package enum VarDCTPixelEncoder {
                     // The codestream's square-DCT coefficient layout transposes
                     // the ordinary row-major analysis transform.
                     let value = result[(k % 8) * 8 + k / 8]
-                    ac[c][block * 64 + k] = try quantise(Double(value) * Double(weights[c * 64 + k]) * Double(scale) / 65536 * 5)
+                    ac[c][block * 64 + k] = try quantise(Double(value) * Double(weights[c * 64 + k]) * Double(scale) / 65536 * Double(quantAC[block]))
                 }
             }
         } }
         let coefficients = Coefficients(width: first.width, height: first.height, blocksX: bx, blocksY: by,
-            bits: bitsPerSample, grayscale: grayscale, hasAlpha: alphaAssociated != nil, globalScale: scale, dc: dc, ac: ac)
+            bits: bitsPerSample, grayscale: grayscale, hasAlpha: alphaAssociated != nil, globalScale: scale, quantAC: quantAC, gaborish: gaborish, dcSmoothing: dcSmoothing, dc: dc, ac: ac)
         return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: limit)) {
             let data = try VarDCTFrameWriter(coefficients: coefficients, source: source, budget: budget, limit: limit).write()
             try ScalarEncodingWork.checkpoint()

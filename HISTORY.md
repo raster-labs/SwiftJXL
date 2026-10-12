@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## VarDCT encoder preparation — 12 October 2026
+
+Added explicit inverse Gaborish, adaptive quantisation and DC-smoothing controls to the internal DCT8 encoder. The filter agrees with 45 directly generated pinned libjxl plane vectors, including tiny and edge inputs. Twenty prepared streams pass independent acceptance and the separate unchanged scalar numerical limits, with exact alpha. Initial no-control fixture bytes remain unchanged. Full strategy search, public integration and final qualification remain open. See [preparation evidence](Documentation/Engineering/Migration/Evidence/VarDCT/EncoderPrepared/validation.json).
+
 ## Internal DCT8 encoder checkpoint — 12 October 2026
 
 Adapted bounded source borrowing, DCT8 analysis and frame entropy writing from the pinned predecessor. Twenty emitted streams are independently accepted; all pass the separate scalar same-stream numerical limits with exact alpha. Affected debug, ASan and TSan each pass 4 declarations / 16 cases. Original NEON integer failures remain recorded. This is a partial internal encoder: inverse Gaborish, adaptive quantisation, mixed strategy search, wider grouping and public integration remain pending. See [exact evidence](Documentation/Engineering/Migration/Evidence/VarDCT/EncoderDCT8/validation.json).

@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased — internal VarDCT encoder preparation, 2026-10-12
+
+- Add explicit inverse Gaborish, adaptive quantisation and DC-smoothing controls. Match the pinned reference filter at visible image boundaries, including tiny dimensions; retain the initial fixed-control profile unchanged. Mixed strategy search and public capability remain pending.
+
 ## Unreleased — internal DCT8 encoder checkpoint, 2026-10-12
 
 - Add bounded synchronous source analysis and frame writing, with twenty independently accepted streams and exact unassociated alpha. Public VarDCT remains disabled; predecessor encoder controls and mixed strategy search are still being integrated.
