@@ -1,0 +1,39 @@
+Building for debugging...
+[1 / 1]
+[2 / 18] SwiftJXL
+[4 / 20] SwiftJXL
+[14 / 23] swiftjxl-cli-product
+[16 / 24] SwiftJXL_SwiftJXLCoreTests
+[18 / 24] SwiftJXLCoreTests-product
+[19 / 25] SwiftJXLCoreTests-product
+[21 / 27] SwiftJXLCoreTests-product
+[21 / 30] SwiftJXLCoreTests-product
+[27 / 29] SwiftJXLCoreTests-product
+[29 / 31] SwiftJXLCoreTests-product
+Build complete! (3.02 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite AnimationFrameIndexTests started.
+◇ Suite AnimationPublicTests started.
+◇ Test truncationAndLimits(_:) started.
+◇ Test malformedAndUnsupportedHeaders() started.
+◇ Test independentAnimationIndex(_:) started.
+◇ Test aggregateLimitsAndCancellation() started.
+◇ Test publicFramesMatchAllFrameScalarOracle(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossy" to independentAnimationIndex(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossless" to independentAnimationIndex(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossy" to truncationAndLimits(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossless" to truncationAndLimits(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossless" to publicFramesMatchAllFrameScalarOracle(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossy-epf0" to publicFramesMatchAllFrameScalarOracle(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossy-rgba16-epf0" to publicFramesMatchAllFrameScalarOracle(_:) started.
+◇ Test case passing 1 argument name → "libjxl-lossless-rgba16" to publicFramesMatchAllFrameScalarOracle(_:) started.
+✔ Test malformedAndUnsupportedHeaders() passed after 0.001 seconds.
+✔ Test independentAnimationIndex(_:) with 2 test cases passed after 0.006 seconds.
+✔ Test aggregateLimitsAndCancellation() passed after 0.019 seconds.
+✔ Test truncationAndLimits(_:) with 2 test cases passed after 0.043 seconds.
+✔ Suite AnimationFrameIndexTests passed after 0.043 seconds.
+✔ Test publicFramesMatchAllFrameScalarOracle(_:) with 4 test cases passed after 0.049 seconds.
+✔ Suite AnimationPublicTests passed after 0.050 seconds.
+✔ Test run with 5 tests in 2 suites passed after 0.050 seconds.

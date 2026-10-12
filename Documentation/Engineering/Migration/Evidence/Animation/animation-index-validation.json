@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "scope": "Internal structural independent-frame index only, public sequence APIs and animation pixels/writing remain unimplemented. Existing still APIs unchanged.",
+  "command": "CLANG_MODULE_CACHE_PATH=$PWD/.build/module-cache SWIFTPM_MODULECACHE_OVERRIDE=$PWD/.build/module-cache swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --filter AnimationFrameIndexTests",
+  "exitCode": 0,
+  "declarations": 3,
+  "argumentCases": 5,
+  "skips": 0,
+  "truncationBytePrefixes": 1736,
+  "fixtureLengths": [
+    924,
+    812
+  ],
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/Codec/AnimationFrameIndex.swift": "3c263973da07bbd28bd58d354c2403971f5be638af399e1c91fd5a182f79b0ed",
+    "Tests/SwiftJXLCoreTests/AnimationFrameIndexTests.swift": "9a399973a35faac92f8a5ac94784b67095fe44a9052ff5283b17dca53aa8bc6c",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/generate.c": "252279d5b02ebc317ccba32dcac3bd980a257cf3fee51d71786d8bac756b86fd",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossless.jxl": "7691ed8baf546b213deac5d9af7dd41aed19da8dbe5dc45b4901b1146903abc9",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossy.jxl": "13fbec19431f9e400324ea20099ad91444c43cef1913b582f85b451eb0a09bc3",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/manifest.json": "42b62fef7da755c753d55c310b218b81c0bd04c329378b7f548f2b1b6b3b6b17"
+  },
+  "log": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/animation-index-tests-3.log",
+  "logSHA256": "f9f59b23595e9921c84d2ec4c4bd00754803f7f21e28c2fec8427440b176587a",
+  "failuresResolved": [
+    "Initialnewfixturefoldernotinexplicitresources; movedunderexistingcopiedVarDCT/AnimationwithoutPackagechange.",
+    "Testcontainerinitiallyomittedrequiredftyp; fixedtestbuilder.",
+    "Attemptedtickrate0syntheticcannotbewrittenbyvalidU32distribution; positiveclockguardretained.",
+    "AttemptedfullUInt32durationwriterexposedpreexisting32bitU32Distributionfitbug; indexfixturesusevalid<=255durations."
+  ],
+  "openGates": [
+    "ASan/TSan/mutationcampaign not run for new index; no public animation API claim",
+    "FullUInt32duration index test requires independent fixture (successor writer currently rejects>255 due U32Distribution32bit shift bug)",
+    "Core index purposefully rejects ICC/custom transforms, crop/blend/reference/zero-duration/timecodes; structural acceptance not pixel decode support"
+  ]
+}

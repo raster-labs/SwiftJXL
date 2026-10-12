@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "scope": "Explicit owning public animation inspection/decoding only; independent full-canvas frames. Animation encoder not implemented by this checkpoint.",
+  "command": "CLANG_MODULE_CACHE_PATH=$PWD/.build/module-cache SWIFTPM_MODULECACHE_OVERRIDE=$PWD/.build/module-cache swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --filter 'AnimationPublicTests|AnimationFrameIndexTests'",
+  "exitCode": 0,
+  "declarations": 5,
+  "argumentCases": 10,
+  "skips": 0,
+  "independentStreams": 4,
+  "independentFrames": 12,
+  "threshold": "Scalar Float32 sRGB oracle rounded to source precision: colour peak<=2LSB,RMS<=.5; lossless every sample exact; RGBA16 alpha exact. No claim about original NEON oracle.",
+  "memory": "One final owning pixel allocation per decoded frame checked (3 per sequence), no copy events. Aggregate priorpixel/metadata retained bytes subtracted from childlimits; compressed synthesis cap*4 admitted before allocation including previousowners, reported materialised bytecount. Values are admission bounds, not RSS peaks.",
+  "limits": "maximumFrames, aggregate maximumPixels and maximumDecodedBytes, metadata including timeline, memory/deadline, invalidindex and middle-sequence cancellation tested. Metadata exact56byte edge passes for3frame emptycolourmetadata sequence.",
+  "filterLimitation": "Shared writer cannot re-emit every nondefault EPF header. Default-parameter gabtrue/EPF2 canonicalises to identical all_default semantics. Custom parameters, other nonzeroEPF spellings and TOCpermutation reject unsupportedFeature; original default-lossy fixture retained and rejection tested. EPF0 fixture separately generated, not substituted silently.",
+  "sourceSHA256": {
+    "Sources/SwiftJXL/AnimationAPI.swift": "2144535c59a13dd263cd51e0c514595abe3b454cf1d64c44b04e0fac1b6369ac",
+    "Sources/SwiftJXLCore/Codec/AnimationFrameIndex.swift": "2d4c5d934d598b218f6b95d1317657f9e050802d8ad86dce49333d83168edc67",
+    "Tests/SwiftJXLCoreTests/AnimationPublicTests.swift": "7f82d1ce8bf316c09dc8c9b004f78c44941f59bf647946787f98679a68901372",
+    "Tests/SwiftJXLCoreTests/AnimationFrameIndexTests.swift": "06c9cb54e36aa9bc6ac395d8f7b5be4e98098751b7dd512c04d05140ee1e9395",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/generate.c": "05a5947d45d0cdbdd52c11183deda5787186b06ad7a14477cde323253eaf8b62",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossless-rgba16.float": "3d4ef9e33871713bcb87c8a97f6a8444a61fec7f163dbd354fb5b2406e2ea97d",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossless-rgba16.jxl": "78d5efc7e259f1537fd3880af5a84bc4763ee23ac13f6e229063deff8c740d78",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossless.float": "66999922ff94274338bc6f1082478bb6b9c84389f5ca617ae10e72595f5d592c",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossless.jxl": "7691ed8baf546b213deac5d9af7dd41aed19da8dbe5dc45b4901b1146903abc9",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossy-epf0.float": "1120debb513170c7e82689060ceefff557c54762abb3d76ef9e6b0568d3e8429",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossy-epf0.jxl": "ee3b59d5a9fb1d3059b65edd2b981bfe29c067d61f39576cbf03d5a516ef58cd",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossy-rgba16-epf0.float": "0f8a03cbb61b985fcc66842f6ff7657f336c262a00086dc1ea98a3683bb20e65",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossy-rgba16-epf0.jxl": "7edb34482e0e249b4b35c564889431a7cb7c212e6bc1e048662d808d568a53e0",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossy.float": "1120debb513170c7e82689060ceefff557c54762abb3d76ef9e6b0568d3e8429",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/libjxl-lossy.jxl": "13fbec19431f9e400324ea20099ad91444c43cef1913b582f85b451eb0a09bc3",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/manifest.json": "7c0781e372965467c67280883d2d62effd09968b2a7ff5cebb56ee32a8728dc4",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Animation/oracle.c": "76f0747acfca9a13b69c1f58c956ef85b68495cbbda1fe046c9f69c9e6253e9c"
+  },
+  "log": "animation-public-debug-5.log",
+  "logSHA256": "49fdb8d30782011ee3bf7699944de309d8aeb982d37cbe69b4011516acf9acbc",
+  "remainingGates": [
+    "Animation encoder and broader clock/profile coverage",
+    "Sanitizers/fullmatrix for animation additions not yet run",
+    "No public single-image API changed; animation remains explicit"
+  ]
+}
