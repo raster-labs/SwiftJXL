@@ -124,7 +124,7 @@ struct VarDCTFrameWriter {
         let tw = (coefficients.blocksX + 7) / 8, th = (coefficients.blocksY + 7) / 8
         for _ in 0..<2 { try modularTokens(width: tw, height: th, value: { _ in 0 }, emit: emit) }
         try modularTokens(width: blocks, height: 2,
-            value: { $0 < blocks ? 0 : coefficients.quantAC - 1 }, emit: emit)
+            value: { $0 < blocks ? 0 : coefficients.quantAC[$0 - blocks] - 1 }, emit: emit)
         try modularTokens(width: coefficients.blocksX, height: coefficients.blocksY,
             value: { _ in 0 }, emit: emit)
     }
@@ -199,12 +199,12 @@ struct VarDCTFrameWriter {
         try metadata.write(to: &writer); writer.writeBit(true); writer.alignToByte()
     }
     private func frameHeader(to writer: inout BitWriter) throws {
-        let frame = FrameHeader(allDefault: false, frameType: .regular, encoding: .varDCT, flags: 128,
+        let frame = FrameHeader(allDefault: false, frameType: .regular, encoding: .varDCT, flags: coefficients.dcSmoothing ? 0 : 128,
             colorTransform: .xyb, chromaSubsampling: .default, upsampling: 1, extraChannelUpsampling: [],
             groupSizeShift: 1, xQmScale: 2, bQmScale: 2, passes: .default, dcLevel: 0,
             customSizeOrOrigin: false, frameOrigin: (0,0), frameSize: nil, blendingInfo: .default,
             extraChannelBlendingInfo: [], animationFrame: .default, isLast: true, saveAsReference: 0,
-            saveBeforeColorTransform: false, name: "", loopFilter: .init(allDefault: false, gab: false, epfIters: 0))
+            saveBeforeColorTransform: false, name: "", loopFilter: .init(allDefault: false, gab: coefficients.gaborish, epfIters: 0))
         try frame.write(to: &writer, context: .init(xybEncoded: true, numExtraChannels: coefficients.hasAlpha ? 1 : 0))
     }
 }

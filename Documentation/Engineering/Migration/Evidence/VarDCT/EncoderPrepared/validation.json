@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "1912302",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "scope": "Internal DCT8 inverse Gaborish/adaptiveQF/DC smoothing; explicit false defaults preserve original fixed-control bytes",
+  "runs": {
+    "debug": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter VarDCTEncoder",
+      "exitCode": 0,
+      "declarations": 8,
+      "cases": 31,
+      "skips": 0,
+      "logSHA256": "34e33281a5fcc990aaea60203f74ad8ccd317709649eb5b10579f5f61799ca15"
+    },
+    "asan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter VarDCTEncoder",
+      "exitCode": 0,
+      "declarations": 8,
+      "cases": 31,
+      "skips": 0,
+      "logSHA256": "1896c74a6bc1d6cc55aa39cc287b7eb9ad3b7cba503884f17ae2029dcddca0ee"
+    },
+    "tsan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter VarDCTEncoder",
+      "exitCode": 0,
+      "declarations": 8,
+      "cases": 31,
+      "skips": 0,
+      "logSHA256": "bd89079a275bcb0a71787cd85520d6e546f5e87dcb7736fff5ac7f6fc0a36dfd"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/VarDCT/VarDCTEncoderPreparation.swift": "71b576ee15e7325bbf9224765a56f6b5b6069c8dc983ab70d48a8d81719b643d",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTPixelEncoder.swift": "4eddd1bf8a5fd9b40c8f8404073835a2ceff3ae3b8371d97841774f8c849c1cc",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTFrameWriter.swift": "a20639ee9c68ce8e067b73acf7674cc1cef125457337d08df7934555d38c3182",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderTests.swift": "4b8b483ad6ebb4bc01a3d1ab805b70acb07c12020ec189da564070cec3b6dcaa",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift": "bdee2b1f9b3f9564d4beaa0369f29d10abd0867502aadaf80a3e9e4d38431b2a"
+  },
+  "review": "Independent source-only review found no actionable issue",
+  "remaining": [
+    "mixed strategy forward kernels/search",
+    "grouped alpha/multiple DC",
+    "public API",
+    "original NEON numeric gate disposition",
+    "extended fuzz, performance and hosted platforms"
+  ],
+  "independent": "20/20 emitted streams accepted; same-stream scalar Float32 nearest20/20 max1/RMS<=.180 exact alpha; originalNEON12/20 retained separately; direct libjxl45 filter vectors pass"
+}

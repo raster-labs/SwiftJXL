@@ -1,0 +1,58 @@
+Building for debugging...
+[1 / 8] SwiftJXLCoreTests-product
+[2 / 9] SwiftJXL_SwiftJXLCoreTests
+[3 / 12] SwiftJXL_SwiftJXLCoreTests
+[4 / 9] SwiftJXLCoreTests-product
+[6 / 11] SwiftJXLCoreTests-product
+[13 / 15] SwiftJXLCoreTests-product
+Build complete! (2.06 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTEncoderPreparationTests started.
+◇ Suite VarDCTEncoderTests started.
+◇ Test adaptiveQuantisationAnchors() started.
+◇ Test preparedReferenceStreams(_:_:) started.
+◇ Test invalidPrefilterAndAdmission() started.
+◇ Test paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test pinnedIndependentPrefilter() started.
+◇ Test independentReferenceStreams(_:_:) started.
+◇ Test case passing 1 argument bits → 8 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test invalidPoliciesAndCumulativeAdmission() started.
+◇ Test cancellationRejectsBeforeSourceRead() started.
+◇ Test case passing 1 argument bits → 16 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to independentReferenceStreams(_:_:) started.
+✔ Test adaptiveQuantisationAnchors() passed after 0.372 seconds.
+✔ Test invalidPrefilterAndAdmission() passed after 0.372 seconds.
+✔ Test pinnedIndependentPrefilter() passed after 0.372 seconds.
+✔ Test paddedPlanarSourceIsBorrowed(_:) with 2 test cases passed after 0.372 seconds.
+✔ Test invalidPoliciesAndCumulativeAdmission() passed after 0.372 seconds.
+✔ Suite VarDCTEncoderPreparationTests passed after 0.372 seconds.
+✔ Test cancellationRejectsBeforeSourceRead() passed after 0.372 seconds.
+✔ Test preparedReferenceStreams(_:_:) with 12 test cases passed after 0.449 seconds.
+✔ Test independentReferenceStreams(_:_:) with 12 test cases passed after 0.529 seconds.
+✔ Suite VarDCTEncoderTests passed after 0.529 seconds.
+✔ Test run with 8 tests in 2 suites passed after 0.529 seconds.
