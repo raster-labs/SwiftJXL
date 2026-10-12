@@ -15,6 +15,9 @@ package enum VarDCTPixelDecoder {
                                layouts: [ModularChannelLayout]) throws {
         let budget = envelope.budget
         try budget.checkpoint()
+        // XYB may be reconstructed independently of its original ICC profile,
+        // but publishing sRGB integers would change that interpretation.
+        guard !envelope.metadata.colorEncoding.useICC else { throw ScalarModularError.unsupportedProfile }
         let grayscale = envelope.metadata.colorEncoding.colorSpace == .grayscale
         let colours = grayscale ? 1 : 3
         let alpha = envelope.metadata.extraChannels.first

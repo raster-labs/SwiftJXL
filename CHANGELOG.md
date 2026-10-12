@@ -3,6 +3,7 @@
 ## Unreleased — internal VarDCT pixel pipeline, 2026-10-12
 
 - Add bounded single-pass coefficient parsing, mixed transform reconstruction and default restoration with direct output into borrowed integer storage. Public VarDCT remains disabled.
+- Preserve bounded ICC metadata for internal XYB reconstruction and pass two official linear-grey numerical references. Integer ICC output remains explicitly unsupported pending qualified interpretation handling.
 - Verify the separate scalar numerical oracle and independent transform bases without replacing original ARM oracle failures. Record unsupported official conformance profiles and predecessor acceptance separately.
 
 ## Unreleased — internal VarDCT primitives, 2026-10-12

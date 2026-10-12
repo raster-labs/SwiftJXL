@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## VarDCT ICC reference extension — 12 October 2026
+
+Preserved bounded ICC metadata for internal XYB reconstruction and qualified the pinned official grayscale/grayscale_5 samples in their prescribed linear-grey Float32 domain. Both meet the original RMS/peak limits; the expanded affected debug suite passes 27 declarations / 110 cases, with ICC-specific ASan/TSan each passing 2 declarations / 3 cases. Public VarDCT and integer ICC output remain unsupported; this does not claim full conformance or silently convert the original profile. See [exact evidence](Documentation/Engineering/Migration/Evidence/VarDCT/ICC/validation.json).
+
 ## Internal VarDCT pixel integration — 12 October 2026
 
 Adapted the bounded single-pass default-matrix XYB pipeline from pinned JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e` under contract 0.10.0: coefficient entropy, strategy mapping, DCT/small/AFV reconstruction, restoration and synchronous borrowed integer output. Full debug passed 207 declarations / 805 cases; affected ASan and TSan each passed 25 declarations / 107 cases. All 32 retained frames pass a separately pinned scalar Float32/nearest-integer oracle; the original ARM integer oracle still has ten recorded failures. This is a scalar numerical milestone, not complete interoperability or public VarDCT support. Official corpus scope, source provenance and remaining gates are in [the updated preflight](Documentation/Engineering/Migration/VARDCT_PREFLIGHT.md).

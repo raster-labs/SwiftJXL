@@ -1,0 +1,20 @@
+{
+  "source": "https://github.com/libjxl/conformance",
+  "revision": "4bf053529c7cefd2951be453475bb3dccc7e7be8",
+  "licence": "grayscale test image CC0; official repository permits reproduction of bitstreams/reference images for testing; original ICC embeds its own Adobe notice; see SOURCE-LICENCES.md and LICENSE.txt",
+  "objects": "https://storage.googleapis.com/jxl-conformance/objects/<sha256>",
+  "reference": "Official reference.npy Float32, shape(1,200,200,1), reference.icc declares linear grey",
+  "scope": "Internal reconstruction only; original ICC retained, implicit ICC-to-sRGB integer output rejected",
+  "thresholds": "Exact prescribed per-frame RMS0.0001/peak0.004 from grayscale.json and grayscale_5.json",
+  "sha256": {
+    "LICENSE.txt": "8405932022a556380c2d8c272eff154a923feb197233f348ce5f7334fb0a5ede",
+    "SOURCE-LICENCES.md": "8f67502fc127cf6ca049f65c27f4c70035b4b602d23a2f68a3ff9bdf92abeebe",
+    "grayscale.json": "a67ad16783c258356f84e802961504f08509cc78da4e41df807d6ed7b02027f2",
+    "grayscale.jxl": "78fbbba852e99946d187dcf0bcbd7fb0e7c22be2f0852523aaae6ed91e7e3c39",
+    "grayscale_5.json": "831b49ab5c64cfed1fdf6514730cc06fc50e5b9037dff0810357a218b18b8f0c",
+    "grayscale_5.jxl": "78fbbba852e99946d187dcf0bcbd7fb0e7c22be2f0852523aaae6ed91e7e3c39",
+    "original.icc": "3f62598dfd40d6642ca5fd962559bb6615af15448a57a3972a4089c109e62fbd",
+    "reference.icc": "57363d9ec00043fe6e3f40b1c3e0cc4676773011fd0818710fb26545002ac27d",
+    "reference.npy": "59162e158e042dc44710eb4d334cea78135399613461079582d963fe79251b68"
+  }
+}

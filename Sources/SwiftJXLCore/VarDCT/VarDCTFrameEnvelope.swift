@@ -10,6 +10,9 @@ import Foundation
 package struct VarDCTFrameEnvelope: Sendable {
     package let width: Int, height: Int
     package let metadata: ImageMetadata
+    /// Preserved interpretation metadata. Internal XYB reconstruction does not
+    /// apply this profile; output conversion must be explicitly qualified.
+    package let iccProfile: Data?
     package let frame: FrameHeader
     package let groupsX: Int, groupsY: Int, dcGroupsX: Int, dcGroupsY: Int
     package let groupDimension: Int
@@ -23,7 +26,9 @@ package struct VarDCTFrameEnvelope: Sendable {
     package static func read(_ input: Data, budget: ScalarOperationBudget,
                              maximumDimension: Int = 16384,
                              maximumPixels: Int = 64 * 1024 * 1024,
-                             maximumNestingDepth: Int = 32) throws -> Self {
+                             maximumNestingDepth: Int = 32,
+                             maximumICCBytes: Int = 4 * 1024 * 1024,
+                             maximumMetadataBytes: Int = 16 * 1024 * 1024) throws -> Self {
         try budget.checkpoint()
         guard input.count <= budget.maximumCompressedBytes, maximumNestingDepth > 0 else {
             throw ScalarModularError.resourceLimit
@@ -56,9 +61,9 @@ package struct VarDCTFrameEnvelope: Sendable {
         let colour = metadata.colorEncoding
         guard metadata.xybEncoded, !metadata.bitDepth.floatingPoint,
               (1...16).contains(metadata.bitDepth.bitsPerSample),
-              [.rgb, .grayscale].contains(colour.colorSpace), !colour.useICC,
-              colour.whitePoint == .d65, colour.transferFunction == .srgb,
-              colour.colorSpace == .grayscale || colour.primaries == .srgb,
+              [.rgb, .grayscale].contains(colour.colorSpace),
+              colour.useICC || (colour.whitePoint == .d65 && colour.transferFunction == .srgb &&
+                  (colour.colorSpace == .grayscale || colour.primaries == .srgb)),
               metadata.orientation == 1, metadata.preview == nil, metadata.animation == nil,
               metadata.intrinsicSize == nil, metadata.intensityTarget == 255, metadata.minNits == 0,
               !metadata.relativeToMaxDisplay, metadata.linearBelow == 0,
@@ -69,6 +74,23 @@ package struct VarDCTFrameEnvelope: Sendable {
                   extra.dimShift == 0, extra.name.isEmpty else { throw ScalarModularError.unsupportedProfile }
         }
         guard try reader.readBit() else { throw ScalarModularError.unsupportedProfile } // default custom transforms
+        let iccProfile: Data?
+        if colour.useICC {
+            guard maximumICCBytes > 0, maximumMetadataBytes > 0 else { throw ScalarModularError.resourceLimit }
+            do {
+                iccProfile = try ICCStream.decode(from: &reader,
+                    maximumBytes: min(maximumICCBytes, maximumMetadataBytes, 4 * 1024 * 1024),
+                    checkpoint: budget.checkpoint)
+            } catch JPEGEntropyError.resourceLimit { throw ScalarModularError.resourceLimit }
+            if let profile = iccProfile {
+                guard profile.count >= 128,
+                      profile.prefix(4).reduce(0, { ($0 << 8) | Int($1) }) == profile.count,
+                      profile[36..<40] == Data("acsp".utf8),
+                      profile[16..<20] == Data((colour.colorSpace == .grayscale ? "GRAY" : "RGB ").utf8) else {
+                    throw ScalarModularError.invalidInput("ICC header does not match the image colour model")
+                }
+            }
+        } else { iccProfile = nil }
         try reader.expectZeroPadding()
         let frame = try FrameHeader.read(from: &reader, context: .init(xybEncoded: true,
             numExtraChannels: metadata.extraChannels.count))
@@ -95,7 +117,7 @@ package struct VarDCTFrameEnvelope: Sendable {
                 throw ScalarModularError.invalidInput("Invalid VarDCT section offset")
             }
         }
-        return Self(width: width, height: height, metadata: metadata, frame: frame,
+        return Self(width: width, height: height, metadata: metadata, iccProfile: iccProfile, frame: frame,
             groupsX: gx, groupsY: gy, dcGroupsX: dx, dcGroupsY: dy, groupDimension: dimension,
             budget: budget, codestream: codestream, toc: toc, start: start, maximumNestingDepth: maximumNestingDepth)
     }

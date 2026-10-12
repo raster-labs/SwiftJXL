@@ -1,0 +1,22 @@
+{
+  "pinnedScalarLinear": {
+    "peak": 0.00022813677787780762,
+    "rms": 7.821050406677496e-06,
+    "count": 40000,
+    "thresholds": {
+      "rms": 0.0001,
+      "peak": 0.004
+    },
+    "passed": true
+  },
+  "predecessorUInt8AssumedSRGBThenLinear": {
+    "peak": 0.004362550189793923,
+    "rms": 0.0015334797035300143,
+    "count": 40000,
+    "thresholds": {
+      "rms": 0.0001,
+      "peak": 0.004
+    },
+    "passed": false
+  }
+}
