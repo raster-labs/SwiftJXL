@@ -4,26 +4,27 @@
 // JPEG XL Project Authors retain BSD-3-Clause; see libjxl-LICENSE.txt.
 import Foundation
 
-/// Bounded DCT8 analysis with explicit predecessor prefilter and adaptive
-/// quantisation controls. Mixed-strategy search remains a separate migration step.
+/// Bounded single-cell transform search with explicit predecessor prefilter
+/// and adaptive quantisation. Larger-region hierarchical search remains pending.
 package enum VarDCTPixelEncoder {
     struct Coefficients {
         let width: Int, height: Int, blocksX: Int, blocksY: Int
         let bits: Int, grayscale: Bool, hasAlpha: Bool
         let globalScale: UInt32
         let quantDC: UInt32 = 17
-        let quantAC: [Int32]
+        let quantAC: [Int32], strategies: [Int32]
         let gaborish: Bool, dcSmoothing: Bool
         let dc: [[Int32]], ac: [[Int32]]
     }
 
     /// The caller keeps the source owner and its synchronous read borrow alive
     /// until return. Neither the raw pointer nor any derived pointer escapes.
-    /// Only admitted coefficient/transform workspace is allocated.
+    /// Only admitted algorithm and writer workspace is allocated.
     package static func encode(_ bytes: UnsafeRawBufferPointer,
                                layouts: [ModularChannelLayout], bitsPerSample: Int,
                                grayscale: Bool, alphaAssociated: Bool?, distance: Float,
                                gaborish: Bool = false, adaptiveQuantisation: Bool = false, dcSmoothing: Bool = false,
+                               smallStrategySearch: Bool = false,
                                budget: ScalarOperationBudget) throws -> Data {
         try budget.checkpoint()
         guard let first = layouts.first, (8...16).contains(bitsPerSample),
@@ -55,6 +56,14 @@ package enum VarDCTPixelEncoder {
         var ac = (0..<3).map { _ in [Int32](repeating: 0, count: padded) }
         var patch = (0..<3).map { _ in [Float](repeating: 0, count: 64) }
         var quantAC = [Int32](repeating: 5, count: blocks)
+        var strategies = [Int32](repeating: 0, count: blocks)
+        let smallPlan = try smallStrategySearch ? VarDCTSmallAnalysis(budget: budget) : nil
+        var smallWeights: [Int: [Float]] = [:]
+        if smallStrategySearch {
+            for id in [0,1,2,3,12,13,14,15,16,17] {
+                smallWeights[id] = try VarDCTQuantWeights.make(identifier: id, rows: 8, columns: 8, budget: budget)
+            }
+        }
         var prepared: [[Float]]? = nil
         if gaborish || adaptiveQuantisation {
             let visible = try ScalarOperationBudget.product(first.width, first.height)
@@ -97,6 +106,39 @@ package enum VarDCTPixelEncoder {
             let block = y * bx + x
             if adaptiveQuantisation { quantAC[block] = try VarDCTEncoderPreparation.quantisation(patch, distance: distance) }
             if prepared != nil { for k in 0..<64 { patch[2][k] -= patch[1][k] } }
+            if let smallPlan {
+                func trial(_ id: Int) throws -> (dc: [Int32], ac: [[Int32]], cost: Int) {
+                    try budget.checkpoint()
+                    try budget.reserveWorkspace(256 * MemoryLayout<Int32>.stride)
+                    guard let weights = smallWeights[id] else { throw VarDCTError.invalidTransform }
+                    var dc = [Int32](repeating: 0, count: 3)
+                    var ac = (0..<3).map { _ in [Int32](repeating: 0, count: 64) }
+                    var cost = 0
+                    for c in 0..<3 {
+                        let values = try smallPlan.apply(patch[c], identifier: id)
+                        dc[c] = try quantise(Double(values[0]) * dcScale[c])
+                        for k in 1..<64 { ac[c][k] = try quantise(Double(values[k]) * Double(weights[c * 64 + k]) * Double(scale) / 65536 * Double(quantAC[block])) }
+                        cost += tokenCost(ac[c])
+                    }
+                    return (dc,ac,cost)
+                }
+                var best = try trial(0), chosen = 0
+                let initialCost = best.cost
+                if initialCost > 54 {
+                    // Later equal-cost choices reproduce the predecessor's
+                    // explicit tie priority, including the four AFV orientations.
+                    for id in [13,12,3,2,1,17,16,15,14] where id < 14 || initialCost > 120 {
+                        let candidate = try trial(id)
+                        if candidate.cost <= best.cost { best = candidate; chosen = id }
+                    }
+                }
+                strategies[block] = Int32(chosen)
+                for c in 0..<3 {
+                    dc[c][block] = best.dc[c]
+                    for k in 1..<64 { ac[c][block * 64 + k] = best.ac[c][k] }
+                }
+                continue
+            }
             for c in 0..<3 {
                 let result = try transform.apply(patch[c])
                 dc[c][block] = try quantise(Double(result[0]) * dcScale[c])
@@ -109,12 +151,22 @@ package enum VarDCTPixelEncoder {
             }
         } }
         let coefficients = Coefficients(width: first.width, height: first.height, blocksX: bx, blocksY: by,
-            bits: bitsPerSample, grayscale: grayscale, hasAlpha: alphaAssociated != nil, globalScale: scale, quantAC: quantAC, gaborish: gaborish, dcSmoothing: dcSmoothing, dc: dc, ac: ac)
+            bits: bitsPerSample, grayscale: grayscale, hasAlpha: alphaAssociated != nil, globalScale: scale, quantAC: quantAC, strategies: strategies, gaborish: gaborish, dcSmoothing: dcSmoothing, dc: dc, ac: ac)
         return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: limit)) {
             let data = try VarDCTFrameWriter(coefficients: coefficients, source: source, budget: budget, limit: limit).write()
             try ScalarEncodingWork.checkpoint()
             return data
         }
+    }
+
+    private static func tokenCost(_ coefficients: [Int32]) -> Int {
+        let order = VarDCTFrameWriter.order
+        var last = 0, magnitudeBits = 0
+        for k in 1..<64 {
+            let value = coefficients[order[k]]
+            if value != 0 { last = k; magnitudeBits += 32 - value.magnitude.leadingZeroBitCount }
+        }
+        return 4 + 2 * last + magnitudeBits
     }
 
     private static func quantise(_ value: Double) throws -> Int32 {

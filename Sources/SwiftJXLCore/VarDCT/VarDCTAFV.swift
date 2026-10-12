@@ -45,6 +45,24 @@ package enum VarDCTAFV {
         try budget.checkpoint()
         return pixels
     }
+    /// Forward orthonormal 4×4 AFV corner; the frame packing is handled by
+    /// VarDCTSmallAnalysis. Reuses the same specification basis as synthesis.
+    static func forwardBasis(_ pixels: [Float], budget: ScalarOperationBudget) throws -> [Float] {
+        try budget.checkpoint()
+        guard pixels.count == 16 else { throw VarDCTError.invalidTransform }
+        guard pixels.allSatisfy(\.isFinite) else { throw VarDCTError.nonFiniteSample }
+        try budget.reserveWorkspace(16 * MemoryLayout<Float>.stride)
+        var output = [Float](repeating: 0, count: 16)
+        for k in 0..<16 {
+            var sum: Double = 0
+            for i in 0..<16 { sum += Double(pixels[i]) * Double(basis[k][i]) }
+            let value = Float(sum)
+            guard value.isFinite else { throw VarDCTError.nonFiniteSample }
+            output[k] = value
+        }
+        try budget.checkpoint()
+        return output
+    }
     private static let basis: [[Float]] = [
         // Row 0: DC (constant = 1/4).
         [0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,

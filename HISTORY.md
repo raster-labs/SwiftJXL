@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## VarDCT single-cell strategy search — 12 October 2026
+
+Added ten bounded forward transform choices with the predecessor cost heuristic and tie priority. All 650 direct pinned libjxl forward vectors pass; twenty mixed streams are independently accepted and meet the separate scalar numerical limits with exact alpha. Affected debug, ASan and TSan each pass 11 declarations / 54 cases. Larger hierarchical strategy search and final integration remain pending. See [exact evidence](Documentation/Engineering/Migration/Evidence/VarDCT/EncoderSmall/validation.json).
+
 ## VarDCT encoder preparation — 12 October 2026
 
 Added explicit inverse Gaborish, adaptive quantisation and DC-smoothing controls to the internal DCT8 encoder. The filter agrees with 45 directly generated pinned libjxl plane vectors, including tiny and edge inputs. Twenty prepared streams pass independent acceptance and the separate unchanged scalar numerical limits, with exact alpha. Initial no-control fixture bytes remain unchanged. Full strategy search, public integration and final qualification remain open. See [preparation evidence](Documentation/Engineering/Migration/Evidence/VarDCT/EncoderPrepared/validation.json).

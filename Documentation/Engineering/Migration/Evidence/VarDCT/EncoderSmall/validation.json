@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "66e8e2d",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "scope": "Ten single-cell strategies with predecessor cost heuristic and tie priority; larger hierarchical search remains pending",
+  "runs": {
+    "debug": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter 'VarDCTEncoder|VarDCTSmallAnalysis'",
+      "exitCode": 0,
+      "declarations": 11,
+      "cases": 54,
+      "skips": 0,
+      "logSHA256": "25e61be380229b3d2eef946930a9bc81562bab28d19cd599ea6d17c9e98a102c"
+    },
+    "asan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter 'VarDCTEncoder|VarDCTSmallAnalysis'",
+      "exitCode": 0,
+      "declarations": 11,
+      "cases": 54,
+      "skips": 0,
+      "logSHA256": "c4dea590a30cc0563f0874835b10667fa77d72aebf677ceca5b196b9f115904e"
+    },
+    "tsan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter 'VarDCTEncoder|VarDCTSmallAnalysis'",
+      "exitCode": 0,
+      "declarations": 11,
+      "cases": 54,
+      "skips": 0,
+      "logSHA256": "343f2d25b84fb817855ae466cb6d8ce538b292cf82ee2d02a13f4e909f844e2c"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift": "03056a1afac70f6dfabd93569af6c748b501bfc9fb66e01f41da778eb8d56014",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTAFV.swift": "6df2aadb26f65b12f4c706caca3c0cd657dce7606bd2cdf4fdcc35b721dcf3eb",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTPixelEncoder.swift": "ee9c43eb885400489cdad18285214ca93ded2cd3f0762082cacb2298163450ea",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTFrameWriter.swift": "af0fb7f2e4028af850705faa8453284339ba777d0d425dafd8236cafbcdaf077",
+    "Tests/SwiftJXLCoreTests/VarDCTSmallAnalysisTests.swift": "b96aa6bdc8ad5dde80ea3e9870da8d406b442676f5902d9ae78c85f1b748fa74",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderTests.swift": "79ee3a5fc76e0a032d41ea6d398287ff98d7d33961a692ecda08c3110bb4a223"
+  },
+  "independent": "650 direct reference forward vectors pass abs2e-6+rel2e-6 and reconstruction;20mixed streams accepted scalar20/20 max1/RMS<=.176 exactalpha; originalNEON15/20 retained",
+  "coverage": "20-frame corpus selects9/10single-cell IDs; DCT4 is independently covered by65forward vectors but not selected in this synthetic frame corpus",
+  "review": "Independent source-only review of small analysis, AFV forward basis, per-cell search/quantisation and writer metadata found no actionable findings",
+  "remaining": [
+    "larger hierarchical region search",
+    "groupedalpha/multipleDC",
+    "publicintegration",
+    "NEON numerical gate disposition",
+    "extendedfuzz/controlledperformance/hostedplatforms"
+  ],
+  "postValidationChange": "Documentation-only source comment clarifies single-cell strategy scope; runtime unchanged"
+}
