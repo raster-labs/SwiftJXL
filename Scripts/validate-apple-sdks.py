@@ -50,10 +50,15 @@ for name in a.profile or PROFILES:
         run['sdkPath'] = sdk_path
         run['sdkVersion'] = subprocess.check_output(['xcrun', '--sdk', sdk, '--show-sdk-version'], text=True).strip()
         scratch = out/name
+        # Native SwiftPM appends the manifest's visionOS deployment version.
+        # A versioned xros input currently becomes xros26.026.0 in its plan.
+        # Supply the versionless input only here; still require the exact OS 26
+        # compiler target, SDK and emitted module below.
+        input_triple = triple.replace('xros26.0', 'xros') if a.build_system == 'native' and sdk in ('xros', 'xrsimulator') else triple
         command = ['xcrun', 'swift', 'build', '--disable-sandbox', '--cache-path', str(out/'cache'),
             '--config-path', str(out/'config'), '--security-path', str(out/'security'),
             '--scratch-path', str(scratch), '--build-system', a.build_system, '--jobs', '2',
-            '--target', 'SwiftJXL', '--triple', triple, '--sdk', sdk_path]
+            '--target', 'SwiftJXL', '--triple', input_triple, '--sdk', sdk_path]
         run['command'] = command
         log = out/(name+'.log')
         with log.open('w') as stream:

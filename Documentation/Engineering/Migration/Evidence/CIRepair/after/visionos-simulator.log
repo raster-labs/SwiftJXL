@@ -1,0 +1,329 @@
+Building for debugging...
+[0/3] Write sources
+[2/3] Write swift-version--58304C5D6DBC2206.txt
+[4/29] Emitting module SwiftJXLCore
+[5/29] Compiling SwiftJXLCore BitReader.swift
+[6/29] Compiling SwiftJXLCore BitWriter.swift
+[7/29] Compiling SwiftJXLCore SpecIntegers.swift
+[8/29] Compiling SwiftJXLCore VarLenUint.swift
+[9/29] Compiling SwiftJXLCore BrotliContext.swift
+[10/29] Compiling SwiftJXLCore BrotliDecoder.swift
+[11/29] Compiling SwiftJXLCore BrotliEncoder.swift
+[12/29] Compiling SwiftJXLCore BrotliMetaBlock.swift
+[13/29] Compiling SwiftJXLCore BrotliPolicy.swift
+[14/29] Compiling SwiftJXLCore BrotliPrefixCode.swift
+[15/29] Compiling SwiftJXLCore BrotliReader.swift
+[16/29] Compiling SwiftJXLCore BrotliStaticDictionary.swift
+[17/29] Compiling SwiftJXLCore AnimationCodestreamBuilder.swift
+[18/29] Compiling SwiftJXLCore AnimationFrameIndex.swift
+[19/29] Compiling SwiftJXLCore ModularFrameDecoder.swift
+[20/29] Compiling SwiftJXLCore ModularSampleStorage.swift
+[21/29] Compiling SwiftJXLCore PixelFrameHeader.swift
+[22/29] Compiling SwiftJXLCore ScalarDecodePolicy.swift
+[23/29] Compiling SwiftJXLCore ScalarMap.swift
+[24/29] Compiling SwiftJXLCore ScalarModularDecoder.swift
+[25/29] Compiling SwiftJXLCore ScalarOperationBudget.swift
+[26/29] Compiling SwiftJXLCore ScalarSampleStorage.swift
+[27/29] Compiling SwiftJXLCore ScalarStorageAudit.swift
+[28/29] Compiling SwiftJXLCore SpecModularEncoder.swift
+[29/29] Compiling SwiftJXLCore BitDepth.swift
+[30/77] Compiling SwiftJXLCore ColorEncoding.swift
+[31/77] Compiling SwiftJXLCore ExtraChannelInfo.swift
+[32/77] Compiling SwiftJXLCore FrameHeader.swift
+[33/77] Compiling SwiftJXLCore ICCStream.swift
+[34/77] Compiling SwiftJXLCore ImageMetadata.swift
+[35/77] Compiling SwiftJXLCore Signature.swift
+[36/77] Compiling SwiftJXLCore SizeHeader.swift
+[37/77] Compiling SwiftJXLCore TOC.swift
+[38/77] Compiling SwiftJXLCore TOCPermutation.swift
+[39/77] Compiling SwiftJXLCore JXLContainer.swift
+[40/77] Compiling SwiftJXLCore ANSDistributionSerialisation.swift
+[41/77] Compiling SwiftJXLCore ANSStreamDecoder.swift
+[42/77] Compiling SwiftJXLCore ANSTokenStreamWriter.swift
+[43/77] Compiling SwiftJXLCore AliasTable.swift
+[44/77] Compiling SwiftJXLCore ContextMap.swift
+[45/77] Compiling SwiftJXLCore EntropySectionHeader.swift
+[46/77] Compiling SwiftJXLCore HybridUint.swift
+[47/77] Compiling SwiftJXLCore LZ77Config.swift
+[48/77] Compiling SwiftJXLCore MultiClusterCodebook.swift
+[49/77] Compiling SwiftJXLCore PrefixCode.swift
+[50/77] Compiling SwiftJXLCore PrefixCodeSerialisation.swift
+[51/77] Compiling SwiftJXLCore RANS.swift
+[52/77] Compiling SwiftJXLCore SimpleEntropyStream.swift
+[53/77] Compiling SwiftJXLCore SpecANSDistribution.swift
+[54/77] Compiling SwiftJXLCore TokenStreamReader.swift
+[55/77] Compiling SwiftJXLCore TokenStreamWriter.swift
+[56/77] Compiling SwiftJXLCore JBRDBox.swift
+[57/77] Compiling SwiftJXLCore JBRDBoxWriter.swift
+[58/77] Compiling SwiftJXLCore JBRDMetadata.swift
+[59/77] Compiling SwiftJXLCore JBRDPolicy.swift
+[60/77] Compiling SwiftJXLCore JPEGBridgeCoefficients.swift
+[61/77] Compiling SwiftJXLCore JPEGBridgeEntropy.swift
+[62/77] Compiling SwiftJXLCore JPEGBridgeFrameReader.swift
+[63/77] Compiling SwiftJXLCore JPEGBridgeFrameWriter.swift
+[64/77] Compiling SwiftJXLCore JPEGCoefficientDecoder.swift
+[65/77] Compiling SwiftJXLCore JPEGEntropyReader.swift
+[66/77] Compiling SwiftJXLCore JPEGFrameLayout.swift
+[67/77] Compiling SwiftJXLCore JPEGNativeTranscode.swift
+[68/77] Compiling SwiftJXLCore JPEGReconstructionMetadata.swift
+[69/77] Compiling SwiftJXLCore JPEGReconstructionWriter.swift
+[70/77] Compiling SwiftJXLCore JPEGSegmentReader.swift
+[71/77] Compiling SwiftJXLCore GroupHeader.swift
+[72/77] Compiling SwiftJXLCore InverseTransforms.swift
+[73/77] Compiling SwiftJXLCore LibjxlPredictor.swift
+[74/77] Compiling SwiftJXLCore ModularChannelDecoder.swift
+[75/77] Compiling SwiftJXLCore ModularImage.swift
+[76/77] Compiling SwiftJXLCore ModularProperties.swift
+[77/77] Compiling SwiftJXLCore ModularTree.swift
+[78/101] Compiling SwiftJXLCore Predictors.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[79/101] Compiling SwiftJXLCore RCT.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[80/101] Compiling SwiftJXLCore SpecRCT.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[81/101] Compiling SwiftJXLCore SpecSqueeze.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[82/101] Compiling SwiftJXLCore WeightedPredictor.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[83/101] Compiling SwiftJXLCore DefaultOpsin.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[84/101] Compiling SwiftJXLCore EdgePreservingFilter.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[85/101] Compiling SwiftJXLCore Gaborish.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[86/101] Compiling SwiftJXLCore ScaledDCT.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[87/101] Compiling SwiftJXLCore VarDCTAFV.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[88/101] Compiling SwiftJXLCore VarDCTCoefficients.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[89/101] Compiling SwiftJXLCore VarDCTEncoderPreparation.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[90/101] Compiling SwiftJXLCore VarDCTEntropy.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[91/101] Compiling SwiftJXLCore VarDCTFrameEnvelope.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[92/101] Compiling SwiftJXLCore VarDCTFrameWriter.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[93/101] Compiling SwiftJXLCore VarDCTHierarchicalAnalysis.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[94/101] Compiling SwiftJXLCore VarDCTLargeAnalysis.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[95/101] Compiling SwiftJXLCore VarDCTPixelDecoder.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[96/101] Compiling SwiftJXLCore VarDCTPixelEncoder.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[97/101] Compiling SwiftJXLCore VarDCTQuantWeights.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[98/101] Compiling SwiftJXLCore VarDCTReconstruction.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[99/101] Compiling SwiftJXLCore VarDCTSmallAnalysis.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[100/101] Compiling SwiftJXLCore VarDCTSmallTransforms.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[101/101] Compiling SwiftJXLCore VarDCTStrategyMap.swift
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[102/107] Compiling SwiftJXL AnimationAPI.swift
+[103/107] Compiling SwiftJXL AnimationEncoding.swift
+[104/107] Compiling SwiftJXL CodecAPI.swift
+[105/107] Compiling SwiftJXL Errors.swift
+[106/107] Compiling SwiftJXL Image.swift
+[107/107] Emitting module SwiftJXL
+[108/111] Compiling SwiftJXL ImageDescriptor.swift
+[109/111] Compiling SwiftJXL ImageStorage.swift
+[110/111] Compiling SwiftJXL Options.swift
+[111/111] Compiling SwiftJXL Transcoding.swift
+Build of target: 'SwiftJXL' complete! (11.29s)
+warning: '--build-system native' has been deprecated and will be removed in a future release; please report an issue at https://github.com/swiftlang/swift-package-manager/issues if you are unable to adopt the default build system.
