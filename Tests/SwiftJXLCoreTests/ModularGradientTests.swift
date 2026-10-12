@@ -55,8 +55,14 @@ struct ModularGradientTests {
     func directStoragePreservesRowsCropsEndiannessAndGuards(_ width:Int,_ mode:Int) throws {
         let height=3
         for bits in [8,16] { for little in [false,true] {
-            let maximum=(1<<bits)-1
-            let expectedSamples=(0..<(width*height)).map { Int32(($0*71+($0/width)*37)&maximum) }
+            let maximum: Int = (1 << bits) - 1
+            let sampleCount: Int = width * height
+            let expectedSamples: [Int32] = (0..<sampleCount).map { index -> Int32 in
+                let columnTerm: Int = index * 71
+                let rowTerm: Int = (index / width) * 37
+                let sample: Int = (columnTerm + rowTerm) & maximum
+                return Int32(sample)
+            }
             var residuals:[Int32]=[]
             for y in 0..<height { for x in 0..<width {
                 let i=y*width+x
