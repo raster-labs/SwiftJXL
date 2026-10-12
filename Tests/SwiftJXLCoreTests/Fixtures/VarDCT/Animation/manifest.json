@@ -1,0 +1,28 @@
+{
+  "licence": "Apache-2.0; synthetic generated pixels, no external media",
+  "oracle": "libjxl0.12.0 a7a9c787341cf703dede03c2009fa460cae5e5df cached scalar dylib",
+  "generation": "clang generate.c -I<cached-build>/lib/include -L<cached-build>/lib -Wl,-rpath,<cached-build>/lib -ljxl -o generate; generate libjxl-lossless.jxl 1; generate libjxl-lossy.jxl 0",
+  "profile": {
+    "width": 16,
+    "height": 9,
+    "bits": 8,
+    "channels": 3,
+    "frames": 3,
+    "durationTicks": [
+      10,
+      20,
+      30
+    ],
+    "ticksPerSecond": [
+      100,
+      1
+    ],
+    "loops": 3
+  },
+  "independentInspection": "Installed jxlinfo accepted both, reported3 full-image frames100/200/300ms, animation length1.800s including3loops. Structural index fixtures, not pixel comparison qualification.",
+  "sha256": {
+    "generate.c": "252279d5b02ebc317ccba32dcac3bd980a257cf3fee51d71786d8bac756b86fd",
+    "libjxl-lossless.jxl": "7691ed8baf546b213deac5d9af7dd41aed19da8dbe5dc45b4901b1146903abc9",
+    "libjxl-lossy.jxl": "13fbec19431f9e400324ea20099ad91444c43cef1913b582f85b451eb0a09bc3"
+  }
+}
