@@ -52,7 +52,7 @@ struct VarDCTPublicTests {
     func publicAllocatingDecodePreservesReferenceAndReportsLossy(_ width: Int, _ channels: Int) async throws {
         let decoder = try Decoder()
         #expect(decoder.capabilities.compressionModes.contains(.lossy))
-        #expect(!Encoder.capabilities.compressionModes.contains(.lossy))
+        #expect(Encoder.capabilities.compressionModes.contains(.lossy))
         for bits in [8, 16] { for independent in [false, true] {
             let name = "pred-\(width)-\(channels)-\(bits)" + (independent ? ".independent" : "")
             let data = try fixture(name), audit = ScalarStorageAudit()

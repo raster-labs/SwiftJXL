@@ -2,8 +2,30 @@
 import Foundation
 import SwiftJXLCore
 
-/// The integer Modular profile uses fixed effort-3, lossless codec settings.
-public struct CodecOptions: Sendable, Equatable { public init() {} }
+/// Explicit lossy VarDCT analysis settings. Distance is a positive finite codec
+/// quality parameter, not an absolute sample-error or perceptual guarantee.
+public struct VarDCTEncodingOptions: Sendable, Equatable {
+    public let distance: Float
+    public let gaborish: Bool
+    public let adaptiveQuantisation: Bool
+    public let dcSmoothing: Bool
+    public init(distance: Float = 1, gaborish: Bool = true,
+                adaptiveQuantisation: Bool = true, dcSmoothing: Bool = true) throws {
+        guard distance.isFinite, distance > 0 else {
+            throw CodecError(.invalidArgument, "VarDCT distance must be positive and finite.")
+        }
+        self.distance = distance; self.gaborish = gaborish
+        self.adaptiveQuantisation = adaptiveQuantisation; self.dcSmoothing = dcSmoothing
+    }
+    private init() { distance = 1; gaborish = true; adaptiveQuantisation = true; dcSmoothing = true }
+    public static let `default` = Self()
+}
+/// Modular uses fixed effort-3 lossless settings. VarDCT controls apply only
+/// with EncoderConfiguration.mode == .lossy, never implicitly to lossless input.
+public struct CodecOptions: Sendable, Equatable {
+    public let varDCT: VarDCTEncodingOptions?
+    public init(varDCT: VarDCTEncodingOptions? = nil) { self.varDCT = varDCT }
+}
 public struct EncoderConfiguration: Sendable, Equatable {
     public let mode: CompressionMode
     public let codecOptions: CodecOptions
@@ -11,8 +33,11 @@ public struct EncoderConfiguration: Sendable, Equatable {
         if case .nearLossless(let bound) = mode, bound <= 0 {
             throw CodecError(.invalidArgument, "Near-lossless error must be positive.")
         }
-        guard mode == .lossless else {
-            throw CodecError(.unsupportedFeature, "Only lossless compression is currently supported.")
+        guard mode == .lossless || mode == .lossy else {
+            throw CodecError(.unsupportedFeature, "Near-lossless compression is not supported.")
+        }
+        guard mode == .lossy || codecOptions.varDCT == nil else {
+            throw CodecError(.invalidArgument, "VarDCT controls require explicit lossy mode.")
         }
         self.mode = mode; self.codecOptions = codecOptions
     }
@@ -94,9 +119,12 @@ public struct DecodedImage: Sendable {
 /// layouts into admitted Int32 algorithm workspace. ICC is unsupported;
 /// sRGB/BT.709 transfer, rendering intent and alpha association are preserved
 /// without conversion through the documented required metadata entries.
+/// Explicit lossy mode selects bounded VarDCT sRGB 8–16-bit encoding with
+/// relative intent and optional straight alpha, at most 2048 per axis (256 with
+/// alpha). It reads the same owning layouts and reports lossy fidelity.
 public struct Encoder: Sendable {
     public let configuration: EncoderConfiguration
-    public static let capabilities = CodecCapabilities.modular(encoding: true)
+    public static let capabilities = CodecCapabilities.pixelEncoding
     public var capabilities: CodecCapabilities { Self.capabilities }
     public init(configuration: EncoderConfiguration = .default) throws { self.configuration = configuration }
 
@@ -111,12 +139,21 @@ public struct Encoder: Sendable {
                 try image.descriptor.validate(limits: limits)
                 let metadataBytes = try image.metadata.validate(limits: limits,
                     additionalBytes: image.descriptor.iccProfile?.count ?? 0)
-                let layouts = try modularSourceLayouts(image.descriptor)
+                let layouts = try encoderSourceLayouts(image.descriptor)
                 let intent = try renderingIntent(image.metadata)
                 let transfer = try transferFunction(image.metadata)
                 guard image.metadata.requiredKeys.subtracting([renderingIntentKey, transferFunctionKey]).isEmpty,
                       options.metadataPolicy == .discardAncillary || image.metadata.entries.keys.allSatisfy({ $0 == renderingIntentKey || $0 == transferFunctionKey }) else {
-                    throw CodecError(.unsupportedFeature, "The Modular encoder cannot preserve this metadata.")
+                    throw CodecError(.unsupportedFeature, "The pixel encoder cannot preserve this metadata.")
+                }
+                if configuration.mode == .lossy {
+                    guard transfer == .srgb, intent == .relative,
+                          image.descriptor.alpha != .premultiplied,
+                          image.descriptor.width <= 2048, image.descriptor.height <= 2048,
+                          image.descriptor.alpha == .absent ||
+                            (image.descriptor.width <= 256 && image.descriptor.height <= 256) else {
+                        throw CodecError(.unsupportedFeature, "VarDCT requires bounded sRGB input with relative intent and optional straight alpha.")
+                    }
                 }
                 guard image.storage.byteCount <= limits.maximumDecodedBytes else {
                     throw CodecError(.resourceLimitExceeded, "Source storage exceeds decoded limits.")
@@ -128,6 +165,16 @@ public struct Encoder: Sendable {
                     guard bytes.count == image.storage.byteCount, layouts.allSatisfy({ bytes.count >= $0.requiredBytes }) else {
                         throw CodecError(.storageUnavailable, "Source provider returned inconsistent capacity.")
                     }
+                    if configuration.mode == .lossy {
+                        let controls = configuration.codecOptions.varDCT ?? .default
+                        return try VarDCTPixelEncoder.encode(bytes, layouts: layouts,
+                            bitsPerSample: image.descriptor.meaningfulBits,
+                            grayscale: image.descriptor.colour == .greyscale,
+                            alphaAssociated: image.descriptor.alpha == .absent ? nil : false,
+                            distance: controls.distance, gaborish: controls.gaborish,
+                            adaptiveQuantisation: controls.adaptiveQuantisation,
+                            dcSmoothing: controls.dcSmoothing, budget: budget)
+                    }
                     return try ModularStorageEncoder.encode(bytes, layouts: layouts,
                         bitsPerSample: image.descriptor.meaningfulBits, grayscale: image.descriptor.colour == .greyscale,
                         alphaAssociated: image.descriptor.alpha == .absent ? nil : image.descriptor.alpha == .premultiplied,
@@ -136,8 +183,9 @@ public struct Encoder: Sendable {
                 try budget.checkpoint()
                 try progress(options.progress, .completed, completed: 1)
                 try budget.checkpoint()
-                return EncodedImage(data: data, encoding: .init(format: "jpeg-xl", mode: .lossless),
-                    report: scalarReport(options.executionPolicy, start: start))
+                return EncodedImage(data: data, encoding: .init(format: "jpeg-xl", mode: configuration.mode),
+                    report: scalarReport(options.executionPolicy, start: start,
+                        fidelity: configuration.mode == .lossless ? .exactSamples : .lossy))
             }
         } onCancel: {
             cancellation.cancel()
@@ -158,7 +206,12 @@ public struct Decoder: Sendable {
     public let configuration: DecoderConfiguration
     public static let capabilities = CodecCapabilities.pixelDecoding
     public var capabilities: CodecCapabilities { Self.capabilities }
-    public init(configuration: DecoderConfiguration = .init()) throws { self.configuration = configuration }
+    public init(configuration: DecoderConfiguration = .init()) throws {
+        guard configuration.codecOptions.varDCT == nil else {
+            throw CodecError(.invalidArgument, "VarDCT encoding controls are not decoder options.")
+        }
+        self.configuration = configuration
+    }
 
     /// Parses and validates the supported headers; does not validate pixel payloads.
     public func inspect(_ data: Data, options: DecodeOptions = .init()) throws -> ImageInfo {
@@ -199,25 +252,25 @@ private extension CodecCapabilities {
         layouts: ["Modular: 1–16-bit greyscale/RGB with optional alpha and ICC; planar/interleaved UInt8/UInt16",
                   "VarDCT: 8/16-bit sRGB greyscale/RGB with optional straight alpha; one DC group, single pass; explicit byte order, offsets and strides"],
         availableBackends: [.scalarCPU], canInspect: true, canEncode: false, canDecode: true)
-    static func modular(encoding: Bool) -> Self {
-        Self(formats: ["jpeg-xl"], compressionModes: [.lossless], sampleTypes: [.unsignedInteger],
-             meaningfulPrecision: encoding ? (8...16) : (1...16),
-             layouts: ["greyscale or RGB, optional alpha; planar/interleaved UInt8/UInt16; explicit byte order, offsets and strides"],
-             availableBackends: [.scalarCPU], canInspect: !encoding, canEncode: encoding, canDecode: !encoding)
-    }
+    static let pixelEncoding = Self(formats: ["jpeg-xl"], compressionModes: [.lossless, .lossy],
+        sampleTypes: [.unsignedInteger], meaningfulPrecision: 8...16,
+        layouts: ["Modular: greyscale/RGB, optional alpha; fixed effort 3",
+                  "VarDCT: sRGB greyscale/RGB, optional straight alpha; maximum 2048 per axis, 256 with alpha",
+                  "Planar/interleaved UInt8/UInt16; explicit byte order, offsets and strides"],
+        availableBackends: [.scalarCPU], canInspect: false, canEncode: true, canDecode: false)
 }
 
-private func modularSourceLayouts(_ d: ImageDescriptor) throws -> [ModularChannelLayout] {
+private func encoderSourceLayouts(_ d: ImageDescriptor) throws -> [ModularChannelLayout] {
     guard d.sampleType == .unsignedInteger, [8, 16].contains(d.storageBits),
           (8...16).contains(d.meaningfulBits), d.iccProfile == nil,
           d.width <= 16384, d.height <= 16384,
           d.colour == .greyscale || d.colour == .rgb else {
-        throw CodecError(.unsupportedFeature, "Requires the supported unsigned integer Modular profile without ICC.")
+        throw CodecError(.unsupportedFeature, "Requires the supported unsigned integer pixel profile without ICC.")
     }
     let roles: [ComponentRole] = (d.colour == .greyscale ? [.grey] : [.red, .green, .blue]) +
         (d.alpha == .absent ? [] : [.alpha])
     guard d.components.count == roles.count, roles.allSatisfy({ d.components.contains($0) }) else {
-        throw CodecError(.unsupportedFeature, "Unsupported Modular source component roles.")
+        throw CodecError(.unsupportedFeature, "Unsupported source component roles.")
     }
     return try channelLayouts(d, roles: roles)
 }

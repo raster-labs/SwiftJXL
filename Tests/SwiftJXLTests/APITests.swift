@@ -34,7 +34,7 @@ struct APITests {
 
     @Test func validatesConfigurationAndFiniteResourceLimits() {
         expectCodecError(.invalidArgument) { _ = try EncoderConfiguration(mode: .nearLossless(maximumAbsoluteError: 0)) }
-        expectCodecError(.unsupportedFeature) { _ = try EncoderConfiguration(mode: .lossy) }
+        expectCodecError(.unsupportedFeature) { _ = try EncoderConfiguration(mode: .nearLossless(maximumAbsoluteError: 1)) }
         expectCodecError(.unsupportedFeature) { _ = try TranscoderConfiguration(mode: .lossy) }
         for deadline in [Double.nan, Double.infinity, 0, -1] {
             expectCodecError(.invalidArgument) { _ = try ResourceLimits(deadlineSeconds: deadline) }
