@@ -1,0 +1,47 @@
+{
+  "platform": "macOS27.0.1(26A434)arm64 AppleSwift6.4 swiftlang-6.4.0.34.1",
+  "command": "reuse-release-probe reuse-performance.json Tests/SwiftJXLCoreTests/Fixtures/VarDCT/pred-64-4-8.input",
+  "exitCode": 0,
+  "build": "SwiftBuild Release, no sanitizers/coverage/tracing",
+  "protocol": "Fivewarmups and20timed iterations per mode, cyclic interleave. All agents explicitly reported builds/probes quiet before execution.",
+  "fixture": "64x64RGBA8 predecessor synthetic corpus;distance1,gaborish/adaptiveQF/DCsmoothingtrue",
+  "results": {
+    "fixedDCT8": {
+      "iterations": 20,
+      "medianMilliseconds": 1.805021,
+      "p95Milliseconds": 1.906791,
+      "minMilliseconds": 1.766333,
+      "maxMilliseconds": 1.931209,
+      "spreadMilliseconds": 0.16487600000000002,
+      "pixelsPerSecond": 2269225.6765987766,
+      "encodedBytes": 12681,
+      "cumulativeWorkspaceAdmissionBytes": 5214464
+    },
+    "singleCell": {
+      "iterations": 20,
+      "medianMilliseconds": 5.4995829999999994,
+      "p95Milliseconds": 5.614792,
+      "minMilliseconds": 5.411875,
+      "maxMilliseconds": 5.623666,
+      "spreadMilliseconds": 0.21179099999999984,
+      "pixelsPerSecond": 744783.7408763537,
+      "encodedBytes": 12740,
+      "cumulativeWorkspaceAdmissionBytes": 15139008
+    },
+    "hierarchical": {
+      "iterations": 20,
+      "medianMilliseconds": 11.457708499999999,
+      "p95Milliseconds": 11.724,
+      "minMilliseconds": 11.330791,
+      "maxMilliseconds": 11.747542,
+      "spreadMilliseconds": 0.41675099999999965,
+      "pixelsPerSecond": 357488.58508662536,
+      "encodedBytes": 11366,
+      "cumulativeWorkspaceAdmissionBytes": 6870464
+    }
+  },
+  "limitations": [
+    "Single syntheticcase, not broad performance qualification. No controlled before/after speedup claim.",
+    "Hardwaremodel/peakRSS unavailable due sandboxsysctl restriction observed in priorcheckpoint. Peakpixel/workspaceallocation,copybytes and allocationcount notinstrumented. Admission is cumulativeconservative bound, not measuredmemory."
+  ]
+}

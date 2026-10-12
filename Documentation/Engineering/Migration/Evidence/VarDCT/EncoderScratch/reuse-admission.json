@@ -1,0 +1,98 @@
+[
+  {
+    "admittedWorkspaceBytes" : "10288832",
+    "channels" : "1",
+    "compressedBytes" : "301",
+    "size" : "128",
+    "status" : "accepted",
+    "textured" : "false"
+  },
+  {
+    "admittedWorkspaceBytes" : "12019344",
+    "channels" : "1",
+    "compressedBytes" : "13319",
+    "size" : "128",
+    "status" : "accepted",
+    "textured" : "true"
+  },
+  {
+    "admittedWorkspaceBytes" : "10288832",
+    "channels" : "3",
+    "compressedBytes" : "299",
+    "size" : "128",
+    "status" : "accepted",
+    "textured" : "false"
+  },
+  {
+    "admittedWorkspaceBytes" : "12085952",
+    "channels" : "3",
+    "compressedBytes" : "26656",
+    "size" : "128",
+    "status" : "accepted",
+    "textured" : "true"
+  },
+  {
+    "admittedWorkspaceBytes" : "25759424",
+    "channels" : "1",
+    "compressedBytes" : "1086",
+    "size" : "256",
+    "status" : "accepted",
+    "textured" : "false"
+  },
+  {
+    "admittedWorkspaceBytes" : "32881296",
+    "channels" : "1",
+    "compressedBytes" : "53802",
+    "size" : "256",
+    "status" : "accepted",
+    "textured" : "true"
+  },
+  {
+    "admittedWorkspaceBytes" : "25759424",
+    "channels" : "3",
+    "compressedBytes" : "1084",
+    "size" : "256",
+    "status" : "accepted",
+    "textured" : "false"
+  },
+  {
+    "admittedWorkspaceBytes" : "32947904",
+    "channels" : "3",
+    "compressedBytes" : "106121",
+    "size" : "256",
+    "status" : "accepted",
+    "textured" : "true"
+  },
+  {
+    "admittedWorkspaceBytes" : "87838400",
+    "channels" : "1",
+    "compressedBytes" : "4235",
+    "size" : "512",
+    "status" : "accepted",
+    "textured" : "false"
+  },
+  {
+    "admittedWorkspaceBytes" : "116335248",
+    "channels" : "1",
+    "compressedBytes" : "215222",
+    "size" : "512",
+    "status" : "accepted",
+    "textured" : "true"
+  },
+  {
+    "admittedWorkspaceBytes" : "87838400",
+    "channels" : "3",
+    "compressedBytes" : "4233",
+    "size" : "512",
+    "status" : "accepted",
+    "textured" : "false"
+  },
+  {
+    "admittedWorkspaceBytes" : "116592320",
+    "channels" : "3",
+    "compressedBytes" : "424484",
+    "size" : "512",
+    "status" : "accepted",
+    "textured" : "true"
+  }
+]

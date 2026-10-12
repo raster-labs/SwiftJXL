@@ -63,6 +63,23 @@ package enum VarDCTAFV {
         try budget.checkpoint()
         return output
     }
+    /// Allocation-free synchronous borrows. The caller admits/owns both
+    /// sixteen-element buffers and keeps them disjoint and alive until return.
+    static func forwardBasis(_ pixels: UnsafeBufferPointer<Float>,
+                             into output: UnsafeMutableBufferPointer<Float>,
+                             budget: ScalarOperationBudget) throws {
+        try budget.checkpoint()
+        guard pixels.count == 16, output.count == 16 else { throw VarDCTError.invalidTransform }
+        guard pixels.allSatisfy(\.isFinite) else { throw VarDCTError.nonFiniteSample }
+        for k in 0..<16 {
+            var sum: Double = 0
+            for i in 0..<16 { sum += Double(pixels[i]) * Double(basis[k][i]) }
+            let value = Float(sum)
+            guard value.isFinite else { throw VarDCTError.nonFiniteSample }
+            output[k] = value
+        }
+        try budget.checkpoint()
+    }
     private static let basis: [[Float]] = [
         // Row 0: DC (constant = 1/4).
         [0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,

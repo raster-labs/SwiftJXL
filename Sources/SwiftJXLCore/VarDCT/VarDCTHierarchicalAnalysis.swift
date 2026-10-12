@@ -20,7 +20,7 @@ package enum VarDCTHierarchicalAnalysis {
     package static func analyse(_ planes: [[Float]], width: Int, height: Int,
                                 scale: UInt32, distance: Float, adaptiveQuantisation: Bool,
                                 budget: ScalarOperationBudget) throws -> Result {
-        guard width > 0, height > 0, width <= 2048, height <= 2048,
+        guard width > 0, height > 0, width <= 4096, height <= 4096, width * height <= 4 * 1024 * 1024,
               planes.count == 3, planes.allSatisfy({ $0.count == width * height }),
               scale > 0, scale <= 65535, distance.isFinite, distance > 0 else {
             throw VarDCTError.invalidTransform
@@ -67,28 +67,52 @@ package enum VarDCTHierarchicalAnalysis {
                 qf[y * bx + x] = try VarDCTEncoderPreparation.quantisation(patch(x,y,8,8,subtractB: false), distance: distance)
             } }
         }
+        // Exclusive bounded transform scratch is allocated once. Quantised
+        // candidate owners remain separately admitted because recursive picks
+        // retain them while comparing partitions.
+        var smallWorkspace = try VarDCTSmallAnalysis.Workspace(budget: budget)
+        var largeWorkspace = try VarDCTLargeAnalysis.Workspace(budget: budget)
+        try budget.reserveWorkspace(4096 * 3 * MemoryLayout<Float>.stride)
+        var trialPixels = (0..<3).map { _ in [Float](repeating: 0, count: 4096) }
         func trial(_ id: Int, _ x: Int, _ y: Int, _ q: Int32) throws -> Pick {
             try budget.checkpoint()
             let rows = large[id]?.rows ?? 8, columns = large[id]?.columns ?? 8
             let count = rows * columns, covered = count / 64
             guard let weight = weights[id], let order = orders[id] else { throw VarDCTError.invalidTransform }
-            let pixels = try patch(x,y,columns,rows,subtractB: true)
+            for yy in 0..<rows {
+                try budget.checkpoint()
+                for xx in 0..<columns {
+                    let source = min(height - 1, y * 8 + yy) * width + min(width - 1, x * 8 + xx)
+                    let target = yy * columns + xx
+                    for c in 0..<3 { trialPixels[c][target] = planes[c][source] }
+                    trialPixels[2][target] -= trialPixels[1][target]
+                }
+            }
             try budget.reserveWorkspace((count + covered) * 3 * MemoryLayout<Int32>.stride)
             var dc: [[Int32]] = [], ac: [[Int32]] = [], cost = 0
             for c in 0..<3 {
-                let low: [Float], values: [Float]
                 if let plan = large[id] {
-                    let result = try plan.apply(pixels[c]); low = result.dc; values = result.coefficients
+                    try trialPixels[c].withUnsafeBufferPointer {
+                        try plan.apply(UnsafeBufferPointer(rebasing: $0[..<count]), workspace: &largeWorkspace)
+                    }
                 } else {
-                    values = try small.apply(pixels[c], identifier: id); low = [values[0]]
+                    try trialPixels[c].withUnsafeBufferPointer {
+                        try small.apply(UnsafeBufferPointer(rebasing: $0[..<64]), identifier: id, workspace: &smallWorkspace)
+                    }
                 }
-                dc.append(try low.map { try quantise(Double($0) * dcScale[c]) })
+                var low = [Int32](repeating: 0, count: covered)
+                for k in 0..<covered {
+                    let value = covered > 1 ? largeWorkspace.dcValue(at: k) : smallWorkspace.value(at: 0)
+                    low[k] = try quantise(Double(value) * dcScale[c])
+                }
+                dc.append(low)
                 var quantised = [Int32](repeating: 0, count: count), last = 0, magnitude = 0
                 // Natural scans place all DC frequencies first, including the
                 // non-contiguous low-frequency rectangle of large transforms.
                 for k in covered..<count {
                     let position = order[k]
-                    let value = try quantise(Double(values[position]) * Double(weight[c * count + position])
+                    let coefficient = covered > 1 ? largeWorkspace.coefficient(at: position) : smallWorkspace.value(at: position)
+                    let value = try quantise(Double(coefficient) * Double(weight[c * count + position])
                         * Double(scale) / 65536 * Double(q))
                     quantised[position] = value
                     if value != 0 { last = k; magnitude += 32 - value.magnitude.leadingZeroBitCount }

@@ -64,6 +64,49 @@ package struct ScaledDCT: Sendable {
         return output
     }
 
+    /// Non-copyable storage prevents Array COW aliases from creating uncharged
+    /// allocations. It is bound to one budget and borrowed exclusively by apply.
+    package struct Workspace: ~Copyable {
+        fileprivate let budget: ScalarOperationBudget
+        fileprivate var temporary: [Float], output: [Float]
+        package init(capacity: Int, budget: ScalarOperationBudget) throws {
+            guard (1...4096).contains(capacity) else { throw VarDCTError.invalidTransform }
+            try budget.reserveWorkspace(capacity * MemoryLayout<Float>.stride * 2)
+            self.budget = budget
+            temporary = [Float](repeating: 0, count: capacity)
+            output = [Float](repeating: 0, count: capacity)
+        }
+        package func value(at index: Int) -> Float { output[index] }
+    }
+
+    /// Synchronous source borrow; no pointer escapes. The caller retains the
+    /// input owner until return. Scratch is allocated once and never copied.
+    package func apply(_ input: UnsafeBufferPointer<Float>, workspace: inout Workspace) throws {
+        try budget.checkpoint()
+        guard input.count == rows * columns, workspace.output.count >= input.count,
+              workspace.budget === budget else { throw VarDCTError.invalidTransform }
+        guard input.allSatisfy(\.isFinite) else { throw VarDCTError.nonFiniteSample }
+        for y in 0..<rows {
+            try budget.checkpoint()
+            for u in 0..<columns {
+                var sum: Double = 0
+                for x in 0..<columns { sum += Double(columnMatrix[u * columns + x]) * Double(input[y * columns + x]) }
+                guard Float(sum).isFinite else { throw VarDCTError.nonFiniteSample }
+                workspace.temporary[y * columns + u] = Float(sum)
+            }
+        }
+        for x in 0..<columns {
+            try budget.checkpoint()
+            for u in 0..<rows {
+                var sum: Double = 0
+                for y in 0..<rows { sum += Double(rowMatrix[u * rows + y]) * Double(workspace.temporary[y * columns + x]) }
+                guard Float(sum).isFinite else { throw VarDCTError.nonFiniteSample }
+                workspace.output[u * columns + x] = Float(sum)
+            }
+        }
+        try budget.checkpoint()
+    }
+
     private static func valid(_ n: Int) -> Bool { (2...64).contains(n) && n & (n - 1) == 0 }
     private static func matrix(_ n: Int, direction: Direction,
                                budget: ScalarOperationBudget) throws -> [Float] {
