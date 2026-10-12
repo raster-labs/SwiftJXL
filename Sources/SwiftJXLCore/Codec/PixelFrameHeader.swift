@@ -45,8 +45,10 @@ package struct PixelFrameHeader: Sendable {
         var reader = BitReader(codestream, startingAt: 16, deadline: budget.deadline,
             maximumNestingDepth: maximumNestingDepth, budget: budget)
         let size = try SizeHeader.read(from: &reader)
-        let width = Int(size.xsize), height = Int(size.ysize)
-        guard width > 0, height > 0, width <= min(maximumDimension, 16384),
+        // Aspect-derived UInt32 sizes can exceed Int.max on arm64_32 Watch.
+        // Reject before conversion rather than trapping on untrusted headers.
+        guard let width = Int(exactly: size.xsize), let height = Int(exactly: size.ysize),
+              width > 0, height > 0, width <= min(maximumDimension, 16384),
               height <= min(maximumDimension, 16384),
               try ScalarOperationBudget.product(width, height) <= maximumPixels else {
             throw ScalarModularError.resourceLimit

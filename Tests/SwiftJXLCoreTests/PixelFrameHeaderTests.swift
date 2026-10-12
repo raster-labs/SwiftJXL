@@ -42,6 +42,25 @@ struct PixelFrameHeaderTests {
         #expect(header.reader.position == position)
     }
 
+    @Test func aspectDerivedSizeBeyondSigned32BitsRejectsBeforeMetadata() throws {
+        var writer = BitWriter()
+        writer.write(bits: 16, value: 0x0aff)
+        writer.writeBit(false) // large size
+        writer.write(bits: 2, value: 3) // 1 + u(30)
+        writer.write(bits: 30, value: (1 << 30) - 1)
+        writer.write(bits: 3, value: 7) // width = 2 * height = 2^31
+        let data = writer.finishToData()
+        var reader = BitReader(data, startingAt: 16)
+        let size = try SizeHeader.read(from: &reader)
+        #expect(size.xsize == UInt32(1) << 31)
+        #expect(Int32(exactly: size.xsize) == nil)
+        do {
+            _ = try PixelFrameHeader.read(data, budget: budget(),
+                maximumDimension: .max, maximumPixels: .max)
+            Issue.record("Oversized header accepted")
+        } catch ScalarModularError.resourceLimit {}
+    }
+
     @Test(arguments: [false, true])
     func selectedProfileStillEnforcesICCLimits(_ xyb: Bool) throws {
         let data = try fixture(xyb ? "grayscale" : "icc-1-16", xyb ? "VarDCT/Conformance" : "Modular/ICC")
