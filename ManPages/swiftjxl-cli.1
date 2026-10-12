@@ -44,7 +44,8 @@ Failure preserves any previous report; partial stdout cannot be rolled back.
 .B Inspection and validation limits
 Input format is jxl or jpeg-xl. Backend is automatic (default) or scalar-cpu;
 accelerated is unavailable. Copy policy defaults to require-sharing;
-allow-copy is accepted. Threads is a ceiling from 1 to 8; one worker is used.
+allow-copy is accepted. Threads is a ceiling from 1 to 8.
+Modular encoding uses bounded workers; decoding and VarDCT encoding are serial.
 Maximum memory is positive bytes, default 1073741824, including command
 buffers and codec admission; it is not a process RSS ceiling.
 Timeout is positive finite seconds, at most 31536000, default 120, checked

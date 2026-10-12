@@ -4,6 +4,7 @@
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import struct
 import subprocess
@@ -11,6 +12,7 @@ import subprocess
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--binary', type=Path, required=True)
 p.add_argument('--output', type=Path, required=True)
+p.add_argument('--scalar-oracle', type=Path, help='Pinned Float32 sRGB reference decoder')
 a = p.parse_args()
 a.output.mkdir(parents=True, exist_ok=False)
 report = {'status': 'running', 'binarySHA256': hashlib.sha256(a.binary.read_bytes()).hexdigest(),
@@ -48,8 +50,24 @@ try:
                     data = decoded.stdout[len(header):]
                     actual = list(data) if bits == 8 else [x[0] for x in struct.iter_unpack('>H', data)]
                     assert actual[channels-1::channels] == samples[channels-1::channels]
-                report['checks'].append({'bits': bits, 'channels': channels, 'controls': toggle,
-                                         'encodedBytes': len(encoded.stdout), 'exactAlpha': channels % 2 == 0})
+                check = {'bits': bits, 'channels': channels, 'controls': toggle,
+                         'encodedBytes': len(encoded.stdout), 'exactAlpha': channels % 2 == 0,
+                         'encodedSHA256': hashlib.sha256(encoded.stdout).hexdigest()}
+                if a.scalar_oracle:
+                    name = f'{bits}-{channels}-{toggle}'
+                    stream = a.output / (name + '.jxl'); floating = a.output / (name + '.scalar')
+                    stream.write_bytes(encoded.stdout)
+                    subprocess.run([str(a.scalar_oracle.resolve()), 'decode-float', str(stream), str(floating)], check=True, timeout=60)
+                    data = decoded.stdout[len(header):] if channels % 2 == 0 else decoded.stdout.split(b'\n', 3)[3]
+                    actual = list(data) if bits == 8 else [x[0] for x in struct.iter_unpack('>H', data)]
+                    reference = [int(min(1, max(0, x[0])) * maximum + .5) for x in struct.iter_unpack('<f', floating.read_bytes())]
+                    assert len(actual) == len(reference) == w * h * channels
+                    errors = [abs(x-y) for i,(x,y) in enumerate(zip(actual, reference)) if channels % 2 or i % channels != channels-1]
+                    peak, rms = max(errors), math.sqrt(sum(x*x for x in errors)/len(errors))
+                    assert peak <= 2 and rms <= .5, (name, peak, rms)
+                    if channels % 2 == 0: assert actual[channels-1::channels] == reference[channels-1::channels] == samples[channels-1::channels]
+                    check.update(scalarPeak=peak, scalarRMS=rms)
+                report['checks'].append(check)
             default = run(['encode', '-i', '-', '--input-format', 'pnm-srgb', '--json'], source)
             assert json.loads(default.stderr)['fidelity'] == 'exact-samples'
             run(['encode', '-i', '-', '--input-format', 'pnm', '--mode', 'lossy'], source, 4)

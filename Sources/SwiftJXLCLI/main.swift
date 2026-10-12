@@ -203,7 +203,7 @@ private func help(_ command: String?) -> String {
               --overwrite              Atomically replace an existing regular output file.
               --backend NAME           automatic (default), scalar-cpu; accelerated returns 4.
               --copy-policy POLICY     require-sharing (default) or allow-copy.
-              --threads N              Worker ceiling 1..8; scalar implementation uses one.
+              --threads N              Worker ceiling 1..8; Modular workers are bounded, VarDCT is serial.
               --max-memory BYTES       Positive aggregate ceiling; default 1073741824.
               --timeout SECONDS        Deadline >0..31536000 seconds; default 120.
             Lossy requires sRGB (pnm-srgb or nrrd), 8..16-bit samples and straight alpha.
@@ -242,7 +242,7 @@ private func help(_ command: String?) -> String {
               --overwrite              Atomically replace an existing regular report file.
               --backend NAME           automatic (default), scalar-cpu; accelerated returns 4.
               --copy-policy POLICY     require-sharing (default) or allow-copy.
-              --threads N              Worker ceiling 1..8; scalar implementation uses one.
+              --threads N              Worker ceiling 1..8; Modular workers are bounded, VarDCT is serial.
               --max-memory BYTES       Positive aggregate ceiling; default 1073741824.
               --timeout SECONDS        Deadline >0..31536000 seconds, including pipe I/O; default 120.
             Mode, max-error and output-format do not apply to inspection/validation.

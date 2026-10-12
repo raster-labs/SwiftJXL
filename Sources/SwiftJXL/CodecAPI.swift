@@ -2,6 +2,12 @@
 import Foundation
 import SwiftJXLCore
 
+/// Explicit transform search scope; larger searches trade CPU and admitted
+/// workspace for potential compressed-size savings, without changing fidelity mode.
+public enum VarDCTStrategySearch: Sendable, Equatable {
+    case fixedDCT8, singleCell, hierarchical
+}
+
 /// Explicit lossy VarDCT analysis settings. Distance is a positive finite codec
 /// quality parameter, not an absolute sample-error or perceptual guarantee.
 public struct VarDCTEncodingOptions: Sendable, Equatable {
@@ -9,15 +15,18 @@ public struct VarDCTEncodingOptions: Sendable, Equatable {
     public let gaborish: Bool
     public let adaptiveQuantisation: Bool
     public let dcSmoothing: Bool
+    public let strategySearch: VarDCTStrategySearch
     public init(distance: Float = 1, gaborish: Bool = true,
-                adaptiveQuantisation: Bool = true, dcSmoothing: Bool = true) throws {
+                adaptiveQuantisation: Bool = true, dcSmoothing: Bool = true,
+                strategySearch: VarDCTStrategySearch = .hierarchical) throws {
         guard distance.isFinite, distance > 0 else {
             throw CodecError(.invalidArgument, "VarDCT distance must be positive and finite.")
         }
         self.distance = distance; self.gaborish = gaborish
         self.adaptiveQuantisation = adaptiveQuantisation; self.dcSmoothing = dcSmoothing
+        self.strategySearch = strategySearch
     }
-    private init() { distance = 1; gaborish = true; adaptiveQuantisation = true; dcSmoothing = true }
+    private init() { distance = 1; gaborish = true; adaptiveQuantisation = true; dcSmoothing = true; strategySearch = .hierarchical }
     public static let `default` = Self()
 }
 /// Modular uses fixed effort-3 lossless settings. VarDCT controls apply only
@@ -173,7 +182,9 @@ public struct Encoder: Sendable {
                             alphaAssociated: image.descriptor.alpha == .absent ? nil : false,
                             distance: controls.distance, gaborish: controls.gaborish,
                             adaptiveQuantisation: controls.adaptiveQuantisation,
-                            dcSmoothing: controls.dcSmoothing, budget: budget)
+                            dcSmoothing: controls.dcSmoothing,
+                            smallStrategySearch: controls.strategySearch == .singleCell,
+                            largeStrategySearch: controls.strategySearch == .hierarchical, budget: budget)
                     }
                     return try ModularStorageEncoder.encode(bytes, layouts: layouts,
                         bitsPerSample: image.descriptor.meaningfulBits, grayscale: image.descriptor.colour == .greyscale,
@@ -250,7 +261,7 @@ private extension CodecCapabilities {
     static let pixelDecoding = Self(formats: ["jpeg-xl"], compressionModes: [.lossless, .lossy],
         sampleTypes: [.unsignedInteger], meaningfulPrecision: 1...16,
         layouts: ["Modular: 1–16-bit greyscale/RGB with optional alpha and ICC; planar/interleaved UInt8/UInt16",
-                  "VarDCT: 8–16-bit sRGB greyscale/RGB with optional straight alpha; one DC group, single pass; explicit byte order, offsets and strides"],
+                  "VarDCT: 8–16-bit sRGB greyscale/RGB with optional straight alpha; multiple DC/AC groups, single pass; explicit byte order, offsets and strides"],
         availableBackends: [.scalarCPU], canInspect: true, canEncode: false, canDecode: true)
     static let pixelEncoding = Self(formats: ["jpeg-xl"], compressionModes: [.lossless, .lossy],
         sampleTypes: [.unsignedInteger], meaningfulPrecision: 8...16,
@@ -343,11 +354,8 @@ private func prepare(_ data: Data, options: DecodeOptions, start: ContinuousCloc
         guard (8...16).contains(Int(envelope.metadata.bitDepth.bitsPerSample)),
               envelope.iccProfile == nil,
               envelope.metadata.extraChannels.first?.alphaAssociated != true,
-              envelope.dcGroupsX == 1, envelope.dcGroupsY == 1,
               envelope.frame.passes.numPasses == 1,
-              !envelope.frame.loopFilter.hasCustomParameters,
-              envelope.metadata.extraChannels.isEmpty ||
-                (envelope.width <= envelope.groupDimension && envelope.height <= envelope.groupDimension) else {
+              !envelope.frame.loopFilter.hasCustomParameters else {
             throw ScalarModularError.unsupportedProfile
         }
         frame = .vardct(envelope)

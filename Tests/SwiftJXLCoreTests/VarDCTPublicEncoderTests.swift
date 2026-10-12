@@ -43,8 +43,12 @@ struct VarDCTPublicEncoderTests {
             let source = try image(input, width: width, channels: channels, bits: bits,
                 planar: channels % 2 == 0, littleEndian: bits == 8)
             let sourceBytes = try source.storage.withUnsafeBytes { Data($0) }
-            for prepared in [false, true] {
-                let controls = try VarDCTEncodingOptions(gaborish: prepared, adaptiveQuantisation: prepared, dcSmoothing: prepared)
+            let profiles: [(Bool, VarDCTStrategySearch, String)] = [
+                (false, .fixedDCT8, "Encoder"), (true, .fixedDCT8, "EncoderPrepared"),
+                (true, .singleCell, "EncoderSmall"), (true, .hierarchical, "EncoderLarge")]
+            for (prepared, search, directory) in profiles {
+                let controls = try VarDCTEncodingOptions(gaborish: prepared, adaptiveQuantisation: prepared,
+                    dcSmoothing: prepared, strategySearch: search)
                 let encoder = try Encoder(configuration: .init(mode: .lossy, codecOptions: .init(varDCT: controls)))
                 let audit = ScalarStorageAudit()
                 let encoded = try await ScalarStorageAudit.$current.withValue(audit) {
@@ -52,7 +56,7 @@ struct VarDCTPublicEncoderTests {
                 }
                 #expect(encoded.encoding.mode == .lossy && encoded.report.fidelity == .lossy)
                 #expect(encoded.report.copyEvents.isEmpty && audit.snapshot.finalPixelAllocations == 0)
-                let expected = try fixture(name, suffix: "jxl", directory: prepared ? "VarDCT/EncoderPrepared" : "VarDCT/Encoder")
+                let expected = try fixture(name, suffix: "jxl", directory: "VarDCT/" + directory)
                 #expect(encoded.data == expected)
                 #expect(try source.storage.withUnsafeBytes { Data($0) } == sourceBytes)
                 #expect(try await Decoder().decode(encoded.data).report.fidelity == .lossy)
@@ -71,7 +75,7 @@ struct VarDCTPublicEncoderTests {
         let padded = try image(input, width: 17, channels: channels, bits: bits,
                                planar: true, littleEndian: false)
         let interleaved = try image(input, width: 17, channels: channels, bits: bits)
-        let encoder = try Encoder(configuration: .init(mode: .lossy))
+        let encoder = try Encoder(configuration: .init(mode: .lossy, codecOptions: .init(varDCT: try .init(strategySearch: .fixedDCT8))))
         let encoded = try await encoder.encode(padded)
         #expect(try await encoder.encode(interleaved).data == encoded.data)
         let name = "precision-\(bits)-\(channels)"
@@ -121,7 +125,7 @@ struct VarDCTPublicEncoderTests {
         let lossy = try EncoderConfiguration(mode: .lossy)
         #expect(lossy.mode == .lossy && EncoderConfiguration.default.mode == .lossless)
         let defaults = VarDCTEncodingOptions.default
-        #expect(defaults.distance == 1 && defaults.gaborish && defaults.adaptiveQuantisation && defaults.dcSmoothing)
+        #expect(defaults.distance == 1 && defaults.gaborish && defaults.adaptiveQuantisation && defaults.dcSmoothing && defaults.strategySearch == .hierarchical)
         for value: Float in [0, -1, .nan, .infinity] {
             #expect(throws: CodecError.self) { _ = try VarDCTEncodingOptions(distance: value) }
         }
