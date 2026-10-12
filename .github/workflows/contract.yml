@@ -122,9 +122,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sanitizer: [address, thread]
+        include:
+          - sanitizer: address
+            timeout: 45
+          - sanitizer: thread
+            timeout: 75
     runs-on: macos-26
-    timeout-minutes: 45
+    # TSan's complete suite passed in 16 minutes, but serial CLI process checks
+    # took the combined job beyond 45 minutes. Individual deadlines stay fixed.
+    timeout-minutes: ${{ matrix.timeout }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -143,13 +149,23 @@ jobs:
         run: |
           python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" -m pip install --only-binary=:all: -r Scripts/nrrd-oracle-requirements.txt
-      - name: CLI sanitizer stream checks
+      - name: Generate CLI fixtures
+        run: swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
+      - name: CLI sanitizer payload checks
         run: |
-          swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
           binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
           python3 Scripts/test-cli-payload.py --binary "$binary" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-${{ matrix.sanitizer }}"
+      - name: CLI sanitizer VarDCT decode checks
+        run: |
+          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
           python3 Scripts/test-cli-vardct.py --binary "$binary" --output "$RUNNER_TEMP/cli-vardct-${{ matrix.sanitizer }}"
+      - name: CLI sanitizer VarDCT encode checks
+        run: |
+          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
           python3 Scripts/test-cli-vardct-encode.py --binary "$binary" --output "$RUNNER_TEMP/cli-vardct-encode-${{ matrix.sanitizer }}"
+      - name: CLI sanitizer NRRD interoperability
+        run: |
+          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$binary" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-${{ matrix.sanitizer }}"
       - name: Preserve CLI evidence
         if: always()
