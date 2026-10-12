@@ -35,8 +35,9 @@ package enum VarDCTPixelEncoder {
                   $0.storageBits >= bitsPerSample && $0.requiredBytes <= bytes.count }) else {
             throw ScalarModularError.invalidInput("Incompatible VarDCT source or distance")
         }
-        guard first.width <= 2048, first.height <= 2048, alphaAssociated != true,
-              alphaAssociated == nil || (first.width <= 256 && first.height <= 256) else {
+        guard first.width <= 4096, first.height <= 4096,
+              try ScalarOperationBudget.product(first.width, first.height) <= 4 * 1024 * 1024,
+              alphaAssociated != true else {
             throw ScalarModularError.unsupportedProfile
         }
         let bx = (first.width + 7) / 8, by = (first.height + 7) / 8

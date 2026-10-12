@@ -26,7 +26,7 @@ private struct VarDCTPrefix {
     }
 }
 
-/// Single DC group, one or more AC groups, standard prefix entropy. Histogram
+/// Bounded DC/AC groups with standard prefix entropy. Histogram
 /// passes stream tokens instead of retaining frame-sized token arrays. The
 /// source borrow is local to the synchronous encoder call, never retained.
 struct VarDCTFrameWriter {
@@ -36,8 +36,30 @@ struct VarDCTFrameWriter {
     let limit: Int
     private var groupsX: Int { (coefficients.width + 255) / 256 }
     private var groupsY: Int { (coefficients.height + 255) / 256 }
-    private var transformCount: Int { coefficients.transforms?.count ?? blocks }
-    private var blocks: Int { coefficients.blocksX * coefficients.blocksY }
+    private var dcGroupsX: Int { (coefficients.blocksX + 255) / 256 }
+    private var dcGroupsY: Int { (coefficients.blocksY + 255) / 256 }
+    private var dcGroups: Int { dcGroupsX * dcGroupsY }
+    private func dcRegion(_ group: Int) -> (x: Int, y: Int, width: Int, height: Int) {
+        let x = group % dcGroupsX * 256, y = group / dcGroupsX * 256
+        return (x, y, min(256, coefficients.blocksX - x), min(256, coefficients.blocksY - y))
+    }
+    private func transformIndices(_ group: Int) throws -> [Int] {
+        let region = dcRegion(group)
+        try budget.reserveWorkspace(ScalarOperationBudget.product(region.width * region.height, 16))
+        if let transforms = coefficients.transforms {
+            return transforms.indices.filter { i in
+                let t = transforms[i]
+                return t.x >= region.x && t.x < region.x + region.width &&
+                    t.y >= region.y && t.y < region.y + region.height
+            }
+        }
+        var indices: [Int] = []
+        indices.reserveCapacity(region.width * region.height)
+        for y in 0..<region.height { for x in 0..<region.width {
+            indices.append((region.y + y) * coefficients.blocksX + region.x + x)
+        } }
+        return indices
+    }
     static let order = [0,1,8,16,9,2,3,10,17,24,32,25,18,11,4,5,
         12,19,26,33,40,48,41,34,27,20,13,6,7,14,21,28,35,42,49,56,
         57,50,43,36,29,22,15,23,30,37,44,51,58,59,52,45,38,31,39,46,
@@ -45,9 +67,15 @@ struct VarDCTFrameWriter {
 
     func write() throws -> Data {
         var modularHistogram = [Int](repeating: 0, count: HybridUintConfig.raw4.maxToken + 1)
-        try alphaTokens { modularHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
-        try dcTokens { modularHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
-        try metadataTokens { modularHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
+        for group in 0..<(groupsX * groupsY) {
+            try alphaTokens(group: group) { modularHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
+        }
+        for group in 0..<dcGroups {
+            try dcTokens(group: group) { modularHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
+            try metadataTokens(group: group, indices: transformIndices(group)) {
+                modularHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1
+            }
+        }
         let modular = try VarDCTPrefix(histogram: modularHistogram, contexts: 1)
         var acHistogram = [Int](repeating: 0, count: HybridUintConfig.raw4.maxToken + 1)
         for group in 0..<(groupsX * groupsY) {
@@ -65,16 +93,22 @@ struct VarDCTFrameWriter {
         }
         if groupsX * groupsY == 1 {
             try section { writer in
-                try lfGlobal(modular, to: &writer); try dcGroup(modular, to: &writer)
+                try lfGlobal(modular, to: &writer); try dcGroup(0, modular, to: &writer)
                 try hfGlobal(ac, to: &writer)
                 try acTokens(group: 0) { try ac.write($0, to: &writer) }
             }
         } else {
             try section { try lfGlobal(modular, to: &$0) }
-            try section { try dcGroup(modular, to: &$0) }
+            for group in 0..<dcGroups { try section { try dcGroup(group, modular, to: &$0) } }
             try section { try hfGlobal(ac, to: &$0) }
             for group in 0..<(groupsX * groupsY) {
-                try section { writer in try acTokens(group: group) { try ac.write($0, to: &writer) } }
+                try section { writer in
+                    try acTokens(group: group) { try ac.write($0, to: &writer) }
+                    if coefficients.hasAlpha {
+                        try GroupHeader.default.write(to: &writer)
+                        try alphaTokens(group: group) { try modular.write($0, to: &writer) }
+                    }
+                }
             }
         }
         var writer = BitWriter()
@@ -109,24 +143,28 @@ struct VarDCTFrameWriter {
             try emit(ZigZag.pack(sample &- prediction))
         } }
     }
-    private func alphaTokens(_ emit: (UInt32) throws -> Void) throws {
+    private func alphaTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
         guard coefficients.hasAlpha else { return }
-        try modularTokens(width: coefficients.width, height: coefficients.height, value: { i in
-            try source.sample(channel: source.layouts.count - 1, x: i % coefficients.width, y: i / coefficients.width)
+        let x = group % groupsX * 256, y = group / groupsX * 256
+        let width = min(256, coefficients.width - x), height = min(256, coefficients.height - y)
+        try modularTokens(width: width, height: height, value: { i in
+            try source.sample(channel: source.layouts.count - 1, x: x + i % width, y: y + i / width)
         }, emit: emit)
     }
-    private func dcTokens(_ emit: (UInt32) throws -> Void) throws {
+    private func dcTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
+        let region = dcRegion(group)
         for c in [1,0,2] {
-            try modularTokens(width: coefficients.blocksX, height: coefficients.blocksY,
-                value: { coefficients.dc[c][$0] }, emit: emit)
+            try modularTokens(width: region.width, height: region.height,
+                value: { coefficients.dc[c][(region.y + $0 / region.width) * coefficients.blocksX + region.x + $0 % region.width] }, emit: emit)
         }
     }
-    private func metadataTokens(_ emit: (UInt32) throws -> Void) throws {
-        let tw = (coefficients.blocksX + 7) / 8, th = (coefficients.blocksY + 7) / 8
+    private func metadataTokens(group: Int, indices: [Int], _ emit: (UInt32) throws -> Void) throws {
+        let region = dcRegion(group), count = indices.count
+        let tw = (region.width + 7) / 8, th = (region.height + 7) / 8
         for _ in 0..<2 { try modularTokens(width: tw, height: th, value: { _ in 0 }, emit: emit) }
-        try modularTokens(width: transformCount, height: 2,
-            value: { $0 < transformCount ? coefficients.strategies[$0] : coefficients.quantAC[$0 - transformCount] - 1 }, emit: emit)
-        try modularTokens(width: coefficients.blocksX, height: coefficients.blocksY,
+        try modularTokens(width: count, height: 2,
+            value: { $0 < count ? coefficients.strategies[indices[$0]] : coefficients.quantAC[indices[$0 - count]] - 1 }, emit: emit)
+        try modularTokens(width: region.width, height: region.height,
             value: { _ in 0 }, emit: emit)
     }
     private func acTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
@@ -194,17 +232,21 @@ struct VarDCTFrameWriter {
         try tree(to: &writer); try modular.writeHeader(to: &writer, contexts: 1)
         if coefficients.hasAlpha {
             try GroupHeader.default.write(to: &writer)
-            try alphaTokens { try modular.write($0, to: &writer) }
+            if groupsX * groupsY == 1 {
+                try alphaTokens(group: 0) { try modular.write($0, to: &writer) }
+            }
         }
     }
-    private func dcGroup(_ modular: VarDCTPrefix, to writer: inout BitWriter) throws {
+    private func dcGroup(_ group: Int, _ modular: VarDCTPrefix, to writer: inout BitWriter) throws {
+        let region = dcRegion(group), indices = try transformIndices(group)
+        guard !indices.isEmpty else { throw VarDCTError.invalidTransform }
         writer.write(bits: 2, value: 0)
         try GroupHeader.default.write(to: &writer)
-        try dcTokens { try modular.write($0, to: &writer) }
-        let bits = Int(ceilLog2(UInt32(blocks)))
-        if bits > 0 { writer.write(bits: bits, value: UInt32(transformCount - 1)) }
+        try dcTokens(group: group) { try modular.write($0, to: &writer) }
+        let bits = Int(ceilLog2(UInt32(region.width * region.height)))
+        if bits > 0 { writer.write(bits: bits, value: UInt32(indices.count - 1)) }
         try GroupHeader.default.write(to: &writer)
-        try metadataTokens { try modular.write($0, to: &writer) }
+        try metadataTokens(group: group, indices: indices) { try modular.write($0, to: &writer) }
     }
     private func hfGlobal(_ ac: VarDCTPrefix, to writer: inout BitWriter) throws {
         writer.writeBit(true) // default AC matrices

@@ -9,9 +9,9 @@ struct VarDCTEncoderTests {
             maximumMemoryBytes: maximum, maximumDecodedBytes: maximum,
             maximumCompressedBytes: maximum, deadline: .now.advanced(by: .seconds(30)))
     }
-    private func fixture(_ name: String, extension suffix: String, encoder: Bool = true, prepared: Bool = false, small: Bool = false, large: Bool = false) throws -> Data {
+    private func fixture(_ name: String, extension suffix: String, encoder: Bool = true, prepared: Bool = false, small: Bool = false, large: Bool = false, grouped: Bool = false) throws -> Data {
         let url = try #require(Bundle.module.url(forResource: name, withExtension: suffix,
-            subdirectory: encoder ? (large ? "VarDCT/EncoderLarge" : small ? "VarDCT/EncoderSmall" : prepared ? "VarDCT/EncoderPrepared" : "VarDCT/Encoder") : "VarDCT"))
+            subdirectory: encoder ? (grouped ? "VarDCT/GroupedEncoder" : large ? "VarDCT/EncoderLarge" : small ? "VarDCT/EncoderSmall" : prepared ? "VarDCT/EncoderPrepared" : "VarDCT/Encoder") : "VarDCT"))
         return try Data(contentsOf: url)
     }
     private func layouts(width: Int, height: Int, channels: Int, bits: Int) throws -> [ModularChannelLayout] {
@@ -42,10 +42,9 @@ struct VarDCTEncoderTests {
             let layout = try layouts(width: width, height: height, channels: channels, bits: bits)
             if width == 257 && channels % 2 == 0 {
                 let input = Data(count: width * height * channels * bits / 8)
-                #expect(throws: (any Error).self) {
-                    try input.withUnsafeBytes { try VarDCTPixelEncoder.encode($0, layouts: layout, bitsPerSample: bits,
-                        grayscale: channels <= 2, alphaAssociated: false, distance: 1, budget: budget()) }
-                }
+                let encoded = try input.withUnsafeBytes { try VarDCTPixelEncoder.encode($0, layouts: layout, bitsPerSample: bits,
+                    grayscale: channels <= 2, alphaAssociated: false, distance: 1, budget: budget()) }
+                #expect(try encoded == fixture("enczero-257-9-\(channels)-\(bits)-0", extension: "jxl", grouped: true))
                 continue
             }
             let name = "enc-\(width)-\(channels)-\(bits)"
