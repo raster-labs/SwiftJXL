@@ -9,9 +9,9 @@ struct VarDCTEncoderTests {
             maximumMemoryBytes: maximum, maximumDecodedBytes: maximum,
             maximumCompressedBytes: maximum, deadline: .now.advanced(by: .seconds(30)))
     }
-    private func fixture(_ name: String, extension suffix: String, encoder: Bool = true, prepared: Bool = false) throws -> Data {
+    private func fixture(_ name: String, extension suffix: String, encoder: Bool = true, prepared: Bool = false, small: Bool = false) throws -> Data {
         let url = try #require(Bundle.module.url(forResource: name, withExtension: suffix,
-            subdirectory: encoder ? (prepared ? "VarDCT/EncoderPrepared" : "VarDCT/Encoder") : "VarDCT"))
+            subdirectory: encoder ? (small ? "VarDCT/EncoderSmall" : prepared ? "VarDCT/EncoderPrepared" : "VarDCT/Encoder") : "VarDCT"))
         return try Data(contentsOf: url)
     }
     private func layouts(width: Int, height: Int, channels: Int, bits: Int) throws -> [ModularChannelLayout] {
@@ -28,7 +28,11 @@ struct VarDCTEncoderTests {
     func preparedReferenceStreams(_ width: Int, _ channels: Int) throws {
         try verifyReference(width, channels, prepared: true)
     }
-    private func verifyReference(_ width: Int, _ channels: Int, prepared: Bool) throws {
+    @Test(arguments: [17,64,257], [1,2,3,4])
+    func smallStrategyReferenceStreams(_ width: Int, _ channels: Int) throws {
+        try verifyReference(width, channels, prepared: true, small: true)
+    }
+    private func verifyReference(_ width: Int, _ channels: Int, prepared: Bool, small: Bool = false) throws {
         let height = width == 64 ? 64 : 9
         for bits in [8,16] {
             let layout = try layouts(width: width, height: height, channels: channels, bits: bits)
@@ -45,11 +49,11 @@ struct VarDCTEncoderTests {
                 : fixture("pred-\(width)-\(channels)-\(bits)", extension: "input", encoder: false)
             let encoded = try input.withUnsafeBytes { try VarDCTPixelEncoder.encode($0, layouts: layout,
                 bitsPerSample: bits, grayscale: channels <= 2, alphaAssociated: channels % 2 == 0 ? false : nil,
-                distance: 1, gaborish: prepared, adaptiveQuantisation: prepared, dcSmoothing: prepared, budget: budget()) }
+                distance: 1, gaborish: prepared, adaptiveQuantisation: prepared, dcSmoothing: prepared, smallStrategySearch: small, budget: budget()) }
             // Tie emitted bytes to the independently accepted libjxl corpus.
             // If encoding changes, regenerate and requalify the oracle rather
             // than claiming an old reference verifies new compressed bytes.
-            #expect(try encoded == fixture(name, extension: "jxl", prepared: prepared))
+            #expect(try encoded == fixture(name, extension: "jxl", prepared: prepared, small: small))
             let envelope = try VarDCTFrameEnvelope.read(encoded, budget: budget())
             #expect(envelope.width == width && envelope.height == height)
             #expect(envelope.metadata.bitDepth.bitsPerSample == bits)
@@ -57,7 +61,7 @@ struct VarDCTEncoderTests {
                 && envelope.frame.loopFilter.gab == prepared)
             var pixels = Data(count: input.count)
             try pixels.withUnsafeMutableBytes { try VarDCTPixelDecoder.decode(envelope, into: $0, layouts: layout) }
-            let oracle = try fixture(name, extension: "scalar", prepared: prepared), maximum = (1 << bits) - 1, step = bits / 8
+            let oracle = try fixture(name, extension: "scalar", prepared: prepared, small: small), maximum = (1 << bits) - 1, step = bits / 8
             #expect(oracle.count == width * height * channels * 4)
             var peak = 0, squared = 0.0, count = 0
             for i in 0..<(width * height * channels) {

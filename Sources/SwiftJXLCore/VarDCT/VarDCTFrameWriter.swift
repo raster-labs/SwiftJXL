@@ -37,7 +37,7 @@ struct VarDCTFrameWriter {
     private var groupsX: Int { (coefficients.width + 255) / 256 }
     private var groupsY: Int { (coefficients.height + 255) / 256 }
     private var blocks: Int { coefficients.blocksX * coefficients.blocksY }
-    private static let order = [0,1,8,16,9,2,3,10,17,24,32,25,18,11,4,5,
+    static let order = [0,1,8,16,9,2,3,10,17,24,32,25,18,11,4,5,
         12,19,26,33,40,48,41,34,27,20,13,6,7,14,21,28,35,42,49,56,
         57,50,43,36,29,22,15,23,30,37,44,51,58,59,52,45,38,31,39,46,
         53,60,61,54,47,55,62,63]
@@ -124,7 +124,7 @@ struct VarDCTFrameWriter {
         let tw = (coefficients.blocksX + 7) / 8, th = (coefficients.blocksY + 7) / 8
         for _ in 0..<2 { try modularTokens(width: tw, height: th, value: { _ in 0 }, emit: emit) }
         try modularTokens(width: blocks, height: 2,
-            value: { $0 < blocks ? 0 : coefficients.quantAC[$0 - blocks] - 1 }, emit: emit)
+            value: { $0 < blocks ? coefficients.strategies[$0] : coefficients.quantAC[$0 - blocks] - 1 }, emit: emit)
         try modularTokens(width: coefficients.blocksX, height: coefficients.blocksY,
             value: { _ in 0 }, emit: emit)
     }

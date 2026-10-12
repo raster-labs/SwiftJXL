@@ -1,0 +1,57 @@
+Building for debugging...
+[Planning 33 / 212]
+[Planning deferred tasks]
+[1 / 3] swiftjxl-cli-product
+[10 / 38] SwiftJXL_SwiftJXLCoreTests
+[11 / 42] SwiftJXLCore
+[13 / 42] SwiftJXLCore
+[14 / 46] SwiftJXLCore
+[15 / 47] SwiftJXLCore
+[23 / 49] SwiftJXL
+[26 / 57] SwiftJXL
+[28 / 57] SwiftJXL
+[33 / 59] swiftjxl-cli-product
+[34 / 58] swiftjxl-cli-product
+[36 / 62] SwiftJXL
+[38 / 62] swiftjxl-cli-product
+[40 / 64] swiftjxl-cli-product
+[46 / 63] SwiftJXLTests-product
+[48 / 71] swiftjxl-cli-product
+[50 / 82] SwiftJXLTests-product
+[52 / 82] SwiftJXLTests-product
+[55 / 82] SwiftJXLTests-product
+[57 / 82] SwiftJXLTests-product
+[63 / 81] SwiftJXLTests-product
+[66 / 81] SwiftJXLCoreTests-product
+[69 / 81] SwiftJXLCoreTests-product
+[69 / 82] SwiftJXLCoreTests-product
+[71 / 82] SwiftJXLCoreTests-product
+[72 / 82] SwiftJXLCoreTests-product
+[73 / 82] SwiftJXLCoreTests-product
+[74 / 82] SwiftJXLCoreTests-product
+[75 / 82] SwiftJXLCoreTests-product
+[76 / 82] SwiftJXL-product
+[80 / 86] SwiftJXLCoreTests-product
+[82 / 86] SwiftJXLCoreTests-product
+[84 / 86] SwiftJXLCoreTests-product
+Build complete! (58.97 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTSmallAnalysisTests started.
+◇ Test invalidAndCumulativeAdmission() started.
+◇ Test pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 2 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 1 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 0 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 3 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 13 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 12 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 15 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 16 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 14 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 17 to pinnedIndependentForwardBasis(_:) started.
+✔ Test invalidAndCumulativeAdmission() passed after 0.022 seconds.
+✔ Test pinnedIndependentForwardBasis(_:) with 10 test cases passed after 0.043 seconds.
+✔ Suite VarDCTSmallAnalysisTests passed after 0.044 seconds.
+✔ Test run with 2 tests in 1 suite passed after 0.044 seconds.

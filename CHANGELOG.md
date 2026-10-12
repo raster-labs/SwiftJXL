@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased — internal VarDCT single-cell strategy search, 2026-10-12
+
+- Add DCT4, DCT2, Hornuss, split DCT and AFV analysis and bounded selection alongside DCT8, qualified against 650 direct reference vectors and twenty emitted streams. Larger hierarchical search remains in progress.
+
 ## Unreleased — internal VarDCT encoder preparation, 2026-10-12
 
 - Add explicit inverse Gaborish, adaptive quantisation and DC-smoothing controls. Match the pinned reference filter at visible image boundaries, including tiny dimensions; retain the initial fixed-control profile unchanged. Mixed strategy search and public capability remain pending.
