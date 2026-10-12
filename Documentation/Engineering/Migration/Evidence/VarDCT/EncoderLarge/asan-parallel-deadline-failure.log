@@ -1,0 +1,189 @@
+Building for debugging...
+[Pre-planning 1 / 212]
+[Planning deferred tasks]
+[1 / 12] SwiftJXLCore
+[10 / 41] SwiftJXL_SwiftJXLCoreTests
+[11 / 45] SwiftJXLCore
+[13 / 53] SwiftJXLCore
+[14 / 57] SwiftJXLCore
+[16 / 56] SwiftJXLCore
+[21 / 59] SwiftJXLCore
+[23 / 70] SwiftJXL
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:114:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+112 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+113 |         }
+114 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+115 |         return result
+116 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[25 / 77] SwiftJXLCore
+[27 / 77] SwiftJXLCore
+[29 / 80] SwiftJXLCore
+[34 / 80] SwiftJXLCore
+[35 / 80] SwiftJXLCore
+[36 / 80] SwiftJXLCore
+[37 / 80] SwiftJXLCore
+[38 / 80] SwiftJXLCore
+[39 / 80] SwiftJXLCore
+[40 / 80] SwiftJXLCore
+[41 / 80] SwiftJXLCore
+[42 / 80] SwiftJXLCore
+[43 / 80] SwiftJXLCore
+[45 / 80] SwiftJXLCore
+[49 / 80] SwiftJXL
+[51 / 82] swiftjxl-cli-product
+[54 / 85] swiftjxl-cli-product
+[56 / 85] swiftjxl-cli-product
+[58 / 87] swiftjxl-cli-product
+[59 / 87]
+[64 / 86] SwiftJXLTests-product
+[66 / 92] swiftjxl-cli-product
+[70 / 94] SwiftJXLCoreTests-product
+[73 / 105] swiftjxl-cli-product
+[75 / 105] SwiftJXLTests-product
+[76 / 105] SwiftJXLCoreTests-product
+[79 / 104] SwiftJXLTests-product
+[84 / 104] SwiftJXLCoreTests-product
+[85 / 104] SwiftJXLCoreTests-product
+[89 / 104] SwiftJXLCoreTests-product
+[89 / 105] SwiftJXLTests-product
+[91 / 105] SwiftJXLCoreTests-product
+[94 / 105] SwiftJXLCoreTests-product
+[95 / 105] SwiftJXLCoreTests-product
+[96 / 105] SwiftJXLCoreTests-product
+[97 / 105]
+[101 / 107] SwiftJXLCoreTests-product
+[103 / 107] SwiftJXLCoreTests-product
+[105 / 107] SwiftJXLCoreTests-product
+Build complete! (62.96 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTLargeAnalysisTests started.
+◇ Suite VarDCTEncoderTests started.
+◇ Suite VarDCTEncoderPreparationTests started.
+◇ Suite VarDCTSmallAnalysisTests started.
+◇ Suite VarDCTHierarchicalAnalysisTests started.
+◇ Test independentReferenceStreams(_:_:) started.
+◇ Test invalidAndCumulativeAdmission() started.
+◇ Test adaptiveQuantisationAnchors() started.
+◇ Test largeStrategyReferenceStreams(_:_:) started.
+◇ Test invalidPoliciesAndCumulativeAdmission() started.
+◇ Test paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test cancellationRejectsBeforeSourceRead() started.
+◇ Test independentLargeTransformsAndDC() started.
+◇ Test pinnedIndependentForwardBasis(_:) started.
+◇ Test invalidPrefilterAndAdmission() started.
+◇ Test preparedReferenceStreams(_:_:) started.
+◇ Test smallStrategyReferenceStreams(_:_:) started.
+◇ Test pinnedIndependentPrefilter() started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test unsupportedAndExhausted() started.
+◇ Test case passing 1 argument bits → 8 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 1 argument bits → 16 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 1 argument identifier → 0 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 1 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test invalidAndExhaustedSearch() started.
+◇ Test case passing 1 argument identifier → 2 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument identifier → 3 to pinnedIndependentForwardBasis(_:) started.
+◇ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test nestedQuantisationAndGroupBoundaries() started.
+◇ Test case passing 1 argument identifier → 12 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 1 argument identifier → 13 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 14 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 1 argument identifier → 15 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 1 argument identifier → 16 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 1 argument identifier → 17 to pinnedIndependentForwardBasis(_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to preparedReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to smallStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to largeStrategyReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to independentReferenceStreams(_:_:) started.
+✘ Test independentLargeTransformsAndDC() recorded an issue at VarDCTLargeAnalysisTests.swift:12:6: Caught error: .resourceLimit
+◇ Test case passing 2 arguments width → 64, channels → 4 to independentReferenceStreams(_:_:) started.
+✔ Test invalidPrefilterAndAdmission() passed after 30.206 seconds.
+◇ Test case passing 2 arguments width → 257, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to independentReferenceStreams(_:_:) started.
+✔ Test adaptiveQuantisationAnchors() passed after 31.489 seconds.
+✔ Test invalidAndCumulativeAdmission() passed after 31.489 seconds.
+◇ Test case passing 1 argument size → 16 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 32 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 64 to uniformRegionsSelectLargeTransforms(_:) started.
+✔ Test pinnedIndependentForwardBasis(_:) with 10 test cases passed after 36.102 seconds.
+◇ Test case passing 1 argument id → 4 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 5 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+✘ Test largeStrategyReferenceStreams(_:_:) recorded an issue with 2 arguments width → 64, channels → 1 at VarDCTEncoderTests.swift:35:6: Caught error: .resourceLimit
+◇ Test case passing 1 argument id → 6 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 7 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 8 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 9 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 10 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 11 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 18 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 19 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 20 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+✔ Test invalidPoliciesAndCumulativeAdmission() passed after 41.913 seconds.
+✔ Test paddedPlanarSourceIsBorrowed(_:) with 2 test cases passed after 41.913 seconds.
+✔ Test preparedReferenceStreams(_:_:) with 12 test cases passed after 41.914 seconds.
+✔ Test pinnedIndependentPrefilter() passed after 41.914 seconds.
+✔ Test unsupportedAndExhausted() passed after 41.912 seconds.
+✘ Test independentLargeTransformsAndDC() failed after 41.915 seconds with 1 issue.
+✔ Test invalidAndExhaustedSearch() passed after 41.911 seconds.
+✔ Test uniformRegionsSelectLargeTransforms(_:) with 3 test cases passed after 41.773 seconds.
+✔ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) with 11 test cases passed after 41.643 seconds.
+✔ Test cancellationRejectsBeforeSourceRead() passed after 41.916 seconds.
+✔ Suite VarDCTEncoderPreparationTests passed after 41.917 seconds.
+✔ Suite VarDCTSmallAnalysisTests passed after 41.917 seconds.
+✘ Suite VarDCTLargeAnalysisTests failed after 41.918 seconds with 1 issue.
+✔ Test independentReferenceStreams(_:_:) with 12 test cases passed after 42.271 seconds.
+✘ Test largeStrategyReferenceStreams(_:_:) recorded an issue with 2 arguments width → 64, channels → 3 at VarDCTEncoderTests.swift:35:6: Caught error: .resourceLimit
+✔ Test smallStrategyReferenceStreams(_:_:) with 12 test cases passed after 49.026 seconds.
+✘ Test largeStrategyReferenceStreams(_:_:) with 12 test cases failed after 51.483 seconds with 2 issues.
+✘ Suite VarDCTEncoderTests failed after 51.483 seconds with 2 issues.
+✔ Test nestedQuantisationAndGroupBoundaries() passed after 55.785 seconds.
+✔ Suite VarDCTHierarchicalAnalysisTests passed after 56.058 seconds.
+✘ Test run with 18 tests in 5 suites failed after 56.058 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - SwiftJXLCoreTests (Swift Testing)

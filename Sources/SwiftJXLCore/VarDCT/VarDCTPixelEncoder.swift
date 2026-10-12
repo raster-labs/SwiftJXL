@@ -4,8 +4,8 @@
 // JPEG XL Project Authors retain BSD-3-Clause; see libjxl-LICENSE.txt.
 import Foundation
 
-/// Bounded single-cell transform search with explicit predecessor prefilter
-/// and adaptive quantisation. Larger-region hierarchical search remains pending.
+/// Bounded transform search through 64×64, with explicit predecessor prefilter
+/// and adaptive quantisation. Optional search preserves earlier fixture bytes.
 package enum VarDCTPixelEncoder {
     struct Coefficients {
         let width: Int, height: Int, blocksX: Int, blocksY: Int
@@ -15,6 +15,7 @@ package enum VarDCTPixelEncoder {
         let quantAC: [Int32], strategies: [Int32]
         let gaborish: Bool, dcSmoothing: Bool
         let dc: [[Int32]], ac: [[Int32]]
+        var transforms: [VarDCTStrategyMap.Transform]? = nil
     }
 
     /// The caller keeps the source owner and its synchronous read borrow alive
@@ -24,7 +25,7 @@ package enum VarDCTPixelEncoder {
                                layouts: [ModularChannelLayout], bitsPerSample: Int,
                                grayscale: Bool, alphaAssociated: Bool?, distance: Float,
                                gaborish: Bool = false, adaptiveQuantisation: Bool = false, dcSmoothing: Bool = false,
-                               smallStrategySearch: Bool = false,
+                               smallStrategySearch: Bool = false, largeStrategySearch: Bool = false,
                                budget: ScalarOperationBudget) throws -> Data {
         try budget.checkpoint()
         guard let first = layouts.first, (8...16).contains(bitsPerSample),
@@ -50,22 +51,8 @@ package enum VarDCTPixelEncoder {
             ScalarOperationBudget.sum(ScalarOperationBudget.product(limit, 6), 4 * 1024 * 1024)))
         let source = VarDCTBorrowedSource(bytes: bytes, layouts: layouts, maximum: (Int32(1) << bitsPerSample) - 1)
         let scale = UInt32(max(1, min(65535, (5111 / max(0.05, distance)).rounded())))
-        let transform = try ScaledDCT(rows: 8, columns: 8, direction: .forward, budget: budget)
-        let weights = try VarDCTQuantWeights.make(identifier: 0, rows: 8, columns: 8, budget: budget)
-        var dc = (0..<3).map { _ in [Int32](repeating: 0, count: blocks) }
-        var ac = (0..<3).map { _ in [Int32](repeating: 0, count: padded) }
-        var patch = (0..<3).map { _ in [Float](repeating: 0, count: 64) }
-        var quantAC = [Int32](repeating: 5, count: blocks)
-        var strategies = [Int32](repeating: 0, count: blocks)
-        let smallPlan = try smallStrategySearch ? VarDCTSmallAnalysis(budget: budget) : nil
-        var smallWeights: [Int: [Float]] = [:]
-        if smallStrategySearch {
-            for id in [0,1,2,3,12,13,14,15,16,17] {
-                smallWeights[id] = try VarDCTQuantWeights.make(identifier: id, rows: 8, columns: 8, budget: budget)
-            }
-        }
         var prepared: [[Float]]? = nil
-        if gaborish || adaptiveQuantisation {
+        if gaborish || adaptiveQuantisation || largeStrategySearch {
             let visible = try ScalarOperationBudget.product(first.width, first.height)
             try budget.reserveWorkspace(ScalarOperationBudget.product(visible, 3 * MemoryLayout<Float>.stride))
             var planes = (0..<3).map { _ in [Float](repeating: 0, count: visible) }
@@ -84,6 +71,36 @@ package enum VarDCTPixelEncoder {
                     width: first.width, height: first.height, budget: budget) }
             }
             prepared = planes
+        }
+        if largeStrategySearch {
+            guard let prepared else { throw VarDCTError.invalidTransform }
+            let result = try VarDCTHierarchicalAnalysis.analyse(prepared, width: first.width,
+                height: first.height, scale: scale, distance: distance,
+                adaptiveQuantisation: adaptiveQuantisation, budget: budget)
+            let coefficients = Coefficients(width: first.width, height: first.height, blocksX: bx, blocksY: by,
+                bits: bitsPerSample, grayscale: grayscale, hasAlpha: alphaAssociated != nil,
+                globalScale: scale, quantAC: result.quantisation, strategies: result.strategies,
+                gaborish: gaborish, dcSmoothing: dcSmoothing, dc: result.dc, ac: result.ac,
+                transforms: result.transforms)
+            return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: limit)) {
+                let data = try VarDCTFrameWriter(coefficients: coefficients, source: source, budget: budget, limit: limit).write()
+                try ScalarEncodingWork.checkpoint()
+                return data
+            }
+        }
+        let transform = try ScaledDCT(rows: 8, columns: 8, direction: .forward, budget: budget)
+        let weights = try VarDCTQuantWeights.make(identifier: 0, rows: 8, columns: 8, budget: budget)
+        var dc = (0..<3).map { _ in [Int32](repeating: 0, count: blocks) }
+        var ac = (0..<3).map { _ in [Int32](repeating: 0, count: padded) }
+        var patch = (0..<3).map { _ in [Float](repeating: 0, count: 64) }
+        var quantAC = [Int32](repeating: 5, count: blocks)
+        var strategies = [Int32](repeating: 0, count: blocks)
+        let smallPlan = try smallStrategySearch ? VarDCTSmallAnalysis(budget: budget) : nil
+        var smallWeights: [Int: [Float]] = [:]
+        if smallStrategySearch {
+            for id in [0,1,2,3,12,13,14,15,16,17] {
+                smallWeights[id] = try VarDCTQuantWeights.make(identifier: id, rows: 8, columns: 8, budget: budget)
+            }
         }
         let dcScale: [Double] = [4096, 512, 256].map { Double(scale) * 17 * $0 / 65536 }
         for y in 0..<by { for x in 0..<bx {

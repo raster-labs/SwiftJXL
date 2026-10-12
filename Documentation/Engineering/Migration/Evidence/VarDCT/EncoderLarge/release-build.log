@@ -1,0 +1,28 @@
+Building for production...
+[Planning deferred tasks]
+[10 / 18] SwiftJXLCore
+[11 / 18] SwiftJXLCore
+[16 / 53]
+[19 / 53]
+[22 / 53]
+[24 / 53]
+[29 / 53]
+[31 / 53]
+[35 / 53]
+[36 / 53]
+[38 / 53]
+[40 / 53]
+[43 / 53]
+[45 / 53]
+[46 / 53]
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:114:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+112 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+113 |         }
+114 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+115 |         return result
+116 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[47 / 53] SwiftJXLCore
+Build complete! (44.29 sec)

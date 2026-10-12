@@ -1,0 +1,267 @@
+[
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "4"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "1.3969839e-09",
+    "strategy" : "4"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "8.381903e-09",
+    "strategy" : "4"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "2.2351742e-08",
+    "strategy" : "4"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "5"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "1.6298145e-09",
+    "strategy" : "5"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "2.9685907e-09",
+    "strategy" : "5"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "3.1897798e-08",
+    "strategy" : "5"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "6"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "2.7939677e-09",
+    "strategy" : "6"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "1.3969839e-08",
+    "strategy" : "6"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "2.2351742e-08",
+    "strategy" : "6"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "7"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "2.7939677e-09",
+    "strategy" : "7"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "1.5948899e-08",
+    "strategy" : "7"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "2.0489097e-08",
+    "strategy" : "7"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "8"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "1.3969839e-09",
+    "strategy" : "8"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "4.1909516e-09",
+    "strategy" : "8"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "2.3981556e-08",
+    "strategy" : "8"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "9"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "1.3969839e-09",
+    "strategy" : "9"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "1.1874363e-08",
+    "strategy" : "9"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "1.6763806e-08",
+    "strategy" : "9"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "10"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "1.8626451e-09",
+    "strategy" : "10"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "3.9872248e-09",
+    "strategy" : "10"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "2.6542693e-08",
+    "strategy" : "10"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "11"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "1.1496013e-09",
+    "strategy" : "11"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "5.9371814e-09",
+    "strategy" : "11"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "2.0023435e-08",
+    "strategy" : "11"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "18"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "1.8626451e-09",
+    "strategy" : "18"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "9.240466e-09",
+    "strategy" : "18"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "6.146729e-08",
+    "strategy" : "18"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "19"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "2.561137e-09",
+    "strategy" : "19"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "5.47152e-09",
+    "strategy" : "19"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "5.075708e-08",
+    "strategy" : "19"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "0",
+    "peak" : "0.0",
+    "strategy" : "20"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "1",
+    "peak" : "1.8626451e-09",
+    "strategy" : "20"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "2",
+    "peak" : "6.9703674e-09",
+    "strategy" : "20"
+  },
+  {
+    "failures" : "0",
+    "pattern" : "3",
+    "peak" : "3.7718564e-08",
+    "strategy" : "20"
+  }
+]
+

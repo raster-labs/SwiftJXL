@@ -1,0 +1,422 @@
+[
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "0",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1770208"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "0",
+    "mode" : "singleCell",
+    "nanoseconds" : "4795791"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "0",
+    "mode" : "hierarchical",
+    "nanoseconds" : "12138125"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "1",
+    "mode" : "singleCell",
+    "nanoseconds" : "4928500"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "1",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11553417"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "1",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1852292"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "2",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11445917"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "2",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1834250"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "2",
+    "mode" : "singleCell",
+    "nanoseconds" : "4782417"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "3",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1807666"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "3",
+    "mode" : "singleCell",
+    "nanoseconds" : "4812708"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "3",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11341917"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "4",
+    "mode" : "singleCell",
+    "nanoseconds" : "4849792"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "4",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11463542"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "4",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1826334"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "5",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11324667"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "5",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1794541"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "5",
+    "mode" : "singleCell",
+    "nanoseconds" : "4800084"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "6",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1824250"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "6",
+    "mode" : "singleCell",
+    "nanoseconds" : "4795500"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "6",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11635792"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "7",
+    "mode" : "singleCell",
+    "nanoseconds" : "4934375"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "7",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11270750"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "7",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1836292"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "8",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11447583"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "8",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1838958"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "8",
+    "mode" : "singleCell",
+    "nanoseconds" : "4834708"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "9",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1846000"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "9",
+    "mode" : "singleCell",
+    "nanoseconds" : "4869042"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "9",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11423667"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "10",
+    "mode" : "singleCell",
+    "nanoseconds" : "4890458"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "10",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11604166"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "10",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1885959"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "11",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11806083"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "11",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1866958"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "11",
+    "mode" : "singleCell",
+    "nanoseconds" : "5036459"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "12",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1844917"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "12",
+    "mode" : "singleCell",
+    "nanoseconds" : "4831333"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "12",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11495875"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "13",
+    "mode" : "singleCell",
+    "nanoseconds" : "4833125"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "13",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11539709"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "13",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1828792"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "14",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11622000"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "14",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1767417"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "14",
+    "mode" : "singleCell",
+    "nanoseconds" : "4839208"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "15",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1809583"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "15",
+    "mode" : "singleCell",
+    "nanoseconds" : "4868333"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "15",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11659791"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "16",
+    "mode" : "singleCell",
+    "nanoseconds" : "5006208"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "16",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11699791"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "16",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1841917"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "17",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11553583"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "17",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1918708"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "17",
+    "mode" : "singleCell",
+    "nanoseconds" : "4957000"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "18",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1888667"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "18",
+    "mode" : "singleCell",
+    "nanoseconds" : "4986291"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "18",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11797792"
+  },
+  {
+    "admittedWorkspaceBytes" : "14399680",
+    "compressedBytes" : "12740",
+    "iteration" : "19",
+    "mode" : "singleCell",
+    "nanoseconds" : "4859708"
+  },
+  {
+    "admittedWorkspaceBytes" : "18029504",
+    "compressedBytes" : "11366",
+    "iteration" : "19",
+    "mode" : "hierarchical",
+    "nanoseconds" : "11416625"
+  },
+  {
+    "admittedWorkspaceBytes" : "5212416",
+    "compressedBytes" : "12681",
+    "iteration" : "19",
+    "mode" : "fixedDCT8",
+    "nanoseconds" : "1866958"
+  }
+]

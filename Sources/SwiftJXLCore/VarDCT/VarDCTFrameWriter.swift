@@ -36,6 +36,7 @@ struct VarDCTFrameWriter {
     let limit: Int
     private var groupsX: Int { (coefficients.width + 255) / 256 }
     private var groupsY: Int { (coefficients.height + 255) / 256 }
+    private var transformCount: Int { coefficients.transforms?.count ?? blocks }
     private var blocks: Int { coefficients.blocksX * coefficients.blocksY }
     static let order = [0,1,8,16,9,2,3,10,17,24,32,25,18,11,4,5,
         12,19,26,33,40,48,41,34,27,20,13,6,7,14,21,28,35,42,49,56,
@@ -123,14 +124,39 @@ struct VarDCTFrameWriter {
     private func metadataTokens(_ emit: (UInt32) throws -> Void) throws {
         let tw = (coefficients.blocksX + 7) / 8, th = (coefficients.blocksY + 7) / 8
         for _ in 0..<2 { try modularTokens(width: tw, height: th, value: { _ in 0 }, emit: emit) }
-        try modularTokens(width: blocks, height: 2,
-            value: { $0 < blocks ? coefficients.strategies[$0] : coefficients.quantAC[$0 - blocks] - 1 }, emit: emit)
+        try modularTokens(width: transformCount, height: 2,
+            value: { $0 < transformCount ? coefficients.strategies[$0] : coefficients.quantAC[$0 - transformCount] - 1 }, emit: emit)
         try modularTokens(width: coefficients.blocksX, height: coefficients.blocksY,
             value: { _ in 0 }, emit: emit)
     }
     private func acTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
         let x0 = group % groupsX * 32, y0 = group / groupsX * 32
         let width = min(32, coefficients.blocksX - x0), height = min(32, coefficients.blocksY - y0)
+        if let transforms = coefficients.transforms {
+            var orders: [Int: [Int]] = [:]
+            for transform in transforms where transform.x >= x0 && transform.x < x0 + width && transform.y >= y0 && transform.y < y0 + height {
+                try budget.checkpoint()
+                let covered = transform.coveredCells, count = covered * 64, offset = transform.coefficientOffset
+                let order: [Int]
+                if let cached = orders[transform.orderBucket] { order = cached }
+                else {
+                    order = try VarDCTOrders.natural(width: max(transform.cellsX,transform.cellsY),
+                        height: min(transform.cellsX,transform.cellsY), budget: budget)
+                    orders[transform.orderBucket] = order
+                }
+                for c in [1,0,2] {
+                    var nonzeros = 0
+                    for k in covered..<count where coefficients.ac[c][offset + order[k]] != 0 { nonzeros += 1 }
+                    try emit(UInt32(nonzeros))
+                    for k in covered..<count {
+                        if nonzeros == 0 { break }
+                        let value = coefficients.ac[c][offset + order[k]]
+                        try emit(ZigZag.pack(value)); if value != 0 { nonzeros -= 1 }
+                    }
+                }
+            }
+            return
+        }
         for y in 0..<height { for x in 0..<width {
             try budget.checkpoint()
             let offset = ((y0 + y) * coefficients.blocksX + x0 + x) * 64
@@ -176,7 +202,7 @@ struct VarDCTFrameWriter {
         try GroupHeader.default.write(to: &writer)
         try dcTokens { try modular.write($0, to: &writer) }
         let bits = Int(ceilLog2(UInt32(blocks)))
-        if bits > 0 { writer.write(bits: bits, value: UInt32(blocks - 1)) }
+        if bits > 0 { writer.write(bits: bits, value: UInt32(transformCount - 1)) }
         try GroupHeader.default.write(to: &writer)
         try metadataTokens { try modular.write($0, to: &writer) }
     }
