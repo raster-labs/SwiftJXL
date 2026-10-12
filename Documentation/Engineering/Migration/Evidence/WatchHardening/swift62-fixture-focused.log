@@ -1,0 +1,32 @@
+Building for debugging...
+[Pre-planning 1 / 212]
+[Planning deferred tasks]
+[3 / 35] SwiftJXLCore
+[5 / 37] SwiftJXLCore
+[7 / 38] SwiftJXLCore
+[12 / 41] SwiftJXL
+[18 / 26] SwiftJXLCoreTests-product
+[20 / 28] SwiftJXLCoreTests-product
+[26 / 30] SwiftJXLCoreTests-product
+[28 / 30] SwiftJXLCoreTests-product
+Build complete! (3.67 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite IntegerBoundaryTests started.
+◇ Test oversizedOrderEndsRejectBeforeNarrowingOrAddition() started.
+✔ Test oversizedOrderEndsRejectBeforeNarrowingOrAddition() passed after 0.008 seconds.
+◇ Test oversizedContextMapTokenPreservesErrorValue() started.
+✔ Test oversizedContextMapTokenPreservesErrorValue() passed after 0.001 seconds.
+◇ Test lz77RejectsUnrepresentableAndWrappedZeroDistances() started.
+✔ Test lz77RejectsUnrepresentableAndWrappedZeroDistances() passed after 0.005 seconds.
+◇ Test lz77RejectsOverflowingLength() started.
+✔ Test lz77RejectsOverflowingLength() passed after 0.001 seconds.
+◇ Test iccRejectsOversizedOutputBeforeAdmission() started.
+✔ Test iccRejectsOversizedOutputBeforeAdmission() passed after 0.001 seconds.
+◇ Test iccPredictionRetainsUnsigned32BitProfileWords() started.
+✔ Test iccPredictionRetainsUnsigned32BitProfileWords() passed after 0.001 seconds.
+◇ Test iccTagWordsRetainHighBitsAndRejectDerivedOverflow() started.
+✔ Test iccTagWordsRetainHighBitsAndRejectDerivedOverflow() passed after 0.001 seconds.
+✔ Suite IntegerBoundaryTests passed after 0.016 seconds.
+✔ Test run with 7 tests in 1 suite passed after 0.017 seconds.

@@ -11,3 +11,5 @@ The library fixes are in `257afcb` and `54a1d4d`; `1632246` changes only CLI cap
 Historical one-hour mutation campaigns are retained separately under `../VarDCT/Mutations` and `../VarDCT/AnimationMutations`, with their original source revisions. These experiments are not coverage-guided fuzzing or security certification. No release, tag or production cutover follows from this evidence.
 
 Exact commands, source/test/fixture/object/binary hashes, exit codes, raw logs, platform identities and scoped review findings are retained in the JSON records. `IntWidth.ll` shows the Watch compiler returning 32 for `Int.bitWidth`; it does not establish runtime testing on Watch.
+
+The first hosted Swift 6.2 run at `b739021` rejected a long array-concatenation expression in the new ICC regression fixture. A test-only follow-up constructs the same bytes with typed append steps, preserves the assertions, and passes all seven boundary tests locally. Library code and its recorded qualification remain unchanged; Swift 6.2 confirmation comes from the subsequent hosted run. The diagnostic excerpt and local command are retained in `swift62-fixture-failure.json`.

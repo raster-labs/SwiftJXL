@@ -1,0 +1,43 @@
+{
+  "head": "b7390211db845008171581aef073064318bbd092",
+  "runId": 38238424039,
+  "job": {
+    "id": 114775209319,
+    "head_sha": "b7390211db845008171581aef073064318bbd092",
+    "name": "Swift 6.2 / ubuntu-24.04",
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "source": "Codex Code Review CI diagnostics",
+  "isExcerpt": true,
+  "providerLogTruncated": false,
+  "errorExcerpt": [
+    "/__w/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/IntegerBoundaryTests.swift:125:17: error: the compiler is unable to type-check this expression in reasonable time; try breaking up the expression into distinct sub-expressions"
+  ],
+  "diagnosis": "Swift 6.2.4 could not type-check chained array concatenation in new ICC regression fixture construction. Split it into typed append steps; input bytes and assertions are unchanged. No library source changes.",
+  "localVerification": {
+    "command": [
+      "xcrun",
+      "swift",
+      "test",
+      "--disable-sandbox",
+      "--cache-path",
+      ".build/cache",
+      "--config-path",
+      ".build/config",
+      "--security-path",
+      ".build/security",
+      "--build-system",
+      "swiftbuild",
+      "--jobs",
+      "2",
+      "--filter",
+      "IntegerBoundaryTests",
+      "--no-parallel"
+    ],
+    "compiler": "Swift6.4 (local); Swift6.2 qualification requires the new hosted run",
+    "exitCode": 0,
+    "tests": 7,
+    "testSourceSHA256": "2f27d72d33447c5a8bca72a1b82d5331a2f05a6ecffb898328cd0d5c0329315d"
+  }
+}

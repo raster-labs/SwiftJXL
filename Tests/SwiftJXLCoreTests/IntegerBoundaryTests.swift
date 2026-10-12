@@ -108,6 +108,15 @@ struct IntegerBoundaryTests {
         return bytes
     }
 
+    private func profileStream(outputSize: UInt32, commands: [UInt8], payload: [UInt8]) -> [UInt8] {
+        var encoded = variable(outputSize)
+        encoded.append(contentsOf: variable(UInt32(commands.count)))
+        encoded.append(contentsOf: commands)
+        encoded.append(contentsOf: [UInt8](repeating: 0, count: 128))
+        encoded.append(contentsOf: payload)
+        return encoded
+    }
+
     @Test func iccRejectsOversizedOutputBeforeAdmission() throws {
         for value in highValues {
             #expect(throws: JPEGEntropyError.resourceLimit) {
@@ -122,8 +131,7 @@ struct IntegerBoundaryTests {
         let expected: [[UInt8]] = [[0xff,0xff,0xff,0xfe], [0xff,0xff,0xff,0xfd], [0x7f,0xff,0xff,0xfd]]
         for order in 0..<3 {
             let commands: [UInt8] = [0,1,16,4,UInt8(3 + order * 4),4]
-            let encoded = variable(148) + variable(UInt32(commands.count)) + commands
-                + [UInt8](repeating: 0, count: 128) + seed + [0,0,0,0]
+            let encoded = profileStream(outputSize: 148, commands: commands, payload: seed + [0,0,0,0])
             let profile = try ICCStream.unpredict(encoded, maximumBytes: 512, checkpoint: {})
             #expect(profile.suffix(4) == Data(expected[order]))
         }
@@ -131,14 +139,12 @@ struct IntegerBoundaryTests {
 
     @Test func iccTagWordsRetainHighBitsAndRejectDerivedOverflow() throws {
         let commands: [UInt8] = [2,0xc1] + variable(0x8000_0000) + variable(0x8000_0000) + [0]
-        let encoded = variable(144) + variable(UInt32(commands.count)) + commands
-            + [UInt8](repeating: 0, count: 128) + Array("test".utf8)
+        let encoded = profileStream(outputSize: 144, commands: commands, payload: Array("test".utf8))
         #expect(try ICCStream.unpredict(encoded, maximumBytes: 512, checkpoint: {}).suffix(8)
             == Data([0x80,0,0,0,0x80,0,0,0]))
         // A second implicit tag starts at 2^32, which cannot be written as a tag word.
         let overflowCommands = Array(commands.dropLast()) + [1,0]
-        let overflow = variable(156) + variable(UInt32(overflowCommands.count)) + overflowCommands
-            + [UInt8](repeating: 0, count: 128) + Array("testtest".utf8)
+        let overflow = profileStream(outputSize: 156, commands: overflowCommands, payload: Array("testtest".utf8))
         #expect(throws: ICCStreamError.malformed) {
             _ = try ICCStream.unpredict(overflow, maximumBytes: 512, checkpoint: {})
         }
