@@ -1,0 +1,65 @@
+Building for debugging...
+[Pre-planning 1 / 212]
+[Planning deferred tasks]
+[1 / 13] SwiftJXLCoreTests-product
+[10 / 41] SwiftJXL_SwiftJXLCoreTests
+[11 / 44] SwiftJXL_SwiftJXLCoreTests
+[14 / 49] SwiftJXLCore
+[22 / 51] SwiftJXLCore
+[25 / 59] SwiftJXL
+[27 / 59] SwiftJXL
+[29 / 59] SwiftJXL
+[32 / 61] SwiftJXL
+[36 / 57] SwiftJXLTests-product
+[38 / 60] swiftjxl-cli-product
+[42 / 68] SwiftJXLTests-product
+[43 / 79] swiftjxl-cli-product
+[44 / 81] swiftjxl-cli-product
+[46 / 81] swiftjxl-cli-product
+[49 / 81] SwiftJXLTests-product
+[51 / 80] SwiftJXLTests-product
+[58 / 82] SwiftJXLTests-product
+[60 / 82] SwiftJXLTests-product
+[62 / 82] SwiftJXLCoreTests-product
+[63 / 82] SwiftJXLCoreTests-product
+[65 / 82] SwiftJXLCoreTests-product
+[67 / 82] SwiftJXLCoreTests-product
+[67 / 83] SwiftJXLTests-product
+[70 / 83] SwiftJXLCoreTests-product
+[72 / 83] SwiftJXLCoreTests-product
+[73 / 83] SwiftJXLCoreTests-product
+[74 / 83] SwiftJXLCoreTests-product
+[75 / 83] SwiftJXLCoreTests-product
+[75 / 83]
+[79 / 85] SwiftJXLCoreTests-product
+[81 / 85] SwiftJXLCoreTests-product
+[83 / 85] SwiftJXLCoreTests-product
+Build complete! (93.87 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTEncoderTests started.
+◇ Test paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test independentReferenceStreams(_:_:) started.
+◇ Test cancellationRejectsBeforeSourceRead() started.
+◇ Test invalidPoliciesAndCumulativeAdmission() started.
+◇ Test case passing 1 argument bits → 8 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 1 argument bits → 16 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to independentReferenceStreams(_:_:) started.
+✔ Test invalidPoliciesAndCumulativeAdmission() passed after 0.380 seconds.
+✔ Test paddedPlanarSourceIsBorrowed(_:) with 2 test cases passed after 0.380 seconds.
+✔ Test cancellationRejectsBeforeSourceRead() passed after 0.380 seconds.
+✔ Test independentReferenceStreams(_:_:) with 12 test cases passed after 1.752 seconds.
+✔ Suite VarDCTEncoderTests passed after 1.752 seconds.
+✔ Test run with 4 tests in 1 suite passed after 1.753 seconds.

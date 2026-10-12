@@ -1,0 +1,35 @@
+Building for debugging...
+[1 / 17] SwiftJXLCore
+[3 / 8] SwiftJXLCoreTests-product
+[5 / 10] SwiftJXLCoreTests-product
+[5 / 16] SwiftJXLCoreTests-product
+[11 / 15] SwiftJXLCoreTests-product
+Build complete! (1.43 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTEncoderTests started.
+◇ Test independentReferenceStreams(_:_:) started.
+◇ Test cancellationRejectsBeforeSourceRead() started.
+◇ Test paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 1 argument bits → 8 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test case passing 1 argument bits → 16 to paddedPlanarSourceIsBorrowed(_:) started.
+◇ Test invalidPoliciesAndCumulativeAdmission() started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 1 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 2 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 3 to independentReferenceStreams(_:_:) started.
+◇ Test case passing 2 arguments width → 257, channels → 4 to independentReferenceStreams(_:_:) started.
+✔ Test paddedPlanarSourceIsBorrowed(_:) with 2 test cases passed after 0.053 seconds.
+✔ Test cancellationRejectsBeforeSourceRead() passed after 0.053 seconds.
+✔ Test invalidPoliciesAndCumulativeAdmission() passed after 0.068 seconds.
+✔ Test independentReferenceStreams(_:_:) with 12 test cases passed after 0.281 seconds.
+✔ Suite VarDCTEncoderTests passed after 0.281 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.281 seconds.

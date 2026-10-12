@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "23ab337",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "scope": "Initial bounded internal DCT8 encoder with default quantisation, explicit sRGB, integer8...16 and single-group unassociated alpha; no public capability or completed migration claim",
+  "runs": {
+    "debug": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter VarDCTEncoder",
+      "exitCode": 0,
+      "declarations": 4,
+      "cases": 16,
+      "skips": 0,
+      "logSHA256": "7315264f8500727b9a5d09b7c795701f55be4b5cd299f27e4cd96bb4b4688948"
+    },
+    "asan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter VarDCTEncoder",
+      "exitCode": 0,
+      "declarations": 4,
+      "cases": 16,
+      "skips": 0,
+      "logSHA256": "61c697e152966bdeb8b86f09963e7c95b713983173784b8be4b5785dffe9522a"
+    },
+    "tsan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter VarDCTEncoder",
+      "exitCode": 0,
+      "declarations": 4,
+      "cases": 16,
+      "skips": 0,
+      "logSHA256": "2c83631814bc1e9c78797c83b65463b7386e6c3622420583a1c92cbfc89e82db"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/VarDCT/VarDCTPixelEncoder.swift": "1f060710bb521778ec4bae2d2843a7b606a9c790e3cd2d550999e6033657680e",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTFrameWriter.swift": "dbbb263530918950e752ffd4cf80780f9f933c101a13a837e62eb7f14b0279d4",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderTests.swift": "1980d2acf36f6424dfc8e75b2276ad6277fb56d980092872d3621a1c98f5b97d",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Encoder/manifest.json": "22c5925be3fd9879c76a035a1152b9bbb0ee360f640c2ff797d2bf0bb1142c10"
+  },
+  "independent": "20/20 emitted streams accepted by libjxl; separate scalar Float32 nearest same-stream comparison20/20 with max2LSB/RMS0.5 unchanged; original NEON integer9/20 retained",
+  "review": "Independent source-only memory/bounds/lifetime/cancellation review found no actionable findings",
+  "memory": "Synchronous source borrow; admitted coefficient/transform/writer workspace. No second full packed source. Cumulative admission, insufficient budget and cancellation tests pass. No measured peak-RSS or performance claim.",
+  "remaining": [
+    "inverse Gaborish and adaptive quantisation",
+    "mixed strategy forward transforms and search",
+    "grouped alpha and multiple DC groups",
+    "public integration",
+    "original NEON numerical gate disposition",
+    "extended malformed/fuzz, controlled performance and platforms"
+  ]
+}

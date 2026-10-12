@@ -1,0 +1,17 @@
+{
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "adaptedFiles": [
+    "Codec/VarDCTEncoder.swift",
+    "Codec/VarDCTBitstreamWriter.swift"
+  ],
+  "successorFiles": [
+    "Sources/SwiftJXLCore/VarDCT/VarDCTPixelEncoder.swift",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTFrameWriter.swift"
+  ],
+  "sourceSHA256": {
+    "Codec/VarDCTEncoder.swift": "4b69e7535253ec51540df144a2d2cb2efd1980995d51dca41dca3510a86fef3a",
+    "Codec/VarDCTBitstreamWriter.swift": "87bb11fa445d65220326b673962daef53e0089a1c51208a38553775f45e529e7"
+  },
+  "licence": "Apache-2.0 AND BSD-3-Clause; existing notices retained",
+  "reference": "Pinned libjxl0.12.0 a7a9c787341cf703dede03c2009fa460cae5e5df, no runtime dependency"
+}
