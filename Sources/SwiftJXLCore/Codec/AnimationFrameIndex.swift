@@ -129,6 +129,54 @@ package struct AnimationFrameIndex: Sendable {
                     frames: frames, totalTicks: totalTicks)
     }
 
+    /// Materialises compressed bytes only. Four times the bounded result ceiling
+    /// admits writer capacity, payload slicing and final Data overlap. This is
+    /// algorithm workspace; no decoded pixel owner is copied or borrowed here.
+    package func standaloneFrame(at index: Int) throws -> Data {
+        let entry = try frame(at: index), metadata = image.metadata, frame = entry.header
+        let budget = image.budget
+        let filter = frame.loopFilter
+        // Canonical all_default encodes precisely gab=true, EPF=2 with default
+        // parameters. Normalising that spelling preserves all filter semantics.
+        // Other nonzero EPF spellings cannot yet be emitted by the shared writer.
+        let canCanonicalise = !filter.hasCustomParameters && filter.gab && filter.epfIters == 2
+        guard !filter.hasCustomParameters, filter.epfIters == 0 || canCanonicalise,
+              !entry.toc.hasPermutation else { throw ScalarModularError.unsupportedProfile }
+        let limit = min(budget.maximumCompressedBytes,
+            try ScalarOperationBudget.sum(entry.payloadRange.count, 65536))
+        try budget.reserveWorkspace(ScalarOperationBudget.product(limit, 4))
+        return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: limit)) {
+            var writer = BitWriter()
+            writer.write(bits: 8, value: 0xff); writer.write(bits: 8, value: 0x0a)
+            try SizeHeader(xsize: UInt32(image.width), ysize: UInt32(image.height)).write(to: &writer)
+            let stillMetadata = ImageMetadata(allDefault: false, orientation: metadata.orientation,
+                intrinsicSize: metadata.intrinsicSize, preview: nil, animation: nil,
+                bitDepth: metadata.bitDepth, modular16BitBufferSufficient: metadata.modular16BitBufferSufficient,
+                extraChannels: metadata.extraChannels, xybEncoded: metadata.xybEncoded,
+                colorEncoding: metadata.colorEncoding, intensityTarget: metadata.intensityTarget,
+                minNits: metadata.minNits, relativeToMaxDisplay: metadata.relativeToMaxDisplay,
+                linearBelow: metadata.linearBelow)
+            try stillMetadata.write(to: &writer); writer.writeBit(true); writer.alignToByte()
+            let stillFrame = FrameHeader(allDefault: false, frameType: frame.frameType,
+                encoding: frame.encoding, flags: frame.flags, colorTransform: frame.colorTransform,
+                chromaSubsampling: frame.chromaSubsampling, upsampling: frame.upsampling,
+                extraChannelUpsampling: frame.extraChannelUpsampling, groupSizeShift: frame.groupSizeShift,
+                xQmScale: frame.xQmScale, bQmScale: frame.bQmScale, passes: frame.passes, dcLevel: frame.dcLevel,
+                customSizeOrOrigin: false, frameOrigin: frame.frameOrigin, frameSize: nil,
+                blendingInfo: frame.blendingInfo, extraChannelBlendingInfo: frame.extraChannelBlendingInfo,
+                animationFrame: .default, isLast: true, saveAsReference: 0,
+                saveBeforeColorTransform: frame.saveBeforeColorTransform, name: frame.name,
+                loopFilter: canCanonicalise ? .default : filter)
+            try stillFrame.write(to: &writer, context: .init(xybEncoded: metadata.xybEncoded,
+                numExtraChannels: metadata.extraChannels.count))
+            try entry.toc.write(to: &writer)
+            writer.appendBytes(image.codestream.subdata(in: entry.payloadRange))
+            let data = writer.finishToData()
+            try ScalarEncodingWork.checkpoint()
+            return data
+        }
+    }
+
     package func frame(at index: Int) throws -> Entry {
         try image.budget.checkpoint()
         guard frames.indices.contains(index) else { throw ScalarModularError.invalidInput("Frame index out of range") }

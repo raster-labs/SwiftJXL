@@ -27,6 +27,7 @@ struct AnimationFrameIndexTests {
         var end = index.preludeRange.upperBound
         for i in 0..<3 {
             let entry = try index.frame(at: i)
+            if name == "libjxl-lossless" { _ = try index.standaloneFrame(at: i) }
             #expect(entry.frameRange.lowerBound == end)
             #expect(entry.payloadRange.lowerBound >= entry.frameRange.lowerBound)
             #expect(entry.payloadRange.upperBound == entry.frameRange.upperBound)
