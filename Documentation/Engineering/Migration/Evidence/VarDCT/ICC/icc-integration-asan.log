@@ -1,0 +1,33 @@
+Building for debugging...
+[Planning 24 / 212]
+[Planning deferred tasks]
+[1 / 13] SwiftJXLCoreTests-product
+[7 / 38] SwiftJXL_SwiftJXLCoreTests
+[8 / 41] SwiftJXL_SwiftJXLCoreTests
+[11 / 42] SwiftJXLCore
+[12 / 44] SwiftJXLCore
+[13 / 44] SwiftJXLCore
+[19 / 50] SwiftJXL
+[23 / 51] SwiftJXLCore
+[28 / 49] swiftjxl-cli-product
+[33 / 48] SwiftJXLCoreTests-product
+[34 / 48] swiftjxl-cli-product
+[39 / 57] SwiftJXLCoreTests-product
+[40 / 58] SwiftJXLCoreTests-product
+[42 / 58] SwiftJXLCoreTests-product
+[49 / 57] SwiftJXLCoreTests-product
+[53 / 59] SwiftJXLCoreTests-product
+[55 / 59] SwiftJXLCoreTests-product
+Build complete! (4.14 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTConformanceTests started.
+◇ Test ICCLimitsAndInterpretationRemainExplicit() started.
+◇ Test prescribedLinearGreyReference(_:) started.
+◇ Test case passing 1 argument name → "grayscale" to prescribedLinearGreyReference(_:) started.
+◇ Test case passing 1 argument name → "grayscale_5" to prescribedLinearGreyReference(_:) started.
+✔ Test ICCLimitsAndInterpretationRemainExplicit() passed after 0.030 seconds.
+✔ Test prescribedLinearGreyReference(_:) with 2 test cases passed after 2.299 seconds.
+✔ Suite VarDCTConformanceTests passed after 2.300 seconds.
+✔ Test run with 2 tests in 1 suite passed after 2.300 seconds.

@@ -1,0 +1,186 @@
+Building for debugging...
+[Planning 135 / 212]
+[Planning deferred tasks]
+[7 / 33] SwiftJXL_SwiftJXLCoreTests
+[10 / 37] SwiftJXL_SwiftJXLCoreTests
+[10 / 35] SwiftJXL
+[16 / 35] swiftjxl-cli-product
+[21 / 35] swiftjxl-cli-product
+[25 / 38] SwiftJXLCoreTests-product
+[27 / 42] SwiftJXLCoreTests-product
+[28 / 42] SwiftJXLCoreTests-product
+[30 / 42] SwiftJXLCoreTests-product
+[39 / 44] swiftjxl-cli-product
+[40 / 46] SwiftJXLCoreTests-product
+[42 / 46] SwiftJXLCoreTests-product
+Build complete! (2.73 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTFrameTests started.
+◇ Suite VarDCTFilterTests started.
+◇ Suite VarDCTStrategyTests started.
+◇ Suite VarDCTColourTests started.
+◇ Suite VarDCTTransformTests started.
+◇ Suite VarDCTEPFTests started.
+◇ Suite VarDCTPixelStorageTests started.
+◇ Test visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test alphaIsExact(_:_:) started.
+◇ Test customWeightsAndResourceBounds() started.
+◇ Test overlapsBoundariesAndCountsReject() started.
+◇ Suite VarDCTConformanceTests started.
+◇ Test pinnedScalarNumerics(_:_:) started.
+◇ Suite VarDCTSmallTransformTests started.
+◇ Test customFilterParametersCannotBecomeDefaults() started.
+◇ Test independentAndPredecessorEnvelope(_:_:) started.
+◇ Test allStrategyGeometries(_:) started.
+◇ Test truncatedLimitsAndTrailingInput() started.
+◇ Test matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test highPrecisionDefinitionAnchors() started.
+◇ Test invalidSamplesRejectWithoutImplicitClamping() started.
+◇ Test mixedRasterCoverage() started.
+◇ Test cancelledOperationRejectsBeforeAdmission() started.
+◇ Test case passing 2 arguments width → 1, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test defaultMatrixRoundTripAndPrimaryAnchors() started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to alphaIsExact(_:_:) started.
+◇ Test case passing 2 arguments width → 1, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 1, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to alphaIsExact(_:_:) started.
+◇ Test rejectionAndExactAdmission() started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to alphaIsExact(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to pinnedScalarNumerics(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test sharedPlanAccountsForConcurrentScratch() started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to pinnedScalarNumerics(_:_:) started.
+◇ Test independentDefinitionAndRoundTrip(_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to alphaIsExact(_:_:) started.
+◇ Test cancellationRejectsBeforeWriting() started.
+◇ Test case passing 2 arguments width → 2, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test rejectsInvalidDestinationBeforeWriting() started.
+◇ Test paddedOwningDestination(_:_:) started.
+◇ Test disabledSharpnessAndAdmission() started.
+◇ Test constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to pinnedScalarNumerics(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 1 argument identifier → 0 to allStrategyGeometries(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to pinnedScalarNumerics(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 1 argument identifier → 1 to allStrategyGeometries(_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to pinnedScalarNumerics(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 1 argument identifier → 2 to allStrategyGeometries(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 1 to independentAndPredecessorEnvelope(_:_:) started.
+◇ Test case passing 1 argument identifier → 3 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument direction → .forward to matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test case passing 2 arguments width → 9, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to pinnedScalarNumerics(_:_:) started.
+◇ Test case passing 1 argument direction → .inverse to matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test case passing 1 argument identifier → 4 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 5 to allStrategyGeometries(_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to pinnedScalarNumerics(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 1 argument identifier → 6 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 7 to allStrategyGeometries(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 2 to independentAndPredecessorEnvelope(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to pinnedScalarNumerics(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 1 argument identifier → 8 to allStrategyGeometries(_:) started.
+◇ Test prescribedLinearGreyReference(_:) started.
+◇ Test case passing 1 argument identifier → 9 to allStrategyGeometries(_:) started.
+◇ Test case passing 2 arguments width → 17, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 1 argument identifier → 10 to allStrategyGeometries(_:) started.
+◇ Test ICCLimitsAndInterpretationRemainExplicit() started.
+◇ Test case passing 1 argument identifier → 11 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 12 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 13 to allStrategyGeometries(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 3 to independentAndPredecessorEnvelope(_:_:) started.
+◇ Test case passing 1 argument identifier → 14 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 15 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 16 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 17 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 18 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 19 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 20 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 21 to allStrategyGeometries(_:) started.
+◇ Test case passing 2 arguments width → 17, channels → 4 to independentAndPredecessorEnvelope(_:_:) started.
+◇ Test case passing 1 argument identifier → 22 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 23 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 24 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 25 to allStrategyGeometries(_:) started.
+◇ Test case passing 1 argument identifier → 26 to allStrategyGeometries(_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 1 to independentAndPredecessorEnvelope(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 2 to independentAndPredecessorEnvelope(_:_:) started.
+✔ Test visibleBoundaryIgnoresPadding(_:_:) with 12 test cases passed after 0.053 seconds.
+◇ Test invalidAndResourceBoundaries() started.
+◇ Test case passing 2 arguments width → 64, channels → 3 to independentAndPredecessorEnvelope(_:_:) started.
+◇ Test case passing 2 arguments width → 64, channels → 4 to independentAndPredecessorEnvelope(_:_:) started.
+◇ Test independentImpulseBasisAndPattern(_:) started.
+◇ Test case passing 1 argument direction → .forward to independentDefinitionAndRoundTrip(_:) started.
+◇ Test case passing 1 argument direction → .inverse to independentDefinitionAndRoundTrip(_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 1 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 2 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 3 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments bits → 8, channels → 4 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 1 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 2 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 3 to paddedOwningDestination(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, channels → 4 to paddedOwningDestination(_:_:) started.
+✔ Test overlapsBoundariesAndCountsReject() passed after 0.258 seconds.
+◇ Test case passing 2 arguments width → 1, iterations → 0 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 1, iterations → 1 to constantTinyAndOddPlanes(_:_:) started.
+✔ Test customWeightsAndResourceBounds() passed after 0.258 seconds.
+◇ Test case passing 2 arguments width → 1, iterations → 2 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 1, iterations → 3 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 2, iterations → 0 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 2, iterations → 1 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 2, iterations → 2 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 2, iterations → 3 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 17, iterations → 0 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 17, iterations → 1 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 17, iterations → 2 to constantTinyAndOddPlanes(_:_:) started.
+◇ Test case passing 2 arguments width → 17, iterations → 3 to constantTinyAndOddPlanes(_:_:) started.
+✔ Test allStrategyGeometries(_:) with 27 test cases passed after 0.269 seconds.
+✔ Test customFilterParametersCannotBecomeDefaults() passed after 0.269 seconds.
+✔ Test truncatedLimitsAndTrailingInput() passed after 0.269 seconds.
+✔ Test independentAndPredecessorEnvelope(_:_:) with 8 test cases passed after 0.269 seconds.
+✔ Test alphaIsExact(_:_:) with 4 test cases passed after 0.269 seconds.
+✔ Test highPrecisionDefinitionAnchors() passed after 0.269 seconds.
+✔ Test invalidSamplesRejectWithoutImplicitClamping() passed after 0.269 seconds.
+◇ Test case passing 1 argument name → "grayscale" to prescribedLinearGreyReference(_:) started.
+◇ Test case passing 1 argument name → "grayscale_5" to prescribedLinearGreyReference(_:) started.
+✔ Test mixedRasterCoverage() passed after 0.359 seconds.
+✔ Test rejectionAndExactAdmission() passed after 0.369 seconds.
+◇ Test case passing 1 argument identifier → 1 to independentImpulseBasisAndPattern(_:) started.
+◇ Test case passing 1 argument identifier → 2 to independentImpulseBasisAndPattern(_:) started.
+◇ Test case passing 1 argument identifier → 3 to independentImpulseBasisAndPattern(_:) started.
+◇ Test case passing 1 argument identifier → 12 to independentImpulseBasisAndPattern(_:) started.
+◇ Test case passing 1 argument identifier → 13 to independentImpulseBasisAndPattern(_:) started.
+◇ Test case passing 1 argument identifier → 14 to independentImpulseBasisAndPattern(_:) started.
+◇ Test case passing 1 argument identifier → 15 to independentImpulseBasisAndPattern(_:) started.
+◇ Test case passing 1 argument identifier → 16 to independentImpulseBasisAndPattern(_:) started.
+◇ Test case passing 1 argument identifier → 17 to independentImpulseBasisAndPattern(_:) started.
+✔ Test defaultMatrixRoundTripAndPrimaryAnchors() passed after 0.522 seconds.
+✔ Test rejectsInvalidDestinationBeforeWriting() passed after 0.522 seconds.
+✔ Test paddedOwningDestination(_:_:) with 8 test cases passed after 0.522 seconds.
+✔ Test disabledSharpnessAndAdmission() passed after 0.522 seconds.
+✔ Test constantTinyAndOddPlanes(_:_:) with 12 test cases passed after 0.522 seconds.
+✔ Test ICCLimitsAndInterpretationRemainExplicit() passed after 0.472 seconds.
+✔ Suite VarDCTFilterTests passed after 0.523 seconds.
+✔ Test invalidAndResourceBoundaries() passed after 0.469 seconds.
+✔ Test independentImpulseBasisAndPattern(_:) with 9 test cases passed after 0.469 seconds.
+✔ Suite VarDCTStrategyTests passed after 0.523 seconds.
+✔ Suite VarDCTColourTests passed after 0.523 seconds.
+✔ Test cancelledOperationRejectsBeforeAdmission() passed after 0.522 seconds.
+✔ Test sharedPlanAccountsForConcurrentScratch() passed after 0.522 seconds.
+✔ Test cancellationRejectsBeforeWriting() passed after 0.522 seconds.
+✔ Suite VarDCTEPFTests passed after 0.523 seconds.
+✔ Suite VarDCTSmallTransformTests passed after 0.523 seconds.
+✔ Suite VarDCTPixelStorageTests passed after 0.523 seconds.
+✔ Test matchesPredecessorAccelerateAndScalar(_:) with 2 test cases passed after 0.549 seconds.
+✔ Test pinnedScalarNumerics(_:_:) with 8 test cases passed after 0.867 seconds.
+✔ Suite VarDCTFrameTests passed after 0.868 seconds.
+✔ Test independentDefinitionAndRoundTrip(_:) with 2 test cases passed after 0.942 seconds.
+✔ Suite VarDCTTransformTests passed after 0.942 seconds.
+✔ Test prescribedLinearGreyReference(_:) with 2 test cases passed after 1.416 seconds.
+✔ Suite VarDCTConformanceTests passed after 1.465 seconds.
+✔ Test run with 27 tests in 9 suites passed after 1.466 seconds.

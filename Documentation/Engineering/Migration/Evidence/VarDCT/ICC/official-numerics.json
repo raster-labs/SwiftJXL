@@ -1,0 +1,22 @@
+[
+  {
+    "name": "grayscale",
+    "peak": 0.00022821653992283197,
+    "rms": 7.825479318114706e-06,
+    "peakLimit": 0.004,
+    "rmsLimit": 0.0001,
+    "passed": true,
+    "outputDomain": "unclamped linear grey from default inverse opsin, no integer quantisation or original-ICC conversion",
+    "samples": 40000
+  },
+  {
+    "name": "grayscale_5",
+    "peak": 0.00022821653992283197,
+    "rms": 7.825479318114706e-06,
+    "peakLimit": 0.004,
+    "rmsLimit": 0.0001,
+    "passed": true,
+    "outputDomain": "unclamped linear grey from default inverse opsin, no integer quantisation or original-ICC conversion",
+    "samples": 40000
+  }
+]

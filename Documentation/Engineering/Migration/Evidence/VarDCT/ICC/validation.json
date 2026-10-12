@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "9c00764",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "officialCorpus": "libjxl/conformance@4bf053529c7cefd2951be453475bb3dccc7e7be8",
+  "scope": "Bounded ICC preservation for internal XYB reconstruction; two prescribed linear-grey reference cases pass. Integer pixel output explicitly rejects ICC; public VarDCT disabled.",
+  "runs": {
+    "debug": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --filter VarDCT",
+      "exitCode": 0,
+      "declarations": 27,
+      "cases": 110,
+      "skips": 0,
+      "logSHA256": "59885de3cd43d303103e28c80d30e8d291f859f680969e682b2932d0a858a71d"
+    },
+    "asan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter VarDCTConformance",
+      "exitCode": 0,
+      "declarations": 2,
+      "cases": 3,
+      "skips": 0,
+      "logSHA256": "43449d7832405512e938d367f304c17f10532a19eb817f6055ca61800ff5ff75"
+    },
+    "tsan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter VarDCTConformance",
+      "exitCode": 0,
+      "declarations": 2,
+      "cases": 3,
+      "skips": 0,
+      "logSHA256": "8455c47c5bf60dcd5a8d85a374187603f42ffb408e8700f43323dd572eac95bc"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/VarDCT/VarDCTFrameEnvelope.swift": "bd164c272ee1c7861089e1d7fa5690ffd7fbdc7b2ac1fd107f85da2553f420b7",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTPixelDecoder.swift": "a4b84fd5cd327b68605d0a1d7a798e6369e14a2e05f0664db2fbed1bb673faf3",
+    "Tests/SwiftJXLCoreTests/VarDCTConformanceTests.swift": "33f458ecef05c4309bca6396de076d9d725d285e844b23c5a2076827006b3727",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Conformance/manifest.json": "da42f12188c797b5afa06f0f69b8b223c51079d9c075c3e4cfdb9bb0f85c64e0"
+  },
+  "earlierFullSuite": "Base9c00764 full debug207/805 and affectedASanTSan25/107; not rerun for this isolated ICC extension",
+  "profileLimits": "Preserved ICC bounded by minimum(maximumICCBytes,maximumMetadataBytes,4MiB), validated header/colour model; exact912-byte fixture passes and911-byte ceilings reject",
+  "fidelity": "Official Float32 linear-grey domain, no integer quantisation or conversion to original Dot Gain profile. Maximum per-channel RMS0.0001/peak0.004 as prescribed by corpus descriptors.",
+  "limitations": [
+    "Not full official conformance",
+    "Original32-stream ARM integer oracle retains ten failures",
+    "No public ICC conversion or VarDCT capability enabled",
+    "No new performance/platform/fuzz claim"
+  ]
+}
