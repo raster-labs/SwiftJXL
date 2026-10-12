@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## VarDCT primitive preparation — 12 October 2026
+
+Adapted bounded scaled DCT, visible-boundary Gaborish and default opsin primitives from pinned JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e` under contract 0.10.0. Independent mathematical references expose and correct three inherited large-transform precision failures without widening thresholds. Pixel baseline diagnostics identify padded-edge filtering errors; four 16-bit colour cases remain outside the declared limits. Public VarDCT remains disabled. Full debug passed 192 declarations / 721 cases; affected ASan and TSan each passed 10 declarations / 23 cases. See [preflight](Documentation/Engineering/Migration/VARDCT_PREFLIGHT.md) and [exact validation](Documentation/Engineering/Migration/Evidence/VarDCT/primitive-validation.json). Frame, entropy, storage integration and full qualification remain open.
+
 ## Modular review and qualification — 12 October 2026
 
 Added bounded encoder workers with joined ordered results, inherited resource/allocation contexts and a live cancellation signal. The nine-case controlled encoder comparison preserves exact serial-successor bytes and independent samples; several native-predecessor latency gaps remain. A single-gradient-leaf decode specialisation passed signed-extreme, layout, malformed-input and cancellation equivalence checks, then improved both timing blocks in all five measured cases (15–27% median reduction). The rejected row-address experiment remains archived separately. Source review also removed a reachable Select-predictor signed-magnitude trap and retained a public malformed-input regression. Final combined validation and hosted CI are recorded separately from the earlier experimental binaries.

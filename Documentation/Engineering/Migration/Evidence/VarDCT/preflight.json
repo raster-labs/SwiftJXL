@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-12",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "publicVarDCTSupport": false,
+  "diagnostics": {
+    "pixels": {
+      "accepted": 16,
+      "withinNumericalLimits": 6,
+      "alphaExact": true,
+      "maximumError": 2640
+    },
+    "no-gaborish": {
+      "accepted": 16,
+      "withinNumericalLimits": 12,
+      "alphaExact": true,
+      "maximumError": 9
+    },
+    "boundary-corrected": {
+      "accepted": 16,
+      "withinNumericalLimits": 12,
+      "alphaExact": true,
+      "maximumError": 10
+    },
+    "colour-corrected": {
+      "accepted": 16,
+      "withinNumericalLimits": 12,
+      "alphaExact": true,
+      "maximumError": 10
+    },
+    "precision-corrected": {
+      "accepted": 16,
+      "withinNumericalLimits": 12,
+      "alphaExact": true,
+      "maximumError": 9
+    }
+  },
+  "math": {
+    "cases": 36,
+    "rectangles": 12,
+    "patterns": 3,
+    "predecessorKnownErrors": 3,
+    "absoluteTolerance": 0.0002,
+    "relativeTolerance": 2e-05,
+    "widenedTolerance": false
+  },
+  "limits": [
+    "Primitive qualification only; entropy/frame/API integration pending.",
+    "Controlled performance not measured while mutation campaigns run.",
+    "Four sixteen-bit colour cases remain outside pixel acceptance limits."
+  ],
+  "sourceHashes": {
+    "DefaultOpsin.swift": "3874a0e9d236c4fff54dbab9407dc722dfc3bbbe6d2c313f4b454c4e92700f1d",
+    "ScaledDCT.swift": "3b99e02112d8de964ad3710590d8e084bfac43ad64dfa97b20a5dcb3e01d053a",
+    "Gaborish.swift": "b1828243688d81fe5152ae872536b89a876f19ccd975df3ea024b83e0cf7a31b"
+  },
+  "binaryHashes": {
+    "pixel-oracle": "85d6a4944d0fd1d09a5b1b7d2ff61ad5576d57b0f03fd31b52cf60c365bb56ad",
+    "predecessor-pixels": "7e6c08f3946d7acbcd3c0fc352ecb5fbe4ad06a7fc4c5aec852fcdbd6a57134b",
+    "predecessor-dct": "dc94adb9b3ab06bad4d0efc847fd595a9dfc369cc71db802e679128e51c214f2",
+    "boundary-diagnostic": "a65af05fca28cb375994126b3b935cf13071c1ac54e2416e4f5bff23b0c44b27",
+    "precision-diagnostic": "d8741912e0c303fa375af46559e52b22d925331ddbf86bce0edad5bb2ac9e078"
+  }
+}

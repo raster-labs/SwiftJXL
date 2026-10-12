@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — internal VarDCT primitives, 2026-10-12
+
+- Add operation-budgeted scalar transforms, visible-boundary Gaborish and default opsin conversion with independent mathematical and predecessor references.
+- Record baseline pixel discrepancies and corrected transform precision without changing acceptance thresholds. Public VarDCT encoding and decoding remain unavailable pending complete integration and qualification.
+
 ## Unreleased — Modular review and qualification, 2026-10-12
 
 - Bound parallel encoding by the caller's worker ceiling, capped at eight, with ordered joined results, per-worker resource admission and cancellation propagated into workers.

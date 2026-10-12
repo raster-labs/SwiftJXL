@@ -1,0 +1,1050 @@
+Building for debugging...
+[Computing dependencies]
+[1 / 2] swiftjxl-cli-product
+[3 / 8] SwiftJXLCoreTests-product
+[3 / 14] SwiftJXLCoreTests-product
+[5 / 16] SwiftJXLCoreTests-product
+[11 / 15] SwiftJXLCoreTests-product
+[13 / 15] SwiftJXLCoreTests-product
+Build complete! (14.49 sec)
+Test Suite 'All tests' started at 2026-10-12 11:21:51.916.
+Test Suite 'All tests' passed at 2026-10-12 11:21:51.929.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.013) seconds
+Test Suite 'All tests' started at 2026-10-12 11:21:52.467.
+Test Suite 'All tests' passed at 2026-10-12 11:21:52.508.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.041) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ScalarPublicAPITests started.
+◇ Suite "Descriptor validation" started.
+◇ Test paddedBigEndianDestinationAndExactEncoderBytes() started.
+◇ Test progressIsSerialOutsideStorageBorrowAndCancellationIsPreserved() started.
+◇ Test resourceLimitsRejectBeforeDestinationWrite() started.
+◇ Test metadataMustBePreservedOrExplicitlyDiscarded() started.
+◇ Test cancellationInProviderFinalisationPreventsPublication(_:) started.
+◇ Test paddedOddDimensionsAndPrecision() started.
+◇ Test rejectsMisalignedOffsetsAndStrides() started.
+◇ Suite "Byte-order sample access" started.
+◇ Suite "Owning storage" started.
+◇ Test deterministicLayoutMutation() started.
+◇ Test finalRowNeedsOnlyItsActualSampleBytes() started.
+◇ Test rejectsArithmeticOverflowBeforeAllocation() started.
+◇ Test rejectsInvalidGeometryAndPrecision() started.
+◇ Suite "Public API feasibility" started.
+◇ Test semanticMetadataMustAgreeWithComponents() started.
+◇ Test rejectsOverlappingPlanesAndIncompleteMapping() started.
+◇ Test case passing 1 argument point → .validatingSealedStorage to cancellationInProviderFinalisationPreventsPublication(_:) started.
+◇ Test case passing 1 argument point → .sealing to cancellationInProviderFinalisationPreventsPublication(_:) started.
+◇ Test writesGoldenBytesForPackedAndPadded12And16BitSamples() started.
+◇ Test outOfPrecisionWriteInvalidatesDestination() started.
+◇ Test refusesShortProviderBeforeLoadingSample() started.
+◇ Test initialisesExternalSampleBytesAtOddAddressWithoutChangingPadding() started.
+◇ Test rejectsCoordinatesBeforeOffsetArithmetic() started.
+◇ Test readsIndependentGoldenBytesFromOddPhysicalAddress() started.
+◇ Test concurrentReadersPreserveEveryLogicalSample() started.
+◇ Test abortMakesStorageUnreadableAndUnwritable() started.
+◇ Test throwingBorrowReleasesAdmissionWithoutReplacingStorage() started.
+◇ Test freshAllocationsHaveDistinctIdentitiesAndZeroPadding() started.
+◇ Test rejectsOwnerCapacityShorterThanDescriptor() started.
+◇ Test copiedLeaseCannotOverlapWriters() started.
+◇ Test leaseCannotBeForgedReusedOrBorrowedReentrantly() started.
+◇ Test imageRetainsAdapterAndAllocationUntilLastReader() started.
+◇ Test reportUnknownMeasurementsRemainUnknown() started.
+✔ Test rejectsInvalidGeometryAndPrecision() passed after 0.001 seconds.
+◇ Test capabilitiesAdvertiseQualifiedProfiles() started.
+◇ Test admissionBoundariesAndMetadataAreChecked() started.
+◇ Test cancellationRetainsItsStandardErrorAndInvalidatesPartialWrite() started.
+◇ Test malformedInputRejectsWithoutTouchingDestination() started.
+◇ Test metadataSharesTheCallerAdmissionBudgetWithPixels() started.
+◇ Test rejectsInputLimitRequiredBackendAndDestructiveMetadataPolicy() started.
+◇ Test safeWriterRejectsOutOfRangeSamplesAndInvalidatesDestination() started.
+✔ Test semanticMetadataMustAgreeWithComponents() passed after 0.001 seconds.
+✔ Test rejectsOverlappingPlanesAndIncompleteMapping() passed after 0.001 seconds.
+✔ Test finalRowNeedsOnlyItsActualSampleBytes() passed after 0.002 seconds.
+✔ Test rejectsMisalignedOffsetsAndStrides() passed after 0.002 seconds.
+◇ Test validatesConfigurationAndFiniteResourceLimits() started.
+✔ Test rejectsArithmeticOverflowBeforeAllocation() passed after 0.003 seconds.
+✔ Test outOfPrecisionWriteInvalidatesDestination() passed after 0.002 seconds.
+✔ Test refusesShortProviderBeforeLoadingSample() passed after 0.002 seconds.
+✔ Test writesGoldenBytesForPackedAndPadded12And16BitSamples() passed after 0.002 seconds.
+✔ Test rejectsCoordinatesBeforeOffsetArithmetic() passed after 0.002 seconds.
+✔ Test initialisesExternalSampleBytesAtOddAddressWithoutChangingPadding() passed after 0.002 seconds.
+✔ Test readsIndependentGoldenBytesFromOddPhysicalAddress() passed after 0.002 seconds.
+✔ Test abortMakesStorageUnreadableAndUnwritable() passed after 0.002 seconds.
+✔ Test rejectsOwnerCapacityShorterThanDescriptor() passed after 0.002 seconds.
+✔ Test leaseCannotBeForgedReusedOrBorrowedReentrantly() passed after 0.002 seconds.
+✔ Test imageRetainsAdapterAndAllocationUntilLastReader() passed after 0.002 seconds.
+✔ Test throwingBorrowReleasesAdmissionWithoutReplacingStorage() passed after 0.002 seconds.
+✔ Test reportUnknownMeasurementsRemainUnknown() passed after 0.002 seconds.
+✔ Test paddedOddDimensionsAndPrecision() passed after 0.004 seconds.
+✔ Test admissionBoundariesAndMetadataAreChecked() passed after 0.002 seconds.
+✔ Test capabilitiesAdvertiseQualifiedProfiles() passed after 0.002 seconds.
+✔ Test metadataSharesTheCallerAdmissionBudgetWithPixels() passed after 0.002 seconds.
+✔ Test safeWriterRejectsOutOfRangeSamplesAndInvalidatesDestination() passed after 0.002 seconds.
+✔ Test deterministicLayoutMutation() passed after 0.004 seconds.
+✔ Test rejectsInputLimitRequiredBackendAndDestructiveMetadataPolicy() passed after 0.002 seconds.
+✔ Test freshAllocationsHaveDistinctIdentitiesAndZeroPadding() passed after 0.002 seconds.
+✔ Suite "Byte-order sample access" passed after 0.004 seconds.
+✔ Test concurrentReadersPreserveEveryLogicalSample() passed after 0.003 seconds.
+✔ Suite "Descriptor validation" passed after 0.004 seconds.
+✔ Test cancellationRetainsItsStandardErrorAndInvalidatesPartialWrite() passed after 0.003 seconds.
+✔ Test validatesConfigurationAndFiniteResourceLimits() passed after 0.001 seconds.
+✔ Test cancellationInProviderFinalisationPreventsPublication(_:) with 2 test cases passed after 0.005 seconds.
+✔ Test copiedLeaseCannotOverlapWriters() passed after 0.005 seconds.
+✔ Suite "Owning storage" passed after 0.006 seconds.
+✔ Test malformedInputRejectsWithoutTouchingDestination() passed after 0.012 seconds.
+✔ Suite "Public API feasibility" passed after 0.013 seconds.
+✔ Test metadataMustBePreservedOrExplicitlyDiscarded() passed after 0.016 seconds.
+✔ Test progressIsSerialOutsideStorageBorrowAndCancellationIsPreserved() passed after 0.016 seconds.
+✔ Test paddedBigEndianDestinationAndExactEncoderBytes() passed after 0.025 seconds.
+✔ Test resourceLimitsRejectBeforeDestinationWrite() passed after 0.026 seconds.
+✔ Suite ScalarPublicAPITests passed after 0.026 seconds.
+✔ Test run with 36 tests in 5 suites passed after 0.027 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ModularTransferTests started.
+◇ Suite ScalarStorageTests started.
+◇ Suite ModularICCTests started.
+◇ Suite ModularLowPrecisionTests started.
+◇ Suite ModularWireTests started.
+◇ Suite JBRDTests started.
+◇ Suite JPEGReconstructionEventTests started.
+◇ Suite SpecRCTTests started.
+◇ Suite VarDCTColourTests started.
+◇ Suite BrotliDecoderTests started.
+◇ Suite ModularTransformTests started.
+◇ Suite ModularEncoderTests started.
+◇ Suite ModularStorageTests started.
+◇ Suite NativeTranscoderPublicTests started.
+◇ Suite JPEGSegmentReaderTests started.
+◇ Suite ScalarMalformedTests started.
+◇ Suite JPEGCoefficientTests started.
+◇ Suite JPEGFrameLayoutTests started.
+◇ Suite ScalarLimitTests started.
+◇ Suite VarDCTTransformTests started.
+◇ Suite ICCStreamTests started.
+◇ Suite JPEGBridgeFrameTests started.
+◇ Suite ScalarModularTests started.
+◇ Suite ScalarMemoryTests started.
+◇ Suite ModularFrameDecoderTests started.
+◇ Suite JPEGBridgeCoefficientTests started.
+◇ Suite BrotliFramingTests started.
+◇ Suite ModularNameTests started.
+◇ Suite ScalarOracleTests started.
+◇ Suite VarDCTFilterTests started.
+◇ Suite JPEGReconstructionMetadataTests started.
+◇ Test concurrentEncodersShareOneImmutableSource() started.
+◇ Test independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test cancellationInvalidatesCallerDestination() started.
+◇ Test independentSmallPrecisionSamples(_:_:) started.
+◇ Test directionSpecificCapabilities() started.
+◇ Test rctCannotMixMetaAndNormalChannelsWithEqualDimensions() started.
+◇ Test writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:) started.
+◇ Test malformedProfileAndTruncatedStreamReject() started.
+◇ Test invalidWriterShapesAndEventLimitsThrow() started.
+◇ Test externalMetadataMustFitExactly() started.
+◇ Test squeezeReadsIndependentWireVectorsAndWritesCanonicalBytes() started.
+◇ Test transformMetadataRejectsAllocationBeyondBudget() started.
+◇ Test independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test invalidTransferAndMetadataLimitsReject() started.
+◇ Test limitsAndCancellationBeforePublication() started.
+◇ Test slicedInputAndConcurrentReads() started.
+◇ Test metadataIdentityLengthAndSurplusAreRejected() started.
+◇ Test explicitEntropyVectorsAndIndependentReconstructionAgree(_:) started.
+◇ Test cumulativeEventLimitAdmitsExactBoundaryAndRejectsBeforePublication() started.
+◇ Test unrepresentableRefinementZeroRunIsExplicitlyRejected() started.
+◇ Test existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test reusesUniqueWorkingPlanesAndRejectsBeforeWriting() started.
+◇ Test matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test invalidSamplesRejectWithoutImplicitClamping() started.
+◇ Test cancellationIsBoundedAndDeadlineCallbackIsHonoured() started.
+◇ Test highPrecisionDefinitionAnchors() started.
+◇ Test compressedFeatureCoverage() started.
+◇ Test rejectsTruncationTrailingAndWrongExpansion() started.
+◇ Test allDictionaryTransformsMatchIndependentReference() started.
+◇ Test rejectsShortDestinationBeforeWriting() started.
+◇ Test storedAndMetadataBlocks() started.
+◇ Test independentCompressedStreams(_:) started.
+◇ Test independentJPEGReconstructionPayloads(_:) started.
+◇ Test resourceLimitsAndCancellation() started.
+◇ Test malformedContextAndBlockTablesStayBounded() started.
+◇ Test rctChainPreservesOtherOwnersAndRejectsCancelledWork() started.
+◇ Test malformedResidualsAndMissingPlanesRejectBeforeAllocation() started.
+◇ Test geometryRejectsOverflowAndMetaMixWithoutPixelAllocation() started.
+◇ Test channelExpansionAndUnsupportedPalettesAreBounded() started.
+◇ Test squeezeMatchesPinnedPredecessorWithOddTailsAndExtremes(_:) started.
+◇ Test paletteUsesActualPrecisionAndRestoresFirstNormalChannel() started.
+◇ Test metaPaletteAndSqueezeRestoreMetaChannelCountAndShifts() started.
+◇ Test implicitSqueezeRetainsOriginalPlanAndRestoresGeometry() started.
+◇ Test resourceAndDeadlineLimitsApplyBeforePlanesAreAllocated() started.
+◇ Test groupedBorrowedSource(_:_:) started.
+◇ Test precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test alphaMismatchRejectsBeforeWritingAndMalformedPixelsInvalidate() started.
+◇ Test paddedCallerStorage(_:_:) started.
+◇ Test associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test independentAssociatedAlphaInput(_:_:) started.
+◇ Test eightBitAdmissionUsesActualCallerCapacity() started.
+◇ Test publicOwningColourDestination(_:_:) started.
+◇ Test multipleScansRetainEachBoundary() started.
+◇ Test publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test mismatchedPrecisionOrCapacityRejectsBeforeTouchingBytes() started.
+◇ Test longEntropyAndFillRunsHaveBoundedCheckpoints(_:) started.
+◇ Test oddOffsetStuffingCannotSkipCheckpoints() started.
+◇ Test malformedFramingThrows(_:) started.
+◇ Test everyPrefixBeforeEOIIsRejected() started.
+◇ Test taskCancellationIsHonoured() started.
+◇ Test preservesFillScanAndTailWithoutReparsingTail() started.
+◇ Test inputCountAndTimeLimitsAreEnforced() started.
+◇ Test everyTruncatedPrefixAndTrailingBytesAreRejected() started.
+◇ Test slicedInputHasRelativeRangesAndRetainedLifetime() started.
+◇ Test storageSlicesAndExtremeReaderOffsets() started.
+◇ Test encoderRejectsSamplesOutsideDeclaredPrecision() started.
+◇ Test containerRejectsOverflowAndAmbiguousCodestreams() started.
+◇ Test deterministicSingleBitMutationsDoNotTrap() started.
+◇ Test cancelledDecodeThrowsCancellationError() started.
+◇ Test cancellationDuringCoefficientWorkThrowsBeforePublication() started.
+◇ Test stuffedEntropyReaderChecksWorkAtOddOffsets() started.
+◇ Test resourceAdmissionAndPaddingLimits() started.
+◇ Test invalidHuffmanTreesAndBitRequestsThrow() started.
+◇ Test independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test nonCanonicalPaddingIsRetained() started.
+◇ Test everyProgressivePrefixFailsWithoutPublishingCoefficients() started.
+◇ Test slicedLifetimeAndConcurrentOperations() started.
+◇ Test wrongRestartSequenceRejects() started.
+◇ Test mutatedInputRemainsBoundedAndCannotTrap() started.
+◇ Test pinnedIndependentFixtures(_:) started.
+◇ Test malformedAndUnsupportedFramesRejectBeforeAllocation() started.
+◇ Test nonInterleavedIndicesSkipRightAndBottomPadding() started.
+◇ Test invalidLimitsRejectAndLargeLimitsCannotExpandProfile() started.
+◇ Test largeAlphabetIsRejectedBeforeItsTableIsParsed() started.
+◇ Test headerTruncationsAndMutationsDoNotTrap() started.
+◇ Test expiredDeadlineRejectsBeforeParsing() started.
+◇ Test defaultMatrixRoundTripAndPrimaryAnchors() started.
+◇ Test admissionLimitsRespectExactBoundaries() started.
+◇ Test tableReservationsAccumulateAndCheckOverflow() started.
+◇ Test sharedPlanAccountsForConcurrentScratch() started.
+◇ Test nestingCeilingRejectsBeforeEnteringExtraLevel() started.
+◇ Test matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test readerRejectsTruncationTrailingBytesAndEnforcesBudgets() started.
+◇ Test cancelledOperationRejectsBeforeAdmission() started.
+◇ Test rejectionAndExactAdmission() started.
+◇ Test boundedWriterStopsGrowthAndThrowsBeforePublication() started.
+◇ Test invalidDimensionsThrow() started.
+◇ Test entropyCheckpointsBoundLatchedFailure(_:) started.
+◇ Test aggregateAdmissionIsCheckedAndOverflowCannotWrap() started.
+◇ Test entropyCheckpointsBoundCancellation(_:) started.
+◇ Test independentLibjxlSamples(_:) started.
+◇ Test cancelledDecodeRejectsBeforeAllocatingWorkspace() started.
+◇ Test aShortGroupCannotReadBytesFromTheFollowingGroup() started.
+◇ Test bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test profileLimitsAndDestinationMeaningReject() started.
+◇ Test admissionMalformedOwnersAndUnsupportedTransforms() started.
+◇ Test noColourTransformUsesExactDCOffsetAndZeroGreyChroma(_:) started.
+◇ Test concurrentOwnersAndTaskCancellation() started.
+◇ Test cancellationBeforePublicationAndDuringBlockWork() started.
+◇ Test completeVariableLengthCountRange() started.
+◇ Test invalidBlockRequestsAndDCOverflowCannotTrapOrWriteScratch() started.
+◇ Test retainedBuffersShareStorageAndSurviveSourceMutationAndRelease() started.
+◇ Test malformedHeadersAndTruncation() started.
+◇ Test malformedFrameNameCannotBecomeUnnamedFrame() started.
+◇ Test encoderMatchesIndependentBoundaryStreams() started.
+◇ Test independentlyAcceptedFramingAndMetadata() started.
+◇ Test cancellationAndBoundedWork() started.
+◇ Test malformedExtraChannelNameCannotBecomeUnnamedAlpha() started.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test nativeProfileRoundTripAndTruncation(_:) started.
+◇ Test cancelledOperationHasNoResult() started.
+◇ Test independentDefinitionAndRoundTrip(_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test preparedFrameRetainsOperationDeadline() started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test publicSharedStorageUsesOnlyTheRequiredFinalAllocation() started.
+◇ Test exactPrecisionAndSamples(bits:) started.
+◇ Test independentBothDirections(bits:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test inputOutputMemoryAndDeadlineAdmission() started.
+◇ Test case passing 2 arguments channels → 1, bits → 1 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test malformedSectionAndInsufficientWorkspaceReject() started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 2 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 3 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments bits → 9, littleEndian → false to writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:) started.
+◇ Test case passing 2 arguments bits → 9, littleEndian → true to writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 4 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, littleEndian → true to writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 5 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test case passing 2 arguments bits → 12, littleEndian → false to writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 6 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, littleEndian → true to writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 7 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 1 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments bits → 16, littleEndian → false to writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 2 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 3 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to independentBT709PreservesSamplesAndRequiredMeaning(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 4 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 5 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 6 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "gray" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 7 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "444" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 1 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "422" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "420" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 2 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "440" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 3 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "restart" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 4 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "sequential-extra-zero" to explicitEntropyVectorsAndIndependentReconstructionAgree(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 5 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-split" to explicitEntropyVectorsAndIndependentReconstructionAgree(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-grouped" to explicitEntropyVectorsAndIndependentReconstructionAgree(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 6 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test customWeightsAndResourceBounds() started.
+◇ Test case passing 1 argument name → "progressive-restart" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart-split" to explicitEntropyVectorsAndIndependentReconstructionAgree(_:) started.
+◇ Test case passing 1 argument name → "progressive-band-zero" to explicitEntropyVectorsAndIndependentReconstructionAgree(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 7 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 1 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "gray" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 2 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "444" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument name → "zero-padding" to independentBundlesMatchOriginalJPEGFields(_:) started.
+◇ Test case passing 1 argument name → "422" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 3 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "420" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument name → "440" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 4 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "progressive" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument type → 0 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "restart" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 5 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument type → 1 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument type → 2 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 6 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument type → 3 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 4 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 7 to independentSmallPrecisionSamples(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument type → 5 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 6 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument type → 7 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument type → 8 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument type → 9 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to existingCorpusScansMatchIndependentJBRD(_:) started.
+◇ Test case passing 1 argument type → 10 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 11 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 12 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 13 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 14 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 15 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 16 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 17 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "text-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 18 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "text-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 19 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "gray" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "text-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 20 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "444" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument type → 21 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "text-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "422" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument type → 22 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "text-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "420" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument type → 23 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "text-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "440" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument type → 24 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "text-q11-m1" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "text-q11-m2" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "progressive" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "restart" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument type → 26 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "unicode-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument type → 27 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "unicode-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 28 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "unicode-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument type → 29 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "unicode-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument type → 30 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "unicode-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument type → 31 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "unicode-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "binary-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 32 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "binary-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 33 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "binary-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 34 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "zero-padding" to independentJPEGReconstructionPayloads(_:) started.
+◇ Test case passing 1 argument name → "binary-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 35 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "binary-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 25 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument type → 36 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "binary-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 37 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "runs-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 38 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument horizontal → false to squeezeMatchesPinnedPredecessorWithOddTailsAndExtremes(_:) started.
+◇ Test case passing 1 argument name → "runs-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 39 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "runs-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument type → 40 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "runs-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument horizontal → true to squeezeMatchesPinnedPredecessorWithOddTailsAndExtremes(_:) started.
+◇ Test case passing 1 argument type → 41 to matchesPinnedPredecessorIncludingWrappingExtremes(_:) started.
+◇ Test case passing 1 argument name → "runs-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q11-m1" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "runs-q11-m2" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "mixed-q0-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 1 argument name → "mixed-q1-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "mixed-q4-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 1 argument name → "mixed-q6-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "mixed-q9-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 1 argument name → "mixed-q11-m0" to independentCompressedStreams(_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "streaming-postfix0-direct0" to independentCompressedStreams(_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 1 argument name → "streaming-postfix1-direct12" to independentCompressedStreams(_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 1 argument name → "streaming-postfix3-direct120" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "unsorted-three-symbol" to independentCompressedStreams(_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 1 argument name → "all-block-types-mtf0" to independentCompressedStreams(_:) started.
+◇ Test case passing 1 argument name → "all-block-types-mtf1" to independentCompressedStreams(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 1 argument name → "all-short-distances" to independentCompressedStreams(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to precisionExtremaAndInvalidHighBits(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to groupedBorrowedSource(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to associatedAlphaAndRenderingIntent(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 1 argument name → "gray" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to independentAssociatedAlphaInput(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 1 argument fill → false to longEntropyAndFillRunsHaveBoundedCheckpoints(_:) started.
+◇ Test case passing 1 argument fill → true to longEntropyAndFillRunsHaveBoundedCheckpoints(_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument data → 6 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 2 arguments name → "rgb12", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument data → 6 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 2 arguments name → "rgb12", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 1 argument data → 4 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument data → 4 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 1 argument data → 4 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument data → 3 bytes to malformedFramingThrows(_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+BROTLI_COVERAGE modes=15 postfix=15 short=65535 dictionary=100 switches=12 types=2,2,2 trees=6,2 metadata=6 blocks=4
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "gray" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "444" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "422" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "420" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "440" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments channels → 1, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "progressive" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "restart" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments channels → 2, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to allVisibleCoefficientsMatchIndependentLibjpeg(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "gray" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 2 arguments channels → 3, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "444" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "422" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 8 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "420" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "440" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "progressive" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 12 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 1 argument name → "restart" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 2 arguments channels → 4, bits → 16 to independentSamplesAndProfileArePreserved(_:_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to pinnedIndependentFixtures(_:) started.
+◇ Test case passing 1 argument direction → .forward to matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test case passing 1 argument direction → .inverse to matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test case passing 1 argument prefix → false to entropyCheckpointsBoundLatchedFailure(_:) started.
+◇ Test case passing 1 argument prefix → true to entropyCheckpointsBoundLatchedFailure(_:) started.
+◇ Test case passing 1 argument prefix → false to entropyCheckpointsBoundCancellation(_:) started.
+◇ Test case passing 1 argument prefix → true to entropyCheckpointsBoundCancellation(_:) started.
+◇ Test case passing 1 argument name → "gray8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "grayalpha8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "rgb8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "rgba8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "rgb12" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "rgba16" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "gray" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "groups-rgb8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "444" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "groups-rgba16" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "422" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "responsive-gray8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "gray" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "420" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "responsive-rgb8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "444" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "440" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "422" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "progressive" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "420" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "restart" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "440" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "progressive" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "restart" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to visibleBridgeBlocksMatchIndependentCoefficients(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to bridgePreservesPaddingForByteExactReconstruction(_:) started.
+◇ Test case passing 1 argument name → "gray" to noColourTransformUsesExactDCOffsetAndZeroGreyChroma(_:) started.
+◇ Test case passing 1 argument name → "444" to noColourTransformUsesExactDCOffsetAndZeroGreyChroma(_:) started.
+◇ Test case passing 1 argument name → "responsive-wide-rgb8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "responsive-small-rgb8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "grayalpha16" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "palette-rgb8" to independentLibjxlSamples(_:) started.
+◇ Test case passing 1 argument name → "palette-rgb16" to independentLibjxlSamples(_:) started.
+◇ Test metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test nativeWriterLimitsAndCancellationAtEveryPhase() started.
+◇ Test slicedSourceAndConcurrentMetadataOwners() started.
+◇ Test nativeWriterConcurrentOwnersAndTaskCancellation() started.
+◇ Test nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test unrepresentableRestartMetadataIsRejected() started.
+◇ Test resourceLimitsAndMidOperationCancellation() started.
+◇ Test supersededFirstQuantisationTableIsUnsupported() started.
+◇ Test nativeWriterCrossesMaximumProgressiveEOBRun() started.
+◇ Test nativeWriterCoefficientMutationsEitherRejectOrRoundtripExactly() started.
+◇ Test independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test nativeWriterRejectsInconsistentOwnersAndMetadata() started.
+◇ Test case passing 1 argument name → "srgb" to nativeProfileRoundTripAndTruncation(_:) started.
+◇ Test case passing 1 argument direction → .forward to independentDefinitionAndRoundTrip(_:) started.
+◇ Test case passing 1 argument direction → .inverse to independentDefinitionAndRoundTrip(_:) started.
+◇ Test case passing 1 argument bits → 9 to exactPrecisionAndSamples(bits:) started.
+◇ Test case passing 1 argument bits → 10 to exactPrecisionAndSamples(bits:) started.
+◇ Test case passing 1 argument bits → 12 to exactPrecisionAndSamples(bits:) started.
+◇ Test case passing 1 argument bits → 14 to exactPrecisionAndSamples(bits:) started.
+✔ Test directionSpecificCapabilities() passed after 38.821 seconds.
+◇ Test case passing 1 argument bits → 16 to exactPrecisionAndSamples(bits:) started.
+◇ Test case passing 1 argument bits → 9 to independentBothDirections(bits:) started.
+◇ Test case passing 1 argument bits → 10 to independentBothDirections(bits:) started.
+◇ Test case passing 1 argument bits → 12 to independentBothDirections(bits:) started.
+◇ Test case passing 1 argument bits → 14 to independentBothDirections(bits:) started.
+◇ Test case passing 1 argument bits → 16 to independentBothDirections(bits:) started.
+✔ Test rctCannotMixMetaAndNormalChannelsWithEqualDimensions() passed after 43.513 seconds.
+✔ Test independentSmallPrecisionSamples(_:_:) with 28 test cases passed after 44.061 seconds.
+✔ Test writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:) with 6 test cases passed after 44.062 seconds.
+✔ Test independentBT709PreservesSamplesAndRequiredMeaning(_:_:) with 12 test cases passed after 44.063 seconds.
+✔ Test malformedProfileAndTruncatedStreamReject() passed after 44.064 seconds.
+✔ Test invalidWriterShapesAndEventLimitsThrow() passed after 44.064 seconds.
+✔ Test externalMetadataMustFitExactly() passed after 44.064 seconds.
+✔ Test transformMetadataRejectsAllocationBeyondBudget() passed after 44.064 seconds.
+✔ Test independentBundlesMatchOriginalJPEGFields(_:) with 16 test cases passed after 44.064 seconds.
+✔ Test squeezeReadsIndependentWireVectorsAndWritesCanonicalBytes() passed after 44.064 seconds.
+✔ Test invalidTransferAndMetadataLimitsReject() passed after 44.064 seconds.
+✔ Test limitsAndCancellationBeforePublication() passed after 44.064 seconds.
+✔ Test metadataIdentityLengthAndSurplusAreRejected() passed after 44.075 seconds.
+✔ Test cumulativeEventLimitAdmitsExactBoundaryAndRejectsBeforePublication() passed after 44.075 seconds.
+✔ Test explicitEntropyVectorsAndIndependentReconstructionAgree(_:) with 5 test cases passed after 44.075 seconds.
+✔ Test unrepresentableRefinementZeroRunIsExplicitlyRejected() passed after 44.075 seconds.
+◇ Test case passing 2 arguments width → 1, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 1, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 1, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+✔ Test existingCorpusScansMatchIndependentJBRD(_:) with 15 test cases passed after 44.083 seconds.
+✔ Test reusesUniqueWorkingPlanesAndRejectsBeforeWriting() passed after 44.083 seconds.
+✔ Test invalidSamplesRejectWithoutImplicitClamping() passed after 44.083 seconds.
+✔ Test matchesPinnedPredecessorIncludingWrappingExtremes(_:) with 42 test cases passed after 44.084 seconds.
+✔ Test cancellationIsBoundedAndDeadlineCallbackIsHonoured() passed after 44.084 seconds.
+✔ Test highPrecisionDefinitionAnchors() passed after 44.084 seconds.
+✔ Test storedAndMetadataBlocks() passed after 44.084 seconds.
+✔ Test rejectsShortDestinationBeforeWriting() passed after 44.085 seconds.
+✔ Test independentCompressedStreams(_:) with 41 test cases passed after 44.084 seconds.
+✔ Test independentJPEGReconstructionPayloads(_:) with 16 test cases passed after 44.084 seconds.
+✔ Test malformedResidualsAndMissingPlanesRejectBeforeAllocation() passed after 44.084 seconds.
+✔ Test geometryRejectsOverflowAndMetaMixWithoutPixelAllocation() passed after 44.084 seconds.
+✔ Test channelExpansionAndUnsupportedPalettesAreBounded() passed after 44.084 seconds.
+✔ Test paletteUsesActualPrecisionAndRestoresFirstNormalChannel() passed after 44.084 seconds.
+✔ Test metaPaletteAndSqueezeRestoreMetaChannelCountAndShifts() passed after 44.084 seconds.
+✔ Test squeezeMatchesPinnedPredecessorWithOddTailsAndExtremes(_:) with 2 test cases passed after 44.084 seconds.
+✔ Test implicitSqueezeRetainsOriginalPlanAndRestoresGeometry() passed after 44.084 seconds.
+✔ Test resourceAndDeadlineLimitsApplyBeforePlanesAreAllocated() passed after 44.084 seconds.
+✔ Test alphaMismatchRejectsBeforeWritingAndMalformedPixelsInvalidate() passed after 44.084 seconds.
+✔ Test precisionExtremaAndInvalidHighBits(_:_:) with 12 test cases passed after 44.084 seconds.
+✔ Test paddedCallerStorage(_:_:) with 48 test cases passed after 44.085 seconds.
+✔ Test malformedContextAndBlockTablesStayBounded() passed after 44.085 seconds.
+✔ Test allDictionaryTransformsMatchIndependentReference() passed after 44.085 seconds.
+✔ Test groupedBorrowedSource(_:_:) with 12 test cases passed after 44.085 seconds.
+✔ Test associatedAlphaAndRenderingIntent(_:_:) with 6 test cases passed after 44.085 seconds.
+✔ Test eightBitAdmissionUsesActualCallerCapacity() passed after 44.085 seconds.
+✔ Test independentAssociatedAlphaInput(_:_:) with 6 test cases passed after 44.085 seconds.
+✔ Test multipleScansRetainEachBoundary() passed after 44.085 seconds.
+✔ Test mismatchedPrecisionOrCapacityRejectsBeforeTouchingBytes() passed after 44.085 seconds.
+✔ Test longEntropyAndFillRunsHaveBoundedCheckpoints(_:) with 2 test cases passed after 44.085 seconds.
+✔ Test oddOffsetStuffingCannotSkipCheckpoints() passed after 44.085 seconds.
+✔ Test everyPrefixBeforeEOIIsRejected() passed after 44.085 seconds.
+✔ Test malformedFramingThrows(_:) with 6 test cases passed after 44.085 seconds.
+✔ Test preservesFillScanAndTailWithoutReparsingTail() passed after 44.085 seconds.
+✔ Test compressedFeatureCoverage() passed after 44.086 seconds.
+✔ Test inputCountAndTimeLimitsAreEnforced() passed after 44.085 seconds.
+✔ Test everyTruncatedPrefixAndTrailingBytesAreRejected() passed after 44.085 seconds.
+✔ Test slicedInputHasRelativeRangesAndRetainedLifetime() passed after 44.085 seconds.
+✔ Test storageSlicesAndExtremeReaderOffsets() passed after 44.085 seconds.
+✔ Test encoderRejectsSamplesOutsideDeclaredPrecision() passed after 44.085 seconds.
+✔ Test containerRejectsOverflowAndAmbiguousCodestreams() passed after 44.085 seconds.
+✔ Test deterministicSingleBitMutationsDoNotTrap() passed after 44.085 seconds.
+✔ Test cancellationDuringCoefficientWorkThrowsBeforePublication() passed after 44.085 seconds.
+✔ Test stuffedEntropyReaderChecksWorkAtOddOffsets() passed after 44.085 seconds.
+✔ Test resourceAdmissionAndPaddingLimits() passed after 44.085 seconds.
+✔ Test invalidHuffmanTreesAndBitRequestsThrow() passed after 44.085 seconds.
+✔ Test allVisibleCoefficientsMatchIndependentLibjpeg(_:) with 15 test cases passed after 44.085 seconds.
+✔ Test independentSamplesAndProfileArePreserved(_:_:) with 12 test cases passed after 44.085 seconds.
+✔ Test nonCanonicalPaddingIsRetained() passed after 44.085 seconds.
+✔ Test wrongRestartSequenceRejects() passed after 44.236 seconds.
+✔ Test pinnedIndependentFixtures(_:) with 9 test cases passed after 44.236 seconds.
+✔ Test malformedAndUnsupportedFramesRejectBeforeAllocation() passed after 44.236 seconds.
+✔ Test nonInterleavedIndicesSkipRightAndBottomPadding() passed after 44.236 seconds.
+✔ Test rejectsTruncationTrailingAndWrongExpansion() passed after 44.238 seconds.
+✔ Test invalidLimitsRejectAndLargeLimitsCannotExpandProfile() passed after 44.237 seconds.
+✔ Test largeAlphabetIsRejectedBeforeItsTableIsParsed() passed after 44.237 seconds.
+✔ Test everyProgressivePrefixFailsWithoutPublishingCoefficients() passed after 44.237 seconds.
+✔ Test expiredDeadlineRejectsBeforeParsing() passed after 44.237 seconds.
+✔ Test defaultMatrixRoundTripAndPrimaryAnchors() passed after 44.241 seconds.
+✔ Test tableReservationsAccumulateAndCheckOverflow() passed after 44.240 seconds.
+✔ Test nestingCeilingRejectsBeforeEnteringExtraLevel() passed after 44.241 seconds.
+✔ Test admissionLimitsRespectExactBoundaries() passed after 44.241 seconds.
+✔ Test mutatedInputRemainsBoundedAndCannotTrap() passed after 44.241 seconds.
+✔ Test rejectionAndExactAdmission() passed after 44.241 seconds.
+✔ Test boundedWriterStopsGrowthAndThrowsBeforePublication() passed after 44.241 seconds.
+✔ Test invalidDimensionsThrow() passed after 44.241 seconds.
+✔ Test aggregateAdmissionIsCheckedAndOverflowCannotWrap() passed after 44.241 seconds.
+✔ Test readerRejectsTruncationTrailingBytesAndEnforcesBudgets() passed after 44.241 seconds.
+✔ Test entropyCheckpointsBoundLatchedFailure(_:) with 2 test cases passed after 44.241 seconds.
+✔ Test bridgePreservesPaddingForByteExactReconstruction(_:) with 15 test cases passed after 44.251 seconds.
+✔ Test headerTruncationsAndMutationsDoNotTrap() passed after 44.253 seconds.
+✔ Test aShortGroupCannotReadBytesFromTheFollowingGroup() passed after 44.251 seconds.
+✔ Test visibleBridgeBlocksMatchIndependentCoefficients(_:) with 15 test cases passed after 44.252 seconds.
+✔ Test profileLimitsAndDestinationMeaningReject() passed after 44.252 seconds.
+✔ Test admissionMalformedOwnersAndUnsupportedTransforms() passed after 44.264 seconds.
+✔ Test matchesPredecessorAccelerateAndScalar(_:) with 2 test cases passed after 44.264 seconds.
+✔ Test noColourTransformUsesExactDCOffsetAndZeroGreyChroma(_:) with 2 test cases passed after 44.264 seconds.
+✔ Test cancellationBeforePublicationAndDuringBlockWork() passed after 44.266 seconds.
+✔ Test completeVariableLengthCountRange() passed after 44.266 seconds.
+✔ Test invalidBlockRequestsAndDCOverflowCannotTrapOrWriteScratch() passed after 44.266 seconds.
+✔ Test malformedHeadersAndTruncation() passed after 44.266 seconds.
+✔ Test malformedFrameNameCannotBecomeUnnamedFrame() passed after 44.266 seconds.
+✔ Test encoderMatchesIndependentBoundaryStreams() passed after 44.266 seconds.
+✔ Test retainedBuffersShareStorageAndSurviveSourceMutationAndRelease() passed after 44.266 seconds.
+✔ Test independentlyAcceptedFramingAndMetadata() passed after 44.266 seconds.
+◇ Test case passing 1 argument name → "gray" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "444" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "422" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "420" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "440" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "restart" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "sequential-extra-zero" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive-split" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive-grouped" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart-split" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "progressive-band-zero" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "zero-padding" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "quant-slot-three" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "long-fill" to metadataIsSelfContainedAndRetainsSourceRecords(_:) started.
+◇ Test case passing 1 argument name → "gray" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "444" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "422" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "420" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "440" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "restart" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "sequential-extra-zero" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive-split" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive-grouped" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart-split" to nativeWriterAcceptsIndependentMetadata(_:) started.
+◇ Test case passing 1 argument name → "progressive-band-zero" to nativeWriterAcceptsIndependentMetadata(_:) started.
+✔ Test malformedExtraChannelNameCannotBecomeUnnamedAlpha() passed after 44.893 seconds.
+◇ Test case passing 1 argument name → "gray" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "444" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "422" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "420" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "440" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "restart" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "sequential-extra-zero" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive-split" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive-grouped" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive-band-zero" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart-split" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "zero-padding" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "quant-slot-three" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "long-fill" to nativeWriterRestoresOriginalWithoutSourceParameter(_:) started.
+◇ Test case passing 1 argument name → "gray" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "444" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "422" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "420" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "440" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "restart" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "sequential-extra-zero" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-split" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-grouped" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart-split" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-band-zero" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "zero-padding" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "quant-slot-three" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+◇ Test case passing 1 argument name → "long-fill" to independentDecoderReconstructsEveryOriginalByte(_:) started.
+✔ Test publicSharedStorageUsesOnlyTheRequiredFinalAllocation() passed after 47.011 seconds.
+✔ Test exactPrecisionAndSamples(bits:) with 5 test cases passed after 47.014 seconds.
+✔ Test independentDefinitionAndRoundTrip(_:) with 2 test cases passed after 47.012 seconds.
+✔ Test inputOutputMemoryAndDeadlineAdmission() passed after 47.011 seconds.
+✔ Test malformedSectionAndInsufficientWorkspaceReject() passed after 47.011 seconds.
+✔ Test customWeightsAndResourceBounds() passed after 46.231 seconds.
+✔ Test visibleBoundaryIgnoresPadding(_:_:) with 12 test cases passed after 46.220 seconds.
+◇ Test case passing 1 argument name → "444" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test metadataIsSelfContainedAndRetainsSourceRecords(_:) with 23 test cases passed after 11.829 seconds.
+✔ Test independentLibjxlSamples(_:) with 15 test cases passed after 47.113 seconds.
+✔ Test nativeWriterAcceptsIndependentMetadata(_:) with 20 test cases passed after 11.829 seconds.
+✔ Test nativeWriterRestoresOriginalWithoutSourceParameter(_:) with 23 test cases passed after 12.003 seconds.
+✔ Test nativeWriterLimitsAndCancellationAtEveryPhase() passed after 12.003 seconds.
+✔ Test unrepresentableRestartMetadataIsRejected() passed after 12.003 seconds.
+✔ Test supersededFirstQuantisationTableIsUnsupported() passed after 12.002 seconds.
+✔ Test independentDecoderReconstructsEveryOriginalByte(_:) with 23 test cases passed after 12.002 seconds.
+✔ Test resourceLimitsAndMidOperationCancellation() passed after 12.005 seconds.
+✔ Test nativeWriterRejectsInconsistentOwnersAndMetadata() passed after 12.004 seconds.
+✔ Suite ModularLowPrecisionTests passed after 47.292 seconds.
+◇ Test case passing 1 argument name → "gray-gamma22" to nativeProfileRoundTripAndTruncation(_:) started.
+✔ Suite ModularWireTests passed after 47.441 seconds.
+✔ Test cancellationInvalidatesCallerDestination() passed after 47.440 seconds.
+✔ Test concurrentEncodersShareOneImmutableSource() passed after 47.440 seconds.
+✔ Suite ModularTransferTests passed after 47.441 seconds.
+✔ Suite ModularICCTests passed after 47.441 seconds.
+✔ Test slicedInputAndConcurrentReads() passed after 47.440 seconds.
+✔ Suite JPEGReconstructionEventTests passed after 47.441 seconds.
+✔ Suite SpecRCTTests passed after 47.441 seconds.
+✔ Suite VarDCTColourTests passed after 47.441 seconds.
+✔ Test resourceLimitsAndCancellation() passed after 47.439 seconds.
+✔ Test rctChainPreservesOtherOwnersAndRejectsCancelledWork() passed after 47.439 seconds.
+✔ Suite ModularEncoderTests passed after 47.441 seconds.
+✔ Test taskCancellationIsHonoured() passed after 47.439 seconds.
+✔ Test cancelledDecodeThrowsCancellationError() passed after 47.438 seconds.
+✔ Test slicedLifetimeAndConcurrentOperations() passed after 47.438 seconds.
+✔ Suite JPEGFrameLayoutTests passed after 47.441 seconds.
+✔ Test sharedPlanAccountsForConcurrentScratch() passed after 47.438 seconds.
+✔ Test cancelledOperationRejectsBeforeAdmission() passed after 47.438 seconds.
+✔ Suite ScalarModularTests passed after 47.441 seconds.
+✔ Test entropyCheckpointsBoundCancellation(_:) with 2 test cases passed after 47.438 seconds.
+✔ Test cancelledDecodeRejectsBeforeAllocatingWorkspace() passed after 47.438 seconds.
+✔ Suite ModularNameTests passed after 47.441 seconds.
+✔ Test cancellationAndBoundedWork() passed after 47.438 seconds.
+✔ Test cancelledOperationHasNoResult() passed after 47.438 seconds.
+✔ Test preparedFrameRetainsOperationDeadline() passed after 47.438 seconds.
+✔ Suite VarDCTFilterTests passed after 47.441 seconds.
+✔ Suite ModularFrameDecoderTests passed after 47.441 seconds.
+✔ Test slicedSourceAndConcurrentMetadataOwners() passed after 12.155 seconds.
+◇ Test case passing 1 argument name → "422" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Suite ScalarStorageTests passed after 47.623 seconds.
+✔ Suite JBRDTests passed after 47.623 seconds.
+✔ Suite BrotliDecoderTests passed after 47.623 seconds.
+✔ Suite ModularTransformTests passed after 47.623 seconds.
+✔ Suite JPEGSegmentReaderTests passed after 47.624 seconds.
+✔ Suite ScalarMalformedTests passed after 47.624 seconds.
+✔ Suite JPEGCoefficientTests passed after 47.624 seconds.
+✔ Suite VarDCTTransformTests passed after 47.624 seconds.
+◇ Test readerBoundsMutationsAndOwnsConcurrentResults() started.
+✔ Suite ScalarMemoryTests passed after 47.624 seconds.
+✔ Test concurrentOwnersAndTaskCancellation() passed after 47.621 seconds.
+✔ Suite BrotliFramingTests passed after 47.624 seconds.
+✔ Suite ScalarLimitTests passed after 47.624 seconds.
+✔ Test nativeWriterConcurrentOwnersAndTaskCancellation() passed after 12.453 seconds.
+✔ Suite JPEGBridgeCoefficientTests passed after 47.740 seconds.
+◇ Test case passing 1 argument name → "420" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test publicOwningColourDestination(_:_:) with 20 test cases passed after 47.783 seconds.
+✔ Suite ModularStorageTests passed after 47.786 seconds.
+◇ Test case passing 1 argument name → "440" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "progressive" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test nativeWriterCoefficientMutationsEitherRejectOrRoundtripExactly() passed after 13.160 seconds.
+◇ Test case passing 1 argument name → "restart" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test readerBoundsMutationsAndOwnsConcurrentResults() passed after 1.887 seconds.
+◇ Test largerEntropyContextCountRequiresBoundedOptIn() started.
+✔ Test largerEntropyContextCountRequiresBoundedOptIn() passed after 0.009 seconds.
+◇ Test frameWriterAdmissionOutputBoundAndCancellation() started.
+◇ Test case passing 1 argument name → "progressive-restart" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test nativeProfileRoundTripAndTruncation(_:) with 2 test cases passed after 49.740 seconds.
+◇ Test malformedCommandsAndOutputBoundsDoNotTrap() started.
+✔ Test malformedCommandsAndOutputBoundsDoNotTrap() passed after 0.056 seconds.
+◇ Test standardCommandFamiliesAndPredictors() started.
+✔ Test standardCommandFamiliesAndPredictors() passed after 0.013 seconds.
+✔ Suite ICCStreamTests passed after 49.815 seconds.
+◇ Test case passing 1 argument name → "progressive-422" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test frameWriterAdmissionOutputBoundAndCancellation() passed after 0.518 seconds.
+◇ Test largerDCGroupProfileIsExplicitlyUnsupported() started.
+✔ Test largerDCGroupProfileIsExplicitlyUnsupported() passed after 0.001 seconds.
+◇ Test nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "gray" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "444" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "422" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "420" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "multigroup-420" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test independentBothDirections(bits:) with 5 test cases passed after 51.323 seconds.
+✔ Suite ScalarOracleTests passed after 51.329 seconds.
+◇ Test case passing 1 argument name → "440" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "restart" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "multigroup-420" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "multigroup-progressive-422" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "multigroup-progressive-422" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test nativeWriterCrossesMaximumProgressiveEOBRun() passed after 41.923 seconds.
+✔ Suite JPEGReconstructionMetadataTests passed after 77.211 seconds.
+◇ Test case passing 1 argument name → "wide-gray" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "quant16" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+✔ Test nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) with 19 test cases passed after 46.525 seconds.
+✔ Suite JPEGBridgeFrameTests passed after 96.566 seconds.
+◇ Test case passing 1 argument name → "wide-gray" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "quant16" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "rgb" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "rgb-progressive" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "tiny" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "thin" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test publicRepeatedRoundTripPreservesEveryByte(_:) with 23 test cases passed after 107.607 seconds.
+◇ Test wholeOperationLimitsAndMetadataPolicyAreEnforced() started.
+✔ Test wholeOperationLimitsAndMetadataPolicyAreEnforced() passed after 0.042 seconds.
+◇ Test slicedOwnersConcurrentCallsAndCancellation() started.
+✔ Test slicedOwnersConcurrentCallsAndCancellation() passed after 0.075 seconds.
+◇ Test rejectsMissingDuplicateTruncatedAndUnsupportedReconstruction() started.
+✔ Test rejectsMissingDuplicateTruncatedAndUnsupportedReconstruction() passed after 0.115 seconds.
+◇ Test iccFragmentValidationAndLimits() started.
+✔ Test iccFragmentValidationAndLimits() passed after 0.220 seconds.
+◇ Test independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "gray" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "444" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "422" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "420" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "440" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "restart" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "multigroup-420" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "multigroup-progressive-422" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "wide-gray" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "quant16" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "rgb" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "rgb-progressive" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "tiny" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "thin" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "exif-xmp" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "icc-rgb" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "icc-gray" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "icc-fragmented" to independentPublicInteroperability(_:) started.
+✔ Test independentPublicInteroperability(_:) with 27 test cases passed after 21.231 seconds.
+✔ Suite NativeTranscoderPublicTests passed after 129.295 seconds.
+✔ Test run with 156 tests in 31 suites passed after 129.299 seconds.
