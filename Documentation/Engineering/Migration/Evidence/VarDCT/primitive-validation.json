@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "scope": "Internal primitives only; public VarDCT disabled",
+  "runs": {
+    "debug": {
+      "command": "SWIFTJXL_ORACLE_BIN=/opt/homebrew/bin CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2",
+      "exitCode": 0,
+      "declarations": 192,
+      "cases": 721,
+      "failures": 0,
+      "skips": 0,
+      "logSHA256": "f16d907a4d4808522a756c626bcc0150f67b362d11783b4e5d31c4b20f3a6957"
+    },
+    "asan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --filter VarDCT",
+      "exitCode": 0,
+      "declarations": 10,
+      "cases": 23,
+      "failures": 0,
+      "skips": 0,
+      "logSHA256": "259e1a837a07be0611d929d75d6ae0e121beae676baad04c3366528020dbcbf4"
+    },
+    "tsan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --filter VarDCT",
+      "exitCode": 0,
+      "declarations": 10,
+      "cases": 23,
+      "failures": 0,
+      "skips": 0,
+      "logSHA256": "ef9db7230edcf65ae6f23cfbc7478bd2873d1b364292b26d1470a313c52d8b1a"
+    }
+  },
+  "sourceSHA256": {
+    "Sources/SwiftJXLCore/VarDCT/DefaultOpsin.swift": "3874a0e9d236c4fff54dbab9407dc722dfc3bbbe6d2c313f4b454c4e92700f1d",
+    "Sources/SwiftJXLCore/VarDCT/ScaledDCT.swift": "3b99e02112d8de964ad3710590d8e084bfac43ad64dfa97b20a5dcb3e01d053a",
+    "Sources/SwiftJXLCore/VarDCT/Gaborish.swift": "b1828243688d81fe5152ae872536b89a876f19ccd975df3ea024b83e0cf7a31b",
+    "Tests/SwiftJXLCoreTests/VarDCTFilterTests.swift": "e5e80e4cfbc3057bd3c827158f32a0e354958069a2d7a5b12e2fa3e069ef10d9",
+    "Tests/SwiftJXLCoreTests/VarDCTTransformTests.swift": "8d07a8c5ccd68d3941d147b3317e659909082aaf0f74ba940a2346834fde2382",
+    "Tests/SwiftJXLCoreTests/VarDCTColourTests.swift": "14807bcfdc3c1e3ad20ce89357f5e24eb2c5de561e6e65884a12de8c2b02de6d",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/manifest.json": "3fed2822791f1ac65a6e8b73de36c82185cf34924dd725f954de0651c2a819f2"
+  },
+  "performance": "Unexecuted; active mutation campaigns preclude controlled timings"
+}

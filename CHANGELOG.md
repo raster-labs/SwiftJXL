@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — internal VarDCT primitives, 2026-10-12
+
+- Add operation-budgeted scalar transforms, visible-boundary Gaborish and default opsin conversion with independent mathematical and predecessor references.
+- Record baseline pixel discrepancies and corrected transform precision without changing acceptance thresholds. Public VarDCT encoding and decoding remain unavailable pending complete integration and qualification.
+
 ## Unreleased — low-precision Modular decoding, 2026-10-12
 
 - Restore predecessor-compatible 1–7-bit greyscale/RGB/alpha decoding without rescaling, with exact UInt16 allocating output or shared UInt8 caller output. Encoding remains 8–16-bit and file adapters reject unrepresentable precision.

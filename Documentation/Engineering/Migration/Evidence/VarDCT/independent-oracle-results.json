@@ -1,0 +1,178 @@
+[
+  {
+    "bits": "16",
+    "channels": "1",
+    "decode": "accepted",
+    "name": "pred-17-1-16.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.28005601680560194,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  },
+  {
+    "bits": "8",
+    "channels": "1",
+    "decode": "accepted",
+    "name": "pred-17-1-8.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.4714045207910317,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  },
+  {
+    "bits": "16",
+    "channels": "2",
+    "decode": "accepted",
+    "name": "pred-17-2-16.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.28005601680560194,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  },
+  {
+    "bits": "8",
+    "channels": "2",
+    "decode": "accepted",
+    "name": "pred-17-2-8.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.4714045207910317,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  },
+  {
+    "bits": "16",
+    "channels": "3",
+    "decode": "accepted",
+    "name": "pred-17-3-16.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 2,
+    "rmsColourErrorLSB": 0.5581638119392959,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": false
+  },
+  {
+    "bits": "8",
+    "channels": "3",
+    "decode": "accepted",
+    "name": "pred-17-3-8.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.44526068837257776,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  },
+  {
+    "bits": "16",
+    "channels": "4",
+    "decode": "accepted",
+    "name": "pred-17-4-16.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 2,
+    "rmsColourErrorLSB": 0.5581638119392959,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": false
+  },
+  {
+    "bits": "8",
+    "channels": "4",
+    "decode": "accepted",
+    "name": "pred-17-4-8.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.44526068837257776,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  },
+  {
+    "bits": "16",
+    "channels": "1",
+    "decode": "accepted",
+    "name": "pred-64-1-16.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.34268300311658295,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  },
+  {
+    "bits": "8",
+    "channels": "1",
+    "decode": "accepted",
+    "name": "pred-64-1-8.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.5075119302784911,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": false
+  },
+  {
+    "bits": "16",
+    "channels": "2",
+    "decode": "accepted",
+    "name": "pred-64-2-16.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.3391021002220423,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  },
+  {
+    "bits": "8",
+    "channels": "2",
+    "decode": "accepted",
+    "name": "pred-64-2-8.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.5153882032022076,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": false
+  },
+  {
+    "bits": "16",
+    "channels": "3",
+    "decode": "accepted",
+    "name": "pred-64-3-16.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 14,
+    "rmsColourErrorLSB": 0.7564824023068878,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": false
+  },
+  {
+    "bits": "8",
+    "channels": "3",
+    "decode": "accepted",
+    "name": "pred-64-3-8.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.4747017978426035,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  },
+  {
+    "bits": "16",
+    "channels": "4",
+    "decode": "accepted",
+    "name": "pred-64-4-16.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 14,
+    "rmsColourErrorLSB": 0.7634961900963663,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": false
+  },
+  {
+    "bits": "8",
+    "channels": "4",
+    "decode": "accepted",
+    "name": "pred-64-4-8.independent.jxl",
+    "oracleExit": 0,
+    "maxColourErrorLSB": 1,
+    "rmsColourErrorLSB": 0.4795627891632127,
+    "alphaExact": true,
+    "withinPredeclaredDecodeThreshold": true
+  }
+]

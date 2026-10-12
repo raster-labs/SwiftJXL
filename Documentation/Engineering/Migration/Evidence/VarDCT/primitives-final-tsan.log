@@ -1,0 +1,54 @@
+Building for debugging...
+[Computing dependencies]
+[1 / 1]
+[3 / 8] SwiftJXLCoreTests-product
+[5 / 16] SwiftJXLCoreTests-product
+[11 / 15] SwiftJXLCoreTests-product
+[13 / 15] SwiftJXLCoreTests-product
+Build complete! (14.76 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTColourTests started.
+◇ Suite VarDCTTransformTests started.
+◇ Test rejectionAndExactAdmission() started.
+◇ Test highPrecisionDefinitionAnchors() started.
+◇ Test invalidSamplesRejectWithoutImplicitClamping() started.
+◇ Test defaultMatrixRoundTripAndPrimaryAnchors() started.
+◇ Test sharedPlanAccountsForConcurrentScratch() started.
+◇ Test independentDefinitionAndRoundTrip(_:) started.
+◇ Suite VarDCTFilterTests started.
+◇ Test matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test case passing 1 argument direction → .forward to independentDefinitionAndRoundTrip(_:) started.
+◇ Test cancelledOperationRejectsBeforeAdmission() started.
+◇ Test case passing 1 argument direction → .forward to matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test case passing 1 argument direction → .inverse to matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test customWeightsAndResourceBounds() started.
+◇ Test case passing 1 argument direction → .inverse to independentDefinitionAndRoundTrip(_:) started.
+◇ Test visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 1, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 1, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 1, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+✔ Test invalidSamplesRejectWithoutImplicitClamping() passed after 0.005 seconds.
+✔ Test customWeightsAndResourceBounds() passed after 0.005 seconds.
+✔ Test cancelledOperationRejectsBeforeAdmission() passed after 0.005 seconds.
+✔ Test sharedPlanAccountsForConcurrentScratch() passed after 0.006 seconds.
+✔ Test visibleBoundaryIgnoresPadding(_:_:) with 12 test cases passed after 0.007 seconds.
+✔ Suite VarDCTFilterTests passed after 0.008 seconds.
+✔ Test rejectionAndExactAdmission() passed after 0.008 seconds.
+✔ Test highPrecisionDefinitionAnchors() passed after 0.017 seconds.
+✔ Test defaultMatrixRoundTripAndPrimaryAnchors() passed after 0.204 seconds.
+✔ Suite VarDCTColourTests passed after 0.204 seconds.
+✔ Test matchesPredecessorAccelerateAndScalar(_:) with 2 test cases passed after 21.362 seconds.
+✔ Test independentDefinitionAndRoundTrip(_:) with 2 test cases passed after 38.240 seconds.
+✔ Suite VarDCTTransformTests passed after 38.241 seconds.
+✔ Test run with 10 tests in 3 suites passed after 38.241 seconds.

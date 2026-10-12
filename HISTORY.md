@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## VarDCT primitive preparation — 12 October 2026
+
+Adapted bounded scaled DCT, visible-boundary Gaborish and default opsin primitives from pinned JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e` under contract 0.10.0. Independent mathematical references expose and correct three inherited large-transform precision failures without widening thresholds. Pixel baseline diagnostics identify padded-edge filtering errors; four 16-bit colour cases remain outside the declared limits. Public VarDCT remains disabled. Full debug passed 192 declarations / 721 cases; affected ASan and TSan each passed 10 declarations / 23 cases. See [preflight](Documentation/Engineering/Migration/VARDCT_PREFLIGHT.md) and [exact validation](Documentation/Engineering/Migration/Evidence/VarDCT/primitive-validation.json). Frame, entropy, storage integration and full qualification remain open.
+
 ## ICC preservation and low-precision compatibility — 12 October 2026
 
 Embedded grey/RGB ICC decoding now retains exact profile bytes and caller interpretation under profile, metadata and operation memory limits. Twelve independent streams verify samples and profiles; malformed headers, size ceilings and mismatched destinations reject. ICC encoding remains unsupported. The predecessor rejects these inputs, which is recorded separately from successful successor qualification. Local full debug passed 180 declarations / 669 cases; affected ASan/TSan each passed 19 declarations / 115 cases, and the expanded CLI suite passed 299 checks in each of debug, release, ASan and TSan. See [ICC evidence](Documentation/Engineering/Migration/Evidence/ModularColour/ICC/validation.json).

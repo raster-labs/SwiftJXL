@@ -1,0 +1,71 @@
+Building for debugging...
+[Computing dependencies]
+[1 / 15] SwiftJXLCore
+[3 / 25] SwiftJXL_SwiftJXLCoreTests
+[4 / 28] SwiftJXL_SwiftJXLCoreTests
+[4 / 26] SwiftJXLCore
+[6 / 28] SwiftJXLCore
+[14 / 34] SwiftJXLCore
+[14 / 34] SwiftJXL
+[16 / 35] SwiftJXL
+[21 / 31] SwiftJXLCoreTests-product
+[22 / 32] swiftjxl-cli-product
+[23 / 32] SwiftJXL-product
+[27 / 37] SwiftJXLCoreTests-product
+[29 / 39] SwiftJXLTests-product
+[30 / 39] SwiftJXLCoreTests-product
+[30 / 40] swiftjxl-cli-product
+[32 / 40] SwiftJXLTests-product
+[36 / 42]
+[37 / 42] SwiftJXL-product
+[38 / 43] SwiftJXLCoreTests-product
+[38 / 49] SwiftJXLCoreTests-product
+[44 / 48] SwiftJXLCoreTests-product
+[46 / 48] SwiftJXLCoreTests-product
+Build complete! (28.29 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTTransformTests started.
+◇ Suite VarDCTFilterTests started.
+◇ Test sharedPlanAccountsForConcurrentScratch() started.
+◇ Test matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test independentDefinitionAndRoundTrip(_:) started.
+◇ Test rejectionAndExactAdmission() started.
+◇ Test customWeightsAndResourceBounds() started.
+◇ Test case passing 1 argument direction → .forward to matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test case passing 1 argument direction → .inverse to matchesPredecessorAccelerateAndScalar(_:) started.
+◇ Test case passing 1 argument direction → .forward to independentDefinitionAndRoundTrip(_:) started.
+◇ Test cancelledOperationRejectsBeforeAdmission() started.
+◇ Test case passing 1 argument direction → .inverse to independentDefinitionAndRoundTrip(_:) started.
+◇ Suite VarDCTColourTests started.
+◇ Test case passing 2 arguments width → 1, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 1, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 2, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 9, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 1 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 2 to visibleBoundaryIgnoresPadding(_:_:) started.
+◇ Test case passing 2 arguments width → 17, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+✔ Test customWeightsAndResourceBounds() passed after 0.007 seconds.
+◇ Test highPrecisionDefinitionAnchors() started.
+◇ Test defaultMatrixRoundTripAndPrimaryAnchors() started.
+◇ Test invalidSamplesRejectWithoutImplicitClamping() started.
+✔ Test cancelledOperationRejectsBeforeAdmission() passed after 0.009 seconds.
+✔ Test rejectionAndExactAdmission() passed after 0.010 seconds.
+✔ Test sharedPlanAccountsForConcurrentScratch() passed after 0.010 seconds.
+◇ Test case passing 2 arguments width → 1, height → 8 to visibleBoundaryIgnoresPadding(_:_:) started.
+✔ Test invalidSamplesRejectWithoutImplicitClamping() passed after 0.003 seconds.
+✔ Test visibleBoundaryIgnoresPadding(_:_:) with 12 test cases passed after 0.012 seconds.
+✔ Suite VarDCTFilterTests passed after 0.012 seconds.
+✔ Test highPrecisionDefinitionAnchors() passed after 0.012 seconds.
+✔ Test defaultMatrixRoundTripAndPrimaryAnchors() passed after 0.093 seconds.
+✔ Suite VarDCTColourTests passed after 0.102 seconds.
+✔ Test matchesPredecessorAccelerateAndScalar(_:) with 2 test cases passed after 12.109 seconds.
+✔ Test independentDefinitionAndRoundTrip(_:) with 2 test cases passed after 21.372 seconds.
+✔ Suite VarDCTTransformTests passed after 21.372 seconds.
+✔ Test run with 10 tests in 3 suites passed after 21.373 seconds.
