@@ -207,7 +207,7 @@ private func help(_ command: String?) -> String {
               --max-memory BYTES       Positive aggregate ceiling; default 1073741824.
               --timeout SECONDS        Deadline >0..31536000 seconds; default 120.
             Lossy requires sRGB (pnm-srgb or nrrd), 8..16-bit samples and straight alpha.
-            Lossy images are limited to 4096 per axis and 4,194,304 pixels, within resource limits.
+            CLI lossy images, including alpha, are limited to 1024 per axis and 1,048,576 pixels.
             Distance is codec-specific, not a maximum sample-error guarantee.
             No intermediate image file or full-image serialisation buffer is created.
             Pipe bytes still incur OS copies; this is not shared memory between processes.
@@ -349,7 +349,7 @@ private func write(_ text: String, to handle: FileHandle) throws {
     if options.json {
         let payload: [String: Any] = ["tool": tool, "version": version, "minimumAppleOS": "26.0",
             "encodeModes": ["lossless", "lossy"], "lossyInterchangeFormats": ["nrrd", "pnm-srgb"],
-            "lossyMeaningfulBits": Array(8...16), "lossyDistanceDefault": 1, "maximumLossyAlphaDimension": 256,
+            "lossyMeaningfulBits": Array(8...16), "lossyDistanceDefault": 1, "maximumLossyAlphaDimension": 1024,
             "canEncode": encoder.canEncode, "canDecode": true, "canTranscode": true,
             "maximumTranscodeDimension": 2048, "transcodePreservation": "original-bitstream",
             "transcodeProfileLimits": Transcoder.capabilities[0].profileLimits,

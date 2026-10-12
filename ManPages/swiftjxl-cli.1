@@ -68,7 +68,8 @@ that this profile cannot preserve. Header limits: 16384 bytes, 64 lines,
 Lossless mode is the default; explicit \-\-mode lossy selects VarDCT.
 Lossy requires pnm-srgb (8 through 16 bits) or nrrd (16-bit greyscale),
 with optional
-straight alpha preserved exactly (alpha images: at most 256 per axis).
+straight alpha preserved exactly. All CLI images, including alpha images,
+are limited to 1024 pixels per axis and 1,048,576 pixels within resource limits.
 Standard BT.709 pnm rejects.
 \-\-distance FLOAT selects positive finite JPEG XL perceptual distance,
 default 1; it is not a maximum sample-error guarantee.

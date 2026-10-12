@@ -26,6 +26,18 @@ def run(args, data=b'', expected=0):
 try:
     caps = json.loads(run(['capabilities', '--json']).stdout)
     assert caps['encodeModes'] == ['lossless', 'lossy']
+    assert caps['maximumLossyAlphaDimension'] == caps['maximumEncodeDimension'] == 1024
+    # The advertised alpha ceiling must allow actual grouped images above 256.
+    header = b'P7\nWIDTH 257\nHEIGHT 9\nDEPTH 2\nMAXVAL 255\nTUPLTYPE GRAYSCALE_ALPHA\nENDHDR\n'
+    samples = bytes(v for i in range(257 * 9) for v in (128, i % 256))
+    encoded = run(['encode', '-i', '-', '--input-format', 'pnm-srgb', '--mode', 'lossy'], header + samples)
+    decoded = run(['decode', '-i', '-', '--output-format', 'pnm-srgb'], encoded.stdout)
+    assert decoded.stdout.startswith(header)
+    assert decoded.stdout[len(header) + 1::2] == samples[1::2]
+    too_wide = b'P7\nWIDTH 1025\nHEIGHT 1\nDEPTH 2\nMAXVAL 255\nTUPLTYPE GRAYSCALE_ALPHA\nENDHDR\n' + bytes([128, 255]) * 1025
+    run(['encode', '-i', '-', '--input-format', 'pnm-srgb', '--mode', 'lossy'], too_wide, 5)
+    report['alphaDimensionChecks'] = {'acceptedWidth': 257, 'exactAlpha': True, 'rejectedWidth': 1025}
+
     for bits in range(8, 17):
         for channels in (1, 2, 3, 4):
             w, h = 17, 9
