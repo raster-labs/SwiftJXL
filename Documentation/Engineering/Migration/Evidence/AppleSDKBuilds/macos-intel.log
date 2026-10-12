@@ -1,0 +1,48 @@
+Building for debugging...
+[Pre-planning 1 / 65]
+[Planning deferred tasks]
+[24 / 40]
+[25 / 41] SwiftJXLCore
+[28 / 87]
+[32 / 87]
+[35 / 87]
+[37 / 87]
+[40 / 87]
+[42 / 87]
+[45 / 87]
+[47 / 87]
+[49 / 87]
+[50 / 87]
+[52 / 87]
+[54 / 87]
+[57 / 87]
+[58 / 87]
+[59 / 87]
+[60 / 87]
+[63 / 87] SwiftJXLCore
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:114:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+112 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+113 |         }
+114 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+115 |         return result
+116 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[67 / 87] SwiftJXLCore
+[72 / 87] SwiftJXLCore
+[74 / 87] SwiftJXLCore
+[75 / 87] SwiftJXLCore
+[76 / 87] SwiftJXLCore
+[77 / 87] SwiftJXLCore
+[77 / 87] SwiftJXL
+[78 / 88]
+[80 / 98] SwiftJXL
+[81 / 98] SwiftJXL
+[83 / 98] SwiftJXL
+[89 / 98] SwiftJXL
+[90 / 98] SwiftJXL
+[93 / 98] SwiftJXLCore
+[94 / 98] SwiftJXLCore
+[96 / 98] SwiftJXL
+Build complete! (36.28 sec)

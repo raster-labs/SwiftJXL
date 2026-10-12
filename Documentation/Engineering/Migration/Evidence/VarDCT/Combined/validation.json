@@ -129,10 +129,34 @@
     "method": "swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete, linked against current Debug public module objects; owning 12-bit lossless roundtrip and two-frame rational timing/independent owners. Hosted CI independently resolves/builds this consumer at tools 6.2."
   },
   "remaining": [
-    "release run in progress",
-    "combined sanitizer completion",
     "one-hour mutation campaign completion",
     "hosted checks including macOS",
     "broader feature/platform/release gates"
-  ]
+  ],
+  "release": {
+    "exitCode": 0,
+    "declarations": 275,
+    "cases": 1080,
+    "skips": 0,
+    "logSHA256": "c2efd26e41d118131e89300998923961044db21dcef942e7636755ca8c081281",
+    "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" SWIFTJXL_ORACLE_BIN=/opt/homebrew/bin xcrun swift test -c release --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --no-parallel",
+    "execution": "Xcode debug-symbol step required permitted execution outside filesystem sandbox; caller sources and caches remain in workspace.",
+    "sourceNote": "Runtime algorithms/tests match the recorded 4205dd5 snapshot. During the build, e760a84 corrected an Encoder documentation comment and the CLI help geometry sentence only; release CLI help was checked to contain 4096/4,194,304. This is not a claim that every compiler input was captured atomically at one revision. Hosted checks cover the committed head."
+  },
+  "sanitizers": {
+    "sourceRevision": "4205dd5",
+    "runs": {
+      "asan": {
+        "declarations": 49,
+        "cases": 277,
+        "skips": 0
+      },
+      "tsan": {
+        "declarations": 49,
+        "cases": 277,
+        "skips": 0
+      }
+    },
+    "details": "sanitizer-validation.json"
+  }
 }
