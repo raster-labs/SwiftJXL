@@ -4,7 +4,7 @@
 // JPEG XL Project Authors retain BSD-3-Clause terms; see libjxl-LICENSE.txt.
 import Foundation
 
-/// Internal one-DC-group, single-pass coefficient profile. Coefficients stay in
+/// Internal bounded, single-pass coefficient profile. Coefficients stay in
 /// codestream orientation and XYB order; final pixel storage is a later stage.
 package struct VarDCTCoefficients: Sendable {
     package let envelope: VarDCTFrameEnvelope
@@ -18,9 +18,7 @@ package struct VarDCTCoefficients: Sendable {
     package let colourFactor: UInt32, baseX: Float, baseB: Float, dcX: Int32, dcB: Int32
 
     package static func read(_ envelope: VarDCTFrameEnvelope) throws -> Self {
-        guard envelope.dcGroupsX == 1, envelope.dcGroupsY == 1,
-              envelope.frame.passes.numPasses == 1,
-              (envelope.metadata.extraChannels.isEmpty || (envelope.width <= envelope.groupDimension && envelope.height <= envelope.groupDimension)),
+        guard envelope.frame.passes.numPasses == 1,
               !envelope.frame.loopFilter.hasCustomParameters else { throw ScalarModularError.unsupportedProfile }
         var reader = try CoefficientReader(envelope: envelope)
         return try reader.read()
@@ -56,7 +54,7 @@ private struct CoefficientReader {
         let post = try EntropySectionHeader.read(from: &r, numContexts: tree.leafCount)
         return (tree, post, try MultiClusterCodebook.read(from: &r, header: post))
     }
-    mutating func modular(_ geometry: [(Int, Int)], group: Int32) throws -> [[Int32]] {
+    mutating func modular(_ geometry: [(Int, Int)], group: Int32, bitDepth: Int = 16) throws -> [[Int32]] {
         let header = try GroupHeader.read(from: &r)
         let entropy: Entropy
         if header.useGlobalTree {
@@ -82,7 +80,7 @@ private struct CoefficientReader {
             stream: &stream, from: &r, wpHeader: header.wpHeader)
         try stream.finish()
         for i in image.channels.indices { image.channels[i].pixels = values[i] }
-        try applyInverseTransforms(image: &image, transforms: transforms, bitDepth: 16, budget: budget)
+        try applyInverseTransforms(image: &image, transforms: transforms, bitDepth: bitDepth, budget: budget)
         guard image.channels.count == geometry.count else { throw ScalarModularError.invalidInput("Invalid Modular channel count") }
         for i in geometry.indices {
             guard image.channels[i].width == geometry[i].0, image.channels[i].height == geometry[i].1 else {
@@ -92,9 +90,22 @@ private struct CoefficientReader {
         return image.channels.map(\.pixels)
     }
 
+    func place(_ source: [Int32], into destination: inout [Int32], x: Int, y: Int,
+               width: Int, height: Int, stride: Int) throws {
+        guard source.count == width * height, x >= 0, y >= 0, width <= stride - x,
+              (y + height) * stride <= destination.count else {
+            throw ScalarModularError.invalidInput("Invalid VarDCT region")
+        }
+        for row in 0..<height {
+            try budget.checkpoint()
+            for column in 0..<width { destination[(y + row) * stride + x + column] = source[row * width + column] }
+        }
+    }
+
     mutating func read() throws -> VarDCTCoefficients {
         let bx = (envelope.width + 7) / 8, by = (envelope.height + 7) / 8, blocks = bx * by
         let groups = envelope.groupsX * envelope.groupsY
+        let dcGroups = envelope.dcGroupsX * envelope.dcGroupsY
         // All coefficient planes, their COW overlap, predictor workspace and
         // bounded metadata. Entropy allocations receive their own reader charges.
         try budget.reserveWorkspace(ScalarOperationBudget.sum(ScalarOperationBudget.product(blocks, 3 * 64 * 8 + 256), 65536))
@@ -114,32 +125,99 @@ private struct CoefficientReader {
             dcX = Int32(try r.read(bits: 8)) - 128; dcB = Int32(try r.read(bits: 8)) - 128
         }
         if try r.readBit() { global = try tree() }
-        let alpha: [Int32]?
+        var alpha: [Int32]?
+        var alphaPalette: [Int32]?
+        var alphaTransform: ModularTransform?
+        let groupedAlpha = !envelope.metadata.extraChannels.isEmpty &&
+            (envelope.width > envelope.groupDimension || envelope.height > envelope.groupDimension)
         if envelope.metadata.extraChannels.isEmpty { alpha = nil }
-        else {
-            alpha = try modular([(envelope.width, envelope.height)], group: 0)[0]
-            let maximum = Int32((1 << envelope.metadata.bitDepth.bitsPerSample) - 1)
-            guard alpha?.allSatisfy({ $0 >= 0 && $0 <= maximum }) == true else {
-                throw ScalarModularError.invalidInput("Invalid alpha sample")
+        else if groupedAlpha {
+            // One simple palette preserves the full-resolution deferred index
+            // geometry. Squeeze and other transform chains need separate grouping.
+            let alphaHeader = try GroupHeader.read(from: &r)
+            if !alphaHeader.transforms.isEmpty {
+                guard alphaHeader.transforms.count == 1, let transform = alphaHeader.transforms.first,
+                      transform.id == .palette, transform.beginC == 0, transform.numC == 1,
+                      transform.nbColors > 0, transform.nbColors <= 65536,
+                      transform.nbDeltas == 0, transform.palettePredictor == 0 else {
+                    throw ScalarModularError.unsupportedProfile
+                }
+                alphaTransform = transform
             }
-        }
-        try end(); try begin(1)
-        let precision = Int(try r.read(bits: 2))
-        let storedDC = try modular([(bx, by), (bx, by), (bx, by)], group: 1)
-        let dc = [storedDC[1], storedDC[0], storedDC[2]]
-        let count = Int(try r.read(bits: Int(ceilLog2(UInt32(blocks))))) + 1
-        guard count <= blocks else { throw VarDCTError.invalidTransform }
+            let entropy: Entropy
+            if alphaHeader.useGlobalTree {
+                guard let global else { throw ScalarModularError.invalidInput("Missing global Modular tree") }
+                entropy = global
+            } else { entropy = try tree() }
+            if let transform = alphaTransform {
+                let width = Int(transform.nbColors)
+                try budget.reserveWorkspace(ScalarOperationBudget.sum(
+                    ScalarOperationBudget.product(width, 12 + 192),
+                    ScalarOperationBudget.product(entropy.2.ansCounts.count, 64 * 1024)))
+                var stream = TokenStreamReader(header: entropy.1, codebook: entropy.2, distanceMultiplier: width)
+                alphaPalette = try decodeAllChannels(channels: [.init(width: width, height: 1)],
+                    groupId: 0, tree: entropy.0, stream: &stream, from: &r, wpHeader: alphaHeader.wpHeader)[0]
+                try stream.finish()
+            } else if !entropy.1.usePrefixCode {
+                guard try r.read(bits: 32) == ANSConstants.initialState else {
+                    throw ScalarModularError.invalidInput("Invalid empty alpha entropy state")
+                }
+            }
+            try budget.reserveWorkspace(ScalarOperationBudget.product(envelope.width * envelope.height, 8))
+            alpha = [Int32](repeating: 0, count: envelope.width * envelope.height)
+        } else { alpha = try modular([(envelope.width, envelope.height)], group: 0,
+            bitDepth: Int(envelope.metadata.bitDepth.bitsPerSample))[0] }
+        try end()
+        var precision = 0
+        var dc = (0..<3).map { _ in [Int32](repeating: 0, count: blocks) }
         let tw = (bx + 7) / 8, th = (by + 7) / 8
-        let metadata = try modular([(tw, th), (tw, th), (count, 2), (bx, by)], group: 3)
-        let strategies = try VarDCTStrategyMap.read(metadata[2], count: count, width: bx, height: by,
-            groupBlocks: envelope.groupDimension / 8, budget: budget)
-        guard metadata[0].allSatisfy({ (-128...127).contains($0) }),
-              metadata[1].allSatisfy({ (-128...127).contains($0) }),
-              metadata[3].allSatisfy({ (0...7).contains($0) }) else {
-            throw ScalarModularError.invalidInput("Invalid VarDCT block metadata")
+        var xSlopes = [Int32](repeating: 0, count: tw * th)
+        var bSlopes = xSlopes, sharpness = [Int32](repeating: 0, count: blocks)
+        var transforms: [VarDCTStrategyMap.Transform] = [], indices = [Int](repeating: -1, count: blocks)
+        var coefficientOffset = 0
+        for group in 0..<dcGroups {
+            try begin(1 + group)
+            let extra = Int(try r.read(bits: 2))
+            if group == 0 { precision = extra }
+            else if extra != precision { throw ScalarModularError.unsupportedProfile }
+            let x0 = group % envelope.dcGroupsX * envelope.groupDimension
+            let y0 = group / envelope.dcGroupsX * envelope.groupDimension
+            let w = min(envelope.groupDimension, bx - x0), h = min(envelope.groupDimension, by - y0)
+            let storedDC = try modular([(w, h), (w, h), (w, h)], group: Int32(1 + group))
+            for c in 0..<3 {
+                try place(storedDC[[1, 0, 2][c]], into: &dc[c], x: x0, y: y0, width: w, height: h, stride: bx)
+            }
+            let count = Int(try r.read(bits: Int(ceilLog2(UInt32(w * h))))) + 1
+            guard count <= w * h else { throw VarDCTError.invalidTransform }
+            let cw = (w + 7) / 8, ch = (h + 7) / 8
+            let metadata = try modular([(cw, ch), (cw, ch), (count, 2), (w, h)],
+                group: Int32(1 + 2 * dcGroups + group))
+            let local = try VarDCTStrategyMap.read(metadata[2], count: count, width: w, height: h,
+                groupBlocks: envelope.groupDimension / 8, budget: budget)
+            guard metadata[0].allSatisfy({ (-128...127).contains($0) }),
+                  metadata[1].allSatisfy({ (-128...127).contains($0) }),
+                  metadata[3].allSatisfy({ (0...7).contains($0) }) else {
+                throw ScalarModularError.invalidInput("Invalid VarDCT block metadata")
+            }
+            try place(metadata[0], into: &xSlopes, x: x0 / 8, y: y0 / 8, width: cw, height: ch, stride: tw)
+            try place(metadata[1], into: &bSlopes, x: x0 / 8, y: y0 / 8, width: cw, height: ch, stride: tw)
+            try place(metadata[3], into: &sharpness, x: x0, y: y0, width: w, height: h, stride: bx)
+            let transformBase = transforms.count
+            for t in local.transforms {
+                transforms.append(.init(identifier: t.identifier, x: x0 + t.x, y: y0 + t.y,
+                    cellsX: t.cellsX, cellsY: t.cellsY, quantisation: t.quantisation,
+                    coefficientOffset: coefficientOffset + t.coefficientOffset))
+            }
+            for y in 0..<h { for x in 0..<w {
+                indices[(y0 + y) * bx + x0 + x] = transformBase + local.indices[y * w + x]
+            } }
+            coefficientOffset += local.coefficientCount
+            try end()
         }
+        let strategies = VarDCTStrategyMap(width: bx, height: by, transforms: transforms,
+            indices: indices, coefficientCount: coefficientOffset)
         let qf = strategies.indices.map { strategies.transforms[$0].quantisation }
-        try end(); try begin(2)
+        try begin(1 + dcGroups)
         guard try r.readBit() else { throw ScalarModularError.unsupportedProfile } // default AC matrices
         let histograms = 1 + Int(try r.read(bits: Int(ceilLog2(UInt32(groups)))))
         guard histograms <= groups else { throw ScalarModularError.invalidInput("Invalid histogram count") }
@@ -151,7 +229,7 @@ private struct CoefficientReader {
         var ac = (0..<3).map { _ in [Int32](repeating: 0, count: blocks * 64) }
         let bpg = envelope.groupDimension / 8
         for group in 0..<groups {
-            try begin(3 + group)
+            try begin(2 + dcGroups + group)
             let histogram = Int(try r.read(bits: Int(ceilLog2(UInt32(histograms)))))
             guard histogram < histograms else { throw ScalarModularError.invalidInput("Invalid histogram selector") }
             var stream = TokenStreamReader(header: header, codebook: codebook)
@@ -182,14 +260,45 @@ private struct CoefficientReader {
                     }
                 }
             } }
-            try stream.finish(); try end()
+            try stream.finish()
+            if groupedAlpha {
+                let px = x0 * 8, py = y0 * 8
+                let pw = min(envelope.groupDimension, envelope.width - px)
+                let ph = min(envelope.groupDimension, envelope.height - py)
+                let values = try modular([(pw, ph)], group: Int32(1 + 3 * dcGroups + 17 + group),
+                    bitDepth: Int(envelope.metadata.bitDepth.bitsPerSample))[0]
+                // Drop the optional's reference before modifying its admitted plane.
+                if var plane = alpha {
+                    alpha = nil
+                    try place(values, into: &plane, x: px, y: py, width: pw, height: ph, stride: envelope.width)
+                    alpha = plane
+                }
+            }
+            try end()
         }
         if envelope.sectionCount == 1 {
             try r.expectZeroPadding()
             guard r.bitsRemaining == 0 else { throw ScalarModularError.invalidInput("Trailing VarDCT bits") }
         }
+        if let transform = alphaTransform, let palette = alphaPalette, let indices = alpha {
+            try ModularImage.admitDescriptors(1, budget: budget)
+            var image = try ModularImage(channels: [ModularChannel(width: envelope.width, height: envelope.height)])
+            let transforms = try metaApplyTransforms(image: &image, transforms: [transform], budget: budget)
+            image.channels[0].pixels = palette
+            image.channels[1].pixels = indices
+            alpha = nil
+            try applyInverseTransforms(image: &image, transforms: transforms,
+                bitDepth: Int(envelope.metadata.bitDepth.bitsPerSample), budget: budget)
+            alpha = image.channels[0].pixels
+        }
+        if let alpha {
+            let maximum = Int32((1 << envelope.metadata.bitDepth.bitsPerSample) - 1)
+            guard alpha.allSatisfy({ $0 >= 0 && $0 <= maximum }) else {
+                throw ScalarModularError.invalidInput("Invalid alpha sample")
+            }
+        }
         return VarDCTCoefficients(envelope: envelope, blocksX: bx, blocksY: by, strategies: strategies, dc: dc, ac: ac, alpha: alpha,
-            quantFields: qf, sharpness: metadata[3], xSlopes: metadata[0], bSlopes: metadata[1],
+            quantFields: qf, sharpness: sharpness, xSlopes: xSlopes, bSlopes: bSlopes,
             globalScale: scale, quantDC: quantDC, dcExtraPrecision: precision,
             colourFactor: factor, baseX: baseX, baseB: baseB, dcX: dcX, dcB: dcB)
     }

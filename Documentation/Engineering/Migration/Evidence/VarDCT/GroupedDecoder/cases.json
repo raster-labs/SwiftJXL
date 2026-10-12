@@ -1,0 +1,44 @@
+[
+  {
+    "name": "grouped-257-17-4-8",
+    "width": 257,
+    "height": 17,
+    "channels": 4,
+    "bits": 8
+  },
+  {
+    "name": "grouped-17-257-2-16",
+    "width": 17,
+    "height": 257,
+    "channels": 2,
+    "bits": 16
+  },
+  {
+    "name": "grouped-257-259-4-8",
+    "width": 257,
+    "height": 259,
+    "channels": 4,
+    "bits": 8
+  },
+  {
+    "name": "grouped-2057-9-3-8",
+    "width": 2057,
+    "height": 9,
+    "channels": 3,
+    "bits": 8
+  },
+  {
+    "name": "grouped-9-2057-1-16",
+    "width": 9,
+    "height": 2057,
+    "channels": 1,
+    "bits": 16
+  },
+  {
+    "name": "grouped-2057-9-4-16",
+    "width": 2057,
+    "height": 9,
+    "channels": 4,
+    "bits": 16
+  }
+]

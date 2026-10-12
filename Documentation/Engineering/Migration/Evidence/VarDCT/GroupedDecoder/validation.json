@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-12",
+  "baseCommit": "7502dd016e336d8d91df72df1b9791a5e849bd02",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "oracleSource": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "oracleMode": "Existing scalar libjxl; Float32 explicit sRGB, nearest integer",
+  "independentCases": 6,
+  "limits": {
+    "peakLSB": 2,
+    "rmsLSB": 0.5,
+    "alpha": "exact source and reference"
+  },
+  "runs": {
+    "debug": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --no-parallel --filter 'VarDCTGroupedDecoderTests|VarDCTPixelStorageTests|VarDCTFrameTests'",
+      "exitCode": 0,
+      "declarations": 12,
+      "cases": 42,
+      "skips": 0
+    },
+    "asan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/asan --sanitize address --no-parallel --filter 'VarDCTGroupedDecoderTests|VarDCTPixelStorageTests|VarDCTFrameTests'",
+      "exitCode": 0,
+      "declarations": 12,
+      "cases": 42,
+      "skips": 0
+    },
+    "tsan": {
+      "command": "CLANG_MODULE_CACHE_PATH=\"$PWD/.build/module-cache\" SWIFTPM_MODULECACHE_OVERRIDE=\"$PWD/.build/module-cache\" xcrun swift test --disable-sandbox --cache-path .build/cache --config-path .build/config --security-path .build/security --build-system swiftbuild --jobs 2 --scratch-path ../evidence/cli-validation-qualification/build/tsan --sanitize thread --no-parallel --filter 'VarDCTGroupedDecoderTests|VarDCTPixelStorageTests|VarDCTFrameTests'",
+      "exitCode": 0,
+      "declarations": 12,
+      "cases": 42,
+      "skips": 0
+    }
+  },
+  "sha256": {
+    "Sources/SwiftJXLCore/VarDCT/VarDCTCoefficients.swift": "d76c13f9c7855f0385f526ca0757b45c2cb1b16caf68f1b9883ed1e351b3ff58",
+    "Tests/SwiftJXLCoreTests/VarDCTGroupedDecoderTests.swift": "cbb1339ddcd9f91920d9d05169458f9aadd3793a514558ee9b3396ba34ced56c",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-9-2057-1-16.jxl": "67568052693c3a619e6ff8ea107757c62f461cb67d810b09f089882808b187b6",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-257-17-4-8.jxl": "14d2047e07434c1ebca404633e88815ae3d9798c13e5f5f5083137c83c47b990",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-17-257-2-16.scalar-oracle": "051b23ac5e448e34404fe7abc654a053565c8aebf76bf4f9a034ca06ff4f3ce2",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-257-17-4-8.scalar-oracle": "da5c58e63df691af7ef51431e312bf74ca699d5de89745a582716141141aef68",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-2057-9-4-16.scalar-oracle": "f6851f1990c3bd7c456688d8b3ef74e94cdf1bcb78d4db62ea894f92a00d8db5",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-9-2057-1-16.scalar-oracle": "c53294301b5b463dfcc13ac31b3256defe779bf103034e5baf83ad1430b743a6",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-257-259-4-8.jxl": "6bc3d19d3f492e86a2a252efd4c162d7e9befc843875db9f3f2fe04faee9e7ab",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-2057-9-3-8.scalar-oracle": "d896f6de82e159ee893bcda51f1c9594a9e94ec986f8ed48904553729f85cafd",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-2057-9-3-8.jxl": "9d962c2f6ad45e700b05242b2e14d9550e7f14af65f1ef9c168427bed428806c",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-17-257-2-16.jxl": "ed66ca965859be0ad2d100da5ffe779bba68345545b12544d2099fe0889106e0",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-2057-9-4-16.jxl": "97bcc8945d09db843db322deb60f5684e2de6eaae04fc7e4e0da436b4c03f013",
+    "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/GroupedDecoder/grouped-257-259-4-8.scalar-oracle": "d78b7869bd3d788eed4fca820fab0f516a40db06ae0f914a3c60cb6f5050e2f2",
+    "Documentation/Engineering/Migration/Evidence/VarDCT/GroupedDecoder/debug.log": "dc11a9e1b9042979a360996da55c94850a74b9887e85e43a905ceccb611d5d22",
+    "Documentation/Engineering/Migration/Evidence/VarDCT/GroupedDecoder/asan.log": "96dcadb68aa5f83259f352c342eaccc813caeceacb7fa0ebff2b98bc819566fa",
+    "Documentation/Engineering/Migration/Evidence/VarDCT/GroupedDecoder/oracle.c": "1b80d28cf15be2ab2782bd7be8c02c1aeb3ded0b1862ae9f866fa55fca4c7861",
+    "Documentation/Engineering/Migration/Evidence/VarDCT/GroupedDecoder/generate.py": "0c4d0395c19cd7276b6154cf2501d111aa359122fc74d988c46bfdcc16f2bca6",
+    "Documentation/Engineering/Migration/Evidence/VarDCT/GroupedDecoder/tsan.log": "5b6bf961e1f1f971f0331b158c37720aa11a304069abd2fdc634b336bea9c018"
+  },
+  "oracleBuildCommand": "xcrun clang ../vardct-preflight/grouped-decoder/oracle.c -I ../vardct-preflight/libjxl-a7a9c787341cf703dede03c2009fa460cae5e5df/lib/include -I ../vardct-preflight/libjxl-scalar-build/lib/include -L ../vardct-preflight/libjxl-scalar-build/lib -ljxl -Wl,-rpath,/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/libjxl-scalar-build/lib -o ../vardct-preflight/grouped-decoder/oracle",
+  "review": "Coordinating agent found no blocking stitching/stream-ID/simple-palette issue; alpha inverse precision concern corrected before final debug/ASan/TSan.",
+  "remaining": [
+    "Global alpha Squeeze and complex/multiple palettes",
+    "Nonuniform per-DC extra precision",
+    "Multiple passes and prior profile exclusions",
+    "Controlled performance, peak resident memory, broad fuzz and platform qualification",
+    "Public grouping admission and encoder grouping are separate integration work"
+  ]
+}
