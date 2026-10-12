@@ -1,0 +1,242 @@
+[
+  {
+    "admittedWorkspaceBytes" : "1666768",
+    "bits" : "16",
+    "channels" : "1",
+    "decode" : "accepted",
+    "height" : "9",
+    "name" : "pred-17-1-16.independent",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(17)",
+    "name" : "pred-17-1-16",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "1666765",
+    "bits" : "8",
+    "channels" : "1",
+    "decode" : "accepted",
+    "height" : "9",
+    "name" : "pred-17-1-8.independent",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(17)",
+    "name" : "pred-17-1-8",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "1942122",
+    "bits" : "16",
+    "channels" : "2",
+    "decode" : "accepted",
+    "height" : "9",
+    "name" : "pred-17-2-16.independent",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(17)",
+    "name" : "pred-17-2-16",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "1934806",
+    "bits" : "8",
+    "channels" : "2",
+    "decode" : "accepted",
+    "height" : "9",
+    "name" : "pred-17-2-8.independent",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(17)",
+    "name" : "pred-17-2-8",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "1670981",
+    "bits" : "16",
+    "channels" : "3",
+    "decode" : "accepted",
+    "height" : "9",
+    "name" : "pred-17-3-16.independent",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(7)",
+    "name" : "pred-17-3-16",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "1670975",
+    "bits" : "8",
+    "channels" : "3",
+    "decode" : "accepted",
+    "height" : "9",
+    "name" : "pred-17-3-8.independent",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(7)",
+    "name" : "pred-17-3-8",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "1946275",
+    "bits" : "16",
+    "channels" : "4",
+    "decode" : "accepted",
+    "height" : "9",
+    "name" : "pred-17-4-16.independent",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(7)",
+    "name" : "pred-17-4-16",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "1939240",
+    "bits" : "8",
+    "channels" : "4",
+    "decode" : "accepted",
+    "height" : "9",
+    "name" : "pred-17-4-8.independent",
+    "stage" : "pixels",
+    "width" : "17"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(7)",
+    "name" : "pred-17-4-8",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "3390822",
+    "bits" : "16",
+    "channels" : "1",
+    "decode" : "accepted",
+    "height" : "64",
+    "name" : "pred-64-1-16.independent",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(18)",
+    "name" : "pred-64-1-16",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "3390819",
+    "bits" : "8",
+    "channels" : "1",
+    "decode" : "accepted",
+    "height" : "64",
+    "name" : "pred-64-1-8.independent",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(18)",
+    "name" : "pred-64-1-8",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "4246573",
+    "bits" : "16",
+    "channels" : "2",
+    "decode" : "accepted",
+    "height" : "64",
+    "name" : "pred-64-2-16.independent",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(18)",
+    "name" : "pred-64-2-16",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "4158086",
+    "bits" : "8",
+    "channels" : "2",
+    "decode" : "accepted",
+    "height" : "64",
+    "name" : "pred-64-2-8.independent",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(18)",
+    "name" : "pred-64-2-8",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "3118607",
+    "bits" : "16",
+    "channels" : "3",
+    "decode" : "accepted",
+    "height" : "64",
+    "name" : "pred-64-3-16.independent",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(20)",
+    "name" : "pred-64-3-16",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "3118601",
+    "bits" : "8",
+    "channels" : "3",
+    "decode" : "accepted",
+    "height" : "64",
+    "name" : "pred-64-3-8.independent",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(20)",
+    "name" : "pred-64-3-8",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "4042375",
+    "bits" : "16",
+    "channels" : "4",
+    "decode" : "accepted",
+    "height" : "64",
+    "name" : "pred-64-4-16.independent",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(20)",
+    "name" : "pred-64-4-16",
+    "stage" : "envelope"
+  },
+  {
+    "admittedWorkspaceBytes" : "3953592",
+    "bits" : "8",
+    "channels" : "4",
+    "decode" : "accepted",
+    "height" : "64",
+    "name" : "pred-64-4-8.independent",
+    "stage" : "pixels",
+    "width" : "64"
+  },
+  {
+    "decode" : "rejected: unsupportedStrategy(20)",
+    "name" : "pred-64-4-8",
+    "stage" : "envelope"
+  }
+]

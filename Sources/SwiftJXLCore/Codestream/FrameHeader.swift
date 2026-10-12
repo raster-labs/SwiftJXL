@@ -415,18 +415,24 @@ package struct LoopFilter: Sendable, Equatable {
     package let gab: Bool
     /// EPF iteration count (default 2, range 0..3 per `Bits(2)`).
     package let epfIters: UInt32
+    /// The envelope retains this flag so an implementation cannot silently use
+    /// default coefficients after consuming custom filter parameters.
+    package let hasCustomParameters: Bool
 
     package init(allDefault: Bool = true,
                 gab: Bool = true,
-                epfIters: UInt32 = 2) {
+                epfIters: UInt32 = 2,
+                hasCustomParameters: Bool = false) {
         self.allDefault = allDefault
         self.gab = gab
         self.epfIters = epfIters
+        self.hasCustomParameters = hasCustomParameters
     }
 
     package static let `default` = LoopFilter()
 
     package func write(to w: inout BitWriter) throws {
+        guard !hasCustomParameters else { throw FrameHeaderError.unsupportedField("Custom filter writer") }
         if allDefault {
             w.writeBit(true)
             // BeginExtensions U64.
@@ -511,7 +517,8 @@ package struct LoopFilter: Sendable, Equatable {
         }
         // Extensions: U64.
         guard try r.readU64() == 0 else { throw BitstreamError.malformedValue("Unsupported extension fields") }
-        return LoopFilter(allDefault: false, gab: gab, epfIters: epfIters)
+        return LoopFilter(allDefault: false, gab: gab, epfIters: epfIters,
+            hasCustomParameters: gabCustom || epfSharpCustom || epfWeightCustom || epfSigmaCustom)
     }
 }
 

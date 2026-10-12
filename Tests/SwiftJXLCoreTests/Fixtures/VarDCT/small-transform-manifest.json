@@ -1,0 +1,20 @@
+{
+  "reference": "libjxl a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "target": "HWY_COMPILE_ONLY_SCALAR; JXL_HIGH_PRECISION=1",
+  "function": "jxl::N_SCALAR::TransformToPixels",
+  "identifiers": [
+    1,
+    2,
+    3,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+  ],
+  "vectorsPerIdentifier": "64 unit coefficient impulses, then coefficient[i]=Float((i*17%29)-14)/31",
+  "layout": "identifier-major, vector-major, 64 row-major Float32 little-endian samples",
+  "predeclaredTolerance": "absolute 0.000002 + relative 0.000002 * abs(reference)",
+  "sha256": "d5312a75688a45e5c5a7285e03490849fcb1c29cc63afdfef20ca12ced100b26"
+}

@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Internal VarDCT pixel integration — 12 October 2026
+
+Adapted the bounded single-pass default-matrix XYB pipeline from pinned JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e` under contract 0.10.0: coefficient entropy, strategy mapping, DCT/small/AFV reconstruction, restoration and synchronous borrowed integer output. Full debug passed 207 declarations / 805 cases; affected ASan and TSan each passed 25 declarations / 107 cases. All 32 retained frames pass a separately pinned scalar Float32/nearest-integer oracle; the original ARM integer oracle still has ten recorded failures. This is a scalar numerical milestone, not complete interoperability or public VarDCT support. Official corpus scope, source provenance and remaining gates are in [the updated preflight](Documentation/Engineering/Migration/VARDCT_PREFLIGHT.md).
+
 ## VarDCT primitive preparation — 12 October 2026
 
 Adapted bounded scaled DCT, visible-boundary Gaborish and default opsin primitives from pinned JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e` under contract 0.10.0. Independent mathematical references expose and correct three inherited large-transform precision failures without widening thresholds. Pixel baseline diagnostics identify padded-edge filtering errors; four 16-bit colour cases remain outside the declared limits. Public VarDCT remains disabled. Full debug passed 192 declarations / 721 cases; affected ASan and TSan each passed 10 declarations / 23 cases. See [preflight](Documentation/Engineering/Migration/VARDCT_PREFLIGHT.md) and [exact validation](Documentation/Engineering/Migration/Evidence/VarDCT/primitive-validation.json). Frame, entropy, storage integration and full qualification remain open.

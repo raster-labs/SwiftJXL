@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-12",
+  "sourceCommit": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "sourceArchiveSHA256": "818398895831069902e3677d285054a7d1255b11b221e94c6aaa1cb83b0a3f29",
+  "scalarLibrarySHA256": "b62141aba6a0d6e33d98185425f2f159e2bb9c62dc5e1fe6be253163d30c82e5",
+  "scalarCMSLibrarySHA256": "a29d9bda607068e5c125f7432157437fa17eb67aee37f3db60feb8feb258e7b5",
+  "configuration": "Release; HWY_COMPILE_ONLY_SCALAR; JXL_HIGH_PRECISION=1; system Homebrew highway1.4.0, brotli1.2.0, lcms2.19; BUILD_TESTING and tools disabled",
+  "buildCommand": "cmake --build work/vardct-preflight/libjxl-scalar-build --target jxl --parallel 2",
+  "decodeCommand": "pixel-oracle-reference-scalar decode-float INPUT.jxl OUTPUT.float",
+  "outcomes": {
+    "coreBuild": "passed",
+    "corpusEnvelopeAndCoefficients": "32/32",
+    "reconstructed": "32/32",
+    "scalarFloatNearestWithinUnchangedLimits": "32/32",
+    "originalNEONIntegerWithinUnchangedLimits": "22/32",
+    "alpha": "exact all cases"
+  },
+  "limits": {
+    "maximumLSB": 2,
+    "rmsLSB": 0.5
+  },
+  "notComplete": [
+    "Affected unit/sanitiser validation pending",
+    "Original NEON integer comparison retains ten threshold failures; this scalar diagnostic is not a silent gate replacement",
+    "Public pixel owning-memory/API integration and encoder are not implemented",
+    "Expanded profiles, malformed corpus, performance and platform validation remain"
+  ],
+  "referenceSourcesSHA256": {
+    "lib/jxl/quantizer-inl.h": "779434597da11f97b869ca1f12dc3dcbb5489e83529232186ee12cf3a8393643",
+    "lib/jxl/render_pipeline/stage_write.cc": "a005ca60dff721b32b3daa8fb59b9d47a10f7b628cefdd8622ed0e616d4cd823",
+    "lib/jxl/render_pipeline/stage_epf.cc": "3db8946a019e651af60d897465d6f7ae81dde1e24bac08c85c4c07b3b477e1af",
+    "lib/jxl/dec_transforms-inl.h": "60646470e8a00996715e6c7b39ebbf881d91daf222a710b6ed393c4ef6102be0"
+  },
+  "captureStage": "Reference-build diagnostic before the subsequent full debug and affected sanitizer qualification. See validation.json for later executed checks."
+}
