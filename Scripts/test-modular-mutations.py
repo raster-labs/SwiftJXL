@@ -17,7 +17,7 @@ from pathlib import Path
 
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--binary', type=Path, required=True)
-p.add_argument('--entry', choices=['inspect', 'decode', 'caller', 'pnm'], required=True)
+p.add_argument('--entry', choices=['inspect', 'decode', 'caller', 'pnm', 'animation-count', 'animation-inspect', 'animation-frame', 'animation-all'], required=True)
 p.add_argument('--seeds', type=Path, required=True)
 p.add_argument('--output', type=Path, required=True)
 p.add_argument('--seconds', type=float, default=3600)

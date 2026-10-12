@@ -1,0 +1,28 @@
+{
+  "scope": "Remaining ten forced-large writer streams only, same previously compiled debug BiasProbe and installed ARM float oracle; no rebuild, runtime change, benchmark or tolerance change.",
+  "command": "python3 ../vardct-preflight/arm-bias-diagnostic/extend.py > ../vardct-preflight/arm-bias-diagnostic/remaining-large-output.json",
+  "exit": 0,
+  "facts": {
+    "processes": 30,
+    "successfulExits": 30,
+    "originalExactlyMatchesSavedSwift": true,
+    "approximateWithinUnchanged2LSBAndPoint5RMSAgainstARMInteger": 10,
+    "maxApproximatePeakAgainstARMInteger": 2,
+    "maxApproximateRMSAgainstARMInteger": 0.15309310892394862,
+    "maxApproximatePeakAgainstARMFloatNearest": 2,
+    "maxApproximateRMSAgainstARMFloatNearest": 0.14959798558692783
+  },
+  "inference": "Together with writer-4, replacing exact division with retained ARM reciprocal approximation in coefficient-bias adjustment alone brings all11forced-large streams within the unchanged original2LSB/RMS0.5limits. This isolates the substantive discrepancy to scalar-versus-ARM reciprocal arithmetic across this forced-large corpus; no successor large-transform defect is demonstrated.",
+  "limits": [
+    "Residual peak2 for writer-18 andwriter-20 is not separately isolated.",
+    "This is a scratch counterfactual, not a runtime fix or general proof for arbitrary coefficient magnitudes and images.",
+    "All original acceptance records remain unchanged and failing; these diagnostic results must not be relabelled as original runtime passes.",
+    "Fusion was not repeated on these ten streams; writer-4 established it was irrelevant for that fixture."
+  ],
+  "evidence": [
+    "results.json",
+    "commands.json",
+    "sha256.json",
+    "../extend.py"
+  ]
+}

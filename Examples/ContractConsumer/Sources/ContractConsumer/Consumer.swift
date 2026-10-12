@@ -34,6 +34,17 @@ struct ContractConsumer {
               decoded.image.descriptor.meaningfulBits == 12 else {
             throw ConsumerFailure.unexpectedResult
         }
+        let sequence = try await encoder.encodeAnimation([
+            try .init(image: image, durationTicks: 10),
+            try .init(image: image, durationTicks: 25)
+        ], animation: .init(ticksPerSecondNumerator: 100, loopCount: 3))
+        let frames = try await decoder.decodeAll(sequence.encoded.data)
+        guard frames.frames.count == 2, frames.timing?.totalTicks == 35,
+              frames.timing?.loopCount == 3,
+              try frames.frames[1].decoded.image.sampleUInt16(x: 2, y: 1) == 4095,
+              frames.frames[0].decoded.image.storage.allocationID != frames.frames[1].decoded.image.storage.allocationID else {
+            throw ConsumerFailure.unexpectedResult
+        }
         let transcoder = try SwiftJXL.Transcoder(configuration: .init())
         do {
             _ = try await transcoder.transcode(Data(), to: .jpegXL, options: .init())
@@ -41,6 +52,6 @@ struct ContractConsumer {
         } catch let error as SwiftJXL.CodecError {
             guard error.category == .malformedInput else { throw error }
         }
-        print("Public consumer passed: owning UInt16 samples and lossless scalar JPEG XL.")
+        print("Public consumer passed: owning UInt16 samples, lossless scalar JPEG XL and exact animation timing.")
     }
 }

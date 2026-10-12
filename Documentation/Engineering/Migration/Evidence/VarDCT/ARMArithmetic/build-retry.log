@@ -1,0 +1,41 @@
+warning: /Users/raster/Library/org.swift.swiftpm/configuration is not accessible or not writable, disabling user-level cache features.
+warning: /Users/raster/Library/org.swift.swiftpm/security is not accessible or not writable, disabling user-level cache features.
+warning: /Users/raster/Library/Caches/org.swift.swiftpm is not accessible or not writable, disabling user-level cache features.
+warning: 'arm-bias-diagnostic': failed storing manifest for 'arm-bias-diagnostic' in cache: attempt to write a readonly database
+Building for debugging...
+[Planning deferred tasks]
+[23 / 38]
+[24 / 39] SwiftJXLCore
+[33 / 84]
+[36 / 84]
+[39 / 84]
+[41 / 84]
+[43 / 84]
+[46 / 84]
+[48 / 84]
+[50 / 84]
+[52 / 84]
+[55 / 84]
+[56 / 84]
+[57 / 84]
+[58 / 84]
+[69 / 84] SwiftJXLCore
+[70 / 84] SwiftJXLCore
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:114:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+112 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+113 |         }
+114 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+115 |         return result
+116 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[76 / 84] BiasProbe-product
+[78 / 85] SwiftJXLCore
+[78 / 85] BiasProbe-product
+[80 / 87] BiasProbe-product
+[81 / 87] BiasProbe-product
+[82 / 87] SwiftJXLCore
+[84 / 87] SwiftJXLCore
+[85 / 87] BiasProbe-product
+Build complete! (16.73 sec)

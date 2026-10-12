@@ -1,0 +1,31 @@
+{
+  "baselineCommit": "48676b4c938b2d71a59e6986dc575240a0b031ee",
+  "toolchain": "Apple Swift6.4 swiftlang-6.4.0.34.1 clang-2100.3.34.1 arm64-apple-macosx27.0.0",
+  "scope": "writer-4 only; diagnostic scratch snapshot, debug executable; no libjxl rebuild, runtime edits, shared-cache use, performance measurement, tolerance change or acceptance record replacement.",
+  "facts": [
+    "ARM integer versus explicit-nearest ARM FLOAT differs at two of768samples, peak1/RMS0.051031. Saved Swift and scalar float-nearest both differ from ARM float-nearest by peak44.",
+    "Original scratch decoder reproduces all saved Swift pixels exactly.",
+    "Exact reciprocal with either fused or unfused multiply/subtract reproduces original pixels exactly: peak44/RMS2.378287 against ARM float-nearest.",
+    "ARM vrecpe reciprocal table with either fused or unfused multiply/subtract reduces error to peak1/RMS0.088388 against ARM float-nearest; versus original ARM integer peak1/RMS0.102062.",
+    "Fused versus unfused output files are byte-identical within each reciprocal pair.",
+    "The one executable selects five modes by BIAS_MODE; unfused multiply is a separate @inline(never) function in a debug build. Original path is retained as a fifth control. No other copied core implementation is edited. All five processes exited0."
+  ],
+  "inference": "For writer-4, reciprocal approximation in reference ARM coefficient-bias adjustment is sufficient to explain the substantive discrepancy. Output conversion and fused-versus-unfused bias arithmetic do not explain that substantive difference on this input. This is evidence against a successor transform defect for this fixture, not proof for every ARM corpus failure.",
+  "limits": [
+    "Single16x16RGB16 forced DCT16 fixture with small AC magnitudes; no generalisation to other transforms or coefficient distributions.",
+    "Remaining<=1LSB residual is not isolated.",
+    "Scratch approximate table is test-only retained hardware evidence, not proposed runtime implementation or portability policy.",
+    "Results are diagnostic and do not erase original failed acceptance records."
+  ],
+  "evidence": {
+    "results": "results.json",
+    "commands": "commands.json",
+    "hashes": "sha256.json",
+    "soleCoreChange": "diagnostic-only.patch",
+    "sources": "Sources/",
+    "buildLogs": [
+      "build.log",
+      "build-retry.log"
+    ]
+  }
+}

@@ -1,0 +1,382 @@
+[
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-5.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-5.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-5.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-5.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-5.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-5.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-6.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-6.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-6.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-6.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-6.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-6.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-7.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-7.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-7.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-7.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-7.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-7.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-8.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-8.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-8.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-8.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-8.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-8.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-9.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-9.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-9.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-9.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-9.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-9.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-10.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-10.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-10.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-10.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-10.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-10.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-11.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-11.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-11.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-11.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-11.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-11.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-18.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-18.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-18.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-18.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-18.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-18.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-19.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-19.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-19.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-19.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-19.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-19.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/pixel-oracle-float",
+      "decode-float",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-20.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-20.arm-float"
+    ],
+    "environment": {},
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-20.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-20.original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-20.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/remaining-large/writer-20.approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

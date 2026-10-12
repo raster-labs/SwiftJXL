@@ -129,8 +129,8 @@ public struct DecodedImage: Sendable {
 /// sRGB/BT.709 transfer, rendering intent and alpha association are preserved
 /// without conversion through the documented required metadata entries.
 /// Explicit lossy mode selects bounded VarDCT sRGB 8–16-bit encoding with
-/// relative intent and optional straight alpha, at most 2048 per axis (256 with
-/// alpha). It reads the same owning layouts and reports lossy fidelity.
+/// relative intent and optional straight alpha, at most 4096 per axis and
+/// 4,194,304 pixels. It reads the same owning layouts and reports lossy fidelity.
 public struct Encoder: Sendable {
     public let configuration: EncoderConfiguration
     public static let capabilities = CodecCapabilities.pixelEncoding

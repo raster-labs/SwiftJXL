@@ -1,6 +1,6 @@
 # VarDCT pixel migration preflight
 
-This stage is in progress on `codex/swiftjxl-vardct-pixels`, based on PR #18 at `bfd12bc`. It does not yet enable public VarDCT pixel decoding or encoding. The pinned predecessor is JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e`; contract 0.10.0 applies. Predecessor source and production remain unchanged.
+Current integration is on `codex/swiftjxl-vardct-public-integration`, rebased onto merged PR #18 (`253424054d4cc7f903ed51dcf83702b099b204dd`). The pinned predecessor remains JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e`; contract 0.10.0 applies. Public bounded VarDCT encoding/decoding is now implemented. Earlier sections below retain the chronological scope and limitations of their own checkpoints; they are not current capability declarations. See [MIGRATION.md](../../../MIGRATION.md) for current bounds. Predecessor source and production remain unchanged.
 
 ## Executed baseline
 
@@ -77,3 +77,19 @@ A shared `PixelFrameHeader` now parses the container, dimensions and metadata on
 Allocated and caller-provided output are integrated through the same ownership lifecycle as Modular, including invalidation on cancellation before sealing. Reports use `.lossy`; no sample-exact claim is made for reconstructed colour. CLI inspection, validation and explicit sRGB PNM decoding share this route and report lossy fidelity. Full debug passed 230 declarations / 883 cases with independent oracle enabled and no skips. Thirty-two retained streams pass CLI inspection, validation, scalar-nearest output/alpha checks and transfer-mismatch rejection. Affected sanitizer evidence is retained in `Evidence/VarDCT/PublicIntegration`.
 
 This public connection does not replace the original NEON integer-oracle evidence or certify the entire conformance corpus. Public encoding, broader groups/frames, remaining malformed-input campaigns, controlled performance and final platform qualification remain open. Production remains on JXLSwift.
+
+## Hierarchical search, grouped public paths and scratch reuse
+
+The default public encoder now performs hierarchical strategy selection through 64×64, with explicit fixed-DCT8 and single-cell alternatives. Forty-four independent large-transform vectors and the retained emitted streams qualify the larger kernels. Multiple DC/AC regions and straight alpha are supported within 4096 pixels per axis and 4,194,304 pixels, subject to caller budgets. Twelve new grouped encoder streams pass the pinned independent scalar comparison at peak ≤1 level/RMS ≤0.15803, with exact alpha. Eight streams are additionally reproduced byte-for-byte through padded planar big-endian public source storage.
+
+Reusable noncopyable scratch is bound to each operation budget; it does not change the global cumulative admission rules. All twelve measured 128/256/512 flat/textured greyscale/RGB inputs now encode under the default 512 MiB workspace limit. The previously rejected textured 512×512 greyscale case admits 116,335,248 bytes; this is cumulative admission, not process RSS. Candidate results retained during search remain separately charged. Historical encoded bytes remain unchanged.
+
+The combined affected core AddressSanitizer and ThreadSanitizer checks each pass 30 declarations / 110 cases. The preceding public hierarchy/grouped-decoder snapshot (`7472e2e4e0a6260b988cb135c35d605958486bc2`) passes each sanitizer with 33 declarations. Public grouped encoding passes five declarations / 58 cases. The sixty-sample quiet release experiment retains five warmups and twenty interleaved samples per strategy; it establishes current latency/size, without claiming a controlled historical speedup. Exact evidence is under [EncoderLarge](Evidence/VarDCT/EncoderLarge), [GroupedEncoder](Evidence/VarDCT/GroupedEncoder), [EncoderScratch](Evidence/VarDCT/EncoderScratch), [PublicHierarchy](Evidence/VarDCT/PublicHierarchy) and [PublicGroupedEncoder](Evidence/VarDCT/PublicGroupedEncoder).
+
+Final combined-head checks, malformed-input campaign completion, broader interoperability and hosted platform qualification remain open. Separate independent-frame animation work does not broaden the still-image API implicitly. No release or production cutover is implied.
+
+## ARM integer-reference discrepancy isolation
+
+A bounded scratch experiment separates output conversion, reciprocal approximation and multiply-add fusion. For the DCT16 `writer-4` stream, ARM integer versus ARM float-nearest differs by at most one level at two samples. The ordinary Swift result differs from ARM float-nearest by peak 44/RMS 2.378287. Replacing exact reciprocal division only in the scratch coefficient-bias calculation reduces that to peak 1/RMS 0.088388; fused and unfused variants produce identical pixels on this fixture.
+
+The same already-built diagnostic extends the reciprocal-only comparison to the remaining ten forced-large streams. Original diagnostic outputs exactly match the retained production Swift pixels. Approximate-reciprocal diagnostic outputs bring all eleven streams within the unchanged original peak-two/RMS-0.5 limits (worst peak 2/RMS 0.153093 against ARM integers). This supports a scalar-versus-ARM arithmetic explanation across this corpus; it is not a runtime patch or proof for arbitrary inputs. Original production acceptance records remain unchanged. Residual two-level differences for two transforms are not separately isolated. [Commands, hashes, patch and results](Evidence/VarDCT/ARMArithmetic) preserve the counterfactual separately.

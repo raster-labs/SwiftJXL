@@ -1,0 +1,178 @@
+[
+  {
+    "name": "pred-17-1-16.independent",
+    "successor-epf": {
+      "peak": 1,
+      "rms": 0.28005601680560194
+    },
+    "successor-reciprocal": {
+      "peak": 0,
+      "rms": 0.0
+    }
+  },
+  {
+    "name": "pred-17-1-8.independent",
+    "successor-epf": {
+      "peak": 0,
+      "rms": 0.0
+    },
+    "successor-reciprocal": {
+      "peak": 0,
+      "rms": 0.0
+    }
+  },
+  {
+    "name": "pred-17-2-16.independent",
+    "successor-epf": {
+      "peak": 1,
+      "rms": 0.28005601680560194
+    },
+    "successor-reciprocal": {
+      "peak": 0,
+      "rms": 0.0
+    }
+  },
+  {
+    "name": "pred-17-2-8.independent",
+    "successor-epf": {
+      "peak": 0,
+      "rms": 0.0
+    },
+    "successor-reciprocal": {
+      "peak": 0,
+      "rms": 0.0
+    }
+  },
+  {
+    "name": "pred-17-3-16.independent",
+    "successor-epf": {
+      "peak": 2,
+      "rms": 0.5581638119392959
+    },
+    "successor-reciprocal": {
+      "peak": 1,
+      "rms": 0.15480678800427466
+    }
+  },
+  {
+    "name": "pred-17-3-8.independent",
+    "successor-epf": {
+      "peak": 0,
+      "rms": 0.0
+    },
+    "successor-reciprocal": {
+      "peak": 0,
+      "rms": 0.0
+    }
+  },
+  {
+    "name": "pred-17-4-16.independent",
+    "successor-epf": {
+      "peak": 2,
+      "rms": 0.5581638119392959
+    },
+    "successor-reciprocal": {
+      "peak": 1,
+      "rms": 0.15480678800427466
+    }
+  },
+  {
+    "name": "pred-17-4-8.independent",
+    "successor-epf": {
+      "peak": 0,
+      "rms": 0.0
+    },
+    "successor-reciprocal": {
+      "peak": 0,
+      "rms": 0.0
+    }
+  },
+  {
+    "name": "pred-64-1-16.independent",
+    "successor-epf": {
+      "peak": 1,
+      "rms": 0.3412551510600243
+    },
+    "successor-reciprocal": {
+      "peak": 1,
+      "rms": 0.10711960313126631
+    }
+  },
+  {
+    "name": "pred-64-1-8.independent",
+    "successor-epf": {
+      "peak": 1,
+      "rms": 0.015625
+    },
+    "successor-reciprocal": {
+      "peak": 0,
+      "rms": 0.0
+    }
+  },
+  {
+    "name": "pred-64-2-16.independent",
+    "successor-epf": {
+      "peak": 1,
+      "rms": 0.33693529145074724
+    },
+    "successor-reciprocal": {
+      "peak": 1,
+      "rms": 0.11048543456039805
+    }
+  },
+  {
+    "name": "pred-64-2-8.independent",
+    "successor-epf": {
+      "peak": 1,
+      "rms": 0.015625
+    },
+    "successor-reciprocal": {
+      "peak": 0,
+      "rms": 0.0
+    }
+  },
+  {
+    "name": "pred-64-3-16.independent",
+    "successor-epf": {
+      "peak": 14,
+      "rms": 0.7631230378080152
+    },
+    "successor-reciprocal": {
+      "peak": 1,
+      "rms": 0.16876928902103802
+    }
+  },
+  {
+    "name": "pred-64-3-8.independent",
+    "successor-epf": {
+      "peak": 1,
+      "rms": 0.03125
+    },
+    "successor-reciprocal": {
+      "peak": 1,
+      "rms": 0.01275775907699572
+    }
+  },
+  {
+    "name": "pred-64-4-16.independent",
+    "successor-epf": {
+      "peak": 14,
+      "rms": 0.7679598751182686
+    },
+    "successor-reciprocal": {
+      "peak": 1,
+      "rms": 0.16362789658755217
+    }
+  },
+  {
+    "name": "pred-64-4-8.independent",
+    "successor-epf": {
+      "peak": 1,
+      "rms": 0.03375385780420761
+    },
+    "successor-reciprocal": {
+      "peak": 0,
+      "rms": 0.0
+    }
+  }
+]

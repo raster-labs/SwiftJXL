@@ -207,7 +207,7 @@ private func help(_ command: String?) -> String {
               --max-memory BYTES       Positive aggregate ceiling; default 1073741824.
               --timeout SECONDS        Deadline >0..31536000 seconds; default 120.
             Lossy requires sRGB (pnm-srgb or nrrd), 8..16-bit samples and straight alpha.
-            Lossy alpha images are limited to 256 per axis.
+            Lossy images are limited to 4096 per axis and 4,194,304 pixels, within resource limits.
             Distance is codec-specific, not a maximum sample-error guarantee.
             No intermediate image file or full-image serialisation buffer is created.
             Pipe bytes still incur OS copies; this is not shared memory between processes.

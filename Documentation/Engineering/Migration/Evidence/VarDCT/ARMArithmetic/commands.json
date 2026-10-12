@@ -1,0 +1,84 @@
+[
+  {
+    "cwd": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL",
+    "command": "../vardct-preflight/pixel-oracle-float decode-float ../vardct-preflight/encoder-large-writer/writer-4.jxl ../vardct-preflight/writer-4-arm-float.bin",
+    "exit": 0
+  },
+  {
+    "cwd": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL",
+    "command": "swift build --package-path ../vardct-preflight/arm-bias-diagnostic -c debug --product BiasProbe",
+    "exit": 1,
+    "note": "Initial attempt failed because default clang module cache was outside writable sandbox; build.log retained."
+  },
+  {
+    "cwd": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL",
+    "command": "CLANG_MODULE_CACHE_PATH=/tmp/swiftjxl-arm-bias-clang SWIFTPM_MODULECACHE_OVERRIDE=/tmp/swiftjxl-arm-bias-modules swift build --disable-sandbox --package-path ../vardct-preflight/arm-bias-diagnostic -c debug --product BiasProbe",
+    "exit": 0,
+    "log": "build-retry.log"
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-4.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/original.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "original"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-4.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/exact-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "exact-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-4.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/exact-fused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "exact-fused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-4.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/approx-unfused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-unfused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/.build/debug/BiasProbe",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/encoder-large-writer/writer-4.jxl",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/vardct-preflight/arm-bias-diagnostic/approx-fused.decoded"
+    ],
+    "environment": {
+      "BIAS_MODE": "approx-fused"
+    },
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

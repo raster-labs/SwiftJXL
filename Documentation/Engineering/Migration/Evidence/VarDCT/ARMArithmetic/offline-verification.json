@@ -1,0 +1,122 @@
+{
+  "armIntegerVsArmFloatNearest": {
+    "samples": 768,
+    "peakLSB": 1,
+    "rmsLSB": 0.05103103630798288,
+    "differentSamples": 2
+  },
+  "savedSwiftVsArmFloatNearest": {
+    "samples": 768,
+    "peakLSB": 44,
+    "rmsLSB": 2.378287198805056,
+    "differentSamples": 191
+  },
+  "scalarVsArmFloatNearest": {
+    "samples": 768,
+    "peakLSB": 44,
+    "rmsLSB": 2.376096238230542,
+    "differentSamples": 192
+  },
+  "variants": {
+    "original": {
+      "vsArmFloatNearest": {
+        "samples": 768,
+        "peakLSB": 44,
+        "rmsLSB": 2.378287198805056,
+        "differentSamples": 191
+      },
+      "vsSavedSwift": {
+        "samples": 768,
+        "peakLSB": 0,
+        "rmsLSB": 0.0,
+        "differentSamples": 0
+      },
+      "vsArmInteger": {
+        "samples": 768,
+        "peakLSB": 44,
+        "rmsLSB": 2.3793819225448725,
+        "differentSamples": 192
+      }
+    },
+    "exact-unfused": {
+      "vsArmFloatNearest": {
+        "samples": 768,
+        "peakLSB": 44,
+        "rmsLSB": 2.378287198805056,
+        "differentSamples": 191
+      },
+      "vsSavedSwift": {
+        "samples": 768,
+        "peakLSB": 0,
+        "rmsLSB": 0.0,
+        "differentSamples": 0
+      },
+      "vsArmInteger": {
+        "samples": 768,
+        "peakLSB": 44,
+        "rmsLSB": 2.3793819225448725,
+        "differentSamples": 192
+      }
+    },
+    "exact-fused": {
+      "vsArmFloatNearest": {
+        "samples": 768,
+        "peakLSB": 44,
+        "rmsLSB": 2.378287198805056,
+        "differentSamples": 191
+      },
+      "vsSavedSwift": {
+        "samples": 768,
+        "peakLSB": 0,
+        "rmsLSB": 0.0,
+        "differentSamples": 0
+      },
+      "vsArmInteger": {
+        "samples": 768,
+        "peakLSB": 44,
+        "rmsLSB": 2.3793819225448725,
+        "differentSamples": 192
+      }
+    },
+    "approx-unfused": {
+      "vsArmFloatNearest": {
+        "samples": 768,
+        "peakLSB": 1,
+        "rmsLSB": 0.08838834764831845,
+        "differentSamples": 6
+      },
+      "vsSavedSwift": {
+        "samples": 768,
+        "peakLSB": 44,
+        "rmsLSB": 2.3793819225448725,
+        "differentSamples": 192
+      },
+      "vsArmInteger": {
+        "samples": 768,
+        "peakLSB": 1,
+        "rmsLSB": 0.10206207261596575,
+        "differentSamples": 8
+      }
+    },
+    "approx-fused": {
+      "vsArmFloatNearest": {
+        "samples": 768,
+        "peakLSB": 1,
+        "rmsLSB": 0.08838834764831845,
+        "differentSamples": 6
+      },
+      "vsSavedSwift": {
+        "samples": 768,
+        "peakLSB": 44,
+        "rmsLSB": 2.3793819225448725,
+        "differentSamples": 192
+      },
+      "vsArmInteger": {
+        "samples": 768,
+        "peakLSB": 1,
+        "rmsLSB": 0.10206207261596575,
+        "differentSamples": 8
+      }
+    }
+  }
+}
