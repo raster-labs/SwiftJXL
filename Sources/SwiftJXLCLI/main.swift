@@ -223,7 +223,7 @@ private func help(_ command: String?) -> String {
 
             \(command == "inspect" ? "Inspect supported headers and output geometry; pixel payload integrity is not checked." : "Decode the entire supported frame in memory to validate its pixel payload; discard pixels.")
             Supports single-frame unsigned greyscale/RGB Modular JPEG XL with optional alpha,
-            8..16 meaningful bits, dimensions <=1024, compressed input <=4194304 bytes.
+            1..16 meaningful bits, dimensions <=1024, compressed input <=4194304 bytes.
             This is not a general JPEG XL conformance validator. Unsupported profiles return 4.
 
             COMMAND OPTIONS
@@ -347,7 +347,7 @@ private func write(_ text: String, to handle: FileHandle) throws {
             "interchangeFormats": ["nrrd", "pnm", "pnm-srgb"], "pnmMeaningfulBits": Array(8...16), "pnmColourTransfers": ["bt709", "srgb-explicit-variant"],
             "maximumEncodeDimension": 1024, "maximumDecodeDimension": 1024,
             "canInspect": decoder.canInspect, "canValidate": true, "formats": formats,
-            "profile": "single-frame integer Modular grey/RGB with optional alpha; 8..16 bits; maximum dimension 1024",
+            "profile": "single-frame integer Modular grey/RGB with optional alpha; inspect/validate 1..16 bits; encode 8..16 bits; maximum dimension 1024",
             "maximumCompressedBytes": CommandIO.maximumInput]
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
         try FileHandle.standardOutput.write(contentsOf: data + Data([10]))

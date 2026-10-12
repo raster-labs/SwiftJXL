@@ -139,7 +139,7 @@ public struct Encoder: Sendable {
     }
 }
 
-/// Single-frame integer Modular JPEG XL decoding, 8–16 meaningful bits,
+/// Single-frame integer Modular JPEG XL decoding, 1–16 meaningful bits,
 /// greyscale or RGB with optional straight/premultiplied alpha. Supports bounded
 /// groups, RCT, simple palettes and Squeeze. Caller storage may be planar or
 /// interleaved, 8/16-bit, padded and either byte order. Embedded grey/RGB ICC
@@ -187,7 +187,7 @@ public struct Decoder: Sendable {
 private extension CodecCapabilities {
     static func modular(encoding: Bool) -> Self {
         Self(formats: ["jpeg-xl"], compressionModes: [.lossless], sampleTypes: [.unsignedInteger],
-             meaningfulPrecision: 8...16,
+             meaningfulPrecision: encoding ? (8...16) : (1...16),
              layouts: ["greyscale or RGB, optional alpha; planar/interleaved UInt8/UInt16; explicit byte order, offsets and strides"],
              availableBackends: [.scalarCPU], canInspect: !encoding, canEncode: encoding, canDecode: !encoding)
     }

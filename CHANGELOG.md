@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — low-precision Modular decoding, 2026-10-12
+
+- Restore predecessor-compatible 1–7-bit greyscale/RGB/alpha decoding without rescaling, with exact UInt16 allocating output or shared UInt8 caller output. Encoding remains 8–16-bit and file adapters reject unrepresentable precision.
+- Add 28 independent fixtures verified against the pinned predecessor, direction-specific capability checks and CLI inspect/validate regressions.
+
 ## Unreleased — embedded ICC pixel decoding, 2026-10-12
 
 - Preserve embedded grey/RGB ICC bytes in public inspect, allocating decode and caller-storage decode without colour conversion. Bound ICC decoding by profile, metadata and operation memory limits. Reject mismatched caller profiles.

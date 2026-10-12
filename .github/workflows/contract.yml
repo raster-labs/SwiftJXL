@@ -211,6 +211,8 @@ jobs:
         run: |
           python3 Scripts/test-cli-pnm.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --info-oracle "$RUNNER_TEMP/libjxl/build/swiftjxl-modular-info-oracle" --reference-tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/pnm-reference-debug
           python3 Scripts/test-cli-pnm.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --info-oracle "$RUNNER_TEMP/libjxl/build/swiftjxl-modular-info-oracle" --reference-tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/pnm-reference-release
+          python3 Scripts/test-cli-low-precision.py --binary "$(swift build --show-bin-path)/swiftjxl-cli" --output .build/low-precision-debug
+          python3 Scripts/test-cli-low-precision.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --output .build/low-precision-release
       - name: Preserve oracle evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -222,6 +224,7 @@ jobs:
             .build/nrrd-reference-*/report.json
             .build/native-jpeg-cli-*/report.json
             .build/pnm-reference-*/report.json
+            .build/low-precision-*/report.json
             .build/jpeg-coefficient-evidence/report.json
             .build/brotli-framing-evidence/report.json
             .build/brotli-decoder-evidence/report.json

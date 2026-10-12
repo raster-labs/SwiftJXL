@@ -34,7 +34,7 @@ import SwiftJXL
                     result = try await decoder.decode(data, options: options)
                 }
                 let d = result.image.descriptor
-                guard d.storageBits == 16, (8...16).contains(d.meaningfulBits),
+                guard d.storageBits == 16, (1...16).contains(d.meaningfulBits),
                       result.image.storage.byteCount == d.requiredByteCount else {
                     throw NSError(domain: "decoded layout invariant", code: 3)
                 }

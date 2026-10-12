@@ -114,3 +114,5 @@ One image is accepted, with dimensions at most 1024, 8–16 meaningful bits and 
 The encoder retains a sample view of the input Data. Output serialisation uses one row of at most 8192 bytes, included in the CLI overhead reservation; no second full image is created. Library BT.709 metadata is required semantics and survives `discardAncillary`. This profile extends CLI coverage; broader migration and release qualification remain open.
 
 Embedded ICC profiles in supported Modular images are retained by library decoding. CLI inspect/validate JSON reports `colourTransfer: "icc"` and `iccProfileBytes`; it does not label these samples sRGB. NRRD/PNM export rejects such input because those adapters cannot preserve the profile.
+
+Inspection and validation also support 1–7-bit integer streams, preserving their declared precision. Encoding and NRRD/PNM file export retain their existing precision limits; a low-precision stream is not silently rescaled or labelled as 8-bit output.

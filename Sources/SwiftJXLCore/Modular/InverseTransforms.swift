@@ -9,7 +9,7 @@
 /// Only simple palettes are implemented; predicted/delta palettes are rejected.
 package func applyInverseTransforms(image: inout ModularImage, transforms: [ModularTransform],
                                     bitDepth: Int, budget: ScalarOperationBudget) throws {
-    guard (8...16).contains(bitDepth), transforms.count <= 256,
+    guard (1...16).contains(bitDepth), transforms.count <= 256,
           image.nbMetaChannels >= 0, image.nbMetaChannels <= image.channels.count,
           image.channels.count <= ModularImage.maximumChannels else {
         throw ModularGeometryError.invalidTransform

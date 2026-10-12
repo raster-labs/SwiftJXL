@@ -105,7 +105,7 @@ package enum ModularFrameDecoder {
         }
         let metadata = try ImageMetadata.read(from: &reader)
         let gray = metadata.colorEncoding.colorSpace == .grayscale
-        guard !metadata.bitDepth.floatingPoint, (8...16).contains(metadata.bitDepth.bitsPerSample),
+        guard !metadata.bitDepth.floatingPoint, (1...16).contains(metadata.bitDepth.bitsPerSample),
               !metadata.xybEncoded, gray || metadata.colorEncoding.colorSpace == .rgb,
               metadata.orientation == 1,
               metadata.preview == nil, metadata.animation == nil, metadata.intrinsicSize == nil,

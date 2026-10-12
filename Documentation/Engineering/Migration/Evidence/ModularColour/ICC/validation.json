@@ -1,5 +1,5 @@
 {
-  "status": "ICC decode integration locally validated; finalCLI TSan and hostedhead pending",
+  "status": "ICC decode localdebug/ASan/TSan anddebug/release/sanitizerCLI checks passed; hostedhead andICCmutationcampaigns pending",
   "baseCommit": "526d6bb942a89cb7b4de16419659365634c6cb54",
   "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
   "contract": "0.10.0",
@@ -46,9 +46,9 @@
       "binarySHA256": "272d5e2d8b45945b7373cfe5e73ed1677340081627a0b1c58aa96deb922362fe"
     },
     "tsan": {
-      "status": "running",
-      "checks": 235,
-      "reportSHA256": "f48a5728b950590e6b738009e9a4f3068d7ccc2a9ace7f1e6c068b450b4b3af7",
+      "status": "passed",
+      "checks": 299,
+      "reportSHA256": "09757aeba141bc895bf00295e3255fe046682d27059a07996e1d9b48e2d03c4e",
       "binarySHA256": "3b68403899cfc599d3211aaaa82d1f6e58e497e4879bbcada6067a5a1e6f2125"
     },
     "release": {

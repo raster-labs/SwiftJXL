@@ -1,5 +1,11 @@
 # History and provenance — SwiftJXL
 
+## ICC preservation and low-precision compatibility — 12 October 2026
+
+Embedded grey/RGB ICC decoding now retains exact profile bytes and caller interpretation under profile, metadata and operation memory limits. Twelve independent streams verify samples and profiles; malformed headers, size ceilings and mismatched destinations reject. ICC encoding remains unsupported. The predecessor rejects these inputs, which is recorded separately from successful successor qualification. Local full debug passed 180 declarations / 669 cases; affected ASan/TSan each passed 19 declarations / 115 cases, and the expanded CLI suite passed 299 checks in each of debug, release, ASan and TSan. See [ICC evidence](Documentation/Engineering/Migration/Evidence/ModularColour/ICC/validation.json).
+
+The next compatibility extension restores 1–7-bit Modular decoding supported by the predecessor. All 28 independent cases retain exact samples in allocating UInt16 and caller-owned UInt8 layouts. The final full debug suite passed 182 declarations / 698 cases; affected ASan/TSan each passed 14 declarations / 53 cases; low-precision CLI checks passed 81 cases in each configuration. See [low-precision evidence](Documentation/Engineering/Migration/Evidence/ModularColour/LowPrecision/validation.json). New-profile mutation campaigns and final-head hosted validation are running; no overall release qualification is claimed. Earlier head 526d6bb passed all eight hosted jobs and four one-hour campaigns totalling 471158 mutations.
+
 ## BT.709 colour semantics and PNM CLI — 9 October 2026
 
 Added required transfer metadata and a bounded P5/P6/P7 adapter, preserving standard BT.709 or explicitly selected sRGB samples without conversion. The predecessor probe demonstrates silent sRGB labelling, ignored unsupported PAM tuples and rejected valid comments; the new regression suite covers these differences. Input retains its Data owner, and export uses one bounded row rather than an additional full image.
