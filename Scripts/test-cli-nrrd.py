@@ -174,7 +174,8 @@ def main():
             run([command, '-i', source, *formats, '--timeout', '1e-100'], expected=5)
             run([command, '-i', source, *formats, '--max-error', '1'], expected=2)
             if command == 'encode':
-                run([command, '-i', source, *formats, '--mode', 'lossy'], expected=4)
+                result = run([command, '-i', source, *formats, '--mode', 'lossy', '--json'])
+                assert json.loads(result.stderr)['fidelity'] == 'lossy'
             else: run([command, '-i', source, *formats, '--mode', 'lossless'], expected=2)
             target = out / (command+'-final');target.write_bytes(b'keep')
             run([command, '-i', source, *formats, '-o', target], expected=6);assert target.read_bytes()==b'keep'

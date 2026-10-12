@@ -13,7 +13,7 @@ private let version = "2.1.0-dev.2"
 private let reserved: [String] = []
 private let active = ["inspect", "validate", "encode", "decode", "transcode"]
 private let valueOptions: Set<String> = ["--input", "-i", "--output", "-o", "--input-format", "--output-format",
-    "--mode", "--max-error", "--backend", "--copy-policy", "--threads", "--max-memory", "--timeout"]
+    "--mode", "--distance", "--gaborish", "--adaptive-quantisation", "--dc-smoothing", "--max-error", "--backend", "--copy-policy", "--threads", "--max-memory", "--timeout"]
 
 private struct UsageError: Error { let message: String }
 private struct Options {
@@ -176,7 +176,7 @@ private func help(_ command: String?) -> String {
             return """
             USAGE: \(tool) \(command) --input PATH \(command == "encode" ? "--input-format nrrd" : "--output-format nrrd") [OPTIONS]
 
-            \(command == "encode" ? "Encode attached raw full-precision UInt16 NRRD to lossless JPEG XL." : "Decode supported 16-bit greyscale JPEG XL to attached raw UInt16 NRRD.")
+            \(command == "encode" ? "Encode attached raw full-precision UInt16 NRRD to JPEG XL (lossless by default)." : "Decode supported 16-bit greyscale JPEG XL to attached raw UInt16 NRRD.")
             Also accepts pnm: binary P5/P6/P7, grey/RGB with optional straight alpha,
             8..16 bits, MAXVAL=2^bits-1, BT.709 transfer. Select pnm-srgb for the
             explicit sRGB variant on BOTH import and export; no colour conversion.
@@ -194,7 +194,11 @@ private func help(_ command: String?) -> String {
               -o, --output PATH         Final binary file; default '-' means stdout.
               --input-format FORMAT    encode: nrrd/pnm/pnm-srgb required; decode: jxl/jpeg-xl optional.
               --output-format FORMAT   decode: nrrd/pnm/pnm-srgb required; encode: jxl/jpeg-xl optional.
-              --mode lossless          Encode only; the only supported mode and default.
+              --mode MODE              Encode: lossless (default) or explicit lossy VarDCT.
+              --distance FLOAT         Lossy only; positive finite JPEG XL distance, default 1.
+              --gaborish on|off         Lossy only; default on.
+              --adaptive-quantisation on|off  Lossy only; default on.
+              --dc-smoothing on|off     Lossy only; default on.
               --json                   Write final JSON report to stderr after binary output.
               --overwrite              Atomically replace an existing regular output file.
               --backend NAME           automatic (default), scalar-cpu; accelerated returns 4.
@@ -202,6 +206,9 @@ private func help(_ command: String?) -> String {
               --threads N              Worker ceiling 1..8; scalar implementation uses one.
               --max-memory BYTES       Positive aggregate ceiling; default 1073741824.
               --timeout SECONDS        Deadline >0..31536000 seconds; default 120.
+            Lossy requires sRGB (pnm-srgb or nrrd), 8..16-bit samples and straight alpha.
+            Lossy alpha images are limited to 256 per axis.
+            Distance is codec-specific, not a maximum sample-error guarantee.
             No intermediate image file or full-image serialisation buffer is created.
             Pipe bytes still incur OS copies; this is not shared memory between processes.
             Stdout may contain partial binary output on I/O failure. File publication is
@@ -223,7 +230,7 @@ private func help(_ command: String?) -> String {
 
             \(command == "inspect" ? "Inspect supported headers and output geometry; pixel payload integrity is not checked." : "Decode the entire supported frame in memory to validate its pixel payload; discard pixels.")
             Supports bounded single-frame Modular and VarDCT greyscale/RGB JPEG XL with optional alpha,
-            Modular 1..16 meaningful bits; VarDCT 8/16-bit sRGB.
+            Modular 1..16 meaningful bits; VarDCT 8..16-bit sRGB.
             Dimensions <=1024, compressed input <=4194304 bytes.
             This is not a general JPEG XL conformance validator. Unsupported profiles return 4.
 
@@ -341,6 +348,8 @@ private func write(_ text: String, to handle: FileHandle) throws {
     let formats = Array(Set(encoder.formats + decoder.formats + ["nrrd", "pnm", "pnm-srgb", "jpeg"])).sorted()
     if options.json {
         let payload: [String: Any] = ["tool": tool, "version": version, "minimumAppleOS": "26.0",
+            "encodeModes": ["lossless", "lossy"], "lossyInterchangeFormats": ["nrrd", "pnm-srgb"],
+            "lossyMeaningfulBits": Array(8...16), "lossyDistanceDefault": 1, "maximumLossyAlphaDimension": 256,
             "canEncode": encoder.canEncode, "canDecode": true, "canTranscode": true,
             "maximumTranscodeDimension": 2048, "transcodePreservation": "original-bitstream",
             "transcodeProfileLimits": Transcoder.capabilities[0].profileLimits,
@@ -348,7 +357,7 @@ private func write(_ text: String, to handle: FileHandle) throws {
             "interchangeFormats": ["nrrd", "pnm", "pnm-srgb"], "pnmMeaningfulBits": Array(8...16), "pnmColourTransfers": ["bt709", "srgb-explicit-variant"],
             "maximumEncodeDimension": 1024, "maximumDecodeDimension": 1024,
             "canInspect": decoder.canInspect, "canValidate": true, "formats": formats,
-            "profile": "single-frame integer Modular grey/RGB with optional alpha, decode 1..16 bits and encode 8..16 bits; VarDCT decode 8/16-bit sRGB with straight alpha, single pass/DC group; maximum dimension 1024",
+            "profile": "single-frame integer Modular grey/RGB with optional alpha, inspect/validate 1..16 bits and encode 8..16 bits; VarDCT encode/decode 8..16-bit sRGB with straight alpha, single pass/DC group; maximum dimension 1024",
             "maximumCompressedBytes": CommandIO.maximumInput]
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
         try FileHandle.standardOutput.write(contentsOf: data + Data([10]))
@@ -379,6 +388,27 @@ private func status(for error: CodecError) -> Int32 {
         throw CodecError(.invalidArgument, "--input is required.")
     }
     let binaryCommand = command == "encode" || command == "decode" || command == "transcode"
+    let lossyKeys = ["--distance", "--gaborish", "--adaptive-quantisation", "--dc-smoothing"]
+    let isLossy = command == "encode" && values["--mode"] == "lossy"
+    guard isLossy || !lossyKeys.contains(where: { values[$0] != nil }) else {
+        throw CodecError(.invalidArgument, "VarDCT controls require encode --mode lossy.")
+    }
+    var encoderConfiguration = EncoderConfiguration.default
+    if isLossy {
+        func toggle(_ key: String) throws -> Bool {
+            guard let value = values[key] else { return true }
+            guard value == "on" || value == "off" else {
+                throw CodecError(.invalidArgument, "VarDCT switches require on or off.")
+            }
+            return value == "on"
+        }
+        guard let distance = Float(values["--distance"] ?? "1"), distance.isFinite, distance > 0 else {
+            throw CodecError(.invalidArgument, "Distance must be positive and finite.")
+        }
+        let varDCT = try VarDCTEncodingOptions(distance: distance, gaborish: toggle("--gaborish"),
+            adaptiveQuantisation: toggle("--adaptive-quantisation"), dcSmoothing: toggle("--dc-smoothing"))
+        encoderConfiguration = try EncoderConfiguration(mode: .lossy, codecOptions: CodecOptions(varDCT: varDCT))
+    }
     var transcodeTarget: TranscodeTarget?
     if command == "transcode" {
         guard values["--max-error"] == nil else { throw CodecError(.invalidArgument, "max-error does not apply to original JPEG preservation.") }
@@ -395,9 +425,9 @@ private func status(for error: CodecError) -> Int32 {
         guard values["--max-error"] == nil, command == "encode" || values["--mode"] == nil else {
             throw CodecError(.invalidArgument, "Compression options do not apply to this command.")
         }
-        if let mode = values["--mode"], mode != "lossless" {
-            throw CodecError(["near-lossless", "lossy"].contains(mode) ? .unsupportedFeature : .invalidArgument,
-                             "Only lossless encoding is supported.")
+        if let mode = values["--mode"], !["lossless", "lossy"].contains(mode) {
+            throw CodecError(mode == "near-lossless" ? .unsupportedFeature : .invalidArgument,
+                             "Encoding supports lossless or explicit lossy mode.")
         }
         let required = command == "encode" ? "--input-format" : "--output-format"
         guard let format = values[required] else {
@@ -491,7 +521,7 @@ private func status(for error: CodecError) -> Int32 {
             else { image = try PNM.parse(data, io: io).image(data, srgb: srgb, limits: limits) }
             descriptor = image.descriptor
             try io.checkpoint()
-            let encoded = try await Encoder().encode(image, options: EncodeOptions(resourceLimits: limits,
+            let encoded = try await Encoder(configuration: encoderConfiguration).encode(image, options: EncodeOptions(resourceLimits: limits,
                 executionPolicy: backend, copyPolicy: copy))
             outputBytes = encoded.data.count
             fidelity = encoded.report.fidelity

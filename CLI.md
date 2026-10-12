@@ -40,7 +40,7 @@ swiftjxl-cli decode -i image.jxl --output-format nrrd -o restored.nrrd
 cat image.nrrd | swiftjxl-cli encode -i - --input-format nrrd | swiftjxl-cli decode -i - --output-format nrrd > restored.nrrd
 ```
 
-Select `--input-format nrrd` for encode or `--output-format nrrd` for decode explicitly. The compressed endpoint is `jxl`/`jpeg-xl` by default; no filename extension reinterprets raw bytes. Encoding accepts only lossless mode (the default), with dimensions at most 1024; decoding accepts dimensions at most 1024. Input is capped at 4 MiB. Resource/backend/copy limits, atomic output and cancellation follow the preceding section. `--max-error` never applies; `--mode` applies only to encode. `--json` writes the final success report to stderr after binary publication; requested verbosity also uses stderr. A reporting failure after publication returns failure but cannot retract the payload. A broken binary output never prints success.
+Select `--input-format nrrd` for encode or `--output-format nrrd` for decode explicitly. The compressed endpoint is `jxl`/`jpeg-xl` by default; no filename extension reinterprets raw bytes. Encoding defaults to lossless; explicit `--mode lossy` selects the bounded VarDCT profile, with dimensions at most 1024; decoding accepts dimensions at most 1024. Input is capped at 4 MiB. Resource/backend/copy limits, atomic output and cancellation follow the preceding section. `--max-error` never applies; `--mode` applies only to encode. `--json` writes the final success report to stderr after binary publication; requested verbosity also uses stderr. A reporting failure after publication returns failure but cannot retract the payload. A broken binary output never prints success.
 
 The [pinned and reviewed NRRD subset](Documentation/Engineering/Migration/NRRD_PROFILE.md) is attached NRRD0005, 2D greyscale, raw unsigned 16-bit samples, explicit little/big endian and x as fastest axis. This explicit input profile assigns the existing codec's D65/sRGB/default rendering intent. Header limits are 16 KiB total, 64 lines, 1024 bytes per line. Standard uint16 type aliases, LF/CRLF and comments are supported. Duplicate/missing fields, invalid counts, wrong payload lengths and unsupported fields reject. Detached references, URLs, compressed encodings, spatial metadata and custom keys are never followed or interpreted.
 
@@ -119,4 +119,14 @@ Inspection and validation also support 1–7-bit integer streams, preserving the
 
 ## VarDCT development decoder
 
-Inspection, validation and decode also accept the library’s bounded single-frame sRGB 8/16-bit VarDCT profile, within the CLI’s existing 1024-pixel dimension and 4 MiB input ceilings. Use `--output-format pnm-srgb` to preserve its sRGB interpretation. The final decode JSON reports `lossy` fidelity, while Modular remains `exact-samples`. ICC VarDCT, associated alpha, unsupported groups/passes and unrepresentable interchange interpretations reject. VarDCT encoding is not exposed yet; whole-migration qualification remains open.
+Inspection, validation and decode also accept the library’s bounded single-frame sRGB 8–16-bit VarDCT profile, within the CLI’s existing 1024-pixel dimension and 4 MiB input ceilings. Use `--output-format pnm-srgb` to preserve its sRGB interpretation. The final decode JSON reports `lossy` fidelity, while Modular remains `exact-samples`. ICC VarDCT, associated alpha, unsupported groups/passes and unrepresentable interchange interpretations reject. Explicit `encode --mode lossy` also exposes the bounded VarDCT encoder; whole-migration qualification remains open.
+
+
+Lossy encoding requires `pnm-srgb` (8–16-bit greyscale/RGB with optional straight alpha) or `nrrd` (16-bit greyscale). Standard `pnm` declares BT.709 and rejects rather than converting or relabelling samples. Alpha remains exact; lossy alpha images are limited to 256 pixels per axis. Lossless is still the default. Near-lossless and `--max-error` remain unsupported.
+
+`--distance FLOAT` is a positive finite JPEG XL perceptual distance (default 1), not a maximum sample-error bound or shared quality scale. `--gaborish on|off`, `--adaptive-quantisation on|off` and `--dc-smoothing on|off` default to `on`. All four options require explicit `encode --mode lossy`; using them on another command or in lossless mode returns exit 2 before input is opened. The final encode JSON reports `lossy` fidelity.
+
+```sh
+swiftjxl-cli encode -i srgb.pam --input-format pnm-srgb --mode lossy --distance 1 -o lossy.jxl
+swiftjxl-cli decode -i lossy.jxl --output-format pnm-srgb -o lossy.pam
+```
