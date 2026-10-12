@@ -104,29 +104,47 @@ struct ModularParallelTests {
         #expect(try decoded.image.storage.withUnsafeBytes { Data($0) } == original)
     }
 
-    @Test func publicCancellationReachesRunningGroupWorkersAndJoinsThem() async throws {
-        let source = try image(width: 1024, height: 1024), audit = ScalarStorageAudit()
-        let finished = Atomic<Bool>(false)
-        let task = Task {
-            defer { finished.store(true, ordering: .relaxed) }
-            return try await ScalarStorageAudit.$current.withValue(audit) {
-                try await Encoder().encode(source, options: .init(resourceLimits: .init(maximumWorkers: 8)))
+    @Test func cancellationInsideWorkerIsObservedAndAllWorkersJoin() throws {
+        let cancellation = ScalarOperationCancellation()
+        let context = ScalarEncodingWork(budget: try budget(workers: 8, cancellation: cancellation), writerByteLimit: 1024)
+        let counts = Mutex(Counts())
+        #expect(throws: CancellationError.self) {
+            try ScalarEncodingWork.$current.withValue(context) {
+                _ = try parallelMap(20) { index -> Int in
+                    counts.withLock { $0.active += 1 }
+                    defer { counts.withLock { $0.active -= 1; $0.completed += 1 } }
+                    // Cancel from inside an entered synchronous worker. No
+                    // scheduling delay or image-size assumption is involved.
+                    cancellation.cancel()
+                    do { try context.checkpoint(); Issue.record("Worker ignored cancellation") }
+                    catch is CancellationError {}
+                    return index
+                }
             }
         }
-        let waitDeadline = ContinuousClock.now.advanced(by: .seconds(30))
-        // One source Int32 plane precedes mapping. The next allocation event
-        // comes from an entered residual worker, so cancellation is mid-work.
-        while audit.snapshot.workingPlaneAllocations < 2 && !finished.load(ordering: .relaxed)
-            && ContinuousClock.now < waitDeadline { await Task.yield() }
-        let enteredWorker = audit.snapshot.workingPlaneAllocations >= 2
-        task.cancel()
+        let settled = counts.withLock { $0 }
+        #expect(settled.completed >= 1 && settled.active == 0)
+    }
+
+    @Test func publicCancellationAfterWorkersJoinPreventsPublication() async throws {
+        let source = try image(width: 1025, height: 7), audit = ScalarStorageAudit()
+        let reachedCompletion = Mutex(false)
+        let task = Task {
+            try await ScalarStorageAudit.$current.withValue(audit) {
+                try await Encoder().encode(source, options: .init(
+                    resourceLimits: .init(maximumWorkers: 8), progress: { update in
+                        if update.phase == .completed {
+                            reachedCompletion.withLock { $0 = true }
+                            withUnsafeCurrentTask { $0?.cancel() }
+                        }
+                    }))
+            }
+        }
         do { _ = try await task.value; Issue.record("Cancelled encoder returned a result") }
         catch is CancellationError {}
-        #expect(enteredWorker)
-        let settled = audit.snapshot.workingPlaneAllocations
-        for _ in 0..<32 { await Task.yield() }
-        #expect(audit.snapshot.workingPlaneAllocations == settled)
-        // Failed operation retains no mutable lease or ownership of the input.
+        #expect(reachedCompletion.withLock { $0 })
+        #expect(audit.snapshot.workingPlaneAllocations >= 2)
+        // Cancellation must prevent publication without affecting source ownership.
         #expect(try source.storage.withUnsafeBytes { $0.count } == source.descriptor.requiredByteCount)
     }
 

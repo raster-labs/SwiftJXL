@@ -54,3 +54,7 @@ The measured baseline records the scalar cost; it does not waive the stable-rele
 ## Final-head compiler follow-up
 
 Run `38216628517` passed both Swift 6.4 Linux jobs and the pinned independent oracle, but both Swift 6.2 Linux jobs timed out while type-checking the expected-sample expression in `ModularGradientTests`. Explicitly typed intermediate values retain the same calculation. The affected four declarations / 29 cases passed locally; all codec source hashes still match the fully tested `e639259` runtime. A fresh CI run is required for the corrected test source, including macOS. See `FinalReview/swift62-test-expression.json`.
+
+### Deterministic cancellation regression
+
+Run `38217995853` exposed a test scheduling race in the Swift 6.2 Linux ARM release suite: polling a worker allocation did not guarantee the encoder was still running when cancellation was requested. Separate deterministic tests now exercise cancellation inside a synchronous worker, joining all entered callbacks, and public cancellation before returning a completed result. The affected six declarations / 12 cases passed locally. Codec sources are unchanged; final-head CI, including macOS, remains required. See `FinalReview/deterministic-cancellation.json`.
