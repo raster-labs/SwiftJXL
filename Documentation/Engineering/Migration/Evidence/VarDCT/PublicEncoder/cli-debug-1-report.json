@@ -1,0 +1,511 @@
+{
+  "status": "passed",
+  "binarySHA256": "c3fb368def64c912b74139797aff515df18e493c064d8e4522d7c9569e41688f",
+  "scriptSHA256": "e672886da2e0c1d87bad1f7b557f031935fb2f0105d2cbdad6a9bfe272e9e871",
+  "checks": [
+    {
+      "bits": 8,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 270,
+      "exactAlpha": false
+    },
+    {
+      "bits": 8,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 195,
+      "exactAlpha": false
+    },
+    {
+      "bits": 8,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 389,
+      "exactAlpha": true
+    },
+    {
+      "bits": 8,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 335,
+      "exactAlpha": true
+    },
+    {
+      "bits": 8,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 514,
+      "exactAlpha": false
+    },
+    {
+      "bits": 8,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 371,
+      "exactAlpha": false
+    },
+    {
+      "bits": 8,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 732,
+      "exactAlpha": true
+    },
+    {
+      "bits": 8,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 616,
+      "exactAlpha": true
+    },
+    {
+      "bits": 9,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 271,
+      "exactAlpha": false
+    },
+    {
+      "bits": 9,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 196,
+      "exactAlpha": false
+    },
+    {
+      "bits": 9,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 404,
+      "exactAlpha": true
+    },
+    {
+      "bits": 9,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 350,
+      "exactAlpha": true
+    },
+    {
+      "bits": 9,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 515,
+      "exactAlpha": false
+    },
+    {
+      "bits": 9,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 372,
+      "exactAlpha": false
+    },
+    {
+      "bits": 9,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 753,
+      "exactAlpha": true
+    },
+    {
+      "bits": 9,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 637,
+      "exactAlpha": true
+    },
+    {
+      "bits": 10,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 270,
+      "exactAlpha": false
+    },
+    {
+      "bits": 10,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 195,
+      "exactAlpha": false
+    },
+    {
+      "bits": 10,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 422,
+      "exactAlpha": true
+    },
+    {
+      "bits": 10,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 360,
+      "exactAlpha": true
+    },
+    {
+      "bits": 10,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 514,
+      "exactAlpha": false
+    },
+    {
+      "bits": 10,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 371,
+      "exactAlpha": false
+    },
+    {
+      "bits": 10,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 770,
+      "exactAlpha": true
+    },
+    {
+      "bits": 10,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 654,
+      "exactAlpha": true
+    },
+    {
+      "bits": 11,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 271,
+      "exactAlpha": false
+    },
+    {
+      "bits": 11,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 196,
+      "exactAlpha": false
+    },
+    {
+      "bits": 11,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 436,
+      "exactAlpha": true
+    },
+    {
+      "bits": 11,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 375,
+      "exactAlpha": true
+    },
+    {
+      "bits": 11,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 515,
+      "exactAlpha": false
+    },
+    {
+      "bits": 11,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 372,
+      "exactAlpha": false
+    },
+    {
+      "bits": 11,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 791,
+      "exactAlpha": true
+    },
+    {
+      "bits": 11,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 673,
+      "exactAlpha": true
+    },
+    {
+      "bits": 12,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 270,
+      "exactAlpha": false
+    },
+    {
+      "bits": 12,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 195,
+      "exactAlpha": false
+    },
+    {
+      "bits": 12,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 456,
+      "exactAlpha": true
+    },
+    {
+      "bits": 12,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 395,
+      "exactAlpha": true
+    },
+    {
+      "bits": 12,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 514,
+      "exactAlpha": false
+    },
+    {
+      "bits": 12,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 371,
+      "exactAlpha": false
+    },
+    {
+      "bits": 12,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 808,
+      "exactAlpha": true
+    },
+    {
+      "bits": 12,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 691,
+      "exactAlpha": true
+    },
+    {
+      "bits": 13,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 271,
+      "exactAlpha": false
+    },
+    {
+      "bits": 13,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 196,
+      "exactAlpha": false
+    },
+    {
+      "bits": 13,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 470,
+      "exactAlpha": true
+    },
+    {
+      "bits": 13,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 409,
+      "exactAlpha": true
+    },
+    {
+      "bits": 13,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 515,
+      "exactAlpha": false
+    },
+    {
+      "bits": 13,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 372,
+      "exactAlpha": false
+    },
+    {
+      "bits": 13,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 827,
+      "exactAlpha": true
+    },
+    {
+      "bits": 13,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 710,
+      "exactAlpha": true
+    },
+    {
+      "bits": 14,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 271,
+      "exactAlpha": false
+    },
+    {
+      "bits": 14,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 196,
+      "exactAlpha": false
+    },
+    {
+      "bits": 14,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 482,
+      "exactAlpha": true
+    },
+    {
+      "bits": 14,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 421,
+      "exactAlpha": true
+    },
+    {
+      "bits": 14,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 515,
+      "exactAlpha": false
+    },
+    {
+      "bits": 14,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 372,
+      "exactAlpha": false
+    },
+    {
+      "bits": 14,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 846,
+      "exactAlpha": true
+    },
+    {
+      "bits": 14,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 728,
+      "exactAlpha": true
+    },
+    {
+      "bits": 15,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 271,
+      "exactAlpha": false
+    },
+    {
+      "bits": 15,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 196,
+      "exactAlpha": false
+    },
+    {
+      "bits": 15,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 495,
+      "exactAlpha": true
+    },
+    {
+      "bits": 15,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 433,
+      "exactAlpha": true
+    },
+    {
+      "bits": 15,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 515,
+      "exactAlpha": false
+    },
+    {
+      "bits": 15,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 372,
+      "exactAlpha": false
+    },
+    {
+      "bits": 15,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 864,
+      "exactAlpha": true
+    },
+    {
+      "bits": 15,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 746,
+      "exactAlpha": true
+    },
+    {
+      "bits": 16,
+      "channels": 1,
+      "controls": "on",
+      "encodedBytes": 271,
+      "exactAlpha": false
+    },
+    {
+      "bits": 16,
+      "channels": 1,
+      "controls": "off",
+      "encodedBytes": 196,
+      "exactAlpha": false
+    },
+    {
+      "bits": 16,
+      "channels": 2,
+      "controls": "on",
+      "encodedBytes": 507,
+      "exactAlpha": true
+    },
+    {
+      "bits": 16,
+      "channels": 2,
+      "controls": "off",
+      "encodedBytes": 445,
+      "exactAlpha": true
+    },
+    {
+      "bits": 16,
+      "channels": 3,
+      "controls": "on",
+      "encodedBytes": 515,
+      "exactAlpha": false
+    },
+    {
+      "bits": 16,
+      "channels": 3,
+      "controls": "off",
+      "encodedBytes": 372,
+      "exactAlpha": false
+    },
+    {
+      "bits": 16,
+      "channels": 4,
+      "controls": "on",
+      "encodedBytes": 883,
+      "exactAlpha": true
+    },
+    {
+      "bits": 16,
+      "channels": 4,
+      "controls": "off",
+      "encodedBytes": 767,
+      "exactAlpha": true
+    }
+  ]
+}

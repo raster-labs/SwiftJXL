@@ -199,7 +199,7 @@ public struct Encoder: Sendable {
 /// interleaved, 8/16-bit, padded and either byte order. Embedded grey/RGB ICC
 /// bytes are preserved without colour conversion. Ancillary boxes, animation
 /// and display transformations are not supported. VarDCT decoding additionally
-/// accepts bounded single-frame, single-pass sRGB 8/16-bit grey/RGB with optional
+/// accepts bounded single-frame, single-pass sRGB 8–16-bit grey/RGB with optional
 /// straight alpha and default opsin/restoration parameters. It uses nearest
 /// integer output and reports lossy fidelity. ICC VarDCT output is unsupported.
 public struct Decoder: Sendable {
@@ -250,7 +250,7 @@ private extension CodecCapabilities {
     static let pixelDecoding = Self(formats: ["jpeg-xl"], compressionModes: [.lossless, .lossy],
         sampleTypes: [.unsignedInteger], meaningfulPrecision: 1...16,
         layouts: ["Modular: 1–16-bit greyscale/RGB with optional alpha and ICC; planar/interleaved UInt8/UInt16",
-                  "VarDCT: 8/16-bit sRGB greyscale/RGB with optional straight alpha; one DC group, single pass; explicit byte order, offsets and strides"],
+                  "VarDCT: 8–16-bit sRGB greyscale/RGB with optional straight alpha; one DC group, single pass; explicit byte order, offsets and strides"],
         availableBackends: [.scalarCPU], canInspect: true, canEncode: false, canDecode: true)
     static let pixelEncoding = Self(formats: ["jpeg-xl"], compressionModes: [.lossless, .lossy],
         sampleTypes: [.unsignedInteger], meaningfulPrecision: 8...16,
@@ -340,7 +340,7 @@ private func prepare(_ data: Data, options: DecodeOptions, start: ContinuousCloc
             maximumICCBytes: l.maximumICCBytes, maximumMetadataBytes: l.maximumMetadataBytes)
         // Keep public capability within the qualified integer output profile.
         // ICC and associated alpha cannot be silently interpreted as sRGB.
-        guard [8, 16].contains(Int(envelope.metadata.bitDepth.bitsPerSample)),
+        guard (8...16).contains(Int(envelope.metadata.bitDepth.bitsPerSample)),
               envelope.iccProfile == nil,
               envelope.metadata.extraChannels.first?.alphaAssociated != true,
               envelope.dcGroupsX == 1, envelope.dcGroupsY == 1,

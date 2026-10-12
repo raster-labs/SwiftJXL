@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — public lossy encoding, 2026-10-12
+
+- Add explicit lossy VarDCT configuration and CLI distance/preparation controls; retain lossless defaults and reject incompatible metadata.
+- Qualify all 8–16-bit public precisions, direct source layouts and exact alpha against retained independent scalar references. Larger search/grouping and final release qualification remain in progress.
+
 ## Unreleased — public VarDCT decoding, 2026-10-12
 
 - Dispatch Modular and bounded VarDCT through a shared prepared header without retrying parsers or duplicating compressed storage.

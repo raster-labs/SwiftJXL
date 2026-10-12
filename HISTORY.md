@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Public VarDCT encoder and intermediate precision — 12 October 2026
+
+Added explicit lossy encoding through owning source storage, with validated distance and preparation controls, plus CLI options. Public decode now accepts every integer precision from 8 through 16. Thirty-six precision streams pass the unchanged separate scalar reference limits (peak one level, RMS ≤0.187) with exact alpha; a failing-before regression records 28 rejected intermediate-precision cases. Full debug passes 246 declarations / 988 cases without skips; affected ASan and TSan each pass 32 declarations / 221 cases. Hierarchical public defaults, wider groups, original ARM integer-oracle differences and final qualification remain open. See [checkpoint evidence](Documentation/Engineering/Migration/Evidence/VarDCT/PublicEncoder/validation.json).
+
 ## Public VarDCT decoder integration — 12 October 2026
 
 Connected the bounded sRGB 8/16-bit VarDCT decoder through the public owning-storage API and CLI. Shared header preparation parses once under the existing admission bounds; allocating output and caller destinations preserve precision, roles, byte order, padding and owner identity. Lossy fidelity is reported explicitly, including CLI JSON. ICC and associated-alpha VarDCT output reject. Full local debug with the independent oracle enabled passed 230 declarations / 883 cases without skips, and CLI inspection, validation, sRGB output and transfer-mismatch rejection passed all 32 retained streams. Final affected sanitizer evidence, original ARM oracle differences and broader migration gates are recorded separately; this is not complete interoperability or release readiness.

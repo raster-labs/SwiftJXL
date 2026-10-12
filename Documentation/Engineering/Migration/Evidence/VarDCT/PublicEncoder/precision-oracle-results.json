@@ -1,0 +1,371 @@
+{
+  "oracleSHA256": "b69645dbea8454166cd4d9601e537c38859ab00689204e32344ec467ae4baad9",
+  "domain": "scalar Float32 sRGB clamped nearest integer at declared precision",
+  "thresholds": {
+    "peak": 2,
+    "rms": 0.5,
+    "alpha": "exact"
+  },
+  "results": [
+    {
+      "name": "precision-10-1",
+      "bits": 10,
+      "channels": 1,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "aaa69d819afc3bfb55889f920f73d32db2575478c3f53a9db39c0d43af223f89"
+    },
+    {
+      "name": "precision-10-2",
+      "bits": 10,
+      "channels": 2,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "700a2510cc2d36999e910a04c6c5c97b5e4d42409c1f5ee9d0b5a38562836fb9"
+    },
+    {
+      "name": "precision-10-3",
+      "bits": 10,
+      "channels": 3,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "494352588d0f5a26134318bfb69160c014da419c7539d1d4e9003809047ceb94"
+    },
+    {
+      "name": "precision-10-4",
+      "bits": 10,
+      "channels": 4,
+      "peak": 1,
+      "rms": 0.04667600280093366,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "d5be6753229fca71acb50d36516e954a3220c11f47ebaef07954109a6b5e974d"
+    },
+    {
+      "name": "precision-11-1",
+      "bits": 11,
+      "channels": 1,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "57f6baf85a4d86b4d698c429ddfba941c80ef5cd9e14a94bdbddfbfcf36b5cf1"
+    },
+    {
+      "name": "precision-11-2",
+      "bits": 11,
+      "channels": 2,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "5eb30cfef5a5603d5205bd1a7633c8850fdd6b31a5c2fa6f0890db9874eb428d"
+    },
+    {
+      "name": "precision-11-3",
+      "bits": 11,
+      "channels": 3,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "2a6865f386e76bfed3e906951430fb8e40f7e5b95ee2348993bf59a0835b92d3"
+    },
+    {
+      "name": "precision-11-4",
+      "bits": 11,
+      "channels": 4,
+      "peak": 1,
+      "rms": 0.04667600280093366,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "27fe12b8c690ffd4259161b6c5c82be7e9363ef0fc6ffb54bd3815860d2f9c91"
+    },
+    {
+      "name": "precision-12-1",
+      "bits": 12,
+      "channels": 1,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "13caff2fe3d0277e93173b8c8dc57865cd3b2a51480ca46ffe17d7d19c6e9640"
+    },
+    {
+      "name": "precision-12-2",
+      "bits": 12,
+      "channels": 2,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "266e79b2e55f4b3cf72cc4e68d6e64af9598f706c8e5f3281c24a7329e9e3998"
+    },
+    {
+      "name": "precision-12-3",
+      "bits": 12,
+      "channels": 3,
+      "peak": 1,
+      "rms": 0.06600983619844496,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "092b294e3dea1254a45ae5a97b60413b6494b6534b9fcddb4eea71fa02197a17"
+    },
+    {
+      "name": "precision-12-4",
+      "bits": 12,
+      "channels": 4,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "3500edf59a9953f1a74e59cd50a92c99c3119139645efbb7953941d78b28220d"
+    },
+    {
+      "name": "precision-13-1",
+      "bits": 13,
+      "channels": 1,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "91804aa42e6fcd3717c22543c9818b8998648c2d34b852b7d66866fa42329886"
+    },
+    {
+      "name": "precision-13-2",
+      "bits": 13,
+      "channels": 2,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "2c6777d19ad8bd2c163fac4c3cbb5cef1b0ee4c3a264851d8fdcc261d2034c31"
+    },
+    {
+      "name": "precision-13-3",
+      "bits": 13,
+      "channels": 3,
+      "peak": 1,
+      "rms": 0.06600983619844496,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "93cbdc2368b2641c3ee8282c87d726be41d841de13ee10975a151feadab721d2"
+    },
+    {
+      "name": "precision-13-4",
+      "bits": 13,
+      "channels": 4,
+      "peak": 1,
+      "rms": 0.06600983619844496,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "7f837f9fcaa14334188a8429a40e17b1b1129933aca6019f0b6cb5f55a90e308"
+    },
+    {
+      "name": "precision-14-1",
+      "bits": 14,
+      "channels": 1,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "ee074df7717e1e75800844e7acac29be6d0d70e8cf31559d102b457853e7c503"
+    },
+    {
+      "name": "precision-14-2",
+      "bits": 14,
+      "channels": 2,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "63bc8dd0eb9b16b4bbb08a79568c4e557fe39042c80139930c75e67e985b50ef"
+    },
+    {
+      "name": "precision-14-3",
+      "bits": 14,
+      "channels": 3,
+      "peak": 1,
+      "rms": 0.08084520834544433,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "171e9bf93e52503e80240cac4ac2a93e85b38ffaa8ffb81df090e2df04af7910"
+    },
+    {
+      "name": "precision-14-4",
+      "bits": 14,
+      "channels": 4,
+      "peak": 1,
+      "rms": 0.09335200560186732,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "8e51ceee98f8a3b338dada2abcf32ea17c4ebd1d5403ab0153ba4c7ead1734ba"
+    },
+    {
+      "name": "precision-15-1",
+      "bits": 15,
+      "channels": 1,
+      "peak": 1,
+      "rms": 0.08084520834544433,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "eea968846c7faf97cfdff97111725d5aaca567f9a991121b05bdf813479a6972"
+    },
+    {
+      "name": "precision-15-2",
+      "bits": 15,
+      "channels": 2,
+      "peak": 1,
+      "rms": 0.08084520834544433,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "42120948c441c1b65cb6d4522b2253ec7c71665272bd9bf0db8f3df257b95021"
+    },
+    {
+      "name": "precision-15-3",
+      "bits": 15,
+      "channels": 3,
+      "peak": 1,
+      "rms": 0.10437071518085825,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "bd825968c7319d40cb684ffc5ad7749d42783a0745055cc1385ebad24edb2e7a"
+    },
+    {
+      "name": "precision-15-4",
+      "bits": 15,
+      "channels": 4,
+      "peak": 1,
+      "rms": 0.1476024809233492,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "3e3695d6888ee5338e332594423efde460695879bacc779d2618858e907c6eba"
+    },
+    {
+      "name": "precision-16-1",
+      "bits": 16,
+      "channels": 1,
+      "peak": 1,
+      "rms": 0.14002800840280097,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "96509396b1bb6fa0562c50c20b79421be8eed353bc3b7888c8da17245cb65e66"
+    },
+    {
+      "name": "precision-16-2",
+      "bits": 16,
+      "channels": 2,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "ec46d6f55c7a74f01aa97b411fae6bbc9a00b87a2fef54b9bfbaacedc8ba47df"
+    },
+    {
+      "name": "precision-16-3",
+      "bits": 16,
+      "channels": 3,
+      "peak": 1,
+      "rms": 0.18670401120373464,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "545ba78671dd3b3a07dcfff505f8f66cdc4a5da38af270671f25585e6ae44efd"
+    },
+    {
+      "name": "precision-16-4",
+      "bits": 16,
+      "channels": 4,
+      "peak": 1,
+      "rms": 0.1682927214324671,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "64368d61c1309fe5b87471cd1fa2ea371d8c185d4f07609bf17fbeb40c296c6e"
+    },
+    {
+      "name": "precision-8-1",
+      "bits": 8,
+      "channels": 1,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "cf34cbfcb9375601af8e68a06b3c63145d153e2d7e52ce8e67a2480272311722"
+    },
+    {
+      "name": "precision-8-2",
+      "bits": 8,
+      "channels": 2,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "14a88e17d9a0e2aa253f863075d70dff7f99c1cd51aeba773e5395a6891677f3"
+    },
+    {
+      "name": "precision-8-3",
+      "bits": 8,
+      "channels": 3,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "fd1cca104c5c5eb22375ff4894e4658ae7660df93100d563027c7304e236d5be"
+    },
+    {
+      "name": "precision-8-4",
+      "bits": 8,
+      "channels": 4,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "31688bb65d9ad16cf19c869ed0beab4c55ac2db40bbfac4890a7d475c9e1a9be"
+    },
+    {
+      "name": "precision-9-1",
+      "bits": 9,
+      "channels": 1,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "3a650b47e1a74395023f44e2cb0ecbc62e4293a7f1c2a787d3ab5341b66bc838"
+    },
+    {
+      "name": "precision-9-2",
+      "bits": 9,
+      "channels": 2,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "6590a4666436aec990123ebaad5f30e9ae8a4eb5e8b01364d442da0b58984d02"
+    },
+    {
+      "name": "precision-9-3",
+      "bits": 9,
+      "channels": 3,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "cce229903c3a44e1c46219988ca04cd91ea438bba7060d06e6cd5d1761799a07"
+    },
+    {
+      "name": "precision-9-4",
+      "bits": 9,
+      "channels": 4,
+      "peak": 0,
+      "rms": 0.0,
+      "alphaExact": true,
+      "passed": true,
+      "sha256": "7ed26e61373248fb0a87991edda1871d3172680559c3c0b2e07e11b015e92f1a"
+    }
+  ]
+}
