@@ -1,0 +1,87 @@
+Building for debugging...
+[Provisioning 3 / 8]
+[2 / 6] SwiftJXLCore
+[3 / 7] SwiftJXLCore
+[7 / 11] SwiftJXLCore
+[10 / 11] SwiftJXLCoreTests-product
+[13 / 14] SwiftJXLTests-product
+[17 / 18] swiftjxl-cli-product
+Build complete! (2.52 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ModularStorageTests started.
+◇ Test paddedCallerStorage(_:_:) started.
+◇ Test publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgb12", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → false to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", planar → true to publicOwningColourDestination(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-rgba16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "groups-grayalpha16", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-gray8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-wide-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "responsive-small-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb8", variant → 2 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 0 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 1 to paddedCallerStorage(_:_:) started.
+◇ Test case passing 2 arguments name → "palette-rgb16", variant → 2 to paddedCallerStorage(_:_:) started.
+✔ Test paddedCallerStorage(_:_:) with 48 test cases passed after 7.539 seconds.
+✔ Test publicOwningColourDestination(_:_:) with 20 test cases passed after 9.472 seconds.
+✔ Suite ModularStorageTests passed after 9.472 seconds.
+✔ Test run with 2 tests in 1 suite passed after 9.472 seconds.

@@ -61,8 +61,10 @@ package func applyLibjxlPredictor(
         return (nbh.w &+ nbh.n) &>> 1
     case 4:
         // Select: |W-NW| < |N-NW| ? N : W
-        let pa = abs(nbh.w &- nbh.nw)
-        let pb = abs(nbh.n &- nbh.nw)
+        // Transformed planes can hold any signed Int32 before final sample
+        // validation. Unsigned magnitude also represents abs(Int32.min).
+        let pa = (nbh.w &- nbh.nw).magnitude
+        let pb = (nbh.n &- nbh.nw).magnitude
         return pa < pb ? nbh.n : nbh.w
     case 5:
         // ClampedGradient.

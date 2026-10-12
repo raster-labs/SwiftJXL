@@ -1,0 +1,8 @@
+{
+  "decision": "rejected; production source restored byte-for-byte",
+  "reason": "Despite affected debug/ASan/TSan correctness passing, both large greyscale decodes regress about6% in each interleaved block. Small-case timings are variable and are not treated as a precise regression magnitude. No sufficient general improvement justifies retaining the specialisation.",
+  "restoredSHA256": "072911732953b26199ca3e6ef57ed9e37c22f933fdadbe2c7482edf2b4b9e2e2",
+  "sourceBase": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+  "correctnessScope": "23declarations/153cases each debug,address,thread in isolated selected-suite manifest; this is experimental evidence only.",
+  "comparisonScope": "Same immutable pre-experiment binary and new binary, nine cases,20timedobservations peroperationafter10warmups. All exactsample/codestreamchecks passed; no runtime threshold was relaxed."
+}

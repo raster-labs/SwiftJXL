@@ -1,0 +1,85 @@
+{
+  "started_utc": "2026-10-12T07:02:57.797432+00:00",
+  "inputs_manifest_sha256": "d3fe2d6c51ae290b9fbe7d8ceecde592b94ffbfb0f95ed561e9babea0fa98f99",
+  "runs": [
+    {
+      "configuration": "debug",
+      "started_utc": "2026-10-12T07:02:57.797620+00:00",
+      "cwd": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-debug/cache",
+        "--config-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-debug/config",
+        "--security-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-debug/security",
+        "--scratch-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-debug",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--filter",
+        "ModularPredictorSafetyTests"
+      ],
+      "environment": {
+        "SWIFTJXL_ORACLE_BIN": "/opt/homebrew/bin",
+        "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-debug/module-cache",
+        "SWIFTPM_MODULECACHE_OVERRIDE": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-debug/module-cache"
+      },
+      "log": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/predictor-debug.log",
+      "exit_code": 0,
+      "elapsed_seconds": 14.987980084,
+      "finished_utc": "2026-10-12T07:03:12.785857+00:00",
+      "log_sha256": "07b547260ec93ed4d5222686d135b5e8f40a8c9de0466eb99bb369baacf1fd4d",
+      "passed_declarations": 2,
+      "passed_argument_cases": 3,
+      "skipped": 0,
+      "sanitizer_diagnostics": false
+    },
+    {
+      "configuration": "asan",
+      "started_utc": "2026-10-12T07:03:12.786342+00:00",
+      "cwd": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe",
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "--disable-sandbox",
+        "--cache-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/cache",
+        "--config-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/config",
+        "--security-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/security",
+        "--scratch-path",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "--sanitize",
+        "address"
+      ],
+      "environment": {
+        "SWIFTJXL_ORACLE_BIN": "/opt/homebrew/bin",
+        "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/module-cache",
+        "SWIFTPM_MODULECACHE_OVERRIDE": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/.build-asan/module-cache"
+      },
+      "log": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-parallel-probe/predictor-asan.log",
+      "exit_code": 0,
+      "elapsed_seconds": 16.141465375000003,
+      "finished_utc": "2026-10-12T07:03:28.927998+00:00",
+      "log_sha256": "8f85aa1ed42e6b63da6bbfb5e7766583f4eedbe3082fa9722f621522080e04b4",
+      "passed_declarations": 22,
+      "passed_argument_cases": 132,
+      "skipped": 0,
+      "sanitizer_diagnostics": false
+    }
+  ],
+  "finished_utc": "2026-10-12T07:03:28.928630+00:00"
+}

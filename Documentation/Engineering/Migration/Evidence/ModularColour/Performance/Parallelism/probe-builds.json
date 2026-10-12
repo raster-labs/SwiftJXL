@@ -1,0 +1,88 @@
+[
+  {
+    "name": "native-control",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-O",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-parse-as-library",
+      "-module-cache-path",
+      "work/SwiftJXL-modular-colour/.build/module-cache",
+      "-D",
+      "PREDECESSOR",
+      "-I",
+      "work/modular-preflight/native-predecessor",
+      "work/SwiftJXL-modular-colour/Scripts/TestSupport/modular-operation-benchmark.swift",
+      "work/modular-preflight/native-predecessor/JXLSwift.o",
+      "-o",
+      "work/modular-preflight/operation-native-control"
+    ],
+    "exit": 0,
+    "sourceSHA256": "491859b599cc0696092fe0312d1b9e2d5e0280991a9dc8a5bc3f41b8f30fceec",
+    "objects": {
+      "work/modular-preflight/native-predecessor/JXLSwift.o": "25da3c7d52921663744d7cb6a77851182fdbaa551d7e54897ea23a6d2c027a15"
+    },
+    "binarySHA256": "53f399837b168611c2a5a884c1976e81fcbc09a6184085fbf89fce74c7b4ebf8"
+  },
+  {
+    "name": "serial-control",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-O",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-parse-as-library",
+      "-module-cache-path",
+      "work/SwiftJXL-modular-colour/.build/module-cache",
+      "-D",
+      "PREDECESSOR",
+      "-D",
+      "SERIAL_PREDECESSOR",
+      "-I",
+      "work/modular-preflight/serial-predecessor",
+      "work/SwiftJXL-modular-colour/Scripts/TestSupport/modular-operation-benchmark.swift",
+      "work/modular-preflight/serial-predecessor/JXLSwift.o",
+      "-o",
+      "work/modular-preflight/operation-serial-control"
+    ],
+    "exit": 0,
+    "sourceSHA256": "491859b599cc0696092fe0312d1b9e2d5e0280991a9dc8a5bc3f41b8f30fceec",
+    "objects": {
+      "work/modular-preflight/serial-predecessor/JXLSwift.o": "cc18b73153c2b3f9ff071c4ee177d6b676cff620b9ce75675d8d185c6c306467"
+    },
+    "binarySHA256": "8cbc1363c617d6c1048c54bcce1f151cd7cd342ab16bea6195b4de1eac3b8d2f"
+  },
+  {
+    "name": "candidate-final",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-O",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-parse-as-library",
+      "-module-cache-path",
+      "work/SwiftJXL-modular-colour/.build/module-cache",
+      "-I",
+      "work/evidence/scalar-storage-qualification-v2-release/build/release/out/Products/Release",
+      "work/SwiftJXL-modular-colour/Scripts/TestSupport/modular-operation-benchmark.swift",
+      "work/evidence/scalar-storage-qualification-v2-release/build/release/out/Products/Release/SwiftJXL.o",
+      "work/evidence/scalar-storage-qualification-v2-release/build/release/out/Products/Release/SwiftJXLCore.o",
+      "-o",
+      "work/modular-preflight/operation-candidate-final"
+    ],
+    "exit": 0,
+    "sourceSHA256": "491859b599cc0696092fe0312d1b9e2d5e0280991a9dc8a5bc3f41b8f30fceec",
+    "objects": {
+      "work/evidence/scalar-storage-qualification-v2-release/build/release/out/Products/Release/SwiftJXL.o": "db50a756b3a8e9285119ab11bf9504559e38ebf80aabad069404d276c6b3ef34",
+      "work/evidence/scalar-storage-qualification-v2-release/build/release/out/Products/Release/SwiftJXLCore.o": "0580565b9662294eea09b8c97cf6ec8d154691d5ced59df120aa338c33a16830"
+    },
+    "binarySHA256": "a18dbeee1d5bcd8fcc48bf68a13c1521e32b5e6b68236110c07b1ddfe64fa155"
+  }
+]

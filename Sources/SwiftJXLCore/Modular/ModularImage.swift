@@ -114,14 +114,16 @@ package func metaApplyTransforms(image: inout ModularImage, transforms: [Modular
             try image.checkEqual(image.checkedRange(begin: t.beginC, count: 3))
             expanded.append(t)
         case .palette:
-            guard t.nbDeltas == 0, t.palettePredictor == 0 else {
-                throw ModularGeometryError.invalidTransform
-            }
             let range = try image.checkedRange(begin: t.beginC, count: t.numC)
             try image.checkEqual(range)
             let isMeta = range.lowerBound < image.nbMetaChannels
             guard !isMeta || range.upperBound <= image.nbMetaChannels else {
                 throw ModularGeometryError.invalidMetaChannels
+            }
+            // Known palette modes are outside this profile, not malformed
+            // input. Validate their channel geometry before classifying them.
+            guard t.nbDeltas == 0, t.palettePredictor == 0 else {
+                throw ScalarModularError.unsupportedProfile
             }
             let table = try ModularChannel(width: ScalarOperationBudget.sum(Int(t.nbColors), Int(t.nbDeltas)),
                                            height: range.count, hshift: -1, vshift: -1)

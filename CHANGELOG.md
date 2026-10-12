@@ -1,5 +1,13 @@
 # Change log
 
+## Unreleased — Modular review and qualification, 2026-10-12
+
+- Bound parallel encoding by the caller's worker ceiling, capped at eight, with ordered joined results, per-worker resource admission and cancellation propagated into workers.
+- Specialise single-leaf gradient decoding to read only its three required neighbours while preserving signed arithmetic, precision rejection and cancellation checks. Controlled five-case decode medians improved by 15–27% against the prior successor; remaining predecessor gaps and release qualification stay open.
+- Prevent a signed-magnitude overflow trap in the Select predictor for malformed transformed samples; preserve defined malformed-input rejection and destination invalidation.
+- Report known unsupported delta/predicted palette modes as `unsupportedFeature`, after validating their geometry; invalid channel ranges remain malformed input. Add public inspect/decode regression coverage.
+- Record additional ICC/low-precision mutation campaigns and larger owning-storage, cancellation and concurrency evidence. Prove the storage tests detect deliberately wrong row strides and byte order.
+
 ## Unreleased — low-precision Modular decoding, 2026-10-12
 
 - Restore predecessor-compatible 1–7-bit greyscale/RGB/alpha decoding without rescaling, with exact UInt16 allocating output or shared UInt8 caller output. Encoding remains 8–16-bit and file adapters reject unrepresentable precision.

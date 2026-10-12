@@ -149,7 +149,7 @@ struct ModularTransformTests {
         for transform in [ModularTransform(id: .palette, numC: 1, nbDeltas: 1),
                           ModularTransform(id: .palette, numC: 1, palettePredictor: 1)] {
             var image = try ModularImage(channels: [channel])
-            #expect(throws: ModularGeometryError.self) {
+            #expect(throws: ScalarModularError.self) {
                 try metaApplyTransforms(image: &image, transforms: [transform], budget: budget())
             }
             #expect(image.channels.count == 1 && image.channels[0].pixels.isEmpty)

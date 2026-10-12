@@ -1,5 +1,5 @@
 {
-  "status": "ICC decode localdebug/ASan/TSan anddebug/release/sanitizerCLI checks passed; hostedhead andICCmutationcampaigns pending",
+  "status": "ICC local library/CLI validation passed; all eight hosted checks passed at bfd12bc; three one-hour ICC ASan mutation campaigns passed",
   "baseCommit": "526d6bb942a89cb7b4de16419659365634c6cb54",
   "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
   "contract": "0.10.0",
@@ -75,5 +75,12 @@
     "ExistingnonICC471158mutationresults coverpreviousruntime. ThreeICC-specificonehourcampaigns are running independently; not yet claimedpassed.",
     "Pinnedpredecessor rejectsall12ICCinputs withdefinedframeencodingerrors; initialprobe-top-leveltermination is notclassifiedascodec crash.",
     "ICCencoding, float/newextras, displayconversion and broaderVarDCT/multiframe/platform/performance/release gates are notclaimedcompleted."
-  ]
+  ],
+  "mutationCampaign": "Mutation/validation.json",
+  "hostedValidation": {
+    "head": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+    "run": 38207550527,
+    "passedJobs": 8,
+    "includesMacOS": true
+  }
 }

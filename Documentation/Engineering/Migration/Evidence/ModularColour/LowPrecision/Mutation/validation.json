@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "runtimeCommit": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+  "contract": "0.10.0",
+  "entries": [
+    {
+      "entry": "inspect",
+      "iterations": 97614,
+      "elapsedSeconds": 3600.003116416,
+      "reportSHA256": "d62912625c7578bf3d35c014ae4bf9471d84697dc9a20c48130ab70aeece5461",
+      "exitCode": 0
+    },
+    {
+      "entry": "decode",
+      "iterations": 91071,
+      "elapsedSeconds": 3600.020948167,
+      "reportSHA256": "239d82e28e617da3f62c480089ca6ebb676bd37aa0d0969effce64fcc4667c0d",
+      "exitCode": 0
+    },
+    {
+      "entry": "caller",
+      "iterations": 91290,
+      "elapsedSeconds": 3600.022327459,
+      "reportSHA256": "f72f6d64b48fb86250b1248a6a018321054d1ac61c16f71d7343ba6e190942b7",
+      "exitCode": 0
+    }
+  ],
+  "totalMutations": 279975,
+  "notes": [
+    "Each entry accepted all 28 conformant low-precision seeds before its 3600-second clock.",
+    "Deterministic fresh-process ASan mutation, not coverage-guided fuzzing or proof of complete security.",
+    "Report RSS includes sanitizers and runtime; it is not measured workspace."
+  ],
+  "binarySHA256": "979e15225bb7b8ce776470397b218e4bbb41cd55ee5d3be31b96e357dbfa082d"
+}

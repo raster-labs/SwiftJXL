@@ -1,24 +1,39 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
 """Run separate optimised probes in ABBA order; preserve raw timings and invalid baselines."""
-import argparse,hashlib,json,math,statistics,subprocess
+import argparse,hashlib,json,math,os,statistics,subprocess
 from pathlib import Path
-p=argparse.ArgumentParser();p.add_argument('--candidate',type=Path,required=True);p.add_argument('--predecessor',type=Path,required=True);p.add_argument('--djxl',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--candidate',type=Path,required=True);p.add_argument('--predecessor',type=Path,required=True);p.add_argument('--djxl',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+p.add_argument('--cases',type=Path,help='JSON rows: name,width,height,channels,bits,pattern')
+p.add_argument('--serial-predecessor',type=Path,help='Diagnostic predecessor with only parallelMap serialised')
+p.add_argument('--operations',nargs='+',choices=['encode','decode','caller'],default=['encode','decode','caller'])
+p.add_argument('--preflight-only',action='store_true',help='Validate generated streams without collecting timing samples')
+p.add_argument('--candidate-workers',type=int,choices=range(1,9),default=1,help='Successor encoder worker ceiling; defaults to the historical serial comparison')
+a=p.parse_args()
+if a.preflight_only:a.operations=[]
 a.output.mkdir(parents=True,exist_ok=False)
 probes={'candidate':a.candidate.resolve(),'predecessor':a.predecessor.resolve()}
-report={'status':'running','method':'Two blocks per implementation, ABBA order;5 warmups and10 timed iterations per block. Separate process per operation/block. No sanitizers. Decode uses the same independently verified candidate codestream.','cases':[],'binaries':{k:hashlib.sha256(v.read_bytes()).hexdigest() for k,v in probes.items()}}
+if a.serial_predecessor:probes['serial-predecessor']=a.serial_predecessor.resolve()
+order=['predecessor','serial-predecessor','candidate','candidate','serial-predecessor','predecessor'] if a.serial_predecessor else ['predecessor','candidate','candidate','predecessor']
+report={'status':'running','order':order,'method':'Two interleaved blocks per implementation;5 warmups and10 timed iterations per block. Separate process per operation/block. No sanitizers. Decode uses the same independently verified candidate codestream. Serial predecessor is diagnostic only.','cases':[],'binaries':{k:hashlib.sha256(v.read_bytes()).hexdigest() for k,v in probes.items()}}
+report['candidateWorkers']=a.candidate_workers
 def save(): (a.output/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 def run(args,log):
- r=subprocess.run(list(map(str,args)),capture_output=True,text=True,timeout=240)
+ r=subprocess.run(list(map(str,args)),capture_output=True,text=True,timeout=600,env={**os.environ,'MODULAR_BENCH_PATTERN':pattern,'MODULAR_BENCH_WORKERS':str(a.candidate_workers)})
  log.write_text(r.stdout+r.stderr)
  return r
-for name,w,h,c,bits in [('small-rgb8',31,17,3,8),('gray16',512,512,1,16),('rgb8',256,257,3,8),('group-rgb8',513,259,3,8),('group-rgba16',513,259,4,16)]:
- case={'name':name,'width':w,'height':h,'channels':c,'bits':bits,'preflight':{},'runs':[],'summaries':{}}
+cases=json.loads(a.cases.read_text()) if a.cases else [('small-rgb8',31,17,3,8,'ramp'),('gray16',512,512,1,16,'ramp'),('rgb8',256,257,3,8,'ramp'),('group-rgb8',513,259,3,8,'ramp'),('group-rgba16',513,259,4,16,'ramp')]
+for name,w,h,c,bits,pattern in cases:
+ assert pattern in ['ramp','flat','noise'] and 1<=w<=4096 and 1<=h<=4096 and 1<=c<=4 and bits in [8,16]
+ case={'name':name,'width':w,'height':h,'channels':c,'bits':bits,'pattern':pattern,'preflight':{},'runs':[],'summaries':{}}
  report['cases'].append(case);save()
  paths={};valid={};maximum=(1<<bits)-1
- expected=bytearray()
+ expected=bytearray();random=20261012
  for i in range(w*h):
-  for channel in range(c):expected.extend(((i*71+(i//w)*37+channel*113)&maximum).to_bytes(bits//8,'big'))
+  for channel in range(c):
+   random=(random*1664525+1013904223)&0xffffffff
+   value=maximum//3 if pattern=='flat' else (random>>8)&maximum if pattern=='noise' else (i*71+(i//w)*37+channel*113)&maximum
+   expected.extend(value.to_bytes(bits//8,'big'))
  for kind,probe in probes.items():
   path=a.output/f'{name}-{kind}.jxl';paths[kind]=path
   command=[probe,'encode',w,h,c,bits,0,path]
@@ -32,9 +47,9 @@ for name,w,h,c,bits in [('small-rgb8',31,17,3,8),('gray16',512,512,1,16),('rgb8'
   case['preflight'][kind]={'status':'passed' if exact else 'failed','oracleExit':oracle.returncode,'exactSamples':exact,'codestreamSHA256':hashlib.sha256(path.read_bytes()).hexdigest(),'encodedBytes':path.stat().st_size}
   save()
  if not valid.get('candidate'):raise RuntimeError(f'Candidate fidelity failed: {name}')
- for operation in ['encode','decode','caller']:
-  for block,kind in enumerate(['predecessor','candidate','candidate','predecessor']):
-   if operation=='caller' and kind=='predecessor':continue
+ for operation in a.operations:
+  for block,kind in enumerate(order):
+   if operation=='caller' and kind!='candidate':continue
    if operation=='encode' and not valid.get(kind):continue # Never time invalid encoding as an accepted baseline.
    if not paths[kind].exists():continue
    dest=a.output/f'{name}-{kind}-{operation}-{block}.jxl'
@@ -57,6 +72,8 @@ for name,w,h,c,bits in [('small-rgb8',31,17,3,8),('gray16',512,512,1,16),('rgb8'
   if old and new:
    new['medianChangePercent']=100*(new['medianMS']/old['medianMS']-1)
    new['requiresInvestigation']=new['medianChangePercent']>5
+  serial=case['summaries'].get('serial-predecessor/'+operation)
+  if serial and new:new['medianChangeVersusSerialPercent']=100*(new['medianMS']/serial['medianMS']-1)
  save()
  print(name,case['preflight'],case['summaries'],flush=True)
 report['status']='completed';save()

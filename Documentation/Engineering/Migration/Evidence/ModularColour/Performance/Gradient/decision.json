@@ -1,0 +1,9 @@
+{
+  "decision": "Retain after review and repeatable improvement in both blocks of all five cases. Combined current runtime still needs qualification and hosted CI.",
+  "originalSourceSHA256": "9d4374a991ed236270933b2b578d2e651df5101ef9a7bc20bb9071b02340e468",
+  "retainedSourceSHA256": "deba29d70736a9b89de58d181037e3b09ea788f4f1327209a6a93bedded46678",
+  "testSHA256": "ad5ec8e48cda53d695c51703991ee91461647fb972d11e644ce6558e3b9ae567",
+  "scope": "Single-leaf predictor5 only; three-neighbour loop, no weighted predictor/property allocation. Generic fallback and token/row checkpoints unchanged.",
+  "baseline": "Both comparison binaries are SwiftJXL; predecessor key is retained bounded-parallel baseline, not JXLSwift. Neither binary includes the later predictor4 magnitude correction.",
+  "cases": "Exact samples/headers checked by libjxl; 5 warmups and10timed samples per block, two interleaved blocks. Every observed thermal state0."
+}

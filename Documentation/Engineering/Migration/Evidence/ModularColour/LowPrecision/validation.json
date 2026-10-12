@@ -1,5 +1,5 @@
 {
-  "status": "Lowprecisiondecoding locally qualified; finalheadCI andtimedmutations pending",
+  "status": "Local library and CLI validation passed; all eight hosted checks passed at bfd12bc; three one-hour low-precision ASan mutation campaigns passed",
   "baseCommit": "2a59e8a",
   "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
   "contract": "0.10.0",
@@ -74,6 +74,13 @@
     "Both outerprofile and inversetransform guards neededthe same1..16decoderbound; firstpartialchange left21multicomponentcases failing; correctedscopes pass.",
     "AllocateUInt16 orwritecallerUInt8 withoutsample scaling; encode stays8..16 andPNM/NRRDexportsrejectlowprecision.",
     "ICCpreviousstage CLI completed299checks eachdebug/release/ASan/TSan; those reports remain scopedtoitsruntime.",
-    "ThreeonehourlowprecisionASancampaigns started alongsideICCcampaigns; no terminalresultclaimed."
-  ]
+    "Three one-hour low-precision ASan campaigns completed with 279975 mutations and no reported failures."
+  ],
+  "mutationCampaign": "Mutation/validation.json",
+  "hostedValidation": {
+    "head": "bfd12bc8b9eb19ded15a60175b305b9a7332abe2",
+    "run": 38207550527,
+    "passedJobs": 8,
+    "includesMacOS": true
+  }
 }

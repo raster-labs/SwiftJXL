@@ -2,6 +2,17 @@
 import Foundation
 import Synchronization
 
+/// A monotonic cancellation flag shared with synchronous GCD workers. It owns
+/// no image memory; the task cancellation handler may set it on any executor.
+package final class ScalarOperationCancellation: Sendable {
+    private let cancelled = Atomic<Bool>(false)
+    package init() {}
+    package func cancel() { cancelled.store(true, ordering: .relaxed) }
+    package func checkpoint() throws {
+        if cancelled.load(ordering: .relaxed) { throw CancellationError() }
+    }
+}
+
 /// Operation-local conservative allocation admission. Charges are never released:
 /// transient allocations therefore cannot conceal retained allocations. Values are
 /// reservation bounds, not measurements of allocator/RSS peaks.
@@ -14,22 +25,28 @@ package final class ScalarOperationBudget: Sendable {
     package let maximumDecodedBytes: Int
     package let maximumCompressedBytes: Int
     package let deadline: ContinuousClock.Instant
+    package let maximumWorkers: Int
+    private let cancellation: ScalarOperationCancellation?
 
     package init(retainedBytes: Int, maximumWorkspaceBytes: Int,
                  maximumMemoryBytes: Int, maximumDecodedBytes: Int,
-                 maximumCompressedBytes: Int, deadline: ContinuousClock.Instant) throws {
+                 maximumCompressedBytes: Int, deadline: ContinuousClock.Instant,
+                 maximumWorkers: Int = 1, cancellation: ScalarOperationCancellation? = nil) throws {
         guard retainedBytes >= 0, maximumWorkspaceBytes > 0, maximumMemoryBytes > 0,
               maximumDecodedBytes > 0, maximumCompressedBytes > 0,
-              retainedBytes <= maximumMemoryBytes else { throw ScalarModularError.resourceLimit }
+              retainedBytes <= maximumMemoryBytes, maximumWorkers > 0 else { throw ScalarModularError.resourceLimit }
         self.retainedBytes = retainedBytes
         self.maximumWorkspaceBytes = maximumWorkspaceBytes
         self.maximumMemoryBytes = maximumMemoryBytes
         self.maximumDecodedBytes = maximumDecodedBytes
         self.maximumCompressedBytes = maximumCompressedBytes
         self.deadline = deadline
+        self.maximumWorkers = min(maximumWorkers, 8)
+        self.cancellation = cancellation
     }
     package func checkpoint() throws {
         try Task.checkCancellation()
+        try cancellation?.checkpoint()
         guard ContinuousClock.now < deadline else { throw ScalarModularError.resourceLimit }
     }
     package func reserveWorkspace(_ bytes: Int) throws {
@@ -85,11 +102,14 @@ package final class ScalarOperationBudget: Sendable {
         let groups = try Self.product((width - 1) / 512 + 1, (height - 1) / 512 + 1)
         let outputLimit = min(try Self.sum(Self.product(samples, 6), 65536), maximumCompressedBytes)
         let arrays = try Self.product(samples, 144)
-        let rows = try Self.product(Self.product(min(width, 512) + 2, channels), 192)
+        // The per-sample envelope already sums scratch across all groups and
+        // both predictor candidates. Concurrent workers additionally need
+        // simultaneous predictor rows and independent entropy table scratch.
+        let rows = try Self.product(Self.product(Self.product(min(width, 512) + 2, channels), 192), maximumWorkers)
         let inventory = try Self.product(Self.product(groups, channels), 16 * 1024)
         try reserveOutput(outputLimit)
         try reserveWorkspace(Self.sum(Self.sum(arrays, rows),
-            Self.sum(inventory, Self.sum(Self.product(outputLimit, 6), 4 * 1024 * 1024))))
+            Self.sum(inventory, Self.sum(Self.product(outputLimit, 6), Self.product(maximumWorkers, 4 * 1024 * 1024)))))
         return outputLimit
     }
 

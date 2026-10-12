@@ -1,0 +1,28 @@
+--- a/Sources/SwiftJXLCore/Codec/ModularSampleStorage.swift
++++ b/Sources/SwiftJXLCore/Codec/ModularSampleStorage.swift
+@@ -50,14 +50,14 @@
+     var count: Int { layout.width * layout.height }
+     subscript(index: Int) -> Int32 {
+         get {
+-            let p = layout.offset + (index / layout.width) * layout.rowBytes + (index % layout.width) * layout.pixelStride
++            let p = layout.offset + (index / layout.width) * (layout.width * layout.pixelStride) + (index % layout.width) * layout.pixelStride
+             let first = Int32(bytes[p])
+             if layout.storageBits == 8 { return first }
+             let second = Int32(bytes[p + 1])
+             return layout.littleEndian ? first | (second << 8) : (first << 8) | second
+         }
+         set {
+-            let p = layout.offset + (index / layout.width) * layout.rowBytes + (index % layout.width) * layout.pixelStride
++            let p = layout.offset + (index / layout.width) * (layout.width * layout.pixelStride) + (index % layout.width) * layout.pixelStride
+             let low = UInt8(truncatingIfNeeded: newValue), high = UInt8(truncatingIfNeeded: newValue >> 8)
+             if layout.storageBits == 8 { bytes[p] = low; return }
+             bytes[p] = layout.littleEndian ? low : high
+@@ -90,7 +90,7 @@
+                     try ScalarEncodingWork.checkpoint()
+                     for x in 0..<first.width {
+                         if x & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
+-                        let p = layout.offset + y * layout.rowBytes + x * layout.pixelStride
++                        let p = layout.offset + y * (layout.width * layout.pixelStride) + x * layout.pixelStride
+                         var value = Int32(bytes[p])
+                         if layout.storageBits == 16 {
+                             value = layout.littleEndian ? value | (Int32(bytes[p + 1]) << 8) : (value << 8) | Int32(bytes[p + 1])

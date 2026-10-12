@@ -1,0 +1,7 @@
+{
+  "phase": "cold build before tests",
+  "timeoutSeconds": 420,
+  "testsExecuted": 0,
+  "orphanCompilerStopped": 68370,
+  "reasonForRetry": "Exclude unrelated test files from private test target; reuse compiled libraries."
+}

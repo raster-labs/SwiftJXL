@@ -1,0 +1,15 @@
+{
+  "recordedUTC": "2026-10-12T06:24:55.892917+00:00",
+  "commands": {
+    "pmset -g custom": {
+      "exit": 0,
+      "stdout": "AC Power:\n Sleep On Power Button 1\n lowpowermode         0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         0\n womp                 1\n networkoversleep     0\n sleep                0\n tcpkeepalive         1\n disksleep            10\n",
+      "stderr": ""
+    },
+    "pmset -g batt": {
+      "exit": 0,
+      "stdout": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36634723)\t94%; discharging; 3:20 remaining present: true\n",
+      "stderr": ""
+    }
+  }
+}

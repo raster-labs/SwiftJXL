@@ -1,0 +1,316 @@
+{
+  "status": "completed",
+  "order": [
+    "predecessor",
+    "serial-predecessor",
+    "candidate",
+    "candidate",
+    "serial-predecessor",
+    "predecessor"
+  ],
+  "method": "Two interleaved blocks per implementation;5 warmups and10 timed iterations per block. Separate process per operation/block. No sanitizers. Decode uses the same independently verified candidate codestream. Serial predecessor is diagnostic only.",
+  "cases": [
+    {
+      "name": "small-rgb8",
+      "width": 31,
+      "height": 17,
+      "channels": 3,
+      "bits": 8,
+      "pattern": "ramp",
+      "preflight": {
+        "candidate": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "75e1b787c4e62e6235f8e3f8cd0d1ae8db0f7f25e86415cdf60036dce40d96f6",
+          "encodedBytes": 1199
+        },
+        "predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "75e1b787c4e62e6235f8e3f8cd0d1ae8db0f7f25e86415cdf60036dce40d96f6",
+          "encodedBytes": 1199
+        },
+        "serial-predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "75e1b787c4e62e6235f8e3f8cd0d1ae8db0f7f25e86415cdf60036dce40d96f6",
+          "encodedBytes": 1199
+        }
+      },
+      "runs": [],
+      "summaries": {}
+    },
+    {
+      "name": "gray16",
+      "width": 512,
+      "height": 512,
+      "channels": 1,
+      "bits": 16,
+      "pattern": "ramp",
+      "preflight": {
+        "candidate": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "998d5a9a7722b2c7ea41fde7b7f408768b4ad118f38a8ce48bba600781e6e56b",
+          "encodedBytes": 137814
+        },
+        "predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "998d5a9a7722b2c7ea41fde7b7f408768b4ad118f38a8ce48bba600781e6e56b",
+          "encodedBytes": 137814
+        },
+        "serial-predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "998d5a9a7722b2c7ea41fde7b7f408768b4ad118f38a8ce48bba600781e6e56b",
+          "encodedBytes": 137814
+        }
+      },
+      "runs": [],
+      "summaries": {}
+    },
+    {
+      "name": "rgb8",
+      "width": 256,
+      "height": 257,
+      "channels": 3,
+      "bits": 8,
+      "pattern": "ramp",
+      "preflight": {
+        "candidate": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "6a7e3c98cffcb7c7e71bcad1cfe2c0487c57ce07c4109de6234cb20e55e51129",
+          "encodedBytes": 150388
+        },
+        "predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "6a7e3c98cffcb7c7e71bcad1cfe2c0487c57ce07c4109de6234cb20e55e51129",
+          "encodedBytes": 150388
+        },
+        "serial-predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "6a7e3c98cffcb7c7e71bcad1cfe2c0487c57ce07c4109de6234cb20e55e51129",
+          "encodedBytes": 150388
+        }
+      },
+      "runs": [],
+      "summaries": {}
+    },
+    {
+      "name": "group-rgb8",
+      "width": 513,
+      "height": 259,
+      "channels": 3,
+      "bits": 8,
+      "pattern": "ramp",
+      "preflight": {
+        "candidate": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "3fc59085592824ecc173c7561c9773958b1a04c1aec072dcb2f645f0fb49166b",
+          "encodedBytes": 336545
+        },
+        "predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "5caff7493b9bed80d02dd677f0f8152d726c9a24664b996ecfbf0938a293a8b7",
+          "encodedBytes": 336541
+        },
+        "serial-predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "5caff7493b9bed80d02dd677f0f8152d726c9a24664b996ecfbf0938a293a8b7",
+          "encodedBytes": 336541
+        }
+      },
+      "runs": [],
+      "summaries": {}
+    },
+    {
+      "name": "group-rgba16",
+      "width": 513,
+      "height": 259,
+      "channels": 4,
+      "bits": 16,
+      "pattern": "ramp",
+      "preflight": {
+        "candidate": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "996b440d463e4610cb6800b7c5349e079dde030aeaabd77d352099757d219682",
+          "encodedBytes": 164243
+        },
+        "predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "cf65a3444ff16a37bd03e051118ff31743e9bb11424de91801300425e5d63d49",
+          "encodedBytes": 164239
+        },
+        "serial-predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "cf65a3444ff16a37bd03e051118ff31743e9bb11424de91801300425e5d63d49",
+          "encodedBytes": 164239
+        }
+      },
+      "runs": [],
+      "summaries": {}
+    },
+    {
+      "name": "flat-gray16",
+      "width": 512,
+      "height": 512,
+      "channels": 1,
+      "bits": 16,
+      "pattern": "flat",
+      "preflight": {
+        "candidate": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "d5cb9e31f5810906e0a9b2530a2e651bad0b36610467a7bfa26ac48ca74d0b1a",
+          "encodedBytes": 48
+        },
+        "predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "d5cb9e31f5810906e0a9b2530a2e651bad0b36610467a7bfa26ac48ca74d0b1a",
+          "encodedBytes": 48
+        },
+        "serial-predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "d5cb9e31f5810906e0a9b2530a2e651bad0b36610467a7bfa26ac48ca74d0b1a",
+          "encodedBytes": 48
+        }
+      },
+      "runs": [],
+      "summaries": {}
+    },
+    {
+      "name": "noise-rgb8",
+      "width": 513,
+      "height": 259,
+      "channels": 3,
+      "bits": 8,
+      "pattern": "noise",
+      "preflight": {
+        "candidate": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "4a20eacce5f906d8d2a107d26e38b9ace293be6daf7cd7b0ef487bfe397de188",
+          "encodedBytes": 436273
+        },
+        "predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "64b5d7fe03752b51907e9932d8170270088a1ece4da76abc1970b09357e6e14e",
+          "encodedBytes": 436269
+        },
+        "serial-predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "64b5d7fe03752b51907e9932d8170270088a1ece4da76abc1970b09357e6e14e",
+          "encodedBytes": 436269
+        }
+      },
+      "runs": [],
+      "summaries": {}
+    },
+    {
+      "name": "large-gray16",
+      "width": 2048,
+      "height": 2048,
+      "channels": 1,
+      "bits": 16,
+      "pattern": "ramp",
+      "preflight": {
+        "candidate": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "dfe72a529a1c497bfa3d2a556f183bb431b7729c12df6f4f3b89104d24b1cc18",
+          "encodedBytes": 3306965
+        },
+        "predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "fe43b016a9ad130f7f0ee7188320dd036324c4854208d97aeeca41b71df8e025",
+          "encodedBytes": 3306961
+        },
+        "serial-predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "fe43b016a9ad130f7f0ee7188320dd036324c4854208d97aeeca41b71df8e025",
+          "encodedBytes": 3306961
+        }
+      },
+      "runs": [],
+      "summaries": {}
+    },
+    {
+      "name": "large-gray8",
+      "width": 4096,
+      "height": 2048,
+      "channels": 1,
+      "bits": 8,
+      "pattern": "ramp",
+      "preflight": {
+        "candidate": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "a4dadfa46c104c125656a6c384edb4578df5508fbcec7fa3454e4bb4b1a1ad25",
+          "encodedBytes": 7647413
+        },
+        "predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "83b5f6277110efeae0db4cb3798111bc20fa412f4ac823967658702454215d00",
+          "encodedBytes": 7647409
+        },
+        "serial-predecessor": {
+          "status": "passed",
+          "oracleExit": 0,
+          "exactSamples": true,
+          "codestreamSHA256": "83b5f6277110efeae0db4cb3798111bc20fa412f4ac823967658702454215d00",
+          "encodedBytes": 7647409
+        }
+      },
+      "runs": [],
+      "summaries": {}
+    }
+  ],
+  "binaries": {
+    "candidate": "5b658ce244f4f692e883bda2cb4de777954c7378597557ac2d12e397a9fcf553",
+    "predecessor": "53f399837b168611c2a5a884c1976e81fcbc09a6184085fbf89fce74c7b4ebf8",
+    "serial-predecessor": "8cbc1363c617d6c1048c54bcce1f151cd7cd342ab16bea6195b4de1eac3b8d2f"
+  }
+}

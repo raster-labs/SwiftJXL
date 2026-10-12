@@ -1,0 +1,48 @@
+{
+  "allocatedHeapAfter" : 3675680,
+  "allocatedHeapBefore" : 2610384,
+  "allocatingDecode" : {
+    "finalPixelAllocations" : 1,
+    "finalPixelBytes" : 1062936,
+    "workingPlaneAllocations" : 12,
+    "workingPlaneBytes" : 4251744
+  },
+  "bits" : 16,
+  "callerCapacity" : 1067080,
+  "callerDecode" : {
+    "finalPixelAllocations" : 0,
+    "finalPixelBytes" : 0,
+    "workingPlaneAllocations" : 12,
+    "workingPlaneBytes" : 4251744
+  },
+  "callerHeapAfter" : 4757536,
+  "callerHeapBefore" : 4757488,
+  "channels" : 4,
+  "checks" : [
+    "every sample",
+    "zeroed output padding",
+    "input padding independence",
+    "caller allocation identity",
+    "allocation-site counters",
+    "sealed rejection",
+    "admission before planes",
+    "cancellation invalidation"
+  ],
+  "compressedBytes" : 269248,
+  "concurrentOperations" : 4,
+  "decodeCumulativeWorkspaceReservation" : 16783708,
+  "dimensions" : [
+    513,
+    259
+  ],
+  "encode" : {
+    "finalPixelAllocations" : 0,
+    "finalPixelBytes" : 0,
+    "workingPlaneAllocations" : 23,
+    "workingPlaneBytes" : 7972020
+  },
+  "maximumMemoryBytes" : 1610612736,
+  "maximumWorkspaceBytes" : 1073741824,
+  "note" : "Ordinary optimised build; allocation-site plane counters and before\/after live process-heap observations. Neither workspace peak nor exact global allocation counts. Other host work active; no latency or comparative RSS claim.",
+  "passed" : true
+}

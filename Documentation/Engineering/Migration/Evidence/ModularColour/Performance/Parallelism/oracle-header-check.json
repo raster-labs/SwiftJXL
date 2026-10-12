@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "files": 27,
+  "fields": [
+    "WIDTH",
+    "HEIGHT",
+    "DEPTH",
+    "MAXVAL"
+  ],
+  "note": "Post-run independent PAM header validation supplements exact sample-payload comparisons; all dimensions, channels and precision matched."
+}

@@ -102,39 +102,45 @@ public struct Encoder: Sendable {
 
     @concurrent public func encode(_ image: Image, options: EncodeOptions = .init()) async throws -> EncodedImage {
         let start = ContinuousClock.now
-        return try translateScalarErrors(encoding: true) {
-            try Task.checkCancellation()
-            try validateOperation(options.executionPolicy)
-            let limits = options.resourceLimits
-            try image.descriptor.validate(limits: limits)
-            let metadataBytes = try image.metadata.validate(limits: limits,
-                additionalBytes: image.descriptor.iccProfile?.count ?? 0)
-            let layouts = try modularSourceLayouts(image.descriptor)
-            let intent = try renderingIntent(image.metadata)
-            let transfer = try transferFunction(image.metadata)
-            guard image.metadata.requiredKeys.subtracting([renderingIntentKey, transferFunctionKey]).isEmpty,
-                  options.metadataPolicy == .discardAncillary || image.metadata.entries.keys.allSatisfy({ $0 == renderingIntentKey || $0 == transferFunctionKey }) else {
-                throw CodecError(.unsupportedFeature, "The Modular encoder cannot preserve this metadata.")
-            }
-            guard image.storage.byteCount <= limits.maximumDecodedBytes else {
-                throw CodecError(.resourceLimitExceeded, "Source storage exceeds decoded limits.")
-            }
-            let budget = try operationBudget(limits, retained: checkedAdd(image.storage.byteCount, metadataBytes), start: start)
-            try progress(options.progress, .processing, completed: 0)
-            let data = try image.storage.withUnsafeBytes { bytes in
-                guard bytes.count == image.storage.byteCount, layouts.allSatisfy({ bytes.count >= $0.requiredBytes }) else {
-                    throw CodecError(.storageUnavailable, "Source provider returned inconsistent capacity.")
+        let cancellation = ScalarOperationCancellation()
+        return try await withTaskCancellationHandler {
+            return try translateScalarErrors(encoding: true) {
+                try Task.checkCancellation()
+                try validateOperation(options.executionPolicy)
+                let limits = options.resourceLimits
+                try image.descriptor.validate(limits: limits)
+                let metadataBytes = try image.metadata.validate(limits: limits,
+                    additionalBytes: image.descriptor.iccProfile?.count ?? 0)
+                let layouts = try modularSourceLayouts(image.descriptor)
+                let intent = try renderingIntent(image.metadata)
+                let transfer = try transferFunction(image.metadata)
+                guard image.metadata.requiredKeys.subtracting([renderingIntentKey, transferFunctionKey]).isEmpty,
+                      options.metadataPolicy == .discardAncillary || image.metadata.entries.keys.allSatisfy({ $0 == renderingIntentKey || $0 == transferFunctionKey }) else {
+                    throw CodecError(.unsupportedFeature, "The Modular encoder cannot preserve this metadata.")
                 }
-                return try ModularStorageEncoder.encode(bytes, layouts: layouts,
-                    bitsPerSample: image.descriptor.meaningfulBits, grayscale: image.descriptor.colour == .greyscale,
-                    alphaAssociated: image.descriptor.alpha == .absent ? nil : image.descriptor.alpha == .premultiplied,
-                    renderingIntent: intent, transferFunction: transfer, budget: budget)
+                guard image.storage.byteCount <= limits.maximumDecodedBytes else {
+                    throw CodecError(.resourceLimitExceeded, "Source storage exceeds decoded limits.")
+                }
+                let budget = try operationBudget(limits, retained: checkedAdd(image.storage.byteCount, metadataBytes),
+                    start: start, maximumWorkers: limits.maximumWorkers, cancellation: cancellation)
+                try progress(options.progress, .processing, completed: 0)
+                let data = try image.storage.withUnsafeBytes { bytes in
+                    guard bytes.count == image.storage.byteCount, layouts.allSatisfy({ bytes.count >= $0.requiredBytes }) else {
+                        throw CodecError(.storageUnavailable, "Source provider returned inconsistent capacity.")
+                    }
+                    return try ModularStorageEncoder.encode(bytes, layouts: layouts,
+                        bitsPerSample: image.descriptor.meaningfulBits, grayscale: image.descriptor.colour == .greyscale,
+                        alphaAssociated: image.descriptor.alpha == .absent ? nil : image.descriptor.alpha == .premultiplied,
+                        renderingIntent: intent, transferFunction: transfer, budget: budget)
+                }
+                try budget.checkpoint()
+                try progress(options.progress, .completed, completed: 1)
+                try budget.checkpoint()
+                return EncodedImage(data: data, encoding: .init(format: "jpeg-xl", mode: .lossless),
+                    report: scalarReport(options.executionPolicy, start: start))
             }
-            try budget.checkpoint()
-            try progress(options.progress, .completed, completed: 1)
-            try budget.checkpoint()
-            return EncodedImage(data: data, encoding: .init(format: "jpeg-xl", mode: .lossless),
-                report: scalarReport(options.executionPolicy, start: start))
+        } onCancel: {
+            cancellation.cancel()
         }
     }
 }
@@ -208,14 +214,15 @@ private func modularSourceLayouts(_ d: ImageDescriptor) throws -> [ModularChanne
     return try channelLayouts(d, roles: roles)
 }
 private func operationBudget(_ limits: ResourceLimits, retained: Int,
-                             start: ContinuousClock.Instant) throws -> ScalarOperationBudget {
+                             start: ContinuousClock.Instant, maximumWorkers: Int = 1,
+                             cancellation: ScalarOperationCancellation? = nil) throws -> ScalarOperationBudget {
     // Values beyond a year need not extend a bounded scalar operation. Clamping
     // before Duration conversion also handles finite Double.greatestFiniteMagnitude.
     let deadline = start.advanced(by: .seconds(min(limits.deadlineSeconds, 31_536_000)))
     return try ScalarOperationBudget(retainedBytes: retained,
         maximumWorkspaceBytes: limits.maximumWorkspaceBytes, maximumMemoryBytes: limits.maximumMemoryBytes,
         maximumDecodedBytes: limits.maximumDecodedBytes, maximumCompressedBytes: limits.maximumCompressedBytes,
-        deadline: deadline)
+        deadline: deadline, maximumWorkers: maximumWorkers, cancellation: cancellation)
 }
 private func prepare(_ data: Data, options: DecodeOptions, start: ContinuousClock.Instant,
                      destinationBytes: Int = 0, destinationMetadataBytes: Int = 0) throws -> (ModularFrameDecoder.Prepared, ScalarOperationBudget) {

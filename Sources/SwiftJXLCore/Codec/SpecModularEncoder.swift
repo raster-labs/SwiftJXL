@@ -906,7 +906,7 @@ package enum SpecModularEncoder {
         // decoder's per-group TokenStreamReader) — emit concurrently,
         // collect in group (TOC) order.
         let chCount = channels.count
-        let acResults = parallelMap(numGroups) {
+        let acResults = try parallelMap(numGroups) {
             (groupIdx: Int) -> Result<Data, any Error> in
             Result {
                 var sec = BitWriter()
@@ -969,7 +969,7 @@ package enum SpecModularEncoder {
            total(multi) < total(best) {
             best = multi
         }
-        if effort >= 8, let greedy = buildSectionsGreedyTree(
+        if effort >= 8, let greedy = try buildSectionsGreedyTree(
             width: width, height: height,
             channels: rctChannels, sampleHi: sampleHi, effort: effort,
             numGroupsX: numGroupsX, numGroupsY: numGroupsY,
@@ -1302,7 +1302,7 @@ package enum SpecModularEncoder {
         numDcGroups: Int,
         header h: EntropySectionHeader, codebook c: MultiClusterCodebook,
         transforms: [ModularTransform] = []
-    ) -> [Data]? {
+    ) throws -> [Data]? {
         let numGroups = perGroupOrdered.count
         var dcGlobal = BitWriter()
         dcGlobal.writeBit(true)            // matrices_dc_default
@@ -1324,7 +1324,7 @@ package enum SpecModularEncoder {
         // immutable header/codebook — emit them concurrently and append
         // in group order (the TOC order), so the codestream is
         // byte-identical to the sequential loop's.
-        let groupSections = parallelMap(numGroups) { (g: Int) -> Data? in
+        let groupSections = try parallelMap(numGroups) { (g: Int) -> Data? in
             var sec = BitWriter()
             do {
                 try GroupHeader.default.write(to: &sec)
@@ -1359,12 +1359,12 @@ package enum SpecModularEncoder {
         perGroupOrdered: [[(ctx: Int, val: UInt32)]],
         numDcGroups: Int, postCfg: HybridUintConfig,
         transforms: [ModularTransform] = []
-    ) -> [Data]? {
+    ) throws -> [Data]? {
         guard let cost = costMultiGroupSections(
             tree: tree, numContexts: n, perGroupOrdered: perGroupOrdered,
             numDcGroups: numDcGroups, postCfg: postCfg,
             transforms: transforms) else { return nil }
-        return emitMultiGroupSections(
+        return try emitMultiGroupSections(
             tree: tree, numContexts: n, perGroupOrdered: perGroupOrdered,
             numDcGroups: numDcGroups, header: cost.header, codebook: cost.codebook,
             transforms: transforms)
@@ -1402,7 +1402,7 @@ package enum SpecModularEncoder {
         // pixel list (the AC sections' token order). `propertyValue` is
         // read BEFORE `predict` in each rect, matching the decoder.
         let chCount = channels.count
-        let rectPixels = parallelMap(chCount * numGroups) {
+        let rectPixels = try parallelMap(chCount * numGroups) {
             (slot: Int) -> [(wpProp: Int32, token: UInt32)] in
             let ci = slot / numGroups
             let gi = slot % numGroups
@@ -1504,7 +1504,7 @@ package enum SpecModularEncoder {
             if !isFixed { consider(costForThresholds(l)) }
         }
         guard let win = best else { return nil }
-        return emitMultiGroupSections(
+        return try emitMultiGroupSections(
             tree: win.tree, numContexts: win.n,
             perGroupOrdered: win.perGroupOrdered,
             numDcGroups: numDcGroups,
@@ -1529,7 +1529,7 @@ package enum SpecModularEncoder {
         numGroupsX: Int, numGroupsY: Int,
         numGroups: Int, numDcGroups: Int, groupDim: Int,
         transforms: [ModularTransform] = []
-    ) -> [Data]? {
+    ) throws -> [Data]? {
         guard width > 0, height > 0, !channels.isEmpty else { return nil }
         let n = width * height * channels.count
         // Memory gate: 6 props/pixel are kept for routing (~24 B/px).
@@ -1636,7 +1636,7 @@ package enum SpecModularEncoder {
             }
             perGroupOrdered[g] = ordered
         }
-        return assembleMultiGroupContextSections(
+        return try assembleMultiGroupContextSections(
             tree: tree, numContexts: numCtx, perGroupOrdered: perGroupOrdered,
             numDcGroups: numDcGroups, postCfg: postCfg,
             transforms: transforms)
@@ -1859,7 +1859,7 @@ package enum SpecModularEncoder {
             case base(Result<Data, any Error>)
             case cand(Data?)
         }
-        let stageB = parallelMap(effort >= 8 ? 3 : 2) { (i: Int) -> StageB in
+        let stageB = try parallelMap(effort >= 8 ? 3 : 2) { (i: Int) -> StageB in
             switch i {
             case 0:
                 return .base(emitBaseline())
