@@ -116,3 +116,7 @@ The encoder retains a sample view of the input Data. Output serialisation uses o
 Embedded ICC profiles in supported Modular images are retained by library decoding. CLI inspect/validate JSON reports `colourTransfer: "icc"` and `iccProfileBytes`; it does not label these samples sRGB. NRRD/PNM export rejects such input because those adapters cannot preserve the profile.
 
 Inspection and validation also support 1–7-bit integer streams, preserving their declared precision. Encoding and NRRD/PNM file export retain their existing precision limits; a low-precision stream is not silently rescaled or labelled as 8-bit output.
+
+## VarDCT development decoder
+
+Inspection, validation and decode also accept the library’s bounded single-frame sRGB 8/16-bit VarDCT profile, within the CLI’s existing 1024-pixel dimension and 4 MiB input ceilings. Use `--output-format pnm-srgb` to preserve its sRGB interpretation. The final decode JSON reports `lossy` fidelity, while Modular remains `exact-samples`. ICC VarDCT, associated alpha, unsupported groups/passes and unrepresentable interchange interpretations reject. VarDCT encoding is not exposed yet; whole-migration qualification remains open.

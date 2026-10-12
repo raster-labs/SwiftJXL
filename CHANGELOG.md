@@ -1,5 +1,13 @@
 # Change log
 
+## Unreleased — public VarDCT decoding, 2026-10-12
+
+- Dispatch Modular and bounded VarDCT through a shared prepared header without retrying parsers or duplicating compressed storage.
+- Decode single-pass sRGB 8/16-bit grey/RGB with optional straight alpha into owning or caller storage, preserving explicit layouts and invalidating failed destinations.
+- Report VarDCT output as lossy in the API and CLI; retain explicit unsupported ICC/associated-alpha/profile boundaries.
+- Add public scalar-reference, ownership, cancellation and CLI regressions. Broader profiles, public encoding, original ARM oracle differences and full qualification remain open.
+
+
 ## Unreleased — internal VarDCT single-cell strategy search, 2026-10-12
 
 - Add DCT4, DCT2, Hornuss, split DCT and AFV analysis and bounded selection alongside DCT8, qualified against 650 direct reference vectors and twenty emitted streams. Larger hierarchical search remains in progress.

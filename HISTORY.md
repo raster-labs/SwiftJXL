@@ -1,5 +1,10 @@
 # History and provenance — SwiftJXL
 
+## Public VarDCT decoder integration — 12 October 2026
+
+Connected the bounded sRGB 8/16-bit VarDCT decoder through the public owning-storage API and CLI. Shared header preparation parses once under the existing admission bounds; allocating output and caller destinations preserve precision, roles, byte order, padding and owner identity. Lossy fidelity is reported explicitly, including CLI JSON. ICC and associated-alpha VarDCT output reject. Full local debug with the independent oracle enabled passed 230 declarations / 883 cases without skips, and CLI inspection, validation, sRGB output and transfer-mismatch rejection passed all 32 retained streams. Final affected sanitizer evidence, original ARM oracle differences and broader migration gates are recorded separately; this is not complete interoperability or release readiness.
+
+
 ## VarDCT single-cell strategy search — 12 October 2026
 
 Added ten bounded forward transform choices with the predecessor cost heuristic and tie priority. All 650 direct pinned libjxl forward vectors pass; twenty mixed streams are independently accepted and meet the separate scalar numerical limits with exact alpha. Affected debug, ASan and TSan each pass 11 declarations / 54 cases. Larger hierarchical strategy search and final integration remain pending. See [exact evidence](Documentation/Engineering/Migration/Evidence/VarDCT/EncoderSmall/validation.json).

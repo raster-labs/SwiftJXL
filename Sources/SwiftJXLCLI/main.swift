@@ -222,8 +222,9 @@ private func help(_ command: String?) -> String {
             USAGE: \(tool) \(command) --input PATH [OPTIONS]
 
             \(command == "inspect" ? "Inspect supported headers and output geometry; pixel payload integrity is not checked." : "Decode the entire supported frame in memory to validate its pixel payload; discard pixels.")
-            Supports single-frame unsigned greyscale/RGB Modular JPEG XL with optional alpha,
-            1..16 meaningful bits, dimensions <=1024, compressed input <=4194304 bytes.
+            Supports bounded single-frame Modular and VarDCT greyscale/RGB JPEG XL with optional alpha,
+            Modular 1..16 meaningful bits; VarDCT 8/16-bit sRGB.
+            Dimensions <=1024, compressed input <=4194304 bytes.
             This is not a general JPEG XL conformance validator. Unsupported profiles return 4.
 
             COMMAND OPTIONS
@@ -287,7 +288,7 @@ private func help(_ command: String?) -> String {
       transcode                 Reversible native JPEG/JPEG XL coefficient conversion.
 
     Requires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.
-    Bounded integer Modular, NRRD/PNM and native JPEG reconstruction profiles are available.
+    Bounded Modular and VarDCT decoding, NRRD/PNM and native JPEG reconstruction profiles are available.
 
     \(common)
 
@@ -347,7 +348,7 @@ private func write(_ text: String, to handle: FileHandle) throws {
             "interchangeFormats": ["nrrd", "pnm", "pnm-srgb"], "pnmMeaningfulBits": Array(8...16), "pnmColourTransfers": ["bt709", "srgb-explicit-variant"],
             "maximumEncodeDimension": 1024, "maximumDecodeDimension": 1024,
             "canInspect": decoder.canInspect, "canValidate": true, "formats": formats,
-            "profile": "single-frame integer Modular grey/RGB with optional alpha; inspect/validate 1..16 bits; encode 8..16 bits; maximum dimension 1024",
+            "profile": "single-frame integer Modular grey/RGB with optional alpha, decode 1..16 bits and encode 8..16 bits; VarDCT decode 8/16-bit sRGB with straight alpha, single pass/DC group; maximum dimension 1024",
             "maximumCompressedBytes": CommandIO.maximumInput]
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
         try FileHandle.standardOutput.write(contentsOf: data + Data([10]))
@@ -483,6 +484,7 @@ private func status(for error: CodecError) -> Int32 {
         let srgb = interchange == "pnm-srgb"
         let descriptor: ImageDescriptor
         var outputBytes = 0
+        let fidelity: Fidelity
         if command == "encode" {
             let image: Image
             if interchange == "nrrd" { image = try NRRD.parse(data, io: io).image(data, limits: limits) }
@@ -492,6 +494,7 @@ private func status(for error: CodecError) -> Int32 {
             let encoded = try await Encoder().encode(image, options: EncodeOptions(resourceLimits: limits,
                 executionPolicy: backend, copyPolicy: copy))
             outputBytes = encoded.data.count
+            fidelity = encoded.report.fidelity
             try diagnostic(3, "interchange source shared with scalar encoder")
             try diagnostic(4, "elapsed seconds before publication: \(ProcessInfo.processInfo.systemUptime - start)")
             try diagnostic(5, "final encoded payload ready for publication")
@@ -502,6 +505,7 @@ private func status(for error: CodecError) -> Int32 {
             else { try PNM.requireRepresentable(info.descriptor, metadata: info.metadata, srgb: srgb) }
             let decoded = try await decoder.decode(data, options: decodeOptions)
             descriptor = decoded.image.descriptor
+            fidelity = decoded.report.fidelity
             try diagnostic(3, "decoded storage serialised to final interchange output")
             try diagnostic(4, "elapsed seconds before publication: \(ProcessInfo.processInfo.systemUptime - start)")
             try diagnostic(5, "final decoded payload ready for publication")
@@ -515,7 +519,7 @@ private func status(for error: CodecError) -> Int32 {
             let report: [String: Any] = ["tool": tool, "version": version, "operation": command,
                 "format": command == "encode" ? "jpeg-xl" : interchange, "width": descriptor.width,
                 "height": descriptor.height, "meaningfulBits": descriptor.meaningfulBits,
-                "componentCount": descriptor.components.count, "fidelity": "exact-samples",
+                "componentCount": descriptor.components.count, "fidelity": fidelityName(fidelity),
                 "outputSampleBytes": descriptor.width * descriptor.height * descriptor.components.count * (descriptor.meaningfulBits <= 8 ? 1 : 2),
                 "encodedBytes": command == "encode" ? outputBytes : data.count]
             try io.writeBytes(JSONSerialization.data(withJSONObject: report, options: [.sortedKeys]) + Data([10]), fd: STDERR_FILENO)
@@ -587,3 +591,13 @@ interrupt.resume()
 let result = await operation.value
 interrupt.cancel()
 exit(result)
+
+/// Report the library's fidelity; successful VarDCT decoding is not sample-exact.
+private func fidelityName(_ fidelity: Fidelity) -> String {
+    switch fidelity {
+    case .exactSamples: "exact-samples"
+    case .boundedError: "bounded-error"
+    case .lossy: "lossy"
+    case .originalBitstream: "original-bitstream"
+    }
+}
