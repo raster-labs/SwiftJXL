@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased — internal DCT8 encoder checkpoint, 2026-10-12
+
+- Add bounded synchronous source analysis and frame writing, with twenty independently accepted streams and exact unassociated alpha. Public VarDCT remains disabled; predecessor encoder controls and mixed strategy search are still being integrated.
+
 ## Unreleased — internal VarDCT pixel pipeline, 2026-10-12
 
 - Add bounded single-pass coefficient parsing, mixed transform reconstruction and default restoration with direct output into borrowed integer storage. Public VarDCT remains disabled.

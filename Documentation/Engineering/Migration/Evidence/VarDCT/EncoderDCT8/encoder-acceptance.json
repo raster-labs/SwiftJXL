@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-12",
+  "scope": "Initial internal DCT8/default-quantisation encoder profile, before its first corpus probe",
+  "requirements": ["Independent libjxl accepts every emitted stream", "Image dimensions, original meaningful precision, grayscale/RGB and optional unassociated alpha semantics match", "Every alpha sample is exact", "Same-stream scalar Float32 explicit-nearest decoder comparison preserves max2LSB/RMS0.5 limits"],
+  "lossySourceComparison": "Measure and report source distortion; do not infer a hard bounded-error or perceptual-quality guarantee from the predecessor distance heuristic",
+  "originalNEONInteger": "Retain separately; does not erase original decoder gate failures",
+  "notIncluded": ["mixed-strategy search", "inverse Gaborish", "adaptive quantisation", "associated alpha", "multiple DC groups", "multi-group alpha", "public API capability", "performance parity"]
+}

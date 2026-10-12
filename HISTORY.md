@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Internal DCT8 encoder checkpoint — 12 October 2026
+
+Adapted bounded source borrowing, DCT8 analysis and frame entropy writing from the pinned predecessor. Twenty emitted streams are independently accepted; all pass the separate scalar same-stream numerical limits with exact alpha. Affected debug, ASan and TSan each pass 4 declarations / 16 cases. Original NEON integer failures remain recorded. This is a partial internal encoder: inverse Gaborish, adaptive quantisation, mixed strategy search, wider grouping and public integration remain pending. See [exact evidence](Documentation/Engineering/Migration/Evidence/VarDCT/EncoderDCT8/validation.json).
+
 ## VarDCT ICC reference extension — 12 October 2026
 
 Preserved bounded ICC metadata for internal XYB reconstruction and qualified the pinned official grayscale/grayscale_5 samples in their prescribed linear-grey Float32 domain. Both meet the original RMS/peak limits; the expanded affected debug suite passes 27 declarations / 110 cases, with ICC-specific ASan/TSan each passing 2 declarations / 3 cases. Public VarDCT and integer ICC output remain unsupported; this does not claim full conformance or silently convert the original profile. See [exact evidence](Documentation/Engineering/Migration/Evidence/VarDCT/ICC/validation.json).
