@@ -29,35 +29,21 @@ package struct VarDCTFrameEnvelope: Sendable {
                              maximumNestingDepth: Int = 32,
                              maximumICCBytes: Int = 4 * 1024 * 1024,
                              maximumMetadataBytes: Int = 16 * 1024 * 1024) throws -> Self {
+        let header = try PixelFrameHeader.read(input, budget: budget,
+            maximumDimension: maximumDimension, maximumPixels: maximumPixels,
+            maximumNestingDepth: maximumNestingDepth)
+        return try read(header, maximumICCBytes: maximumICCBytes, maximumMetadataBytes: maximumMetadataBytes)
+    }
+
+    package static func read(_ preparedHeader: PixelFrameHeader,
+                             maximumICCBytes: Int = 4 * 1024 * 1024,
+                             maximumMetadataBytes: Int = 16 * 1024 * 1024) throws -> Self {
+        let budget = preparedHeader.budget
         try budget.checkpoint()
-        guard input.count <= budget.maximumCompressedBytes, maximumNestingDepth > 0 else {
-            throw ScalarModularError.resourceLimit
-        }
-        // Container extraction, retained BitReader bytes, and section copies.
-        // Each section may be opened once by the pixel reader; repeated public
-        // internal calls are charged separately below.
-        try budget.reserveWorkspace(ScalarOperationBudget.sum(ScalarOperationBudget.product(input.count, 3),
-            ScalarOperationBudget.sum(256 * min(4096, input.count / 8), 64 * 1024)))
-        let codestream: Data
-        switch try parseJXLContainer(input, checkpoint: budget.checkpoint) {
-        case .naked: codestream = input
-        case .iso(let boxes):
-            guard boxes.allSatisfy({ ["ftyp", "jxll", "jxlc", "jxlp"].contains($0.type) }) else {
-                throw ScalarModularError.unsupportedProfile
-            }
-            codestream = try extractCodestream(from: boxes, in: input, checkpoint: budget.checkpoint)
-        }
-        guard hasCodestreamSignature(codestream) else { throw ScalarModularError.invalidInput("Missing codestream signature") }
-        var reader = BitReader(codestream, startingAt: 16, deadline: budget.deadline,
-            maximumNestingDepth: maximumNestingDepth, budget: budget)
-        let size = try SizeHeader.read(from: &reader)
-        let width = Int(size.xsize), height = Int(size.ysize)
-        guard width > 0, height > 0, width <= min(maximumDimension, 16384),
-              height <= min(maximumDimension, 16384),
-              try ScalarOperationBudget.product(width, height) <= maximumPixels else {
-            throw ScalarModularError.resourceLimit
-        }
-        let metadata = try ImageMetadata.read(from: &reader)
+        let codestream = preparedHeader.codestream, metadata = preparedHeader.metadata
+        let width = preparedHeader.width, height = preparedHeader.height
+        let maximumNestingDepth = preparedHeader.maximumNestingDepth
+        var reader = preparedHeader.reader
         let colour = metadata.colorEncoding
         guard metadata.xybEncoded, !metadata.bitDepth.floatingPoint,
               (1...16).contains(metadata.bitDepth.bitsPerSample),
