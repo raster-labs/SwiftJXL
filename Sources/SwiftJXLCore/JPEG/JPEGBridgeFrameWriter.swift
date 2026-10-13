@@ -10,7 +10,8 @@ import Foundation
 
 /// Writes the predecessor's single-DC-group, multi-AC-group JPEG bridge profile.
 /// Streaming histogram passes use fixed workspace instead of frame-sized token
-/// lists. Prefix coding is standard JXL; ANS/clustering optimisation is separate.
+/// lists. Multi-group colour AC data may use compact single-cluster ANS when its
+/// measured bit cost beats prefix coding, including conservative framing costs.
 package enum JPEGBridgeFrameWriter {
     package static func write(_ coefficients: JPEGBridgeCoefficients,
                               maximumOutputBytes: Int = 64 * 1024 * 1024, iccProfile: Data? = nil,
@@ -56,6 +57,18 @@ private struct BridgePrefix {
         header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: contexts),
             usePrefixCode: true, logAlphaSize: 15, uintConfigs: [.raw4])
     }
+    init(ansHistogram histogram: [Int], contexts: Int) throws {
+        let size = max(2, (histogram.lastIndex(where: { $0 != 0 }) ?? 0) + 1)
+        let counts = histogram.prefix(size).map { UInt32($0) }
+        let distribution = try ANSDistribution(rawFrequencies: counts)
+        var scratch = BitWriter()
+        let wire = try SpecANSDistribution.writeHistogram(
+            distribution.frequencies.map { Int32($0) }, to: &scratch)
+        let logAlpha = max(5, Int(ceilLog2(UInt32(wire.count))))
+        codebook = MultiClusterCodebook(huffmanTables: [], ansCounts: [wire], alphabetSizes: [wire.count])
+        header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: contexts),
+            usePrefixCode: false, logAlphaSize: logAlpha, uintConfigs: [.raw4])
+    }
     func writeHeader(to writer: inout BitWriter, contexts: Int) throws {
         try header.write(to: &writer, numContexts: contexts)
         try codebook.write(to: &writer, header: header)
@@ -89,7 +102,7 @@ private struct BridgeFrameWriter {
         for group in 0..<(groupsX * groupsY) {
             try acTokens(group: group) { acHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
         }
-        let ac = try BridgePrefix(histogram: acHistogram, contexts: 15 * (37 + 458))
+        let ac = try acCode(histogram: acHistogram)
         var sections: [Data] = []
         var sectionBytes = 0
         func section(_ body: (inout BitWriter) throws -> Void) throws {
@@ -103,14 +116,14 @@ private struct BridgeFrameWriter {
         if groupsX * groupsY == 1 {
             try section { w in
                 try lfGlobal(dc, to: &w); try dcGroup(dc, to: &w)
-                try hfGlobal(ac, to: &w); try acTokens(group: 0) { try ac.write($0, to: &w) }
+                try hfGlobal(ac, to: &w); try acGroup(ac, group: 0, to: &w)
             }
         } else {
             try section { try lfGlobal(dc, to: &$0) }
             try section { try dcGroup(dc, to: &$0) }
             try section { try hfGlobal(ac, to: &$0) }
             for group in 0..<(groupsX * groupsY) {
-                try section { w in try acTokens(group: group) { try ac.write($0, to: &w) } }
+                try section { w in try acGroup(ac, group: group, to: &w) }
             }
         }
         var output = BitWriter()
@@ -152,6 +165,52 @@ private struct BridgeFrameWriter {
                 }
                 swap(&current, &previous)
             }
+        }
+    }
+
+    private func acCode(histogram: [Int]) throws -> BridgePrefix {
+        let prefix = try BridgePrefix(histogram: histogram, contexts: 15 * (37 + 458))
+        // Measured setup/replay work regresses greyscale, small or flat groups.
+        // Keep their original bytes and latency; only cost substantial streams.
+        guard view.frame.components.count == 3, groupsX * groupsY > 1,
+              histogram.reduce(0, +) >= 16_384,
+              histogram.filter({ $0 > 0 }).count > 1 else { return prefix }
+        let ans = try BridgePrefix(ansHistogram: histogram, contexts: 15 * (37 + 458))
+        var prefixHeader = BitWriter(), ansHeader = BitWriter()
+        try prefix.writeHeader(to: &prefixHeader, contexts: 15 * (37 + 458))
+        try ans.writeHeader(to: &ansHeader, contexts: 15 * (37 + 458))
+        var prefixBits = prefixHeader.bitCount, ansBits = ansHeader.bitCount
+        let stream = try ANSTokenStreamWriter(header: ans.header, codebook: ans.codebook)
+        for group in 0..<(groupsX * groupsY) {
+            // Costing retains only UInt16 symbols for one group (<= 384 KiB).
+            var symbols: [UInt16] = []
+            symbols.reserveCapacity(3 * 32 * 32 * 64)
+            try acTokens(group: group) { value in
+                let symbol = Int(HybridUintConfig.raw4.tokenOnly(value))
+                symbols.append(UInt16(symbol))
+                prefixBits += Int(prefix.codebook.huffmanTables[0].lengths[symbol])
+            }
+            ansBits += 32 + 16 * (try stream.refillWordCount(symbols: symbols))
+            try policy.checkpoint()
+        }
+        // Extra bits are identical. Allow 8 bits of section padding and a
+        // full 32-bit TOC entry per changed AC/HFGlobal section. This exceeds
+        // every possible framing increase; no size regression is selected.
+        return ansBits + 40 * (groupsX * groupsY + 1) < prefixBits ? ans : prefix
+    }
+
+    private func acGroup(_ code: BridgePrefix, group: Int, to writer: inout BitWriter) throws {
+        if code.header.usePrefixCode {
+            try acTokens(group: group) { try code.write($0, to: &writer) }
+        } else {
+            // At most 196608 symbols (384 KiB), reused for refills, plus
+            // 24 KiB flags. This fits the existing 4 MiB scratch admission.
+            var symbols: [UInt16] = []
+            symbols.reserveCapacity(3 * 32 * 32 * 64)
+            try acTokens(group: group) { symbols.append(UInt16(HybridUintConfig.raw4.tokenOnly($0))) }
+            let stream = try ANSTokenStreamWriter(header: code.header, codebook: code.codebook)
+            try stream.finishSingleCluster(symbols: &symbols,
+                replay: { try acTokens(group: group, $0) }, to: &writer)
         }
     }
 

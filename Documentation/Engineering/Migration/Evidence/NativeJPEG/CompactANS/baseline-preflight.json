@@ -1,0 +1,661 @@
+{
+  "binarySHA256": "e22d1e82a9fd8fd2e387f3fef90d9c71e8857c449eb17a73553b4eb184adf544",
+  "cases": [
+    {
+      "fixture": "gray",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":683,\"outputBytes\":905,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 905,
+      "jxlSHA256": "c48732605f7d4cf2766bee202e70a9bf4375fa4cca3d370760340b57d6598886",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 0.260 MP/s, 0.337 MB/s, 10 threads.\n",
+          "bytes": 683,
+          "sha256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n31 x 17, 1.653 MP/s, 10 threads.\n",
+          "bytes": 1594,
+          "sha256": "7013d7526be5728d749d2125258eefc914fac073c37a13c899e62ad69eb3c41d"
+        }
+      ]
+    },
+    {
+      "fixture": "progressive-edge",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/progressive-edge.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-progressive-edge.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":834,\"outputBytes\":869,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 869,
+      "jxlSHA256": "ec21b9977ad76bf7b86449077d378e7b78899e02fb9b3218c7814535d52af5bd",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-progressive-edge.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-progressive-edge.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n17 x 17, 0.788 MP/s, 2.273 MB/s, 10 threads.\n",
+          "bytes": 834,
+          "sha256": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-progressive-edge.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-progressive-edge.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n17 x 17, 0.860 MP/s, 10 threads.\n",
+          "bytes": 880,
+          "sha256": "3e99756d1ccdc681f7e621d4a2259c5b1383f1b7b4aa089fece704567e685398"
+        }
+      ]
+    },
+    {
+      "fixture": "quant16",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/quant16.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-quant16.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":747,\"outputBytes\":1079,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 1079,
+      "jxlSHA256": "fd04664ece398252f9f8e865faeba847c401d83e6e299df845b6e5bcfcbf7cb2",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-quant16.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-quant16.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.739 MP/s, 2.465 MB/s, 10 threads.\n",
+          "bytes": 747,
+          "sha256": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-quant16.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-quant16.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n31 x 17, 1.918 MP/s, 10 threads.\n",
+          "bytes": 1594,
+          "sha256": "c94a605fabdf91def50df42d601f9b84f68eff93f9b4125ea3f047c73067e7d7"
+        }
+      ]
+    },
+    {
+      "fixture": "multigroup-420",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/multigroup-420.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-multigroup-420.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":89074,\"outputBytes\":116126,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 116126,
+      "jxlSHA256": "e2b4bbee1c0c6ea8ab270dd62fa54aa6fd862ac0aaefdae53c43da700555223e",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-multigroup-420.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-multigroup-420.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n257 x 513, 75.964 MP/s, 51.322 MB/s, 10 threads.\n",
+          "bytes": 89074,
+          "sha256": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-multigroup-420.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-multigroup-420.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n257 x 513, 104.188 MP/s, 10 threads.\n",
+          "bytes": 395538,
+          "sha256": "1d24e6dffc91aade54359dd44e1b6d7fa08c74b1ecf6d456bf071716cc4f3981"
+        }
+      ]
+    },
+    {
+      "fixture": "icc-rgb",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/icc-rgb.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-rgb.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":1965,\"outputBytes\":2981,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 2981,
+      "jxlSHA256": "43bb797f3d7c3331dc9c4ac6ba4f5e9432e5fe2044a7e62a10dbc21dc459ffd3",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-rgb.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-rgb.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.509 MP/s, 5.625 MB/s, 10 threads.\n",
+          "bytes": 1965,
+          "sha256": "f203936ed7fa34619ff722f28a13c5b2cfc6c205f0b80c1bc6fe1eed4492515a",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-rgb.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-rgb.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n31 x 17, 1.744 MP/s, 10 threads.\n",
+          "bytes": 1594,
+          "sha256": "827a9f3fd1c9f4dcbec74103f88cce2c618e06d290e61900fa04998adc9e04be"
+        }
+      ]
+    },
+    {
+      "fixture": "icc-gray",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/icc-gray.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-gray.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":1049,\"outputBytes\":1668,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 1668,
+      "jxlSHA256": "aa059ede78bf3c6b3ca702a54ee95dc30749766eb3535fe4d9009ead3af0d6a9",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-gray.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-gray.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.502 MP/s, 2.989 MB/s, 10 threads.\n",
+          "bytes": 1049,
+          "sha256": "23aa8b554baa323a07dea44c2109ce525a3aa5586b411c39a57bdac5a084f3dd",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-gray.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-icc-gray.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n31 x 17, 1.881 MP/s, 10 threads.\n",
+          "bytes": 1594,
+          "sha256": "7013d7526be5728d749d2125258eefc914fac073c37a13c899e62ad69eb3c41d"
+        }
+      ]
+    },
+    {
+      "fixture": "rgb",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":1609,\"outputBytes\":1802,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 1802,
+      "jxlSHA256": "f332a51018b380bae4ce70e7b05e1be9c200a9dae4442125a9e3f5f88f0e82f1",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n31 x 17, 1.519 MP/s, 4.638 MB/s, 10 threads.\n",
+          "bytes": 1609,
+          "sha256": "cc132a8ef6ae044a24b714270e73d4bcbf684824f8488034c56489ee22731148",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n31 x 17, 1.815 MP/s, 10 threads.\n",
+          "bytes": 1594,
+          "sha256": "44b7fd354de7ae615c456f2d692b33d5758fdbe652f1f7515ee57f073a3ace6b"
+        }
+      ]
+    },
+    {
+      "fixture": "rgb-progressive",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-progressive.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-progressive.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":1377,\"outputBytes\":1324,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 1324,
+      "jxlSHA256": "1660639f64c50a9843800138cc3eda9e34943d2701bbdaf442851bb8efa69636",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-progressive.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-progressive.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n19 x 11, 0.620 MP/s, 4.083 MB/s, 10 threads.\n",
+          "bytes": 1377,
+          "sha256": "c7c5a34bf4568dd71f37259415f8d14a87fcdb9a4f03e24b61b4bb1704ecf538",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-progressive.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-progressive.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n19 x 11, 0.678 MP/s, 10 threads.\n",
+          "bytes": 640,
+          "sha256": "0e9048f7eb3ae08b54c17e944b085b4727cff558428d7e8b6be18e59978bc88e"
+        }
+      ]
+    },
+    {
+      "fixture": "gray-flat",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray-flat.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-flat.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":1940,\"outputBytes\":2889,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 2889,
+      "jxlSHA256": "65c5c53c59813648a160eba0e3928cdb28b536124e9e7373654588296eb142e9",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-flat.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-flat.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n513 x 257, 232.541 MP/s, 3.422 MB/s, 10 threads.\n",
+          "bytes": 1940,
+          "sha256": "97a1e9b918c10b5534f09e46ed7560fefcdb646bbacd9e28d2eaf4c2a68cbb18",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-flat.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-flat.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n513 x 257, 186.216 MP/s, 10 threads.\n",
+          "bytes": 395538,
+          "sha256": "f0290b231436a0de0997059960883b296841bbf74664f57b148eb1512a4bc30b"
+        }
+      ]
+    },
+    {
+      "fixture": "gray-ramp",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray-ramp.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-ramp.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":40659,\"outputBytes\":56571,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 56571,
+      "jxlSHA256": "1d6d2a741fc726ef9bd9d246a75757372180d994aaec19a794f9c1677aaa317a",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-ramp.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-ramp.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n512 x 511, 314.304 MP/s, 48.845 MB/s, 10 threads.\n",
+          "bytes": 40659,
+          "sha256": "d5b8c32e52ba97ab4a66548e2ce876c5a818cd1a30ea850c529cfc195ed7e0e1",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-ramp.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-ramp.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n512 x 511, 226.824 MP/s, 10 threads.\n",
+          "bytes": 784911,
+          "sha256": "5d431dc563b04e8f420c958cc882c4e75de2e28fc3c2625bf463837de56e108b"
+        }
+      ]
+    },
+    {
+      "fixture": "gray-noise",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray-noise.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-noise.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":52994,\"outputBytes\":54287,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 54287,
+      "jxlSHA256": "05a7e4a68780599996182439a6c3f37f75341eafc6a9d978f9761119fde08f1e",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-noise.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-noise.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n257 x 257, 64.086 MP/s, 51.419 MB/s, 10 threads.\n",
+          "bytes": 52994,
+          "sha256": "c7da4eafe0411f2f056818c91c5ecd910aa00e0580d82fe55a21bf61509cd587",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-noise.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-gray-noise.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n257 x 257, 57.582 MP/s, 10 threads.\n",
+          "bytes": 198162,
+          "sha256": "ab2aba6d13a0b3e975d222c49c1bc64a34dd7813cf80efb9392f56cb33fde6df"
+        }
+      ]
+    },
+    {
+      "fixture": "rgb-ramp",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-ramp.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-ramp.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":40096,\"outputBytes\":55607,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 55607,
+      "jxlSHA256": "03f37f8c8c406c5b23aff27d6919266b79ff4e4a0ccd6b7141f02e282f40d5d2",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-ramp.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-ramp.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n513 x 259, 145.468 MP/s, 43.899 MB/s, 10 threads.\n",
+          "bytes": 40096,
+          "sha256": "24503bb5f4158efe8992615fa66316901946e033809ae334827a052e6b81b304",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-ramp.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-ramp.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n513 x 259, 147.712 MP/s, 10 threads.\n",
+          "bytes": 398616,
+          "sha256": "7dba9544da7aa47593428772deff7ab63bd1c9db9a6be579aad9f8b809bfdcd1"
+        }
+      ]
+    },
+    {
+      "fixture": "rgb-noise444",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":125959,\"outputBytes\":123686,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 123686,
+      "jxlSHA256": "f02adc278109668adf2d2f81311331f5439dc44f1c8e903890223cb28b72738d",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n257 x 257, 30.050 MP/s, 57.306 MB/s, 10 threads.\n",
+          "bytes": 125959,
+          "sha256": "d573f04b4cad82faf023ffb817d0aa7daa2d05b5cbb93f3acf1bc4445cde50f9",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n257 x 257, 35.830 MP/s, 10 threads.\n",
+          "bytes": 198162,
+          "sha256": "55e444509e708e254e2858b88e0486deeedad0bbcaf35a694238cb806cbb4eab"
+        }
+      ]
+    },
+    {
+      "fixture": "rgb-flat420",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-flat420.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-flat420.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":1146,\"outputBytes\":1080,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 1080,
+      "jxlSHA256": "48d60f0d6b59862a33124d5631f8a6c8ebb9811dd6c33c787fdc37f090cf7abd",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-flat420.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-flat420.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n1025 x 17, 43.522 MP/s, 2.862 MB/s, 10 threads.\n",
+          "bytes": 1146,
+          "sha256": "f8d81a6b957ffce76253c68a816e1561f7b923597bb7a649e32b36242690b208",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-flat420.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-flat420.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n1025 x 17, 50.295 MP/s, 10 threads.\n",
+          "bytes": 52290,
+          "sha256": "c5db78c026f5b787d7cc0c4d94370ec5fd33c0c0b34355f09a1da014bf7f07b1"
+        }
+      ]
+    },
+    {
+      "fixture": "rgb-textured420",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-textured420.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-textured420.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":811752,\"outputBytes\":966068,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 966068,
+      "jxlSHA256": "a4d03eab5f9d2befc6705e8ac7d67184a0c911f0607dc5c79056ee2e013cefcf",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-textured420.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-textured420.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n1024 x 1024, 96.837 MP/s, 74.966 MB/s, 10 threads.\n",
+          "bytes": 811752,
+          "sha256": "b8388330a18ccef8a1c4566f1414896ff58e0161fd704e16ac531de630ec7c7d",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-textured420.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-textured420.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n1024 x 1024, 226.580 MP/s, 10 threads.\n",
+          "bytes": 3145745,
+          "sha256": "bdb87794f6502b9cdfba32c690bba9baab54d7e872e15c37bbb7b59540041ed6"
+        }
+      ]
+    },
+    {
+      "fixture": "rgb-boundary444",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "preflight",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-boundary444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-boundary444.jxl"
+      ],
+      "exit": 0,
+      "stdout": "{\"exact\":true,\"inputBytes\":3473,\"outputBytes\":4196,\"stage\":\"complete\"}\n",
+      "stderr": "",
+      "jxlBytes": 4196,
+      "jxlSHA256": "0d03e5a24809e56b2e640f91c32b85633930b04840ca4d1655982b0aa35d4c88",
+      "oracle": [
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-boundary444.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-boundary444.jpg"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nReconstructed to JPEG.\n257 x 8, 4.540 MP/s, 7.669 MB/s, 10 threads.\n",
+          "bytes": 3473,
+          "sha256": "55b23854c6c562e91e43b290f651c7adcb5121c3ce36e21d1e23752c4bcb22ac",
+          "exactJPEG": true
+        },
+        {
+          "command": [
+            "/opt/homebrew/bin/djxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-boundary444.jxl",
+            "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-boundary444.ppm"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": "JPEG XL decoder v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nDecoded to pixels.\n257 x 8, 6.234 MP/s, 10 threads.\n",
+          "bytes": 6181,
+          "sha256": "d025cf75bdf85f20ec6898013e16f6c9b1e45a6ea808c7bc394932822819102f"
+        }
+      ]
+    }
+  ]
+}

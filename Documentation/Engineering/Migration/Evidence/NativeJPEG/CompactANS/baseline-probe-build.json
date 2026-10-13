@@ -1,0 +1,23 @@
+{
+  "command": [
+    "xcrun",
+    "swiftc",
+    "-O",
+    "-g",
+    "-swift-version",
+    "6",
+    "-strict-concurrency=complete",
+    "-package-name",
+    "SwiftJXL",
+    "-module-cache-path",
+    "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/cache",
+    "-I",
+    "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh",
+    "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/probe.swift",
+    "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/libSwiftJXLCore.a",
+    "-o",
+    "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor"
+  ],
+  "exit": 0,
+  "output": ""
+}

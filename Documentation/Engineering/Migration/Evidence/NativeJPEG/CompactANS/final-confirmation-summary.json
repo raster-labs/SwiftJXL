@@ -1,0 +1,674 @@
+[
+  {
+    "fixture": "gray",
+    "forward": {
+      "predecessor": {
+        "medianUs": 224.14600000000002,
+        "p95Us": 233.334,
+        "minUs": 221.833,
+        "maxUs": 238.875,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 223.54149999999998,
+        "p95Us": 230.167,
+        "minUs": 219.875,
+        "maxUs": 235.834,
+        "n": 40
+      },
+      "medianChangePercent": -0.2696902911495269
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 81.354,
+        "p95Us": 87.792,
+        "minUs": 79.125,
+        "maxUs": 88.833,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 81.0,
+        "p95Us": 84.458,
+        "minUs": 78.667,
+        "maxUs": 85.875,
+        "n": 40
+      },
+      "medianChangePercent": -0.4351353344641873
+    },
+    "encodedBytes": {
+      "predecessor": 905,
+      "successor": 905
+    },
+    "sizeChangePercent": 0.0
+  },
+  {
+    "fixture": "progressive-edge",
+    "forward": {
+      "predecessor": {
+        "medianUs": 261.27099999999996,
+        "p95Us": 270.625,
+        "minUs": 256.041,
+        "maxUs": 278.584,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 259.3125,
+        "p95Us": 271.125,
+        "minUs": 252.791,
+        "maxUs": 277.625,
+        "n": 40
+      },
+      "medianChangePercent": -0.7496048164549296
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 132.5,
+        "p95Us": 137.833,
+        "minUs": 129.917,
+        "maxUs": 139.333,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 136.54149999999998,
+        "p95Us": 142.666,
+        "minUs": 131.875,
+        "maxUs": 147.917,
+        "n": 40
+      },
+      "medianChangePercent": 3.0501886792452693
+    },
+    "encodedBytes": {
+      "predecessor": 869,
+      "successor": 869
+    },
+    "sizeChangePercent": 0.0
+  },
+  {
+    "fixture": "quant16",
+    "forward": {
+      "predecessor": {
+        "medianUs": 232.375,
+        "p95Us": 240.958,
+        "minUs": 228.125,
+        "maxUs": 244.417,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 224.47899999999998,
+        "p95Us": 230.792,
+        "minUs": 219.792,
+        "maxUs": 236.417,
+        "n": 40
+      },
+      "medianChangePercent": -3.397955890263593
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 83.4585,
+        "p95Us": 86.791,
+        "minUs": 80.375,
+        "maxUs": 88.917,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 83.4585,
+        "p95Us": 87.583,
+        "minUs": 80.333,
+        "maxUs": 112.25,
+        "n": 40
+      },
+      "medianChangePercent": 0.0
+    },
+    "encodedBytes": {
+      "predecessor": 1079,
+      "successor": 1079
+    },
+    "sizeChangePercent": 0.0
+  },
+  {
+    "fixture": "multigroup-420",
+    "forward": {
+      "predecessor": {
+        "medianUs": 13625.0,
+        "p95Us": 13860.208,
+        "minUs": 13485.417,
+        "maxUs": 14094.167,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 12074.9165,
+        "p95Us": 12800.166,
+        "minUs": 12017.625,
+        "maxUs": 14112.583,
+        "n": 40
+      },
+      "medianChangePercent": -11.376759633027522
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 10052.3335,
+        "p95Us": 10795.334,
+        "minUs": 9813.958,
+        "maxUs": 10926.166,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 9677.9375,
+        "p95Us": 9833.209,
+        "minUs": 9623.125,
+        "maxUs": 9882.292,
+        "n": 40
+      },
+      "medianChangePercent": -3.7244685525007815
+    },
+    "encodedBytes": {
+      "predecessor": 116126,
+      "successor": 93341
+    },
+    "sizeChangePercent": -19.620928990923648
+  },
+  {
+    "fixture": "icc-rgb",
+    "forward": {
+      "predecessor": {
+        "medianUs": 337.1255,
+        "p95Us": 360.916,
+        "minUs": 320.834,
+        "maxUs": 399.709,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 332.02099999999996,
+        "p95Us": 369.584,
+        "minUs": 317.625,
+        "maxUs": 394.292,
+        "n": 40
+      },
+      "medianChangePercent": -1.514124561921315
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 184.375,
+        "p95Us": 198.125,
+        "minUs": 179.166,
+        "maxUs": 220.75,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 183.52100000000002,
+        "p95Us": 190.209,
+        "minUs": 179.5,
+        "maxUs": 195.041,
+        "n": 40
+      },
+      "medianChangePercent": -0.463186440677954
+    },
+    "encodedBytes": {
+      "predecessor": 2981,
+      "successor": 2981
+    },
+    "sizeChangePercent": 0.0
+  },
+  {
+    "fixture": "icc-gray",
+    "forward": {
+      "predecessor": {
+        "medianUs": 249.66649999999998,
+        "p95Us": 259.958,
+        "minUs": 247.292,
+        "maxUs": 265.291,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 250.8125,
+        "p95Us": 264.125,
+        "minUs": 244.083,
+        "maxUs": 300.334,
+        "n": 40
+      },
+      "medianChangePercent": 0.45901232243814594
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 96.1665,
+        "p95Us": 100.292,
+        "minUs": 94.166,
+        "maxUs": 102.584,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 97.9585,
+        "p95Us": 102.542,
+        "minUs": 94.5,
+        "maxUs": 104.875,
+        "n": 40
+      },
+      "medianChangePercent": 1.8634347719840072
+    },
+    "encodedBytes": {
+      "predecessor": 1668,
+      "successor": 1668
+    },
+    "sizeChangePercent": 0.0
+  },
+  {
+    "fixture": "rgb",
+    "forward": {
+      "predecessor": {
+        "medianUs": 317.8125,
+        "p95Us": 328.875,
+        "minUs": 313,
+        "maxUs": 331.583,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 318.2085,
+        "p95Us": 326.208,
+        "minUs": 311.417,
+        "maxUs": 332.584,
+        "n": 40
+      },
+      "medianChangePercent": 0.12460176991151428
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 161.9795,
+        "p95Us": 223.709,
+        "minUs": 157.875,
+        "maxUs": 256.75,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 162.792,
+        "p95Us": 166.625,
+        "minUs": 159.041,
+        "maxUs": 172.375,
+        "n": 40
+      },
+      "medianChangePercent": 0.5016066847965295
+    },
+    "encodedBytes": {
+      "predecessor": 1802,
+      "successor": 1802
+    },
+    "sizeChangePercent": 0.0
+  },
+  {
+    "fixture": "rgb-progressive",
+    "forward": {
+      "predecessor": {
+        "medianUs": 311.875,
+        "p95Us": 325.542,
+        "minUs": 306.375,
+        "maxUs": 356.042,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 316.875,
+        "p95Us": 327.416,
+        "minUs": 304.833,
+        "maxUs": 330.584,
+        "n": 40
+      },
+      "medianChangePercent": 1.603206412825653
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 193.3535,
+        "p95Us": 208.542,
+        "minUs": 190.625,
+        "maxUs": 237.291,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 194.9795,
+        "p95Us": 207.958,
+        "minUs": 189.959,
+        "maxUs": 209.125,
+        "n": 40
+      },
+      "medianChangePercent": 0.8409467633117673
+    },
+    "encodedBytes": {
+      "predecessor": 1324,
+      "successor": 1324
+    },
+    "sizeChangePercent": 0.0
+  },
+  {
+    "fixture": "gray-flat",
+    "forward": {
+      "predecessor": {
+        "medianUs": 1923.9375,
+        "p95Us": 1953.5,
+        "minUs": 1900.75,
+        "maxUs": 2013,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 1934.729,
+        "p95Us": 2028.125,
+        "minUs": 1896.792,
+        "maxUs": 2202.458,
+        "n": 40
+      },
+      "medianChangePercent": 0.560906994120125
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 1601.0415,
+        "p95Us": 1631.541,
+        "minUs": 1582.667,
+        "maxUs": 1644.542,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 1610.9375,
+        "p95Us": 1646.875,
+        "minUs": 1587.292,
+        "maxUs": 1663.459,
+        "n": 40
+      },
+      "medianChangePercent": 0.6180976570563601
+    },
+    "encodedBytes": {
+      "predecessor": 2889,
+      "successor": 2889
+    },
+    "sizeChangePercent": 0.0
+  },
+  {
+    "fixture": "gray-ramp",
+    "forward": {
+      "predecessor": {
+        "medianUs": 7146.4585,
+        "p95Us": 7582.833,
+        "minUs": 7039.291,
+        "maxUs": 8211.917,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 6785.291499999999,
+        "p95Us": 6858.208,
+        "minUs": 6728.5,
+        "maxUs": 6916.75,
+        "n": 40
+      },
+      "medianChangePercent": -5.053789929655372
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 5445.312,
+        "p95Us": 5715.5,
+        "minUs": 5397.958,
+        "maxUs": 6863.209,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 5290.8544999999995,
+        "p95Us": 5994.083,
+        "minUs": 5178.709,
+        "maxUs": 6117.916,
+        "n": 40
+      },
+      "medianChangePercent": -2.8365224986189985
+    },
+    "encodedBytes": {
+      "predecessor": 56571,
+      "successor": 47224
+    },
+    "sizeChangePercent": -16.522599918686254
+  },
+  {
+    "fixture": "gray-noise",
+    "forward": {
+      "predecessor": {
+        "medianUs": 6098.728999999999,
+        "p95Us": 6202,
+        "minUs": 5966,
+        "maxUs": 6356.708,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 5526.875,
+        "p95Us": 5687.958,
+        "minUs": 5453.209,
+        "maxUs": 5725.625,
+        "n": 40
+      },
+      "medianChangePercent": -9.37660945419938
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 4332.646,
+        "p95Us": 4937.375,
+        "minUs": 4276.292,
+        "maxUs": 5036.916,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 4332.646,
+        "p95Us": 4554.375,
+        "minUs": 4240.291,
+        "maxUs": 4608.667,
+        "n": 40
+      },
+      "medianChangePercent": 0.0
+    },
+    "encodedBytes": {
+      "predecessor": 54287,
+      "successor": 52497
+    },
+    "sizeChangePercent": -3.297290327334357
+  },
+  {
+    "fixture": "rgb-ramp",
+    "forward": {
+      "predecessor": {
+        "medianUs": 5857.3125,
+        "p95Us": 6519.917,
+        "minUs": 5730.833,
+        "maxUs": 6884.125,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 5442.5205000000005,
+        "p95Us": 5499.667,
+        "minUs": 5394.625,
+        "maxUs": 5629.333,
+        "n": 40
+      },
+      "medianChangePercent": -7.0816095265533345
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 5088.771,
+        "p95Us": 5194.375,
+        "minUs": 5024.292,
+        "maxUs": 5308.666,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 4911.2705,
+        "p95Us": 5204.917,
+        "minUs": 4846.667,
+        "maxUs": 5783.958,
+        "n": 40
+      },
+      "medianChangePercent": -3.4880818963950233
+    },
+    "encodedBytes": {
+      "predecessor": 55607,
+      "successor": 43816
+    },
+    "sizeChangePercent": -21.204164943262537
+  },
+  {
+    "fixture": "rgb-noise444",
+    "forward": {
+      "predecessor": {
+        "medianUs": 15000.3335,
+        "p95Us": 15860.625,
+        "minUs": 14632.375,
+        "maxUs": 16955.375,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 12831.271,
+        "p95Us": 13074.667,
+        "minUs": 12727.792,
+        "maxUs": 13209.5,
+        "n": 40
+      },
+      "medianChangePercent": -14.460095170550701
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 11906.8125,
+        "p95Us": 12094.541,
+        "minUs": 11843.333,
+        "maxUs": 12188.791,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 11873.5835,
+        "p95Us": 12517.75,
+        "minUs": 11650.25,
+        "maxUs": 12984.542,
+        "n": 40
+      },
+      "medianChangePercent": -0.2790755292400804
+    },
+    "encodedBytes": {
+      "predecessor": 123686,
+      "successor": 115980
+    },
+    "sizeChangePercent": -6.230292838316387
+  },
+  {
+    "fixture": "rgb-flat420",
+    "forward": {
+      "predecessor": {
+        "medianUs": 498.042,
+        "p95Us": 563.417,
+        "minUs": 484.459,
+        "maxUs": 589.291,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 478.91700000000003,
+        "p95Us": 498.541,
+        "minUs": 474.083,
+        "maxUs": 500.458,
+        "n": 40
+      },
+      "medianChangePercent": -3.840037587191425
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 543.4585,
+        "p95Us": 577.875,
+        "minUs": 531.083,
+        "maxUs": 624.667,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 550.9585,
+        "p95Us": 623.041,
+        "minUs": 535.458,
+        "maxUs": 655.375,
+        "n": 40
+      },
+      "medianChangePercent": 1.3800501786245034
+    },
+    "encodedBytes": {
+      "predecessor": 1080,
+      "successor": 1080
+    },
+    "sizeChangePercent": 0.0
+  },
+  {
+    "fixture": "rgb-textured420",
+    "forward": {
+      "predecessor": {
+        "medianUs": 110496.8955,
+        "p95Us": 115513.25,
+        "minUs": 108239.625,
+        "maxUs": 118505.667,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 95292.97899999999,
+        "p95Us": 99989.459,
+        "minUs": 94302,
+        "maxUs": 101557.584,
+        "n": 40
+      },
+      "medianChangePercent": -13.759587028397558
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 79021.75,
+        "p95Us": 82777.709,
+        "minUs": 78413.75,
+        "maxUs": 83793.542,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 78051.5,
+        "p95Us": 81884.209,
+        "minUs": 76914.25,
+        "maxUs": 90797.834,
+        "n": 40
+      },
+      "medianChangePercent": -1.227826516117403
+    },
+    "encodedBytes": {
+      "predecessor": 966068,
+      "successor": 830435
+    },
+    "sizeChangePercent": -14.039694928307323
+  },
+  {
+    "fixture": "rgb-boundary444",
+    "forward": {
+      "predecessor": {
+        "medianUs": 614.187,
+        "p95Us": 681.375,
+        "minUs": 557.791,
+        "maxUs": 692.416,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 565.8125,
+        "p95Us": 584.416,
+        "minUs": 543,
+        "maxUs": 592.667,
+        "n": 40
+      },
+      "medianChangePercent": -7.876184289149723
+    },
+    "reverse": {
+      "predecessor": {
+        "medianUs": 374.35450000000003,
+        "p95Us": 384.958,
+        "minUs": 370.125,
+        "maxUs": 387,
+        "n": 40
+      },
+      "successor": {
+        "medianUs": 372.79200000000003,
+        "p95Us": 385.459,
+        "minUs": 365.125,
+        "maxUs": 401.125,
+        "n": 40
+      },
+      "medianChangePercent": -0.41738512559619245
+    },
+    "encodedBytes": {
+      "predecessor": 4196,
+      "successor": 4196
+    },
+    "sizeChangePercent": 0.0
+  }
+]

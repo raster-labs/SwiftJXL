@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — bounded native JPEG entropy selection, 2026-10-13
+
+- Select compact single-cluster rANS for substantial multi-group colour AC streams when its exact bit cost covers all framing overhead. Keep greyscale, flat and small streams on the existing prefix path.
+- Reuse one admitted group symbol buffer for refill data, preserving original JPEG bytes, cancellation and resource limits. Broader performance, feature and platform qualification remains open.
+
 ## Unreleased — Modular integer-token conversion, 2026-10-13
 
 - Simplify integer-token encoding when no bits are folded into the token, preserving exact codestreams and all resource controls.

@@ -1,0 +1,485 @@
+{
+  "scope": "Fixed six alternating process pairs after all tests completed; investigates one earlier RSS outlier, not a new general speed claim.",
+  "rows": [
+    {
+      "block": 0,
+      "codec": "baseline",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 123686,
+        "processHighWaterRSSBytes": 9994240,
+        "samplesMicroseconds": [
+          15196.208,
+          15198.125,
+          14911.75,
+          15059.042,
+          14833.834,
+          14687.458,
+          14720.792,
+          14650.875,
+          14670.833,
+          14660.75,
+          16490.5,
+          17304.75,
+          15132.084,
+          16058.625,
+          15479.25,
+          15915.75,
+          15708.5,
+          15582.834,
+          15295.917,
+          15039.083
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 0,
+      "codec": "candidate",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 115980,
+        "processHighWaterRSSBytes": 10387456,
+        "samplesMicroseconds": [
+          13454.959,
+          13564.334,
+          13669.458,
+          13729.542,
+          13321.833,
+          13573.917,
+          13322.417,
+          13660.333,
+          13523,
+          13470.834,
+          13708.542,
+          13227.667,
+          13580.042,
+          13445.625,
+          13425.833,
+          13582.208,
+          13328.375,
+          13984.833,
+          13622.25,
+          13300.458
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 1,
+      "codec": "candidate",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 115980,
+        "processHighWaterRSSBytes": 10387456,
+        "samplesMicroseconds": [
+          13354.625,
+          13500.25,
+          13527.25,
+          13483.292,
+          13488.458,
+          13277.542,
+          13497.084,
+          13539.25,
+          13378.5,
+          13400.833,
+          13690.833,
+          13482.834,
+          13490.625,
+          13423.291,
+          13508.416,
+          13513.042,
+          13448.417,
+          13599.292,
+          13479.042,
+          13553.625
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 1,
+      "codec": "baseline",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 123686,
+        "processHighWaterRSSBytes": 9994240,
+        "samplesMicroseconds": [
+          14673.666,
+          14761,
+          14796.958,
+          15019.125,
+          15810.167,
+          16486.458,
+          16615.958,
+          15727.833,
+          15653.042,
+          16331.542,
+          15678.5,
+          16064.292,
+          15687.875,
+          15362.25,
+          15416.958,
+          15203.083,
+          15130.208,
+          15237.542,
+          15161.583,
+          15165.042
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 2,
+      "codec": "baseline",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 123686,
+        "processHighWaterRSSBytes": 9994240,
+        "samplesMicroseconds": [
+          15140.666,
+          15205.584,
+          15018.167,
+          14838.75,
+          14899.417,
+          14796.584,
+          14772.084,
+          15122.958,
+          14891.417,
+          15107.583,
+          14955.167,
+          15067.542,
+          14641.917,
+          14708.125,
+          14806.542,
+          15263.542,
+          15272.291,
+          15288.458,
+          14776.75,
+          14828.333
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 2,
+      "codec": "candidate",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 115980,
+        "processHighWaterRSSBytes": 10387456,
+        "samplesMicroseconds": [
+          13653.917,
+          13802.958,
+          13823.209,
+          13610.375,
+          13459.208,
+          13620.875,
+          13470.292,
+          13512.375,
+          13755.167,
+          13673,
+          13687.375,
+          13608.083,
+          13775.25,
+          13362.084,
+          13610.75,
+          13640.041,
+          13719.042,
+          13801.833,
+          13605.083,
+          13492.125
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 3,
+      "codec": "candidate",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 115980,
+        "processHighWaterRSSBytes": 10387456,
+        "samplesMicroseconds": [
+          13895.667,
+          14549.292,
+          14877.208,
+          14464.208,
+          14221.208,
+          14238.917,
+          13853.125,
+          13562.541,
+          13776.417,
+          13654.417,
+          13739.083,
+          13477,
+          13623.166,
+          13578.916,
+          13583.958,
+          13544.458,
+          13749.833,
+          13631.5,
+          13578.5,
+          13640.792
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 3,
+      "codec": "baseline",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 123686,
+        "processHighWaterRSSBytes": 9994240,
+        "samplesMicroseconds": [
+          14581.834,
+          14828.958,
+          14938.291,
+          14634.166,
+          14541.417,
+          14900.667,
+          15011.334,
+          15149.666,
+          15057.166,
+          14932.417,
+          15283.459,
+          15496.75,
+          15297.25,
+          15081.666,
+          15500.833,
+          14916.292,
+          15509.417,
+          14578.792,
+          15028.958,
+          15010.375
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 4,
+      "codec": "baseline",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 123686,
+        "processHighWaterRSSBytes": 9994240,
+        "samplesMicroseconds": [
+          15122.708,
+          15006.209,
+          15047.333,
+          14846.5,
+          14954.375,
+          14881.042,
+          14624.375,
+          14645.333,
+          15308.583,
+          15367.875,
+          14825.833,
+          14723.042,
+          14768.708,
+          14910.541,
+          14744.416,
+          14698.583,
+          14835.625,
+          16669.5,
+          17950.25,
+          16008.459
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 4,
+      "codec": "candidate",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 115980,
+        "processHighWaterRSSBytes": 10387456,
+        "samplesMicroseconds": [
+          13995.458,
+          13937.833,
+          13893.917,
+          13923.25,
+          13709.209,
+          13779.458,
+          13867.541,
+          13843.292,
+          13828.125,
+          13579.875,
+          13414.208,
+          13538.834,
+          13705.25,
+          13633.5,
+          13576,
+          13569.833,
+          13546.708,
+          13649.375,
+          14549.583,
+          13556.709
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 5,
+      "codec": "candidate",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 115980,
+        "processHighWaterRSSBytes": 10403840,
+        "samplesMicroseconds": [
+          13726.292,
+          13552.375,
+          13575.25,
+          13582.958,
+          13491.667,
+          13780.583,
+          13674.833,
+          13440.959,
+          13671.25,
+          13613.875,
+          13641.583,
+          13511.709,
+          13660.25,
+          13676.833,
+          13579,
+          13594.084,
+          13495.959,
+          13601.375,
+          13553,
+          13717.25
+        ],
+        "warmups": 5
+      }
+    },
+    {
+      "block": 5,
+      "codec": "baseline",
+      "command": [
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/successor",
+        "forward",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/fresh/streams/successor-rgb-noise444.jxl"
+      ],
+      "exit": 0,
+      "result": {
+        "direction": "forward",
+        "inputBytes": 125959,
+        "outputBytes": 123686,
+        "processHighWaterRSSBytes": 10010624,
+        "samplesMicroseconds": [
+          14458.042,
+          14543.458,
+          14588.709,
+          14561.791,
+          14654.791,
+          14508.292,
+          14852.541,
+          14852.958,
+          14313.125,
+          14343.333,
+          14546.625,
+          14677.584,
+          15896,
+          16343.583,
+          16227.084,
+          15466.125,
+          15992.875,
+          16498,
+          16027,
+          16403.167
+        ],
+        "warmups": 5
+      }
+    }
+  ]
+}

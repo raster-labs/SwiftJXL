@@ -1,0 +1,11 @@
+{
+  "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "hardware": "",
+  "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36634723)\t100%; charged; 0:00 remaining present: true\n",
+  "djxl": "djxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project\n",
+  "djxlSHA256": "25e0a5a5ad107352f7e91a1a9c824576e56d2aca2d53708e5d3dc90eeb621566",
+  "model": "Mac16,13",
+  "memoryBytes": 17179869184,
+  "logicalCPUs": 10
+}

@@ -42,6 +42,7 @@ package enum ANSTokenStreamWriterError: Error, Sendable {
     case clusterOutOfRange(Int, max: Int)
     case symbolHasZeroFrequency(cluster: Int, symbol: Int)
     case alias(AliasTableError)
+    case invalidReplay
 }
 
 /// Buffers context-routed integer tokens and emits them as one
@@ -192,6 +193,50 @@ package struct ANSTokenStreamWriter {
                 w.write(bits: t.extraNBits, value: t.extraBits)
             }
         }
+    }
+
+    /// Compact single-cluster stream for a caller-admitted group. Reuses
+    /// its UInt16 symbol buffer for refill words, plus one flag bit per symbol.
+    /// The synchronous replay must supply the same values in forward order.
+    package func finishSingleCluster(symbols: inout [UInt16],
+        replay: (_ emit: (UInt32) throws -> Void) throws -> Void,
+        to w: inout BitWriter) throws {
+        try ScalarEncodingWork.checkpoint()
+        guard clusters.count == 1 else {
+            throw ANSTokenStreamWriterError.clusterOutOfRange(clusters.count, max: 1)
+        }
+        let enc = clusters[0], config = header.uintConfigs[0]
+        var hasRefill = [UInt8](repeating: 0, count: symbols.count / 8 + (symbols.count % 8 == 0 ? 0 : 1))
+        var state = ANSConstants.initialState
+        for i in symbols.indices.reversed() {
+            if i & 255 == 0 { try ScalarEncodingWork.checkpoint() }
+            let symbol = Int(symbols[i])
+            guard symbol < enc.freq.count, enc.freq[symbol] > 0 else {
+                throw ANSTokenStreamWriterError.symbolHasZeroFrequency(cluster: 0, symbol: symbol)
+            }
+            let f = enc.freq[symbol]
+            if UInt64(state) >= UInt64(f) << UInt64(32 - ANSConstants.logTabSize) {
+                symbols[i] = UInt16(truncatingIfNeeded: state)
+                hasRefill[i / 8] |= UInt8(1 << (i % 8))
+                state >>= 16
+            }
+            state = (state / f) &* UInt32(ANSConstants.tabSize)
+                &+ enc.slotForResidue[symbol][Int(state % f)]
+        }
+        w.write(bits: 32, value: state)
+        var index = 0
+        try replay { value in
+            guard index < symbols.count else { throw ANSTokenStreamWriterError.invalidReplay }
+            if index & 255 == 0 { try ScalarEncodingWork.checkpoint() }
+            if hasRefill[index / 8] & UInt8(1 << (index % 8)) != 0 {
+                w.write(bits: 16, value: UInt32(symbols[index]))
+            }
+            let token = config.encode(value)
+            if token.extraNBits > 0 { w.write(bits: token.extraNBits, value: token.extraBits) }
+            index += 1
+        }
+        guard index == symbols.count else { throw ANSTokenStreamWriterError.invalidReplay }
+        try ScalarEncodingWork.checkpoint()
     }
 
     /// Number of buffered tokens.

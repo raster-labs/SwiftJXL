@@ -1,0 +1,133 @@
+diff --git a/Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift b/Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift
+index c17835a..94c28f2 100644
+--- a/Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift
++++ b/Sources/SwiftJXLCore/JPEG/JPEGBridgeFrameWriter.swift
+@@ -45,23 +45,42 @@ private struct BridgePrefix {
+     let header: EntropySectionHeader
+     let codebook: MultiClusterCodebook
+     init(histogram: [Int], contexts: Int) throws {
+-        let size = max(2, (histogram.lastIndex(where: { $0 != 0 }) ?? 0) + 1)
+-        var counts = Array(histogram.prefix(size))
+-        if counts.filter({ $0 != 0 }).count == 1 {
+-            counts[counts[0] == 0 ? 0 : 1] = 1
++        try self.init(histograms: [histogram], map: .trivial(numContexts: contexts))
++    }
++    init(histograms: [[Int]], map: ContextMap) throws {
++        var tables: [PrefixCodeTable] = []
++        for histogram in histograms {
++            let size = max(2, (histogram.lastIndex(where: { $0 != 0 }) ?? 0) + 1)
++            var counts = Array(histogram.prefix(size))
++            if counts.filter({ $0 != 0 }).count == 1 {
++                counts[counts[0] == 0 ? 0 : 1] = 1
++            }
++            let lengths = lengthLimitedCanonicalHuffman(counts: counts, maxLength: 15, alphabetSize: size)
++            tables.append(try PrefixCodeTable(lengths: lengths))
++        }
++        codebook = MultiClusterCodebook(huffmanTables: tables,
++            ansCounts: [], alphabetSizes: tables.map { $0.alphabetSize })
++        header = EntropySectionHeader(lz77: .disabled, contextMap: map,
++            usePrefixCode: true, logAlphaSize: 15,
++            uintConfigs: [HybridUintConfig](repeating: .raw4, count: histograms.count))
++    }
++    func bitCost(histograms: [[Int]]) throws -> Int {
++        var writer = BitWriter()
++        try writeHeader(to: &writer, contexts: header.contextMap.numContexts)
++        var bits = writer.bitCount
++        for (cluster, histogram) in histograms.enumerated() {
++            for (symbol, count) in histogram.enumerated() where count > 0 {
++                bits += count * Int(codebook.huffmanTables[cluster].lengths[symbol])
++            }
+         }
+-        let lengths = lengthLimitedCanonicalHuffman(counts: counts, maxLength: 15, alphabetSize: size)
+-        codebook = MultiClusterCodebook(huffmanTables: [try PrefixCodeTable(lengths: lengths)],
+-            ansCounts: [], alphabetSizes: [size])
+-        header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: contexts),
+-            usePrefixCode: true, logAlphaSize: 15, uintConfigs: [.raw4])
++        return bits
+     }
+     func writeHeader(to writer: inout BitWriter, contexts: Int) throws {
+         try header.write(to: &writer, numContexts: contexts)
+         try codebook.write(to: &writer, header: header)
+     }
+-    func write(_ value: UInt32, to writer: inout BitWriter) throws {
+-        try TokenStreamWriter(header: header, codebook: codebook).writeToken(context: 0, value: value, to: &writer)
++    func write(_ value: UInt32, context: Int = 0, to writer: inout BitWriter) throws {
++        try TokenStreamWriter(header: header, codebook: codebook).writeToken(context: context, value: value, to: &writer)
+     }
+ }
+ 
+@@ -85,11 +104,31 @@ private struct BridgeFrameWriter {
+         try dcTokens { dcHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
+         dcHistogram[0] += metadataZeros
+         let dc = try BridgePrefix(histogram: dcHistogram, contexts: 1)
+-        var acHistogram = [Int](repeating: 0, count: HybridUintConfig.raw4.maxToken + 1)
++        let contexts = 15 * (37 + 458)
++        var acHistograms = [[Int]](repeating: [Int](repeating: 0,
++            count: HybridUintConfig.raw4.maxToken + 1), count: 2)
+         for group in 0..<(groupsX * groupsY) {
+-            try acTokens(group: group) { acHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
++            try acTokens(group: group) { context, value in
++                acHistograms[context == 0 ? 0 : 1][Int(HybridUintConfig.raw4.encode(value).token)] += 1
++            }
++        }
++        let combined = zip(acHistograms[0], acHistograms[1]).map { $0 + $1 }
++        var ac = try BridgePrefix(histogram: combined, contexts: contexts)
++        if groupsX * groupsY > 1 && acHistograms[1].contains(where: { $0 > 0 }) {
++            // NNZ-count contexts precede all coefficient contexts. Two fixed
++            // histograms retain streaming tokens and the existing scratch bound.
++            let map = try ContextMap(numClusters: 2,
++                map: [UInt8](repeating: 0, count: 15 * 37)
++                    + [UInt8](repeating: 1, count: 15 * 458))
++            let split = try BridgePrefix(histograms: acHistograms, map: map)
++            // Extra bits are identical. Cover every section's possible padding
++            // difference before choosing a smaller header + token body.
++            if try split.bitCost(histograms: acHistograms) + 8 * (groupsX * groupsY + 1)
++                < ac.bitCost(histograms: [combined]) {
++                ac = split
++            }
++            try policy.checkpoint()
+         }
+-        let ac = try BridgePrefix(histogram: acHistogram, contexts: 15 * (37 + 458))
+         var sections: [Data] = []
+         var sectionBytes = 0
+         func section(_ body: (inout BitWriter) throws -> Void) throws {
+@@ -103,14 +142,14 @@ private struct BridgeFrameWriter {
+         if groupsX * groupsY == 1 {
+             try section { w in
+                 try lfGlobal(dc, to: &w); try dcGroup(dc, to: &w)
+-                try hfGlobal(ac, to: &w); try acTokens(group: 0) { try ac.write($0, to: &w) }
++                try hfGlobal(ac, to: &w); try acTokens(group: 0) { try ac.write($1, context: $0, to: &w) }
+             }
+         } else {
+             try section { try lfGlobal(dc, to: &$0) }
+             try section { try dcGroup(dc, to: &$0) }
+             try section { try hfGlobal(ac, to: &$0) }
+             for group in 0..<(groupsX * groupsY) {
+-                try section { w in try acTokens(group: group) { try ac.write($0, to: &w) } }
++                try section { w in try acTokens(group: group) { try ac.write($1, context: $0, to: &w) } }
+             }
+         }
+         var output = BitWriter()
+@@ -155,7 +194,7 @@ private struct BridgeFrameWriter {
+         }
+     }
+ 
+-    private func acTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
++    private func acTokens(group: Int, _ emit: (Int, UInt32) throws -> Void) throws {
+         let x0 = (group % groupsX) * 32, y0 = (group / groupsX) * 32
+         let width = min(32, blocksX - x0), height = min(32, blocksY - y0)
+         var block = [Int32](repeating: 0, count: 64)
+@@ -169,11 +208,11 @@ private struct BridgeFrameWriter {
+                     try view.readBlock(channel: channel, block: index, into: &block)
+                     var nonzeros = 0
+                     for k in 1..<64 where block[Self.order[k]] != 0 { nonzeros += 1 }
+-                    try emit(UInt32(nonzeros))
++                    try emit(0, UInt32(nonzeros))
+                     for k in 1..<64 {
+                         if nonzeros == 0 { break }
+                         let value = block[Self.order[k]]
+-                        try emit(ZigZag.pack(value))
++                        try emit(15 * 37, ZigZag.pack(value))
+                         if value != 0 { nonzeros -= 1 }
+                     }
+                 }

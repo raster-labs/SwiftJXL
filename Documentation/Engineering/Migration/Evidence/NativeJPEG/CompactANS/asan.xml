@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.4083e-05"/>
+    <testsuite name="TestResults" errors="0" tests="28" failures="0" skipped="0" time="24.597315875">
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="aggregateAdmissionIsCheckedAndOverflowCannotWrap()" time="0.000142833"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="entropyCheckpointsBoundLatchedFailure(_:)" time="0.002989208"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="boundedWriterStopsGrowthAndThrowsBeforePublication()" time="8.3e-05"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="publicSharedStorageUsesOnlyTheRequiredFinalAllocation()" time="0.153697333"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="entropyCheckpointsBoundCancellation(_:)" time="0.001599333"/>
+        <testcase classname="SwiftJXLCoreTests.CompactANSTests" name="compactWriterRejectsMismatchedReplayCount()" time="0.002479875"/>
+        <testcase classname="SwiftJXLCoreTests.CompactANSTests" name="compactWriterEnforcesCancelledAndLatchedOutputLimits()" time="0.002509583"/>
+        <testcase classname="SwiftJXLCoreTests.CompactANSTests" name="compactOutputMatchesBufferedWriterAndDecoder(_:)" time="0.632729667"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="iccTagWordsRetainHighBitsAndRejectDerivedOverflow()" time="0.000247041"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="lz77RejectsUnrepresentableAndWrappedZeroDistances()" time="0.012134959"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="iccPredictionRetainsUnsigned32BitProfileWords()" time="0.000190375"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="iccRejectsOversizedOutputBeforeAdmission()" time="0.000226084"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="oversizedContextMapTokenPreservesErrorValue()" time="0.001606542"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="oversizedOrderEndsRejectBeforeNarrowingOrAddition()" time="0.013284166"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="lz77RejectsOverflowingLength()" time="0.004056125"/>
+        <testcase classname="SwiftJXLCoreTests.NativeTranscoderPublicTests" name="rejectsMissingDuplicateTruncatedAndUnsupportedReconstruction()" time="0.023889916"/>
+        <testcase classname="SwiftJXLCoreTests.NativeTranscoderPublicTests" name="independentPublicInteroperability(_:)" time="5.9915361670000005"/>
+        <testcase classname="SwiftJXLCoreTests.NativeTranscoderPublicTests" name="iccFragmentValidationAndLimits()" time="0.037793917"/>
+        <testcase classname="SwiftJXLCoreTests.NativeTranscoderPublicTests" name="wholeOperationLimitsAndMetadataPolicyAreEnforced()" time="0.044842333"/>
+        <testcase classname="SwiftJXLCoreTests.NativeTranscoderPublicTests" name="slicedOwnersConcurrentCallsAndCancellation()" time="0.034496583"/>
+        <testcase classname="SwiftJXLCoreTests.NativeTranscoderPublicTests" name="publicRepeatedRoundTripPreservesEveryByte(_:)" time="8.872831542"/>
+        <testcase classname="SwiftJXLCoreTests.JPEGBridgeFrameTests" name="frameWriterAdmissionOutputBoundAndCancellation()" time="0.093333959"/>
+        <testcase classname="SwiftJXLCoreTests.JPEGBridgeFrameTests" name="largerEntropyContextCountRequiresBoundedOptIn()" time="0.008206542"/>
+        <testcase classname="SwiftJXLCoreTests.JPEGBridgeFrameTests" name="groupedACCompressionPreservesCoefficientsAndFlatFallback()" time="1.504480166"/>
+        <testcase classname="SwiftJXLCoreTests.JPEGBridgeFrameTests" name="nativeFrameAndMetadataRestoreWithIndependentDecoder(_:)" time="6.79519775"/>
+        <testcase classname="SwiftJXLCoreTests.JPEGBridgeFrameTests" name="readerBoundsMutationsAndOwnsConcurrentResults()" time="0.316540167"/>
+        <testcase classname="SwiftJXLCoreTests.JPEGBridgeFrameTests" name="readerRejectsTruncationTrailingBytesAndEnforcesBudgets()" time="0.043779667"/>
+        <testcase classname="SwiftJXLCoreTests.JPEGBridgeFrameTests" name="largerDCGroupProfileIsExplicitlyUnsupported()" time="0.000164417"/>
+    </testsuite>
+</testsuites>

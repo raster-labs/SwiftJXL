@@ -236,3 +236,16 @@ The RGB correction passed the broader targeted suite in debug/ASan/TSan: **36 de
 The optimised whole-operation benchmark was repeated on final source with two additional RGB inputs. Baseline/progressive RGB median forward/reverse times were 755/184 µs and 698/218 µs. Exact samples and process-RSS scope are in [FinalReview/Benchmark/result.json](Evidence/NativeJPEG/FinalReview/Benchmark/result.json). Required hosted checks must still validate the reviewed commit before merge. All broader migration/release gates remain open.
 
 The first final-review CI run passed all seven non-macOS jobs, including independent debug/release interoperability, but macOS TSan exposed a test-scheduling issue: four concurrent owner reads shared a ten-second deadline created before their tasks were scheduled; the contended run took 23.429 seconds. The ownership/cancellation test now requests a 120-second deadline, while the separate expired-deadline test and production limits are unchanged. Its local TSan regression passes all 8 declarations / 37 cases. [Scheduling correction evidence](Evidence/NativeJPEG/FinalReview/macos-scheduling.json) retains the failed run and exact test hash; a fresh hosted pass remains mandatory.
+
+
+## Multi-group colour entropy qualification — 13 October 2026
+
+A bounded single-cluster rANS option reduces the four selected colour streams
+by 6.2–21.2% versus merged main while preserving original JPEG bytes. Selection
+costs the actual entropy stream and conservative framing overhead, retains
+greyscale/small/flat prefix output, and reuses one admitted symbol buffer.
+Sixteen independent reconstruction and pixel-decode preflights pass. Exact
+commands, raw timing and memory observations, rejected experiments, regression
+checks and remaining gates are in [CompactANS](Evidence/NativeJPEG/CompactANS/README.md).
+The native predecessor size gap and broader performance/platform qualification
+remain open. Hosted checks still apply to the final submitted head.
