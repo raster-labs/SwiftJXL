@@ -1,0 +1,496 @@
+[
+  {
+    "run": "conditioned-initial",
+    "rows": [
+      {
+        "width": 64,
+        "metric": "write_ns",
+        "medians": {
+          "baseline": 7292.0,
+          "current": 6354.0,
+          "direct-read": 6562.5
+        },
+        "candidateVsOriginalPercent": -10.004114097641247,
+        "candidateVsPR22Percent": 3.281397544853637,
+        "p95": {
+          "baseline": 8209,
+          "current": 7583,
+          "direct-read": 7917
+        },
+        "minimum": {
+          "baseline": 6500,
+          "current": 5542,
+          "direct-read": 5791
+        },
+        "maximum": {
+          "baseline": 8417,
+          "current": 8000,
+          "direct-read": 8083
+        }
+      },
+      {
+        "width": 64,
+        "metric": "read_ns",
+        "medians": {
+          "baseline": 49645.5,
+          "current": 51645.5,
+          "direct-read": 48833.0
+        },
+        "candidateVsOriginalPercent": -1.6366035189493533,
+        "candidateVsPR22Percent": -5.4457793999477255,
+        "p95": {
+          "baseline": 50667,
+          "current": 56292,
+          "direct-read": 55208
+        },
+        "minimum": {
+          "baseline": 43750,
+          "current": 46000,
+          "direct-read": 45958
+        },
+        "maximum": {
+          "baseline": 50708,
+          "current": 56541,
+          "direct-read": 58334
+        }
+      },
+      {
+        "width": 64,
+        "metric": "total_ns",
+        "medians": {
+          "baseline": 57958.5,
+          "current": 59896.0,
+          "direct-read": 57208.0
+        },
+        "candidateVsOriginalPercent": -1.2948920348180182,
+        "candidateVsPR22Percent": -4.487778816615462,
+        "p95": {
+          "baseline": 59250,
+          "current": 65166,
+          "direct-read": 63166
+        },
+        "minimum": {
+          "baseline": 51292,
+          "current": 52500,
+          "direct-read": 52625
+        },
+        "maximum": {
+          "baseline": 59375,
+          "current": 65459,
+          "direct-read": 67542
+        }
+      },
+      {
+        "width": 512,
+        "metric": "write_ns",
+        "medians": {
+          "baseline": 410624.5,
+          "current": 358604.0,
+          "direct-read": 369333.0
+        },
+        "candidateVsOriginalPercent": -10.055780889839749,
+        "candidateVsPR22Percent": 2.99187962209011,
+        "p95": {
+          "baseline": 417417,
+          "current": 361542,
+          "direct-read": 374583
+        },
+        "minimum": {
+          "baseline": 371125,
+          "current": 321792,
+          "direct-read": 341417
+        },
+        "maximum": {
+          "baseline": 421584,
+          "current": 363292,
+          "direct-read": 380750
+        }
+      },
+      {
+        "width": 512,
+        "metric": "read_ns",
+        "medians": {
+          "baseline": 3064354.5,
+          "current": 3223563.0,
+          "direct-read": 3121500.0
+        },
+        "candidateVsOriginalPercent": 1.8648462506540842,
+        "candidateVsPR22Percent": -3.1661549657940657,
+        "p95": {
+          "baseline": 3158250,
+          "current": 3272666,
+          "direct-read": 3224167
+        },
+        "minimum": {
+          "baseline": 2922625,
+          "current": 3024166,
+          "direct-read": 2967958
+        },
+        "maximum": {
+          "baseline": 3187750,
+          "current": 3272834,
+          "direct-read": 3304750
+        }
+      },
+      {
+        "width": 512,
+        "metric": "total_ns",
+        "medians": {
+          "baseline": 3476250.0,
+          "current": 3577375.0,
+          "direct-read": 3479437.0
+        },
+        "candidateVsOriginalPercent": 0.0916792520676113,
+        "candidateVsPR22Percent": -2.7377057199762356,
+        "p95": {
+          "baseline": 3573458,
+          "current": 3638250,
+          "direct-read": 3598250
+        },
+        "minimum": {
+          "baseline": 3336375,
+          "current": 3389000,
+          "direct-read": 3352750
+        },
+        "maximum": {
+          "baseline": 3613167,
+          "current": 3638916,
+          "direct-read": 3679584
+        }
+      },
+      {
+        "width": 2048,
+        "metric": "write_ns",
+        "medians": {
+          "baseline": 6288229.0,
+          "current": 5401375.0,
+          "direct-read": 5574229.0
+        },
+        "candidateVsOriginalPercent": -11.354548315590929,
+        "candidateVsPR22Percent": 3.200185138043543,
+        "p95": {
+          "baseline": 6457250,
+          "current": 5725208,
+          "direct-read": 5759250
+        },
+        "minimum": {
+          "baseline": 6182292,
+          "current": 5181000,
+          "direct-read": 5289792
+        },
+        "maximum": {
+          "baseline": 13282375,
+          "current": 6030459,
+          "direct-read": 5803125
+        }
+      },
+      {
+        "width": 2048,
+        "metric": "read_ns",
+        "medians": {
+          "baseline": 49723146.0,
+          "current": 52292437.5,
+          "direct-read": 51290249.5
+        },
+        "candidateVsOriginalPercent": 3.151657982381084,
+        "candidateVsPR22Percent": -1.9165065694250694,
+        "p95": {
+          "baseline": 59437666,
+          "current": 54095416,
+          "direct-read": 53164583
+        },
+        "minimum": {
+          "baseline": 46000083,
+          "current": 49599417,
+          "direct-read": 48123084
+        },
+        "maximum": {
+          "baseline": 98778167,
+          "current": 54134500,
+          "direct-read": 53734583
+        }
+      },
+      {
+        "width": 2048,
+        "metric": "total_ns",
+        "medians": {
+          "baseline": 56176666.5,
+          "current": 57676416.5,
+          "direct-read": 56993875.0
+        },
+        "candidateVsOriginalPercent": 1.4547116283590844,
+        "candidateVsPR22Percent": -1.1833978971283687,
+        "p95": {
+          "baseline": 65788708,
+          "current": 59354250,
+          "direct-read": 58862875
+        },
+        "minimum": {
+          "baseline": 52331000,
+          "current": 55068875,
+          "direct-read": 53804500
+        },
+        "maximum": {
+          "baseline": 112158292,
+          "current": 59739125,
+          "direct-read": 59589708
+        }
+      }
+    ],
+    "peakProcessRSSBytes": {
+      "baseline": 18071552,
+      "current": 18382848,
+      "direct-read": 18432000
+    },
+    "thermalStates": [
+      0
+    ]
+  },
+  {
+    "run": "conditioned-confirmation",
+    "rows": [
+      {
+        "width": 64,
+        "metric": "write_ns",
+        "medians": {
+          "baseline": 7291.5,
+          "current": 6292.0,
+          "direct-read": 6500.0
+        },
+        "candidateVsOriginalPercent": -10.855105259548791,
+        "candidateVsPR22Percent": 3.305785123966931,
+        "p95": {
+          "baseline": 9209,
+          "current": 8083,
+          "direct-read": 11000
+        },
+        "minimum": {
+          "baseline": 6417,
+          "current": 5500,
+          "direct-read": 5791
+        },
+        "maximum": {
+          "baseline": 10041,
+          "current": 8459,
+          "direct-read": 12166
+        }
+      },
+      {
+        "width": 64,
+        "metric": "read_ns",
+        "medians": {
+          "baseline": 47354.0,
+          "current": 50583.0,
+          "direct-read": 49542.0
+        },
+        "candidateVsOriginalPercent": 4.62051780208641,
+        "candidateVsPR22Percent": -2.058003677124731,
+        "p95": {
+          "baseline": 53125,
+          "current": 58083,
+          "direct-read": 56000
+        },
+        "minimum": {
+          "baseline": 38708,
+          "current": 43584,
+          "direct-read": 44125
+        },
+        "maximum": {
+          "baseline": 57375,
+          "current": 59209,
+          "direct-read": 56834
+        }
+      },
+      {
+        "width": 64,
+        "metric": "total_ns",
+        "medians": {
+          "baseline": 55229.5,
+          "current": 57916.5,
+          "direct-read": 57416.5
+        },
+        "candidateVsOriginalPercent": 3.9598403027367723,
+        "candidateVsPR22Percent": -0.8633118368685966,
+        "p95": {
+          "baseline": 63125,
+          "current": 66916,
+          "direct-read": 65042
+        },
+        "minimum": {
+          "baseline": 45916,
+          "current": 51500,
+          "direct-read": 50959
+        },
+        "maximum": {
+          "baseline": 70083,
+          "current": 68416,
+          "direct-read": 71709
+        }
+      },
+      {
+        "width": 512,
+        "metric": "write_ns",
+        "medians": {
+          "baseline": 415562.5,
+          "current": 359375.0,
+          "direct-read": 369562.5
+        },
+        "candidateVsOriginalPercent": -11.069333734396148,
+        "candidateVsPR22Percent": 2.834782608695652,
+        "p95": {
+          "baseline": 424083,
+          "current": 365125,
+          "direct-read": 386583
+        },
+        "minimum": {
+          "baseline": 389375,
+          "current": 320500,
+          "direct-read": 336125
+        },
+        "maximum": {
+          "baseline": 424125,
+          "current": 369000,
+          "direct-read": 390083
+        }
+      },
+      {
+        "width": 512,
+        "metric": "read_ns",
+        "medians": {
+          "baseline": 3043020.5,
+          "current": 3195500.0,
+          "direct-read": 3093125.0
+        },
+        "candidateVsOriginalPercent": 1.6465383654168608,
+        "candidateVsPR22Percent": -3.2037239868565215,
+        "p95": {
+          "baseline": 3140458,
+          "current": 3284375,
+          "direct-read": 3200917
+        },
+        "minimum": {
+          "baseline": 2901750,
+          "current": 3035709,
+          "direct-read": 2967750
+        },
+        "maximum": {
+          "baseline": 3168583,
+          "current": 3308625,
+          "direct-read": 3201834
+        }
+      },
+      {
+        "width": 512,
+        "metric": "total_ns",
+        "medians": {
+          "baseline": 3463229.0,
+          "current": 3544396.0,
+          "direct-read": 3472229.0
+        },
+        "candidateVsOriginalPercent": 0.25987308376085316,
+        "candidateVsPR22Percent": -2.0360873897837584,
+        "p95": {
+          "baseline": 3551792,
+          "current": 3656375,
+          "direct-read": 3572917
+        },
+        "minimum": {
+          "baseline": 3320375,
+          "current": 3408959,
+          "direct-read": 3346958
+        },
+        "maximum": {
+          "baseline": 3590250,
+          "current": 3672708,
+          "direct-read": 3575625
+        }
+      },
+      {
+        "width": 2048,
+        "metric": "write_ns",
+        "medians": {
+          "baseline": 6360000.0,
+          "current": 5369812.5,
+          "direct-read": 5493479.5
+        },
+        "candidateVsOriginalPercent": -13.624536163522016,
+        "candidateVsPR22Percent": 2.303004062059899,
+        "p95": {
+          "baseline": 6696875,
+          "current": 5589208,
+          "direct-read": 5678083
+        },
+        "minimum": {
+          "baseline": 6136042,
+          "current": 5243792,
+          "direct-read": 5305125
+        },
+        "maximum": {
+          "baseline": 7095292,
+          "current": 5682750,
+          "direct-read": 5715958
+        }
+      },
+      {
+        "width": 2048,
+        "metric": "read_ns",
+        "medians": {
+          "baseline": 49801458.5,
+          "current": 52299916.5,
+          "direct-read": 51254937.0
+        },
+        "candidateVsOriginalPercent": 2.918546050212556,
+        "candidateVsPR22Percent": -1.9980519471766267,
+        "p95": {
+          "baseline": 51515792,
+          "current": 54044458,
+          "direct-read": 52328250
+        },
+        "minimum": {
+          "baseline": 48454459,
+          "current": 51135458,
+          "direct-read": 49948625
+        },
+        "maximum": {
+          "baseline": 53636833,
+          "current": 55241375,
+          "direct-read": 52476958
+        }
+      },
+      {
+        "width": 2048,
+        "metric": "total_ns",
+        "medians": {
+          "baseline": 56178833.5,
+          "current": 57714770.5,
+          "direct-read": 56755978.5
+        },
+        "candidateVsOriginalPercent": 1.0273353219411474,
+        "candidateVsPR22Percent": -1.661259313159702,
+        "p95": {
+          "baseline": 58040792,
+          "current": 59465333,
+          "direct-read": 58090167
+        },
+        "minimum": {
+          "baseline": 54897459,
+          "current": 56459417,
+          "direct-read": 55585250
+        },
+        "maximum": {
+          "baseline": 60819833,
+          "current": 61008416,
+          "direct-read": 58184042
+        }
+      }
+    ],
+    "peakProcessRSSBytes": {
+      "baseline": 18104320,
+      "current": 18415616,
+      "direct-read": 18399232
+    },
+    "thermalStates": [
+      0
+    ]
+  }
+]

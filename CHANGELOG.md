@@ -5,6 +5,11 @@
 - Separate nested quantisation and group-boundary correctness fixtures so sanitizer overhead does not combine four textured searches under one operation deadline.
 - Strengthen both-axis boundary, partial-cell, map-coverage and cancellation/deadline assertions. Production code, limits and full sanitizer coverage are unchanged.
 
+## Unreleased — public sample-read qualification, 2026-10-13
+
+- Read UInt16 bytes under the existing checked descriptor, coordinate and borrowed-capacity bounds, avoiding a redundant extent check.
+- Retain exact strided-sample, shortened-provider and ownership checks, controlled comparisons and discarded experiments. The scoped warm 512×511 read finding is resolved on the measured host; start-of-process timing variation and broader qualification remain open.
+
 ## Unreleased — bounded sample row writes, 2026-10-13
 
 - Validate the complete sample row extent before writing UInt16 values, avoiding repeated extent checks while preserving byte order, strided padding, precision checks, cancellation and owning storage.

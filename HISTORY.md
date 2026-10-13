@@ -4,6 +4,10 @@
 
 Two main-branch Thread Sanitizer attempts reached the same 30-second resource deadline in a combined hierarchical correctness fixture. Separate quantisation inheritance from horizontal/vertical group boundaries, strengthen complete-map checks and add explicit expired/cancelled-before-admission regressions. Production sources, deadlines, memory limits and the complete hosted sanitizer/CLI workflow are unchanged. Affected debug, release, ASan and TSan each passed 6 declarations / 19 cases locally. Hosted Swift 6.2 verification remains required; see [diagnosis and retained evidence](Documentation/Engineering/Migration/Evidence/CIRepair/HierarchyDeadline/README.md).
 
+## Public sample-read qualification — 13 October 2026
+
+Investigated the retained PR22 read gap against the original pre-span baseline. Direct byte assembly under the existing descriptor, coordinate and actual borrowed-capacity checks improves the 512×511 read median by 3.17% / 3.20% against PR22 in the fixed sustained-warm comparison. The original-baseline difference is +1.86% / +1.65%. A capture-only experiment was discarded, and all initial timing/resource-wrapper failures remain available. The separate start-of-process tiny-image variation remains unresolved. No ownership, public API, codec or common contract changes. See [bounds proof, exact validation and evidence](Documentation/Engineering/Migration/STORAGE_READ_PERFORMANCE.md).
+
 ## Sample-row write qualification — 13 October 2026
 
 Reconciled the historical span-write regression against the current byte-wise implementation. Two fresh baseline comparisons retained a repeated current write slowdown; a row-extent check and cached immutable loop values then reduced write medians by 16.3–25.8% against merged PR21 in two controlled comparisons, and beat the original pre-span baseline at every measured size. Strided padding, byte order, meaningful precision, row cancellation and owning publication are preserved. No codec, public API or shared contract changes.
