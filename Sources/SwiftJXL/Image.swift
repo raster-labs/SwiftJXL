@@ -152,18 +152,30 @@ public final class ImageDestination: Sendable {
         try validateGreyscale16(descriptor)
         let plane = descriptor.planes[0]
         let maximum = UInt32(1) << descriptor.meaningfulBits
+        let width = descriptor.width, height = descriptor.height
+        let littleEndian = descriptor.byteOrder == .littleEndian
+        // Descriptor construction checked this arithmetic and proves that every
+        // two-byte sample lies inside this positive, non-overlapping row extent.
+        let rowPayload = (width - 1) * plane.pixelStride + MemoryLayout<UInt16>.size
         return try write { bytes in
-            for y in 0..<descriptor.height {
+            for y in 0..<height {
                 try Task.checkCancellation()
-                for x in 0..<descriptor.width {
+                let rowOffset = plane.offset + y * plane.rowBytes
+                guard rowOffset >= 0, rowOffset <= bytes.count - rowPayload else {
+                    throw CodecError(.storageUnavailable, "Sample row lies outside the retained allocation.")
+                }
+                for x in 0..<width {
                     let value = try sample(x, y)
                     guard UInt32(value) < maximum else {
                         throw CodecError(.invalidArgument, "Sample exceeds declared meaningful precision.")
                     }
-                    let offset = plane.offset + y * plane.rowBytes + x * plane.pixelStride
-                    // The exclusive lease retains these two bytes. External
-                    // providers need not initialise samples before this write.
-                    try storeUInt16(value, into: bytes, at: offset, order: descriptor.byteOrder)
+                    let offset = rowOffset + x * plane.pixelStride
+                    let low = UInt8(truncatingIfNeeded: value)
+                    let high = UInt8(truncatingIfNeeded: value >> 8)
+                    // The row guard covers both bytes, including strided samples.
+                    // Raw byte writes also initialise external sample storage.
+                    bytes[offset] = littleEndian ? low : high
+                    bytes[offset + 1] = littleEndian ? high : low
                 }
             }
         }
@@ -187,7 +199,8 @@ public final class ImageDestination: Sendable {
 //     begin at an odd address. Byte access has no alignment precondition.
 //   * A bounds check before the allocation is touched (MEM-04). A raw buffer
 //     subscript is unchecked in release builds, so the guards below are load
-//     bearing, not defensive duplication of the descriptor arithmetic.
+//     bearing, not defensive duplication of the descriptor arithmetic. The writer
+//     validates each complete row extent before initialising its samples.
 
 @inline(__always)
 private func loadUInt16(_ bytes: UnsafeRawBufferPointer, at offset: Int,
@@ -197,19 +210,6 @@ private func loadUInt16(_ bytes: UnsafeRawBufferPointer, at offset: Int,
     }
     let first = UInt16(bytes[offset]), second = UInt16(bytes[offset + 1])
     return order == .littleEndian ? first | (second << 8) : (first << 8) | second
-}
-
-@inline(__always)
-private func storeUInt16(_ value: UInt16, into bytes: UnsafeMutableRawBufferPointer,
-                         at offset: Int, order: ByteOrder) throws {
-    guard offset >= 0, offset <= bytes.count - MemoryLayout<UInt16>.size else {
-        throw CodecError(.storageUnavailable, "Sample extent lies outside the retained allocation.")
-    }
-    let low = UInt8(truncatingIfNeeded: value), high = UInt8(truncatingIfNeeded: value >> 8)
-    // Assigning through the raw buffer initialises these bytes, so a provider
-    // may hand over uninitialised sample storage under the exclusive lease.
-    bytes[offset] = order == .littleEndian ? low : high
-    bytes[offset + 1] = order == .littleEndian ? high : low
 }
 
 private func validateGreyscale16(_ descriptor: ImageDescriptor) throws {

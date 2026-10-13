@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — bounded sample row writes, 2026-10-13
+
+- Validate the complete sample row extent before writing UInt16 values, avoiding repeated extent checks while preserving byte order, strided padding, precision checks, cancellation and owning storage.
+- Reconcile the historical span-write investigation against current source and controlled release comparisons. The separate historical read-performance gap and broader migration gates remain open.
+
 ## Unreleased — bounded native JPEG entropy selection, 2026-10-13
 
 - Select compact single-cluster rANS for substantial multi-group colour AC streams when its exact bit cost covers all framing overhead. Keep greyscale, flat and small streams on the existing prefix path.

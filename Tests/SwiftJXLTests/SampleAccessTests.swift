@@ -215,6 +215,57 @@ struct SampleAccessTests {
         }
     }
 
+    @Test(arguments: [1, 3, 9], [false, true])
+    func stridedRowsKeepAllPaddingAndCallbackOrder(width: Int, bigEndian: Bool) throws {
+        let height = 3, prefix = 2, pixelStride = 6
+        let rowPayload = (width - 1) * pixelStride + 2
+        let rowBytes = rowPayload + 8
+        // The final row ends exactly at its last sample; no trailing padding is
+        // required. Earlier rows contain both pixel gaps and eight padding bytes.
+        let capacity = prefix + (height - 1) * rowBytes + rowPayload
+        let plane = try PlaneDescriptor(width: width, height: height, offset: prefix,
+            pixelStride: pixelStride, rowBytes: rowBytes, byteCount: capacity)
+        let descriptor = try ImageDescriptor(width: width, height: height,
+            byteOrder: bigEndian ? .bigEndian : .littleEndian, planes: [plane])
+        let destination = try ImageDestination.allocate(descriptor: descriptor)
+        let identity = destination.storage.allocationID
+        var calls: [Int] = []
+        let image = try destination.writeUInt16 { x, y in
+            calls.append(y * width + x)
+            return UInt16(0x8100 + y * width + x)
+        }
+        var expected = [UInt8](repeating: 0, count: capacity)
+        for y in 0..<height {
+            for x in 0..<width {
+                let low = UInt8(y * width + x)
+                let offset = prefix + y * rowBytes + x * pixelStride
+                expected[offset] = bigEndian ? 0x81 : low
+                expected[offset + 1] = bigEndian ? low : 0x81
+            }
+        }
+        #expect(calls == Array(0..<(width * height)))
+        #expect(try image.storage.withUnsafeBytes { Array($0) } == expected)
+        #expect(image.storage.allocationID == identity)
+    }
+
+    @Test func throwingSampleStopsInsideLaterRowAndInvalidatesDestination() throws {
+        enum Stop: Error { case requested }
+        let descriptor = try ImageDescriptor.greyscale16(width: 3, height: 3, rowBytes: 10)
+        let destination = try ImageDestination.allocate(descriptor: descriptor)
+        var calls = 0
+        #expect(throws: Stop.self) {
+            _ = try destination.writeUInt16 { x, y in
+                calls += 1
+                if x == 1 && y == 1 { throw Stop.requested }
+                return 65535
+            }
+        }
+        #expect(calls == 5)
+        expectCategory(.storageUnavailable) {
+            _ = try destination.writeUInt16 { _, _ in 0 }
+        }
+    }
+
     @Test func refusesShortProviderBeforeLoadingSample() throws {
         let shape = try ImageDescriptor.greyscale16(width: 1, height: 1)
         let image = try Image(descriptor: shape, storage: ShortenedSampleBorrow())

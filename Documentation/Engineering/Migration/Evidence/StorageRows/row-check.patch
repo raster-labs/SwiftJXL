@@ -1,0 +1,133 @@
+diff --git a/Sources/SwiftJXL/Image.swift b/Sources/SwiftJXL/Image.swift
+index 3721bbb..ab8c09a 100644
+--- a/Sources/SwiftJXL/Image.swift
++++ b/Sources/SwiftJXL/Image.swift
+@@ -152,18 +152,30 @@ public final class ImageDestination: Sendable {
+         try validateGreyscale16(descriptor)
+         let plane = descriptor.planes[0]
+         let maximum = UInt32(1) << descriptor.meaningfulBits
++        let width = descriptor.width, height = descriptor.height
++        let littleEndian = descriptor.byteOrder == .littleEndian
++        // Descriptor construction checked this arithmetic and proves that every
++        // two-byte sample lies inside this positive, non-overlapping row extent.
++        let rowPayload = (width - 1) * plane.pixelStride + MemoryLayout<UInt16>.size
+         return try write { bytes in
+-            for y in 0..<descriptor.height {
++            for y in 0..<height {
+                 try Task.checkCancellation()
+-                for x in 0..<descriptor.width {
++                let rowOffset = plane.offset + y * plane.rowBytes
++                guard rowOffset >= 0, rowOffset <= bytes.count - rowPayload else {
++                    throw CodecError(.storageUnavailable, "Sample row lies outside the retained allocation.")
++                }
++                for x in 0..<width {
+                     let value = try sample(x, y)
+                     guard UInt32(value) < maximum else {
+                         throw CodecError(.invalidArgument, "Sample exceeds declared meaningful precision.")
+                     }
+-                    let offset = plane.offset + y * plane.rowBytes + x * plane.pixelStride
+-                    // The exclusive lease retains these two bytes. External
+-                    // providers need not initialise samples before this write.
+-                    try storeUInt16(value, into: bytes, at: offset, order: descriptor.byteOrder)
++                    let offset = rowOffset + x * plane.pixelStride
++                    let low = UInt8(truncatingIfNeeded: value)
++                    let high = UInt8(truncatingIfNeeded: value >> 8)
++                    // The row guard covers both bytes, including strided samples.
++                    // Raw byte writes also initialise external sample storage.
++                    bytes[offset] = littleEndian ? low : high
++                    bytes[offset + 1] = littleEndian ? high : low
+                 }
+             }
+         }
+@@ -187,7 +199,8 @@ public final class ImageDestination: Sendable {
+ //     begin at an odd address. Byte access has no alignment precondition.
+ //   * A bounds check before the allocation is touched (MEM-04). A raw buffer
+ //     subscript is unchecked in release builds, so the guards below are load
+-//     bearing, not defensive duplication of the descriptor arithmetic.
++//     bearing, not defensive duplication of the descriptor arithmetic. The writer
++//     validates each complete row extent before initialising its samples.
+ 
+ @inline(__always)
+ private func loadUInt16(_ bytes: UnsafeRawBufferPointer, at offset: Int,
+@@ -199,19 +212,6 @@ private func loadUInt16(_ bytes: UnsafeRawBufferPointer, at offset: Int,
+     return order == .littleEndian ? first | (second << 8) : (first << 8) | second
+ }
+ 
+-@inline(__always)
+-private func storeUInt16(_ value: UInt16, into bytes: UnsafeMutableRawBufferPointer,
+-                         at offset: Int, order: ByteOrder) throws {
+-    guard offset >= 0, offset <= bytes.count - MemoryLayout<UInt16>.size else {
+-        throw CodecError(.storageUnavailable, "Sample extent lies outside the retained allocation.")
+-    }
+-    let low = UInt8(truncatingIfNeeded: value), high = UInt8(truncatingIfNeeded: value >> 8)
+-    // Assigning through the raw buffer initialises these bytes, so a provider
+-    // may hand over uninitialised sample storage under the exclusive lease.
+-    bytes[offset] = order == .littleEndian ? low : high
+-    bytes[offset + 1] = order == .littleEndian ? high : low
+-}
+-
+ private func validateGreyscale16(_ descriptor: ImageDescriptor) throws {
+     guard descriptor.sampleType == .unsignedInteger, descriptor.storageBits == 16,
+           descriptor.components == [.grey], descriptor.planes.count == 1 else {
+diff --git a/Tests/SwiftJXLTests/SampleAccessTests.swift b/Tests/SwiftJXLTests/SampleAccessTests.swift
+index 45ebaa3..7239feb 100644
+--- a/Tests/SwiftJXLTests/SampleAccessTests.swift
++++ b/Tests/SwiftJXLTests/SampleAccessTests.swift
+@@ -215,6 +215,57 @@ struct SampleAccessTests {
+         }
+     }
+ 
++    @Test(arguments: [1, 3, 9], [false, true])
++    func stridedRowsKeepAllPaddingAndCallbackOrder(width: Int, bigEndian: Bool) throws {
++        let height = 3, prefix = 2, pixelStride = 6
++        let rowPayload = (width - 1) * pixelStride + 2
++        let rowBytes = rowPayload + 8
++        // The final row ends exactly at its last sample; no trailing padding is
++        // required. Earlier rows contain both pixel gaps and eight padding bytes.
++        let capacity = prefix + (height - 1) * rowBytes + rowPayload
++        let plane = try PlaneDescriptor(width: width, height: height, offset: prefix,
++            pixelStride: pixelStride, rowBytes: rowBytes, byteCount: capacity)
++        let descriptor = try ImageDescriptor(width: width, height: height,
++            byteOrder: bigEndian ? .bigEndian : .littleEndian, planes: [plane])
++        let destination = try ImageDestination.allocate(descriptor: descriptor)
++        let identity = destination.storage.allocationID
++        var calls: [Int] = []
++        let image = try destination.writeUInt16 { x, y in
++            calls.append(y * width + x)
++            return UInt16(0x8100 + y * width + x)
++        }
++        var expected = [UInt8](repeating: 0, count: capacity)
++        for y in 0..<height {
++            for x in 0..<width {
++                let low = UInt8(y * width + x)
++                let offset = prefix + y * rowBytes + x * pixelStride
++                expected[offset] = bigEndian ? 0x81 : low
++                expected[offset + 1] = bigEndian ? low : 0x81
++            }
++        }
++        #expect(calls == Array(0..<(width * height)))
++        #expect(try image.storage.withUnsafeBytes { Array($0) } == expected)
++        #expect(image.storage.allocationID == identity)
++    }
++
++    @Test func throwingSampleStopsInsideLaterRowAndInvalidatesDestination() throws {
++        enum Stop: Error { case requested }
++        let descriptor = try ImageDescriptor.greyscale16(width: 3, height: 3, rowBytes: 10)
++        let destination = try ImageDestination.allocate(descriptor: descriptor)
++        var calls = 0
++        #expect(throws: Stop.self) {
++            _ = try destination.writeUInt16 { x, y in
++                calls += 1
++                if x == 1 && y == 1 { throw Stop.requested }
++                return 65535
++            }
++        }
++        #expect(calls == 5)
++        expectCategory(.storageUnavailable) {
++            _ = try destination.writeUInt16 { _, _ in 0 }
++        }
++    }
++
+     @Test func refusesShortProviderBeforeLoadingSample() throws {
+         let shape = try ImageDescriptor.greyscale16(width: 1, height: 1)
+         let image = try Image(descriptor: shape, storage: ShortenedSampleBorrow())
