@@ -1,5 +1,11 @@
 # History and provenance — SwiftJXL
 
+## Sample-row write qualification — 13 October 2026
+
+Reconciled the historical span-write regression against the current byte-wise implementation. Two fresh baseline comparisons retained a repeated current write slowdown; a row-extent check and cached immutable loop values then reduced write medians by 16.3–25.8% against merged PR21 in two controlled comparisons, and beat the original pre-span baseline at every measured size. Strided padding, byte order, meaningful precision, row cancellation and owning publication are preserved. No codec, public API or shared contract changes.
+
+Full debug and release each passed 290 declarations / 1,136 cases, with focused ASan and TSan each passing 43 declarations / 134 cases; no failures, skips or sanitizer diagnostics. New cases cover pixel gaps, exact final-row capacity, callback order and a throwing callback in a later row. The independent untimed benchmark preflight checks sample bytes, padding and owner identity. The separate 512×511 read regression against the original baseline remains open. See [qualification and retained evidence](Documentation/Engineering/Migration/STORAGE_PERFORMANCE.md); hosted checks and broader migration gates remain separate.
+
 ## Grouped VarDCT, reusable scratch and animation decoding — 12 October 2026
 
 Extended public lossy encoding to multiple DC/AC regions and straight alpha within 4096 pixels per dimension and 4,194,304 pixels. Eight independently accepted grouped streams are reproduced byte-for-byte through padded planar public source storage; exact alpha and source ownership are retained. Operation-local noncopyable transform scratch reduces cumulative admission without weakening resource limits; all twelve tested 128–512 pixel admission cases now pass. Combined core ASan/TSan each pass 30 declarations / 110 cases. The preceding public hierarchy/grouped-decoder snapshot passes both sanitizers with 33 declarations. These are scoped checkpoints, not final combined-head qualification.

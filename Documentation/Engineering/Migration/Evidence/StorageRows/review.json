@@ -1,0 +1,18 @@
+{
+  "base": "aa6d75c7028e0e3eda4e8ce06fdd60907ecd59fd",
+  "reviewedUTC": "2026-10-13T08:30:15.954052+00:00",
+  "findings": [],
+  "reviewer": "Primary coding agent source review; no separate GitHub reviewer approval claimed.",
+  "checks": [
+    "Immutable validated descriptors prove width/height positive, row payload and row offsets fit Int, pixelStride covers both sample bytes, and row extents do not overlap.",
+    "The row guard checks the complete extent against the actual borrowed buffer before any sample callback or byte write; existing full-provider capacity checks remain.",
+    "Callback order, meaningful-bit checks, per-row cancellation and publication cancellation are retained; throwing fill still invalidates the owner.",
+    "Raw byte initialisation preserves odd physical addresses and uninitialised external storage. No pointer escapes, unchecked concurrency annotation, extra pixel allocation or copy is added.",
+    "Source bounds, lifetime, layout and failure paths match the new tests and retained independent golden-byte fixtures.",
+    "Performance comparison retains original and merged baselines and all raw runs. The separate read regression remains open."
+  ],
+  "sourceHashes": {
+    "Sources/SwiftJXL/Image.swift": "b507695fc6ece7a1717d8b33fb9bc9500ccbe7d5d721cf880d7ea0e32bb4522e",
+    "Tests/SwiftJXLTests/SampleAccessTests.swift": "a019702b3cdf493d1c312bdb925a65ba73241ed983d5b7b9935b41b78267d1ad"
+  }
+}
