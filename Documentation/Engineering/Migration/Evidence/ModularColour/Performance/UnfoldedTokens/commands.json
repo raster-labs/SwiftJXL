@@ -1,0 +1,286 @@
+{
+  "cwd": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public",
+  "releaseBuild": [
+    "xcrun",
+    "swift",
+    "build",
+    "-c",
+    "release",
+    "--disable-sandbox",
+    "--cache-path",
+    ".build/cache",
+    "--config-path",
+    ".build/config",
+    "--security-path",
+    ".build/security",
+    "--build-system",
+    "swiftbuild",
+    "--jobs",
+    "2"
+  ],
+  "buildEnvironment": {
+    "CLANG_MODULE_CACHE_PATH": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/.build/module-cache",
+    "SWIFTPM_MODULECACHE_OVERRIDE": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/.build/module-cache"
+  },
+  "measurements": [
+    {
+      "label": "baseline",
+      "command": [
+        "python3",
+        "Scripts/TestSupport/modular-operation-benchmark.py",
+        "--candidate",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-baseline",
+        "--predecessor",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-preflight/operation-native-control",
+        "--djxl",
+        "/opt/homebrew/bin/djxl",
+        "--operations",
+        "encode",
+        "--candidate-workers",
+        "8",
+        "--cases",
+        "Documentation/Engineering/Migration/Evidence/ModularColour/Performance/Parallelism/cases.json",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/baseline-comparison",
+        "--serial-predecessor",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/modular-preflight/operation-serial-control"
+      ]
+    },
+    {
+      "label": "inline",
+      "command": [
+        "python3",
+        "Scripts/TestSupport/modular-operation-benchmark.py",
+        "--candidate",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-inline",
+        "--predecessor",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-baseline",
+        "--djxl",
+        "/opt/homebrew/bin/djxl",
+        "--operations",
+        "encode",
+        "--candidate-workers",
+        "8",
+        "--cases",
+        "Documentation/Engineering/Migration/Evidence/ModularColour/Performance/Parallelism/cases.json",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/inline-comparison"
+      ]
+    },
+    {
+      "label": "neighbour",
+      "command": [
+        "python3",
+        "Scripts/TestSupport/modular-operation-benchmark.py",
+        "--candidate",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-neighbour",
+        "--predecessor",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-baseline",
+        "--djxl",
+        "/opt/homebrew/bin/djxl",
+        "--operations",
+        "encode",
+        "--candidate-workers",
+        "8",
+        "--cases",
+        "Documentation/Engineering/Migration/Evidence/ModularColour/Performance/Parallelism/cases.json",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/neighbour-comparison"
+      ]
+    },
+    {
+      "label": "dynamic",
+      "command": [
+        "python3",
+        "Scripts/TestSupport/modular-operation-benchmark.py",
+        "--candidate",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-dynamic",
+        "--predecessor",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-baseline",
+        "--djxl",
+        "/opt/homebrew/bin/djxl",
+        "--operations",
+        "encode",
+        "--candidate-workers",
+        "8",
+        "--cases",
+        "Documentation/Engineering/Migration/Evidence/ModularColour/Performance/Parallelism/cases.json",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/dynamic-comparison"
+      ]
+    },
+    {
+      "label": "unfolded",
+      "command": [
+        "python3",
+        "Scripts/TestSupport/modular-operation-benchmark.py",
+        "--candidate",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-unfolded",
+        "--predecessor",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-baseline",
+        "--djxl",
+        "/opt/homebrew/bin/djxl",
+        "--operations",
+        "encode",
+        "--candidate-workers",
+        "8",
+        "--cases",
+        "Documentation/Engineering/Migration/Evidence/ModularColour/Performance/Parallelism/cases.json",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/unfolded-comparison"
+      ]
+    },
+    {
+      "label": "confirmation",
+      "command": [
+        "python3",
+        "Scripts/TestSupport/modular-operation-benchmark.py",
+        "--candidate",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-unfolded",
+        "--predecessor",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-baseline",
+        "--djxl",
+        "/opt/homebrew/bin/djxl",
+        "--operations",
+        "encode",
+        "decode",
+        "caller",
+        "--candidate-workers",
+        "8",
+        "--cases",
+        "Documentation/Engineering/Migration/Evidence/ModularColour/Performance/Parallelism/cases.json",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/confirmation"
+      ]
+    },
+    {
+      "label": "tail-confirmation",
+      "command": [
+        "python3",
+        "Scripts/TestSupport/modular-operation-benchmark.py",
+        "--candidate",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-unfolded",
+        "--predecessor",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-baseline",
+        "--djxl",
+        "/opt/homebrew/bin/djxl",
+        "--operations",
+        "encode",
+        "decode",
+        "--candidate-workers",
+        "8",
+        "--cases",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/tail-cases.json",
+        "--output",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/tail-confirmation"
+      ]
+    }
+  ],
+  "probeCompiles": [
+    {
+      "label": "baseline",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-O",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-parse-as-library",
+        "-module-cache-path",
+        ".build/module-cache",
+        "-I",
+        ".build/out/Products/Release",
+        "Scripts/TestSupport/modular-operation-benchmark.swift",
+        ".build/out/Products/Release/SwiftJXL.o",
+        ".build/out/Products/Release/SwiftJXLCore.o",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-baseline"
+      ]
+    },
+    {
+      "label": "inline",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-O",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-parse-as-library",
+        "-module-cache-path",
+        ".build/module-cache",
+        "-I",
+        ".build/out/Products/Release",
+        "Scripts/TestSupport/modular-operation-benchmark.swift",
+        ".build/out/Products/Release/SwiftJXL.o",
+        ".build/out/Products/Release/SwiftJXLCore.o",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-inline"
+      ]
+    },
+    {
+      "label": "neighbour",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-O",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-parse-as-library",
+        "-module-cache-path",
+        ".build/module-cache",
+        "-I",
+        ".build/out/Products/Release",
+        "Scripts/TestSupport/modular-operation-benchmark.swift",
+        ".build/out/Products/Release/SwiftJXL.o",
+        ".build/out/Products/Release/SwiftJXLCore.o",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-neighbour"
+      ]
+    },
+    {
+      "label": "dynamic",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-O",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-parse-as-library",
+        "-module-cache-path",
+        ".build/module-cache",
+        "-I",
+        ".build/out/Products/Release",
+        "Scripts/TestSupport/modular-operation-benchmark.swift",
+        ".build/out/Products/Release/SwiftJXL.o",
+        ".build/out/Products/Release/SwiftJXLCore.o",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-dynamic"
+      ]
+    },
+    {
+      "label": "unfolded",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-O",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-parse-as-library",
+        "-module-cache-path",
+        ".build/module-cache",
+        "-I",
+        ".build/out/Products/Release",
+        "Scripts/TestSupport/modular-operation-benchmark.swift",
+        ".build/out/Products/Release/SwiftJXL.o",
+        ".build/out/Products/Release/SwiftJXLCore.o",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/operation-unfolded"
+      ]
+    }
+  ]
+}

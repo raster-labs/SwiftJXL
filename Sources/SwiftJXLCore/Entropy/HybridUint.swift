@@ -103,6 +103,13 @@ extension HybridUintConfig {
         // Position of MSB of value: n = floor(log2(value)).
         let n = Int(31 - value.leadingZeroBitCount)
         let m = value &- (UInt32(1) &<< UInt32(n))
+        // With no folded bits (including the Modular encoder's raw4),
+        // the token identifies the bit class and all remaining bits are
+        // emitted verbatim. Avoid the general variable shifts and masks.
+        if msbInToken == 0 && lsbInToken == 0 {
+            return HybridUintToken(token: split + UInt32(n - splitExponent),
+                                   extraBits: m, extraNBits: n)
+        }
         // Number of bits that go into the token via msbInToken folding.
         let nMinusMsb = n &- msbInToken
         let msbBits = (m &>> UInt32(nMinusMsb)) & ((UInt32(1) &<< UInt32(msbInToken)) &- (msbInToken == 0 ? 0 : 1))

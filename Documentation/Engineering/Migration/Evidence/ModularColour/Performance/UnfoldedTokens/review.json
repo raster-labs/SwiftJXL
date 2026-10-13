@@ -1,0 +1,22 @@
+{
+  "base": "4e6b012bc3c54da968085dd35a6df9ff90e7606f",
+  "reviewedSourceHashes": {
+    "Sources/SwiftJXLCore/Entropy/HybridUint.swift": "7ed8e6d998b08a22cd070a66f80f84d00f2ac741a672000f32e7855c2420700f",
+    "Tests/SwiftJXLCoreTests/HybridUintEncodingTests.swift": "ef1374f722185cfd4afa8dabd5a23996b4d9184bdceb77b3b8c2e445c48338a0"
+  },
+  "findings": [],
+  "arithmeticProof": [
+    "The preceding literal branch guarantees value >= 2^splitExponent, hence n >= splitExponent.",
+    "UInt32 inputs bound n to 31; splitExponent is validated in 0...30. The token sum is <= 2^30 + 1 and cannot overflow UInt32. n - splitExponent fits arm64_32 Int.",
+    "With zero MSB and LSB folding, both folded fields in the old formula are zero; the extra mask leaves m unchanged, including n = 0 and n = 31."
+  ],
+  "ownershipAndResources": "No allocations, pointers, mutable shared state, budget, copy report, executor or cancellation changes.",
+  "contracts": "All seven COMMON_CONTRACT_SHA256 checks pass. Public API unchanged.",
+  "scope": "Only accepted runtime edit is HybridUint no-fold fast path; annotation and dynamic worker trials are absent from runtime diff.",
+  "limits": [
+    "Local Swift 6.4 arm64 evidence only; submitted-head hosted checks pending.",
+    "No physical device, Watch runtime, broader performance gate or migration completion claimed."
+  ],
+  "validation": "Debug/release: 284 declarations / 1119 cases each. ASan/TSan: 25 declarations / 100 cases each. No failures, skips or sanitizer diagnostics.",
+  "tailTiming": "Three-case follow-up did not reproduce earlier p95 increases; new isolated RGB decode tail variation remains documented. Performance gate stays open."
+}

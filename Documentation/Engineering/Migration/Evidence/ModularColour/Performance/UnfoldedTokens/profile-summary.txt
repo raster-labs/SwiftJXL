@@ -1,0 +1,44 @@
+Five-second, 1 ms sample of owned baseline process. Diagnostic only; separate from accepted timings.
+Full source sample SHA256: 08f100f7cab33affc353484330c4ada85286e4c665b64838252879ba0b6c2985
+
+
+        __workq_kernreturn  (in libsystem_kernel.dylib)        16421
+        mach_msg2_trap  (in libsystem_kernel.dylib)        3262
+        closure #1 in residuals #1 (useWP:) in static SpecModularEncoder.buildSections(width:height:channels:sampleHi:effort:applyRCT:)  (in operation-baseline)        1681
+        HybridUintConfig.encode(_:)  (in operation-baseline)        1520
+        specialized Neighbourhood.init(at:_:in:width:)  (in operation-baseline)        1508
+        WeightedPredictor.predict(x:y:xsize:n:w:ne:nw:nn:)  (in operation-baseline)        1377
+        ANSTokenStreamWriter.refillWordCount(symbols:clusters:)  (in operation-baseline)        1272
+        ANSTokenStreamWriter.finish(to:)  (in operation-baseline)        839
+        BitWriter.write(bits:value:)  (in operation-baseline)        692
+        swift_release  (in libswiftCore.dylib)        617
+        __ulock_wait  (in libsystem_kernel.dylib)        563
+        swift_retain  (in libswiftCore.dylib)        514
+        swift_isUniquelyReferenced_nonNull_native  (in libswiftCore.dylib)        331
+        closure #1 in static SpecModularEncoder.buildSections(width:height:channels:sampleHi:effort:applyRCT:)  (in operation-baseline)        231
+        _platform_memmove  (in libsystem_platform.dylib)        193
+        mach_continuous_time  (in libsystem_kernel.dylib)        191
+        __ulock_wait2  (in libsystem_kernel.dylib)        181
+        swift_bridgeObjectRelease  (in libswiftCore.dylib)        181
+        static ModularStorageEncoder.encode(_:layouts:bitsPerSample:grayscale:alphaAssociated:renderingIntent:transferFunction:budget:)  (in operation-baseline)        174
+        DYLD-STUB$$swift_isUniquelyReferenced_nonNull_native  (in operation-baseline)        157
+        swift_bridgeObjectRetain  (in libswiftCore.dylib)        145
+        syscall_thread_switch  (in libsystem_kernel.dylib)        78
+        DYLD-STUB$$swift_bridgeObjectRetain  (in operation-baseline)        77
+        static SpecModularEncoder.buildSections(width:height:channels:sampleHi:effort:applyRCT:)  (in operation-baseline)        65
+        os_unfair_lock_lock  (in libsystem_platform.dylib)        56
+        DYLD-STUB$$swift_bridgeObjectRelease  (in operation-baseline)        52
+        __ulock_wake  (in libsystem_kernel.dylib)        26
+        _os_unfair_lock_lock_slow  (in libsystem_platform.dylib)        24
+        __bzero  (in libsystem_platform.dylib)        22
+        clock_gettime  (in libsystem_c.dylib)        22
+        swift_task_localValueGetImpl(swift::HeapObject const*)  (in libswift_Concurrency.dylib)        21
+        os_unfair_lock_unlock  (in libsystem_platform.dylib)        18
+        __isPlatformOrVariantPlatformVersionAtLeast  (in libswiftCore.dylib)        11
+        static Task<>.checkCancellation()  (in libswift_Concurrency.dylib)        11
+        static ContinuousClock.now.getter  (in libswift_Concurrency.dylib)        9
+        _stdlib_isOSVersionAtLeastOrVariantVersionAtLeast(_:_:_:_:_:_:)  (in libswiftCore.dylib)        8
+        swift_task_getCurrent  (in libswift_Concurrency.dylib)        8
+        _platform_memset  (in libsystem_platform.dylib)        7
+        specialized ANSTokenStreamWriter.init(header:codebook:)  (in operation-baseline)        6
+        swift_get_time  (in libswift_Concurrency.dylib)        6
