@@ -1,0 +1,38 @@
+[
+  {
+    "name": "direct-read",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-O",
+      "-g",
+      "-whole-module-optimization",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-target",
+      "arm64-apple-macos27.0",
+      "-module-cache-path",
+      "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-remaining-qualification/work/storage-read/direct-read/cache",
+      "-package-name",
+      "SwiftJXL",
+      "-I",
+      "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-remaining-qualification/work/storage-read/direct-read",
+      "-I",
+      "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour",
+      "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-remaining-qualification/work/storage-read/preflight.swift",
+      "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-remaining-qualification/work/storage-read/direct-read/libSwiftJXL.a",
+      "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/compact-ans-colour/libSwiftJXLCore.a",
+      "-o",
+      "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-remaining-qualification/work/storage-read/direct-read-preflight"
+    ],
+    "compileExit": 0,
+    "compileOutput": "",
+    "probeHash": "3ad4bd3420c8beaef7df9e4968ec91c367506343cd5412efb862f4799dc8767d",
+    "runCommand": [
+      "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-remaining-qualification/work/storage-read/direct-read-preflight"
+    ],
+    "exit": 0,
+    "output": "Checked 4457920 exact samples and 20968 padding bytes; allocation identity preserved.\n"
+  }
+]

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="25" failures="0" skipped="0" time="0.005961208">
+        <testcase classname="SwiftJXLTests.StorageTests" name="rejectsOwnerCapacityShorterThanDescriptor()" time="2.7417e-05"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="imageRetainsAdapterAndAllocationUntilLastReader()" time="3.8542e-05"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="leaseCannotBeForgedReusedOrBorrowedReentrantly()" time="3.5667e-05"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="concurrentReadersPreserveEveryLogicalSample()" time="5.8458e-05"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="abortMakesStorageUnreadableAndUnwritable()" time="2.45e-05"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="freshAllocationsHaveDistinctIdentitiesAndZeroPadding()" time="3.9209e-05"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="throwingBorrowReleasesAdmissionWithoutReplacingStorage()" time="0.000139917"/>
+        <testcase classname="SwiftJXLTests.StorageTests" name="copiedLeaseCannotOverlapWriters()" time="0.001615417"/>
+        <testcase classname="SwiftJXLTests" name="cancellationInProviderFinalisationPreventsPublication(_:)" time="0.001545667"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="finalRowNeedsOnlyItsActualSampleBytes()" time="5.4875e-05"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="rejectsMisalignedOffsetsAndStrides()" time="3.6708e-05"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="paddedOddDimensionsAndPrecision()" time="5.7708e-05"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="rejectsInvalidGeometryAndPrecision()" time="4.7083e-05"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="semanticMetadataMustAgreeWithComponents()" time="4.6291e-05"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="deterministicLayoutMutation()" time="0.000247958"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="rejectsArithmeticOverflowBeforeAllocation()" time="2.7583e-05"/>
+        <testcase classname="SwiftJXLTests.DescriptorTests" name="rejectsOverlappingPlanesAndIncompleteMapping()" time="3.1667e-05"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="throwingSampleStopsInsideLaterRowAndInvalidatesDestination()" time="0.000142417"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="readsIndependentGoldenBytesFromOddPhysicalAddress()" time="0.000352041"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="initialisesExternalSampleBytesAtOddAddressWithoutChangingPadding()" time="5.8458e-05"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="refusesShortProviderBeforeLoadingSample()" time="3.0125e-05"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="writesGoldenBytesForPackedAndPadded12And16BitSamples()" time="0.000134709"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="rejectsCoordinatesBeforeOffsetArithmetic()" time="4.7166e-05"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="stridedRowsKeepAllPaddingAndCallbackOrder(width:bigEndian:)" time="0.000323334"/>
+        <testcase classname="SwiftJXLTests.SampleAccessTests" name="outOfPrecisionWriteInvalidatesDestination()" time="3.1625e-05"/>
+    </testsuite>
+    <testsuite name="TestResults" errors="0" tests="18" failures="0" skipped="0" time="17.556307083">
+        <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="eightBitAdmissionUsesActualCallerCapacity()" time="0.001495041"/>
+        <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="publicOwningColourDestination(_:_:)" time="11.739558208"/>
+        <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="independentAssociatedAlphaInput(_:_:)" time="0.0874745"/>
+        <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="paddedCallerStorage(_:_:)" time="5.4056884169999995"/>
+        <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="alphaMismatchRejectsBeforeWritingAndMalformedPixelsInvalidate()" time="0.00233125"/>
+        <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="mismatchedPrecisionOrCapacityRejectsBeforeTouchingBytes()" time="0.000552584"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:)" time="0.040204084"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="concurrentEncodersShareOneImmutableSource()" time="0.013308084"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="rejectsShortDestinationBeforeWriting()" time="0.00339075"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="cancellationInvalidatesCallerDestination()" time="0.00280975"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="aggregateAdmissionIsCheckedAndOverflowCannotWrap()" time="5.4583e-05"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="entropyCheckpointsBoundLatchedFailure(_:)" time="0.001245167"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="entropyCheckpointsBoundCancellation(_:)" time="0.000724"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="publicSharedStorageUsesOnlyTheRequiredFinalAllocation()" time="0.052403166"/>
+        <testcase classname="SwiftJXLCoreTests.ScalarMemoryTests" name="boundedWriterStopsGrowthAndThrowsBeforePublication()" time="5.25e-05"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTPixelStorageTests" name="rejectsInvalidDestinationBeforeWriting()" time="0.000209208"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTPixelStorageTests" name="paddedOwningDestination(_:_:)" time="0.203783"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTPixelStorageTests" name="cancellationRejectsBeforeWriting()" time="9.1042e-05"/>
+    </testsuite>
+</testsuites>

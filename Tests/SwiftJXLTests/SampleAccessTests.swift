@@ -5,7 +5,7 @@ import Testing
 import SwiftJXL
 
 // Fault injection: construction sees the declared two-byte capacity, but a later
-// read exposes only one byte. Image access must reject before a span load traps.
+// read exposes only one byte. Image access must reject before loading either byte.
 private final class ShortenedSampleBorrow: ReadOnlyImageStorage, Sendable {
     let allocationID = UUID()
     let byteCount = 2
@@ -241,6 +241,7 @@ struct SampleAccessTests {
                 let offset = prefix + y * rowBytes + x * pixelStride
                 expected[offset] = bigEndian ? 0x81 : low
                 expected[offset + 1] = bigEndian ? low : 0x81
+                #expect(try image.sampleUInt16(x: x, y: y) == UInt16(0x8100 + y * width + x))
             }
         }
         #expect(calls == Array(0..<(width * height)))

@@ -1,0 +1,64 @@
+{
+  "baseline": {
+    "archive": "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/storage-performance/baseline",
+    "binarySHA256": "580aea218125ebf1db41929f9c48bc17e3ed73c66e37913b189f115909aee40f",
+    "librarySHA256": "c72aa244f4641a1486414550462d7f9a2fd4b97b0bfece848c0fb1ac3ee40cc7",
+    "sourceHashes": {
+      "Sources/SwiftJXL/CodecAPI.swift": "50bc697ef1c976fb164d659b6a7b4d3a6858e5591ce60a83b8d62cb17989c174",
+      "Sources/SwiftJXL/Errors.swift": "cfae3357b4aba0e62df1ed6096b8af951d39d0155184b8881c737d48ec936643",
+      "Sources/SwiftJXL/Image.swift": "a10dda5b5d33b63aec4afb4eb060a3a2d8017dbb9bc0c3b1059a4498f77222e5",
+      "Sources/SwiftJXL/ImageDescriptor.swift": "a6d91691d00c0bee8f19986f7bd95739589794898e3c163e80923885d21c5a96",
+      "Sources/SwiftJXL/ImageStorage.swift": "8bc26a7d1237260dbb607fe2612f55d05a9376365371573332190e78308095cd",
+      "Sources/SwiftJXL/Options.swift": "082a589b2172282b6a66ea3bd6e72f6d865671a782cb1b3839549db3e575f622",
+      "Sources/SwiftJXL/Transcoding.swift": "c033c2fd033ac78b23d357e632be71812ab28a994928445e7f67de5b9f1a0995"
+    }
+  },
+  "current": {
+    "archive": "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/storage-performance/candidate",
+    "binarySHA256": "42cf7b25a8c186c4403d271d901922774b4036fbaec573de5e8d0a8f818ce729",
+    "librarySHA256": "d4a8865c191a291ce5187798540c628bdd724c7a19fe3a5bf8c9dce50c6a0648",
+    "sourceHashes": {
+      "Sources/SwiftJXL/AnimationAPI.swift": "2144535c59a13dd263cd51e0c514595abe3b454cf1d64c44b04e0fac1b6369ac",
+      "Sources/SwiftJXL/AnimationEncoding.swift": "42ac0a50808d3758294e7fb81fb7f6b4c7a69f5b218e02acb0c0da236533253e",
+      "Sources/SwiftJXL/CodecAPI.swift": "c8190f197630138241c7dfdf68f93884141053d5737c9855348737d8dfb0c523",
+      "Sources/SwiftJXL/Errors.swift": "f71dd532405f2bca468ef39b29117513c686a89c64dd908ef598d1bca4f4fe6b",
+      "Sources/SwiftJXL/Image.swift": "b507695fc6ece7a1717d8b33fb9bc9500ccbe7d5d721cf880d7ea0e32bb4522e",
+      "Sources/SwiftJXL/ImageDescriptor.swift": "44cf8b2f796c0c39a17a4ff11ea8e97dc08f1f496cddc0197696a822922a1656",
+      "Sources/SwiftJXL/ImageStorage.swift": "8cb882511ae13ab0347782a6e474bee82013b0812aa6756c4a0dba573d87cb3f",
+      "Sources/SwiftJXL/Options.swift": "dd43c63592bf4d74c53626374fb4494b0815315f0f64bc1a2831f9c066b5d787",
+      "Sources/SwiftJXL/Transcoding.swift": "a2bd0f22707fc98c4b3495d582f37b5adb9863edde66fef58f07a26a5bf26456"
+    }
+  },
+  "candidate": {
+    "archive": "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-remaining-qualification/work/storage-read/candidate",
+    "binarySHA256": "dc27248ab67f5ce053720379a1f74dc8725249b50d6c93eefaa518bc81c33eeb",
+    "librarySHA256": "1b12e58755042853d9db1d4a57a4f1cb23345316ff0e7d5b46bab45737932915",
+    "sourceHashes": {
+      "Sources/SwiftJXL/AnimationAPI.swift": "2144535c59a13dd263cd51e0c514595abe3b454cf1d64c44b04e0fac1b6369ac",
+      "Sources/SwiftJXL/AnimationEncoding.swift": "42ac0a50808d3758294e7fb81fb7f6b4c7a69f5b218e02acb0c0da236533253e",
+      "Sources/SwiftJXL/CodecAPI.swift": "c8190f197630138241c7dfdf68f93884141053d5737c9855348737d8dfb0c523",
+      "Sources/SwiftJXL/Errors.swift": "f71dd532405f2bca468ef39b29117513c686a89c64dd908ef598d1bca4f4fe6b",
+      "Sources/SwiftJXL/Image.swift": "478171273e9c0fc6c2ea4e095c0846c7049ec68cabd4b76d22f44053d7b429e7",
+      "Sources/SwiftJXL/ImageDescriptor.swift": "44cf8b2f796c0c39a17a4ff11ea8e97dc08f1f496cddc0197696a822922a1656",
+      "Sources/SwiftJXL/ImageStorage.swift": "8cb882511ae13ab0347782a6e474bee82013b0812aa6756c4a0dba573d87cb3f",
+      "Sources/SwiftJXL/Options.swift": "dd43c63592bf4d74c53626374fb4494b0815315f0f64bc1a2831f9c066b5d787",
+      "Sources/SwiftJXL/Transcoding.swift": "a2bd0f22707fc98c4b3495d582f37b5adb9863edde66fef58f07a26a5bf26456"
+    }
+  },
+  "direct-read": {
+    "archive": "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-remaining-qualification/work/storage-read/direct-read",
+    "binarySHA256": "f86672ac0ac2368c2d35770a0143502bf1020b28c8b53d1b24d53c08b92457b8",
+    "librarySHA256": "d96950ca65ac0b32c593b933c7c82480b37b661d811ecb2ea5b36087e7bebf47",
+    "sourceHashes": {
+      "Sources/SwiftJXL/AnimationAPI.swift": "2144535c59a13dd263cd51e0c514595abe3b454cf1d64c44b04e0fac1b6369ac",
+      "Sources/SwiftJXL/AnimationEncoding.swift": "42ac0a50808d3758294e7fb81fb7f6b4c7a69f5b218e02acb0c0da236533253e",
+      "Sources/SwiftJXL/CodecAPI.swift": "c8190f197630138241c7dfdf68f93884141053d5737c9855348737d8dfb0c523",
+      "Sources/SwiftJXL/Errors.swift": "f71dd532405f2bca468ef39b29117513c686a89c64dd908ef598d1bca4f4fe6b",
+      "Sources/SwiftJXL/Image.swift": "ad4f87db872592214c1113bad412fc52efd0680078e822007b979c634a53f46f",
+      "Sources/SwiftJXL/ImageDescriptor.swift": "44cf8b2f796c0c39a17a4ff11ea8e97dc08f1f496cddc0197696a822922a1656",
+      "Sources/SwiftJXL/ImageStorage.swift": "8cb882511ae13ab0347782a6e474bee82013b0812aa6756c4a0dba573d87cb3f",
+      "Sources/SwiftJXL/Options.swift": "dd43c63592bf4d74c53626374fb4494b0815315f0f64bc1a2831f9c066b5d787",
+      "Sources/SwiftJXL/Transcoding.swift": "a2bd0f22707fc98c4b3495d582f37b5adb9863edde66fef58f07a26a5bf26456"
+    }
+  }
+}

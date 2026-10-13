@@ -1,5 +1,7 @@
 # Sample-storage performance investigation
 
+Follow-up: [public sample-read qualification](STORAGE_READ_PERFORMANCE.md) records the subsequent PR22-based investigation, rejected capture experiment, retained direct reads and remaining start-of-process timing uncertainty. The original comparisons below are preserved.
+
 Contract distribution 0.10.0; 13 October 2026. This record qualifies the synchronous `ImageDestination.writeUInt16` sample helper. It does not measure codec throughput or complete Milestone 4.
 
 ## Historical finding and current source
