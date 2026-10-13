@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased — Modular internal effort qualification, 2026-10-13
+
+- Reduce temporary single-section effort 4–7 property storage and add shared-pass cancellation/deadline checkpoints.
+- Preserve tested codestream bytes across efforts 1–9 and retain independent fixture, release-performance and sanitizer evidence.
+- Keep public effort fixed at 3; full higher-effort admission and migration qualification remain open.
+
 ## Unreleased — hierarchical sanitizer test deadline, 2026-10-13
 
 - Separate nested quantisation and group-boundary correctness fixtures so sanitizer overhead does not combine four textured searches under one operation deadline.
