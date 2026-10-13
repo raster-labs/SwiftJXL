@@ -1,0 +1,170 @@
+Building for debugging...
+[Planning 32 / 212]
+[Planning deferred tasks]
+[1 / 4]
+[2 / 5] SwiftJXLCore
+[3 / 6] SwiftJXLCore
+[13 / 16] SwiftJXLCore
+[16 / 20] SwiftJXLCore
+[17 / 20] SwiftJXLCore
+[26 / 35] SwiftJXLCoreTests-product
+[28 / 39] SwiftJXLCoreTests-product
+[29 / 39] SwiftJXLCoreTests-product
+[30 / 39] SwiftJXLCoreTests-product
+[34 / 38] SwiftJXLCoreTests-product
+[36 / 38] SwiftJXLCoreTests-product
+[39 / 40] SwiftJXLTests-product
+[43 / 44] SwiftJXLTests-product
+[47 / 51] swiftjxl-cli-product
+[50 / 51] swiftjxl-cli-product
+Build complete! (5.03 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CompactANSTests started.
+◇ Test compactOutputMatchesBufferedWriterAndDecoder(_:) started.
+◇ Test case passing 1 argument count → 0 to compactOutputMatchesBufferedWriterAndDecoder(_:) started.
+◇ Test case passing 1 argument count → 1 to compactOutputMatchesBufferedWriterAndDecoder(_:) started.
+◇ Test case passing 1 argument count → 255 to compactOutputMatchesBufferedWriterAndDecoder(_:) started.
+◇ Test case passing 1 argument count → 256 to compactOutputMatchesBufferedWriterAndDecoder(_:) started.
+◇ Test case passing 1 argument count → 257 to compactOutputMatchesBufferedWriterAndDecoder(_:) started.
+◇ Test case passing 1 argument count → 4097 to compactOutputMatchesBufferedWriterAndDecoder(_:) started.
+◇ Test case passing 1 argument count → 196608 to compactOutputMatchesBufferedWriterAndDecoder(_:) started.
+✔ Test compactOutputMatchesBufferedWriterAndDecoder(_:) with 7 test cases passed after 1.657 seconds.
+◇ Test compactWriterRejectsMismatchedReplayCount() started.
+✔ Test compactWriterRejectsMismatchedReplayCount() passed after 0.005 seconds.
+◇ Test compactWriterEnforcesCancelledAndLatchedOutputLimits() started.
+✔ Test compactWriterEnforcesCancelledAndLatchedOutputLimits() passed after 0.005 seconds.
+✔ Suite CompactANSTests passed after 1.668 seconds.
+◇ Suite IntegerBoundaryTests started.
+◇ Test oversizedOrderEndsRejectBeforeNarrowingOrAddition() started.
+✔ Test oversizedOrderEndsRejectBeforeNarrowingOrAddition() passed after 0.026 seconds.
+◇ Test oversizedContextMapTokenPreservesErrorValue() started.
+✔ Test oversizedContextMapTokenPreservesErrorValue() passed after 0.002 seconds.
+◇ Test lz77RejectsUnrepresentableAndWrappedZeroDistances() started.
+✔ Test lz77RejectsUnrepresentableAndWrappedZeroDistances() passed after 0.023 seconds.
+◇ Test lz77RejectsOverflowingLength() started.
+✔ Test lz77RejectsOverflowingLength() passed after 0.008 seconds.
+◇ Test iccRejectsOversizedOutputBeforeAdmission() started.
+✔ Test iccRejectsOversizedOutputBeforeAdmission() passed after 0.001 seconds.
+◇ Test iccPredictionRetainsUnsigned32BitProfileWords() started.
+✔ Test iccPredictionRetainsUnsigned32BitProfileWords() passed after 0.001 seconds.
+◇ Test iccTagWordsRetainHighBitsAndRejectDerivedOverflow() started.
+✔ Test iccTagWordsRetainHighBitsAndRejectDerivedOverflow() passed after 0.001 seconds.
+✔ Suite IntegerBoundaryTests passed after 0.062 seconds.
+◇ Suite JPEGBridgeFrameTests started.
+◇ Test groupedACCompressionPreservesCoefficientsAndFlatFallback() started.
+✔ Test groupedACCompressionPreservesCoefficientsAndFlatFallback() passed after 3.148 seconds.
+◇ Test readerRejectsTruncationTrailingBytesAndEnforcesBudgets() started.
+✔ Test readerRejectsTruncationTrailingBytesAndEnforcesBudgets() passed after 0.085 seconds.
+◇ Test readerBoundsMutationsAndOwnsConcurrentResults() started.
+✔ Test readerBoundsMutationsAndOwnsConcurrentResults() passed after 0.671 seconds.
+◇ Test largerEntropyContextCountRequiresBoundedOptIn() started.
+✔ Test largerEntropyContextCountRequiresBoundedOptIn() passed after 0.017 seconds.
+◇ Test frameWriterAdmissionOutputBoundAndCancellation() started.
+✔ Test frameWriterAdmissionOutputBoundAndCancellation() passed after 0.180 seconds.
+◇ Test largerDCGroupProfileIsExplicitlyUnsupported() started.
+✔ Test largerDCGroupProfileIsExplicitlyUnsupported() passed after 0.001 seconds.
+◇ Test nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "gray" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "444" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "422" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "420" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "440" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "restart" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "multigroup-420" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "multigroup-progressive-422" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "wide-gray" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+◇ Test case passing 1 argument name → "quant16" to nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) started.
+✔ Test nativeFrameAndMetadataRestoreWithIndependentDecoder(_:) with 19 test cases passed after 14.274 seconds.
+✔ Suite JPEGBridgeFrameTests passed after 18.378 seconds.
+◇ Suite NativeTranscoderPublicTests started.
+◇ Test publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "gray" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "444" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "422" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "420" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "440" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "progressive" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "restart" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "multigroup-420" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "multigroup-progressive-422" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "wide-gray" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "quant16" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "rgb" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "rgb-progressive" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "tiny" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+◇ Test case passing 1 argument name → "thin" to publicRepeatedRoundTripPreservesEveryByte(_:) started.
+✔ Test publicRepeatedRoundTripPreservesEveryByte(_:) with 23 test cases passed after 19.170 seconds.
+◇ Test wholeOperationLimitsAndMetadataPolicyAreEnforced() started.
+✔ Test wholeOperationLimitsAndMetadataPolicyAreEnforced() passed after 0.075 seconds.
+◇ Test slicedOwnersConcurrentCallsAndCancellation() started.
+✔ Test slicedOwnersConcurrentCallsAndCancellation() passed after 0.054 seconds.
+◇ Test rejectsMissingDuplicateTruncatedAndUnsupportedReconstruction() started.
+✔ Test rejectsMissingDuplicateTruncatedAndUnsupportedReconstruction() passed after 0.038 seconds.
+◇ Test iccFragmentValidationAndLimits() started.
+✔ Test iccFragmentValidationAndLimits() passed after 0.087 seconds.
+◇ Test independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "gray" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "444" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "422" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "420" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "440" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "restart" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "metadata-tail" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "fill-marker" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-edge" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-restart" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-422" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-440" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "progressive-dc-refine" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "sequential-multiscan" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "multigroup-420" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "multigroup-progressive-422" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "wide-gray" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "quant16" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "rgb" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "rgb-progressive" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "tiny" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "thin" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "exif-xmp" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "icc-rgb" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "icc-gray" to independentPublicInteroperability(_:) started.
+◇ Test case passing 1 argument name → "icc-fragmented" to independentPublicInteroperability(_:) started.
+✔ Test independentPublicInteroperability(_:) with 27 test cases passed after 11.765 seconds.
+✔ Suite NativeTranscoderPublicTests passed after 31.192 seconds.
+◇ Suite ScalarMemoryTests started.
+◇ Test entropyCheckpointsBoundLatchedFailure(_:) started.
+◇ Test case passing 1 argument prefix → false to entropyCheckpointsBoundLatchedFailure(_:) started.
+◇ Test case passing 1 argument prefix → true to entropyCheckpointsBoundLatchedFailure(_:) started.
+✔ Test entropyCheckpointsBoundLatchedFailure(_:) with 2 test cases passed after 0.005 seconds.
+◇ Test entropyCheckpointsBoundCancellation(_:) started.
+◇ Test case passing 1 argument prefix → false to entropyCheckpointsBoundCancellation(_:) started.
+◇ Test case passing 1 argument prefix → true to entropyCheckpointsBoundCancellation(_:) started.
+✔ Test entropyCheckpointsBoundCancellation(_:) with 2 test cases passed after 0.003 seconds.
+◇ Test aggregateAdmissionIsCheckedAndOverflowCannotWrap() started.
+✔ Test aggregateAdmissionIsCheckedAndOverflowCannotWrap() passed after 0.001 seconds.
+◇ Test boundedWriterStopsGrowthAndThrowsBeforePublication() started.
+✔ Test boundedWriterStopsGrowthAndThrowsBeforePublication() passed after 0.001 seconds.
+◇ Test publicSharedStorageUsesOnlyTheRequiredFinalAllocation() started.
+✔ Test publicSharedStorageUsesOnlyTheRequiredFinalAllocation() passed after 0.415 seconds.
+✔ Suite ScalarMemoryTests passed after 0.425 seconds.
+✔ Test run with 28 tests in 5 suites passed after 51.726 seconds.

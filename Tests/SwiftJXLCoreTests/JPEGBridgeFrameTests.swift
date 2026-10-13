@@ -7,6 +7,22 @@ import Testing
 // Avoid concurrent oracle processes and instrumented large-frame oversubscription.
 @Suite(.serialized)
 struct JPEGBridgeFrameTests {
+    @Test func groupedACCompressionPreservesCoefficientsAndFlatFallback() throws {
+        let url = try #require(Bundle.module.url(forResource: "multigroup-420", withExtension: "jpg", subdirectory: "JPEGBridge"))
+        let input = try JPEGCoefficientDecoder.decode(Data(contentsOf: url), policy: JPEGCoefficientPolicy())
+        for flat in [false, true] {
+            let coefficients = flat ? input.coefficients.map { [Int32](repeating: 0, count: $0.count) } : input.coefficients
+            let view = try JPEGBridgeCoefficients(frame: input.frame, coefficients: coefficients,
+                quantisation: input.quantisation, policy: JPEGBridgePolicy())
+            let data = try JPEGBridgeFrameWriter.write(view, policy: JPEGBridgePolicy())
+            // The prior prefix-only textured codestream was 115606 bytes.
+            #expect(data.count < 100_000)
+            let restored = try JPEGBridgeFrameReader.read(data, policy: JPEGBridgePolicy())
+            #expect(restored.coefficients == coefficients)
+            #expect(restored.quantisation == input.quantisation.map { $0.map(Int32.init) })
+        }
+    }
+
     @Test func readerRejectsTruncationTrailingBytesAndEnforcesBudgets() throws {
         let url = try #require(Bundle.module.url(forResource: "gray", withExtension: "jpg", subdirectory: "JPEG"))
         let input = try JPEGCoefficientDecoder.decode(Data(contentsOf: url), policy: JPEGCoefficientPolicy())

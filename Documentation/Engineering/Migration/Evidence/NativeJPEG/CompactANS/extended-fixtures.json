@@ -1,0 +1,187 @@
+{
+  "cjpegSHA256": "1313b8394da8708c93fd1bff14d352957cc5e7775b315ef5970953a0004cc760",
+  "version": "libjpeg-turbo version 3.2.0 (build 20260630)\n",
+  "fixtures": [
+    {
+      "name": "gray-flat",
+      "generator": "extend-corpus.py; seed 20261013",
+      "width": 513,
+      "height": 257,
+      "pattern": "flat",
+      "command": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "90",
+        "-dct",
+        "int",
+        "-grayscale",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray-flat.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray-flat.pnm"
+      ],
+      "exit": 0,
+      "pnmSHA256": "9115887060abc25a7ecb9eb9e3de22d4cb83055e65041b6fbd603c9f2433bba8",
+      "sha256": "97a1e9b918c10b5534f09e46ed7560fefcdb646bbacd9e28d2eaf4c2a68cbb18",
+      "bytes": 1940
+    },
+    {
+      "name": "gray-ramp",
+      "generator": "extend-corpus.py; seed 20261013",
+      "width": 512,
+      "height": 511,
+      "pattern": "ramp",
+      "command": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "90",
+        "-dct",
+        "int",
+        "-grayscale",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray-ramp.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray-ramp.pnm"
+      ],
+      "exit": 0,
+      "pnmSHA256": "633239477dc039b1d304fa59c51f6aa6e421ca758e25f612ae81e59908dd7798",
+      "sha256": "d5b8c32e52ba97ab4a66548e2ce876c5a818cd1a30ea850c529cfc195ed7e0e1",
+      "bytes": 40659
+    },
+    {
+      "name": "gray-noise",
+      "generator": "extend-corpus.py; seed 20261013",
+      "width": 257,
+      "height": 257,
+      "pattern": "noise",
+      "command": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "90",
+        "-dct",
+        "int",
+        "-grayscale",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray-noise.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/gray-noise.pnm"
+      ],
+      "exit": 0,
+      "pnmSHA256": "e6047aa842621c426bcf758d5a1de3ac10cfc54ec0c19283bc924b3a998c08ba",
+      "sha256": "c7da4eafe0411f2f056818c91c5ecd910aa00e0580d82fe55a21bf61509cd587",
+      "bytes": 52994
+    },
+    {
+      "name": "rgb-ramp",
+      "generator": "extend-corpus.py; seed 20261013",
+      "width": 513,
+      "height": 259,
+      "pattern": "ramp",
+      "command": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "90",
+        "-dct",
+        "int",
+        "-sample",
+        "2x2",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-ramp.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-ramp.pnm"
+      ],
+      "exit": 0,
+      "pnmSHA256": "09d89389302d98d1619b66627950a317e735b5a94f5a60e8dddbe63bc38e6278",
+      "sha256": "24503bb5f4158efe8992615fa66316901946e033809ae334827a052e6b81b304",
+      "bytes": 40096
+    },
+    {
+      "name": "rgb-noise444",
+      "generator": "extend-corpus.py; seed 20261013",
+      "width": 257,
+      "height": 257,
+      "pattern": "noise",
+      "command": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "90",
+        "-dct",
+        "int",
+        "-sample",
+        "1x1",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-noise444.pnm"
+      ],
+      "exit": 0,
+      "pnmSHA256": "62e8e67fe3a68c3d354a792a2dca876ed726fe4ed3ab723a8d61f5e9f0262f7b",
+      "sha256": "d573f04b4cad82faf023ffb817d0aa7daa2d05b5cbb93f3acf1bc4445cde50f9",
+      "bytes": 125959
+    },
+    {
+      "name": "rgb-flat420",
+      "generator": "extend-corpus.py; seed 20261013",
+      "width": 1025,
+      "height": 17,
+      "pattern": "flat",
+      "command": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "90",
+        "-dct",
+        "int",
+        "-sample",
+        "2x2",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-flat420.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-flat420.pnm"
+      ],
+      "exit": 0,
+      "pnmSHA256": "87fca9a2fb7ce46c94c202de6f248b9b6b8f69f466905b1b3f21e5d369f87dc9",
+      "sha256": "f8d81a6b957ffce76253c68a816e1561f7b923597bb7a649e32b36242690b208",
+      "bytes": 1146
+    },
+    {
+      "name": "rgb-textured420",
+      "generator": "extend-corpus.py; seed 20261013",
+      "width": 1024,
+      "height": 1024,
+      "pattern": "texture",
+      "command": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "90",
+        "-dct",
+        "int",
+        "-sample",
+        "2x2",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-textured420.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-textured420.pnm"
+      ],
+      "exit": 0,
+      "pnmSHA256": "33a9355f42b8744bed88b9bc2965d5c7ff8bd6b2a7669da01d37df803255b74d",
+      "sha256": "b8388330a18ccef8a1c4566f1414896ff58e0161fd704e16ac531de630ec7c7d",
+      "bytes": 811752
+    },
+    {
+      "name": "rgb-boundary444",
+      "generator": "extend-corpus.py; seed 20261013",
+      "width": 257,
+      "height": 8,
+      "pattern": "texture",
+      "command": [
+        "/opt/homebrew/bin/cjpeg",
+        "-quality",
+        "90",
+        "-dct",
+        "int",
+        "-sample",
+        "1x1",
+        "-outfile",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-boundary444.jpg",
+        "/Users/raster/Documents/Codex/2026-10-13/swiftjxl-milestone4-next/work/native-jpeg/inputs/rgb-boundary444.pnm"
+      ],
+      "exit": 0,
+      "pnmSHA256": "16538ca56920fc02bbd07af195f7251d9fa5c0d7c91cd0a10137cc7e2231f896",
+      "sha256": "55b23854c6c562e91e43b290f651c7adcb5121c3ce36e21d1e23752c4bcb22ac",
+      "bytes": 3473
+    }
+  ]
+}
