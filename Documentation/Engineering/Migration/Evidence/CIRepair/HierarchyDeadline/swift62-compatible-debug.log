@@ -1,0 +1,60 @@
+Building for debugging...
+[4 / 29] SwiftJXLCore
+[6 / 30] SwiftJXLCore
+[11 / 34] SwiftJXL
+[18 / 43] SwiftJXL
+[22 / 43] swiftjxl-cli-product
+[23 / 43] swiftjxl-cli-product
+[25 / 41] SwiftJXL
+[30 / 48] SwiftJXLTests-product
+[32 / 56] SwiftJXLCoreTests-product
+[34 / 67] SwiftJXLTests-product
+[35 / 67] SwiftJXLTests-product
+[37 / 65] SwiftJXLTests-product
+[41 / 65] SwiftJXLTests-product
+[43 / 65] SwiftJXLTests-product
+[45 / 63] SwiftJXLTests-product
+[49 / 63] SwiftJXLCoreTests-product
+[52 / 63] SwiftJXLCoreTests-product
+[54 / 63] SwiftJXLTests-product
+[55 / 63] SwiftJXLCoreTests-product
+[57 / 63] SwiftJXLCoreTests-product
+[58 / 63]
+[60 / 63] SwiftJXLCoreTests-product
+[62 / 66] SwiftJXLCoreTests-product
+[64 / 66] SwiftJXLCoreTests-product
+Build complete! (55.84 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTHierarchicalAnalysisTests started.
+◇ Test uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 16 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 32 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 64 to uniformRegionsSelectLargeTransforms(_:) started.
+✔ Test uniformRegionsSelectLargeTransforms(_:) with 3 test cases passed after 0.908 seconds.
+◇ Test nestedLeavesInheritRegionQuantisation() started.
+✔ Test nestedLeavesInheritRegionQuantisation() passed after 0.949 seconds.
+◇ Test groupBoundariesAndPartialCells(_:) started.
+◇ Test case passing 1 argument vertical → false to groupBoundariesAndPartialCells(_:) started.
+◇ Test case passing 1 argument vertical → true to groupBoundariesAndPartialCells(_:) started.
+✔ Test groupBoundariesAndPartialCells(_:) with 2 test cases passed after 0.846 seconds.
+◇ Test expiredAndCancelledSearchRejectBeforeWorkspaceAdmission() started.
+✔ Test expiredAndCancelledSearchRejectBeforeWorkspaceAdmission() passed after 0.001 seconds.
+◇ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 4 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 5 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 6 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 7 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 8 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 9 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 10 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 11 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 18 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 19 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 20 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+✔ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) with 11 test cases passed after 0.437 seconds.
+◇ Test invalidAndExhaustedSearch() started.
+✔ Test invalidAndExhaustedSearch() passed after 0.001 seconds.
+✔ Suite VarDCTHierarchicalAnalysisTests passed after 3.143 seconds.
+✔ Test run with 6 tests in 1 suite passed after 3.143 seconds.

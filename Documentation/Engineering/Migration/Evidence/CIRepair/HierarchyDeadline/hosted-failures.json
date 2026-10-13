@@ -1,0 +1,51 @@
+{
+  "contract": "0.10.0",
+  "mainHead": "3069f05500c49d704cd1de2a64b8fe906564adb3",
+  "run": 38378421617,
+  "attempts": [
+    {
+      "job": {
+        "id": 115251022600,
+        "head_sha": "3069f05500c49d704cd1de2a64b8fe906564adb3",
+        "name": "macOS 26 thread sanitizer / Swift 6.2",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      "logTruncated": true,
+      "failureExcerpt": [
+        "2026-10-13T10:48:56.0852860Z ◇ Test nestedQuantisationAndGroupBoundaries() started.",
+        "2026-10-13T10:48:56.0854770Z ✘ Test nestedQuantisationAndGroupBoundaries() recorded an issue at VarDCTHierarchicalAnalysisTests.swift:25:6: Caught error: .resourceLimit",
+        "2026-10-13T10:48:56.0856720Z ✘ Test nestedQuantisationAndGroupBoundaries() failed after 30.035 seconds with 1 issue.",
+        "2026-10-13T10:48:56.0875050Z ✘ Suite VarDCTHierarchicalAnalysisTests failed after 40.890 seconds with 1 issue.",
+        "2026-10-13T10:49:15.6568990Z ✘ Test run with 290 tests in 65 suites failed after 949.996 seconds with 1 issue.",
+        "2026-10-13T10:49:15.6618420Z ##[error]Process completed with exit code 1."
+      ],
+      "diagnosticSearch": {
+        "threadSanitizerWarningInReturnedText": false
+      },
+      "qualification": "Tool returned a truncated log; absence of a race warning applies only to the returned text."
+    },
+    {
+      "job": {
+        "id": 115232520631,
+        "head_sha": "3069f05500c49d704cd1de2a64b8fe906564adb3",
+        "name": "macOS 26 thread sanitizer / Swift 6.2",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      "logTruncated": true,
+      "failureExcerpt": [
+        "2026-10-13T10:01:26.9963890Z ◇ Test nestedQuantisationAndGroupBoundaries() started.",
+        "2026-10-13T10:01:26.9964690Z ✘ Test nestedQuantisationAndGroupBoundaries() recorded an issue at VarDCTHierarchicalAnalysisTests.swift:25:6: Caught error: .resourceLimit",
+        "2026-10-13T10:01:26.9965520Z ✘ Test nestedQuantisationAndGroupBoundaries() failed after 30.075 seconds with 1 issue.",
+        "2026-10-13T10:01:26.9998650Z ✘ Suite VarDCTHierarchicalAnalysisTests failed after 41.759 seconds with 1 issue.",
+        "2026-10-13T10:01:46.0363040Z ✘ Test run with 290 tests in 65 suites failed after 952.399 seconds with 1 issue.",
+        "2026-10-13T10:01:46.0561260Z ##[error]Process completed with exit code 1."
+      ],
+      "diagnosticSearch": {
+        "threadSanitizerWarningInReturnedText": false
+      },
+      "qualification": "Tool returned a truncated log; absence of a race warning applies only to the returned text."
+    }
+  ]
+}

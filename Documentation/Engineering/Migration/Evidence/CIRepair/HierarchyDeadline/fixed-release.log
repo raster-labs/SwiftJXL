@@ -1,0 +1,60 @@
+Building for production...
+[3 / 13]
+[4 / 14] SwiftJXLCore
+/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[6 / 15] SwiftJXLCore
+[11 / 18] SwiftJXL
+[18 / 26] swiftjxl-cli-product
+[20 / 28] SwiftJXLCoreTests-product
+[22 / 29] SwiftJXLCoreTests-product
+[22 / 29] swiftjxl-cli-product
+[25 / 29] SwiftJXLTests-product
+[26 / 30] swiftjxl-cli-product
+[30 / 32] SwiftJXLTests-product
+[31 / 33] SwiftJXLCoreTests-product
+[35 / 39] SwiftJXLCoreTests-product
+[37 / 39] SwiftJXLCoreTests-product
+[38 / 38] swiftjxl-cli-product
+Build complete! (102.56 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTHierarchicalAnalysisTests started.
+◇ Test uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 16 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 32 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 64 to uniformRegionsSelectLargeTransforms(_:) started.
+✔ Test uniformRegionsSelectLargeTransforms(_:) with 3 test cases passed after 0.010 seconds.
+◇ Test nestedLeavesInheritRegionQuantisation() started.
+✔ Test nestedLeavesInheritRegionQuantisation() passed after 0.012 seconds.
+◇ Test groupBoundariesAndPartialCells(_:) started.
+◇ Test case passing 1 argument vertical → false to groupBoundariesAndPartialCells(_:) started.
+◇ Test case passing 1 argument vertical → true to groupBoundariesAndPartialCells(_:) started.
+✔ Test groupBoundariesAndPartialCells(_:) with 2 test cases passed after 0.015 seconds.
+◇ Test expiredAndCancelledSearchRejectBeforeWorkspaceAdmission() started.
+✔ Test expiredAndCancelledSearchRejectBeforeWorkspaceAdmission() passed after 0.001 seconds.
+◇ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 4 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 5 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 6 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 7 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 8 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 9 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 10 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 11 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 18 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 19 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 20 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+✔ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) with 11 test cases passed after 0.016 seconds.
+◇ Test invalidAndExhaustedSearch() started.
+✔ Test invalidAndExhaustedSearch() passed after 0.001 seconds.
+✔ Suite VarDCTHierarchicalAnalysisTests passed after 0.055 seconds.
+✔ Test run with 6 tests in 1 suite passed after 0.055 seconds.

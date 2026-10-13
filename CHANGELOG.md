@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — hierarchical sanitizer test deadline, 2026-10-13
+
+- Separate nested quantisation and group-boundary correctness fixtures so sanitizer overhead does not combine four textured searches under one operation deadline.
+- Strengthen both-axis boundary, partial-cell, map-coverage and cancellation/deadline assertions. Production code, limits and full sanitizer coverage are unchanged.
+
 ## Unreleased — public sample-read qualification, 2026-10-13
 
 - Read UInt16 bytes under the existing checked descriptor, coordinate and borrowed-capacity bounds, avoiding a redundant extent check.

@@ -1,5 +1,11 @@
 # History and provenance — SwiftJXL
 
+## Hierarchical sanitizer test deadline — 13 October 2026
+
+Two main-branch Thread Sanitizer attempts reached the same 30-second resource deadline in a combined hierarchical correctness fixture. Separate quantisation inheritance from horizontal/vertical group boundaries, strengthen complete-map checks and add explicit expired/cancelled-before-admission regressions. Production sources, deadlines, memory limits and the complete hosted sanitizer/CLI workflow are unchanged. Affected debug, release, ASan and TSan each passed 6 declarations / 19 cases locally. Hosted Swift 6.2 verification remains required; see [diagnosis and retained evidence](Documentation/Engineering/Migration/Evidence/CIRepair/HierarchyDeadline/README.md).
+
+Hosted Swift 6.2 then exposed a type-checker limit in nested fixture construction. Explicit typed patch arrays preserve the samples and assertions; focused debug and TSan again pass 6 declarations / 19 cases locally on Swift 6.4 after incorporating merged PR23. The hosted compatibility failure and both local validation stages remain archived.
+
 ## Public sample-read qualification — 13 October 2026
 
 Investigated the retained PR22 read gap against the original pre-span baseline. Direct byte assembly under the existing descriptor, coordinate and actual borrowed-capacity checks improves the 512×511 read median by 3.17% / 3.20% against PR22 in the fixed sustained-warm comparison. The original-baseline difference is +1.86% / +1.65%. A capture-only experiment was discarded, and all initial timing/resource-wrapper failures remain available. The separate start-of-process tiny-image variation remains unresolved. No ownership, public API, codec or common contract changes. See [bounds proof, exact validation and evidence](Documentation/Engineering/Migration/STORAGE_READ_PERFORMANCE.md).

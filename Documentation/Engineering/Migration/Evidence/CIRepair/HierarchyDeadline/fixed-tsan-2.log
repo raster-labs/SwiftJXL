@@ -1,0 +1,41 @@
+Building for debugging...
+[1 / 4]
+[2 / 5] SwiftJXLCoreTests-product
+[4 / 7] SwiftJXLCoreTests-product
+[10 / 12] SwiftJXLCoreTests-product
+[12 / 12] SwiftJXLCoreTests-product
+Build complete! (1.93 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite VarDCTHierarchicalAnalysisTests started.
+◇ Test uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 16 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 32 to uniformRegionsSelectLargeTransforms(_:) started.
+◇ Test case passing 1 argument size → 64 to uniformRegionsSelectLargeTransforms(_:) started.
+✔ Test uniformRegionsSelectLargeTransforms(_:) with 3 test cases passed after 3.523 seconds.
+◇ Test nestedLeavesInheritRegionQuantisation() started.
+✔ Test nestedLeavesInheritRegionQuantisation() passed after 3.735 seconds.
+◇ Test groupBoundariesAndPartialCells(_:) started.
+◇ Test case passing 1 argument vertical → false to groupBoundariesAndPartialCells(_:) started.
+◇ Test case passing 1 argument vertical → true to groupBoundariesAndPartialCells(_:) started.
+✔ Test groupBoundariesAndPartialCells(_:) with 2 test cases passed after 3.298 seconds.
+◇ Test expiredAndCancelledSearchRejectBeforeWorkspaceAdmission() started.
+✔ Test expiredAndCancelledSearchRejectBeforeWorkspaceAdmission() passed after 0.001 seconds.
+◇ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 4 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 5 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 6 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 7 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 8 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 9 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 10 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 11 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 18 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 19 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+◇ Test case passing 1 argument id → 20 to everyLargeWriterStrategyMatchesIndependentScalar(_:) started.
+✔ Test everyLargeWriterStrategyMatchesIndependentScalar(_:) with 11 test cases passed after 1.785 seconds.
+◇ Test invalidAndExhaustedSearch() started.
+✔ Test invalidAndExhaustedSearch() passed after 0.001 seconds.
+✔ Suite VarDCTHierarchicalAnalysisTests passed after 12.346 seconds.
+✔ Test run with 6 tests in 1 suite passed after 12.346 seconds.
