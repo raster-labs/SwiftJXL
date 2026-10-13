@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.1584e-05"/>
+    <testsuite name="TestResults" errors="0" tests="25" failures="0" skipped="0" time="29.027166208">
+        <testcase classname="SwiftJXLCoreTests.ModularPredictorSafetyTests" name="selectPredictorAcceptsEverySignedDifferenceMagnitude()" time="0.000387625"/>
+        <testcase classname="SwiftJXLCoreTests.ModularPredictorSafetyTests" name="publicTransformedPlaneRejectsOutOfPrecisionSamplesWithoutTrapping(_:)" time="0.007236334"/>
+        <testcase classname="SwiftJXLCoreTests.AnimationEncoderTests" name="limitsSingletonAndCancellation()" time="0.037435667"/>
+        <testcase classname="SwiftJXLCoreTests.AnimationEncoderTests" name="owningSequenceRoundTrip(_:_:)" time="1.230315167"/>
+        <testcase classname="SwiftJXLCoreTests.ModularEncoderTests" name="groupedBorrowedSource(_:_:)" time="7.908708208999999"/>
+        <testcase classname="SwiftJXLCoreTests.ModularEncoderTests" name="associatedAlphaAndRenderingIntent(_:_:)" time="0.162449167"/>
+        <testcase classname="SwiftJXLCoreTests.ModularEncoderTests" name="precisionExtremaAndInvalidHighBits(_:_:)" time="0.173406042"/>
+        <testcase classname="SwiftJXLCoreTests.HybridUintEncodingTests" name="unfoldedTokensPreserveBitClassesAndRoundTrip(_:)" time="0.154939166"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTGroupedEncoderTests" name="groupedPlanarBorrowPreservesPadding()" time="0.121374917"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTGroupedEncoderTests" name="groupedWorkspaceRejects()" time="0.010121208"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTGroupedEncoderTests" name="rejectsUnqualifiedGeometry(_:)" time="0.000254667"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTGroupedEncoderTests" name="independentGroupedWriter(_:)" time="18.364740792"/>
+        <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="errorsAreOrderedAfterJoiningAndAdmissionPrecedesCallbacks()" time="0.000303292"/>
+        <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="publicCancellationAfterWorkersJoinPreventsPublication()" time="0.029700917"/>
+        <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="concurrentEncodesShareTheImmutableSource()" time="0.313919375"/>
+        <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="oneAndEightWorkersProduceIdenticalStreamsAndAllocationEvents(_:_:)" time="0.458163208"/>
+        <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="cancellationInsideWorkerIsObservedAndAllWorkersJoin()" time="0.000408458"/>
+        <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_:)" time="0.000783334"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="iccRejectsOversizedOutputBeforeAdmission()" time="0.000657"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="lz77RejectsOverflowingLength()" time="0.01569475"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="iccPredictionRetainsUnsigned32BitProfileWords()" time="0.000465125"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="oversizedContextMapTokenPreservesErrorValue()" time="0.001984125"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="oversizedOrderEndsRejectBeforeNarrowingOrAddition()" time="0.015690958"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="lz77RejectsUnrepresentableAndWrappedZeroDistances()" time="0.014383417"/>
+        <testcase classname="SwiftJXLCoreTests.IntegerBoundaryTests" name="iccTagWordsRetainHighBitsAndRejectDerivedOverflow()" time="0.000921333"/>
+    </testsuite>
+</testsuites>

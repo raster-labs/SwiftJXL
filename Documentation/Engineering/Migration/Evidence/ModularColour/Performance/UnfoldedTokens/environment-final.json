@@ -1,0 +1,34 @@
+{
+  "recordedUTC": "2026-10-13T05:06:51.901922+00:00",
+  "machine": "Mac16,13",
+  "memoryBytes": "17179869184",
+  "processors": "10",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434",
+  "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "power": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=36634723)\t100%; charged; 0:00 remaining present: true",
+  "powerSettings": "Battery Power:\n Sleep On Power Button 1\n lowpowermode         0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         180\n womp                 0\n networkoversleep     0\n sleep                1\n lessbright           1\n tcpkeepalive         1\n disksleep            10\nAC Power:\n Sleep On Power Button 1\n lowpowermode         0\n standby              1\n ttyskeepawake        1\n hibernatemode        3\n powernap             1\n hibernatefile        /var/vm/sleepimage\n displaysleep         0\n womp                 1\n networkoversleep     0\n sleep                0\n tcpkeepalive         1\n disksleep            10",
+  "base": "4e6b012bc3c54da968085dd35a6df9ff90e7606f",
+  "pinnedPredecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "sourceHashes": {
+    "Sources/SwiftJXLCore/Entropy/HybridUint.swift": "9952e9645494e3c5f38767f0935085f5b1bdba65c93c5970e69cbe214f7d4b2b",
+    "Sources/SwiftJXLCore/Modular/Predictors.swift": "213bb710d12d6d8c5df46f95c1023f0c1a8c2ec9cf71803afe3e39116796f66f",
+    "Scripts/TestSupport/modular-operation-benchmark.swift": "c0a82bf0a7e9371158f753a27257e75289f13146a162ca474ccff887c5bb0474",
+    "Scripts/TestSupport/modular-operation-benchmark.py": "872bbf702e5b15b9c6b6e793f14017cf4d9ac9a0de972cbf9862da343134ce99"
+  },
+  "note": "Source hashes cover the two-annotation experiment; baseline binary was built before either edit. Dedicated timing window, no concurrent task builds/tests. Full command provenance accompanies evidence.",
+  "initialEnvironmentSourceHashesDescribe": "Discarded two-annotation trial, retained as historical data",
+  "acceptedSourceHashes": {
+    "Sources/SwiftJXLCore/Entropy/HybridUint.swift": "7ed8e6d998b08a22cd070a66f80f84d00f2ac741a672000f32e7855c2420700f",
+    "Tests/SwiftJXLCoreTests/HybridUintEncodingTests.swift": "ef1374f722185cfd4afa8dabd5a23996b4d9184bdceb77b3b8c2e445c48338a0"
+  },
+  "binaries": {
+    "operation-dynamic": "31293956c957c3a33673131cac92fc63676bd3a5b2e17eeb85651838af448b5e",
+    "operation-inline": "e4a69320c31a68d9c7d4eb0444683e7c81086c8d4f16f7a5f9330bba73e00e62",
+    "operation-neighbour": "5cff1debb29fa1833d6bbec7d1c2fccbe2962f52e1ea09a9ddbbb2f1d8633ab0",
+    "operation-baseline": "fbf6a6f60515eb866b6e9fdf948a22c1293d6f73114b5667810fcf15f31b94ef",
+    "operation-unfolded": "442a4ab0638fc9cfccd723a97963f6c1f05f154064e61d43c43da5b62d3a7d93"
+  },
+  "oracleVersion": "djxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project\n",
+  "oracleSHA256": "25e0a5a5ad107352f7e91a1a9c824576e56d2aca2d53708e5d3dc90eeb621566"
+}

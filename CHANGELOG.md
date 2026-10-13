@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — Modular integer-token conversion, 2026-10-13
+
+- Simplify integer-token encoding when no bits are folded into the token, preserving exact codestreams and all resource controls.
+- Record controlled comparisons against merged main and the pinned predecessor, including discarded experiments. The remaining predecessor performance gap and platform qualification gates stay open.
+
 ## Unreleased — grouped encoding and animation support, 2026-10-12
 
 - Add grouped VarDCT encoding with straight alpha, bounded to 4096 pixels per dimension and 4,194,304 pixels, plus hierarchical strategy selection through 64×64.
