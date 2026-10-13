@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Hierarchical sanitizer test deadline — 13 October 2026
+
+Two main-branch Thread Sanitizer attempts reached the same 30-second resource deadline in a combined hierarchical correctness fixture. Separate quantisation inheritance from horizontal/vertical group boundaries, strengthen complete-map checks and add explicit expired/cancelled-before-admission regressions. Production sources, deadlines, memory limits and the complete hosted sanitizer/CLI workflow are unchanged. Affected debug, release, ASan and TSan each passed 6 declarations / 19 cases locally. Hosted Swift 6.2 verification remains required; see [diagnosis and retained evidence](Documentation/Engineering/Migration/Evidence/CIRepair/HierarchyDeadline/README.md).
+
 ## Sample-row write qualification — 13 October 2026
 
 Reconciled the historical span-write regression against the current byte-wise implementation. Two fresh baseline comparisons retained a repeated current write slowdown; a row-extent check and cached immutable loop values then reduced write medians by 16.3–25.8% against merged PR21 in two controlled comparisons, and beat the original pre-span baseline at every measured size. Strided padding, byte order, meaningful precision, row cancellation and owning publication are preserved. No codec, public API or shared contract changes.

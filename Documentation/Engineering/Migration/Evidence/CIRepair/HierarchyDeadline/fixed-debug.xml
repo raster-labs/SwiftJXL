@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.2083e-05"/>
+    <testsuite name="TestResults" errors="0" tests="6" failures="0" skipped="0" time="3.124913208">
+        <testcase classname="SwiftJXLCoreTests.VarDCTHierarchicalAnalysisTests" name="invalidAndExhaustedSearch()" time="0.000308833"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTHierarchicalAnalysisTests" name="nestedLeavesInheritRegionQuantisation()" time="0.943113375"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTHierarchicalAnalysisTests" name="uniformRegionsSelectLargeTransforms(_:)" time="0.89930675"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTHierarchicalAnalysisTests" name="groupBoundariesAndPartialCells(_:)" time="0.850893334"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTHierarchicalAnalysisTests" name="expiredAndCancelledSearchRejectBeforeWorkspaceAdmission()" time="0.000352"/>
+        <testcase classname="SwiftJXLCoreTests.VarDCTHierarchicalAnalysisTests" name="everyLargeWriterStrategyMatchesIndependentScalar(_:)" time="0.430419083"/>
+    </testsuite>
+</testsuites>
