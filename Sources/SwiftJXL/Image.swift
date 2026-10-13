@@ -67,9 +67,13 @@ public struct Image: Sendable {
             guard bytes.count >= descriptor.requiredByteCount else {
                 throw CodecError(.storageUnavailable, "Provider returned insufficient capacity.")
             }
-            // The provider retains sealed storage for this synchronous borrow.
-            // Descriptor and capacity checks above prove the two-byte extent.
-            return try loadUInt16(bytes, at: offset, order: descriptor.byteOrder)
+            // The immutable descriptor proves every valid coordinate's two-byte
+            // extent lies within requiredByteCount. The borrow capacity check
+            // above therefore covers both loads, including a shortened provider.
+            // Byte access also permits an odd physical base address.
+            let first = UInt16(bytes[offset]), second = UInt16(bytes[offset + 1])
+            return descriptor.byteOrder == .littleEndian
+                ? first | (second << 8) : (first << 8) | second
         }
     }
 }
@@ -180,36 +184,6 @@ public final class ImageDestination: Sendable {
             }
         }
     }
-}
-
-// MARK: - Byte-order-explicit 16-bit sample access
-
-// These replace the `RawSpan.load(fromByteOffset:as:_:)` and
-// `OutputRawSpan.append(_:as:_:)` byte-order operations. Those standard-library
-// entry points are annotated `@available(macOS 27, *)` and equivalents, so using
-// them would raise every Apple deployment floor above the 26.0 baseline that
-// PLATFORMS.md PLAT-02 fixes. They are a spelling convenience, not a capability:
-// the contract requires an explicit byte order (MEM-01), never a particular
-// standard-library type to express it.
-//
-// Assembling each sample byte-wise keeps two properties the span types provided
-// implicitly and that the accessors depend on:
-//
-//   * Alignment independence. MEM-03 permits any plane `offset`, so a sample may
-//     begin at an odd address. Byte access has no alignment precondition.
-//   * A bounds check before the allocation is touched (MEM-04). A raw buffer
-//     subscript is unchecked in release builds, so the guards below are load
-//     bearing, not defensive duplication of the descriptor arithmetic. The writer
-//     validates each complete row extent before initialising its samples.
-
-@inline(__always)
-private func loadUInt16(_ bytes: UnsafeRawBufferPointer, at offset: Int,
-                        order: ByteOrder) throws -> UInt16 {
-    guard offset >= 0, offset <= bytes.count - MemoryLayout<UInt16>.size else {
-        throw CodecError(.storageUnavailable, "Sample extent lies outside the retained allocation.")
-    }
-    let first = UInt16(bytes[offset]), second = UInt16(bytes[offset + 1])
-    return order == .littleEndian ? first | (second << 8) : (first << 8) | second
 }
 
 private func validateGreyscale16(_ descriptor: ImageDescriptor) throws {
