@@ -64,8 +64,16 @@ struct VarDCTHierarchicalAnalysisTests {
         let result = try VarDCTHierarchicalAnalysis.analyse(planes, width: width, height: height,
             scale: 5111, distance: 1, adaptiveQuantisation: true, budget: operation)
         try checkStrategyMap(result, width: width, height: height, budget: operation)
-        let firstPatch = planes.map { plane in (0..<64).map { plane[($0 / 8) * width + $0 % 8] } }
-        let laterPatch = planes.map { plane in (0..<64).map { plane[($0 / 8) * width + 8 + $0 % 8] } }
+        var firstPatch = [[Float]](repeating: [Float](repeating: 0, count: 64), count: 3)
+        var laterPatch = firstPatch
+        for channel in 0..<3 {
+            for sample in 0..<64 {
+                let rowOffset = (sample / 8) * width
+                let column = sample % 8
+                firstPatch[channel][sample] = planes[channel][rowOffset + column]
+                laterPatch[channel][sample] = planes[channel][rowOffset + 8 + column]
+            }
+        }
         let firstQF = try VarDCTEncoderPreparation.quantisation(firstPatch, distance: 1)
         let laterQF = try VarDCTEncoderPreparation.quantisation(laterPatch, distance: 1)
         #expect(firstQF < laterQF)

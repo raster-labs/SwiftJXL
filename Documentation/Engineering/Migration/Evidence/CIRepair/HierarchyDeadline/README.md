@@ -24,4 +24,12 @@ Affected debug, release, ASan and TSan each passed 6 declarations / 19 argument 
 
 `validation.json` records exact commands, source hashes and test timings. `hosted-failures.json` preserves both original failures and the log-truncation limitation. `fixed-tsan.log` preserves an initial new-test compile error (the resource error enum is not Equatable); `fixed-tsan-2.*` records the corrected explicit error-pattern assertion. No production error type was changed. `SHA256SUMS` covers retained scripts, logs and machine-readable records.
 
-Agent source review found no actionable issue; independent human approval is not claimed. The submitted-head hosted Swift 6.2 result is required before merge. Main remains unchanged until separately authorised merge; broader Milestone 4 performance, feature and platform gates remain open.
+Agent source review found no actionable issue; independent human approval is not claimed. The submitted-head hosted Swift 6.2 result is required before merge. This repair remains outside main until separately authorised merge; broader Milestone 4 performance, feature and platform gates remain open.
+
+## Swift 6.2 fixture compilation follow-up
+
+Hosted run 38392869882 exposed a Swift 6.2 Linux type-checker limit in the nested `laterPatch` map expression. Replace both patch expressions with typed arrays and explicit row/column indices; the selected samples and quantisation assertions are unchanged. Retain the complete diagnostic in `hosted-swift62-compile.json`.
+
+PR23 subsequently passed all 12 checks and was explicitly authorised and merged as main `68af0caae2509b72c91d81ae0cf0553c2817bef8`. This repair branch incorporates that main commit, retaining both history/change-log entries. It changes no production sources or hosted workflow relative to that base.
+
+After the expression correction, focused debug and TSan each pass 6 declarations / 19 cases on local Swift 6.4, with no failures, skips or sanitizer diagnostics. `swift62-followup.json` records the commands and hashes; `swift62-compatible-*` filenames describe the intended correction, not a local Swift 6.2 execution. The original four-configuration records remain historical evidence for the first repair. Current-head hosted Swift 6.2 qualification remains required.
