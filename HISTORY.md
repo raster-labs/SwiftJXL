@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Modular profile and concurrent ownership qualification — 14 October 2026
+
+Extend the existing effort matrix with 17 synthetic precision/alpha/group-edge profiles, four worker-budget refusal cases, twelve concurrent budget cases and six public owning-source lifetime cases. Debug, release, ASan and TSan each pass 4 declarations / 90 cases with 74 exact independent decodes per configuration. Three ordinary-build concurrent probes separately record allocator/RSS observations and conservative cumulative admission. Initial budget and sandbox failures remain in the evidence. Production sources and public effort 3 are unchanged; this is a bounded qualification slice, not Milestone 4 completion. See [scope, measurements and remaining gates](Documentation/Engineering/Migration/MODULAR_PROFILE_QUALIFICATION.md).
+
 ## Modular greyscale memory follow-up — 14 October 2026
 
 Replace per-node greedy learner index arrays with ranges in one operation-local owner and checkpointed in-place partitioning. Debug/release pass 43 declarations / 257 cases each; ASan/TSan pass 21 / 131 each. Independent decodes and worker-budget comparisons preserve samples, bytes and admission boundaries. See the [controlled memory comparisons and retained diagnostics](Documentation/Engineering/Migration/MODULAR_GREY_MEMORY.md). Public effort remains 3; wider Milestone 4 qualification remains open.
