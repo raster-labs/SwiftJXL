@@ -1741,9 +1741,9 @@ package enum SpecModularEncoder {
                     postCfg: postCfg, symbolsPerChannel: r.symbolsPerChannel,
                     totalExtraNBits: r.totalExtraNBits) })
             default:
-                return .shared(wpGreedyPerPixel(
+                return .shared(try wpGreedyPerPixel(
                     width: width, height: height,
-                    channels: channels, postCfg: postCfg))
+                    channels: channels, postCfg: postCfg, includeTreeProperties: effort >= 8))
             }
         }
         guard case let .gate(grad, gradRes) = stageA[0],
@@ -1868,10 +1868,11 @@ package enum SpecModularEncoder {
                     width: width, height: height,
                     channels: channels, sampleHi: sampleHi,
                     transforms: transforms,
-                    precomputed: (wpShared.propsFlat, wpShared.tokens))
+                    precomputed: (wpShared.propsFlat, wpShared.tokens),
+                    propertyStride: effort >= 8 ? 6 : 1)
                 return .cand(d ?? nil)
             default:
-                return .cand(buildSingleSectionGreedyTree(
+                return .cand(try buildSingleSectionGreedyTree(
                     width: width, height: height,
                     channels: channels, sampleHi: sampleHi, effort: effort,
                     transforms: transforms,
@@ -1883,6 +1884,7 @@ package enum SpecModularEncoder {
                 "internal: stage layout")
         }
         var best = try baseRes.get()
+        try ScalarEncodingWork.checkpoint()
         if case let .cand(multiData) = stageB[1], let multiData,
            multiData.count < best.count {
             best = multiData
@@ -2130,22 +2132,23 @@ package enum SpecModularEncoder {
     private static func buildSingleSectionMultiContext(
         width: Int, height: Int, channels: [[Int32]], sampleHi: Int32,
         transforms: [ModularTransform] = [],
-        precomputed: (propsFlat: [Int32], tokens: [UInt32])? = nil
+        precomputed: (propsFlat: [Int32], tokens: [UInt32])? = nil,
+        propertyStride: Int = 6
     ) throws -> Data? {
         guard width > 0, height > 0, !channels.isEmpty else { return nil }
         let postCfg = HybridUintConfig.raw4
         // Per pixel (channel-major, row-major): the WP-activity property
         // (property 15) and the WP residual token. When the caller already
         // ran the shared WP pass (`wpGreedyPerPixel`, effort ≥ 4), reuse it —
-        // property 15 is slot 5 of the 6-property block; this is byte-exactly
-        // the same `(wpProp, token)` this builder used to compute inline.
+        // property 15 is the last slot of each one- or six-property block.
+        // This is the same `(wpProp, token)` previously computed inline.
         var perPixel: [(wpProp: Int32, token: UInt32)] = []
         perPixel.reserveCapacity(width * height * channels.count)
         if let pc = precomputed {
             let count = pc.tokens.count
             perPixel.reserveCapacity(count)
             for i in 0..<count {
-                perPixel.append((pc.propsFlat[i * 6 + 5], pc.tokens[i]))
+                perPixel.append((pc.propsFlat[i * propertyStride + propertyStride - 1], pc.tokens[i]))
             }
         } else {
             // `propertyValue` is read BEFORE `predict`, matching the decoder.
@@ -2501,9 +2504,9 @@ package enum SpecModularEncoder {
     /// the caller against the single-context and activity-split candidates;
     /// `nil` when the learner finds no useful split.
     /// The shared WP per-pixel pass: for each pixel (channel-major,
-    /// row-major) the 6 greedy MA-tree properties `[4,5,9,10,12,15]`, the
-    /// weighted-predictor residual token, its post-config token bucket, and
-    /// the max bucket. `buildSingleSection` computes this **once** at
+    /// row-major), collect the weighted-predictor residual token and activity.
+    /// Tree-enabled calls also collect properties `[4,5,9,10,12]`, the
+    /// post-config token bucket, and the max bucket. `buildSingleSection` computes this **once** at
     /// effort ≥ 4 and hands it to both `buildSingleSectionMultiContext`
     /// (WP-activity split — needs property 15 + the token) and
     /// `buildSingleSectionGreedyTree` (needs all 6 + bucket), eliminating two
@@ -2512,22 +2515,30 @@ package enum SpecModularEncoder {
     /// the values (and hence the emitted bytes) are identical to each
     /// builder's former inline loop.
     static func wpGreedyPerPixel(
-        width: Int, height: Int, channels: [[Int32]], postCfg: HybridUintConfig
-    ) -> (propsFlat: [Int32], tokens: [UInt32], tokBucket: [Int], maxTok: Int) {
-        let propCount = 6
+        width: Int, height: Int, channels: [[Int32]], postCfg: HybridUintConfig,
+        includeTreeProperties: Bool = true
+    ) throws -> (propsFlat: [Int32], tokens: [UInt32], tokBucket: [Int], maxTok: Int) {
+        try ScalarEncodingWork.checkpoint()
+        // Efforts 4...7 use only activity (property 15). The other five
+        // properties and token buckets belong exclusively to the effort-8/9
+        // tree learner. Keeping only activity saves 28 bytes per sample on
+        // 64-bit hosts without changing the predictor or candidate ordering.
+        let propCount = includeTreeProperties ? 6 : 1
         let n = width * height * channels.count
         var propsFlat = [Int32](repeating: 0, count: n * propCount)
         var tokens = [UInt32](repeating: 0, count: n)
-        var tokBucket = [Int](repeating: 0, count: n)
+        var tokBucket = [Int](repeating: 0, count: includeTreeProperties ? n : 0)
         var maxTok = 0
         var pi = 0
         for pix in channels {
             var wp = WeightedPredictor(header: .default, xsize: max(1, width))
             for y in 0..<height {
+                try ScalarEncodingWork.checkpoint()
                 let rowBase = y * width
                 let prevRow = (y - 1) * width
                 let prev2Row = (y - 2) * width
                 for x in 0..<width {
+                    if x & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
                     let left: Int32 = x > 0 ? pix[rowBase + x - 1]
                         : (y > 0 ? pix[prevRow + x] : 0)
                     let top: Int32 = y > 0 ? pix[prevRow + x] : left
@@ -2537,21 +2548,25 @@ package enum SpecModularEncoder {
                     let topTop: Int32 = y > 1 ? pix[prev2Row + x] : top
                     let wpProp = wp.propertyValue(x: x, y: y, xsize: width)
                     let b = pi * propCount
-                    propsFlat[b + 0] = top < 0 ? (0 &- top) : top      // 4 |top|
-                    propsFlat[b + 1] = left < 0 ? (0 &- left) : left   // 5 |left|
-                    propsFlat[b + 2] = left &+ top &- topLeft           // 9
-                    propsFlat[b + 3] = left &- topLeft                  // 10
-                    propsFlat[b + 4] = top &- topRight                  // 12
-                    propsFlat[b + 5] = wpProp                           // 15
+                    if includeTreeProperties {
+                        propsFlat[b + 0] = top < 0 ? (0 &- top) : top  // 4 |top|
+                        propsFlat[b + 1] = left < 0 ? (0 &- left) : left // 5 |left|
+                        propsFlat[b + 2] = left &+ top &- topLeft       // 9
+                        propsFlat[b + 3] = left &- topLeft             // 10
+                        propsFlat[b + 4] = top &- topRight             // 12
+                    }
+                    propsFlat[b + propCount - 1] = wpProp              // 15
                     let pred = wp.predict(
                         x: x, y: y, xsize: width,
                         n: top, w: left, ne: topRight, nw: topLeft, nn: topTop)
                     let actual = pix[rowBase + x]
                     let tok = ZigZag.pack(actual &- pred)
                     tokens[pi] = tok
-                    let tk = Int(postCfg.encode(tok).token)
-                    tokBucket[pi] = tk
-                    if tk > maxTok { maxTok = tk }
+                    if includeTreeProperties {
+                        let tk = Int(postCfg.encode(tok).token)
+                        tokBucket[pi] = tk
+                        if tk > maxTok { maxTok = tk }
+                    }
                     wp.update(actual: actual, x: x, y: y, xsize: width)
                     pi += 1
                 }
@@ -2565,7 +2580,7 @@ package enum SpecModularEncoder {
         effort: Int = 9, transforms: [ModularTransform] = [],
         precomputed: (propsFlat: [Int32], tokens: [UInt32],
                       tokBucket: [Int], maxTok: Int)? = nil
-    ) -> Data? {
+    ) throws -> Data? {
         guard width > 0, height > 0, !channels.isEmpty else { return nil }
         let postCfg = HybridUintConfig.raw4
         // Only properties whose `fillModularProperties` formula is verified
@@ -2580,7 +2595,7 @@ package enum SpecModularEncoder {
         let n = width * height * channels.count
         // Reuse the shared WP pass when the caller already ran it (effort ≥ 4
         // path); otherwise compute it here so other callers/tests still work.
-        let shared = precomputed ?? wpGreedyPerPixel(
+        let shared = try precomputed ?? wpGreedyPerPixel(
             width: width, height: height, channels: channels, postCfg: postCfg)
         let propsFlat = shared.propsFlat
         let tokens = shared.tokens

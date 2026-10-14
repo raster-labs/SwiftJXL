@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Modular internal effort qualification — 13 October 2026
+
+Single-section effort 4–7 activity candidates now omit unused tree properties and token buckets, reducing that visible array payload from 36 to 8 bytes per sample on 64-bit hosts. Checkpoints bound the shared property pass. All 54 effort/case outputs match baseline bytes and independently decode exactly; affected debug/release/ASan/TSan each pass 25 declarations / 191 cases. A decoder coordinate experiment was reverted after repeated colour regressions. Public effort remains 3; higher-effort admission and wider Milestone 4 gates remain open. See [qualification and retained evidence](Documentation/Engineering/Migration/MODULAR_EFFORT_QUALIFICATION.md).
+
 ## Hierarchical sanitizer test deadline — 13 October 2026
 
 Two main-branch Thread Sanitizer attempts reached the same 30-second resource deadline in a combined hierarchical correctness fixture. Separate quantisation inheritance from horizontal/vertical group boundaries, strengthen complete-map checks and add explicit expired/cancelled-before-admission regressions. Production sources, deadlines, memory limits and the complete hosted sanitizer/CLI workflow are unchanged. Affected debug, release, ASan and TSan each passed 6 declarations / 19 cases locally. Hosted Swift 6.2 verification remains required; see [diagnosis and retained evidence](Documentation/Engineering/Migration/Evidence/CIRepair/HierarchyDeadline/README.md).
