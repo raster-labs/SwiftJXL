@@ -114,7 +114,13 @@ struct ModularEffortLimitTests {
     @Test(arguments: [2, 8])
     func groupedCandidateAdmissionFailureMustNotFallBackToBaseline(_ workers: Int) throws {
         let width = 513, height = 17
-        let pixels = (0..<(width * height)).map { Int32(($0 * 71 + ($0 / width) * 37) & 65535) }
+        var pixels = [Int32]()
+        pixels.reserveCapacity(width * height)
+        for index in 0..<(width * height) {
+            let row = index / width
+            let value = index * 71 + row * 37
+            pixels.append(Int32(value & 65535))
+        }
         let baseline = try context(workers: workers)
         let data = try ScalarEncodingWork.$current.withValue(baseline) {
             try SpecModularEncoder.encodeGrayscale16(width: width, height: height,
