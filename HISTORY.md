@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Modular learner performance follow-up — 14 October 2026
+
+Share activity sorting between percentile and learned thresholds, reuse private token storage, halve merge scratch and reserve greedy child indices by their actual counts. Final debug/release pass 42 declarations / 254 cases; ASan/TSan pass 20 / 128, with exact independent samples and unchanged bytes across 54 small and fourteen larger/control decodes. Forty-two worker-budget comparisons preserve PR28's admission boundaries. Two final release comparisons and a separate allocation-history diagnostic retain both improvements and RSS variability; see [the measured results and remaining gates](Documentation/Engineering/Migration/MODULAR_EFFORT_PERFORMANCE.md). Public effort stays 3 and Milestone 4 remains incomplete.
+
 ## Higher-effort Modular admission and cancellation — 14 October 2026
 
 Add cumulative reservations for collection, candidate routing/costing, selected emission and capped learning on top of the caller's effort-3 admission. Stable bounded sorting and checkpointed learner blocks preserve the scoped byte output while exposing resource/cancellation failures. Final debug/release pass 40 declarations / 249 cases; focused ASan/TSan pass 18 / 123. Fifty-four small streams and fourteen larger/control baseline/candidate streams independently decode exactly, and 42 old/new worker-budget comparisons reproduce the accounting repair. Repeated higher-effort tree latency still rises roughly 6–7% after investigation, and activity-grey process RSS rises about 5.5%; those safety/performance trade-offs remain open under PERF-03. Public effort stays 3 and Milestone 4 is incomplete. See [evidence and remaining gates](Documentation/Engineering/Migration/MODULAR_EFFORT_BUDGET.md).

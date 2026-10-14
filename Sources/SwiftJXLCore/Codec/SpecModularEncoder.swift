@@ -1058,26 +1058,37 @@ package enum SpecModularEncoder {
     /// boundary scores in O(1). Level *d* yields `2^d − 1` thresholds —
     /// 1 / 3 / 7 for 2 / 4 / 8 bins — which, sorted, feed `activitySplitTree`
     /// directly (greedy recursion produces a valid ordered partition).
-    /// Returns one sorted set per depth that fully split with strictly
-    /// increasing thresholds; stops early if a range can't be split.
-    static func learnedThresholdSets(
+    /// One stable ordering supplies both the fixed octiles and learned
+    /// thresholds. Return only these small sets so sorting/learning scratch
+    /// is released before candidate routing/costing begins. Learned sets
+    /// stop early when a range cannot split with increasing thresholds.
+    static func activityThresholdSets(
         pairs: [(wpProp: Int32, token: UInt32)],
         postCfg: HybridUintConfig, maxDepth: Int,
         checkpoint: () throws -> Void = ScalarEncodingWork.checkpoint
-    ) throws -> [[Int32]] {
-        let n = pairs.count
-        guard n >= 2, maxDepth >= 1 else { return [] }
-        guard maxDepth <= 3 else { throw ScalarModularError.resourceLimit }
+    ) throws -> (octiles: [Int32], learned: [[Int32]]) {
         try checkpoint()
+        let n = pairs.count
+        guard n > 0 else { return ([], []) }
+        guard (1...3).contains(maxDepth) else { throw ScalarModularError.resourceLimit }
+        if n == 1 { return (Array(repeating: pairs[0].wpProp, count: 7), []) }
         try ModularEffortWork.reserve(samples: n, bytesPerSample: 64, fixed: 128 * 1024)
         var sorted = pairs
         try ModularEffortWork.sort(&sorted, by: { $0.wpProp < $1.wpProp }, checkpoint: checkpoint)
+        // Preserve the original floor-based percentile rule, including ties.
+        let octiles = (1...7).map { k in
+            sorted[min(n - 1, max(0, Int(Double(n) * (Double(k) / 8.0))))].wpProp
+        }
         let maxTok = postCfg.maxToken
-        var toks = [Int]()
-        toks.reserveCapacity(n)
-        for (i, pair) in sorted.enumerated() {
-            if i & 1023 == 0 { try checkpoint() }
-            toks.append(Int(postCfg.encode(pair.token).token))
+        // The private sorted copy needs only token buckets from this point.
+        // Reuse its UInt32 field instead of allocating another Int per sample;
+        // the caller's original-order residual tokens are retained unchanged.
+        try sorted.withUnsafeMutableBufferPointer { samples in
+            for start in stride(from: 0, to: n, by: 1024) {
+                try checkpoint()
+                let end = start + min(1024, n - start)
+                for i in start..<end { samples[i].token = postCfg.encode(samples[i].token).token }
+            }
         }
         // Memoise `c·log₂c` (0…n): the recursive sweep updates running
         // Σ count·log₂count per pixel, so computing `log2` inline was hot.
@@ -1097,7 +1108,7 @@ package enum SpecModularEncoder {
             var hiTotal = 0, hiS = 0.0
             for i in lo..<hi {
                 if i & 1023 == 0 { try checkpoint() }
-                hiCount[toks[i]] += 1; hiTotal += 1
+                hiCount[Int(sorted[i].token)] += 1; hiTotal += 1
             }
             for c in hiCount where c > 1 { hiS += term(c) }
             var loCount = [Int](repeating: 0, count: maxTok + 1)
@@ -1108,7 +1119,7 @@ package enum SpecModularEncoder {
                 let v = sorted[i].wpProp
                 while i < hi && sorted[i].wpProp == v {
                     if i & 1023 == 0 { try checkpoint() }
-                    let tk = toks[i]
+                    let tk = Int(sorted[i].token)
                     hiS -= term(hiCount[tk]); hiCount[tk] -= 1; hiS += term(hiCount[tk])
                     hiTotal -= 1
                     loS -= term(loCount[tk]); loCount[tk] += 1; loS += term(loCount[tk])
@@ -1146,7 +1157,7 @@ package enum SpecModularEncoder {
             sets.append(s)
         }
         try checkpoint()
-        return sets
+        return (octiles, sets)
     }
 
     /// Analytically cost the multi-group section array for a given MA-tree
@@ -1464,25 +1475,23 @@ package enum SpecModularEncoder {
         }
         var perGroupPixels: [[(wpProp: Int32, token: UInt32)]] =
             Array(repeating: [], count: numGroups)
-        var allProps: [Int32] = []
-        allProps.reserveCapacity(width * height * chCount)
         for ci in 0..<chCount {
             for gi in 0..<numGroups {
-                let run = rectPixels[ci * numGroups + gi]
-                perGroupPixels[gi].append(contentsOf: run)
                 try ScalarEncodingWork.checkpoint()
-                for (i, p) in run.enumerated() {
-                    if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
-                    allProps.append(p.wpProp)
-                }
+                perGroupPixels[gi].append(contentsOf: rectPixels[ci * numGroups + gi])
             }
         }
-        guard !allProps.isEmpty else { return nil }
-        try ModularEffortWork.sort(&allProps, by: <)
-        func pct(_ p: Double) -> Int32 {
-            allProps[min(allProps.count - 1,
-                         max(0, Int(Double(allProps.count) * p)))]
+        var learningPairs = [(wpProp: Int32, token: UInt32)]()
+        learningPairs.reserveCapacity(samples)
+        for group in perGroupPixels {
+            for (i, pair) in group.enumerated() {
+                if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
+                learningPairs.append(pair)
+            }
         }
+        guard !learningPairs.isEmpty else { return nil }
+        let thresholds = try activityThresholdSets(
+            pairs: learningPairs, postCfg: postCfg, maxDepth: 3)
 
         // Cost one N-bin activity-split candidate: route each group's
         // tokens through `ctxOf` to per-group (context, token) pairs and
@@ -1526,27 +1535,18 @@ package enum SpecModularEncoder {
             guard let c else { return }
             if best == nil || c.bytes < best!.bytes { best = c }
         }
-        let median = pct(0.5)
+        let median = thresholds.octiles[3]
         consider(try costForThresholds([median]))
-        let q1 = pct(0.25), q2 = pct(0.5), q3 = pct(0.75)
+        let q1 = thresholds.octiles[1], q2 = median, q3 = thresholds.octiles[5]
         if q1 < q2, q2 < q3 { consider(try costForThresholds([q1, q2, q3])) }
-        let oct = (1...7).map { pct(Double($0) / 8.0) }
+        let oct = thresholds.octiles
         if zip(oct, oct.dropFirst()).allSatisfy({ $0 < $1 }) {
             consider(try costForThresholds(oct))
         }
         // Learned (entropy-optimal) 2/4/8-bin splits, cost-gated alongside
         // the fixed percentile sets. Each is skipped when it matches the
         // fixed set of the same size (already tried above).
-        var learningPairs = [(wpProp: Int32, token: UInt32)]()
-        learningPairs.reserveCapacity(samples)
-        for group in perGroupPixels {
-            for (i, pair) in group.enumerated() {
-                if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
-                learningPairs.append(pair)
-            }
-        }
-        for l in try learnedThresholdSets(
-            pairs: learningPairs, postCfg: postCfg, maxDepth: 3) {
+        for l in thresholds.learned {
             let isFixed = (l.count == 1 && l == [median])
                 || (l.count == 3 && l == [q1, q2, q3])
                 || (l.count == 7 && l == oct)
@@ -2241,17 +2241,8 @@ package enum SpecModularEncoder {
             }
         }
         guard !perPixel.isEmpty else { return nil }
-        var sortedProps = [Int32]()
-        sortedProps.reserveCapacity(perPixel.count)
-        for (i, pixel) in perPixel.enumerated() {
-            if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
-            sortedProps.append(pixel.wpProp)
-        }
-        try ModularEffortWork.sort(&sortedProps, by: <)
-        func pct(_ p: Double) -> Int32 {
-            sortedProps[min(sortedProps.count - 1,
-                            max(0, Int(Double(sortedProps.count) * p)))]
-        }
+        let thresholds = try activityThresholdSets(
+            pairs: perPixel, postCfg: postCfg, maxDepth: 3)
 
         // Cost one N-bin WP-activity split candidate (exact section bytes,
         // no emission). The tree is a balanced property-15 decision tree
@@ -2290,19 +2281,18 @@ package enum SpecModularEncoder {
             guard let c else { return }
             if best == nil || c.bytes < best!.bytes { best = c }
         }
-        let median = pct(0.5)
+        let median = thresholds.octiles[3]
         consider(try costForThresholds([median]))
-        let q1 = pct(0.25), q2 = pct(0.5), q3 = pct(0.75)
+        let q1 = thresholds.octiles[1], q2 = median, q3 = thresholds.octiles[5]
         if q1 < q2, q2 < q3 { consider(try costForThresholds([q1, q2, q3])) }
-        let oct = (1...7).map { pct(Double($0) / 8.0) }
+        let oct = thresholds.octiles
         if zip(oct, oct.dropFirst()).allSatisfy({ $0 < $1 }) {
             consider(try costForThresholds(oct))
         }
         // Learned (entropy-optimal) 2/4/8-bin splits, cost-gated alongside
         // the fixed percentile sets. Each is skipped when it matches the
         // fixed set of the same size (already tried above).
-        for l in try learnedThresholdSets(
-            pairs: perPixel, postCfg: postCfg, maxDepth: 3) {
+        for l in thresholds.learned {
             let isFixed = (l.count == 1 && l == [median])
                 || (l.count == 3 && l == [q1, q2, q3])
                 || (l.count == 7 && l == oct)
@@ -2571,9 +2561,17 @@ package enum SpecModularEncoder {
             let node = leaves[bi]
             let k = node.bestK
             let s = node.bestSplit
+            // Size both children before allocating. Reserving the entire
+            // parent for each child retained almost twice the live indices,
+            // especially for skewed splits. The second pass preserves order.
+            var leftCount = 0
+            for (j, i) in node.idxs.enumerated() {
+                if j & 1023 == 0 { try checkpoint() }
+                if propsFlat[i * propCount + k] > s { leftCount += 1 }
+            }
             var leftIdxs = [Int](); var rightIdxs = [Int]()
-            leftIdxs.reserveCapacity(node.idxs.count)
-            rightIdxs.reserveCapacity(node.idxs.count)
+            leftIdxs.reserveCapacity(leftCount)
+            rightIdxs.reserveCapacity(node.idxs.count - leftCount)
             for (j, i) in node.idxs.enumerated() {
                 if j & 1023 == 0 { try checkpoint() }
                 if propsFlat[i * propCount + k] > s { leftIdxs.append(i) }

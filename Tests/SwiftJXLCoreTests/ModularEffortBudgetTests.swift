@@ -108,6 +108,40 @@ struct ModularEffortBudgetTests {
         #expect(sorted.map(\.order) == input.sorted { $0.key < $1.key }.map(\.order))
     }
 
+    @Test(arguments: [0, 1, 2, 3])
+    func sharedActivityPercentilesHandleSmallAndTiedInputs(_ fixture: Int) throws {
+        let properties: [Int32]
+        let expected: [Int32]
+        switch fixture {
+        case 0: properties = []; expected = []
+        case 1: properties = [-7]; expected = Array(repeating: -7, count: 7)
+        case 2: properties = [4, 4, 4]; expected = Array(repeating: 4, count: 7)
+        default:
+            properties = [8, 7, 6, 5, 4, 3, 2, 1]
+            expected = [2, 3, 4, 5, 6, 7, 8]
+        }
+        let residual: UInt32 = fixture == 3 ? .max : 0
+        let pairs = properties.map { (wpProp: $0, token: residual) }
+        let result = try SpecModularEncoder.activityThresholdSets(
+            pairs: pairs, postCfg: .raw4, maxDepth: 3)
+        #expect(result.octiles == expected)
+        #expect(pairs.allSatisfy { $0.token == residual })
+    }
+
+    @Test func sharedActivityLearningPreservesUnevenPropertyBoundaries() throws {
+        // Groups of 257 equal properties cross work-block boundaries. The
+        // final group is shorter; permutation preserves the same histogram.
+        var pairs = [(wpProp: Int32, token: UInt32)]()
+        for i in 0..<4098 {
+            let band = ((i * 251) % 4098) / 257
+            pairs.append((Int32(band), UInt32(band)))
+        }
+        let result = try SpecModularEncoder.activityThresholdSets(
+            pairs: pairs, postCfg: .raw4, maxDepth: 3)
+        #expect(result.octiles == [1, 3, 5, 7, 9, 11, 13])
+        #expect(result.learned == [[7], [3, 7, 11], [1, 3, 5, 7, 9, 11, 13]])
+    }
+
     @Test(arguments: [false, true])
     func policyFailuresEscapeThroughoutLearning(_ greedy: Bool) throws {
         // Uneven equal-property runs cross the 1,024-sample work blocks.
@@ -128,9 +162,9 @@ struct ModularEffortBudgetTests {
                     checkpoint: checkpoint)
                 #expect(result != nil)
             } else {
-                let result = try SpecModularEncoder.learnedThresholdSets(
+                let result = try SpecModularEncoder.activityThresholdSets(
                     pairs: pairs, postCfg: .raw4, maxDepth: 3, checkpoint: checkpoint)
-                #expect(!result.isEmpty)
+                #expect(!result.learned.isEmpty)
             }
         }
         var total = 0
