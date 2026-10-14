@@ -5,6 +5,25 @@ import Darwin
 import SwiftJXL
 
 private struct ProbeFailure: Error { let message: String }
+/// Cancels after real destination writes, while the owning provider is still
+/// retained. No borrowed pointer crosses an async boundary.
+private final class CancellingOutputOwner: WritableImageStorage {
+    let owner: OwnedImageStorage
+    init(bytes: Int) throws { owner = try OwnedImageStorage(byteCount: bytes) }
+    var byteCount: Int { owner.byteCount }
+    var allocationID: UUID { owner.allocationID }
+    func reserveWrite() throws -> StorageWriteLease { try owner.reserveWrite() }
+    func withUnsafeMutableBytes<R>(lease: StorageWriteLease,
+        _ body: (UnsafeMutableRawBufferPointer) throws -> R) throws -> R {
+        let result = try owner.withUnsafeMutableBytes(lease: lease, body)
+        withUnsafeCurrentTask { $0?.cancel() }
+        return result
+    }
+    func finishAndSeal(lease: StorageWriteLease) throws -> any ReadOnlyImageStorage {
+        try owner.finishAndSeal(lease: lease)
+    }
+    func abortAndInvalidate(lease: StorageWriteLease) throws { try owner.abortAndInvalidate(lease: lease) }
+}
 @main struct AppleRuntimeProbe {
     static func require(_ value: Bool, _ message: String) throws {
         guard value else { throw ProbeFailure(message: message) }
@@ -81,8 +100,41 @@ private struct ProbeFailure: Error { let message: String }
         }
         do { _ = try await cancelled.value; throw ProbeFailure(message: "Cancellation ignored") }
         catch is CancellationError {}
+        let interruptedOwner = try CancellingOutputOwner(bytes: descriptor.requiredByteCount)
+        let interruptedDestination = try ImageDestination(descriptor: descriptor, storage: interruptedOwner, limits: cap)
+        let interrupted = Task { try await decoder.decode(encoded.data, into: interruptedDestination, options: decodeOptions) }
+        do { _ = try await interrupted.value; throw ProbeFailure(message: "Cancelled output published") }
+        catch is CancellationError {}
+        do { _ = try interruptedOwner.reserveWrite(); throw ProbeFailure(message: "Failed destination reused") }
+        catch let error as CodecError { try require(error.category == .storageUnavailable, "Invalidated destination") }
+        try require(ResourceLimits.watch.maximumWorkspaceBytes == 32 * 1024 * 1024 &&
+            ResourceLimits.watch.maximumDecodedBytes == 32 * 1024 * 1024 &&
+            ResourceLimits.watch.maximumWorkers == 2 && ResourceLimits.watch.deadlineSeconds == 30, "Watch profile")
+        #if os(watchOS)
+        try require(ResourceLimits.default == .watch, "Watch default selection")
+        #endif
+        let watchEncoded = try await encoder.encode(image, options: .init(resourceLimits: .watch))
+        let watchDecoded = try await decoder.decode(watchEncoded.data, options: .init(resourceLimits: .watch))
+        try require(try watchDecoded.image.sampleUInt16(x: 2, y: 1) == 4095, "Watch profile exact output")
+        let wrapped = try await Encoder(configuration: .init(codecOptions: .init(container: .iso)))
+            .encode(image, options: encodeOptions)
+        let fromContainer = try await decoder.decode(wrapped.data, options: decodeOptions)
+        try require(wrapped.report.copyEvents.count == 1 &&
+            fromContainer.image.sampleUInt16(x: 2, y: 1) == 4095, "Explicit pixel container")
+        let jpeg = try Data(contentsOf: fixtures.appendingPathComponent("gray.jpg"))
+        let jpegReference = try Data(contentsOf: fixtures.appendingPathComponent("gray.raw"))
+        let jpegPixels = try await decoder.decodeJPEG(jpeg, interpretingAs: .srgb, options: decodeOptions)
+        let jpegBytes = try jpegPixels.image.storage.withUnsafeBytes { Data($0) }
+        try require(jpegBytes.count == jpegReference.count && jpegPixels.report.pixelAllocationCount == 1,
+            "JPEG pixel owner and shape")
+        var jpegSquares = 0.0, jpegPeak = 0
+        for i in 0..<jpegBytes.count {
+            let delta = abs(Int(jpegBytes[i]) - Int(jpegReference[i]))
+            jpegPeak = max(jpegPeak, delta); jpegSquares += Double(delta * delta)
+        }
+        try require(jpegPeak <= 2 && sqrt(jpegSquares / Double(jpegBytes.count)) <= 0.75, "Independent JPEG pixel gate")
         return ["status":"passed", "memoryCeilingBytes":32 * 1024 * 1024, "varDCTPeakLSB":peak, "varDCTRMSLSB":rms,
-                "checks":["12-bit lossless", "caller destination owner", "shared-storage reports", "exact animation timing", "separate retained frame owners", "independent VarDCT12", "independent RGBA16 animation", "low-memory rejection", "cancellation"]]
+                "checks":["12-bit lossless", "caller destination owner", "shared-storage reports", "exact animation timing", "separate retained frame owners", "independent VarDCT12", "independent RGBA16 animation", "low-memory rejection", "cancellation", "cancellation after destination writes", "failed destination invalidation", "Watch profile and exact round trip", "explicit pixel container", "independent JPEG pixel decoding"]]
     }
     static func main() async {
         do {

@@ -9,4 +9,10 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR AND
   target_include_directories(swiftjxl-modular-info-oracle PRIVATE
     "${CMAKE_SOURCE_DIR}/lib/include" "${CMAKE_BINARY_DIR}/lib/include")
   target_link_libraries(swiftjxl-modular-info-oracle PRIVATE jxl)
+  foreach(oracle modular-profile animation-pixel)
+    add_executable(swiftjxl-${oracle}-oracle "${CMAKE_CURRENT_LIST_DIR}/${oracle}-oracle.c")
+    target_include_directories(swiftjxl-${oracle}-oracle PRIVATE
+      "${CMAKE_SOURCE_DIR}/lib/include" "${CMAKE_BINARY_DIR}/lib/include")
+    target_link_libraries(swiftjxl-${oracle}-oracle PRIVATE jxl)
+  endforeach()
 endif()

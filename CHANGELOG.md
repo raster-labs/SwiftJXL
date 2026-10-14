@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-10-14 — Milestone 4 completion branch
+
+Added explicit pixel-container output, bounded native JPEG pixel decoding, CLI independent-frame animation with exact timing and safe export, and extended Modular layout/group and simulator qualification tools. Final local debug/release, ASan/TSan, independent CLI/reference and available simulator checks passed after implementation. Controlled comparisons and remaining stable-release gates are recorded; hosted CI is pending. See [scope, sequence and final gates](Documentation/Engineering/Migration/MILESTONE4_COMPLETION.md). JXLSwift remains the production route.
+
 ## Unreleased — Modular profile and ownership qualification, 2026-10-14
 
 - Add precision, alpha and 511/512/513-pixel group-edge regressions with exact independent decoding and guarded direct output.

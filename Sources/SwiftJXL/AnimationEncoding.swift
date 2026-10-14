@@ -116,7 +116,10 @@ extension Encoder {
                     maximumMetadataBytes: limits.maximumMetadataBytes, maximumICCBytes: limits.maximumICCBytes,
                     maximumNestingDepth: limits.maximumNestingDepth, maximumWorkers: limits.maximumWorkers,
                     deadlineSeconds: seconds, maximumMemoryBytes: memory)
-                let encoded = try await encode(frame.image, options: .init(resourceLimits: childLimits,
+                // Assemble raw frame codestreams; wrap only the completed sequence.
+                let frameEncoder = try Encoder(configuration: .init(mode: configuration.mode,
+                    codecOptions: .init(varDCT: configuration.codecOptions.varDCT)))
+                let encoded = try await frameEncoder.encode(frame.image, options: .init(resourceLimits: childLimits,
                     executionPolicy: options.executionPolicy, copyPolicy: options.copyPolicy, metadataPolicy: options.metadataPolicy))
                 try budget.checkpoint()
                 let index = try AnimationFrameIndex.read(encoded.data, budget: budget, maximumFrames: 1,
@@ -132,14 +135,16 @@ extension Encoder {
             }
             guard var completed = builder else { throw CodecError(.internalFailure, "Missing animation assembler.") }
             let data = try completed.finish()
+            let packaged = try packagePixelCodestream(data, format: configuration.codecOptions.container, budget: budget)
             options.progress?(try ProgressUpdate(phase: .completed, completedUnits: frames.count, totalUnits: frames.count))
             try budget.checkpoint()
             let elapsed = start.duration(to: .now).components
             let fallback: String? = if case .preferred(.accelerated) = options.executionPolicy { "Accelerated backend unavailable; used scalar CPU." } else { nil }
             let report = OperationReport(backend: .scalarCPU, fallbackReason: fallback,
                 fidelity: configuration.mode == .lossless ? .exactSamples : .lossy,
+                copyEvents: packaged.copies,
                 elapsedSeconds: Double(elapsed.seconds) + Double(elapsed.attoseconds) / 1e18)
-            return .init(encoded: .init(data: data, encoding: .init(format: "jpeg-xl", mode: configuration.mode), report: report),
+            return .init(encoded: .init(data: packaged.data, encoding: .init(format: "jpeg-xl", mode: configuration.mode), report: report),
                 timing: .init(ticksPerSecondNumerator: animation.ticksPerSecondNumerator,
                     ticksPerSecondDenominator: animation.ticksPerSecondDenominator, loopCount: animation.loopCount, totalTicks: totalTicks),
                 frameCount: frames.count, compressedFrameBytesMaterialised: compressed)

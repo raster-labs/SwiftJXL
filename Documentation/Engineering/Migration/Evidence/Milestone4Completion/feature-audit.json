@@ -1,0 +1,891 @@
+{
+  "asOfUTC": "2026-10-14T13:24:13.734203+00:00",
+  "contract": "0.10.0",
+  "predecessor": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "consumerRevision": "1580377c598cdd2934db73e5e6900021c88a3285",
+  "priorAuditSHA256": "afdbeb3f5f85f8559b354924b50de10b89b758949251d1539e7e16a4c942e3ea",
+  "method": "Pinned source reconciliation plus current executed evidence. Negative source searches are bounded to the named implementation files. Existing deferrals are distinguished from missing capabilities; no new deferral is approved.",
+  "items": [
+    {
+      "id": "unsigned-modular",
+      "status": "required-implemented-qualification-open",
+      "finding": "Core integer greyscale/RGB and alpha paths are retained behind owning storage. Current decoding adds grouped/progressive, Squeeze, ICC-preserving and low-precision profiles.",
+      "remaining": "The current boundary and 432-case layout/interpretation matrix extend exact evidence; complete hosted, hardware and performance gates remain separate.",
+      "evidence": [
+        {
+          "project": "successor",
+          "path": "IMPLEMENTATION.md",
+          "sha256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "lines": [
+            29
+          ],
+          "anchor": "Retain the actual conformant Modular",
+          "priorSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "anchorPresent": true,
+          "finalSourceSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "finalAnchorLines": [
+            29
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "MIGRATION.md",
+          "sha256": "b7a91550a281361f8d84cdc1839a01508e1b37206b73de407568711b9652b6a4",
+          "lines": [
+            5
+          ],
+          "anchor": "The encoder supports 8\u201316",
+          "priorSHA256": "ad5d8583f4a2ee2a4db05cbe811167d5738902f649feb259e400d510f1c35b68",
+          "anchorPresent": true,
+          "finalSourceSHA256": "55835fd2126b250ef9a7b7db5f612ff19cbe72eba8dbbffe8c98ba255979a0e3",
+          "finalAnchorLines": [
+            5
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [
+        "MIGRATION.md"
+      ],
+      "finalQualification": "See final validation and 48-row predecessor / 14-row previous-successor performance records. Hosted/hardware and stable performance acceptance remain distinct."
+    },
+    {
+      "id": "modular-effort",
+      "status": "demonstrated-predecessor-surface-unreconciled",
+      "finding": "Internal efforts 1\u20139 now have bounded workspace, learning/cancellation checkpoints and wider exact corpus evidence. The public owning API remains effort 3 by the continuation constraint.",
+      "remaining": "A separate scope decision is required to expose higher public efforts; this test-only qualification does not override the explicit fixed-effort constraint.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/EncodingOptions.swift",
+          "sha256": "ddc1d2835bb22d389e2ea1b8286a6ec210bb458bba8ad5d5d4e515eff896edf8",
+          "lines": [
+            29
+          ],
+          "anchor": "public enum EncodingEffort",
+          "priorSHA256": "ddc1d2835bb22d389e2ea1b8286a6ec210bb458bba8ad5d5d4e515eff896edf8",
+          "anchorPresent": true
+        },
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLEncoder.swift",
+          "sha256": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+          "lines": [
+            157,
+            169,
+            177,
+            186,
+            194,
+            204,
+            212,
+            223
+          ],
+          "anchor": "effort: options.effort.rawValue",
+          "priorSHA256": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+          "anchorPresent": true
+        },
+        {
+          "project": "successor",
+          "path": "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift",
+          "sha256": "d1bd1ccbde9bbba22e69672b2c6b7f8591dc750737b14c156dc8632f6e246206",
+          "lines": [
+            15
+          ],
+          "anchor": "Fixed effort 3",
+          "priorSHA256": "12887bbe1e2562336c34676c756a4aad63af84e06bfcbf5f0b1da9c5879aaf48",
+          "anchorPresent": true,
+          "finalSourceSHA256": "d1bd1ccbde9bbba22e69672b2c6b7f8591dc750737b14c156dc8632f6e246206",
+          "finalAnchorLines": [
+            15
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "Sources/SwiftJXL/CodecAPI.swift",
+          "sha256": "c8190f197630138241c7dfdf68f93884141053d5737c9855348737d8dfb0c523",
+          "lines": [
+            32
+          ],
+          "anchor": "Modular uses fixed effort-3",
+          "priorSHA256": "c8190f197630138241c7dfdf68f93884141053d5737c9855348737d8dfb0c523",
+          "anchorPresent": true,
+          "finalSourceSHA256": "a791ae0723b4cb38dd64f38f2f38a4e712645f3e9a95a79e04272d7e4a7ea9ee",
+          "finalAnchorLines": [
+            32
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [
+        "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift"
+      ]
+    },
+    {
+      "id": "vardct",
+      "status": "required-implemented-qualification-open",
+      "finding": "Bounded still-image encode/decode, hierarchical transforms and grouped straight alpha are implemented. Scalar numerical agreement does not replace the original ARM integer-oracle failures.",
+      "remaining": "Final local references, simulators and controlled measurements are recorded. Hosted/hardware checks, unsupported profiles and stable performance acceptance remain open as documented.",
+      "evidence": [
+        {
+          "project": "successor",
+          "path": "IMPLEMENTATION.md",
+          "sha256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "lines": [
+            29
+          ],
+          "anchor": "Retain the actual conformant Modular",
+          "priorSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "anchorPresent": true,
+          "finalSourceSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "finalAnchorLines": [
+            29
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "Documentation/Engineering/Migration/VARDCT_PREFLIGHT.md",
+          "sha256": "892433dcc92c0d6e7b5dd53d76d7b440bc9c438034debed3a7778fa0719ffa3f",
+          "lines": [
+            95
+          ],
+          "anchor": "not a runtime patch",
+          "priorSHA256": "892433dcc92c0d6e7b5dd53d76d7b440bc9c438034debed3a7778fa0719ffa3f",
+          "anchorPresent": true,
+          "finalSourceSHA256": "892433dcc92c0d6e7b5dd53d76d7b440bc9c438034debed3a7778fa0719ffa3f",
+          "finalAnchorLines": [
+            95
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [],
+      "finalQualification": "See final validation and 48-row predecessor / 14-row previous-successor performance records. Hosted/hardware and stable performance acceptance remain distinct."
+    },
+    {
+      "id": "native-jpeg",
+      "status": "required-implemented-qualification-open",
+      "finding": "POL-09 and X1 require autonomous original-byte restoration. The bounded public transcoder and independent corpus evidence are present.",
+      "remaining": "Final local references, simulators and controlled measurements are recorded. Hosted/hardware checks, unsupported profiles and stable performance acceptance remain open as documented.",
+      "evidence": [
+        {
+          "project": "successor",
+          "path": "IMPLEMENTATION.md",
+          "sha256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "lines": [
+            68
+          ],
+          "anchor": "X1 \u2014 reversible JPEG",
+          "priorSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "anchorPresent": true,
+          "finalSourceSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "finalAnchorLines": [
+            68
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "Sources/SwiftJXL/Transcoding.swift",
+          "sha256": "a2bd0f22707fc98c4b3495d582f37b5adb9863edde66fef58f07a26a5bf26456",
+          "lines": [
+            72
+          ],
+          "anchor": "public func transcode",
+          "priorSHA256": "a2bd0f22707fc98c4b3495d582f37b5adb9863edde66fef58f07a26a5bf26456",
+          "anchorPresent": true,
+          "finalSourceSHA256": "a2bd0f22707fc98c4b3495d582f37b5adb9863edde66fef58f07a26a5bf26456",
+          "finalAnchorLines": [
+            72
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [],
+      "finalQualification": "See final validation and 48-row predecessor / 14-row previous-successor performance records. Hosted/hardware and stable performance acceptance remain distinct."
+    },
+    {
+      "id": "independent-animation",
+      "status": "implemented-qualification-open",
+      "finding": "Predecessor encoding and frame-by-frame decoding map to the successor independent full-canvas animation API, with explicit rational timing and bounded retained owners.",
+      "remaining": "Final local references, simulators and controlled measurements are recorded. Hosted/hardware checks, unsupported profiles and stable performance acceptance remain open as documented.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLEncoder.swift",
+          "sha256": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+          "lines": [
+            396
+          ],
+          "anchor": "public func encode(_ frames:",
+          "priorSHA256": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+          "anchorPresent": true
+        },
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "lines": [
+            3946
+          ],
+          "anchor": "public func decodeAll",
+          "priorSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "anchorPresent": true
+        },
+        {
+          "project": "successor",
+          "path": "MIGRATION.md",
+          "sha256": "b7a91550a281361f8d84cdc1839a01508e1b37206b73de407568711b9652b6a4",
+          "lines": [
+            15
+          ],
+          "anchor": "## Development animation support",
+          "priorSHA256": "ad5d8583f4a2ee2a4db05cbe811167d5738902f649feb259e400d510f1c35b68",
+          "anchorPresent": true,
+          "finalSourceSHA256": "55835fd2126b250ef9a7b7db5f612ff19cbe72eba8dbbffe8c98ba255979a0e3",
+          "finalAnchorLines": [
+            15
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [
+        "MIGRATION.md"
+      ],
+      "finalQualification": "See final validation and 48-row predecessor / 14-row previous-successor performance records. Hosted/hardware and stable performance acceptance remain distinct."
+    },
+    {
+      "id": "icc-pixel-encoding",
+      "status": "inherited-unsupported-scope-not-waived",
+      "finding": "The pinned predecessor explicitly throws when ImageFrame.iccProfile is set. Successor rejection therefore is not evidence of a lost implemented encoder capability.",
+      "remaining": "Keep unsupported. A first-stable requirement still needs an explicit scope decision; this audit does not approve a deferral.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLEncoder.swift",
+          "sha256": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+          "lines": [
+            104
+          ],
+          "anchor": "if frame.iccProfile != nil",
+          "priorSHA256": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+          "anchorPresent": true
+        },
+        {
+          "project": "successor",
+          "path": "MIGRATION.md",
+          "sha256": "b7a91550a281361f8d84cdc1839a01508e1b37206b73de407568711b9652b6a4",
+          "lines": [
+            11
+          ],
+          "anchor": "ICC encoding remains unsupported",
+          "priorSHA256": "ad5d8583f4a2ee2a4db05cbe811167d5738902f649feb259e400d510f1c35b68",
+          "anchorPresent": true,
+          "finalSourceSHA256": "55835fd2126b250ef9a7b7db5f612ff19cbe72eba8dbbffe8c98ba255979a0e3",
+          "finalAnchorLines": [
+            11
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [
+        "MIGRATION.md"
+      ]
+    },
+    {
+      "id": "advanced-animation-compositing",
+      "status": "no-qualified-predecessor-capability-established",
+      "finding": "Predecessor decodeAll synthesises independent per-frame streams and calls its still decoder without a retained compositing canvas. Its conformance tests explicitly list multi-layer blending as a feature gap. Header fields are not proof of compositing support.",
+      "remaining": "Retain successor rejection; use an independent dependency/blending corpus if required before calling this a migration regression or an accepted deferral.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "lines": [
+            4030
+          ],
+          "anchor": "out.append(try decode(synth))",
+          "priorSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "anchorPresent": true
+        },
+        {
+          "project": "predecessor",
+          "path": "Tests/JXLSwiftTests/ConformanceTests.swift",
+          "sha256": "48093a87b09800e1f63fd5ae1bb972f4efe432b7be064643686c1a7420a0e9f0",
+          "lines": [
+            63
+          ],
+          "anchor": "CMYK + multi-layer blending",
+          "priorSHA256": "48093a87b09800e1f63fd5ae1bb972f4efe432b7be064643686c1a7420a0e9f0",
+          "anchorPresent": true
+        },
+        {
+          "project": "successor",
+          "path": "MIGRATION.md",
+          "sha256": "b7a91550a281361f8d84cdc1839a01508e1b37206b73de407568711b9652b6a4",
+          "lines": [
+            19
+          ],
+          "anchor": "The first profile rejects compositing",
+          "priorSHA256": "ad5d8583f4a2ee2a4db05cbe811167d5738902f649feb259e400d510f1c35b68",
+          "anchorPresent": true,
+          "finalSourceSHA256": "55835fd2126b250ef9a7b7db5f612ff19cbe72eba8dbbffe8c98ba255979a0e3",
+          "finalAnchorLines": [
+            19
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [
+        "MIGRATION.md"
+      ]
+    },
+    {
+      "id": "vardct-icc-output",
+      "status": "predecessor-semantics-incomplete",
+      "finding": "Predecessor parses ICC for coefficient capture but ordinary pixel output converts XYB to sRGB and constructs frames without attaching frameICC. The separate official grayscale diagnostic already exceeds its Float32 reference limits after predecessor integer conversion.",
+      "remaining": "Do not reproduce silent interpretation loss. A qualified ICC colour-output policy and independent reference domain are needed before enabling the successor integer route.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "lines": [
+            386
+          ],
+          "anchor": "var frameICC: Data?",
+          "priorSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "anchorPresent": true
+        },
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "lines": [
+            3590
+          ],
+          "anchor": "gray8[y * xsize + x] = linearToSRGB8",
+          "priorSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "anchorPresent": true
+        },
+        {
+          "project": "successor",
+          "path": "Sources/SwiftJXLCore/VarDCT/VarDCTPixelDecoder.swift",
+          "sha256": "a4b84fd5cd327b68605d0a1d7a798e6369e14a2e05f0664db2fbed1bb673faf3",
+          "lines": [
+            20
+          ],
+          "anchor": "guard !envelope.metadata.colorEncoding.useICC",
+          "priorSHA256": "a4b84fd5cd327b68605d0a1d7a798e6369e14a2e05f0664db2fbed1bb673faf3",
+          "anchorPresent": true,
+          "finalSourceSHA256": "a4b84fd5cd327b68605d0a1d7a798e6369e14a2e05f0664db2fbed1bb673faf3",
+          "finalAnchorLines": [
+            20
+          ]
+        }
+      ],
+      "changedSincePriorAudit": []
+    },
+    {
+      "id": "vardct-multipass",
+      "status": "source-surface-not-qualified",
+      "finding": "Predecessor parses per-pass coefficient orders and histograms, but the inspected reconstruction chooses acHistsPerPass[0]; the conformance record calls multi-pass VarDCT a lossy preview. Parsing passes alone does not establish complete multi-pass reconstruction.",
+      "remaining": "Run targeted independent multi-pass fixtures before assigning a required migration delta. Successor still rejects this profile; no approved deferral is inferred.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "lines": [
+            1319
+          ],
+          "anchor": "let firstACHist = acHistsPerPass[0]",
+          "priorSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "anchorPresent": true
+        },
+        {
+          "project": "predecessor",
+          "path": "Tests/JXLSwiftTests/ConformanceTests.swift",
+          "sha256": "48093a87b09800e1f63fd5ae1bb972f4efe432b7be064643686c1a7420a0e9f0",
+          "lines": [
+            66
+          ],
+          "anchor": "multi-pass progressive VarDCT",
+          "priorSHA256": "48093a87b09800e1f63fd5ae1bb972f4efe432b7be064643686c1a7420a0e9f0",
+          "anchorPresent": true
+        },
+        {
+          "project": "successor",
+          "path": "MIGRATION.md",
+          "sha256": "b7a91550a281361f8d84cdc1839a01508e1b37206b73de407568711b9652b6a4",
+          "lines": [
+            9
+          ],
+          "anchor": "custom restoration, multiple passes",
+          "priorSHA256": "ad5d8583f4a2ee2a4db05cbe811167d5738902f649feb259e400d510f1c35b68",
+          "anchorPresent": true,
+          "finalSourceSHA256": "55835fd2126b250ef9a7b7db5f612ff19cbe72eba8dbbffe8c98ba255979a0e3",
+          "finalAnchorLines": [
+            9
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [
+        "MIGRATION.md"
+      ]
+    },
+    {
+      "id": "vardct-custom-restoration",
+      "status": "predecessor-semantics-incomplete",
+      "finding": "Predecessor reconstruction applies default Gaborish and builds default EPF parameters while forwarding iteration count. Header parsing does not establish custom-weight fidelity.",
+      "remaining": "Keep unsupported custom profiles and qualify an independent fixture before declaring a lost capability or approved deferral.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "lines": [
+            3484
+          ],
+          "anchor": "Gaborish.apply(to: &planeX",
+          "priorSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "anchorPresent": true
+        },
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "lines": [
+            3511
+          ],
+          "anchor": "quantMul: EPFParams.default.quantMul",
+          "priorSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "anchorPresent": true
+        },
+        {
+          "project": "successor",
+          "path": "MIGRATION.md",
+          "sha256": "b7a91550a281361f8d84cdc1839a01508e1b37206b73de407568711b9652b6a4",
+          "lines": [
+            9
+          ],
+          "anchor": "custom restoration, multiple passes",
+          "priorSHA256": "ad5d8583f4a2ee2a4db05cbe811167d5738902f649feb259e400d510f1c35b68",
+          "anchorPresent": true,
+          "finalSourceSHA256": "55835fd2126b250ef9a7b7db5f612ff19cbe72eba8dbbffe8c98ba255979a0e3",
+          "finalAnchorLines": [
+            9
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [
+        "MIGRATION.md"
+      ]
+    },
+    {
+      "id": "additional-extra-channels",
+      "status": "predecessor-output-loss-recorded",
+      "finding": "Predecessor Modular assembly surfaces at most one alpha channel and explicitly drops other extras. The owning successor rejects unsupported extras rather than silently discarding them.",
+      "remaining": "Any required extra-channel preservation needs a qualified descriptor/wire interpretation and corpus; source acceptance with discarded output is not a baseline success.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLDecoder.swift",
+          "sha256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "lines": [
+            3872
+          ],
+          "anchor": "everything else gets dropped here",
+          "priorSHA256": "fd9dfa004eef732f7e6b1c3350bbd3f235928d73bf6e1c3082abe22a4a5b3e4e",
+          "anchorPresent": true
+        },
+        {
+          "project": "successor",
+          "path": "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift",
+          "sha256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "lines": [
+            115
+          ],
+          "anchor": "extra.dimShift == 0, extra.name.isEmpty",
+          "priorSHA256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "anchorPresent": true,
+          "finalSourceSHA256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "finalAnchorLines": [
+            115
+          ]
+        }
+      ],
+      "changedSincePriorAudit": []
+    },
+    {
+      "id": "progressive-encoding-option",
+      "status": "predecessor-option-without-consumer",
+      "finding": "EncodingOptions stores progressive, but a scoped search of predecessor Sources/JXLSwift found no options.progressive use. It is not proof of an implemented encoder control.",
+      "remaining": "Retain unsupported pending an actual implementation requirement; no new accepted deferral.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/EncodingOptions.swift",
+          "sha256": "ddc1d2835bb22d389e2ea1b8286a6ec210bb458bba8ad5d5d4e515eff896edf8",
+          "lines": [
+            110
+          ],
+          "anchor": "self.progressive = progressive",
+          "priorSHA256": "ddc1d2835bb22d389e2ea1b8286a6ec210bb458bba8ad5d5d4e515eff896edf8",
+          "anchorPresent": true
+        },
+        {
+          "project": "successor",
+          "path": "MIGRATION.md",
+          "sha256": "b7a91550a281361f8d84cdc1839a01508e1b37206b73de407568711b9652b6a4",
+          "lines": [
+            47
+          ],
+          "anchor": "Near-lossless, progressive output",
+          "priorSHA256": "ad5d8583f4a2ee2a4db05cbe811167d5738902f649feb259e400d510f1c35b68",
+          "anchorPresent": true,
+          "finalSourceSHA256": "55835fd2126b250ef9a7b7db5f612ff19cbe72eba8dbbffe8c98ba255979a0e3",
+          "finalAnchorLines": []
+        }
+      ],
+      "changedSincePriorAudit": [
+        "MIGRATION.md"
+      ]
+    },
+    {
+      "id": "signed-float",
+      "status": "explicit-existing-deferral",
+      "finding": "MIGRATION.md explicitly defers signed and floating-point codec coverage. Predecessor signed mapping depends on external interpretation.",
+      "remaining": "Preserve the recorded deferral and do not infer portable signed semantics.",
+      "evidence": [
+        {
+          "project": "successor",
+          "path": "MIGRATION.md",
+          "sha256": "b7a91550a281361f8d84cdc1839a01508e1b37206b73de407568711b9652b6a4",
+          "lines": [
+            120
+          ],
+          "anchor": "Float and signed codec coverage remain deferred",
+          "priorSHA256": "ad5d8583f4a2ee2a4db05cbe811167d5738902f649feb259e400d510f1c35b68",
+          "anchorPresent": true,
+          "finalSourceSHA256": "55835fd2126b250ef9a7b7db5f612ff19cbe72eba8dbbffe8c98ba255979a0e3",
+          "finalAnchorLines": [
+            120
+          ]
+        }
+      ],
+      "changedSincePriorAudit": [
+        "MIGRATION.md"
+      ]
+    },
+    {
+      "id": "advanced-cli-and-alias",
+      "status": "explicit-existing-deferral",
+      "finding": "IMPLEMENTATION.md defers Batch/BatchEncode/BatchDecode/Benchmark/Compare/Convert/Completions and the duplicate jxl executable.",
+      "remaining": "Preserve these exact dispositions; other missing CLI file adapters are not automatically covered by this list.",
+      "evidence": [
+        {
+          "project": "successor",
+          "path": "IMPLEMENTATION.md",
+          "sha256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "lines": [
+            72
+          ],
+          "anchor": "Deferred to a CLI milestone",
+          "priorSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "anchorPresent": true,
+          "finalSourceSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "finalAnchorLines": [
+            72
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "IMPLEMENTATION.md",
+          "sha256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "lines": [
+            62
+          ],
+          "anchor": "Deferred \u2014 dropped",
+          "priorSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "anchorPresent": true,
+          "finalSourceSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "finalAnchorLines": [
+            62
+          ]
+        }
+      ],
+      "changedSincePriorAudit": []
+    },
+    {
+      "id": "acceleration",
+      "status": "conditional-not-mandatory-by-itself",
+      "finding": "Optional acceleration requires a measured benefit and retained scalar path; it is not an automatic Milestone 4 feature requirement.",
+      "remaining": "Apply the existing performance-first experiment order without mandatory SIMD/GPU work.",
+      "evidence": [
+        {
+          "project": "successor",
+          "path": "Documentation/PERFORMANCE.md",
+          "sha256": "139e83f4c670b514940bcbae2d69560e0b28f866b266019ff8c112c0f388343b",
+          "lines": [
+            27
+          ],
+          "anchor": "Maintain CPU fallback",
+          "priorSHA256": "139e83f4c670b514940bcbae2d69560e0b28f866b266019ff8c112c0f388343b",
+          "anchorPresent": true,
+          "finalSourceSHA256": "139e83f4c670b514940bcbae2d69560e0b28f866b266019ff8c112c0f388343b",
+          "finalAnchorLines": [
+            27
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "IMPLEMENTATION.md",
+          "sha256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "lines": [
+            18
+          ],
+          "anchor": "optional acceleration",
+          "priorSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "anchorPresent": true,
+          "finalSourceSHA256": "e493bdf36c101ecae1bdd7289e9df2a0123ad739ec7c99c1d022c981f32d28c5",
+          "finalAnchorLines": [
+            18
+          ]
+        }
+      ],
+      "changedSincePriorAudit": []
+    },
+    {
+      "id": "colour-enumerations",
+      "status": "predecessor-tags-without-preserving-encoder-use",
+      "finding": "ImageFrame declares linearRGB, displayP3 and rec2020, but the pinned JXLEncoder does not read frame.colorSpace. Encoders select grey/RGB from channel count and write their chosen transfer/primaries. This is not qualified arbitrary colour preservation. Successor explicitly preserves supported BT.709 primaries and sRGB/BT.709 transfer through metadata; other interpretations reject.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/ImageFrame.swift",
+          "sha256": "57e137ddc2ee99ee38955e59f7454837a73434e99f3095eff9db8d93ede2d2a2",
+          "anchor": "public enum ColorSpace",
+          "lines": [
+            41
+          ]
+        },
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLEncoder.swift",
+          "sha256": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+          "anchor": "case 3: colorSpace",
+          "lines": [
+            290
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift",
+          "sha256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "anchor": "metadata.colorEncoding.useICC ||",
+          "lines": [
+            106
+          ],
+          "finalSourceSHA256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "finalAnchorLines": [
+            106
+          ]
+        }
+      ]
+    },
+    {
+      "id": "orientation",
+      "status": "predecessor-output-semantics-incomplete",
+      "finding": "Pinned JXLDecoder has no orientation consumer and ImageFrame carries no orientation field. Successor rejects non-identity orientation instead of silently losing that interpretation; transformed output remains unqualified.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/ImageFrame.swift",
+          "sha256": "57e137ddc2ee99ee38955e59f7454837a73434e99f3095eff9db8d93ede2d2a2",
+          "anchor": "public struct ImageFrame",
+          "lines": [
+            54
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift",
+          "sha256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "anchor": "metadata.orientation == 1",
+          "lines": [
+            104
+          ],
+          "finalSourceSHA256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "finalAnchorLines": [
+            104
+          ]
+        }
+      ]
+    },
+    {
+      "id": "container-pixel-output",
+      "status": "implemented-and-locally-validated-bounded-profile",
+      "finding": "CodecOptions.container now selects codestream or basic ISO output for still images and completed animations; source/output overlap and compressed copy are admitted/reported. Native JPEG reconstruction remains distinct.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/JXLEncoder.swift",
+          "sha256": "60e974b29443379cbd6e8301c03e44c82ae5ee344d49cfd4e7e425ec227e337b",
+          "anchor": "let wrapped = options.containerWrap",
+          "lines": [
+            126,
+            234,
+            359,
+            445
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "Sources/SwiftJXL/CodecAPI.swift",
+          "sha256": "c8190f197630138241c7dfdf68f93884141053d5737c9855348737d8dfb0c523",
+          "anchor": "public struct CodecOptions",
+          "lines": [
+            34
+          ],
+          "finalSourceSHA256": "a791ae0723b4cb38dd64f38f2f38a4e712645f3e9a95a79e04272d7e4a7ea9ee",
+          "finalAnchorLines": [
+            37
+          ]
+        }
+      ],
+      "validation": "Debug/release, full ASan/TSan, 26-group required CLI references in all four configurations, 10 SDK builds and four 14-check simulator probes. Wider unsupported profiles remain explicit."
+    },
+    {
+      "id": "ancillary-and-named-metadata",
+      "status": "predecessor-pixel-preservation-not-established",
+      "finding": "Predecessor parses box inventory but ImageFrame carries only ICC, not general Exif/XMP/orientation/named extra metadata. Native JPEG reconstructs marker bytes separately. Successor supports its declared required interpretation keys and ICC Modular decode; unknown required keys and unsupported ancillary boxes reject. Parser acceptance does not establish metadata-preserving pixel round trips.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Container/JXLContainer.swift",
+          "sha256": "4c882d2e02230192132a852effe902b101d9aa1d088de55754d333be918212e3",
+          "anchor": "package struct JXLBox",
+          "lines": [
+            43
+          ]
+        },
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLSwift/Codec/ImageFrame.swift",
+          "sha256": "57e137ddc2ee99ee38955e59f7454837a73434e99f3095eff9db8d93ede2d2a2",
+          "anchor": "public let iccProfile",
+          "lines": [
+            63
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift",
+          "sha256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "anchor": "extra.dimShift == 0, extra.name.isEmpty",
+          "lines": [
+            115
+          ],
+          "finalSourceSHA256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "finalAnchorLines": [
+            115
+          ]
+        }
+      ]
+    },
+    {
+      "id": "legacy-file-adapters",
+      "status": "implemented-and-locally-validated-bounded-profile",
+      "finding": "CLI supports independent-frame multi-input encode, timed singleton, exact rational timing, selected/all-frame decode and inspection/validation. Explicit jpeg-srgb adds bounded 8-bit Huffman JPEG pixel input. Predecessor 12-bit/SOF3 pixel decoding remains outside this bounded profile; no claim of complete JPEG decoder parity. PNG/TIFF adapters were not demonstrated in pinned CLI.",
+      "evidence": [
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLTool/Encode.swift",
+          "sha256": "d6b5bf156b01c963cdecaefdcbdfdf26a05d9e925993675f4f4f54d2c5f1c3ff",
+          "anchor": "JPEGSegmentReader.looksLikeJPEG",
+          "lines": [
+            80
+          ]
+        },
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLTool/Decode.swift",
+          "sha256": "b0370c1fc65859e64654e9500a79d6fd6556a74a90f96891cc0fa960d33a888d",
+          "anchor": "var allFrames",
+          "lines": [
+            29
+          ]
+        },
+        {
+          "project": "predecessor",
+          "path": "Sources/JXLTool/PNM.swift",
+          "sha256": "79a19a9bbf2e65dda77e84d8a6365139251cc1f0a1019853d48530e9190023d0",
+          "anchor": "PNG",
+          "lines": [
+            30
+          ]
+        },
+        {
+          "project": "successor",
+          "path": "MIGRATION.md",
+          "sha256": "b7a91550a281361f8d84cdc1839a01508e1b37206b73de407568711b9652b6a4",
+          "anchor": "CLI continues to expose still-image operations",
+          "lines": [
+            19
+          ],
+          "finalSourceSHA256": "55835fd2126b250ef9a7b7db5f612ff19cbe72eba8dbbffe8c98ba255979a0e3",
+          "finalAnchorLines": []
+        }
+      ],
+      "validation": "Debug/release, full ASan/TSan, 26-group required CLI references in all four configurations, 10 SDK builds and four 14-check simulator probes. Wider unsupported profiles remain explicit."
+    },
+    {
+      "id": "consumer-read-only",
+      "status": "milestone5-adoption-remains-separate",
+      "finding": "DICOMKit still depends on versioned JXLSwift and uses signed Int16 external level shifts, effort squirrel, pixel encode/decode and reversible JPEG operations. Signed coverage is explicitly deferred in SwiftJXL, public effort stays 3, and this audit does not migrate the consumer or establish production equivalence.",
+      "evidence": [
+        {
+          "project": "consumer",
+          "path": "Package.swift",
+          "sha256": "6657ba0c1f07083b26b3716b7ab3ef72e4dd671a6208940a976cef21d649e178",
+          "anchor": "https://github.com/Raster-Lab/JXLSwift.git",
+          "lines": [
+            259
+          ]
+        },
+        {
+          "project": "consumer",
+          "path": "Sources/DICOMCore/JXLCodec.swift",
+          "sha256": "75a8762474e96ef2bf070fac050e89e8f7508550af981c78d4ced85607b76a31",
+          "anchor": "effort: .squirrel",
+          "lines": [
+            185
+          ]
+        },
+        {
+          "project": "consumer",
+          "path": "Sources/DICOMCore/JXLCodec.swift",
+          "sha256": "75a8762474e96ef2bf070fac050e89e8f7508550af981c78d4ced85607b76a31",
+          "anchor": "signedOutput: descriptor.isSigned",
+          "lines": [
+            229
+          ]
+        }
+      ]
+    }
+  ],
+  "unresolved": [
+    "Predecessor performance and lossless-size acceptance after recorded investigation",
+    "Original ARM integer-reference gate",
+    "Hosted toolchain and unavailable physical/native/minimum-runtime targets",
+    "Initial-release one-hour campaigns for added JPEG pixel entry points",
+    "Exact global peak allocation/copy metrics unavailable; preserve scoped claims",
+    "Explicit unsupported predecessor profiles are not newly approved deferrals"
+  ],
+  "finalImplementation": {
+    "contract": "0.10.0",
+    "base": "cce875c1620b5ca40971ee9fff5f02ab0ba42d58",
+    "validation": "Local functional, independent-reference, sanitizer, SDK/simulator checks and controlled measurement campaigns completed. Stable release acceptance remains separate.",
+    "unimplementedJPEGConvenienceProfiles": [
+      "12-bit DCT",
+      "SOF3 lossless",
+      "ICC/Exif interpretation"
+    ],
+    "publicModularEffort": 3
+  },
+  "sourceBaseBeforeUnpublishedCommit": "e3a921012fe688ebe85e6275ffd7730abe1abccd",
+  "finalSourceIdentity": "Final source hashes in the validation manifest; publication records the committed Git revision."
+}

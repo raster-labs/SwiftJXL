@@ -140,7 +140,9 @@ jobs:
       # Each sanitizer retains the complete serial suite and CLI matrix. Split
       # their runner budgets without changing per-operation limits or cases.
       - name: Full sanitizer suite
-        run: swift test --scratch-path .build/${{ matrix.sanitizer }} --sanitize ${{ matrix.sanitizer }} --no-parallel
+        # Preserve every assertion/case while optimising instrumented 4097² work.
+        # Unoptimised instrumentation previously exhausted the operation budget.
+        run: swift test -c release --scratch-path .build/${{ matrix.sanitizer }} --sanitize ${{ matrix.sanitizer }} --no-parallel
       - name: Python for pinned NRRD test oracle
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
@@ -153,19 +155,19 @@ jobs:
         run: swift run --package-path Examples/CLIValidationFixtures CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
       - name: CLI sanitizer payload checks
         run: |
-          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
+          binary="$(swift build -c release --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
           python3 Scripts/test-cli-payload.py --binary "$binary" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-${{ matrix.sanitizer }}"
       - name: CLI sanitizer VarDCT decode checks
         run: |
-          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
+          binary="$(swift build -c release --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
           python3 Scripts/test-cli-vardct.py --binary "$binary" --output "$RUNNER_TEMP/cli-vardct-${{ matrix.sanitizer }}"
       - name: CLI sanitizer VarDCT encode checks
         run: |
-          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
+          binary="$(swift build -c release --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
           python3 Scripts/test-cli-vardct-encode.py --binary "$binary" --output "$RUNNER_TEMP/cli-vardct-encode-${{ matrix.sanitizer }}"
       - name: CLI sanitizer NRRD interoperability
         run: |
-          binary="$(swift build --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
+          binary="$(swift build -c release --scratch-path .build/${{ matrix.sanitizer }} --show-bin-path)/swiftjxl-cli"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$binary" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/cli-nrrd-${{ matrix.sanitizer }}"
       - name: Preserve CLI evidence
         if: always()
@@ -250,7 +252,7 @@ jobs:
     name: Pinned libjxl 0.12.0 interoperability / Swift 6.4
     runs-on: ubuntu-24.04
     container: swift:6.4-noble
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -260,7 +262,7 @@ jobs:
         run: |
           set -euo pipefail
           apt-get update
-          apt-get install -y --no-install-recommends python3 python3-venv cmake ninja-build pkg-config libjpeg-dev libpng-dev libbrotli-dev
+          apt-get install -y --no-install-recommends python3 python3-venv cmake ninja-build pkg-config libjpeg-dev libjpeg-turbo-progs libpng-dev libbrotli-dev
           git init "$RUNNER_TEMP/libjxl"
           git -C "$RUNNER_TEMP/libjxl" remote add origin https://github.com/libjxl/libjxl.git
           git -C "$RUNNER_TEMP/libjxl" fetch --depth 1 origin a7a9c787341cf703dede03c2009fa460cae5e5df
@@ -275,14 +277,21 @@ jobs:
             -DJPEGXL_ENABLE_DOXYGEN=OFF -DJPEGXL_ENABLE_JNI=OFF \
             -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_ENABLE_OPENEXR=OFF \
             -DJPEGXL_ENABLE_SKCMS=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_BUNDLE_LIBPNG=OFF
-          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl swiftjxl-modular-info-oracle --parallel 2
+          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl swiftjxl-modular-info-oracle swiftjxl-modular-profile-oracle swiftjxl-animation-pixel-oracle --parallel 2
           mkdir -p .build
           git -C "$RUNNER_TEMP/libjxl" submodule status > .build/oracle-source-pins.txt
       - name: Require debug and release oracle tests
         run: python3 Scripts/validate-oracle.py --tools "$RUNNER_TEMP/libjxl/build/tools" --output .build/oracle-evidence
+      - name: Require extended Modular boundary and interpretation matrix
+        run: python3 Scripts/test-modular-completion.py --configuration release --scratch-path .build --oracle-bin "$RUNNER_TEMP/libjxl/build/tools" --profile-oracle "$RUNNER_TEMP/libjxl/build/swiftjxl-modular-profile-oracle" --output .build/modular-completion-evidence
+      - name: Require JPEG pixels, containers and CLI animation interoperability
+        run: |
+          swift build -c release
+          clang -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
+          djpeg -version 2> .build/jpeg-pixel-oracle-version.txt
+          python3 Scripts/test-cli-completion.py --binary "$(swift build -c release --show-bin-path)/swiftjxl-cli" --djpeg /usr/bin/djpeg --animation-oracle "$RUNNER_TEMP/libjxl/build/swiftjxl-animation-pixel-oracle" --coefficient-oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/cli-completion-evidence
       - name: Recheck JPEG coefficient snapshots independently
         run: |
-          clang -Wall -Wextra -Werror Scripts/TestSupport/jpeg-coefficient-oracle.c -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
           python3 Scripts/validate-jpeg-coefficients.py --oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/jpeg-coefficient-evidence
       - name: Recheck JPEG reconstruction-event vectors independently
         run: python3 Scripts/validate-jpeg-events.py --tools "$RUNNER_TEMP/libjxl/build/tools" --coefficient-oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output .build/jpeg-event-evidence
@@ -314,6 +323,11 @@ jobs:
           name: independent-oracle-evidence
           path: |
             .build/oracle-evidence
+            .build/modular-completion-evidence/report.json
+            .build/modular-completion-evidence/tests.xml
+            .build/modular-completion-evidence/tests.log
+            .build/cli-completion-evidence/report.json
+            .build/jpeg-pixel-oracle-version.txt
             .build/oracle-source-pins.txt
             .build/nrrd-reference-*/report.json
             .build/native-jpeg-cli-*/report.json

@@ -1,0 +1,239 @@
+{
+  "fixtureRecords": [
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/sequential-multiscan.json",
+      "bytes": 3160,
+      "sha256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/fill-marker.json",
+      "bytes": 3669,
+      "sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive.jpg",
+      "bytes": 951,
+      "sha256": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-restart.jpg",
+      "bytes": 958,
+      "sha256": "ffbcd8f9e4bb1c0ac3c3704c00279603c98dbea6108f1098771fa6f6d2dcd484"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/420.json",
+      "bytes": 3669,
+      "sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+      "bytes": 683,
+      "sha256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/metadata-tail.jpg",
+      "bytes": 1045,
+      "sha256": "37f5d9c0bbe11e9fb42e55095b097ad53f60cf3bf4a928c91e29d81d0ff6efb2"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/440.json",
+      "bytes": 4779,
+      "sha256": "f1e7bdbc50c036d38a19e48d2a53b3d1bd1bc9a4e2e9689d9959668bf15c4506"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-422.json",
+      "bytes": 3720,
+      "sha256": "cac4b26acf2d79c0bf27a3c18d5da1c65aebe280bb3c325facf161c2e46e36cf"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/sequential-multiscan.jpg",
+      "bytes": 899,
+      "sha256": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.json",
+      "bytes": 3160,
+      "sha256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/restart.jpg",
+      "bytes": 1020,
+      "sha256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/fill-marker.jpg",
+      "bytes": 1011,
+      "sha256": "560fee1feeabbe80b5b0a9ef6ece71927cfe16ccab319c1f78b1beb294381493"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/444.jpg",
+      "bytes": 1359,
+      "sha256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-440.jpg",
+      "bytes": 898,
+      "sha256": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-dc-refine.jpg",
+      "bytes": 695,
+      "sha256": "75e81758da83ee9f204b75c3ee74931adeb3b34c31ed55b37a301f0048a5d48d"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/444.json",
+      "bytes": 5990,
+      "sha256": "4531a34258f6ff5f9423de08652a6f1b7c45a2b5b121ed9d5c8b4f0ea8dd235e"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/metadata-tail.json",
+      "bytes": 3669,
+      "sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-440.json",
+      "bytes": 3716,
+      "sha256": "c852f0258fdf708b5deaa325516cedb48687294293316344c309b926c2f5e397"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.jpg",
+      "bytes": 834,
+      "sha256": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-restart.json",
+      "bytes": 3160,
+      "sha256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/manifest.json",
+      "bytes": 4127,
+      "sha256": "ff123a2719ca13654c37e03d3031e91e9eb537833012a20b223ce3a37ee5aaf3"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/440.jpg",
+      "bytes": 1133,
+      "sha256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/restart.json",
+      "bytes": 3669,
+      "sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-dc-refine.json",
+      "bytes": 3160,
+      "sha256": "a8a5b3f6c68583600b60d3fb2b42133a4899c3a3058e88f836829aba1d395a1e"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-422.jpg",
+      "bytes": 903,
+      "sha256": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/422.json",
+      "bytes": 4249,
+      "sha256": "3c3e282be0ac3e1051708f8a0f0b733ee6d21627c3e2a5d3cea4742afc921fe1"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.json",
+      "bytes": 2150,
+      "sha256": "21f0b7dd1ed16ba239228c1d09f1b574dbf1cff8dddc160a8dfff683e445a461"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/420.jpg",
+      "bytes": 1010,
+      "sha256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/422.jpg",
+      "bytes": 1099,
+      "sha256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive.json",
+      "bytes": 3669,
+      "sha256": "a484ce2fd18735ebe3c819ed045056001ff79291630d1d014df17da6fcd30648"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/tiny.jpg",
+      "bytes": 634,
+      "sha256": "8b1dc62b2bea95a0953f0bbe2c0a61e2ee5848dcf39aac53b5a1d540c9ba970d"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb.jpg",
+      "bytes": 1609,
+      "sha256": "cc132a8ef6ae044a24b714270e73d4bcbf684824f8488034c56489ee22731148"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/quant16.jpg",
+      "bytes": 747,
+      "sha256": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/thin.jpg",
+      "bytes": 3309,
+      "sha256": "f8a3d2624abb1b0a639e9f1a952421727e60a4cdad6ca2def15692b37fffde23"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/icc-manifest.json",
+      "bytes": 598,
+      "sha256": "658d998f3cba776e03126e07e59cb5f84002ae60eb7a8b36c47ad9724bc2bc3d"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/wide-gray.jpg",
+      "bytes": 22646,
+      "sha256": "196d2e347c8f6079b76998030b4b76889e3e33a38dbc714491b96dc9ecbdd271"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-420.jpg",
+      "bytes": 89074,
+      "sha256": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb-progressive.jpg",
+      "bytes": 1377,
+      "sha256": "c7c5a34bf4568dd71f37259415f8d14a87fcdb9a4f03e24b61b4bb1704ecf538"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/manifest.json",
+      "bytes": 2756,
+      "sha256": "13489849e36bf8847ca2ce2c283d79eba52539890a9b98f7c72486b03c6483c8"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-progressive-422.jpg",
+      "bytes": 113743,
+      "sha256": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb-edge-manifest.json",
+      "bytes": 1162,
+      "sha256": "48be4fc94425c8e7890cef98e0e548a9340fcb0a28b100ce24678c2b8c3ebb0a"
+    }
+  ],
+  "naturalFixtures": [
+    {
+      "name": "bicycles-444",
+      "path": "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/native/bicycles-444.jpg",
+      "sha256": "0e47fdc0a31a1d2126bec06ff843a0e39755d2de2541441ad7ad66dde202bc4b"
+    },
+    {
+      "name": "bicycles-420",
+      "path": "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/native/bicycles-420.jpg",
+      "sha256": "ad2d2e6f0baddeeb825953c347c5df91a683798eb7251374d1cc2d4b0191fdda"
+    },
+    {
+      "name": "bicycles-progressive",
+      "path": "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/native/bicycles-progressive.jpg",
+      "sha256": "81a6f95c663a9e87efbcaec18a89c40bdc53d50b28d6c56b92987ecdf722fdce"
+    },
+    {
+      "name": "grayscale",
+      "path": "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/native/grayscale.jpg",
+      "sha256": "03f6b30c5cc8361bcad77f8700991055fadbea138ec77f8eed5613bfe19da78a"
+    }
+  ],
+  "corpusRevision": "4bf053529c7cefd2951be453475bb3dccc7e7be8",
+  "licence": "CC0 for the bicycles/grayscale natural corpus; repository synthetic fixture provenance remains in each manifest.",
+  "scope": "Natural files generated from the pinned licensed corpus with recorded commands; paths and bytes retained in the local evidence archive."
+}

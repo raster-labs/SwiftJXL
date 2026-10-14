@@ -47,16 +47,26 @@ struct ModularProfileCase: Sendable {
     }
 
     func budget(workers: Int = 1, workspace: Int = 512 * 1024 * 1024,
+                memory: Int = 1024 * 1024 * 1024,
+                decoded: Int = 4 * 1024 * 1024, compressed: Int = 4 * 1024 * 1024,
                 cancellation: ScalarOperationCancellation? = nil) throws -> ScalarOperationBudget {
         try ScalarOperationBudget(retainedBytes: width * height * channels * 2,
-            maximumWorkspaceBytes: workspace, maximumMemoryBytes: 1024 * 1024 * 1024,
-            maximumDecodedBytes: 4 * 1024 * 1024, maximumCompressedBytes: 4 * 1024 * 1024,
+            maximumWorkspaceBytes: workspace, maximumMemoryBytes: memory,
+            maximumDecodedBytes: decoded, maximumCompressedBytes: compressed,
             deadline: .now.advanced(by: .seconds(120)), maximumWorkers: workers, cancellation: cancellation)
     }
 
     func encode(_ pixels: [[UInt16]], effort: Int, budget: ScalarOperationBudget) throws -> Data {
         let limit = try budget.admitModularEncoder(width: width, height: height, channels: channels)
         return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: limit)) {
+            if channels == 1 {
+                if bits == 8 {
+                    return try SpecModularEncoder.encodeGrayscale8(width: width, height: height,
+                        pixels: pixels[0].map(UInt8.init), effort: effort)
+                }
+                return try SpecModularEncoder.encodeGrayscale16(width: width, height: height,
+                    bitsPerSample: UInt32(bits), pixels: pixels[0], effort: effort)
+            }
             if channels == 2 {
                 if bits == 8 {
                     return try SpecModularEncoder.encodeGrayscaleAlpha8(width: width, height: height,
@@ -66,8 +76,18 @@ struct ModularProfileCase: Sendable {
                     bitsPerSample: UInt32(bits), gray: pixels[0], alpha: pixels[1], effort: effort)
             }
             if channels == 3 {
+                if bits == 8 {
+                    return try SpecModularEncoder.encodeRGB8(width: width, height: height,
+                        r: pixels[0].map(UInt8.init), g: pixels[1].map(UInt8.init),
+                        b: pixels[2].map(UInt8.init), effort: effort)
+                }
                 return try SpecModularEncoder.encodeRGB16(width: width, height: height,
                     bitsPerSample: UInt32(bits), r: pixels[0], g: pixels[1], b: pixels[2], effort: effort)
+            }
+            if bits == 8 {
+                return try SpecModularEncoder.encodeRGBA8(width: width, height: height,
+                    r: pixels[0].map(UInt8.init), g: pixels[1].map(UInt8.init),
+                    b: pixels[2].map(UInt8.init), a: pixels[3].map(UInt8.init), effort: effort)
             }
             return try SpecModularEncoder.encodeRGBA16(width: width, height: height,
                 bitsPerSample: UInt32(bits), r: pixels[0], g: pixels[1], b: pixels[2], a: pixels[3], effort: effort)

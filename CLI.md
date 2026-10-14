@@ -24,7 +24,7 @@ swiftjxl-cli validate -i image.jxl -o report.json --json
 cat image.jxl | swiftjxl-cli validate -i - --timeout 30
 ```
 
-`inspect` reports supported headers and geometry without validating the pixel payload. `validate` decodes the entire supported frame in memory and discards its pixels. Neither is a general JPEG XL conformance validator. Both accept the public decoder's integer Modular profile: greyscale/RGB with optional alpha, 8–16 meaningful bits, one frame, grouped streams, RCT, simple palettes and Squeeze. CLI dimensions remain at most 1024 and compressed input at most 4 MiB. Unsupported colour interpretation, transforms, animation or other profiles return 4. JSON includes `pixelPayloadValidated`, dimensions, bit depths, colour/alpha interpretation, component count and a metadata-presence flag; metadata values and paths are not reported.
+`inspect` reports supported headers and geometry without validating the pixel payload. `validate` decodes the entire supported frame in memory and discards its pixels. Neither is a general JPEG XL conformance validator. Both accept the public decoder's integer Modular profile: greyscale/RGB with optional alpha, 8–16 meaningful bits, one frame, grouped streams, RCT, simple palettes and Squeeze. CLI dimensions remain at most 1024 and compressed input at most 4 MiB. Unsupported colour interpretation, transforms, compositing or other profiles return 4. Explicit `--all-frames` enables the bounded independent animation profile. JSON includes `pixelPayloadValidated`, dimensions, bit depths, colour/alpha interpretation, component count and a metadata-presence flag; metadata values and paths are not reported.
 
 Input is a regular file or pipe; `-` means stdin. Output defaults to stdout and is a text or `--json` report. File reports use a temporary sibling and atomic publication, refusing existing files unless `--overwrite` is explicit. Existing input aliases, symlinks and non-regular outputs are refused. Failed validation preserves the previous report. Standard output cannot be rolled back after a partial I/O failure. No intermediate pixel file is created.
 
@@ -109,7 +109,7 @@ swiftjxl-cli encode -i srgb.pam --input-format pnm-srgb -o srgb.jxl
 swiftjxl-cli decode -i srgb.jxl --output-format pnm-srgb -o restored.pam
 ```
 
-One image is accepted, with dimensions at most 1024, 8–16 meaningful bits and MAXVAL exactly `2^bits-1`. Multi-byte samples are big endian. Other maxima, unknown tuple meanings, concatenated frames, trailing or truncated payloads and out-of-range samples reject. The P5/P6 raster follows exactly one whitespace delimiter after MAXVAL; whitespace or `#` in the raster is sample data. Header limits are 16 KiB, 64-byte numeric tokens, and for PAM 64 lines/1024 bytes per line. All existing command input, memory, deadline, pipe and atomic-output rules apply.
+Each PNM/PAM input file contains one image, with dimensions at most 1024, 8–16 meaningful bits and MAXVAL exactly `2^bits-1`. Multi-byte samples are big endian. Other maxima, unknown tuple meanings, concatenated frames, trailing or truncated payloads and out-of-range samples reject. The P5/P6 raster follows exactly one whitespace delimiter after MAXVAL; whitespace or `#` in the raster is sample data. Header limits are 16 KiB, 64-byte numeric tokens, and for PAM 64 lines/1024 bytes per line. All existing command input, memory, deadline, pipe and atomic-output rules apply.
 
 The encoder retains a sample view of the input Data. Output serialisation uses one row of at most 8192 bytes, included in the CLI overhead reservation; no second full image is created. Library BT.709 metadata is required semantics and survives `discardAncillary`. This profile extends CLI coverage; broader migration and release qualification remain open.
 
@@ -122,7 +122,7 @@ Inspection and validation also support 1–7-bit integer streams, preserving the
 Inspection, validation and decode also accept the library’s bounded single-frame sRGB 8–16-bit VarDCT profile, within the CLI’s existing 1024-pixel dimension and 4 MiB input ceilings. Use `--output-format pnm-srgb` to preserve its sRGB interpretation. The final decode JSON reports `lossy` fidelity, while Modular remains `exact-samples`. ICC VarDCT, associated alpha, unsupported groups/passes and unrepresentable interchange interpretations reject. Explicit `encode --mode lossy` also exposes the bounded VarDCT encoder; whole-migration qualification remains open.
 
 
-Lossy encoding requires `pnm-srgb` (8–16-bit greyscale/RGB with optional straight alpha) or `nrrd` (16-bit greyscale). Standard `pnm` declares BT.709 and rejects rather than converting or relabelling samples. Alpha remains exact. The CLI limits all lossy images, including alpha images, to 1024 pixels per axis and 1,048,576 pixels, additionally bounded by workspace and memory limits. The library separately supports up to 4096 pixels per axis and 4,194,304 pixels. Lossless is still the default. Near-lossless and `--max-error` remain unsupported.
+Lossy encoding requires `pnm-srgb` (8–16-bit greyscale/RGB with optional straight alpha), `nrrd` (16-bit greyscale), or explicit `jpeg-srgb` input (8-bit grey/RGB decoded pixels). Standard `pnm` declares BT.709 and rejects rather than converting or relabelling samples. Alpha remains exact. The CLI limits all lossy images, including alpha images, to 1024 pixels per axis and 1,048,576 pixels, additionally bounded by workspace and memory limits. The library separately supports up to 4096 pixels per axis and 4,194,304 pixels. Lossless is still the default. Near-lossless and `--max-error` remain unsupported.
 
 `--distance FLOAT` is a positive finite JPEG XL perceptual distance (default 1), not a maximum sample-error bound or shared quality scale. `--gaborish on|off`, `--adaptive-quantisation on|off` and `--dc-smoothing on|off` default to `on`. All four options require explicit `encode --mode lossy`; using them on another command or in lossless mode returns exit 2 before input is opened. The final encode JSON reports `lossy` fidelity.
 
@@ -130,3 +130,23 @@ Lossy encoding requires `pnm-srgb` (8–16-bit greyscale/RGB with optional strai
 swiftjxl-cli encode -i srgb.pam --input-format pnm-srgb --mode lossy --distance 1 -o lossy.jxl
 swiftjxl-cli decode -i lossy.jxl --output-format pnm-srgb -o lossy.pam
 ```
+
+## Containers, animation and JPEG pixel input
+
+Encode accepts `--container codestream|iso`; `codestream` remains the default. Container overhead and its compressed copy count against the operation limits.
+
+Repeat `-i` with named files to encode an animation, or use `--animation` to retain timing for one input. All inputs use the selected interchange format and must have matching geometry, precision and colour/alpha interpretation. `--frame-duration 11,29,7` supplies positive integer ticks (one value may apply to every frame); `--ticks-per-second 24000/1001` and `--loop-count 4` retain exact rational timing. Defaults are duration 10, clock 100/1 and indefinite loops. `--max-frames` defaults to 64 and is capped at 256. One deadline and aggregate input/decoded-memory limits cover the operation.
+
+```sh
+swiftjxl-cli encode -i first.pam -i second.pam --input-format pnm-srgb --frame-duration 11,29 --ticks-per-second 24000/1001 --container iso -o sequence.jxl
+swiftjxl-cli inspect -i sequence.jxl --all-frames --json
+swiftjxl-cli validate -i sequence.jxl --all-frames --json
+swiftjxl-cli decode -i sequence.jxl --frame 1 --output-format pnm-srgb -o second.pam
+swiftjxl-cli decode -i sequence.jxl --all-frames --output-format pnm-srgb -o decoded-frames
+```
+
+All-frame export requires a new output directory and refuses overwrite or stdout. It decodes and admits all owning frames, checks output interpretation, then stages the final files beside the destination. Exclusive directory creation and no-clobber links prevent replacing existing files. A failure cleans only entries created by this transaction; publication of a directory's files is not atomic as a group. The directory contains numbered frame files and `timing.json`. Inspect and validate with `--all-frames` always emit a structured JSON timeline; only validate establishes supported pixel decoding. Selected-frame decode validates the index but does not decode unrelated frames.
+
+`--input-format jpeg-srgb` enables the bounded JPEG pixel route for encode or decode. It explicitly assigns sRGB interpretation, uses native scalar IDCT and nearest chroma upsampling, and supports 8-bit Huffman grey/RGB DCT JPEG. ICC/Exif, CMYK, 12-bit, SOF3 and arithmetic JPEG reject. JPEG-to-PNM export requires `--output-format pnm-srgb`; using BT.709 PNM never silently converts colour. Lossless JPEG XL encoding of these decoded samples does not restore original JPEG bytes: use `transcode` for that guarantee. The CLI dimension ceiling remains 1024, input 4 MiB, and all existing limits apply.
+
+`Scripts/test-cli-completion.py` requires independent libjpeg and libjxl tools, checks JPEG pixel error before using its output, and compares lossless samples and animation timing exactly. Missing reference tools fail its gate.

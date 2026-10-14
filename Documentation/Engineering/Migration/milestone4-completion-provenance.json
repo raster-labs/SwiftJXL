@@ -1,0 +1,41 @@
+{
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "references": [
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGDecoder.swift",
+      "sourceSHA256": "24de5f32534a5e36d9c2f4b51a87917e7e8d12f8153ea1902c4956dd9cd1f31d",
+      "licence": "Apache-2.0",
+      "disposition": "Adapted bounded feature and arithmetic semantics; fresh owning-storage/resource-safe implementation. Existing predecessor wider profiles not claimed."
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGIDCT.swift",
+      "sourceSHA256": "d553c3baf647fb2fd6eb97d23aa8807ca5986e7292953cda1e1155e4d0b7f0d5",
+      "licence": "Apache-2.0",
+      "disposition": "Adapted bounded feature and arithmetic semantics; fresh owning-storage/resource-safe implementation. Existing predecessor wider profiles not claimed."
+    },
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGColorConversion.swift",
+      "sourceSHA256": "1790ebed1293dd22663e9636c964d4af55b1c4627e2933382e1a6639d842f23f",
+      "licence": "Apache-2.0",
+      "disposition": "Adapted bounded feature and arithmetic semantics; fresh owning-storage/resource-safe implementation. Existing predecessor wider profiles not claimed."
+    },
+    {
+      "source": "Sources/JXLTool/Encode.swift",
+      "sourceSHA256": "d6b5bf156b01c963cdecaefdcbdfdf26a05d9e925993675f4f4f54d2c5f1c3ff",
+      "licence": "Apache-2.0",
+      "disposition": "Adapted bounded feature and arithmetic semantics; fresh owning-storage/resource-safe implementation. Existing predecessor wider profiles not claimed."
+    },
+    {
+      "source": "Sources/JXLTool/Decode.swift",
+      "sourceSHA256": "b0370c1fc65859e64654e9500a79d6fd6556a74a90f96891cc0fa960d33a888d",
+      "licence": "Apache-2.0",
+      "disposition": "Adapted bounded feature and arithmetic semantics; fresh owning-storage/resource-safe implementation. Existing predecessor wider profiles not claimed."
+    }
+  ],
+  "testOnlyReferences": [
+    "libjxl a7a9c787341cf703dede03c2009fa460cae5e5df",
+    "libjpeg version and binary hashes recorded per execution"
+  ],
+  "fixtures": "Existing JPEG fixture manifests and pinned CC0 JPEG XL corpus manifests retained; no new external fixture downloaded in this implementation."
+}

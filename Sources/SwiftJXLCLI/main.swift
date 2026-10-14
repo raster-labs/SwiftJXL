@@ -13,10 +13,13 @@ private let version = "2.1.0-dev.2"
 private let reserved: [String] = []
 private let active = ["inspect", "validate", "encode", "decode", "transcode"]
 private let valueOptions: Set<String> = ["--input", "-i", "--output", "-o", "--input-format", "--output-format",
-    "--mode", "--distance", "--gaborish", "--adaptive-quantisation", "--dc-smoothing", "--max-error", "--backend", "--copy-policy", "--threads", "--max-memory", "--timeout"]
+    "--container", "--frame-duration", "--ticks-per-second", "--loop-count", "--frame", "--max-frames", "--mode", "--distance", "--gaborish", "--adaptive-quantisation", "--dc-smoothing", "--max-error", "--backend", "--copy-policy", "--threads", "--max-memory", "--timeout"]
 
 private struct UsageError: Error { let message: String }
-private struct Options {
+struct Options {
+    var inputs: [String] = []
+    var animation = false
+    var allFrames = false
     var command: String? = nil
     var help = false
     var version = false
@@ -70,10 +73,19 @@ private func parse(_ args: [String]) throws -> Options {
             options.verbosity += arg.count - 1
         } else if !positionalOnly && valueOptions.contains(arg) {
             let key = arg == "-i" ? "--input" : arg == "-o" ? "--output" : arg
-            guard options.values[key] == nil else { throw UsageError(message: "Duplicate command option.") }
-            options.values[key] = try consumeValue()
+            let value = try consumeValue()
+            if key == "--input" {
+                guard options.inputs.count < 256 else { throw UsageError(message: "At most 256 input paths are supported.") }
+                options.inputs.append(value)
+                if options.values[key] == nil { options.values[key] = value }
+            } else {
+                guard options.values[key] == nil else { throw UsageError(message: "Duplicate command option.") }
+                options.values[key] = value
+            }
             options.codecOptions = true
-        } else if !positionalOnly && arg == "--overwrite" { options.codecOptions = true; options.overwrite = true }
+        } else if !positionalOnly && arg == "--animation" { options.codecOptions = true; options.animation = true }
+        else if !positionalOnly && arg == "--all-frames" { options.codecOptions = true; options.allFrames = true }
+        else if !positionalOnly && arg == "--overwrite" { options.codecOptions = true; options.overwrite = true }
         else if !positionalOnly && arg.hasPrefix("-") {
             throw UsageError(message: "Unknown option. Use \(tool) --help.")
         } else if options.command == nil { options.command = arg }
@@ -181,7 +193,7 @@ private func help(_ command: String?) -> String {
             8..16 bits, MAXVAL=2^bits-1, BT.709 transfer. Select pnm-srgb for the
             explicit sRGB variant on BOTH import and export; no colour conversion.
             Premultiplied alpha, ICC and other interpretation metadata reject.
-            One image, <=1024 per axis, <=4 MiB input; PNM header <=16384 bytes.
+            Each image: <=1024 per axis, <=4 MiB input; PNM header <=16384 bytes.
             NRRD0005, 2D greyscale, explicit little/big endian; x is the fastest axis.
             This explicit profile assigns D65/sRGB/default intent on encode. Decode
             rejects sub-16-bit precision or interpretation metadata NRRD cannot preserve.
@@ -192,8 +204,16 @@ private func help(_ command: String?) -> String {
             COMMAND OPTIONS
               -i, --input PATH          Required regular file/pipe; '-' means stdin.
               -o, --output PATH         Final binary file; default '-' means stdout.
-              --input-format FORMAT    encode: nrrd/pnm/pnm-srgb required; decode: jxl/jpeg-xl optional.
+              --input-format FORMAT    encode: nrrd/pnm/pnm-srgb/jpeg-srgb; decode: jxl/jpeg-xl/jpeg-srgb.
               --output-format FORMAT   decode: nrrd/pnm/pnm-srgb required; encode: jxl/jpeg-xl optional.
+              --container FORMAT       Encode: codestream (default) or iso; includes animation.
+              --animation              Encode a timed sequence, including a singleton.
+              --frame-duration TICKS    Encode: one positive integer or comma list; default 10.
+              --ticks-per-second N/D   Encode: exact rational clock; default 100/1.
+              --loop-count N           Encode: repetitions, 0 means indefinite; default 0.
+              --all-frames             Decode to a new directory with frame files and timing.json.
+              --frame INDEX            Decode just the zero-based selected JPEG XL frame.
+              --max-frames N           Animation frame ceiling, default 64, at most 256.
               --mode MODE              Encode: lossless (default) or explicit lossy VarDCT.
               --distance FLOAT         Lossy only; positive finite JPEG XL distance, default 1.
               --gaborish on|off         Lossy only; default on.
@@ -206,10 +226,16 @@ private func help(_ command: String?) -> String {
               --threads N              Worker ceiling 1..8; Modular workers are bounded, VarDCT is serial.
               --max-memory BYTES       Positive aggregate ceiling; default 1073741824.
               --timeout SECONDS        Deadline >0..31536000 seconds; default 120.
-            Lossy requires sRGB (pnm-srgb or nrrd), 8..16-bit samples and straight alpha.
+            Repeat -i with named files to encode an animation; input interpretation is shared.
+            JPEG pixels require explicit jpeg-srgb: 8-bit DCT grey/RGB with nearest chroma.
+            ICC/Exif, CMYK, 12-bit and SOF3 JPEG inputs reject; use transcode for original bytes.
+            All-frame output requires a new directory; overwrite/stdout are unavailable.
+            Exact timing is retained in timing.json. All decoded frames are admitted before writing.
+            Lossy requires sRGB (pnm-srgb, jpeg-srgb or nrrd), 8..16-bit samples and straight alpha.
             CLI lossy images, including alpha, are limited to 1024 per axis and 1,048,576 pixels.
             Distance is codec-specific, not a maximum sample-error guarantee.
-            No intermediate image file or full-image serialisation buffer is created.
+            Still operations create no intermediate image file or full-image serialisation buffer.
+            All-frame files are staged in the output directory's parent; failures clean this transaction.
             Pipe bytes still incur OS copies; this is not shared memory between processes.
             Stdout may contain partial binary output on I/O failure. File publication is
             atomic; failures before publication preserve an existing output. Ctrl-C: 130.
@@ -238,6 +264,8 @@ private func help(_ command: String?) -> String {
               -i, --input PATH          Required regular file or pipe; '-' means stdin.
               -o, --output PATH         Final report file; default '-' means stdout.
               --input-format FORMAT    jxl or jpeg-xl; optional, bytes are always checked.
+              --all-frames             Inspect/validate every independent animation frame.
+              --max-frames N           With all-frames: default 64, at most 256.
               --json                   Emit one structured report instead of readable text.
               --overwrite              Atomically replace an existing regular report file.
               --backend NAME           automatic (default), scalar-cpu; accelerated returns 4.
@@ -356,9 +384,13 @@ private func write(_ text: String, to handle: FileHandle) throws {
             "interchangeFormat": "nrrd", "interchangeMeaningfulBits": 16,
             "interchangeFormats": ["nrrd", "pnm", "pnm-srgb"], "pnmMeaningfulBits": Array(8...16), "pnmColourTransfers": ["bt709", "srgb-explicit-variant"],
             "maximumEncodeDimension": 1024, "maximumDecodeDimension": 1024,
-            "canInspect": decoder.canInspect, "canValidate": true, "formats": formats,
-            "profile": "single-frame integer Modular grey/RGB with optional alpha, inspect/validate 1..16 bits and encode 8..16 bits; VarDCT encode/decode 8..16-bit sRGB with straight alpha, single pass/DC group; maximum dimension 1024",
-            "maximumCompressedBytes": CommandIO.maximumInput]
+            "canInspect": decoder.canInspect, "canValidate": true, "formats": formats + ["jpeg-srgb"],
+            "profile": "integer Modular grey/RGB with optional alpha, inspect/validate 1..16 bits and encode 8..16 bits; VarDCT encode/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024",
+            "maximumCompressedBytes": CommandIO.maximumInput,
+            "pixelContainers": ["codestream", "iso"], "canEncodeAnimation": true, "canDecodeAnimation": true,
+            "maximumAnimationFrames": 256, "defaultMaximumAnimationFrames": 64,
+            "jpegPixelInputFormat": "jpeg-srgb", "jpegPixelMeaningfulBits": [8],
+            "jpegPixelProfile": "Huffman DCT grey/RGB, nearest chroma upsampling; ICC/Exif/CMYK/12-bit/SOF3 unsupported; explicit sRGB interpretation"]
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
         try FileHandle.standardOutput.write(contentsOf: data + Data([10]))
     } else {
@@ -393,7 +425,17 @@ private func status(for error: CodecError) -> Int32 {
     guard isLossy || !lossyKeys.contains(where: { values[$0] != nil }) else {
         throw CodecError(.invalidArgument, "VarDCT controls require encode --mode lossy.")
     }
-    var encoderConfiguration = EncoderConfiguration.default
+    try validateAnimationArguments(command, options: options)
+    let container: PixelContainerFormat
+    switch values["--container"] ?? "codestream" {
+    case "codestream": container = .codestream
+    case "iso": container = .iso
+    default: throw CodecError(.invalidArgument, "Container must be codestream or iso.")
+    }
+    guard command == "encode" || values["--container"] == nil else {
+        throw CodecError(.invalidArgument, "Container selection applies to encode only.")
+    }
+    var encoderConfiguration = try EncoderConfiguration(codecOptions: .init(container: container))
     if isLossy {
         func toggle(_ key: String) throws -> Bool {
             guard let value = values[key] else { return true }
@@ -407,7 +449,7 @@ private func status(for error: CodecError) -> Int32 {
         }
         let varDCT = try VarDCTEncodingOptions(distance: distance, gaborish: toggle("--gaborish"),
             adaptiveQuantisation: toggle("--adaptive-quantisation"), dcSmoothing: toggle("--dc-smoothing"))
-        encoderConfiguration = try EncoderConfiguration(mode: .lossy, codecOptions: CodecOptions(varDCT: varDCT))
+        encoderConfiguration = try EncoderConfiguration(mode: .lossy, codecOptions: CodecOptions(varDCT: varDCT, container: container))
     }
     var transcodeTarget: TranscodeTarget?
     if command == "transcode" {
@@ -433,9 +475,9 @@ private func status(for error: CodecError) -> Int32 {
         guard let format = values[required] else {
             throw CodecError(.invalidArgument, "Select nrrd, pnm or pnm-srgb explicitly.")
         }
-        guard ["nrrd", "pnm", "pnm-srgb"].contains(format) else { throw CodecError(.unsupportedFormat, "Unsupported interchange format.") }
+        guard (["nrrd", "pnm", "pnm-srgb"] + (command == "encode" ? ["jpeg-srgb"] : [])).contains(format) else { throw CodecError(.unsupportedFormat, "Unsupported interchange format.") }
         let optional = command == "encode" ? "--output-format" : "--input-format"
-        if let format = values[optional], !["jxl", "jpeg-xl"].contains(format) {
+        if let format = values[optional], !(["jxl", "jpeg-xl"] + (command == "decode" ? ["jpeg-srgb"] : [])).contains(format) {
             throw CodecError(.unsupportedFormat, "Unsupported compressed format.")
         }
     } else {
@@ -482,6 +524,8 @@ private func status(for error: CodecError) -> Int32 {
     default: throw CodecError(.invalidArgument, "Unknown copy policy.")
     }
     let io = CommandIO(deadline: .now.advanced(by: .seconds(seconds)), maximumMemoryBytes: memory)
+    if try await runAnimationCommand(command, options: options, configuration: encoderConfiguration,
+        io: io, backend: backend, copy: copy, threads: threads) { return 0 }
     let data = try io.readInput(input)
     try io.checkpoint()
     // Retain room for input capacity/growth and report/scratch in addition to
@@ -518,7 +562,9 @@ private func status(for error: CodecError) -> Int32 {
         if command == "encode" {
             let image: Image
             if interchange == "nrrd" { image = try NRRD.parse(data, io: io).image(data, limits: limits) }
-            else { image = try PNM.parse(data, io: io).image(data, srgb: srgb, limits: limits) }
+            else if interchange == "jpeg-srgb" {
+                image = try await decoder.decodeJPEG(data, interpretingAs: .srgb, options: decodeOptions).image
+            } else { image = try PNM.parse(data, io: io).image(data, srgb: srgb, limits: limits) }
             descriptor = image.descriptor
             try io.checkpoint()
             let encoded = try await Encoder(configuration: encoderConfiguration).encode(image, options: EncodeOptions(resourceLimits: limits,
@@ -530,10 +576,13 @@ private func status(for error: CodecError) -> Int32 {
             try diagnostic(5, "final encoded payload ready for publication")
             try io.publish(encoded.data, path: output, inputPath: input, overwrite: options.overwrite)
         } else {
-            let info = try decoder.inspect(data, options: decodeOptions)
+            let jpeg = values["--input-format"] == "jpeg-srgb"
+            let info = if jpeg { try decoder.inspectJPEG(data, interpretingAs: .srgb, options: decodeOptions) }
+                else { try decoder.inspect(data, options: decodeOptions) }
             if interchange == "nrrd" { try NRRD.requireRepresentable(info.descriptor, metadata: info.metadata) }
             else { try PNM.requireRepresentable(info.descriptor, metadata: info.metadata, srgb: srgb) }
-            let decoded = try await decoder.decode(data, options: decodeOptions)
+            let decoded = if jpeg { try await decoder.decodeJPEG(data, interpretingAs: .srgb, options: decodeOptions) }
+                else { try await decoder.decode(data, options: decodeOptions) }
             descriptor = decoded.image.descriptor
             fidelity = decoded.report.fidelity
             try diagnostic(3, "decoded storage serialised to final interchange output")
@@ -576,7 +625,7 @@ private func status(for error: CodecError) -> Int32 {
     let report: Data
     if options.json {
         let object: [String: Any] = ["tool": tool, "version": version, "operation": command,
-            "format": "jpeg-xl", "profile": "integer-modular", "frameCount": 1,
+            "format": "jpeg-xl", "profile": "integer-pixel", "frameCount": 1,
             "colour": colour, "alpha": alpha, "colourTransfer": colourTransfer,
             "componentCount": descriptor.components.count,
             "width": descriptor.width, "height": descriptor.height,
