@@ -142,6 +142,36 @@ struct ModularEffortBudgetTests {
         #expect(result.learned == [[7], [3, 7, 11], [1, 3, 5, 7, 9, 11, 13]])
     }
 
+    @Test(arguments: [2, 8, 32])
+    func greedyLeafRangesRetainEveryOriginalSample(_ leaves: Int) throws {
+        // An uneven, permuted population forces repeated splits of ranges
+        // away from index zero. The decoder walk independently checks the
+        // learner's original-index context map after all partitions finish.
+        let count = 10033
+        var properties = [Int32](), tokens = [Int]()
+        for i in 0..<count {
+            let band = ((i * 251) % count) / 317
+            properties.append(Int32(band / 4))
+            properties.append(Int32(band % 4))
+            tokens.append(band)
+        }
+        let learned = try SpecModularEncoder.greedyTreeAndContexts(
+            propsFlat: properties, tokBucket: tokens, pixelCount: count,
+            propIndices: [4, 9], maxTok: 31, maxLeaves: leaves, minGain: 1)
+        let result = try #require(learned)
+        #expect(result.numContexts == leaves)
+        #expect(result.contexts.count == count)
+        var used = Set<Int>()
+        for i in 0..<count {
+            var p = [Int32](repeating: 0, count: 16)
+            p[4] = properties[i * 2]; p[9] = properties[i * 2 + 1]
+            let expected = try result.tree.walk(properties: p).leafId
+            #expect(result.contexts[i] == expected)
+            used.insert(result.contexts[i])
+        }
+        #expect(used.count == leaves)
+    }
+
     @Test(arguments: [false, true])
     func policyFailuresEscapeThroughoutLearning(_ greedy: Bool) throws {
         // Uneven equal-property runs cross the 1,024-sample work blocks.
