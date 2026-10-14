@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased — Modular learner performance, 2026-10-14
+
+- Share stable activity analysis and reuse private token storage without changing percentile, tie or candidate selection rules.
+- Reduce merge scratch and excess child-index capacity while retaining bounded cancellation and conservative cumulative admission.
+- Preserve scoped encoded bytes and public effort 3; retain repeated comparisons, sanitizer/oracle checks and process-memory variability.
+
 ## Unreleased — higher-effort Modular admission and cancellation, 2026-10-14
 
 - Admit collection, routing, costing, emission and capped learner storage against cumulative workspace and aggregate-memory limits.

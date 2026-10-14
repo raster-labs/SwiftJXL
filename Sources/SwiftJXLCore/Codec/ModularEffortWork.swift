@@ -116,11 +116,11 @@ enum ModularEffortWork {
                     fixed: ScalarOperationBudget.sum(tables, buffers))
     }
 
-    /// Stable bounded runs followed by checkpointed merges. The standard
-    /// library only sorts runs of at most 1,024 values; long equal/descending
-    /// runs therefore cannot perform an unchecked whole-image move. Callers
-    /// admit the arrays and sort scratch. Allocation/COW runtime work is not
-    /// interruptible, so this is a CPU-work bound, not a real-time guarantee.
+    /// Stable bounded runs followed by checkpointed in-place merges. Only
+    /// the shorter run is copied to scratch (at most count/2 values). Array
+    /// ownership remains scoped; no uninitialised storage or pointer escapes.
+    /// Allocation/COW runtime work is not interruptible, so this bounds CPU
+    /// loop work rather than promising a real-time cancellation deadline.
     static func sort<T>(_ values: inout [T], by less: (T, T) -> Bool,
                         checkpoint: () throws -> Void = ScalarEncodingWork.checkpoint) throws {
         try checkpoint()
@@ -137,38 +137,81 @@ enum ModularEffortWork {
             }
         }
         guard count > run else { try checkpoint(); return }
-        var scratch = values
-        var width = run
-        while width < count {
+        // Append into independent storage, avoiding a slice that could retain
+        // the full input allocation. All elements stay initialised on throws.
+        var scratch = [T]()
+        let capacity = count / 2
+        scratch.reserveCapacity(capacity)
+        for start in stride(from: 0, to: capacity, by: run) {
             try checkpoint()
-            try values.withUnsafeBufferPointer { source in
-                try scratch.withUnsafeMutableBufferPointer { destination in
+            let end = start + min(run, capacity - start)
+            for i in start..<end { scratch.append(values[i]) }
+        }
+        try values.withUnsafeMutableBufferPointer { buffer in
+            try scratch.withUnsafeMutableBufferPointer { temporary in
+                var width = run
+                while width < count {
                     var start = 0
                     while start < count {
+                        try checkpoint()
                         let middle = start + min(width, count - start)
                         let end = middle + min(width, count - middle)
-                        var left = start, right = middle
-                        var blockStart = start
-                        while blockStart < end {
-                            try checkpoint()
-                            let blockEnd = blockStart + min(run, end - blockStart)
-                            for output in blockStart..<blockEnd {
-                                // Choose left on equality, preserving the original
-                                // order of equal properties and existing tie rules.
-                                if right < end && (left == middle || less(source[right], source[left])) {
-                                    destination[output] = source[right]; right += 1
-                                } else {
-                                    destination[output] = source[left]; left += 1
+                        // Already ordered adjacent runs need no element moves.
+                        if middle < end && less(buffer[middle], buffer[middle - 1]) {
+                            let leftCount = middle - start, rightCount = end - middle
+                            if leftCount <= rightCount {
+                                for block in stride(from: 0, to: leftCount, by: run) {
+                                    try checkpoint()
+                                    let limit = block + min(run, leftCount - block)
+                                    for i in block..<limit { temporary[i] = buffer[start + i] }
+                                }
+                                var left = 0, right = middle, output = start
+                                while left < leftCount {
+                                    try checkpoint()
+                                    let limit = output + min(run, end - output)
+                                    while output < limit && left < leftCount {
+                                        // Left wins equal keys in a forward merge.
+                                        // While left remains, output < right, so
+                                        // overwriting output cannot destroy input.
+                                        if right < end && less(buffer[right], temporary[left]) {
+                                            buffer[output] = buffer[right]; right += 1
+                                        } else {
+                                            buffer[output] = temporary[left]; left += 1
+                                        }
+                                        output += 1
+                                    }
+                                }
+                                // Once the copied left run is consumed, the
+                                // remaining right values are already in place.
+                            } else {
+                                for block in stride(from: 0, to: rightCount, by: run) {
+                                    try checkpoint()
+                                    let limit = block + min(run, rightCount - block)
+                                    for i in block..<limit { temporary[i] = buffer[middle + i] }
+                                }
+                                // Exclusive upper indices avoid negative-index
+                                // sentinels. Right wins equal keys when merging
+                                // backwards, leaving the original left ties first.
+                                var left = middle, right = rightCount, output = end
+                                while right > 0 {
+                                    try checkpoint()
+                                    let limit = output - min(run, output - start)
+                                    while output > limit && right > 0 {
+                                        output -= 1
+                                        if left > start && less(temporary[right - 1], buffer[left - 1]) {
+                                            left -= 1; buffer[output] = buffer[left]
+                                        } else {
+                                            right -= 1; buffer[output] = temporary[right]
+                                        }
+                                    }
                                 }
                             }
-                            blockStart = blockEnd
                         }
                         start = end
                     }
+                    width = width > count / 2 ? count : width * 2
                 }
             }
-            swap(&values, &scratch)
-            width = width > count / 2 ? count : width * 2
         }
         try checkpoint()
     }
