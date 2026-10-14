@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Modular greyscale memory follow-up — 14 October 2026
+
+Replace per-node greedy learner index arrays with ranges in one operation-local owner and checkpointed in-place partitioning. Debug/release pass 43 declarations / 257 cases each; ASan/TSan pass 21 / 131 each. Independent decodes and worker-budget comparisons preserve samples, bytes and admission boundaries. See the [controlled memory comparisons and retained diagnostics](Documentation/Engineering/Migration/MODULAR_GREY_MEMORY.md). Public effort remains 3; wider Milestone 4 qualification remains open.
+
 ## Modular learner performance follow-up — 14 October 2026
 
 Share activity sorting between percentile and learned thresholds, reuse private token storage, halve merge scratch and reserve greedy child indices by their actual counts. Final debug/release pass 42 declarations / 254 cases; ASan/TSan pass 20 / 128, with exact independent samples and unchanged bytes across 54 small and fourteen larger/control decodes. Forty-two worker-budget comparisons preserve PR28's admission boundaries. Two final release comparisons and a separate allocation-history diagnostic retain both improvements and RSS variability; see [the measured results and remaining gates](Documentation/Engineering/Migration/MODULAR_EFFORT_PERFORMANCE.md). Public effort stays 3 and Milestone 4 remains incomplete.

@@ -2450,7 +2450,7 @@ package enum SpecModularEncoder {
         }
 
         final class GNode {
-            var idxs: [Int]
+            let range: Range<Int>
             var prop: Int32 = -1     // actual property index; -1 until split
             var split: Int32 = 0
             var left: GNode?
@@ -2458,7 +2458,7 @@ package enum SpecModularEncoder {
             var bestK: Int = -1      // candidate position of best split prop
             var bestSplit: Int32 = 0
             var bestGain: Double = -1
-            init(_ i: [Int]) { idxs = i }
+            init(_ range: Range<Int>) { self.range = range }
         }
 
         // Scratch shared by every computeBest call (one allocation for the
@@ -2468,6 +2468,17 @@ package enum SpecModularEncoder {
         var radixBuf = [Int64](repeating: 0, count: n)
         var radixCounts = [Int](repeating: 0, count: 8 * 256)
         var loBuf = [Int](repeating: 0, count: maxTok + 1)
+
+        // All leaf ranges partition one index owner, avoiding fresh child
+        // allocations for every split. Neither this array nor its scoped
+        // borrows escapes. Leaf indices need not retain encounter order:
+        // computeBest sorts each property's packed (value, token) multiset,
+        // and returned contexts are written at the original sample index.
+        var indices = [Int](repeating: 0, count: n)
+        for i in 0..<n {
+            if i & 1023 == 0 { try checkpoint() }
+            indices[i] = i
+        }
 
         // Cache the best (property, threshold) split for `node` by sweeping
         // each candidate property's activity-sorted order and tracking the
@@ -2479,13 +2490,14 @@ package enum SpecModularEncoder {
         ) throws {
             try checkpoint()
             node.bestGain = -1; node.bestK = -1
-            let m = node.idxs.count
+            let start = node.range.lowerBound
+            let m = node.range.count
             if m < 2 { return }
             var nodeHist = [Int](repeating: 0, count: maxTok + 1)
             for blockStart in stride(from: 0, to: m, by: 1024) {
                 try checkpoint()
                 for j in blockStart..<min(blockStart + 1024, m) {
-                    nodeHist[tokBucket[node.idxs[j]]] += 1
+                    nodeHist[tokBucket[indices[start + j]]] += 1
                 }
             }
             let nodeCost = histCost(nodeHist, m)
@@ -2502,7 +2514,7 @@ package enum SpecModularEncoder {
                 for blockStart in stride(from: 0, to: m, by: 1024) {
                     try checkpoint()
                     for i in blockStart..<min(blockStart + 1024, m) {
-                        let idx = node.idxs[i]
+                        let idx = indices[start + i]
                         packedBuf[i] = (Int64(propsFlat[idx * propCount + k]) << 16)
                             | Int64(tokBucket[idx])
                     }
@@ -2541,13 +2553,7 @@ package enum SpecModularEncoder {
             }
         }
 
-        var rootIndices = [Int]()
-        rootIndices.reserveCapacity(n)
-        for i in 0..<n {
-            if i & 1023 == 0 { try checkpoint() }
-            rootIndices.append(i)
-        }
-        let root = GNode(rootIndices)
+        let root = GNode(0..<n)
         try computeBest(root, &packedBuf, &radixBuf, &radixCounts, &loBuf)
         var leaves: [GNode] = [root]
         while leaves.count < maxLeaves {
@@ -2561,28 +2567,30 @@ package enum SpecModularEncoder {
             let node = leaves[bi]
             let k = node.bestK
             let s = node.bestSplit
-            // Size both children before allocating. Reserving the entire
-            // parent for each child retained almost twice the live indices,
-            // especially for skewed splits. The second pass preserves order.
-            var leftCount = 0
-            for (j, i) in node.idxs.enumerated() {
-                if j & 1023 == 0 { try checkpoint() }
-                if propsFlat[i * propCount + k] > s { leftCount += 1 }
+            let start = node.range.lowerBound, end = node.range.upperBound
+            var middle = start
+            try indices.withUnsafeMutableBufferPointer { buffer in
+                // Partition only this leaf's range. Each swap preserves its
+                // index multiset and leaves sibling ranges untouched.
+                for block in stride(from: start, to: end, by: 1024) {
+                    try checkpoint()
+                    for j in block..<min(block + 1024, end) {
+                        let i = buffer[j]
+                        if propsFlat[i * propCount + k] > s {
+                            buffer[j] = buffer[middle]
+                            buffer[middle] = i
+                            middle += 1
+                        }
+                    }
+                }
             }
-            var leftIdxs = [Int](); var rightIdxs = [Int]()
-            leftIdxs.reserveCapacity(leftCount)
-            rightIdxs.reserveCapacity(node.idxs.count - leftCount)
-            for (j, i) in node.idxs.enumerated() {
-                if j & 1023 == 0 { try checkpoint() }
-                if propsFlat[i * propCount + k] > s { leftIdxs.append(i) }
-                else { rightIdxs.append(i) }
+            if middle == start || middle == end {
+                node.bestGain = -1; continue
             }
-            if leftIdxs.isEmpty || rightIdxs.isEmpty { node.bestGain = -1; continue }
             node.prop = propIndices[k]
             node.split = s
-            let L = GNode(leftIdxs); let R = GNode(rightIdxs)
+            let L = GNode(start..<middle); let R = GNode(middle..<end)
             node.left = L; node.right = R
-            node.idxs = []
             try computeBest(L, &packedBuf, &radixBuf, &radixCounts, &loBuf)
             try computeBest(R, &packedBuf, &radixBuf, &radixCounts, &loBuf)
             leaves.remove(at: bi)
@@ -2608,9 +2616,9 @@ package enum SpecModularEncoder {
                     leftChildOrLeafId: lid, rightChild: 0,
                     predictor: .gradient, predictorOffset: 0,
                     multiplier: 1, rawPredictor: 6))
-                for (j, i) in g.idxs.enumerated() {
+                for j in g.range {
                     if j & 1023 == 0 { try checkpoint() }
-                    contexts[i] = lid
+                    contexts[indices[j]] = lid
                 }
             } else {
                 let leftIdx = queue.count

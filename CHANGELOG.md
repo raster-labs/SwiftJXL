@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased — Modular learner index storage, 2026-10-14
+
+- Reuse one index array across greedy tree leaves, removing per-child allocations and the separate counting pass.
+- Preserve deterministic tree selection and original-sample contexts with bounded cancellation and unchanged cumulative resource limits.
+- Add routing coverage for uneven leaf ranges and retain independent decode, sanitizer and controlled memory evidence; public effort stays 3.
+
 ## Unreleased — Modular learner performance, 2026-10-14
 
 - Share stable activity analysis and reuse private token storage without changing percentile, tie or candidate selection rules.
