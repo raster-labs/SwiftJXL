@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased — Modular profile and ownership qualification, 2026-10-14
+
+- Add precision, alpha and 511/512/513-pixel group-edge regressions with exact independent decoding and guarded direct output.
+- Exercise shared source lifetime, cancellation and per-operation resource refusal across concurrent encodes.
+- Retain scoped debug/release/sanitizer and ordinary-build memory evidence. Production sources, resource limits and public effort 3 are unchanged; broader Milestone 4 qualification remains open.
+
 ## Unreleased — Modular learner index storage, 2026-10-14
 
 - Reuse one index array across greedy tree leaves, removing per-child allocations and the separate counting pass.
