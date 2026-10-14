@@ -1,0 +1,3 @@
+# Higher-effort admission and cancellation evidence
+
+See [the scoped report](../../MODULAR_EFFORT_BUDGET.md), [qualification index](qualification.json) and [raw evidence](raw-evidence.zip). The archive retains commands, final and superseded validation, source hashes, synthetic probe generators, independent-decoder logs, policy comparisons and both interleaved timing runs. Absolute paths record the executed environment; adjust work/repository paths when reproducing. Compiled products and generated image payloads are omitted; their output hashes remain in the reports. Public encoding remains at effort 3.

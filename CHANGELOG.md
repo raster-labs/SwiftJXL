@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased — higher-effort Modular admission and cancellation, 2026-10-14
+
+- Admit collection, routing, costing, emission and capped learner storage against cumulative workspace and aggregate-memory limits.
+- Bound activity sorting/learning and greedy learner loops with cancellation checkpoints while preserving stable ties and encoded bytes in the scoped corpus.
+- Keep public encoding at effort 3; conservative internal reservations and wider migration gates remain explicit.
+
 ## Unreleased — exact Modular learning cap, 2026-10-14
 
 - Enforce the 256,000-sample learning ceiling for internal effort-8/9 encodes with uniform, overflow-safe selection.
