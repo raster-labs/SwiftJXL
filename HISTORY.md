@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Higher-effort Modular admission and cancellation — 14 October 2026
+
+Add cumulative reservations for collection, candidate routing/costing, selected emission and capped learning on top of the caller's effort-3 admission. Stable bounded sorting and checkpointed learner blocks preserve the scoped byte output while exposing resource/cancellation failures. Final debug/release pass 40 declarations / 249 cases; focused ASan/TSan pass 18 / 123. Fifty-four small streams and fourteen larger/control baseline/candidate streams independently decode exactly, and 42 old/new worker-budget comparisons reproduce the accounting repair. Repeated higher-effort tree latency still rises roughly 6–7% after investigation, and activity-grey process RSS rises about 5.5%; those safety/performance trade-offs remain open under PERF-03. Public effort stays 3 and Milestone 4 is incomplete. See [evidence and remaining gates](Documentation/Engineering/Migration/MODULAR_EFFORT_BUDGET.md).
+
 ## Exact Modular learner sample cap — 14 October 2026
 
 Both internal effort-8/9 learners now select exactly at most 256,000 uniformly distributed samples with overflow-safe arithmetic. The former floor stride could nearly double that count. Debug/release/ASan/TSan each pass 13 declarations / 89 cases; 54 small streams remain unchanged and eight larger/control baseline/candidate streams independently decode exactly. Two release comparisons show about 30–33% faster encoding on two cases whose learning population nearly halves, with compressed-size changes below 0.002%. Public effort remains 3; full admission/cancellation and broader Milestone 4 gates remain open. See [the scoped qualification](Documentation/Engineering/Migration/MODULAR_LEARNING_CAP.md).
