@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## Exact Modular learner sample cap — 14 October 2026
+
+Both internal effort-8/9 learners now select exactly at most 256,000 uniformly distributed samples with overflow-safe arithmetic. The former floor stride could nearly double that count. Debug/release/ASan/TSan each pass 13 declarations / 89 cases; 54 small streams remain unchanged and eight larger/control baseline/candidate streams independently decode exactly. Two release comparisons show about 30–33% faster encoding on two cases whose learning population nearly halves, with compressed-size changes below 0.002%. Public effort remains 3; full admission/cancellation and broader Milestone 4 gates remain open. See [the scoped qualification](Documentation/Engineering/Migration/MODULAR_LEARNING_CAP.md).
+
 ## Modular candidate resource enforcement — 14 October 2026
 
 PR26's Swift 6.2 Linux builds exposed a compiler type-checking limit in the grouped test fixture expression. A loop preserves all 8,721 samples and every assertion; focused debug/TSan each pass seven declarations / eleven cases locally. Runtime sources are unchanged. See [the retained failure and repair evidence](Documentation/Engineering/Migration/Evidence/CIRepair/EffortFixture/README.md).

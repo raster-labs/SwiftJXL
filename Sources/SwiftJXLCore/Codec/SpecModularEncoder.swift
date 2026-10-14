@@ -1546,10 +1546,14 @@ package enum SpecModularEncoder {
 
         var perGroupProps = [[Int32]](repeating: [], count: numGroups)
         var perGroupTokens = [[UInt32]](repeating: [], count: numGroups)
-        // Uniform learning subsample (≤ ~256K pixels).
-        let sampleStride = max(1, n / 256_000)
+        // Uniform learning subsample, with an exact 256,000-sample ceiling.
+        let learningSamples = try ModularLearningSamples(population: n)
+        var sampleIndices = learningSamples.makeIterator()
+        var nextSample = sampleIndices.next()
         var sampleProps: [Int32] = []
         var sampleTok: [Int] = []
+        sampleProps.reserveCapacity(learningSamples.count * propCount)
+        sampleTok.reserveCapacity(learningSamples.count)
         var sampleMaxTok = 0
         var globalIdx = 0
         var props16 = [Int32](repeating: 0, count: 16)
@@ -1597,12 +1601,14 @@ package enum SpecModularEncoder {
                             let tok = ZigZag.pack(actual &- pred)
                             perGroupTokens[gi].append(tok)
                             let tk = Int(postCfg.encode(tok).token)
-                            if globalIdx % sampleStride == 0 {
+                            if globalIdx == nextSample {
+                                if sampleTok.count & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
                                 for k in 0..<propCount {
                                     sampleProps.append(props16[Int(propIndices[k])])
                                 }
                                 sampleTok.append(tk)
                                 if tk > sampleMaxTok { sampleMaxTok = tk }
+                                nextSample = sampleIndices.next()
                             }
                             wp.update(actual: actual, x: rx, y: ry, xsize: rectW)
                             globalIdx += 1
@@ -2620,30 +2626,30 @@ package enum SpecModularEncoder {
         // end-to-end through djxl by the test gates. minGain stays the
         // splitting floor, so trees only grow where the entropy drop
         // pays for the extra context.
-        // Learn the tree from a uniform subsample (≤ ~256K pixels), matching
+        // Learn the tree from a uniform subsample (≤ 256,000 samples), matching
         // the multi-group path and bounding the learner's cost on large
         // multi-channel frames. For the common ≤256K case stride is 1 — the
         // sample IS every pixel, so the tree (and output) is identical to
         // learning on all pixels. Routing then walks the tree per pixel via
         // the decoder's own `ModularTree.walk`, so contexts agree exactly.
         let maxLeaves = effort >= 9 ? 32 : 16
-        let stride = max(1, n / 256_000)
+        let learningSamples = try ModularLearningSamples(population: n)
         let sampleProps: [Int32]
         let sampleTok: [Int]
         var sampleMaxTok = 0
-        if stride == 1 {
+        if learningSamples.count == n {
             sampleProps = propsFlat; sampleTok = tokBucket; sampleMaxTok = maxTok
         } else {
             var sp = [Int32](); var st = [Int]()
-            sp.reserveCapacity((n / stride + 1) * propCount)
-            var i = 0
-            while i < n {
+            sp.reserveCapacity(learningSamples.count * propCount)
+            st.reserveCapacity(learningSamples.count)
+            for i in learningSamples {
+                if st.count & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
                 let b = i * propCount
                 for k in 0..<propCount { sp.append(propsFlat[b + k]) }
                 let tk = tokBucket[i]
                 st.append(tk)
                 if tk > sampleMaxTok { sampleMaxTok = tk }
-                i += stride
             }
             sampleProps = sp; sampleTok = st
         }

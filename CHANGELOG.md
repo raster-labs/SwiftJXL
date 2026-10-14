@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — exact Modular learning cap, 2026-10-14
+
+- Enforce the 256,000-sample learning ceiling for internal effort-8/9 encodes with uniform, overflow-safe selection.
+- Preserve all samples below the cap and qualify changed above-cap streams independently; public effort stays at 3.
+
 ## Unreleased — Modular candidate limits, 2026-10-14
 
 - Simplify the candidate-limit test fixture for Swift 6.2 Linux compiler compatibility; generated samples, assertions and runtime code are unchanged.
