@@ -1,5 +1,13 @@
 # Change log
 
+## Unreleased — Modular candidate limits, 2026-10-14
+
+- Simplify the candidate-limit test fixture for Swift 6.2 Linux compiler compatibility; generated samples, assertions and runtime code are unchanged.
+
+- Propagate operation cancellation/resource failures from optional Modular candidates instead of silently selecting a fallback.
+- Admit shared-property scratch before allocation and checkpoint token costing/tree routing.
+- Retain the fixed public effort-3 profile while complete higher-effort admission and learner qualification continue.
+
 ## Unreleased — Modular internal effort qualification, 2026-10-13
 
 - Reduce temporary single-section effort 4–7 property storage and add shared-pass cancellation/deadline checkpoints.

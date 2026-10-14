@@ -1,5 +1,11 @@
 # History and provenance — SwiftJXL
 
+## Modular candidate resource enforcement — 14 October 2026
+
+PR26's Swift 6.2 Linux builds exposed a compiler type-checking limit in the grouped test fixture expression. A loop preserves all 8,721 samples and every assertion; focused debug/TSan each pass seven declarations / eleven cases locally. Runtime sources are unchanged. See [the retained failure and repair evidence](Documentation/Engineering/Migration/Evidence/CIRepair/EffortFixture/README.md).
+
+A grouped higher-effort candidate could swallow a worker workspace rejection and return its effort-3 baseline. Propagate cancellation/resource errors through optional candidates, add bounded costing/routing checkpoints and reserve shared-property scratch with checked arithmetic before allocation. The old/new two- and eight-worker probe confirms the repair. Final affected debug/release/ASan/TSan each pass 32 declarations / 202 cases; 54 new independently decoded streams preserve fixture bytes. Public effort remains 3 and complete higher-effort admission remains open. See [qualification and remaining gates](Documentation/Engineering/Migration/MODULAR_EFFORT_LIMITS.md).
+
 ## Modular internal effort qualification — 13 October 2026
 
 Single-section effort 4–7 activity candidates now omit unused tree properties and token buckets, reducing that visible array payload from 36 to 8 bytes per sample on 64-bit hosts. Checkpoints bound the shared property pass. All 54 effort/case outputs match baseline bytes and independently decode exactly; affected debug/release/ASan/TSan each pass 25 declarations / 191 cases. A decoder coordinate experiment was reverted after repeated colour regressions. Public effort remains 3; higher-effort admission and wider Milestone 4 gates remain open. See [qualification and retained evidence](Documentation/Engineering/Migration/MODULAR_EFFORT_QUALIFICATION.md).

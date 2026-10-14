@@ -960,12 +960,12 @@ package enum SpecModularEncoder {
         // a percent on most natural content; efforts 8/9 buy
         // progressively larger learned trees). effort ≤ 3 ships the
         // single-context baseline only.
-        if effort >= 4, let multi = try? buildSectionsMultiContext(
+        if effort >= 4, let multi = try ModularEffortWork.candidate({ try buildSectionsMultiContext(
             width: width, height: height,
             channels: rctChannels, sampleHi: sampleHi,
             numGroupsX: numGroupsX, numGroupsY: numGroupsY,
             numGroups: numGroups, numDcGroups: numDcGroups,
-            groupDim: groupDim, transforms: modularTransforms),
+            groupDim: groupDim, transforms: modularTransforms) }) ?? nil,
            total(multi) < total(best) {
             best = multi
         }
@@ -1149,7 +1149,7 @@ package enum SpecModularEncoder {
         perGroupOrdered: [[(ctx: Int, val: UInt32)]],
         numDcGroups: Int, postCfg: HybridUintConfig,
         transforms: [ModularTransform] = []
-    ) -> (bytes: Int, header: EntropySectionHeader,
+    ) throws -> (bytes: Int, header: EntropySectionHeader,
           codebook: MultiClusterCodebook)? {
         let numGroups = perGroupOrdered.count
         guard n >= 1, numGroups >= 1 else { return nil }
@@ -1169,6 +1169,7 @@ package enum SpecModularEncoder {
             var cls = [UInt8](repeating: 0, count: run.count)
             var extra = 0
             for (i, t) in run.enumerated() {
+                if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
                 let exp = postCfg.encode(t.val)
                 let tk = Int(exp.token)
                 histo[t.ctx][tk] += 1
@@ -1183,15 +1184,15 @@ package enum SpecModularEncoder {
         }
         for c in 0..<n where histo[c].reduce(0, +) == 0 { return nil }
         let alpha = maxTok + 1
-        guard let ctxMap = try? ContextMap(
-            numClusters: n, map: (0..<n).map { UInt8($0) }) else { return nil }
+        guard let ctxMap = try ModularEffortWork.candidate({ try ContextMap(
+            numClusters: n, map: (0..<n).map { UInt8($0) }) }) else { return nil }
         let cfgs = Array(repeating: postCfg, count: n)
 
         // Per-AC-section constant: the GroupHeader bits that precede each
         // group's token stream (every section is byte-aligned after it).
-        let groupHeaderBits: Int = {
+        let groupHeaderBits: Int = try {
             var w = BitWriter()
-            try? GroupHeader.default.write(to: &w)
+            try ModularEffortWork.candidate({ try GroupHeader.default.write(to: &w) })
             return w.bitCount
         }()
         // Analytic total bytes for one candidate: the DC-global section
@@ -1201,7 +1202,7 @@ package enum SpecModularEncoder {
         // rANS: 32 + 16·refills + extras per fresh group stream).
         func analyticTotal(
             _ h: EntropySectionHeader, _ c: MultiClusterCodebook
-        ) -> Int {
+        ) throws -> Int {
             var dcGlobal = BitWriter()
             dcGlobal.writeBit(true)
             dcGlobal.writeBit(true)
@@ -1210,7 +1211,7 @@ package enum SpecModularEncoder {
                 try h.write(to: &dcGlobal, numContexts: n)
                 try c.write(to: &dcGlobal, header: h)
                 try GroupHeader(transforms: transforms).write(to: &dcGlobal)
-            } catch { return Int.max }
+            } catch { try ModularEffortWork.rethrowPolicyFailure(error); return Int.max }
             if !h.usePrefixCode { dcGlobal.write(bits: 32, value: ANSConstants.initialState) }
             dcGlobal.alignToByte()
             var total = dcGlobal.bitCount / 8
@@ -1220,6 +1221,7 @@ package enum SpecModularEncoder {
                     let syms = groupSymbols[g]
                     let cls = groupClusters[g]
                     for i in 0..<syms.count {
+                        if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
                         let len = Int(c.huffmanTables[Int(cls[i])]
                             .lengths[Int(syms[i])])
                         if len == 0 { return Int.max }
@@ -1228,11 +1230,11 @@ package enum SpecModularEncoder {
                     total += (bits + 7) / 8
                 }
             } else {
-                guard let aw = try? ANSTokenStreamWriter(header: h, codebook: c)
+                guard let aw = try ModularEffortWork.candidate({ try ANSTokenStreamWriter(header: h, codebook: c) })
                 else { return Int.max }
                 for g in 0..<numGroups {
-                    guard let r = try? aw.refillWordCount(
-                        symbols: groupSymbols[g], clusters: groupClusters[g])
+                    guard let r = try ModularEffortWork.candidate({ try aw.refillWordCount(
+                        symbols: groupSymbols[g], clusters: groupClusters[g]) })
                     else { return Int.max }
                     let bits = groupHeaderBits + 32 + 16 * r + groupExtraNBits[g]
                     total += (bits + 7) / 8
@@ -1255,17 +1257,17 @@ package enum SpecModularEncoder {
                 lz77: .disabled, contextMap: ctxMap,
                 usePrefixCode: true, logAlphaSize: 15, uintConfigs: cfgs)
             candidates.append((huffHeader, huffCodebook))
-        } catch { /* fall through to rANS */ }
+        } catch { try ModularEffortWork.rethrowPolicyFailure(error) /* fall through to rANS */ }
         var wires: [[Int32]] = []
         var maxWire = 0
         var ansOK = true
         for c in 0..<n {
-            guard let dist = try? ANSDistribution(
-                rawFrequencies: histo[c][0..<alpha].map { UInt32(max(0, $0)) })
+            guard let dist = try ModularEffortWork.candidate({ try ANSDistribution(
+                rawFrequencies: histo[c][0..<alpha].map { UInt32(max(0, $0)) }) })
             else { ansOK = false; break }
             var scratch = BitWriter()
-            guard let wire = try? SpecANSDistribution.writeHistogram(
-                dist.frequencies.map { Int32($0) }, to: &scratch)
+            guard let wire = try ModularEffortWork.candidate({ try SpecANSDistribution.writeHistogram(
+                dist.frequencies.map { Int32($0) }, to: &scratch) })
             else { ansOK = false; break }
             wires.append(wire); maxWire = max(maxWire, wire.count)
         }
@@ -1285,8 +1287,8 @@ package enum SpecModularEncoder {
         // Cost both analytically (exact section-byte totals).
         // `min(by: <)` keeps the earlier candidate on a tie — Huffman
         // first, matching the previous assemble-both order.
-        let costed = candidates
-            .map { (cand: $0, total: analyticTotal($0.0, $0.1)) }
+        let costed = try candidates
+            .map { (cand: $0, total: try analyticTotal($0.0, $0.1)) }
             .filter { $0.total != Int.max }
         guard let winner = costed.min(by: { $0.total < $1.total })
         else { return nil }
@@ -1312,7 +1314,7 @@ package enum SpecModularEncoder {
             try h.write(to: &dcGlobal, numContexts: n)
             try c.write(to: &dcGlobal, header: h)
             try GroupHeader(transforms: transforms).write(to: &dcGlobal)
-        } catch { return nil }
+        } catch { try ModularEffortWork.rethrowPolicyFailure(error); return nil }
         if !h.usePrefixCode { dcGlobal.write(bits: 32, value: ANSConstants.initialState) }
         dcGlobal.alignToByte()
         var sections = [Data]()
@@ -1341,7 +1343,7 @@ package enum SpecModularEncoder {
                     }
                     try aw.finish(to: &sec)
                 }
-            } catch { return nil }
+            } catch { try ModularEffortWork.rethrowPolicyFailure(error); return nil }
             sec.alignToByte()
             return sec.finishToData()
         }
@@ -1360,7 +1362,7 @@ package enum SpecModularEncoder {
         numDcGroups: Int, postCfg: HybridUintConfig,
         transforms: [ModularTransform] = []
     ) throws -> [Data]? {
-        guard let cost = costMultiGroupSections(
+        guard let cost = try costMultiGroupSections(
             tree: tree, numContexts: n, perGroupOrdered: perGroupOrdered,
             numDcGroups: numDcGroups, postCfg: postCfg,
             transforms: transforms) else { return nil }
@@ -1460,13 +1462,13 @@ package enum SpecModularEncoder {
             bytes: Int, tree: ModularTree, n: Int,
             perGroupOrdered: [[(ctx: Int, val: UInt32)]],
             header: EntropySectionHeader, codebook: MultiClusterCodebook)
-        func costForThresholds(_ thr: [Int32]) -> Candidate? {
+        func costForThresholds(_ thr: [Int32]) throws -> Candidate? {
             guard let (n, ctxOf, tree) =
                 activitySplitTree(thresholds: thr) else { return nil }
             let perGroupOrdered = perGroupPixels.map { group in
                 group.map { (ctx: ctxOf($0.wpProp), val: $0.token) }
             }
-            guard let cost = costMultiGroupSections(
+            guard let cost = try costMultiGroupSections(
                 tree: tree, numContexts: n, perGroupOrdered: perGroupOrdered,
                 numDcGroups: numDcGroups, postCfg: postCfg,
                 transforms: transforms) else { return nil }
@@ -1486,12 +1488,12 @@ package enum SpecModularEncoder {
             if best == nil || c.bytes < best!.bytes { best = c }
         }
         let median = pct(0.5)
-        consider(costForThresholds([median]))
+        consider(try costForThresholds([median]))
         let q1 = pct(0.25), q2 = pct(0.5), q3 = pct(0.75)
-        if q1 < q2, q2 < q3 { consider(costForThresholds([q1, q2, q3])) }
+        if q1 < q2, q2 < q3 { consider(try costForThresholds([q1, q2, q3])) }
         let oct = (1...7).map { pct(Double($0) / 8.0) }
         if zip(oct, oct.dropFirst()).allSatisfy({ $0 < $1 }) {
-            consider(costForThresholds(oct))
+            consider(try costForThresholds(oct))
         }
         // Learned (entropy-optimal) 2/4/8-bin splits, cost-gated alongside
         // the fixed percentile sets. Each is skipped when it matches the
@@ -1501,7 +1503,7 @@ package enum SpecModularEncoder {
             let isFixed = (l.count == 1 && l == [median])
                 || (l.count == 3 && l == [q1, q2, q3])
                 || (l.count == 7 && l == oct)
-            if !isFixed { consider(costForThresholds(l)) }
+            if !isFixed { consider(try costForThresholds(l)) }
         }
         guard let win = best else { return nil }
         return try emitMultiGroupSections(
@@ -1629,6 +1631,7 @@ package enum SpecModularEncoder {
             var ordered = [(ctx: Int, val: UInt32)]()
             ordered.reserveCapacity(toks.count)
             for i in 0..<toks.count {
+                if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
                 let base = i * propCount
                 for k in 0..<propCount { props16[Int(propIndices[k])] = props[base + k] }
                 guard let leaf = try? tree.walk(properties: props16) else { return nil }
@@ -1864,12 +1867,12 @@ package enum SpecModularEncoder {
             case 0:
                 return .base(emitBaseline())
             case 1:
-                let d = try? buildSingleSectionMultiContext(
+                let d = try ModularEffortWork.candidate({ try buildSingleSectionMultiContext(
                     width: width, height: height,
                     channels: channels, sampleHi: sampleHi,
                     transforms: transforms,
                     precomputed: (wpShared.propsFlat, wpShared.tokens),
-                    propertyStride: effort >= 8 ? 6 : 1)
+                    propertyStride: effort >= 8 ? 6 : 1) })
                 return .cand(d ?? nil)
             default:
                 return .cand(try buildSingleSectionGreedyTree(
@@ -1950,7 +1953,7 @@ package enum SpecModularEncoder {
         tree: ModularTree, numContexts n: Int,
         ordered: [(ctx: Int, val: UInt32)], postCfg: HybridUintConfig,
         transforms: [ModularTransform] = []
-    ) -> (bytes: Int, header: EntropySectionHeader,
+    ) throws -> (bytes: Int, header: EntropySectionHeader,
           codebook: MultiClusterCodebook)? {
         guard n >= 1, !ordered.isEmpty else { return nil }
         var histo = [[Int]](
@@ -1964,6 +1967,7 @@ package enum SpecModularEncoder {
         var clusters = [UInt8](repeating: 0, count: ordered.count)
         var totalExtraNBits = 0
         for (i, t) in ordered.enumerated() {
+            if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
             let exp = postCfg.encode(t.val)
             let tk = Int(exp.token)
             histo[t.ctx][tk] += 1
@@ -1974,14 +1978,14 @@ package enum SpecModularEncoder {
         }
         for c in 0..<n where histo[c].reduce(0, +) == 0 { return nil }
         let alpha = maxTok + 1
-        guard let ctxMap = try? ContextMap(
-            numClusters: n, map: (0..<n).map { UInt8($0) }) else { return nil }
+        guard let ctxMap = try ModularEffortWork.candidate({ try ContextMap(
+            numClusters: n, map: (0..<n).map { UInt8($0) }) }) else { return nil }
         let cfgs = Array(repeating: postCfg, count: n)
         // Everything before the token stream, measured with the real
         // writers on a scratch (no per-pixel content in any of it).
         func prefixBits(
             _ h: EntropySectionHeader, _ c: MultiClusterCodebook
-        ) -> Int {
+        ) throws -> Int {
             var w = BitWriter()
             w.writeBit(true)           // matrices_dc_default
             w.writeBit(true)           // has_tree
@@ -1990,7 +1994,7 @@ package enum SpecModularEncoder {
                 try h.write(to: &w, numContexts: n)
                 try c.write(to: &w, header: h)
                 try GroupHeader(transforms: transforms).write(to: &w)
-            } catch { return Int.max }
+            } catch { try ModularEffortWork.rethrowPolicyFailure(error); return Int.max }
             return w.bitCount
         }
         // Huffman candidate (one table per context). Exact stream size:
@@ -2002,7 +2006,7 @@ package enum SpecModularEncoder {
                     counts: Array(histo[c][0..<alpha]), maxLength: 15,
                     alphabetSize: alpha))
             }
-        } catch { return nil }
+        } catch { try ModularEffortWork.rethrowPolicyFailure(error); return nil }
         let huffCodebook = MultiClusterCodebook(
             huffmanTables: huffTables, ansCounts: [],
             alphabetSizes: Array(repeating: alpha, count: n))
@@ -2011,7 +2015,7 @@ package enum SpecModularEncoder {
             usePrefixCode: true, logAlphaSize: 15, uintConfigs: cfgs)
         var best: (EntropySectionHeader, MultiClusterCodebook) =
             (huffHeader, huffCodebook)
-        var bestBits = prefixBits(huffHeader, huffCodebook)
+        var bestBits = try prefixBits(huffHeader, huffCodebook)
         if bestBits != Int.max {
             var streamBits = totalExtraNBits
             var ok = true
@@ -2031,12 +2035,12 @@ package enum SpecModularEncoder {
         var maxWire = 0
         var ansOK = true
         for c in 0..<n {
-            guard let dist = try? ANSDistribution(
-                rawFrequencies: histo[c][0..<alpha].map { UInt32(max(0, $0)) })
+            guard let dist = try ModularEffortWork.candidate({ try ANSDistribution(
+                rawFrequencies: histo[c][0..<alpha].map { UInt32(max(0, $0)) }) })
             else { ansOK = false; break }
             var scratch = BitWriter()
-            guard let wire = try? SpecANSDistribution.writeHistogram(
-                dist.frequencies.map { Int32($0) }, to: &scratch)
+            guard let wire = try ModularEffortWork.candidate({ try SpecANSDistribution.writeHistogram(
+                dist.frequencies.map { Int32($0) }, to: &scratch) })
             else { ansOK = false; break }
             wires.append(wire); maxWire = max(maxWire, wire.count)
         }
@@ -2051,12 +2055,12 @@ package enum SpecModularEncoder {
                 let ansCodebook = MultiClusterCodebook(
                     huffmanTables: [], ansCounts: wires,
                     alphabetSizes: wires.map { $0.count })
-                var b = prefixBits(ansHeader, ansCodebook)
+                var b = try prefixBits(ansHeader, ansCodebook)
                 if b != Int.max,
-                   let aw = try? ANSTokenStreamWriter(
-                       header: ansHeader, codebook: ansCodebook),
-                   let r = try? aw.refillWordCount(
-                       symbols: symbols, clusters: clusters) {
+                   let aw = try ModularEffortWork.candidate({ try ANSTokenStreamWriter(
+                       header: ansHeader, codebook: ansCodebook) }),
+                   let r = try ModularEffortWork.candidate({ try aw.refillWordCount(
+                       symbols: symbols, clusters: clusters) }) {
                     b += 32 + 16 * r + totalExtraNBits
                 } else {
                     b = Int.max
@@ -2076,7 +2080,7 @@ package enum SpecModularEncoder {
         header postHeader: EntropySectionHeader,
         codebook postCodebook: MultiClusterCodebook,
         transforms: [ModularTransform] = []
-    ) -> Data? {
+    ) throws -> Data? {
         var sec = BitWriter()
         sec.writeBit(true)            // matrices_dc_default
         sec.writeBit(true)            // has_tree
@@ -2096,7 +2100,7 @@ package enum SpecModularEncoder {
                 for (ctx, v) in ordered { try aw.writeToken(context: ctx, value: v) }
                 try aw.finish(to: &sec)
             }
-        } catch { return nil }
+        } catch { try ModularEffortWork.rethrowPolicyFailure(error); return nil }
         sec.alignToByte()
         return sec.finishToData()
     }
@@ -2107,12 +2111,12 @@ package enum SpecModularEncoder {
         tree: ModularTree, numContexts n: Int,
         ordered: [(ctx: Int, val: UInt32)], postCfg: HybridUintConfig,
         transforms: [ModularTransform] = []
-    ) -> Data? {
-        guard let cost = costMultiContextSection(
+    ) throws -> Data? {
+        guard let cost = try costMultiContextSection(
             tree: tree, numContexts: n, ordered: ordered, postCfg: postCfg,
             transforms: transforms)
         else { return nil }
-        return emitMultiContextSection(
+        return try emitMultiContextSection(
             tree: tree, numContexts: n, ordered: ordered,
             header: cost.header, codebook: cost.codebook,
             transforms: transforms)
@@ -2184,13 +2188,13 @@ package enum SpecModularEncoder {
             bytes: Int, tree: ModularTree, n: Int,
             ordered: [(ctx: Int, val: UInt32)],
             header: EntropySectionHeader, codebook: MultiClusterCodebook)
-        func costForThresholds(_ thr: [Int32]) -> Candidate? {
+        func costForThresholds(_ thr: [Int32]) throws -> Candidate? {
             guard let (n, ctxOf, tree) =
                 activitySplitTree(thresholds: thr) else { return nil }
             var ordered: [(ctx: Int, val: UInt32)] = []
             ordered.reserveCapacity(perPixel.count)
             for (wpProp, tok) in perPixel { ordered.append((ctxOf(wpProp), tok)) }
-            guard let cost = costMultiContextSection(
+            guard let cost = try costMultiContextSection(
                 tree: tree, numContexts: n, ordered: ordered, postCfg: postCfg,
                 transforms: transforms)
             else { return nil }
@@ -2209,12 +2213,12 @@ package enum SpecModularEncoder {
             if best == nil || c.bytes < best!.bytes { best = c }
         }
         let median = pct(0.5)
-        consider(costForThresholds([median]))
+        consider(try costForThresholds([median]))
         let q1 = pct(0.25), q2 = pct(0.5), q3 = pct(0.75)
-        if q1 < q2, q2 < q3 { consider(costForThresholds([q1, q2, q3])) }
+        if q1 < q2, q2 < q3 { consider(try costForThresholds([q1, q2, q3])) }
         let oct = (1...7).map { pct(Double($0) / 8.0) }
         if zip(oct, oct.dropFirst()).allSatisfy({ $0 < $1 }) {
-            consider(costForThresholds(oct))
+            consider(try costForThresholds(oct))
         }
         // Learned (entropy-optimal) 2/4/8-bin splits, cost-gated alongside
         // the fixed percentile sets. Each is skipped when it matches the
@@ -2224,10 +2228,10 @@ package enum SpecModularEncoder {
             let isFixed = (l.count == 1 && l == [median])
                 || (l.count == 3 && l == [q1, q2, q3])
                 || (l.count == 7 && l == oct)
-            if !isFixed { consider(costForThresholds(l)) }
+            if !isFixed { consider(try costForThresholds(l)) }
         }
         guard let win = best else { return nil }
-        return emitMultiContextSection(
+        return try emitMultiContextSection(
             tree: win.tree, numContexts: win.n, ordered: win.ordered,
             header: win.header, codebook: win.codebook,
             transforms: transforms)
@@ -2524,7 +2528,14 @@ package enum SpecModularEncoder {
         // tree learner. Keeping only activity saves 28 bytes per sample on
         // 64-bit hosts without changing the predictor or candidate ordering.
         let propCount = includeTreeProperties ? 6 : 1
-        let n = width * height * channels.count
+        let perChannel = try ScalarOperationBudget.product(width, height)
+        let workspace = try ModularEffortWork.propertyWorkspace(
+            width: width, height: height, channels: channels.count, tree: includeTreeProperties)
+        guard channels.allSatisfy({ $0.count == perChannel }) else {
+            throw ScalarModularError.invalidInput("Incompatible Modular property planes")
+        }
+        let n = try ScalarOperationBudget.product(perChannel, channels.count)
+        try ScalarEncodingWork.current?.budget.reserveWorkspace(workspace)
         var propsFlat = [Int32](repeating: 0, count: n * propCount)
         var tokens = [UInt32](repeating: 0, count: n)
         var tokBucket = [Int](repeating: 0, count: includeTreeProperties ? n : 0)
@@ -2646,12 +2657,13 @@ package enum SpecModularEncoder {
         var ordered: [(ctx: Int, val: UInt32)] = []
         ordered.reserveCapacity(n)
         for i in 0..<n {
+            if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
             let b = i * propCount
             for k in 0..<propCount { props16[Int(propIndices[k])] = propsFlat[b + k] }
             guard let leaf = try? tree.walk(properties: props16) else { return nil }
             ordered.append((leaf.leafId, tokens[i]))
         }
-        return assembleMultiContextSection(
+        return try assembleMultiContextSection(
             tree: tree, numContexts: numCtx, ordered: ordered, postCfg: postCfg,
             transforms: transforms)
     }
@@ -2695,12 +2707,12 @@ package enum SpecModularEncoder {
 
         // rANS candidate (on-wire quantised distribution).
         var ansCand: (EntropySectionHeader, MultiClusterCodebook)?
-        if let dist = try? ANSDistribution(
-            rawFrequencies: histo.map { UInt32(max(0, $0)) }) {
+        if let dist = try ModularEffortWork.candidate({ try ANSDistribution(
+            rawFrequencies: histo.map { UInt32(max(0, $0)) }) }) {
             let normalised = dist.frequencies.map { Int32($0) }
             var scratch = BitWriter()
-            if let wire = try? SpecANSDistribution.writeHistogram(
-                normalised, to: &scratch) {
+            if let wire = try ModularEffortWork.candidate({ try SpecANSDistribution.writeHistogram(
+                normalised, to: &scratch) }) {
                 var logAlpha = 5
                 while (1 << logAlpha) < wire.count && logAlpha < 8 {
                     logAlpha += 1
@@ -2723,19 +2735,19 @@ package enum SpecModularEncoder {
         // the same writers the real section uses.
         func headerCodebookBits(
             _ h: EntropySectionHeader, _ c: MultiClusterCodebook
-        ) -> Int {
+        ) throws -> Int {
             var w = BitWriter()
             do {
                 try h.write(to: &w, numContexts: 1)
                 try c.write(to: &w, header: h)
-            } catch { return Int.max }
+            } catch { try ModularEffortWork.rethrowPolicyFailure(error); return Int.max }
             return w.bitCount
         }
 
         // Huffman: stateless, so token-stream bits are exactly
         // Σ histo[s]·codeLen[s] + Σ extraNBits. A counted symbol with no
         // codeword would have thrown in emission — treat as unencodable.
-        var huffBits = headerCodebookBits(huffHeader, huffCodebook)
+        var huffBits = try headerCodebookBits(huffHeader, huffCodebook)
         if huffBits != Int.max {
             let lens = huffTable.lengths
             var streamBits = totalExtraNBits
@@ -2754,10 +2766,10 @@ package enum SpecModularEncoder {
         // the walk runs over the flattened symbol sequence.
         var ansBits = Int.max
         if let cand = ansCand {
-            let hc = headerCodebookBits(cand.0, cand.1)
+            let hc = try headerCodebookBits(cand.0, cand.1)
             if hc != Int.max,
-               let aw = try? ANSTokenStreamWriter(
-                   header: cand.0, codebook: cand.1) {
+               let aw = try ModularEffortWork.candidate({ try ANSTokenStreamWriter(
+                   header: cand.0, codebook: cand.1) }) {
                 let all: [UInt16]
                 if symbolsPerChannel.count == 1 {
                     all = symbolsPerChannel[0]
@@ -2768,7 +2780,7 @@ package enum SpecModularEncoder {
                     for s in symbolsPerChannel { flat.append(contentsOf: s) }
                     all = flat
                 }
-                if let r = try? aw.refillWordCount(symbols: all) {
+                if let r = try ModularEffortWork.candidate({ try aw.refillWordCount(symbols: all) }) {
                     ansBits = hc + 32 + 16 * r + totalExtraNBits
                 }
             }
