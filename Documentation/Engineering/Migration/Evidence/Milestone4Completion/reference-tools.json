@@ -1,0 +1,70 @@
+{
+  "records": [
+    {
+      "command": [
+        "xcrun",
+        "clang",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/opt/homebrew/include",
+        "-L/opt/homebrew/lib",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/TestSupport/animation-pixel-oracle.c",
+        "-ljxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/final/animation-pixel-oracle"
+      ],
+      "exit": 0,
+      "sourceSHA256": "5f846f2d32882cd4be34961aa2ad0d0645d71f1d4e17e442ed710b898185cbae",
+      "binarySHA256": "3ea54e5014ea40752e8d41944daa2889f5d976e80d548a4f04056a17da0c4079"
+    },
+    {
+      "command": [
+        "xcrun",
+        "clang",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I/opt/homebrew/include",
+        "-L/opt/homebrew/lib",
+        "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/TestSupport/modular-profile-oracle.c",
+        "-ljxl",
+        "-o",
+        "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/final/modular-profile-oracle"
+      ],
+      "exit": 0,
+      "sourceSHA256": "b388400d6aefc1ddb1b68efd310528404223ce956d98fe3a73474a02942feee0",
+      "binarySHA256": "eb9af3579126fca8f92088fc415c9c1b41734286f79595b3679e6ca9a3a7750b"
+    }
+  ],
+  "versionCommand": [
+    "/opt/homebrew/bin/djxl",
+    "--version"
+  ],
+  "version": "djxl v0.12.0 0.12.0 [_NEON_BF16_,NEON] {AppleClang 21.0.0.21000099}\nCopyright (c) the JPEG XL Project\n",
+  "initialAnimationBuildFailure": "Missing jxl/encode.h declaration; header added, strict rebuild passed.",
+  "coefficientOracle": {
+    "source": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/TestSupport/jpeg-coefficient-oracle.c",
+    "sourceSHA256": "1e039193d952d94e76d0e692a314ecd417881cf25896f83d8681f9901fbeb3aa",
+    "binarySHA256": "0c690635e805d1b29158491146bf2b4aea452446dc8cde68e98d6bb263cde23a",
+    "command": [
+      "xcrun",
+      "clang",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/opt/homebrew/opt/jpeg-turbo/include",
+      "-L/opt/homebrew/opt/jpeg-turbo/lib",
+      "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Scripts/TestSupport/jpeg-coefficient-oracle.c",
+      "-ljpeg",
+      "-o",
+      "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/final/jpeg-coefficient-oracle"
+    ],
+    "exit": 0,
+    "stderr": ""
+  },
+  "jpegVersion": "libjpeg-turbo version 3.2.0 (build 20260630)"
+}

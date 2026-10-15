@@ -171,3 +171,23 @@ meanings and extra frames reject. Headers are bounded to 16 KiB, numeric
 tokens to 64 bytes, and PAM to 64 lines of at most 1024 bytes each.
 After the P5/P6 MAXVAL exactly one whitespace delimiter precedes the raster;
 any subsequent whitespace or hash byte is sample data.
+
+.SH ANIMATION AND CONTAINERS
+Encode accepts --container codestream|iso. Repeat -i with named images for an
+animation, or specify --animation for a timed singleton. Use --frame-duration
+TICKS (one value or a comma list), --ticks-per-second NUMERATOR/DENOMINATOR,
+and --loop-count N. Defaults: 10 ticks, 100/1, indefinite loops. --max-frames
+defaults to 64 and is capped at 256.
+.PP
+Decode --frame INDEX selects a zero-based frame. Decode --all-frames requires
+a new output directory, writes numbered frame files and timing.json, and
+refuses overwrite/stdout. Files are staged before exclusive publication; a
+failure removes only this transaction's entries. Directory publication is not
+atomic as a group. Inspect/validate --all-frames reports the exact timeline;
+only validate decodes pixels.
+.SH JPEG PIXEL INPUT
+Explicit --input-format jpeg-srgb enables bounded native 8-bit Huffman
+grey/RGB DCT JPEG pixel decoding, with scalar IDCT and nearest chroma
+upsampling. ICC/Exif, CMYK, 12-bit, SOF3 and arithmetic profiles reject. Use
+pnm-srgb for pixel export. This path interprets samples as sRGB and is
+distinct from original-JPEG byte preservation through transcode.

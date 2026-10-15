@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## 2026-10-14 — Milestone 4 implementation completion work
+
+Added explicit pixel-container output, bounded native JPEG pixel decoding, CLI independent-frame animation with exact timing and safe export, and extended Modular layout/group and simulator qualification tools. Final local debug/release, ASan/TSan, independent CLI/reference and available simulator checks passed after implementation. Controlled comparisons and remaining stable-release gates are recorded; hosted CI is pending. See [scope, sequence and final gates](Documentation/Engineering/Migration/MILESTONE4_COMPLETION.md). JXLSwift remains the production route.
+
 ## Modular profile and concurrent ownership qualification — 14 October 2026
 
 Extend the existing effort matrix with 17 synthetic precision/alpha/group-edge profiles, four worker-budget refusal cases, twelve concurrent budget cases and six public owning-source lifetime cases. Debug, release, ASan and TSan each pass 4 declarations / 90 cases with 74 exact independent decodes per configuration. Three ordinary-build concurrent probes separately record allocator/RSS observations and conservative cumulative admission. Initial budget and sandbox failures remain in the evidence. Production sources and public effort 3 are unchanged; this is a bounded qualification slice, not Milestone 4 completion. See [scope, measurements and remaining gates](Documentation/Engineering/Migration/MODULAR_PROFILE_QUALIFICATION.md).

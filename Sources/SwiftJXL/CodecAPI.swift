@@ -31,9 +31,15 @@ public struct VarDCTEncodingOptions: Sendable, Equatable {
 }
 /// Modular uses fixed effort-3 lossless settings. VarDCT controls apply only
 /// with EncoderConfiguration.mode == .lossy, never implicitly to lossless input.
+public enum PixelContainerFormat: Sendable, Equatable {
+    case codestream, iso
+}
 public struct CodecOptions: Sendable, Equatable {
     public let varDCT: VarDCTEncodingOptions?
-    public init(varDCT: VarDCTEncodingOptions? = nil) { self.varDCT = varDCT }
+    public let container: PixelContainerFormat
+    public init(varDCT: VarDCTEncodingOptions? = nil, container: PixelContainerFormat = .codestream) {
+        self.varDCT = varDCT; self.container = container
+    }
 }
 public struct EncoderConfiguration: Sendable, Equatable {
     public let mode: CompressionMode
@@ -190,12 +196,13 @@ public struct Encoder: Sendable {
                         alphaAssociated: image.descriptor.alpha == .absent ? nil : image.descriptor.alpha == .premultiplied,
                         renderingIntent: intent, transferFunction: transfer, budget: budget)
                 }
+                let packaged = try packagePixelCodestream(data, format: configuration.codecOptions.container, budget: budget)
                 try budget.checkpoint()
                 try progress(options.progress, .completed, completed: 1)
                 try budget.checkpoint()
-                return EncodedImage(data: data, encoding: .init(format: "jpeg-xl", mode: configuration.mode),
+                return EncodedImage(data: packaged.data, encoding: .init(format: "jpeg-xl", mode: configuration.mode),
                     report: scalarReport(options.executionPolicy, start: start,
-                        fidelity: configuration.mode == .lossless ? .exactSamples : .lossy))
+                        fidelity: configuration.mode == .lossless ? .exactSamples : .lossy, copyEvents: packaged.copies))
             }
         } onCancel: {
             cancellation.cancel()
@@ -441,7 +448,7 @@ private func decodedLayouts(_ d: ImageDescriptor, frame: PreparedPixelFrame) thr
     }
     return try channelLayouts(d, roles: roles)
 }
-private func channelLayouts(_ d: ImageDescriptor, roles: [ComponentRole]) throws -> [ModularChannelLayout] {
+func channelLayouts(_ d: ImageDescriptor, roles: [ComponentRole]) throws -> [ModularChannelLayout] {
     // The validated descriptor maps each component exactly once and prevents
     // plane overlap. Resolve roles explicitly, including BGR and reversed planes.
     return try roles.map { role in
@@ -487,12 +494,13 @@ private func progress(_ callback: (@Sendable (ProgressUpdate) -> Void)?,
     try Task.checkCancellation()
 }
 private func scalarReport(_ policy: ExecutionPolicy, start: ContinuousClock.Instant,
-                          fidelity: Fidelity = .exactSamples) -> OperationReport {
+                          fidelity: Fidelity = .exactSamples, copyEvents: [CopyEvent] = []) -> OperationReport {
     let elapsed = start.duration(to: .now).components
     let fallback: String?
     if case .preferred(.accelerated) = policy { fallback = "Accelerated backend unavailable; used scalar CPU." }
     else { fallback = nil }
     return OperationReport(backend: .scalarCPU, fallbackReason: fallback, fidelity: fidelity,
+        copyEvents: copyEvents,
         elapsedSeconds: Double(elapsed.seconds) + Double(elapsed.attoseconds) / 1e18)
 }
 private func validateOperation(_ policy: ExecutionPolicy) throws {

@@ -1,0 +1,1779 @@
+{
+  "analysis": {
+    "method": "Five warm-ups and ten timed samples in each process; two interleaved processes per implementation per round. Triggered rows repeat in reverse order. Regressions require the same threshold on both rounds. Spread is retained; no significance claim from a single median.",
+    "baselineRoles": {
+      "predecessor": "JXLSwift 57e81cb9e2411d1efac435b429a306a031744c1e",
+      "previousSuccessor": "PR31 e3a921012fe688ebe85e6275ffd7730abe1abccd"
+    },
+    "comparisons": {
+      "predecessor": {
+        "rows": 48,
+        "pairedRows": 37,
+        "candidateOnly": [
+          "vardct-bicycles-crop-d0.5/decode",
+          "vardct-bicycles-crop-d1/decode",
+          "vardct-bicycles-crop-d3/decode",
+          "vardct-rgba16-small-d0.5/decode",
+          "vardct-rgba16-small-d1/decode",
+          "vardct-rgba16-small-d3/decode",
+          "vardct-animation-animation-crop/decode",
+          "vardct-animation-rgba16-small/decode",
+          "native-bicycles-progressive/forward",
+          "native-bicycles-progressive/reverse",
+          "jpeg-pixels-bicycles-progressive/decode"
+        ],
+        "confirmedLatencyTriggers": [
+          {
+            "case": "modular-bicycles/encode",
+            "latencyChangePercent": [
+              115.17476938040846,
+              113.31117580737443
+            ],
+            "rssChangePercent": [
+              -42.74511381002172,
+              -43.71689937409725
+            ],
+            "candidateMedianMS": 145.8395625,
+            "baselineMedianMS": 68.369396,
+            "candidateRSSBytes": 114917376.0,
+            "baselineRSSBytes": 204177408.0
+          },
+          {
+            "case": "modular-bicycles/decode",
+            "latencyChangePercent": [
+              116.52673378619363,
+              113.36485029509689
+            ],
+            "rssChangePercent": [
+              -39.41826796525402,
+              -38.55218855218855
+            ],
+            "candidateMedianMS": 29.400521,
+            "baselineMedianMS": 13.7794585,
+            "candidateRSSBytes": 113623040.0,
+            "baselineRSSBytes": 184909824.0
+          },
+          {
+            "case": "modular-grayscale/encode",
+            "latencyChangePercent": [
+              30.838042686095,
+              26.61939379763234
+            ],
+            "rssChangePercent": [
+              -2.02101859337106,
+              -2.417405318291699
+            ],
+            "candidateMedianMS": 2.2410835000000002,
+            "baselineMedianMS": 1.769937,
+            "candidateRSSBytes": 9920512.0,
+            "baselineRSSBytes": 10166272.0
+          },
+          {
+            "case": "modular-rgb8-noise512/encode",
+            "latencyChangePercent": [
+              24.873577214906284,
+              24.52802461127488
+            ],
+            "rssChangePercent": [
+              -7.34407848633497,
+              -7.3020322354589995
+            ],
+            "candidateMedianMS": 56.8721045,
+            "baselineMedianMS": 45.670125,
+            "candidateRSSBytes": 54181888.0,
+            "baselineRSSBytes": 58449920.0
+          },
+          {
+            "case": "modular-rgb8-noise512/decode",
+            "latencyChangePercent": [
+              10.081801436333993,
+              8.380177251903053
+            ],
+            "rssChangePercent": [
+              -7.095709570957098,
+              -7.1107110711071115
+            ],
+            "candidateMedianMS": 15.307458,
+            "baselineMedianMS": 14.123854,
+            "candidateRSSBytes": 50724864.0,
+            "baselineRSSBytes": 54607872.0
+          },
+          {
+            "case": "modular-grey16-large/encode",
+            "latencyChangePercent": [
+              192.1900993013482,
+              191.55050698471138
+            ],
+            "rssChangePercent": [
+              -43.16912309038293,
+              -45.94513715710723
+            ],
+            "candidateMedianMS": 216.584854,
+            "baselineMedianMS": 74.28725,
+            "candidateRSSBytes": 133177344.0,
+            "baselineRSSBytes": 246374400.0
+          },
+          {
+            "case": "modular-grey16-large/decode",
+            "latencyChangePercent": [
+              316.4033915611393,
+              316.19399714715905
+            ],
+            "rssChangePercent": [
+              -45.98696163300203,
+              -46.27785848421501
+            ],
+            "candidateMedianMS": 52.5195205,
+            "baselineMedianMS": 12.619,
+            "candidateRSSBytes": 124207104.0,
+            "baselineRSSBytes": 231202816.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d0.5/encode",
+            "latencyChangePercent": [
+              316.90513205198,
+              317.529047211748
+            ],
+            "rssChangePercent": [
+              13.397277227722771,
+              13.269409217445105
+            ],
+            "candidateMedianMS": 708.7328545,
+            "baselineMedianMS": 169.7445625,
+            "candidateRSSBytes": 29999104.0,
+            "baselineRSSBytes": 26484736.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d1/encode",
+            "latencyChangePercent": [
+              338.5922647440094,
+              340.785683319613
+            ],
+            "rssChangePercent": [
+              13.818860877684402,
+              23.78580323785804
+            ],
+            "candidateMedianMS": 671.307229,
+            "baselineMedianMS": 152.297875,
+            "candidateRSSBytes": 32571392.0,
+            "baselineRSSBytes": 26312704.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d3/encode",
+            "latencyChangePercent": [
+              409.03721607432647,
+              409.6723061583882
+            ],
+            "rssChangePercent": [
+              9.338298481810359,
+              14.201367308887502
+            ],
+            "candidateMedianMS": 582.6088545,
+            "baselineMedianMS": 114.310479,
+            "candidateRSSBytes": 30105600.0,
+            "baselineRSSBytes": 26361856.0
+          },
+          {
+            "case": "vardct-grayscale-d0.5/encode",
+            "latencyChangePercent": [
+              562.3609263660472,
+              541.0961730411123
+            ],
+            "rssChangePercent": [
+              -1.5852047556142668,
+              4.341736694677878
+            ],
+            "candidateMedianMS": 70.50441699999999,
+            "baselineMedianMS": 10.997479,
+            "candidateRSSBytes": 12206080.0,
+            "baselineRSSBytes": 11698176.0
+          },
+          {
+            "case": "vardct-grayscale-d0.5/decode",
+            "latencyChangePercent": [
+              66.15380987094044,
+              63.82776511340524
+            ],
+            "rssChangePercent": [
+              1.8181818181818077,
+              2.027972027972025
+            ],
+            "candidateMedianMS": 8.1612505,
+            "baselineMedianMS": 4.981604,
+            "candidateRSSBytes": 11952128.0,
+            "baselineRSSBytes": 11714560.0
+          },
+          {
+            "case": "vardct-grayscale-d1/encode",
+            "latencyChangePercent": [
+              548.513888320991,
+              545.0203768114966
+            ],
+            "rssChangePercent": [
+              3.1900138696255187,
+              2.843273231622745
+            ],
+            "candidateMedianMS": 70.005,
+            "baselineMedianMS": 10.8531455,
+            "candidateRSSBytes": 12148736.0,
+            "baselineRSSBytes": 11812864.0
+          },
+          {
+            "case": "vardct-grayscale-d1/decode",
+            "latencyChangePercent": [
+              83.01199761105069,
+              90.31801165536154
+            ],
+            "rssChangePercent": [
+              -2.708058124174373,
+              1.459346768589298
+            ],
+            "candidateMedianMS": 9.1793955,
+            "baselineMedianMS": 4.823188,
+            "candidateRSSBytes": 11960320.0,
+            "baselineRSSBytes": 11788288.0
+          },
+          {
+            "case": "vardct-grayscale-d3/encode",
+            "latencyChangePercent": [
+              544.9302024686231,
+              544.7099006391566
+            ],
+            "rssChangePercent": [
+              2.646239554317553,
+              0.20283975659229903
+            ],
+            "candidateMedianMS": 70.48210399999999,
+            "baselineMedianMS": 10.932375,
+            "candidateRSSBytes": 12140544.0,
+            "baselineRSSBytes": 12115968.0
+          },
+          {
+            "case": "vardct-grayscale-d3/decode",
+            "latencyChangePercent": [
+              95.69269592628021,
+              93.47449572807697
+            ],
+            "rssChangePercent": [
+              0.1394700139470073,
+              0.20920502092049986
+            ],
+            "candidateMedianMS": 9.642083,
+            "baselineMedianMS": 4.9836455,
+            "candidateRSSBytes": 11771904.0,
+            "baselineRSSBytes": 11747328.0
+          },
+          {
+            "case": "vardct-rgba16-small-d0.5/encode",
+            "latencyChangePercent": [
+              81.21250407188141,
+              78.58255860317726
+            ],
+            "rssChangePercent": [
+              1.5706806282722585,
+              1.919720767888311
+            ],
+            "candidateMedianMS": 0.680771,
+            "baselineMedianMS": 0.381208,
+            "candidateRSSBytes": 9568256.0,
+            "baselineRSSBytes": 9388032.0
+          },
+          {
+            "case": "vardct-rgba16-small-d1/encode",
+            "latencyChangePercent": [
+              83.76487886382624,
+              84.31599932421014
+            ],
+            "rssChangePercent": [
+              1.221640488656206,
+              1.308900523560208
+            ],
+            "candidateMedianMS": 0.681854,
+            "baselineMedianMS": 0.36993750000000003,
+            "candidateRSSBytes": 9510912.0,
+            "baselineRSSBytes": 9388032.0
+          },
+          {
+            "case": "vardct-rgba16-small-d3/encode",
+            "latencyChangePercent": [
+              85.19994200688399,
+              84.85053759951539
+            ],
+            "rssChangePercent": [
+              1.5706806282722585,
+              1.4834205933682343
+            ],
+            "candidateMedianMS": 0.6835625,
+            "baselineMedianMS": 0.369792,
+            "candidateRSSBytes": 9527296.0,
+            "baselineRSSBytes": 9388032.0
+          },
+          {
+            "case": "vardct-animation-animation-crop/encode",
+            "latencyChangePercent": [
+              320.51586711937705,
+              321.9521166736912
+            ],
+            "rssChangePercent": [
+              -3.0518097941802713,
+              0.4964539007092261
+            ],
+            "candidateMedianMS": 65.49479149999999,
+            "baselineMedianMS": 15.521854,
+            "candidateRSSBytes": 11608064.0,
+            "baselineRSSBytes": 11550720.0
+          },
+          {
+            "case": "vardct-animation-rgba16-small/encode",
+            "latencyChangePercent": [
+              87.80007797187483,
+              81.38903603651137
+            ],
+            "rssChangePercent": [
+              4.820333041191938,
+              4.2424242424242475
+            ],
+            "candidateMedianMS": 2.1486665,
+            "baselineMedianMS": 1.1845625,
+            "candidateRSSBytes": 9863168.0,
+            "baselineRSSBytes": 9461760.0
+          }
+        ],
+        "confirmedRSSTriggers": [
+          {
+            "case": "modular-grey16-odd/encode",
+            "latencyChangePercent": [
+              5.141150491280544,
+              3.1819025757710007
+            ],
+            "rssChangePercent": [
+              6.059735784032161,
+              5.970149253731338
+            ],
+            "candidateMedianMS": 14.9937915,
+            "baselineMedianMS": 14.531416,
+            "candidateRSSBytes": 30244864.0,
+            "baselineRSSBytes": 28540928.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d0.5/encode",
+            "latencyChangePercent": [
+              316.90513205198,
+              317.529047211748
+            ],
+            "rssChangePercent": [
+              13.397277227722771,
+              13.269409217445105
+            ],
+            "candidateMedianMS": 708.7328545,
+            "baselineMedianMS": 169.7445625,
+            "candidateRSSBytes": 29999104.0,
+            "baselineRSSBytes": 26484736.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d1/encode",
+            "latencyChangePercent": [
+              338.5922647440094,
+              340.785683319613
+            ],
+            "rssChangePercent": [
+              13.818860877684402,
+              23.78580323785804
+            ],
+            "candidateMedianMS": 671.307229,
+            "baselineMedianMS": 152.297875,
+            "candidateRSSBytes": 32571392.0,
+            "baselineRSSBytes": 26312704.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d3/encode",
+            "latencyChangePercent": [
+              409.03721607432647,
+              409.6723061583882
+            ],
+            "rssChangePercent": [
+              9.338298481810359,
+              14.201367308887502
+            ],
+            "candidateMedianMS": 582.6088545,
+            "baselineMedianMS": 114.310479,
+            "candidateRSSBytes": 30105600.0,
+            "baselineRSSBytes": 26361856.0
+          }
+        ],
+        "thermalExceptions": [],
+        "allPairedRows": [
+          {
+            "case": "modular-bicycles/encode",
+            "latencyChangePercent": [
+              115.17476938040846,
+              113.31117580737443
+            ],
+            "rssChangePercent": [
+              -42.74511381002172,
+              -43.71689937409725
+            ],
+            "candidateMedianMS": 145.8395625,
+            "baselineMedianMS": 68.369396,
+            "candidateRSSBytes": 114917376.0,
+            "baselineRSSBytes": 204177408.0
+          },
+          {
+            "case": "modular-bicycles/decode",
+            "latencyChangePercent": [
+              116.52673378619363,
+              113.36485029509689
+            ],
+            "rssChangePercent": [
+              -39.41826796525402,
+              -38.55218855218855
+            ],
+            "candidateMedianMS": 29.400521,
+            "baselineMedianMS": 13.7794585,
+            "candidateRSSBytes": 113623040.0,
+            "baselineRSSBytes": 184909824.0
+          },
+          {
+            "case": "modular-grayscale/encode",
+            "latencyChangePercent": [
+              30.838042686095,
+              26.61939379763234
+            ],
+            "rssChangePercent": [
+              -2.02101859337106,
+              -2.417405318291699
+            ],
+            "candidateMedianMS": 2.2410835000000002,
+            "baselineMedianMS": 1.769937,
+            "candidateRSSBytes": 9920512.0,
+            "baselineRSSBytes": 10166272.0
+          },
+          {
+            "case": "modular-grayscale/decode",
+            "latencyChangePercent": [
+              -34.53402925825186
+            ],
+            "rssChangePercent": [
+              -2.5167785234899376
+            ],
+            "candidateMedianMS": 0.5565835,
+            "baselineMedianMS": 0.8501875000000001,
+            "candidateRSSBytes": 9519104.0,
+            "baselineRSSBytes": 9764864.0
+          },
+          {
+            "case": "modular-rgba16-small/encode",
+            "latencyChangePercent": [
+              -9.28260139587449
+            ],
+            "rssChangePercent": [
+              -2.6732673267326756
+            ],
+            "candidateMedianMS": 0.125625,
+            "baselineMedianMS": 0.1384795,
+            "candidateRSSBytes": 8052736.0,
+            "baselineRSSBytes": 8273920.0
+          },
+          {
+            "case": "modular-rgba16-small/decode",
+            "latencyChangePercent": [
+              -91.60696457508666
+            ],
+            "rssChangePercent": [
+              -1.8181818181818188
+            ],
+            "candidateMedianMS": 0.0334585,
+            "baselineMedianMS": 0.398646,
+            "candidateRSSBytes": 7962624.0,
+            "baselineRSSBytes": 8110080.0
+          },
+          {
+            "case": "modular-rgb8-noise512/encode",
+            "latencyChangePercent": [
+              24.873577214906284,
+              24.52802461127488
+            ],
+            "rssChangePercent": [
+              -7.34407848633497,
+              -7.3020322354589995
+            ],
+            "candidateMedianMS": 56.8721045,
+            "baselineMedianMS": 45.670125,
+            "candidateRSSBytes": 54181888.0,
+            "baselineRSSBytes": 58449920.0
+          },
+          {
+            "case": "modular-rgb8-noise512/decode",
+            "latencyChangePercent": [
+              10.081801436333993,
+              8.380177251903053
+            ],
+            "rssChangePercent": [
+              -7.095709570957098,
+              -7.1107110711071115
+            ],
+            "candidateMedianMS": 15.307458,
+            "baselineMedianMS": 14.123854,
+            "candidateRSSBytes": 50724864.0,
+            "baselineRSSBytes": 54607872.0
+          },
+          {
+            "case": "modular-grey16-odd/encode",
+            "latencyChangePercent": [
+              5.141150491280544,
+              3.1819025757710007
+            ],
+            "rssChangePercent": [
+              6.059735784032161,
+              5.970149253731338
+            ],
+            "candidateMedianMS": 14.9937915,
+            "baselineMedianMS": 14.531416,
+            "candidateRSSBytes": 30244864.0,
+            "baselineRSSBytes": 28540928.0
+          },
+          {
+            "case": "modular-grey16-odd/decode",
+            "latencyChangePercent": [
+              7.513957736474963,
+              -0.007187890929249985
+            ],
+            "rssChangePercent": [
+              2.3990282417248654,
+              -0.2006880733944949
+            ],
+            "candidateMedianMS": 4.6324585,
+            "baselineMedianMS": 4.6327915,
+            "candidateRSSBytes": 28516352.0,
+            "baselineRSSBytes": 28573696.0
+          },
+          {
+            "case": "modular-grey16-large/encode",
+            "latencyChangePercent": [
+              192.1900993013482,
+              191.55050698471138
+            ],
+            "rssChangePercent": [
+              -43.16912309038293,
+              -45.94513715710723
+            ],
+            "candidateMedianMS": 216.584854,
+            "baselineMedianMS": 74.28725,
+            "candidateRSSBytes": 133177344.0,
+            "baselineRSSBytes": 246374400.0
+          },
+          {
+            "case": "modular-grey16-large/decode",
+            "latencyChangePercent": [
+              316.4033915611393,
+              316.19399714715905
+            ],
+            "rssChangePercent": [
+              -45.98696163300203,
+              -46.27785848421501
+            ],
+            "candidateMedianMS": 52.5195205,
+            "baselineMedianMS": 12.619,
+            "candidateRSSBytes": 124207104.0,
+            "baselineRSSBytes": 231202816.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d0.5/encode",
+            "latencyChangePercent": [
+              316.90513205198,
+              317.529047211748
+            ],
+            "rssChangePercent": [
+              13.397277227722771,
+              13.269409217445105
+            ],
+            "candidateMedianMS": 708.7328545,
+            "baselineMedianMS": 169.7445625,
+            "candidateRSSBytes": 29999104.0,
+            "baselineRSSBytes": 26484736.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d1/encode",
+            "latencyChangePercent": [
+              338.5922647440094,
+              340.785683319613
+            ],
+            "rssChangePercent": [
+              13.818860877684402,
+              23.78580323785804
+            ],
+            "candidateMedianMS": 671.307229,
+            "baselineMedianMS": 152.297875,
+            "candidateRSSBytes": 32571392.0,
+            "baselineRSSBytes": 26312704.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d3/encode",
+            "latencyChangePercent": [
+              409.03721607432647,
+              409.6723061583882
+            ],
+            "rssChangePercent": [
+              9.338298481810359,
+              14.201367308887502
+            ],
+            "candidateMedianMS": 582.6088545,
+            "baselineMedianMS": 114.310479,
+            "candidateRSSBytes": 30105600.0,
+            "baselineRSSBytes": 26361856.0
+          },
+          {
+            "case": "vardct-grayscale-d0.5/encode",
+            "latencyChangePercent": [
+              562.3609263660472,
+              541.0961730411123
+            ],
+            "rssChangePercent": [
+              -1.5852047556142668,
+              4.341736694677878
+            ],
+            "candidateMedianMS": 70.50441699999999,
+            "baselineMedianMS": 10.997479,
+            "candidateRSSBytes": 12206080.0,
+            "baselineRSSBytes": 11698176.0
+          },
+          {
+            "case": "vardct-grayscale-d0.5/decode",
+            "latencyChangePercent": [
+              66.15380987094044,
+              63.82776511340524
+            ],
+            "rssChangePercent": [
+              1.8181818181818077,
+              2.027972027972025
+            ],
+            "candidateMedianMS": 8.1612505,
+            "baselineMedianMS": 4.981604,
+            "candidateRSSBytes": 11952128.0,
+            "baselineRSSBytes": 11714560.0
+          },
+          {
+            "case": "vardct-grayscale-d1/encode",
+            "latencyChangePercent": [
+              548.513888320991,
+              545.0203768114966
+            ],
+            "rssChangePercent": [
+              3.1900138696255187,
+              2.843273231622745
+            ],
+            "candidateMedianMS": 70.005,
+            "baselineMedianMS": 10.8531455,
+            "candidateRSSBytes": 12148736.0,
+            "baselineRSSBytes": 11812864.0
+          },
+          {
+            "case": "vardct-grayscale-d1/decode",
+            "latencyChangePercent": [
+              83.01199761105069,
+              90.31801165536154
+            ],
+            "rssChangePercent": [
+              -2.708058124174373,
+              1.459346768589298
+            ],
+            "candidateMedianMS": 9.1793955,
+            "baselineMedianMS": 4.823188,
+            "candidateRSSBytes": 11960320.0,
+            "baselineRSSBytes": 11788288.0
+          },
+          {
+            "case": "vardct-grayscale-d3/encode",
+            "latencyChangePercent": [
+              544.9302024686231,
+              544.7099006391566
+            ],
+            "rssChangePercent": [
+              2.646239554317553,
+              0.20283975659229903
+            ],
+            "candidateMedianMS": 70.48210399999999,
+            "baselineMedianMS": 10.932375,
+            "candidateRSSBytes": 12140544.0,
+            "baselineRSSBytes": 12115968.0
+          },
+          {
+            "case": "vardct-grayscale-d3/decode",
+            "latencyChangePercent": [
+              95.69269592628021,
+              93.47449572807697
+            ],
+            "rssChangePercent": [
+              0.1394700139470073,
+              0.20920502092049986
+            ],
+            "candidateMedianMS": 9.642083,
+            "baselineMedianMS": 4.9836455,
+            "candidateRSSBytes": 11771904.0,
+            "baselineRSSBytes": 11747328.0
+          },
+          {
+            "case": "vardct-rgba16-small-d0.5/encode",
+            "latencyChangePercent": [
+              81.21250407188141,
+              78.58255860317726
+            ],
+            "rssChangePercent": [
+              1.5706806282722585,
+              1.919720767888311
+            ],
+            "candidateMedianMS": 0.680771,
+            "baselineMedianMS": 0.381208,
+            "candidateRSSBytes": 9568256.0,
+            "baselineRSSBytes": 9388032.0
+          },
+          {
+            "case": "vardct-rgba16-small-d1/encode",
+            "latencyChangePercent": [
+              83.76487886382624,
+              84.31599932421014
+            ],
+            "rssChangePercent": [
+              1.221640488656206,
+              1.308900523560208
+            ],
+            "candidateMedianMS": 0.681854,
+            "baselineMedianMS": 0.36993750000000003,
+            "candidateRSSBytes": 9510912.0,
+            "baselineRSSBytes": 9388032.0
+          },
+          {
+            "case": "vardct-rgba16-small-d3/encode",
+            "latencyChangePercent": [
+              85.19994200688399,
+              84.85053759951539
+            ],
+            "rssChangePercent": [
+              1.5706806282722585,
+              1.4834205933682343
+            ],
+            "candidateMedianMS": 0.6835625,
+            "baselineMedianMS": 0.369792,
+            "candidateRSSBytes": 9527296.0,
+            "baselineRSSBytes": 9388032.0
+          },
+          {
+            "case": "modular-animation-animation-crop/encode",
+            "latencyChangePercent": [
+              -90.72132674434866
+            ],
+            "rssChangePercent": [
+              -34.84029484029484
+            ],
+            "candidateMedianMS": 5.882270999999999,
+            "baselineMedianMS": 63.3956045,
+            "candidateRSSBytes": 10862592.0,
+            "baselineRSSBytes": 16670720.0
+          },
+          {
+            "case": "modular-animation-animation-crop/decode",
+            "latencyChangePercent": [
+              -49.878941411927826
+            ],
+            "rssChangePercent": [
+              -35.08492569002123
+            ],
+            "candidateMedianMS": 1.0996454999999998,
+            "baselineMedianMS": 2.1939789999999997,
+            "candidateRSSBytes": 10018816.0,
+            "baselineRSSBytes": 15433728.0
+          },
+          {
+            "case": "vardct-animation-animation-crop/encode",
+            "latencyChangePercent": [
+              320.51586711937705,
+              321.9521166736912
+            ],
+            "rssChangePercent": [
+              -3.0518097941802713,
+              0.4964539007092261
+            ],
+            "candidateMedianMS": 65.49479149999999,
+            "baselineMedianMS": 15.521854,
+            "candidateRSSBytes": 11608064.0,
+            "baselineRSSBytes": 11550720.0
+          },
+          {
+            "case": "vardct-animation-rgba16-small/encode",
+            "latencyChangePercent": [
+              87.80007797187483,
+              81.38903603651137
+            ],
+            "rssChangePercent": [
+              4.820333041191938,
+              4.2424242424242475
+            ],
+            "candidateMedianMS": 2.1486665,
+            "baselineMedianMS": 1.1845625,
+            "candidateRSSBytes": 9863168.0,
+            "baselineRSSBytes": 9461760.0
+          },
+          {
+            "case": "native-bicycles-444/forward",
+            "latencyChangePercent": [
+              -76.93953549682107
+            ],
+            "rssChangePercent": [
+              -76.50364203954214
+            ],
+            "candidateMedianMS": 44.173271,
+            "baselineMedianMS": 191.554125,
+            "candidateRSSBytes": 18497536.0,
+            "baselineRSSBytes": 78725120.0
+          },
+          {
+            "case": "native-bicycles-444/reverse",
+            "latencyChangePercent": [
+              4.757941768949858
+            ],
+            "rssChangePercent": [
+              -43.389917695473244
+            ],
+            "candidateMedianMS": 49.1742505,
+            "baselineMedianMS": 46.940833,
+            "candidateRSSBytes": 18030592.0,
+            "baselineRSSBytes": 31850496.0
+          },
+          {
+            "case": "native-bicycles-420/forward",
+            "latencyChangePercent": [
+              -77.3181346832384
+            ],
+            "rssChangePercent": [
+              -75.49951770704148
+            ],
+            "candidateMedianMS": 34.028416500000006,
+            "baselineMedianMS": 150.024771,
+            "candidateRSSBytes": 14565376.0,
+            "baselineRSSBytes": 59449344.0
+          },
+          {
+            "case": "native-bicycles-420/reverse",
+            "latencyChangePercent": [
+              2.3436699781937076
+            ],
+            "rssChangePercent": [
+              -35.47780285929271
+            ],
+            "candidateMedianMS": 28.7263545,
+            "baselineMedianMS": 28.068521,
+            "candidateRSSBytes": 14049280.0,
+            "baselineRSSBytes": 21774336.0
+          },
+          {
+            "case": "native-grayscale/forward",
+            "latencyChangePercent": [
+              -69.79015683972614
+            ],
+            "rssChangePercent": [
+              -6.729131175468483
+            ],
+            "candidateMedianMS": 0.9930415,
+            "baselineMedianMS": 3.2871455000000003,
+            "candidateRSSBytes": 8970240.0,
+            "baselineRSSBytes": 9617408.0
+          },
+          {
+            "case": "native-grayscale/reverse",
+            "latencyChangePercent": [
+              -66.67712365323804
+            ],
+            "rssChangePercent": [
+              -11.724137931034484
+            ],
+            "candidateMedianMS": 0.751521,
+            "baselineMedianMS": 2.2552705,
+            "candidateRSSBytes": 8388608.0,
+            "baselineRSSBytes": 9502720.0
+          },
+          {
+            "case": "jpeg-pixels-bicycles-444/decode",
+            "latencyChangePercent": [
+              -26.988556975553735
+            ],
+            "rssChangePercent": [
+              -27.2235294117647
+            ],
+            "candidateMedianMS": 35.5238545,
+            "baselineMedianMS": 48.6551875,
+            "candidateRSSBytes": 25337856.0,
+            "baselineRSSBytes": 34816000.0
+          },
+          {
+            "case": "jpeg-pixels-bicycles-420/decode",
+            "latencyChangePercent": [
+              -2.8224293532509437
+            ],
+            "rssChangePercent": [
+              -31.548913043478265
+            ],
+            "candidateMedianMS": 27.100395499999998,
+            "baselineMedianMS": 27.8875005,
+            "candidateRSSBytes": 20635648.0,
+            "baselineRSSBytes": 30146560.0
+          },
+          {
+            "case": "jpeg-pixels-grayscale/decode",
+            "latencyChangePercent": [
+              -42.99559901372487
+            ],
+            "rssChangePercent": [
+              0.849256900212314
+            ],
+            "candidateMedianMS": 0.5723125,
+            "baselineMedianMS": 1.0039794999999998,
+            "candidateRSSBytes": 7782400.0,
+            "baselineRSSBytes": 7716864.0
+          }
+        ]
+      },
+      "previousSuccessor": {
+        "rows": 14,
+        "pairedRows": 14,
+        "candidateOnly": [],
+        "confirmedLatencyTriggers": [],
+        "confirmedRSSTriggers": [],
+        "thermalExceptions": [],
+        "allPairedRows": [
+          {
+            "case": "modular-bicycles/encode",
+            "latencyChangePercent": [
+              1.516204735752269
+            ],
+            "rssChangePercent": [
+              -2.192538622411122
+            ],
+            "candidateMedianMS": 149.464,
+            "baselineMedianMS": 147.23166650000002,
+            "candidateRSSBytes": 118767616.0,
+            "baselineRSSBytes": 121430016.0
+          },
+          {
+            "case": "modular-bicycles/decode",
+            "latencyChangePercent": [
+              -0.061684370101255936
+            ],
+            "rssChangePercent": [
+              0.0797216987969307
+            ],
+            "candidateMedianMS": 30.242646,
+            "baselineMedianMS": 30.2613125,
+            "candidateRSSBytes": 113123328.0,
+            "baselineRSSBytes": 113033216.0
+          },
+          {
+            "case": "modular-rgba16-small/encode",
+            "latencyChangePercent": [
+              -4.9401515151515145
+            ],
+            "rssChangePercent": [
+              -0.5055611729019249
+            ],
+            "candidateMedianMS": 0.125479,
+            "baselineMedianMS": 0.132,
+            "candidateRSSBytes": 8060928.0,
+            "baselineRSSBytes": 8101888.0
+          },
+          {
+            "case": "modular-rgba16-small/decode",
+            "latencyChangePercent": [
+              -0.43191735684388055
+            ],
+            "rssChangePercent": [
+              0.20661157024792765
+            ],
+            "candidateMedianMS": 0.0335415,
+            "baselineMedianMS": 0.033687,
+            "candidateRSSBytes": 7946240.0,
+            "baselineRSSBytes": 7929856.0
+          },
+          {
+            "case": "modular-grey16-large/encode",
+            "latencyChangePercent": [
+              -0.8250873383653601
+            ],
+            "rssChangePercent": [
+              -7.674575508827164
+            ],
+            "candidateMedianMS": 220.861208,
+            "baselineMedianMS": 222.6986665,
+            "candidateRSSBytes": 134520832.0,
+            "baselineRSSBytes": 145702912.0
+          },
+          {
+            "case": "modular-grey16-large/decode",
+            "latencyChangePercent": [
+              0.7584799139689347
+            ],
+            "rssChangePercent": [
+              0.039588281868563335
+            ],
+            "candidateMedianMS": 52.973729,
+            "baselineMedianMS": 52.574958499999994,
+            "candidateRSSBytes": 124207104.0,
+            "baselineRSSBytes": 124157952.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d1/encode",
+            "latencyChangePercent": [
+              3.671314701247952
+            ],
+            "rssChangePercent": [
+              -1.3851167843563328
+            ],
+            "candidateMedianMS": 666.1667709999999,
+            "baselineMedianMS": 642.5757915,
+            "candidateRSSBytes": 29745152.0,
+            "baselineRSSBytes": 30162944.0
+          },
+          {
+            "case": "vardct-bicycles-crop-d1/decode",
+            "latencyChangePercent": [
+              1.1697048185666858
+            ],
+            "rssChangePercent": [
+              -0.4960835509138395
+            ],
+            "candidateMedianMS": 58.443146,
+            "baselineMedianMS": 57.7674375,
+            "candidateRSSBytes": 31219712.0,
+            "baselineRSSBytes": 31375360.0
+          },
+          {
+            "case": "modular-animation-animation-crop/encode",
+            "latencyChangePercent": [
+              -1.5764325539000201
+            ],
+            "rssChangePercent": [
+              0.646203554119551
+            ],
+            "candidateMedianMS": 5.4994375,
+            "baselineMedianMS": 5.587521,
+            "candidateRSSBytes": 10207232.0,
+            "baselineRSSBytes": 10141696.0
+          },
+          {
+            "case": "modular-animation-animation-crop/decode",
+            "latencyChangePercent": [
+              -0.42258779998298746
+            ],
+            "rssChangePercent": [
+              0.08190008190007703
+            ],
+            "candidateMedianMS": 1.0947705,
+            "baselineMedianMS": 1.0994165,
+            "candidateRSSBytes": 10010624.0,
+            "baselineRSSBytes": 10002432.0
+          },
+          {
+            "case": "vardct-animation-animation-crop/encode",
+            "latencyChangePercent": [
+              3.5682335732558412
+            ],
+            "rssChangePercent": [
+              -2.0803443328550886
+            ],
+            "candidateMedianMS": 63.362354499999995,
+            "baselineMedianMS": 61.179333,
+            "candidateRSSBytes": 11182080.0,
+            "baselineRSSBytes": 11419648.0
+          },
+          {
+            "case": "vardct-animation-animation-crop/decode",
+            "latencyChangePercent": [
+              1.710815292635215
+            ],
+            "rssChangePercent": [
+              -1.8382352941176516
+            ],
+            "candidateMedianMS": 5.9179375,
+            "baselineMedianMS": 5.8183955,
+            "candidateRSSBytes": 10936320.0,
+            "baselineRSSBytes": 11141120.0
+          },
+          {
+            "case": "vardct-animation-rgba16-small/encode",
+            "latencyChangePercent": [
+              -0.46991821031502345
+            ],
+            "rssChangePercent": [
+              -0.5097706032285432
+            ],
+            "candidateMedianMS": 2.0474995,
+            "baselineMedianMS": 2.0571665,
+            "candidateRSSBytes": 9592832.0,
+            "baselineRSSBytes": 9641984.0
+          },
+          {
+            "case": "vardct-animation-rgba16-small/decode",
+            "latencyChangePercent": [
+              1.126545547997071
+            ],
+            "rssChangePercent": [
+              0.25684931506848585
+            ],
+            "candidateMedianMS": 0.2636455,
+            "baselineMedianMS": 0.2607085,
+            "candidateRSSBytes": 9592832.0,
+            "baselineRSSBytes": 9568256.0
+          }
+        ]
+      }
+    },
+    "sizeAndDistortion": [
+      {
+        "case": "modular-bicycles",
+        "family": "modular",
+        "candidateBytes": 662695,
+        "predecessorBytes": 662691,
+        "sizeChangePercent": 0.000603599566018076,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 8.033054506464306e-06,
+          "psnrDB": 150.03318933308245,
+          "encodedBytes": 662695
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 8.033054506464306e-06,
+          "psnrDB": 150.03318933308245,
+          "encodedBytes": 662691
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.0,
+          "sourcePSNRdB": null,
+          "alphaMaxLSB": 0,
+          "exactSource": true,
+          "fixtureSHA256": "6bcfe9ec00b965dd434073a803c955dac433d116236eb55ba198971868c0392c",
+          "streamSHA256": "2ad9cc7bc0b698e99c09dccdb1a1705b7210f2bfbec6dcc71a9eb18b95604161"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "modular-grayscale",
+        "family": "modular",
+        "candidateBytes": 5230,
+        "predecessorBytes": 5230,
+        "sizeChangePercent": 0.0,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 1.0808281596512088e-05,
+          "psnrDB": 147.45567058525717,
+          "encodedBytes": 5230
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 1.0808281596512088e-05,
+          "psnrDB": 147.45567058525717,
+          "encodedBytes": 5230
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.0,
+          "sourcePSNRdB": null,
+          "alphaMaxLSB": 0,
+          "exactSource": true,
+          "fixtureSHA256": "77918e281acc0d91b023ec8e40fface076ffe651f2c0895c233b8fb9f5538045",
+          "streamSHA256": "1cec3f62555d57c1d3f6f359da57dfda806e5c41b762f169b118de260fd960de"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "modular-rgba16-small",
+        "family": "modular",
+        "candidateBytes": 453,
+        "predecessorBytes": 453,
+        "sizeChangePercent": 0.0,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 0.00010156410694483178,
+          "psnrDB": 176.19466099310364,
+          "encodedBytes": 453
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 0.00010156410694483178,
+          "psnrDB": 176.19466099310364,
+          "encodedBytes": 453
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.0,
+          "sourcePSNRdB": null,
+          "alphaMaxLSB": 0,
+          "exactSource": true,
+          "fixtureSHA256": "0e05766d6419f8399705cc8e47407db34ac3e8c7fa040dc78cc9d2bef7d2decd",
+          "streamSHA256": "53fb2002a6f3adbdc921327825f3b01a8fe95b7fb886d3acf8c334d593982190"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "modular-rgb8-noise512",
+        "family": "modular",
+        "candidateBytes": 853709,
+        "predecessorBytes": 853709,
+        "sizeChangePercent": 0.0,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 9.61411092490929e-06,
+          "psnrDB": 148.4726210368954,
+          "encodedBytes": 853709
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 9.61411092490929e-06,
+          "psnrDB": 148.4726210368954,
+          "encodedBytes": 853709
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.0,
+          "sourcePSNRdB": null,
+          "alphaMaxLSB": 0,
+          "exactSource": true,
+          "fixtureSHA256": "c4df68d38d03ee7f2f5ef9b55ec158710b43b777625d376a8708d53d4be76834",
+          "streamSHA256": "2722a1c535ac0acd5a0f91d1f4976d9d51e8c021f193e16408b89e6890018b73"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "modular-grey16-odd",
+        "family": "modular",
+        "candidateBytes": 265913,
+        "predecessorBytes": 265909,
+        "sizeChangePercent": 0.0015042740185489123,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 0.0008464439724238436,
+          "psnrDB": 157.77750174128943,
+          "encodedBytes": 265913
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 0.0008464439724238436,
+          "psnrDB": 157.77750174128943,
+          "encodedBytes": 265909
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.0,
+          "sourcePSNRdB": null,
+          "alphaMaxLSB": 0,
+          "exactSource": true,
+          "fixtureSHA256": "7089994cb890cc1f1e8248f979b04b5c720f642fb4b97c67173a950bceaadacf",
+          "streamSHA256": "7187b1287a61a104a308fa903fbc7c9b383f36bb858751f1a2dd130e35321c52"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "modular-grey16-large",
+        "family": "modular",
+        "candidateBytes": 367,
+        "predecessorBytes": 363,
+        "sizeChangePercent": 1.1019283746556363,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 0.0006510317325592041,
+          "psnrDB": 160.05742292638385,
+          "encodedBytes": 367
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 0.0006510317325592041,
+          "psnrDB": 160.05742292638385,
+          "encodedBytes": 363
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.0,
+          "sourcePSNRdB": null,
+          "alphaMaxLSB": 0,
+          "exactSource": true,
+          "fixtureSHA256": "a682fad6e04e091116fcfb97760ebe824c3a439f51a111d7550dad446c7dd045",
+          "streamSHA256": "0d89226e2b4b8b559b55908c288011ada8ebddc0296659d84599286eeb913542"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "vardct-bicycles-crop-d0.5",
+        "family": "vardct",
+        "candidateBytes": 148172,
+        "predecessorBytes": 148309,
+        "sizeChangePercent": -0.09237470416495475,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 2.1621257403415015,
+          "psnrDB": 41.433184666023024,
+          "encodedBytes": 148172
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 1.3382267841925486,
+          "psnrDB": 45.60020925069358,
+          "encodedBytes": 148309
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 1,
+          "oracleRMSLSB": 0.006385118052984961,
+          "sourceColourRMSLSB": 2.1412972602379483,
+          "sourcePSNRdB": 41.517264382176336,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "809b5eb35f95199d1fbe26fa0e6f4383515581cca5bd131c2f0c67818dabf83e",
+          "streamSHA256": "0fa43eabcbb38e9f45ea3b1cdf5c3323daf54464aab06f0676f34efb5aa41c9a"
+        },
+        "pairedEncode": true,
+        "pairedDecode": false
+      },
+      {
+        "case": "vardct-bicycles-crop-d1",
+        "family": "vardct",
+        "candidateBytes": 103594,
+        "predecessorBytes": 103587,
+        "sizeChangePercent": 0.006757604718732324,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 2.7812331379416433,
+          "psnrDB": 39.24605570282506,
+          "encodedBytes": 103594
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 2.267047156256942,
+          "psnrDB": 41.021592531343465,
+          "encodedBytes": 103587
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 1,
+          "oracleRMSLSB": 0.0064841180350730275,
+          "sourceColourRMSLSB": 2.7434658369656293,
+          "sourcePSNRdB": 39.364812478486854,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "809b5eb35f95199d1fbe26fa0e6f4383515581cca5bd131c2f0c67818dabf83e",
+          "streamSHA256": "79a6ea9d5d27cd5cc2b811f7e6f8140821f6cd2379b6e861bd299ecc9ea5ffb2"
+        },
+        "pairedEncode": true,
+        "pairedDecode": false
+      },
+      {
+        "case": "vardct-bicycles-crop-d3",
+        "family": "vardct",
+        "candidateBytes": 55163,
+        "predecessorBytes": 55245,
+        "sizeChangePercent": -0.1484297221468034,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 5.870086730283853,
+          "psnrDB": 32.75791324912569,
+          "encodedBytes": 55163
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 5.516846738234078,
+          "psnrDB": 33.2969852261122,
+          "encodedBytes": 55245
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 1,
+          "oracleRMSLSB": 0.005972731032093707,
+          "sourceColourRMSLSB": 5.792550407851028,
+          "sourcePSNRdB": 32.8734071728828,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "809b5eb35f95199d1fbe26fa0e6f4383515581cca5bd131c2f0c67818dabf83e",
+          "streamSHA256": "6887d208c798402a57adefd42c09d166d50d6d5e6a8d9f8fa2d5d3e74f39b472"
+        },
+        "pairedEncode": true,
+        "pairedDecode": false
+      },
+      {
+        "case": "vardct-grayscale-d0.5",
+        "family": "vardct",
+        "candidateBytes": 2382,
+        "predecessorBytes": 2370,
+        "sizeChangePercent": 0.5063291139240533,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 0.33457193380378353,
+          "psnrDB": 57.64101347778811,
+          "encodedBytes": 2382
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 0.3313689162426502,
+          "psnrDB": 57.72456826071391,
+          "encodedBytes": 2370
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 1,
+          "oracleRMSLSB": 0.005,
+          "sourceColourRMSLSB": 0.35046397817750113,
+          "sourcePSNRdB": 57.23793588061051,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "77918e281acc0d91b023ec8e40fface076ffe651f2c0895c233b8fb9f5538045",
+          "streamSHA256": "b666275ab585d68a53b5b1b0e79bc098fea3f8dfe8c7f3e67bca3f2bbc55287a"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "vardct-grayscale-d1",
+        "family": "vardct",
+        "candidateBytes": 1676,
+        "predecessorBytes": 1991,
+        "sizeChangePercent": -15.821195379206433,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 0.41609065890994523,
+          "psnrDB": 55.74704428582194,
+          "encodedBytes": 1676
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 0.40602514772114734,
+          "psnrDB": 55.95974494805639,
+          "encodedBytes": 1991
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.46776062254106,
+          "sourcePSNRdB": 54.73033043206517,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "77918e281acc0d91b023ec8e40fface076ffe651f2c0895c233b8fb9f5538045",
+          "streamSHA256": "1605187c55739147de684b97a357c1c586babf7a7495091948b7d631e6ea809e"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "vardct-grayscale-d3",
+        "family": "vardct",
+        "candidateBytes": 1121,
+        "predecessorBytes": 1121,
+        "sizeChangePercent": 0.0,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 0.6958805864116402,
+          "psnrDB": 51.28010919324652,
+          "encodedBytes": 1121
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 0.6961817777661851,
+          "psnrDB": 51.276350575854565,
+          "encodedBytes": 1121
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.7508828137599102,
+          "sourcePSNRdB": 50.61936032288453,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "77918e281acc0d91b023ec8e40fface076ffe651f2c0895c233b8fb9f5538045",
+          "streamSHA256": "b322680c9848fae7fe8441e95b5eb4a1b2de958d2a7a761708fa1f9ac8ad2455"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "vardct-rgba16-small-d0.5",
+        "family": "vardct",
+        "candidateBytes": 285,
+        "predecessorBytes": 291,
+        "sizeChangePercent": -2.0618556701030966,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 167.38222488156265,
+          "psnrDB": 51.85527934932033,
+          "encodedBytes": 285
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 87.5868350580583,
+          "psnrDB": 57.48068940657956,
+          "encodedBytes": 291
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 1,
+          "oracleRMSLSB": 0.07001400420140048,
+          "sourceColourRMSLSB": 167.38014604414812,
+          "sourcePSNRdB": 51.85538722615433,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "0e05766d6419f8399705cc8e47407db34ac3e8c7fa040dc78cc9d2bef7d2decd",
+          "streamSHA256": "94b931826234f62aa9a55e80cbb1096ec9637aa7fd39244ee1c54537d520a663"
+        },
+        "pairedEncode": true,
+        "pairedDecode": false
+      },
+      {
+        "case": "vardct-rgba16-small-d1",
+        "family": "vardct",
+        "candidateBytes": 280,
+        "predecessorBytes": 280,
+        "sizeChangePercent": 0.0,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 128.47384264079903,
+          "psnrDB": 54.153171794820224,
+          "encodedBytes": 280
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 128.47384264079903,
+          "psnrDB": 54.153171794820224,
+          "encodedBytes": 280
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 1,
+          "oracleRMSLSB": 0.10694815798662465,
+          "sourceColourRMSLSB": 128.46656355670808,
+          "sourcePSNRdB": 54.15366393478398,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "0e05766d6419f8399705cc8e47407db34ac3e8c7fa040dc78cc9d2bef7d2decd",
+          "streamSHA256": "9200e14b81038fa81d46de9773fc8c916692d4ca2e646567f724025fa2e0ad68"
+        },
+        "pairedEncode": true,
+        "pairedDecode": false
+      },
+      {
+        "case": "vardct-rgba16-small-d3",
+        "family": "vardct",
+        "candidateBytes": 270,
+        "predecessorBytes": 270,
+        "sizeChangePercent": 0.0,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 380.71984306283616,
+          "psnrDB": 44.71735581991534,
+          "encodedBytes": 270
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 380.71984306283616,
+          "psnrDB": 44.71735581991534,
+          "encodedBytes": 270
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 1,
+          "oracleRMSLSB": 0.07001400420140048,
+          "sourceColourRMSLSB": 380.71507939344866,
+          "sourcePSNRdB": 44.71746450078971,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "0e05766d6419f8399705cc8e47407db34ac3e8c7fa040dc78cc9d2bef7d2decd",
+          "streamSHA256": "b151c936d27b83820906c18c24fbc5581a6f8e00c98b1046db8b1a8e51d87def"
+        },
+        "pairedEncode": true,
+        "pairedDecode": false
+      },
+      {
+        "case": "modular-animation-animation-crop",
+        "family": "modular",
+        "candidateBytes": 24776,
+        "predecessorBytes": 26632,
+        "sizeChangePercent": -6.969059777711029,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 1.4377894492873056e-05,
+          "psnrDB": 144.97689776128416,
+          "encodedBytes": 24776
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 1.4377894492873056e-05,
+          "psnrDB": 144.97689776128416,
+          "encodedBytes": 26632
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.0,
+          "sourcePSNRdB": null,
+          "alphaMaxLSB": 0,
+          "exactSource": true,
+          "fixtureSHA256": "5d89d27dc66a0a5b68c076aebb7c83231487d364ba366f3c0532a6f9e3337926",
+          "streamSHA256": "107370476d378cad9f31256c4fab2c30c22ccabdeae6ee70a79705f9ca78c160"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      },
+      {
+        "case": "vardct-animation-animation-crop",
+        "family": "vardct",
+        "candidateBytes": 14293,
+        "predecessorBytes": 14463,
+        "sizeChangePercent": -1.1754131231418108,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 16.209666627023495,
+          "psnrDB": 23.935321946542757,
+          "encodedBytes": 14293
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 16.260006840255393,
+          "psnrDB": 23.908389129539582,
+          "encodedBytes": 14463
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 1,
+          "oracleRMSLSB": 0.010376841900902612,
+          "sourceColourRMSLSB": 13.086197943643912,
+          "sourcePSNRdB": 25.794533904467976,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "5d89d27dc66a0a5b68c076aebb7c83231487d364ba366f3c0532a6f9e3337926",
+          "streamSHA256": "88f290de5830ee27abbc2b7915991a493f071c016242dd57348b7debc0ff95ab"
+        },
+        "pairedEncode": true,
+        "pairedDecode": false
+      },
+      {
+        "case": "vardct-animation-rgba16-small",
+        "family": "vardct",
+        "candidateBytes": 823,
+        "predecessorBytes": 825,
+        "sizeChangePercent": -0.24242424242424399,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 130.29123498066699,
+          "psnrDB": 54.031162063058986,
+          "encodedBytes": 823
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 131.72210287911216,
+          "psnrDB": 53.93629296741003,
+          "encodedBytes": 825
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 1,
+          "oracleRMSLSB": 0.10437071518085825,
+          "sourceColourRMSLSB": 130.29268487813258,
+          "sourcePSNRdB": 54.03106540591007,
+          "alphaMaxLSB": 0,
+          "exactSource": false,
+          "fixtureSHA256": "0e05766d6419f8399705cc8e47407db34ac3e8c7fa040dc78cc9d2bef7d2decd",
+          "streamSHA256": "848d6489efdac0793c8206bb2551f02bd0e10d197d8ff80069cd48cef0d43084"
+        },
+        "pairedEncode": true,
+        "pairedDecode": false
+      }
+    ],
+    "losslessSizeTriggers": [
+      {
+        "case": "modular-grey16-large",
+        "family": "modular",
+        "candidateBytes": 367,
+        "predecessorBytes": 363,
+        "sizeChangePercent": 1.1019283746556363,
+        "candidateReferenceRateDistortion": {
+          "rmsLSB": 0.0006510317325592041,
+          "psnrDB": 160.05742292638385,
+          "encodedBytes": 367
+        },
+        "predecessorReferenceRateDistortion": {
+          "rmsLSB": 0.0006510317325592041,
+          "psnrDB": 160.05742292638385,
+          "encodedBytes": 363
+        },
+        "candidateOracle": {
+          "oracleMaxLSB": 0,
+          "oracleRMSLSB": 0.0,
+          "sourceColourRMSLSB": 0.0,
+          "sourcePSNRdB": null,
+          "alphaMaxLSB": 0,
+          "exactSource": true,
+          "fixtureSHA256": "a682fad6e04e091116fcfb97760ebe824c3a439f51a111d7550dad446c7dd045",
+          "streamSHA256": "0d89226e2b4b8b559b55908c288011ada8ebddc0296659d84599286eeb913542"
+        },
+        "pairedEncode": true,
+        "pairedDecode": true
+      }
+    ],
+    "nativeSizes": [
+      {
+        "case": "bicycles-444",
+        "originalJPEGBytes": 233213,
+        "candidateBytes": 255178,
+        "predecessorBytes": 205031,
+        "allAcceptedComparisonsByteExact": true
+      },
+      {
+        "case": "bicycles-420",
+        "originalJPEGBytes": 208685,
+        "candidateBytes": 230151,
+        "predecessorBytes": 182442,
+        "allAcceptedComparisonsByteExact": true
+      },
+      {
+        "case": "bicycles-progressive",
+        "originalJPEGBytes": 194233,
+        "candidateBytes": 230125,
+        "predecessorBytes": null,
+        "allAcceptedComparisonsByteExact": true
+      },
+      {
+        "case": "grayscale",
+        "originalJPEGBytes": 2386,
+        "candidateBytes": 3912,
+        "predecessorBytes": 1702,
+        "allAcceptedComparisonsByteExact": true
+      }
+    ],
+    "interpretation": "Threshold triggers require source-path investigation and explicit acceptance for any deliberate cost before stable release. Performance alone does not establish independent fidelity, zero handoff copies or leak freedom.",
+    "investigation": {
+      "kernelIdentity": [
+        {
+          "path": "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift",
+          "sha256": "d1bd1ccbde9bbba22e69672b2c6b7f8591dc750737b14c156dc8632f6e246206",
+          "unchangedFromPR31": true
+        },
+        {
+          "path": "Sources/SwiftJXLCore/Entropy/ANSTokenStreamWriter.swift",
+          "sha256": "55d701e5197b5edc8cb78024513dfe76fc8ff85533975dd600dd035d6ffc2da0",
+          "unchangedFromPR31": true
+        },
+        {
+          "path": "Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift",
+          "sha256": "78e632330a2caf23204ce6bb139562faa04af4878954ff7869d66803de956108",
+          "unchangedFromPR31": true
+        },
+        {
+          "path": "Sources/SwiftJXLCore/VarDCT/ScaledDCT.swift",
+          "sha256": "2d261b81cd504ff090a0a0acac29b68828efd39dc5303b4bebc05d31362abcfa",
+          "unchangedFromPR31": true
+        },
+        {
+          "path": "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift",
+          "sha256": "2b5a52d5a392e192af245a06926d9c12935c9262b173baf9b21ee76fa603800c",
+          "unchangedFromPR31": true
+        },
+        {
+          "path": "Sources/SwiftJXLCore/VarDCT/VarDCTPixelDecoder.swift",
+          "sha256": "a4b84fd5cd327b68605d0a1d7a798e6369e14a2e05f0664db2fbed1bb673faf3",
+          "unchangedFromPR31": true
+        }
+      ],
+      "profiles": [
+        {
+          "path": "vardct-bicycles-crop-d0.5-profile.sample.txt",
+          "sha256": "c7597afba9e1f63d8478f44865dc88f02c24e877a3d4b59507272810d70a4eb6",
+          "topOfStack": "Sort by top of stack, same collapsed (when >= 5):\n        mach_msg2_trap  (in libsystem_kernel.dylib)        2420\n        ScaledDCT.apply(_:workspace:)  (in family-candidate)        1146\n        specialized cell #1 (_:_:_:) in static VarDCTHierarchicalAnalysis.analyse(_:width:height:scale:distance:adaptiveQuantisation:budget:)  (in family-candidate)        126\n        mach_continuous_time  (in libsystem_kernel.dylib)        103\n        specialized region #1 (_:_:_:_:) in static VarDCTHierarchicalAnalysis.analyse(_:width:height:scale:distance:adaptiveQuantisation:budget:)  (in family-candidate)        97\n        DYLD-STUB$$swift_isUniquelyReferenced_nonNull_native  (in family-candidate)        53\n        specialized static VarDCTEncoderPreparation.inverseGaborish(_:width:height:budget:)  (in family-candidate)        50\n        swift_isUniquelyReferenced_nonNull_native  (in libswiftCore.dylib)        47\n        swift_retain  (in libswiftCore.dylib)        44\n        clock_gettime  (in libsystem_c.dylib)        41\n        VarDCTLargeAnalysis.apply(_:workspace:)  (in family-candidate)        35\n        ???  (in family-candidate)  load address 0x104a94000 + 0x41998  [0x104ad5998]        33\n        VarDCTSmallAnalysis.apply(_:identifier:workspace:)  (in family-candidate)        31\n        static ContinuousClock.now.getter  (in libswift_Concurrency.dylib)        29\n        ???  (in family-candidate)  load address 0x104a94000 + 0x419a0  [0x104ad59a0]        25\n        swift_release  (in libswiftCore.dylib)        25\n        __isPlatformOrVariantPlatformVersionAtLeast  (in libswiftCore.dylib)        24\n        swift_get_time  (in libswift_Concurrency.dylib)        22\n        specialized Collection.map<A, B>(_:)  (in family-candidate)        21\n        _stdlib_isOSVersionAtLeastOrVariantVersionAtLeast(_:_:_:_:_:_:)  (in libswiftCore.dylib)        18\n        clock_gettime_nsec_np  (in libsystem_c.dylib)        18\n        <deduplicated_symbol>  (in libswiftCore.dylib)        15\n        __swift_noop_void_return  (in libswift_Concurrency.dylib)        15\n        _xzm_xzone_malloc_tiny  (in libsystem_malloc.dylib)        15\n        specialized trial #1 (_:_:_:_:) in static VarDCTHierarchicalAnalysis.analyse(_:width:height:scale:distance:adaptiveQuantisation:budget:)  (in family-candidate)        15\n        <deduplicated_symbol>  (in family-candidate)        14\n        static Task<>.checkCancellation()  (in libswift_Concurrency.dylib)        14\n        swift_beginAccess  (in libswiftCore.dylib)        14\n        ???  (in family-candidate)  load address 0x104a94000 + 0x419ac  [0x104ad59ac]        12\n        VarDCTFrameWriter.acTokens(group:_:)  (in family-candidate)        12\n        _availability_version_check  (in libxpc.dylib)        12\n        specialized static VarDCTAFV.forwardBasis(_:into:budget:)  (in family-candidate)        12\n        pow  (in libsystem_m.dylib)        11\n        ???  (in family-candidate)  load address 0x104a94000 + 0x10ee44  [0x104ba2e44]        10\n        specialized Array._makeMutableAndUnique()  (in family-candidate)        10\n        _xzm_free_main  (in libsystem_malloc.dylib)        9\n        swift_endAccess  (in libswiftCore.dylib)        9\n        ???  (in <unknown binary>)  [0x1b2e95a9c]        8\n        static VarDCTPixelEncoder.encode(_:layouts:bitsPerSample:grayscale:alphaAssociated:distance:gaborish:adaptiveQuantisation:dcSmoothing:smallStrategySearch:largeStrategySearch:budget:)  (in family-candidate)        8\n        ???  (in <unknown binary>)  [0x2cae52d0c]        7\n        ScalarOperationBudget.checkpoint()  (in family-candidate)        7\n        swift_task_isCancelledWithFlags  (in libswift_Concurrency.dylib)        7\n        ???  (in family-candidate)  load address 0x104a94000 + 0x4199c  [0x104ad599c]        6\n        DYLD-STUB$$swift_endAccess  (in family-candidate)        6\n        DYLD-STUB$$type metadata accessor for ContinuousClock.Instant  (in family-candidate)        6\n        cbrt  (in libsystem_m.dylib)        6\n        dispatch_once_f  (in libdispatch.dylib)        6\n        specialized __RawDictionaryStorage.find<A>(_:hashValue:)  (in family-candidate)        6\n        specialized static Hasher._hash(seed:_:)  (in libswiftCore.dylib)        6\n        swift_task_getCurrent  (in libswift_Concurrency.dylib)        6\n        ???  (in <unknown binary>)  [0x2cae5a90c]        5\n        ???  (in libsystem_m.dylib)  load address 0x1ac1a2000 + 0x1178  [0x1ac1a3178]        5\n        VarDCTBorrowedSource.sample(channel:x:y:)  (in family-candidate)        5\n        ___chkstk_darwin  (in libsystem_pthread.dylib)        5\n        cos  (in libsystem_m.dylib)        5\n\n"
+        },
+        {
+          "path": "modular-bicycles-profile.sample.txt",
+          "sha256": "e13de1463e81f775cedfb328478e09e7b597767aa088e12dcc351b9ad631c96c",
+          "topOfStack": "Sort by top of stack, same collapsed (when >= 5):\n        mach_msg2_trap  (in libsystem_kernel.dylib)        2332\n        ANSTokenStreamWriter.refillWordCount(symbols:clusters:)  (in family-candidate)        362\n        closure #1 in residuals #1 (useWP:) in static SpecModularEncoder.buildSections(width:height:channels:sampleHi:effort:applyRCT:)  (in family-candidate)        353\n        WeightedPredictor.predict(x:y:xsize:n:w:ne:nw:nn:)  (in family-candidate)        289\n        specialized Neighbourhood.init(at:_:in:width:)  (in family-candidate)        240\n        specialized static SpecModularEncoder.estimateGradientResidualBits(_:width:height:)  (in family-candidate)        234\n        ANSTokenStreamWriter.finish(to:)  (in family-candidate)        129\n        HybridUintConfig.encode(_:)  (in family-candidate)        120\n        swift_release  (in libswiftCore.dylib)        80\n        swift_retain  (in libswiftCore.dylib)        71\n        swift_isUniquelyReferenced_nonNull_native  (in libswiftCore.dylib)        65\n        closure #1 in static SpecModularEncoder.buildSections(width:height:channels:sampleHi:effort:applyRCT:)  (in family-candidate)        57\n        DYLD-STUB$$swift_isUniquelyReferenced_nonNull_native  (in family-candidate)        56\n        static ModularStorageEncoder.encode(_:layouts:bitsPerSample:grayscale:alphaAssociated:renderingIntent:transferFunction:budget:)  (in family-candidate)        47\n        static SpecModularEncoder.buildSections(width:height:channels:sampleHi:effort:applyRCT:)  (in family-candidate)        35\n        _platform_memmove  (in libsystem_platform.dylib)        30\n        swift_bridgeObjectRetain  (in libswiftCore.dylib)        28\n        swift_bridgeObjectRelease  (in libswiftCore.dylib)        27\n        BitWriter.write(bits:value:)  (in family-candidate)        26\n        DYLD-STUB$$swift_bridgeObjectRelease  (in family-candidate)        16\n        DYLD-STUB$$swift_bridgeObjectRetain  (in family-candidate)        16\n        mach_continuous_time  (in libsystem_kernel.dylib)        7\n        __isPlatformOrVariantPlatformVersionAtLeast  (in libswiftCore.dylib)        5\n        _stdlib_isOSVersionAtLeastOrVariantVersionAtLeast(_:_:_:_:_:_:)  (in libswiftCore.dylib)        5\n\n"
+        },
+        {
+          "path": "modular-grey16-large-profile.sample.txt",
+          "sha256": "0239ac477bf63861200cce96aec074e026ca8275adffdf73b5ae0eba70885843",
+          "topOfStack": "Sort by top of stack, same collapsed (when >= 5):\n        mach_msg2_trap  (in libsystem_kernel.dylib)        2456\n        ANSTokenStreamWriter.refillWordCount(symbols:clusters:)  (in family-candidate)        437\n        closure #1 in residuals #1 (useWP:) in static SpecModularEncoder.buildSections(width:height:channels:sampleHi:effort:applyRCT:)  (in family-candidate)        404\n        WeightedPredictor.predict(x:y:xsize:n:w:ne:nw:nn:)  (in family-candidate)        340\n        specialized Neighbourhood.init(at:_:in:width:)  (in family-candidate)        317\n        swift_retain  (in libswiftCore.dylib)        111\n        ANSTokenStreamWriter.finish(to:)  (in family-candidate)        104\n        swift_release  (in libswiftCore.dylib)        100\n        swift_isUniquelyReferenced_nonNull_native  (in libswiftCore.dylib)        81\n        HybridUintConfig.encode(_:)  (in family-candidate)        74\n        static ModularStorageEncoder.encode(_:layouts:bitsPerSample:grayscale:alphaAssociated:renderingIntent:transferFunction:budget:)  (in family-candidate)        71\n        closure #1 in static SpecModularEncoder.buildSections(width:height:channels:sampleHi:effort:applyRCT:)  (in family-candidate)        69\n        DYLD-STUB$$swift_isUniquelyReferenced_nonNull_native  (in family-candidate)        67\n        swift_bridgeObjectRelease  (in libswiftCore.dylib)        39\n        swift_bridgeObjectRetain  (in libswiftCore.dylib)        39\n        _platform_memmove  (in libsystem_platform.dylib)        34\n        DYLD-STUB$$swift_bridgeObjectRelease  (in family-candidate)        29\n        static SpecModularEncoder.buildSections(width:height:channels:sampleHi:effort:applyRCT:)  (in family-candidate)        26\n        DYLD-STUB$$swift_bridgeObjectRetain  (in family-candidate)        24\n        mach_continuous_time  (in libsystem_kernel.dylib)        24\n        clock_gettime_nsec_np  (in libsystem_c.dylib)        10\n        __isPlatformOrVariantPlatformVersionAtLeast  (in libswiftCore.dylib)        7\n        _availability_version_check  (in libxpc.dylib)        5\n\n"
+        }
+      ],
+      "findings": [
+        "The 14 targeted comparisons with PR31 have no latency or RSS threshold trigger. Their observed latency deltas range from -4.94% to +3.67%; these small changes are not claimed as speedups. Default pixel/native output bytes match all 22 retained PR31 streams.",
+        "Against the predecessor, 21 paired rows retain >5% latency increases and four retain >5% RSS increases on both interleaved rounds. Every row, raw sample, spread and repeat is retained; no aggregate average hides these cases.",
+        "Separate three-second samples identify residual/predictor work and ANS refill-state counting as major Modular CPU work. VarDCT sampling is dominated by scaled transforms and hierarchical strategy analysis, with deadline checks also visible. These implementation files are byte-identical to PR31; profiling identifies optimisation targets without proving that one function explains the entire predecessor gap.",
+        "Allocating JPEG XL decode uses UInt16 storage in the successor; the predecessor uses UInt8 for 8-bit frames. Those 8-bit decode rows include the public output-layout migration cost. Both carry identical meaningful samples; the comparison does not isolate equal-storage kernels.",
+        "The 2048-square flat UInt16 lossless case grows from 363 to 367 bytes (+1.1019%). The retained source/bitstream investigation identifies the four-byte ANS terminal state for the empty global pixel stream. It is an explained encoding decision; stable acceptance has not been inferred.",
+        "The four RSS triggers remain measured process-level differences. Sampled heap endpoints and peak RSS cannot establish exact algorithm workspace or allocation/lifetime causes. No exact peak or leak-freedom claim is made.",
+        "The native preflight/timing hash-seed mismatch was reproduced twice, then corrected only in native baseline setup. Exact original-JPEG restoration and independent djxl restoration passed before the resumed native timings. The original failed attempt remains retained.",
+        "Natural progressive JPEG is rejected by both predecessor native and pixel paths with malformedACSymbol; those three timed rows are candidate-only. Eight pixel decode rows also lack an eligible predecessor. No speed ratio is assigned to excluded comparisons."
+      ],
+      "gateStatus": "Investigation completed; predecessor performance/size acceptance remains open for stable release. No threshold waived and no production switch authorised."
+    }
+  },
+  "rawSamples": "performance-raw.json.gz",
+  "rawRecordContents": "Every per-process timing, percentile/spread, RSS/heap sample, binary hash and command for all 48 predecessor and 14 previous-successor rows."
+}
