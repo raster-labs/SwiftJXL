@@ -89,9 +89,12 @@ struct VarDCTEncoderPreparationTests {
             return output
         }
         for (width, height) in [(1,1),(1,7),(7,1),(2,2),(2,7),(7,2),(17,9),(257,3)] {
-            let input = (0..<(width * height)).map { Float(($0 * 173 + 19) % 1021 - 510) / 127 }
+            let input: [Float] = (0..<(width * height)).map { (index: Int) -> Float in
+                Float((index * 173 + 19) % 1021 - 510) / 127
+            }
             let actual = try VarDCTEncoderPreparation.inverseGaborish(input, width: width, height: height, budget: budget())
-            #expect(actual.map(\.bitPattern) == reference(input, width, height).map(\.bitPattern))
+            let expected = reference(input, width, height)
+            #expect(actual.map(\.bitPattern) == expected.map(\.bitPattern))
         }
     }
 

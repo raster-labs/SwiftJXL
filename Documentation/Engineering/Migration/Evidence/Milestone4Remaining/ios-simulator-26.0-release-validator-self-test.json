@@ -1,0 +1,72 @@
+{
+  "rawReportSHA256": "f006eb2e5213f2ba99c96c6191ab4afa1e23bd33d282ff392ada433553360774",
+  "auditedAtUTC": "2026-10-15T14:04:03.309975+00:00",
+  "allScenariosBehavedAsExpected": true,
+  "scenarios": [
+    {
+      "scenario": "baseline_valid_record",
+      "expectedPassed": true,
+      "actualPassed": true,
+      "failedChecks": []
+    },
+    {
+      "scenario": "missing_test_identity",
+      "expectedPassed": false,
+      "actualPassed": false,
+      "failedChecks": [
+        "exactIdentitySet",
+        "expectedDeclarationCount",
+        "macOS365Minus6ExcludedEquals359"
+      ]
+    },
+    {
+      "scenario": "single_case_failure",
+      "expectedPassed": false,
+      "actualPassed": false,
+      "failedChecks": [
+        "allCasesPassed"
+      ]
+    },
+    {
+      "scenario": "sentinel_proof_failure",
+      "expectedPassed": false,
+      "actualPassed": false,
+      "failedChecks": [
+        "reciprocalSentinelProofVerified"
+      ]
+    },
+    {
+      "scenario": "device_runtime_mismatch",
+      "expectedPassed": false,
+      "actualPassed": false,
+      "failedChecks": [
+        "correctRuntime"
+      ]
+    },
+    {
+      "scenario": "missing_asan_instrumentation",
+      "expectedPassed": false,
+      "actualPassed": false,
+      "failedChecks": [
+        "sanitizerInstrumented"
+      ]
+    },
+    {
+      "scenario": "source_drift_detected",
+      "expectedPassed": false,
+      "actualPassed": false,
+      "failedChecks": [
+        "noSourceDrift"
+      ]
+    },
+    {
+      "scenario": "live_run_missing_runner_hash_and_built_artifacts",
+      "expectedPassed": false,
+      "actualPassed": false,
+      "failedChecks": [
+        "runnerHashRecordedAndUnchanged",
+        "builtArtifactsRecordedForAllRuns"
+      ]
+    }
+  ]
+}

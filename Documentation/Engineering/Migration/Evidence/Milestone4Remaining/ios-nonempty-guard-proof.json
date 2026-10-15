@@ -1,0 +1,21 @@
+{
+  "rawReportSHA256": "7ef50997b595c1b4694e7f38a914deabe719ce70a6fe5f3e1d8b823ac2d35084",
+  "verifiedAtUTC": "2026-10-15T13:49:16.978105+00:00",
+  "runnerSHA256": "475cd8a7fdc0e3f471ac43664a8fadaea7855c69939ca5f062a313f02bd7785a",
+  "command": [
+    "python3",
+    "<repo>/Scripts/TestSupport/qualify-ios-simulator.py",
+    "<work-final>/ios-nonempty-guard-test",
+    "--reciprocal-vectors",
+    "<work-final>/arm/reciprocal-vectors.json"
+  ],
+  "exitCode": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"<repo>/Scripts/TestSupport/qualify-ios-simulator.py\", line 1523, in <module>\n    sys.exit(main())\n  File \"<repo>/Scripts/TestSupport/qualify-ios-simulator.py\", line 1070, in main\n    raise RuntimeError(\nRuntimeError: Refusing to reuse non-empty output directory for new execution: <work-final>/ios-nonempty-guard-test. Pass --audit-existing to re-audit existing artifacts or specify a fresh directory.\n",
+  "markerSurvived": true,
+  "markerSHA256Before": "bffa0da0216bed07d78190ba87d9b27d72f602d83b5eb280b1c85cb5ce10244c",
+  "markerSHA256After": "bffa0da0216bed07d78190ba87d9b27d72f602d83b5eb280b1c85cb5ce10244c",
+  "directoryEntriesAfter": [
+    "marker.txt"
+  ],
+  "passed": true
+}

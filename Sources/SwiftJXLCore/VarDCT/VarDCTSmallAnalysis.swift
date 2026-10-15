@@ -61,7 +61,7 @@ package struct VarDCTSmallAnalysis: Sendable {
         // One uniquely owned allocation supplies ten disjoint typed slices.
         // The synchronous borrow establishes uniqueness once per transform;
         // no pointer escapes or enters a worker, and DCT scratch is separate.
-        try workspace.storage.withUnsafeMutableBufferPointer { buffer in
+        try workspace.storage.withUnsafeMutableBufferPointer { (buffer: inout UnsafeMutableBufferPointer<Float>) throws -> Void in
             let output = UnsafeMutableBufferPointer(rebasing: buffer[0..<64])
             let source = UnsafeMutableBufferPointer(rebasing: buffer[64..<128])
             let patch16 = UnsafeMutableBufferPointer(rebasing: buffer[128..<144])

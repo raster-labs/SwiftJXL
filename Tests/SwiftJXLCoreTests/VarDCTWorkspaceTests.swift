@@ -16,7 +16,9 @@ struct VarDCTWorkspaceTests {
         var scratch = try VarDCTSmallAnalysis.Workspace(budget: operation)
         let admitted = operation.reservedWorkspaceBytes
         for repetition in 0..<3 { for id in [17,0,16,1,15,2,14,3,13,12] {
-            let pixels = (0..<64).map { Float(($0 * 17 + repetition * 11) % 29 - 14) / 31 }
+            let pixels: [Float] = (0..<64).map { (index: Int) -> Float in
+                Float((index * 17 + repetition * 11) % 29 - 14) / 31
+            }
             let expected = try reference.apply(pixels, identifier: id)
             try pixels.withUnsafeBufferPointer { try plan.apply($0, identifier: id, workspace: &scratch) }
             for i in 0..<64 { #expect(scratch.value(at: i) == expected[i]) }
@@ -32,7 +34,9 @@ struct VarDCTWorkspaceTests {
             let admitted = operation.reservedWorkspaceBytes
             for repetition in 0..<2 {
                 let count = plan.rows * plan.columns
-                let pixels = (0..<count).map { Float(($0 * 11 + repetition * 3) % 23 - 11) / 29 }
+                let pixels: [Float] = (0..<count).map { (index: Int) -> Float in
+                    Float((index * 11 + repetition * 3) % 23 - 11) / 29
+                }
                 let expected = try reference.apply(pixels)
                 try pixels.withUnsafeBufferPointer { try plan.apply($0, workspace: &scratch) }
                 for i in 0..<count { #expect(scratch.coefficient(at: i) == expected.coefficients[i]) }
@@ -49,7 +53,9 @@ struct VarDCTWorkspaceTests {
                 let plan = try ScaledDCT(rows: rows, columns: columns, direction: direction, budget: operation)
                 var scratch = try ScaledDCT.Workspace(capacity: rows * columns, budget: operation)
                 for seed in [0, 1] {
-                    let pixels = (0..<(rows * columns)).map { Float(($0 * 113 + seed * 29) % 257 - 128) / 31 }
+                    let pixels: [Float] = (0..<(rows * columns)).map { (index: Int) -> Float in
+                        Float((index * 113 + seed * 29) % 257 - 128) / 31
+                    }
                     let expected = try plan.apply(pixels)
                     let admitted = operation.reservedWorkspaceBytes
                     try pixels.withUnsafeBufferPointer { try plan.apply($0, workspace: &scratch) }
@@ -64,7 +70,9 @@ struct VarDCTWorkspaceTests {
     func cachedLargeDCFactorsRetainOriginalArithmetic(_ identifier: Int) throws {
         let operation = try budget(), plan = try VarDCTLargeAnalysis(identifier: identifier, budget: operation)
         let count = plan.rows * plan.columns, cellsX = plan.columns / 8, cellsY = plan.rows / 8
-        let input = (0..<count).map { Float(($0 * 113 + 29) % 257 - 128) / 31 }
+        let input: [Float] = (0..<count).map { (index: Int) -> Float in
+            Float((index * 113 + 29) % 257 - 128) / 31
+        }
         let scalar = try ScaledDCT(rows: plan.rows, columns: plan.columns, direction: .forward, budget: operation).apply(input)
         var scratch = try VarDCTLargeAnalysis.Workspace(capacity: count, budget: operation)
         try input.withUnsafeBufferPointer { try plan.apply($0, workspace: &scratch) }
@@ -100,7 +108,9 @@ struct VarDCTWorkspaceTests {
             let shared = try ScaledDCT(rows: rows, columns: columns, direction: direction,
                 budget: operation, axes: &axes)
             let reference = try ScaledDCT(rows: rows, columns: columns, direction: direction, budget: budget())
-            let input = (0..<(rows * columns)).map { Float(($0 * 31 + rows * 7) % 113 - 56) / 37 }
+            let input: [Float] = (0..<(rows * columns)).map { (index: Int) -> Float in
+                Float((index * 31 + rows * 7) % 113 - 56) / 37
+            }
             let actual = try shared.apply(input), expected = try reference.apply(input)
             for i in input.indices { #expect(actual[i].bitPattern == expected[i].bitPattern) }
         } }
@@ -137,7 +147,7 @@ struct VarDCTWorkspaceTests {
         let cancellation = ScalarOperationCancellation(), operation = try budget(cancellation: cancellation)
         let plan = try ScaledDCT(rows: axis, columns: axis, direction: .forward, budget: operation)
         var scratch = try ScaledDCT.Workspace(capacity: axis * axis, budget: operation)
-        let input = (0..<(axis * axis)).map { Float($0 % 13) / 31 }
+        let input: [Float] = (0..<(axis * axis)).map { (index: Int) -> Float in Float(index % 13) / 31 }
         try input.withUnsafeBufferPointer { try plan.apply($0, workspace: &scratch) }
         let before = (0..<input.count).map { scratch.value(at: $0).bitPattern }
         cancellation.cancel()
@@ -177,7 +187,7 @@ struct VarDCTWorkspaceTests {
         let before = (0..<64).map { scratch.value(at: $0) }
         let large = try VarDCTLargeAnalysis(identifier: 6, budget: operation)
         var largeScratch = try VarDCTLargeAnalysis.Workspace(budget: operation)
-        let largePixels = (0..<128).map { Float($0 % 19 - 9) / 23 }
+        let largePixels: [Float] = (0..<128).map { (index: Int) -> Float in Float(index % 19 - 9) / 23 }
         try largePixels.withUnsafeBufferPointer { try large.apply($0, workspace: &largeScratch) }
         let beforeLarge = (0..<128).map { largeScratch.coefficient(at: $0).bitPattern }
         let beforeDC = (0..<2).map { largeScratch.dcValue(at: $0).bitPattern }
