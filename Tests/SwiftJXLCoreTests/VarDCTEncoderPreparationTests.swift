@@ -153,7 +153,7 @@ struct VarDCTEncoderPreparationTests {
         var offset = 0
         for (width,height) in [(1,1),(2,3),(7,5),(8,8),(17,9)] {
             for pattern in 0..<3 { for c in 0..<3 {
-                let input: [Float] = (0..<(width * height)).map { i in
+                let input: [Float] = (0..<(width * height)).map { (i: Int) -> Float in
                     let x = i % width, y = i / width
                     return pattern == 0 ? 0.375 : pattern == 1 ? (x == 0 && y == 0 ? 1 : 0) : Float((x * 17 + y * 11 + c * 7) % 29 - 14) / 31
                 }

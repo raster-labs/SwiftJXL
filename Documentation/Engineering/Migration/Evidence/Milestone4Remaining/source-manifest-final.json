@@ -1,63 +1,6 @@
 {
-  "schemaVersion": "1.0.0",
-  "generatedAtUTC": "2026-10-15T14:15:46.731227+00:00",
-  "sourceCount": 1195,
-  "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
-  "preFixSourceManifestReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/source-manifest.json",
-  "preFixSourceManifestReportSHA256": "f47da5b05a22002b34b2e6238d765bc4f2eece7e771374f115a828567ed06a0f",
-  "changeReason": "Swift 6.2 type-checker compatibility repair: added explicit closure parameter/return type annotations to workspace.storage.withUnsafeMutableBufferPointer in VarDCTSmallAnalysis.apply and Float sample generation closures in VarDCTEncoderPreparationTests and VarDCTWorkspaceTests. No numerical, evaluation order, memory ownership, or default behaviour changes.",
-  "changedFilesFromPreFix": {
-    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift": {
-      "before": "377283f92883dad3a4dad1511c296b113b79f4ef15742e23ed479fa78a13351a",
-      "after": "8c747973627d5f75f4099e9c657c33b5e661315b86c99e25929204010405cfb5"
-    },
-    "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift": {
-      "before": "2ed709bc129fe940d2554ac179c71516cf7c9952b3776c063ace07d187753ca3",
-      "after": "829805640b1726b2a48c9e639e15f956a8aec292eb710af346cde8f38afa0793"
-    },
-    "Tests/SwiftJXLCoreTests/VarDCTWorkspaceTests.swift": {
-      "before": "fb15c228476294547918c8252f722ca85ecbcebd62d39852519765db1b3f70e4",
-      "after": "9bea8f075a4880cc071a2b1640ad2eec43218e9f0854915c5044a2cd32e06c80"
-    }
-  },
-  "compiledObjectEqualityAcrossModes": {
-    "release": {
-      "preFixRun": "release-6",
-      "postFixRun": "release-7",
-      "objectSHA256Equal": true,
-      "objectSHA256": {
-        "<repo>/.build/out/Products/Release/SwiftJXL.o": "1102488958caf5f9385e3bfdaa56fa5abb057abc39209dcfd2ebeb6737931ac2",
-        "<repo>/.build/out/Products/Release/SwiftJXLCore.o": "2e44f687c9dc25eba26c7b10d3e3260ab87697929fb5eb4c97fd996dc46c77b2"
-      }
-    },
-    "debug": {
-      "preFixRun": "debug-1",
-      "postFixRun": "debug-2-vardct",
-      "objectSHA256Equal": true,
-      "objectSHA256": {
-        "<repo>/.build/out/Products/Debug/SwiftJXL.o": "47446af4eb3bc777b3dfe4eb6bec879b4cb0766fe044bddbddddd36020838e22",
-        "<repo>/.build/out/Products/Debug/SwiftJXLCore.o": "43e7d7d5081e9f9914ac372ae0cebae02c342e70724aded480fcb9584f8919e3"
-      }
-    },
-    "asan": {
-      "preFixRun": "asan-2",
-      "postFixRun": "asan-3-vardct",
-      "objectSHA256Equal": true,
-      "objectSHA256": {
-        "<local-work>/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/build-asan/out/Products/Release/SwiftJXL.o": "223c69fe5db536a0fccc1f4775bc5b5dbc28602e241fbfadea1baf0f2a9b2cf8",
-        "<local-work>/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/build-asan/out/Products/Release/SwiftJXLCore.o": "ec36f6a57911462ca00b7c18ed58920b585cdabd987370ae136b948d6b7f64b5"
-      }
-    },
-    "tsan": {
-      "preFixRun": "tsan-1",
-      "postFixRun": "tsan-2-vardct",
-      "objectSHA256Equal": true,
-      "objectSHA256": {
-        "<local-work>/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/build-tsan/out/Products/Release/SwiftJXL.o": "e6033a9cc623c77206f04505fbaad183b74fd1323718232f08bac2d6fe8c7f5a",
-        "<local-work>/2026-10-12/swiftjxl-migration-continuation/work/milestone4-performance/build-tsan/out/Products/Release/SwiftJXLCore.o": "96fd20ae511f4eb3f4d13d9d7229cd4d07cc04b2d0bab880981d4ec80b93cd18"
-      }
-    }
-  },
+  "implementationReviewed": true,
+  "createdAtUTC": "2026-10-15T06:23:42.227948+00:00",
   "sourceSHA256": {
     "Sources/SwiftJXL/AnimationAPI.swift": "2144535c59a13dd263cd51e0c514595abe3b454cf1d64c44b04e0fac1b6369ac",
     "Sources/SwiftJXL/AnimationEncoding.swift": "ed0d03433cbfc8f8c967c6349569f99453b1a72f6edf8f9eee04a227aa3523c4",
@@ -175,7 +118,7 @@
     "Sources/SwiftJXLCore/VarDCT/VarDCTPixelEncoder.swift": "9da2ecd504cfec5a76e889d7dfa54c02895684904603be64a6ec451bca8e11a2",
     "Sources/SwiftJXLCore/VarDCT/VarDCTQuantWeights.swift": "b813d3c408362bf2c17667e548dc46252ff754bc18701ee540b3c3c9327e7604",
     "Sources/SwiftJXLCore/VarDCT/VarDCTReconstruction.swift": "bd232c211ed347241b9ee051798a0785b13ce3c853d202cde1294db0b44cf04c",
-    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift": "8c747973627d5f75f4099e9c657c33b5e661315b86c99e25929204010405cfb5",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift": "050613c8c9f5dda57227c53e1fdbeabf267b684e63e0833d314147659543bac2",
     "Sources/SwiftJXLCore/VarDCT/VarDCTSmallTransforms.swift": "5766555f0147c3eddb7f00640b3d899b305c3a68b5780d02aec98e01dbec68f9",
     "Sources/SwiftJXLCore/VarDCT/VarDCTStrategyMap.swift": "c9be670d7b1d0b94c37d69a6d5269041990f1a139b63d89d27e2b095d6190aa7",
     "Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift": "9b615b7dc00c976c8ae239e6c3f5cd2a97595dff14f5ea4f9a72a534598d3134",
@@ -1230,7 +1173,7 @@
     "Tests/SwiftJXLCoreTests/VarDCTColourTests.swift": "14807bcfdc3c1e3ad20ce89357f5e24eb2c5de561e6e65884a12de8c2b02de6d",
     "Tests/SwiftJXLCoreTests/VarDCTConformanceTests.swift": "33f458ecef05c4309bca6396de076d9d725d285e844b23c5a2076827006b3727",
     "Tests/SwiftJXLCoreTests/VarDCTEPFTests.swift": "5a66433b869c1bafa97d2761c56a2c546695b3d57c69b3d40335c932c82d9b5d",
-    "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift": "829805640b1726b2a48c9e639e15f956a8aec292eb710af346cde8f38afa0793",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift": "e06e1c2797bfbb49b094235ef49f38f14fc2683776c255efa0195642293e03c3",
     "Tests/SwiftJXLCoreTests/VarDCTEncoderTests.swift": "ebf78b04b94e6bc03d7645ea71a0e0bd17c79d8232f575e84839a1562c648860",
     "Tests/SwiftJXLCoreTests/VarDCTFilterTests.swift": "e5e80e4cfbc3057bd3c827158f32a0e354958069a2d7a5b12e2fa3e069ef10d9",
     "Tests/SwiftJXLCoreTests/VarDCTFrameTests.swift": "76ae0d1a3e8dab6c8cc54afc2a9799a7740034f7a26120d4b143a5792b3c84cc",
@@ -1254,5 +1197,92 @@
     "Tests/SwiftJXLTests/SampleAccessTests.swift": "48479f5f4ecae3543a4858fbb0352d5a97f947e4015a92d9ddb569d75a22724c",
     "Tests/SwiftJXLTests/ScalarPublicAPITests.swift": "1c2bfc2379f828f18de2c2a71274bd9f3b183d24b606a6f6c92858d0b796b40d",
     "Tests/SwiftJXLTests/StorageTests.swift": "4b8a8d8fcc6ebe24bb08e17ba24dd901985a9079d9032006cb9fd4a2183de148"
-  }
+  },
+  "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+  "supportSHA256": {
+    "Scripts/Qualification/VarDCTARM/reciprocal-vectors.c": "d4d99728cdcdd90217815cc10f8109cc76c2850b87f9b817861bea2ffa1490f6",
+    "Scripts/README.md": "01560dd44a4c02d1d0acbbd4201050fac993f8e69993e2dde82d9feabce10b89",
+    "Scripts/TestSupport/animation-mutation-probe.swift": "d2bc15a494e189bd41b4706ccad03e29f6ee74ebe5688a0f989f117af869be95",
+    "Scripts/TestSupport/animation-pixel-oracle.c": "5f846f2d32882cd4be34961aa2ad0d0645d71f1d4e17e442ed710b898185cbae",
+    "Scripts/TestSupport/apple-runtime-probe.swift": "59ba21ae0d2b7379581155510757ccd8928c48fe0cbe30aaafc5c8c570171df1",
+    "Scripts/TestSupport/jpeg-coefficient-oracle.c": "1e039193d952d94e76d0e692a314ecd417881cf25896f83d8681f9901fbeb3aa",
+    "Scripts/TestSupport/jpeg-extended-fixtures.py": "5785f95197ef502e3dc81bc322ae44eb86bbc898d6d8a1ee4d89f82047002623",
+    "Scripts/TestSupport/jpeg-mutation-probe.swift": "3957cb4d42efc0d35a9d68d18d555fc442c878d78ca2155124e7ed3d17bf8918",
+    "Scripts/TestSupport/jpeg-pixel-benchmark.swift": "9782cbff9a4d7a85cd5a5b5f8b249b77b4a75c9484ad4ce971098226fc8c7698",
+    "Scripts/TestSupport/milestone4-performance.py": "909abf3d1de2a4d16450ef2a3101e9b870a49c143a204fda16ded09ee28a0a38",
+    "Scripts/TestSupport/modular-alpha-fixtures.c": "0d2648d125a3d8552926cb53603a4b75542224de65c7ec883e764976426b56cb",
+    "Scripts/TestSupport/modular-decoder-fixtures.py": "8994d6c7c917e14c46487d48270369ff63b7b015e9fdfc8a634233f2fc78fe85",
+    "Scripts/TestSupport/modular-effort-benchmark.swift": "5f6c3b1a01434c00bd876149426d8e12c2ecb10809bf8e0fe7a25de2622ee833",
+    "Scripts/TestSupport/modular-icc-fixtures.c": "f839e153e62d61e5dfa8ea05b143a93412512a04a8530a374c08a11a3be01d86",
+    "Scripts/TestSupport/modular-info-oracle.c": "67bb08ef33d2a8212da17c3b7ebaf8a5dae5efd18264003168dfc575fc8a9433",
+    "Scripts/TestSupport/modular-info-oracle.cmake": "bdf1ef1760f5206a3584d7acdd19c460ef294c9ba25913329644d4252a8c8630",
+    "Scripts/TestSupport/modular-low-precision-fixtures.c": "90e7c1c4dd9be8b5e524fd05471bdb37dd6314ac6f3774e6af77714a32552a9a",
+    "Scripts/TestSupport/modular-mutation-probe.swift": "0e9e0761f9fde19dd7af069ccb59456546cf2b00a2c0ed1bb9d29bda42f7745b",
+    "Scripts/TestSupport/modular-operation-benchmark.py": "872bbf702e5b15b9c6b6e793f14017cf4d9ac9a0de972cbf9862da343134ce99",
+    "Scripts/TestSupport/modular-operation-benchmark.swift": "c0a82bf0a7e9371158f753a27257e75289f13146a162ca474ccff887c5bb0474",
+    "Scripts/TestSupport/modular-profile-oracle.c": "b388400d6aefc1ddb1b68efd310528404223ce956d98fe3a73474a02942feee0",
+    "Scripts/TestSupport/modular-transfer-fixtures.c": "d7f205ef3ff65ea3bdf7eeee2ce23e618a966bc22b2d61b049a3af77dbd842f1",
+    "Scripts/TestSupport/native-family-benchmark.swift": "fe61d7c60998016b43c1fe3af5fe9d34355cc3c1cfe889a5c1cb41b8cc487e6d",
+    "Scripts/TestSupport/pixel-family-benchmark.swift": "cb7f227c20609f8cdce880cba6339bb89de4a272ba81a7c015167408bf36cfb2",
+    "Scripts/TestSupport/pnm-mutation-seeds.py": "2a6a2028d55b9aadb73f058563291a84aae100a3f04eeb48f8306ba5c2c02310",
+    "Scripts/TestSupport/qualify-native-runtime.py": "4b5cd55a375375a407cdd4fb58316df9316d19545587db75e570bb3de14f28e5",
+    "Scripts/TestSupport/rct-baseline.swift": "5a2d69c38835bb961f5bc25f2c1c09883e6f708ae3cd919c163af4165e4a41c8",
+    "Scripts/TestSupport/run-apple-runtime-probe.py": "20490f9ba64d4fb5ef255557273af110b58e3d408b5a4753a8b29f1701ff8d66",
+    "Scripts/TestSupport/squeeze-baseline.swift": "4a69f75e5b4d2c6a98eb519eedfbf0bfb74592f903c5f777e13ff160580c92ba",
+    "Scripts/TestSupport/squeeze-wire-vectors.py": "44c7096b62b7bc4b8517cd0d74a014b33d7eaaaee7e5a6cc49186e3cb34761fc",
+    "Scripts/audit-native-jpeg.py": "2aa0ff796ae596bac8e7316a625f75c8803a3a7777ef33257941f7b80691038c",
+    "Scripts/generate-icc-fixtures.py": "3eea4ff9af222cbcc6f175b72d27e95ab39a52f6202166c7dbc0c43caa585418",
+    "Scripts/install-cli.sh": "2ec55c5025e69e18e92ba76f738bee4fe5c9df4ea6b332ae9ec7140b8b55e693",
+    "Scripts/nrrd-oracle-requirements.txt": "8d352b4d60c7555a612f30fc76c2a2b59948cb29a6e9e36d101f383da0c2a29f",
+    "Scripts/test-cli-completion.py": "08d74efe5028f22f9a0f97d5cdc71c309df992d2328d7db281a9a85ed9a38b07",
+    "Scripts/test-cli-jpeg-extended.py": "2e37c6155becc4d335b5e935b8c8fa7b92bbda8c9d5c8896bdf4276c3f5b6dee",
+    "Scripts/test-cli-low-precision.py": "e15986e7836c7a8f1469370bab3f11c0c99f1b27651fa2a19ffa38cb9915de72",
+    "Scripts/test-cli-native-jpeg.py": "47175b28df0aa55cd1b0e02be88e4aef65c3c056e0aab2be3120fa38622e2251",
+    "Scripts/test-cli-nrrd.py": "74014e8343eadb23d310d3d419b6bb5553d9e1ea01b9f297fd988b2f07a9cbed",
+    "Scripts/test-cli-payload.py": "b7d18fb56e1ab18e173ec85199d0d0910d7f7314624ad253161a30baa7b5c212",
+    "Scripts/test-cli-pnm.py": "55db46b995e5417dc5ecd0bd39ab3d654288f474a8351e978f3bf2d21d5a60d1",
+    "Scripts/test-cli-vardct-encode.py": "ee975ab8abca38112539ceed06f69ef47768f3b061867fe5f66e7912f60d9261",
+    "Scripts/test-cli-vardct.py": "d5d6bb87ec66273e27766db6ef6825ffe4bc267a11159bcf1020c3c3efc4b38a",
+    "Scripts/test-cli.py": "9a369cd681e8157843711856f6c4e65baccd5e3a88170534c434e5d5732d8676",
+    "Scripts/test-jpeg-mutations.py": "c907096bb512e0ff6aee219b50b6932eff931478ac5b17b21951d8f04d97a528",
+    "Scripts/test-modular-completion.py": "7af565baa47651d830df5bd3d9cbd75a91cc1db123f52794e9f3f429c1a54271",
+    "Scripts/test-modular-mutations.py": "b107c94fe67334b240e5d189d83c4a04f72e1db5920391e7371824db245506ed",
+    "Scripts/validate-apple-sdks.py": "e937098f4688baad38091cc747613d72334992518ebabe987f5f18e5c25c770c",
+    "Scripts/validate-brotli-decoder.py": "bdec74f527c7ddae2925988675347203477206a7c9a9e205c8a650769e41641f",
+    "Scripts/validate-brotli-framing.py": "a5487097f65f97187fb0603c3b5271688cb7b2dc294438b493d3395f554b59c8",
+    "Scripts/validate-jpeg-coefficients.py": "8bc44754a228d5e2e14f345659f968ef0c37e1062b8a14d9b265ef6682703473",
+    "Scripts/validate-jpeg-events.py": "7c2a0b0e862b23bb389621b45993eae172a69fff278a745b16b664b243d198e9",
+    "Scripts/validate-oracle.py": "bde9955282ea6207322fcf980c51eff4e3d5a2c5a6f2e0e851d6d123ba37ba13",
+    "Scripts/validate-swift64.py": "fe3f1f17bd76b07586ffeaf421204dc0bece5fc8ff50c62a278c54d468eaa4b2",
+    "Scripts/validate.sh": "5edc7443bf7b061f728d652d45e1fb1d5c6e90d2666554a677d6a14a6a752311",
+    "Examples/CLIValidationFixtures/Package.swift": "e8e9857aba866a5b30107786284676e3094e0a8870866003c051c2984da0573a",
+    "Examples/CLIValidationFixtures/Sources/CLIValidationFixtures/main.swift": "233da1582bcee79849449e44517b51f52c3b48539852c7c95b6ea2743fd69f1b",
+    "Examples/ContractConsumer/Package.swift": "4cf70f60bc0eba0a795f567cac7b9f19db92795252cb103b5bd9fe4a53aef3e8",
+    "Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift": "ca5197faa0dd385397699bf2c52259d0123c2853332b3cba8c9b1afc1a0c89cb",
+    "Examples/MemoryProbe/Package.swift": "249681dbc376bdab603e164f5a2ff49c111175d91564223e150e576e804c4da5",
+    "Examples/MemoryProbe/Sources/MemoryProbe/main.swift": "60a4241fcb25d75e7863b5b1f4c760ff1628c1b8a0b826a42776dedea10a80f5"
+  },
+  "review": "Root and independent reviewer accepted the JPEG parser admission repair and two VarDCT payload reductions. JPEG reserves the existing64KiB fixed allowance before ICC fragment collection, with unchanged total successful admission and a255-fragment late-duplicate regression. VarDCT retains disjoint192-Float small cache and4096-Float large-channel suffix, identical sample arithmetic and per-row checkpoints; normalized-shape natural scan sharing preserves original per-strategy charges. All21strategies/eight scans covered by independent decoder-bucket mapping. No outstanding static findings; final execution pending.",
+  "base": "efce6a973c96d3e49e9facc3510966d7ab0563a1",
+  "contract": "0.10.0",
+  "expectedDeclarations": 365,
+  "capturedAtUTC": "2026-10-15T13:50:53.340560+00:00",
+  "changedFilesFromFreeze6": {
+    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift": {
+      "before": "377283f92883dad3a4dad1511c296b113b79f4ef15742e23ed479fa78a13351a",
+      "after": "8c747973627d5f75f4099e9c657c33b5e661315b86c99e25929204010405cfb5"
+    },
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift": {
+      "before": "2ed709bc129fe940d2554ac179c71516cf7c9952b3776c063ace07d187753ca3",
+      "after": "829805640b1726b2a48c9e639e15f956a8aec292eb710af346cde8f38afa0793"
+    },
+    "Tests/SwiftJXLCoreTests/VarDCTWorkspaceTests.swift": {
+      "before": "fb15c228476294547918c8252f722ca85ecbcebd62d39852519765db1b3f70e4",
+      "after": "9bea8f075a4880cc071a2b1640ad2eec43218e9f0854915c5044a2cd32e06c80"
+    }
+  },
+  "changeReason": "Swift 6.2 type-checker compatibility repair: added explicit closure parameter/return type annotations to workspace.storage.withUnsafeMutableBufferPointer in VarDCTSmallAnalysis.apply and Float sample generation closures in VarDCTEncoderPreparationTests and VarDCTWorkspaceTests. No numerical, evaluation order, memory ownership, or default behaviour changes.",
+  "frozenAtUTC": "2026-10-15T14:57:34.056860+00:00",
+  "sourceCount": 1195,
+  "rawReportSHA256": "180894db14cafe7284d61ba79ead78616a604252c1674dc3f432fbe01e547770"
 }

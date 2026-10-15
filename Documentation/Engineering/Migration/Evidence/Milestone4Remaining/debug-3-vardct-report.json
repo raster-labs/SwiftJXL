@@ -1,11 +1,10 @@
 {
-  "rawReportSHA256": "3d017be819e8f435df87a87bb604c11e0cc216c66b4ca3ab981bf55acf884a96",
   "status": "passed",
   "mode": "debug",
-  "startedAtUTC": "2026-10-15T14:05:22.805989+00:00",
+  "startedAtUTC": "2026-10-15T14:59:16.627585+00:00",
   "provenanceKind": "implementation-freeze",
-  "provenance": "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/implementation-freeze-7.json",
-  "provenanceSHA256": "df5c2237cb5fd9b32f21610f6e94f38c5db2f5cd7101f7f665fb3826a915ccce",
+  "provenance": "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/implementation-freeze-8.json",
+  "provenanceSHA256": "180894db14cafe7284d61ba79ead78616a604252c1674dc3f432fbe01e547770",
   "sourceSHA256": {
     "Sources/SwiftJXL/AnimationAPI.swift": "2144535c59a13dd263cd51e0c514595abe3b454cf1d64c44b04e0fac1b6369ac",
     "Sources/SwiftJXL/AnimationEncoding.swift": "ed0d03433cbfc8f8c967c6349569f99453b1a72f6edf8f9eee04a227aa3523c4",
@@ -123,7 +122,7 @@
     "Sources/SwiftJXLCore/VarDCT/VarDCTPixelEncoder.swift": "9da2ecd504cfec5a76e889d7dfa54c02895684904603be64a6ec451bca8e11a2",
     "Sources/SwiftJXLCore/VarDCT/VarDCTQuantWeights.swift": "b813d3c408362bf2c17667e548dc46252ff754bc18701ee540b3c3c9327e7604",
     "Sources/SwiftJXLCore/VarDCT/VarDCTReconstruction.swift": "bd232c211ed347241b9ee051798a0785b13ce3c853d202cde1294db0b44cf04c",
-    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift": "8c747973627d5f75f4099e9c657c33b5e661315b86c99e25929204010405cfb5",
+    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift": "050613c8c9f5dda57227c53e1fdbeabf267b684e63e0833d314147659543bac2",
     "Sources/SwiftJXLCore/VarDCT/VarDCTSmallTransforms.swift": "5766555f0147c3eddb7f00640b3d899b305c3a68b5780d02aec98e01dbec68f9",
     "Sources/SwiftJXLCore/VarDCT/VarDCTStrategyMap.swift": "c9be670d7b1d0b94c37d69a6d5269041990f1a139b63d89d27e2b095d6190aa7",
     "Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift": "9b615b7dc00c976c8ae239e6c3f5cd2a97595dff14f5ea4f9a72a534598d3134",
@@ -1178,7 +1177,7 @@
     "Tests/SwiftJXLCoreTests/VarDCTColourTests.swift": "14807bcfdc3c1e3ad20ce89357f5e24eb2c5de561e6e65884a12de8c2b02de6d",
     "Tests/SwiftJXLCoreTests/VarDCTConformanceTests.swift": "33f458ecef05c4309bca6396de076d9d725d285e844b23c5a2076827006b3727",
     "Tests/SwiftJXLCoreTests/VarDCTEPFTests.swift": "5a66433b869c1bafa97d2761c56a2c546695b3d57c69b3d40335c932c82d9b5d",
-    "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift": "829805640b1726b2a48c9e639e15f956a8aec292eb710af346cde8f38afa0793",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift": "e06e1c2797bfbb49b094235ef49f38f14fc2683776c255efa0195642293e03c3",
     "Tests/SwiftJXLCoreTests/VarDCTEncoderTests.swift": "ebf78b04b94e6bc03d7645ea71a0e0bd17c79d8232f575e84839a1562c648860",
     "Tests/SwiftJXLCoreTests/VarDCTFilterTests.swift": "e5e80e4cfbc3057bd3c827158f32a0e354958069a2d7a5b12e2fa3e069ef10d9",
     "Tests/SwiftJXLCoreTests/VarDCTFrameTests.swift": "76ae0d1a3e8dab6c8cc54afc2a9799a7740034f7a26120d4b143a5792b3c84cc",
@@ -1214,7 +1213,7 @@
   "environment": {
     "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
     "SWIFTJXL_ORACLE_BIN": "/opt/homebrew/bin",
-    "SWIFTJXL_ORACLE_OUTPUT": "<work-final>/debug-2-vardct/oracles",
+    "SWIFTJXL_ORACLE_OUTPUT": "<work-final>/debug-3-vardct/oracles",
     "SWIFTJXL_PROFILE_ORACLE": "<local-work>/2026-10-14/swiftjxl-milestone4-completion/work/final/modular-profile-oracle",
     "SWIFTJXL_ARM_RECIPROCAL_VECTORS": "<local-work>/2026-10-14/swiftjxl-milestone4-remaining/work/final/arm/reciprocal-vectors.json"
   },
@@ -1227,8 +1226,8 @@
         "--version"
       ],
       "exitCode": 0,
-      "seconds": 0.14157591699999997,
-      "log": "<work-final>/debug-2-vardct/compiler.log",
+      "seconds": 0.150699958,
+      "log": "<work-final>/debug-3-vardct/compiler.log",
       "logSHA256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc"
     },
     {
@@ -1239,8 +1238,8 @@
         "swift"
       ],
       "exitCode": 0,
-      "seconds": 0.0063375830000000355,
-      "log": "<work-final>/debug-2-vardct/compiler-path.log",
+      "seconds": 0.0062389170000000105,
+      "log": "<work-final>/debug-3-vardct/compiler-path.log",
       "logSHA256": "61282ac0b52d5cc453e4e3ca66457a6dcfad2d726fa60800bbf74209a1b30e72"
     },
     {
@@ -1261,9 +1260,9 @@
         "--disable-xctest"
       ],
       "exitCode": 0,
-      "seconds": 118.074636458,
-      "log": "<work-final>/debug-2-vardct/discovery.log",
-      "logSHA256": "a6f738f221694c3be55f97bd3ec8eec08a7ae4faee217c7354aac2449190df74"
+      "seconds": 67.273690666,
+      "log": "<work-final>/debug-3-vardct/discovery.log",
+      "logSHA256": "74b2ff3d2a42112158426ec9850cdbd8c1e4445ee8bc7e11e9987c138cf7cece"
     },
     {
       "name": "tests",
@@ -1283,14 +1282,14 @@
         "--skip-build",
         "--no-parallel",
         "--xunit-output",
-        "<work-final>/debug-2-vardct/tests.xml",
+        "<work-final>/debug-3-vardct/tests.xml",
         "--filter",
         "VarDCTWorkspaceTests|VarDCTEncoderPreparationTests|VarDCTSmallAnalysisTests|VarDCTPixelEncoderTests|VarDCTDirectRoundTripTests"
       ],
       "exitCode": 0,
-      "seconds": 2.5018378750000068,
-      "log": "<work-final>/debug-2-vardct/tests.log",
-      "logSHA256": "1b718ae3e023e4be4b33728e68b1faf2f76d2eb5f3d5b365eace73d080ba2a7c"
+      "seconds": 1.9773086250000063,
+      "log": "<work-final>/debug-3-vardct/tests.log",
+      "logSHA256": "9b77ec1c2e5cc5f85f6e2c967e2f7b4d5e413855bf08326e3586e54a7382134b"
     }
   ],
   "compiler": "swift-driver version: 1.168.6 Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
@@ -1332,7 +1331,7 @@
     "--skip-build",
     "--no-parallel",
     "--xunit-output",
-    "<work-final>/debug-2-vardct/tests.xml",
+    "<work-final>/debug-3-vardct/tests.xml",
     "--filter",
     "VarDCTWorkspaceTests|VarDCTEncoderPreparationTests|VarDCTSmallAnalysisTests|VarDCTPixelEncoderTests|VarDCTDirectRoundTripTests"
   ],
@@ -1345,31 +1344,32 @@
   },
   "executedInventory": [
     "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/scopedPrefilterMatchesOriginalScalarBitsAtMirroredEdges()",
-    "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/eightBitConversionMatchesUncachedArithmeticExactly()",
-    "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/adaptiveQuantisationAnchors()",
     "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/borrowedQuantisationMatchesArrayReferenceAndRejectsInvalidSamples()",
-    "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/lookupStillRejectsOutOfRangePaddedSixteenBitStorage()",
-    "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/pinnedIndependentPrefilter()",
     "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/invalidPrefilterAndAdmission()",
+    "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/pinnedIndependentPrefilter()",
+    "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/eightBitConversionMatchesUncachedArithmeticExactly()",
+    "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/lookupStillRejectsOutOfRangePaddedSixteenBitStorage()",
+    "SwiftJXLCoreTests.VarDCTEncoderPreparationTests/adaptiveQuantisationAnchors()",
     "SwiftJXLCoreTests.VarDCTSmallAnalysisTests/invalidAndCumulativeAdmission()",
     "SwiftJXLCoreTests.VarDCTSmallAnalysisTests/pinnedIndependentForwardBasis(_:)",
-    "SwiftJXLCoreTests.VarDCTWorkspaceTests/smallScratchReusesAdmissionAndOverwritesEveryStrategy()",
-    "SwiftJXLCoreTests.VarDCTWorkspaceTests/sharedAxesPreserveEveryShapeAndAdmission(_:)",
-    "SwiftJXLCoreTests.VarDCTWorkspaceTests/scopedDCTBorrowPreservesScalarArithmetic(_:)",
     "SwiftJXLCoreTests.VarDCTWorkspaceTests/cachedLargeDCFactorsRetainOriginalArithmetic(_:)",
-    "SwiftJXLCoreTests.VarDCTWorkspaceTests/scratchCannotCrossBudgetsOrAdmitInsufficientCapacity()",
     "SwiftJXLCoreTests.VarDCTWorkspaceTests/cancellationDoesNotOverwriteAdmittedScratch()",
+    "SwiftJXLCoreTests.VarDCTWorkspaceTests/smallScratchReusesAdmissionAndOverwritesEveryStrategy()",
+    "SwiftJXLCoreTests.VarDCTWorkspaceTests/largeScratchReusesAdmissionAcrossShapes()",
     "SwiftJXLCoreTests.VarDCTWorkspaceTests/scopedDCTRejectsCancellationBeforeScratchWrite(_:)",
-    "SwiftJXLCoreTests.VarDCTWorkspaceTests/largeScratchReusesAdmissionAcrossShapes()"
+    "SwiftJXLCoreTests.VarDCTWorkspaceTests/scopedDCTBorrowPreservesScalarArithmetic(_:)",
+    "SwiftJXLCoreTests.VarDCTWorkspaceTests/sharedAxesPreserveEveryShapeAndAdmission(_:)",
+    "SwiftJXLCoreTests.VarDCTWorkspaceTests/scratchCannotCrossBudgetsOrAdmitInsufficientCapacity()"
   ],
   "parameterisedCaseStarts": 31,
   "caseExecutions": 43,
   "objectSHA256": {
     "<repo>/.build/out/Products/Debug/SwiftJXL.o": "47446af4eb3bc777b3dfe4eb6bec879b4cb0766fe044bddbddddd36020838e22",
-    "<repo>/.build/out/Products/Debug/SwiftJXLCore.o": "43e7d7d5081e9f9914ac372ae0cebae02c342e70724aded480fcb9584f8919e3"
+    "<repo>/.build/out/Products/Debug/SwiftJXLCore.o": "4d9cb8fe534f93c404536c1c5917b489f0f86536f21e16bd2c3113a528794b04"
   },
   "sourcesUnchanged": true,
   "packageUnchanged": true,
-  "finishedAtUTC": "2026-10-15T14:07:24.319404+00:00",
-  "seconds": 121.509140625
+  "finishedAtUTC": "2026-10-15T15:00:26.726981+00:00",
+  "seconds": 70.092826625,
+  "rawReportSHA256": "8f5cd0cc053fe7cc1b66ab583b6e9c1ede6aa1a75e8db3ad520158462d5915fd"
 }
