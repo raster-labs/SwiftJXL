@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased — remaining Milestone 4 follow-up
+
+Added extended JPEG pixel precision/lossless/metadata handling, explicit ARM reference numerical conventions, reduced Modular/transform overhead and per-entry security/runtime harnesses. Local macOS arm64 debug/release/ASan/TSan suites (365 declarations / 2,048 cases each), 123-case ARM reference checks, standalone consumer, release/ASan/debug/TSan CLI suites, 10 Apple SDK builds, 4 simulator smoke probes (`iOS 26.5`, `tvOS 26.5`, `visionOS 26.5`, `watchOS 26.0`) and the 48-row primary release performance comparison passed on the final source manifest (10 one-worker diagnostic latency rows retained; 3×3600s JPEG mutation campaigns, native Intel, physical Apple devices, minimum-OS 26.0 runtimes on macOS/iOS/tvOS/visionOS and hosted CI remain unexecuted/pending). See [the follow-up record](Documentation/Engineering/Migration/MILESTONE4_REMAINING.md); Milestone 4 is not declared complete while required gates remain open.
+
 ## 2026-10-14 — Milestone 4 completion branch
 
 Added explicit pixel-container output, bounded native JPEG pixel decoding, CLI independent-frame animation with exact timing and safe export, and extended Modular layout/group and simulator qualification tools. Final local debug/release, ASan/TSan, independent CLI/reference and available simulator checks passed after implementation. Controlled comparisons and remaining stable-release gates are recorded; hosted CI is pending. See [scope, sequence and final gates](Documentation/Engineering/Migration/MILESTONE4_COMPLETION.md). JXLSwift remains the production route.

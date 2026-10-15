@@ -59,9 +59,32 @@ public struct EncoderConfiguration: Sendable, Equatable {
     private init() { mode = .lossless; codecOptions = .init() }
     public static let `default` = Self()
 }
+/// Numerical output conventions for lossy VarDCT only; Modular stays exact.
+/// Neither convention changes colour space, meaningful precision or alpha.
+public enum VarDCTNumericalProfile: Sendable, Equatable {
+    /// Exact scalar coefficient division, with undithered nearest integers.
+    case scalarNearest
+    /// Explicit compatibility with libjxl 0.12.0 ARM integer-output conventions:
+    /// ARM coefficient reciprocal estimates and eight-bit colour blue-noise
+    /// dithering. Implemented portably in Swift on every architecture. This can
+    /// change lossy colour samples relative to scalarNearest; alpha stays exact.
+    /// It is a numerical profile, not a general bit-exact libjxl promise.
+    case libjxl012ARMInteger
+
+    fileprivate var coreMode: VarDCTNumericalMode {
+        switch self {
+        case .scalarNearest: .scalarNearest
+        case .libjxl012ARMInteger: .libjxl012ARMInteger
+        }
+    }
+}
 public struct DecoderConfiguration: Sendable, Equatable {
     public let codecOptions: CodecOptions
-    public init(codecOptions: CodecOptions = .init()) { self.codecOptions = codecOptions }
+    public let varDCTNumericalProfile: VarDCTNumericalProfile
+    public init(codecOptions: CodecOptions = .init(),
+                varDCTNumericalProfile: VarDCTNumericalProfile = .scalarNearest) {
+        self.codecOptions = codecOptions; self.varDCTNumericalProfile = varDCTNumericalProfile
+    }
 }
 
 public struct CodecCapabilities: Sendable, Equatable {
@@ -219,7 +242,8 @@ public struct Encoder: Sendable {
 /// Ancillary boxes and display transformations are unsupported. VarDCT decoding additionally
 /// accepts bounded single-frame, single-pass sRGB 8–16-bit grey/RGB with optional
 /// straight alpha and default opsin/restoration parameters. It uses nearest
-/// integer output and reports lossy fidelity. ICC VarDCT output is unsupported.
+/// integer output by default and reports lossy fidelity. The explicit numerical
+/// profile can select pinned ARM integer conventions. ICC VarDCT output is unsupported.
 public struct Decoder: Sendable {
     public let configuration: DecoderConfiguration
     public static let capabilities = CodecCapabilities.pixelDecoding
@@ -242,25 +266,33 @@ public struct Decoder: Sendable {
     }
     @concurrent public func decode(_ data: Data, options: DecodeOptions = .init()) async throws -> DecodedImage {
         let start = ContinuousClock.now
-        return try translateScalarErrors {
-            let (frame, budget) = try prepare(data, options: options, start: start)
-            let descriptor = try frameDescriptor(frame, limits: options.resourceLimits)
-            try budget.reservePixels(descriptor.requiredByteCount)
-            let destination = try ImageDestination.allocate(descriptor: descriptor, limits: options.resourceLimits)
-            return try finish(frame, into: destination, budget: budget, options: options, start: start)
-        }
+        let cancellation = ScalarOperationCancellation()
+        return try await withTaskCancellationHandler {
+            try translateScalarErrors {
+                let (frame, budget) = try prepare(data, options: options, start: start, cancellation: cancellation)
+                let descriptor = try frameDescriptor(frame, limits: options.resourceLimits)
+                try budget.reservePixels(descriptor.requiredByteCount)
+                let destination = try ImageDestination.allocate(descriptor: descriptor, limits: options.resourceLimits)
+                return try finish(frame, into: destination, budget: budget, options: options, start: start,
+                    numericalMode: configuration.varDCTNumericalProfile.coreMode)
+            }
+        } onCancel: { cancellation.cancel() }
     }
     @concurrent public func decode(_ data: Data, into destination: ImageDestination,
                                   options: DecodeOptions = .init()) async throws -> DecodedImage {
         let start = ContinuousClock.now
-        return try translateScalarErrors {
-            // Account the caller's entire retained allocation before parsing.
-            try destination.descriptor.validate(limits: options.resourceLimits)
-            let (frame, budget) = try prepare(data, options: options, start: start,
-                destinationBytes: destination.storage.byteCount,
-                destinationMetadataBytes: destination.descriptor.iccProfile?.count ?? 0)
-            return try finish(frame, into: destination, budget: budget, options: options, start: start)
-        }
+        let cancellation = ScalarOperationCancellation()
+        return try await withTaskCancellationHandler {
+            try translateScalarErrors {
+                // Account the caller's entire retained allocation before parsing.
+                try destination.descriptor.validate(limits: options.resourceLimits)
+                let (frame, budget) = try prepare(data, options: options, start: start,
+                    destinationBytes: destination.storage.byteCount,
+                    destinationMetadataBytes: destination.descriptor.iccProfile?.count ?? 0, cancellation: cancellation)
+                return try finish(frame, into: destination, budget: budget, options: options, start: start,
+                    numericalMode: configuration.varDCTNumericalProfile.coreMode)
+            }
+        } onCancel: { cancellation.cancel() }
     }
 }
 
@@ -330,23 +362,26 @@ private enum PreparedPixelFrame: Sendable {
         switch self { case .modular(let f): f.transferFunction; case .vardct(let f): f.metadata.colorEncoding.transferFunction }
     }
     var fidelity: Fidelity { switch self { case .modular: .exactSamples; case .vardct: .lossy } }
-    func decode(into bytes: UnsafeMutableRawBufferPointer, layouts: [ModularChannelLayout]) throws {
+    func decode(into bytes: UnsafeMutableRawBufferPointer, layouts: [ModularChannelLayout],
+                numericalMode: VarDCTNumericalMode) throws {
         switch self {
         case .modular(let f): try f.decode(into: bytes, layouts: layouts)
-        case .vardct(let f): try VarDCTPixelDecoder.decode(f, into: bytes, layouts: layouts)
+        case .vardct(let f): try VarDCTPixelDecoder.decode(f, into: bytes, layouts: layouts, numericalMode: numericalMode)
         }
     }
 }
 
 private func prepare(_ data: Data, options: DecodeOptions, start: ContinuousClock.Instant,
-                     destinationBytes: Int = 0, destinationMetadataBytes: Int = 0) throws -> (PreparedPixelFrame, ScalarOperationBudget) {
+                     destinationBytes: Int = 0, destinationMetadataBytes: Int = 0,
+                     cancellation: ScalarOperationCancellation? = nil) throws -> (PreparedPixelFrame, ScalarOperationBudget) {
     try Task.checkCancellation()
     try validateOperation(options.executionPolicy)
     let l = options.resourceLimits
     guard data.count <= l.maximumCompressedBytes else {
         throw CodecError(.resourceLimitExceeded, "Compressed input exceeds limits.")
     }
-    let budget = try operationBudget(l, retained: checkedAdd(data.count, destinationMetadataBytes), start: start)
+    let budget = try operationBudget(l, retained: checkedAdd(data.count, destinationMetadataBytes), start: start,
+        maximumWorkers: l.maximumWorkers, cancellation: cancellation)
     try budget.reservePixels(destinationBytes)
     try progress(options.progress, .inspecting, completed: 0)
     let header = try PixelFrameHeader.read(data, budget: budget,
@@ -465,7 +500,7 @@ func channelLayouts(_ d: ImageDescriptor, roles: [ComponentRole]) throws -> [Mod
 }
 private func finish(_ frame: PreparedPixelFrame, into destination: ImageDestination,
                     budget: ScalarOperationBudget, options: DecodeOptions,
-                    start: ContinuousClock.Instant) throws -> DecodedImage {
+                    start: ContinuousClock.Instant, numericalMode: VarDCTNumericalMode) throws -> DecodedImage {
     let d = destination.descriptor
     try d.validate(limits: options.resourceLimits)
     let layouts = try decodedLayouts(d, frame: frame)
@@ -481,7 +516,7 @@ private func finish(_ frame: PreparedPixelFrame, into destination: ImageDestinat
         try progress(options.progress, .completed, completed: 1)
         try budget.checkpoint()
     }) { bytes in
-        try frame.decode(into: bytes, layouts: layouts)
+        try frame.decode(into: bytes, layouts: layouts, numericalMode: numericalMode)
         try budget.checkpoint()
     }
     try budget.checkpoint()

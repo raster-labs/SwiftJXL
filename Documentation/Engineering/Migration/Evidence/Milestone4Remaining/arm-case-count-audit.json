@@ -1,0 +1,61 @@
+{
+  "caseCount": 123,
+  "uniqueCaseCount": 123,
+  "manifestCount": 123,
+  "manifestMatchesSource": true,
+  "groupCounts": {
+    "VarDCT": 32,
+    "VarDCT/Encoder": 20,
+    "VarDCT/EncoderPrepared": 20,
+    "VarDCT/EncoderSmall": 20,
+    "VarDCT/EncoderLarge": 31
+  },
+  "testSHA256": "35534b47f3105da179b15e5afa004e404d69a906fc9b5986c20e21f619c8d7f0",
+  "manifestSHA256": "726799b13314a6b67274f4b854278a510ee87831f75f08ead4d76022af9ed0b3",
+  "suiteEvidence": {
+    "/Users/raster/Documents/Codex/2026-10-15/in-our-previous-chat-i-could-2/work/qualification/final/release-6": {
+      "startedCount": 123,
+      "startedSetMatches": true,
+      "passedCounts": [
+        "123"
+      ],
+      "logSHA256": "21753518d967c9d89cece47b4f5e9cd7e5e5c4816fcb2e33c38463c3e56330bf",
+      "reportSHA256": "556d7bca06100008308e57931a5b75c65b1a1498b1b024a437be4e95abe5125d",
+      "declarations": 365,
+      "helperSHA256": "0192a79d9858d296679df2ef3afb53229e17383ed7a83a6cce4ef527f7ce00ac"
+    },
+    "/Users/raster/Documents/Codex/2026-10-15/in-our-previous-chat-i-could-2/work/qualification/final/asan-2": {
+      "startedCount": 123,
+      "startedSetMatches": true,
+      "passedCounts": [
+        "123"
+      ],
+      "logSHA256": "c513bd5b11e45a4eca0f803dd8abc8aa6c1a3f52492ea434269d4903d98d4de2",
+      "reportSHA256": "276b789bf23c3dddaa4fee2ccbfb2b5f999c37ca9cf26c103cef4c0c6acdf60c",
+      "declarations": 365,
+      "helperSHA256": "0192a79d9858d296679df2ef3afb53229e17383ed7a83a6cce4ef527f7ce00ac"
+    },
+    "/Users/raster/Documents/Codex/2026-10-15/in-our-previous-chat-i-could-2/work/qualification/final/debug-1": {
+      "startedCount": 123,
+      "startedSetMatches": true,
+      "passedCounts": [
+        "123"
+      ],
+      "logSHA256": "ec37904008b1d4b453d93272757d409c698471d6b9e95fe4c7341a5efd2c8032",
+      "reportSHA256": "09d8583b266ce437f651de4ab4d636a8a072f700ddcb95b1af72fe49633a673b",
+      "declarations": 365,
+      "helperSHA256": "0192a79d9858d296679df2ef3afb53229e17383ed7a83a6cce4ef527f7ce00ac"
+    },
+    "/Users/raster/Documents/Codex/2026-10-15/in-our-previous-chat-i-could-2/work/qualification/final/tsan-1": {
+      "startedCount": 123,
+      "startedSetMatches": true,
+      "passedCounts": [
+        "123"
+      ],
+      "logSHA256": "51b850255da7d74d7acbcda3a8f77774e84204f4e09d9c3f403fe6121de3e5dc",
+      "reportSHA256": "2c5ce9ec32039f55d77c95a266aac4ea88cc35adbad446bb3a867773051e8fb7",
+      "declarations": 365,
+      "helperSHA256": "0192a79d9858d296679df2ef3afb53229e17383ed7a83a6cce4ef527f7ce00ac"
+    }
+  }
+}

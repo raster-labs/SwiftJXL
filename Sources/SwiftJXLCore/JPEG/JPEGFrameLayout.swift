@@ -9,7 +9,8 @@ package enum JPEGFrameError: Error, Sendable, Equatable {
     case resourceLimit
 }
 
-/// Validated geometry for the native 8-bit DCT reconstruction path. Allocates
+/// Validated geometry: native reconstruction stays 8-bit DCT. Pixel callers
+/// explicitly opt into 12-bit DCT and full-resolution SOF3. Allocates
 /// at most three component records, never coefficient or pixel storage.
 package struct JPEGFrameLayout: Sendable {
     package struct Component: Sendable {
@@ -31,6 +32,7 @@ package struct JPEGFrameLayout: Sendable {
         }
     }
 
+    package let precision: Int
     package let marker: UInt8
     package let width: Int
     package let height: Int
@@ -39,14 +41,17 @@ package struct JPEGFrameLayout: Sendable {
     package let components: [Component]
     package let coefficientCount: Int
 
-    package init(data: Data, segment: JPEGSegment, maximumCoefficientBytes: Int) throws {
-        guard [UInt8(0xc0), 0xc1, 0xc2].contains(segment.markerByte) else { throw JPEGFrameError.unsupported }
+    package init(data: Data, segment: JPEGSegment, maximumCoefficientBytes: Int, pixelProfile: Bool = false) throws {
+        guard [UInt8(0xc0), 0xc1, 0xc2].contains(segment.markerByte) || (pixelProfile && segment.markerByte == 0xc3) else { throw JPEGFrameError.unsupported }
         let range = segment.payloadRange
         guard range.lowerBound >= 0, range.upperBound <= data.count, range.count >= 6 else {
             throw JPEGFrameError.malformed
         }
         func byte(_ n: Int) -> UInt8 { data[data.startIndex + range.lowerBound + n] }
-        guard byte(0) == 8 else { throw JPEGFrameError.unsupported }
+        let precision = Int(byte(0))
+        let lossless = segment.markerByte == 0xc3
+        guard precision == 8 || (pixelProfile && (lossless ? (2...16).contains(precision) : precision == 12 && segment.markerByte != 0xc0)) else { throw JPEGFrameError.unsupported }
+        self.precision = precision
         let height = Int(byte(1)) * 256 + Int(byte(2))
         let width = Int(byte(3)) * 256 + Int(byte(4))
         let count = Int(byte(5))
@@ -67,23 +72,29 @@ package struct JPEGFrameLayout: Sendable {
         // Header width/height <= 65535, factors <= 4: all geometry arithmetic
         // below fits Int even on 32-bit targets. The aggregate byte count uses
         // checked multiplication/addition before any coefficient allocation.
-        let mcusWide = (width + 8 * maxH - 1) / (8 * maxH)
-        let mcusHigh = (height + 8 * maxV - 1) / (8 * maxV)
+        if lossless {
+            guard maxH == 1, maxV == 1 else { throw JPEGFrameError.unsupported }
+            guard (0..<count).allSatisfy({ byte(8 + $0 * 3) == 0 }) else { throw JPEGFrameError.malformed }
+        }
+        let unit = lossless ? 1 : 8
+        let mcusWide = (width + unit * maxH - 1) / (unit * maxH)
+        let mcusHigh = (height + unit * maxV - 1) / (unit * maxV)
         var components: [Component] = []
         var coefficients = 0
         for i in 0..<count {
             let h = Int(byte(7 + i * 3) >> 4), v = Int(byte(7 + i * 3) & 15)
             let bw = mcusWide * h, bh = mcusHigh * v
-            let (n, overflow) = (bw * bh).multipliedReportingOverflow(by: 64)
+            let (cells, cellOverflow) = bw.multipliedReportingOverflow(by: bh)
+            let (n, overflow) = cells.multipliedReportingOverflow(by: lossless ? 1 : 64)
             let (next, sumOverflow) = coefficients.addingReportingOverflow(n)
-            guard !overflow, !sumOverflow, next <= maximumCoefficientBytes / MemoryLayout<Int32>.stride else {
+            guard !cellOverflow, !overflow, !sumOverflow, next <= maximumCoefficientBytes / MemoryLayout<Int32>.stride else {
                 throw JPEGFrameError.resourceLimit
             }
             coefficients = next
             components.append(Component(id: byte(6 + i * 3), horizontalSampling: h, verticalSampling: v,
                 quantisationTable: byte(8 + i * 3),
-                visibleBlocksWide: (width * h + 8 * maxH - 1) / (8 * maxH),
-                visibleBlocksHigh: (height * v + 8 * maxV - 1) / (8 * maxV),
+                visibleBlocksWide: (width * h + unit * maxH - 1) / (unit * maxH),
+                visibleBlocksHigh: (height * v + unit * maxV - 1) / (unit * maxV),
                 paddedBlocksWide: bw, paddedBlocksHigh: bh))
         }
         self.marker = segment.markerByte

@@ -223,12 +223,13 @@ private func help(_ command: String?) -> String {
               --overwrite              Atomically replace an existing regular output file.
               --backend NAME           automatic (default), scalar-cpu; accelerated returns 4.
               --copy-policy POLICY     require-sharing (default) or allow-copy.
-              --threads N              Worker ceiling 1..8; Modular workers are bounded, VarDCT is serial.
+              --threads N              Worker ceiling 1..8; eligible codec stages use bounded workers.
               --max-memory BYTES       Positive aggregate ceiling; default 1073741824.
               --timeout SECONDS        Deadline >0..31536000 seconds; default 120.
             Repeat -i with named files to encode an animation; input interpretation is shared.
-            JPEG pixels require explicit jpeg-srgb: 8-bit DCT grey/RGB with nearest chroma.
-            ICC/Exif, CMYK, 12-bit and SOF3 JPEG inputs reject; use transcode for original bytes.
+            JPEG pixels require explicit jpeg-srgb: 8/12-bit DCT or 8..16-bit SOF3 grey/RGB.
+            JPEG pixel export and JPEG XL encoding require 8..16 meaningful bits.
+            ICC/Exif and CMYK reject in this CLI profile; use transcode for original bytes.
             All-frame output requires a new directory; overwrite/stdout are unavailable.
             Exact timing is retained in timing.json. All decoded frames are admitted before writing.
             Lossy requires sRGB (pnm-srgb, jpeg-srgb or nrrd), 8..16-bit samples and straight alpha.
@@ -270,7 +271,7 @@ private func help(_ command: String?) -> String {
               --overwrite              Atomically replace an existing regular report file.
               --backend NAME           automatic (default), scalar-cpu; accelerated returns 4.
               --copy-policy POLICY     require-sharing (default) or allow-copy.
-              --threads N              Worker ceiling 1..8; Modular workers are bounded, VarDCT is serial.
+              --threads N              Worker ceiling 1..8; eligible Modular decode groups use workers.
               --max-memory BYTES       Positive aggregate ceiling; default 1073741824.
               --timeout SECONDS        Deadline >0..31536000 seconds, including pipe I/O; default 120.
             Mode, max-error and output-format do not apply to inspection/validation.
@@ -389,8 +390,8 @@ private func write(_ text: String, to handle: FileHandle) throws {
             "maximumCompressedBytes": CommandIO.maximumInput,
             "pixelContainers": ["codestream", "iso"], "canEncodeAnimation": true, "canDecodeAnimation": true,
             "maximumAnimationFrames": 256, "defaultMaximumAnimationFrames": 64,
-            "jpegPixelInputFormat": "jpeg-srgb", "jpegPixelMeaningfulBits": [8],
-            "jpegPixelProfile": "Huffman DCT grey/RGB, nearest chroma upsampling; ICC/Exif/CMYK/12-bit/SOF3 unsupported; explicit sRGB interpretation"]
+            "jpegPixelInputFormat": "jpeg-srgb", "jpegPixelMeaningfulBits": Array(8...16),
+            "jpegPixelProfile": "8/12-bit Huffman DCT grey/RGB with nearest chroma; 8..16-bit SOF3 grey/RGB; ICC/Exif/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits"]
         let data = try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])
         try FileHandle.standardOutput.write(contentsOf: data + Data([10]))
     } else {

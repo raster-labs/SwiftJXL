@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## 2026-10-15 — Remaining Milestone 4 implementation and follow-up validation
+
+Completed predecessor performance fixes, an explicit ARM integer-reference numerical profile, 12-bit DCT/SOF3 JPEG pixels with explicit ICC/Exif interpretation, and source-pinned security/platform harnesses on `codex/swiftjxl-milestone4-remaining`. Passed local macOS arm64 debug/release/ASan/TSan suites (365 declarations / 2,048 cases each), 123-case ARM reference checks, standalone consumer, release/ASan/debug/TSan CLI suites, 10 Apple SDK builds, 4 simulator smoke probes (`iOS 26.5`, `tvOS 26.5`, `visionOS 26.5`, `watchOS 26.0`) and the 48-row primary release performance comparison (10 constrained one-worker diagnostic latency rows retained). Native Intel, physical Apple devices, absent minimum-OS 26.0 runtimes, the three 3,600-second JPEG mutation campaigns and hosted CI remain unexecuted/pending; see [the follow-up record](Documentation/Engineering/Migration/MILESTONE4_REMAINING.md).
+
 ## 2026-10-14 — Milestone 4 implementation completion work
 
 Added explicit pixel-container output, bounded native JPEG pixel decoding, CLI independent-frame animation with exact timing and safe export, and extended Modular layout/group and simulator qualification tools. Final local debug/release, ASan/TSan, independent CLI/reference and available simulator checks passed after implementation. Controlled comparisons and remaining stable-release gates are recorded; hosted CI is pending. See [scope, sequence and final gates](Documentation/Engineering/Migration/MILESTONE4_COMPLETION.md). JXLSwift remains the production route.

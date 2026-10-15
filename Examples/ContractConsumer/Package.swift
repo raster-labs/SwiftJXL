@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "ContractConsumer",
     platforms: [.macOS("26.0")],
-    dependencies: [.package(path: "../..")],
+    dependencies: [.package(name: "SwiftJXL", path: "../..")],
     targets: [
         .executableTarget(
             name: "ContractConsumer",

@@ -95,7 +95,7 @@ struct VarDCTTransformTests {
                 try ScaledDCT(rows: size, columns: 8, direction: .inverse, budget: budget())
             }
         }
-        let bytes = (8 * 8 + 16 * 16 + 2 * 8 * 16) * 4
+        let bytes = (8 * 8 + 16 * 16) * 8 + 2 * 8 * 16 * 4
         let b = try budget(bytes)
         let plan = try ScaledDCT(rows: 8, columns: 16, direction: .inverse, budget: b)
         let dc = [Float](repeating: 0, count: 128)
@@ -118,7 +118,7 @@ struct VarDCTTransformTests {
     }
 
     @Test func sharedPlanAccountsForConcurrentScratch() async throws {
-        let b = try budget(1536)
+        let b = try budget(2048)
         let plan = try ScaledDCT(rows: 8, columns: 8, direction: .inverse, budget: b)
         var values = [Float](repeating: 0, count: 64)
         values[0] = 0.75
@@ -127,7 +127,7 @@ struct VarDCTTransformTests {
             for _ in 0..<2 { group.addTask { try plan.apply(input) } }
             for try await result in group { #expect(result.allSatisfy { $0 == 0.75 }) }
         }
-        #expect(b.reservedWorkspaceBytes == 1536)
+        #expect(b.reservedWorkspaceBytes == 2048)
         #expect(throws: (any Error).self) { try plan.apply(input) }
     }
 

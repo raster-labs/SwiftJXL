@@ -15,6 +15,33 @@ struct VarDCTHierarchicalAnalysisTests {
         try Data(contentsOf: #require(Bundle.module.url(forResource: name, withExtension: suffix,
             subdirectory: "VarDCT/EncoderLarge")))
     }
+    @Test func normalisedStrategyShapesShareDecoderNaturalScans() throws {
+        let operation = try budget()
+        var writer = BitWriter()
+        try writer.writeU32(0, distributions: (.literal(0x5f), .literal(0x13), .literal(0), .bits(13)))
+        var reader = BitReader(writer.finishToData())
+        // Decoder bucket geometry is an independent mapping from strategy IDs;
+        // small strategies even use two distinct buckets for one natural scan.
+        let decoded = try VarDCTOrders.read(from: &reader, usedBuckets: Set(0...8), budget: operation)
+        var byShape: [Int: [Int]] = [:]
+        for id in 0...20 {
+            let rows: Int, columns: Int
+            if [4,5,6,7,8,9,10,11,18,19,20].contains(id) {
+                let plan = try VarDCTLargeAnalysis(identifier: id, budget: operation)
+                rows = plan.rows; columns = plan.columns
+            } else { rows = 8; columns = 8 }
+            let transform = VarDCTStrategyMap.Transform(identifier: id, x: 0, y: 0,
+                cellsX: columns / 8, cellsY: rows / 8, quantisation: 5, coefficientOffset: 0)
+            let reference = try #require(decoded[transform.orderBucket])
+            let natural = try VarDCTOrders.natural(width: max(rows, columns) / 8,
+                height: min(rows, columns) / 8, budget: operation)
+            #expect(reference.count == 3 && reference.allSatisfy { $0 == natural })
+            let key = max(rows, columns) * 64 + min(rows, columns)
+            if let prior = byShape[key] { #expect(prior == natural) }
+            else { byShape[key] = natural }
+        }
+        #expect(byShape.count == 8)
+    }
     @Test(arguments: [16,32,64])
     func uniformRegionsSelectLargeTransforms(_ size: Int) throws {
         let operation = try budget(), planes = [[Float]](repeating: [Float](repeating: 0.375, count: size * size), count: 3)
@@ -151,6 +178,49 @@ struct VarDCTHierarchicalAnalysisTests {
         #expect(peak <= 2)
         #expect(sqrt(squared / Double(count * 3)) <= 0.5)
     }
+    @Test func packedSelectedCoefficientsMatchSeparateChannelAnalysis() throws {
+        let width = 17, height = 9, bx = (width + 7) / 8, operation = try budget()
+        let planes = texturedPlanes(width: width, height: height)
+        let result = try VarDCTHierarchicalAnalysis.analyse(planes, width: width, height: height,
+            scale: 5111, distance: 1, adaptiveQuantisation: false, budget: operation)
+        let small = try VarDCTSmallAnalysis(budget: operation)
+        let scales = [4096.0,512,256].map { Double(5111) * 17 * $0 / 65536 }
+        for transform in result.transforms {
+            let rows = transform.cellsY * 8, columns = transform.cellsX * 8
+            let count = rows * columns, covered = count / 64
+            let weights = try VarDCTQuantWeights.make(identifier: transform.identifier,
+                rows: rows, columns: columns, budget: operation)
+            let order = try VarDCTOrders.natural(width: max(rows, columns) / 8,
+                height: min(rows, columns) / 8, budget: operation)
+            for c in 0..<3 {
+                var patch = [Float](repeating: 0, count: count)
+                for y in 0..<rows { for x in 0..<columns {
+                    let source = min(height - 1, transform.y * 8 + y) * width + min(width - 1, transform.x * 8 + x)
+                    patch[y * columns + x] = c == 2 ? planes[2][source] - planes[1][source] : planes[c][source]
+                } }
+                let low: [Float], coefficients: [Float]
+                if covered > 1 {
+                    let analysed = try VarDCTLargeAnalysis(identifier: transform.identifier, budget: operation).apply(patch)
+                    low = analysed.dc; coefficients = analysed.coefficients
+                } else {
+                    coefficients = try small.apply(patch, identifier: transform.identifier)
+                    low = [coefficients[0]]
+                }
+                for y in 0..<transform.cellsY { for x in 0..<transform.cellsX {
+                    let expected = Int32((Double(low[y * transform.cellsX + x]) * scales[c]).rounded())
+                    #expect(result.dc[c][(transform.y + y) * bx + transform.x + x] == expected)
+                } }
+                var expected = [Int32](repeating: 0, count: count)
+                for k in covered..<count {
+                    let position = order[k]
+                    expected[position] = Int32((Double(coefficients[position]) * Double(weights[c * count + position])
+                        * Double(5111) / 65536 * Double(transform.quantisation)).rounded())
+                }
+                #expect(Array(result.ac[c][transform.coefficientOffset..<(transform.coefficientOffset + count)]) == expected)
+            }
+        }
+    }
+
     @Test func invalidAndExhaustedSearch() throws {
         #expect(throws: (any Error).self) {
             try VarDCTHierarchicalAnalysis.analyse([], width: 16, height: 16, scale: 5111,

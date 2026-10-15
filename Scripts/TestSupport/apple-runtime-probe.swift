@@ -133,8 +133,42 @@ private final class CancellingOutputOwner: WritableImageStorage {
             jpegPeak = max(jpegPeak, delta); jpegSquares += Double(delta * delta)
         }
         try require(jpegPeak <= 2 && sqrt(jpegSquares / Double(jpegBytes.count)) <= 0.75, "Independent JPEG pixel gate")
-        return ["status":"passed", "memoryCeilingBytes":32 * 1024 * 1024, "varDCTPeakLSB":peak, "varDCTRMSLSB":rms,
-                "checks":["12-bit lossless", "caller destination owner", "shared-storage reports", "exact animation timing", "separate retained frame owners", "independent VarDCT12", "independent RGBA16 animation", "low-memory rejection", "cancellation", "cancellation after destination writes", "failed destination invalidation", "Watch profile and exact round trip", "explicit pixel container", "independent JPEG pixel decoding"]]
+        let extended = fixtures.appendingPathComponent("JPEGExtended")
+        let manifest = try JSONSerialization.jsonObject(with: Data(contentsOf: extended.appendingPathComponent("manifest.json")))
+        guard let cases = manifest as? [[String: Any]], !cases.isEmpty else { throw ProbeFailure(message: "Missing extended JPEG cases") }
+        for entry in cases {
+            guard let name = entry["name"] as? String, let expected = entry["samples"] as? [Int],
+                  let bits = entry["precision"] as? Int, let interpretation = entry["interpretation"] as? String else {
+                throw ProbeFailure(message: "Invalid extended JPEG fixture manifest")
+            }
+            let bytes = try Data(contentsOf: extended.appendingPathComponent(name + ".jpg"))
+            let mode: JPEGPixelInterpretation = interpretation == "srgb" ? .srgb : .embedded(orientation: .preserve)
+            let info = try decoder.inspectJPEG(bytes, interpretingAs: mode, options: decodeOptions)
+            let result = try await decoder.decodeJPEG(bytes, interpretingAs: mode, options: decodeOptions)
+            let d = result.image.descriptor
+            try require(d == info.descriptor && d.meaningfulBits == bits, "Extended JPEG descriptor")
+            let samples = try result.image.storage.withUnsafeBytes { raw -> [Int] in
+                if d.storageBits == 8 { return raw.map(Int.init) }
+                return stride(from: 0, to: raw.count, by: 2).map { Int(raw[$0]) | Int(raw[$0 + 1]) << 8 }
+            }
+            try require(samples == expected, "Extended JPEG exact reference samples")
+            let target = try ImageDestination.allocate(descriptor: d, limits: cap)
+            let id = target.storage.allocationID
+            let direct = try await decoder.decodeJPEG(bytes, interpretingAs: mode, into: target, options: decodeOptions)
+            try require(direct.image.storage.allocationID == id && direct.report.pixelAllocationCount == 0,
+                        "Extended JPEG caller owner")
+            if name == "exif-6-True" {
+                let oriented = try await decoder.decodeJPEG(bytes, interpretingAs: .embedded(orientation: .apply), options: decodeOptions)
+                let values = try oriented.image.storage.withUnsafeBytes { $0.map(Int.init) }
+                try require(oriented.image.descriptor.width == 2 && oriented.image.descriptor.height == 3
+                    && values == [4,1,5,2,6,3], "Explicit JPEG orientation application")
+            }
+            if name == "icc-gray" {
+                try require(d.iccProfile == Data(contentsOf: extended.appendingPathComponent("gray.icc")), "JPEG ICC preservation")
+            }
+        }
+        return ["status":"passed", "jpegExtendedCases": cases.count, "memoryCeilingBytes":32 * 1024 * 1024, "varDCTPeakLSB":peak, "varDCTRMSLSB":rms,
+                "checks":["12-bit lossless", "caller destination owner", "shared-storage reports", "exact animation timing", "separate retained frame owners", "independent VarDCT12", "independent RGBA16 animation", "low-memory rejection", "cancellation", "cancellation after destination writes", "failed destination invalidation", "Watch profile and exact round trip", "explicit pixel container", "independent JPEG pixel decoding", "extended JPEG precision metadata and ownership"]]
     }
     static func main() async {
         do {

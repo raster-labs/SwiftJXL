@@ -107,6 +107,7 @@ package struct ANSStreamDecoder: Sendable {
 
     /// Read one symbol from cluster `cluster`. The first call also
     /// consumes the 32-bit rANS state init from the bitstream.
+    @inline(__always)
     package mutating func readSymbol(
         cluster: Int, from r: inout BitReader
     ) throws -> UInt32 {

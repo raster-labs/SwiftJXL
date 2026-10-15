@@ -1,0 +1,974 @@
+{
+  "scope": "Offline verification of retained original fixture provenance and independently generated current ARM hardware vectors; no decoder execution",
+  "cases": 123,
+  "groups": {
+    "VarDCT": 32,
+    "VarDCT/Encoder": 20,
+    "VarDCT/EncoderPrepared": 20,
+    "VarDCT/EncoderSmall": 20,
+    "VarDCT/EncoderLarge": 31
+  },
+  "allFixtureChecksPassed": true,
+  "casesChecked": [
+    {
+      "name": "pred-17-1-16.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-1-16",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-1-8.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-1-8",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-2-16.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-2-16",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-2-8.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-2-8",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-3-16.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-3-16",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-3-8.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-3-8",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-4-16.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-4-16",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-4-8.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-17-4-8",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-1-16.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-1-16",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-1-8.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-1-8",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-2-16.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-2-16",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-2-8.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-2-8",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-3-16.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-3-16",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-3-8.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-3-8",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-4-16.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-4-16",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-4-8.independent",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "pred-64-4-8",
+      "directory": "VarDCT",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalManifest": true
+    },
+    {
+      "name": "enc-17-1-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-1-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-2-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-2-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-3-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-3-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-4-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-4-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-1-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-1-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-3-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-3-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-1-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-1-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-2-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-2-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-3-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-3-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-4-16",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-4-8",
+      "directory": "VarDCT/Encoder",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-1-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-1-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-2-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-2-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-3-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-3-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-4-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-4-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-1-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-1-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-3-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-3-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-1-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-1-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-2-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-2-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-3-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-3-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-4-16",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-4-8",
+      "directory": "VarDCT/EncoderPrepared",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-1-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-1-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-2-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-2-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-3-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-3-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-4-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-4-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-1-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-1-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-3-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-3-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-1-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-1-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-2-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-2-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-3-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-3-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-4-16",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-4-8",
+      "directory": "VarDCT/EncoderSmall",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-1-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-1-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-2-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-2-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-3-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-3-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-4-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-17-4-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-1-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-1-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-3-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-257-3-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-1-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-1-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-2-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-2-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-3-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-3-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-4-16",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "enc-64-4-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-10",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-11",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-18",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-19",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-20",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-4",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-5",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-6",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-7",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-8",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    },
+    {
+      "name": "writer-9",
+      "directory": "VarDCT/EncoderLarge",
+      "streamMatches": true,
+      "referenceMatches": true,
+      "matchesOriginalRetainedOutput": true,
+      "matchesOriginalRetainedStream": true
+    }
+  ],
+  "hardwareVectorCount": 45826,
+  "hardwareVectorSHA256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+  "reciprocalFormulaMismatches": [],
+  "ditherEntries": 1024,
+  "ditherLiteralsMatchPinnedSource": true,
+  "pinnedDitherSourceMatchesManifest": true,
+  "implementationSHA256": "0192a79d9858d296679df2ef3afb53229e17383ed7a83a6cce4ef527f7ce00ac",
+  "manifestSHA256": "726799b13314a6b67274f4b854278a510ee87831f75f08ead4d76022af9ed0b3"
+}

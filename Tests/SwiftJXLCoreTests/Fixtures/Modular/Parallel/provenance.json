@@ -1,0 +1,39 @@
+{
+  "positive": {
+    "name": "gray2048-gradient-ans",
+    "sourceArtifact": "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/final/bench/families/modular-grey16-large-candidate.jxl",
+    "sha256": "0d89226e2b4b8b559b55908c288011ada8ebddc0296659d84599286eeb913542",
+    "encodedBytes": 367,
+    "width": 2048,
+    "height": 2048,
+    "channels": 1,
+    "bits": 16,
+    "expectedSample": 21845,
+    "scope": "Actual retained shared-input stream selected by the controlled decode benchmark; copied without regeneration.",
+    "originalPAM": "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/final/bench/families/grey16-large.pam",
+    "originalPAMSHA256": "a682fad6e04e091116fcfb97760ebe824c3a439f51a111d7550dad446c7dd045",
+    "originalPAMPayloadBytes": 8388608,
+    "expectedDecodedUInt16LESHA256": "85e43f98f0f64a55ba451c8479f3a29daedc1b19eec3247e4a9cbd667518d68b"
+  },
+  "negative": {
+    "name": "gray2048-predecessor-missing-empty-state",
+    "sourceArtifact": "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-remaining/work/final/performance/pixel-results/modular-grey16-large-decode-r0-0-predecessor.jxl",
+    "sha256": "c82e3316067d3046195a749259aa60b499e4b3c97d8d27238a9ef255feb41e77",
+    "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+    "width": 2048,
+    "height": 2048,
+    "channels": 1,
+    "bits": 16,
+    "expectedSample": 21845,
+    "scope": "Retained predecessor output omits the empty global ANS initial/final state. Strict decoder rejection is required; not a valid positive comparison input.",
+    "encodedBytes": 363,
+    "originalPAM": "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-completion/work/final/bench/families/grey16-large.pam",
+    "originalPAMSHA256": "a682fad6e04e091116fcfb97760ebe824c3a439f51a111d7550dad446c7dd045",
+    "originalPAMPayloadBytes": 8388608,
+    "expectedDecodedUInt16LESHA256": "85e43f98f0f64a55ba451c8479f3a29daedc1b19eec3247e4a9cbd667518d68b"
+  },
+  "corrections": [
+    "Release-5 and ASan-5 each recorded one failure because the original positive test accidentally selected the 363-byte predecessor artifact instead of the actual 367-byte shared input. Production source is unchanged; both artifacts and failure reports remain retained.",
+    "Release-6 and ASan-6 each recorded one expectation failure: all serial/default/eight-worker outputs agreed, but the test incorrectly assumed 32768 from a separate generated constant-image test. The original benchmark PAM independently contains only 21845 (0x5555). Test and provenance now use that source-grounded value and payload hash; production code and both compressed artifacts are unchanged."
+  ]
+}

@@ -45,7 +45,8 @@ Failure preserves any previous report; partial stdout cannot be rolled back.
 Input format is jxl or jpeg-xl. Backend is automatic (default) or scalar-cpu;
 accelerated is unavailable. Copy policy defaults to require-sharing;
 allow-copy is accepted. Threads is a ceiling from 1 to 8.
-Modular encoding uses bounded workers; decoding and VarDCT encoding are serial.
+Modular encoding, eligible Modular group decoding and VarDCT encoding
+analysis use bounded workers. JPEG and VarDCT pixel decoding remain serial.
 Maximum memory is positive bytes, default 1073741824, including command
 buffers and codec admission; it is not a process RSS ceiling.
 Timeout is positive finite seconds, at most 31536000, default 120, checked
@@ -188,6 +189,9 @@ only validate decodes pixels.
 .SH JPEG PIXEL INPUT
 Explicit --input-format jpeg-srgb enables bounded native 8-bit Huffman
 grey/RGB DCT JPEG pixel decoding, with scalar IDCT and nearest chroma
-upsampling. ICC/Exif, CMYK, 12-bit, SOF3 and arithmetic profiles reject. Use
+upsampling, plus 12-bit DCT and 8..16-bit SOF3 grey/RGB.
+JPEG pixel export and JPEG XL encoding require 8..16 meaningful bits.
+Lower-precision SOF3 rejects without implicitly widening samples.
+ICC/Exif, CMYK and arithmetic profiles reject in the CLI. Use
 pnm-srgb for pixel export. This path interprets samples as sRGB and is
 distinct from original-JPEG byte preservation through transcode.

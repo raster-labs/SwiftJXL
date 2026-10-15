@@ -8,6 +8,20 @@ import Foundation
 package protocol ModularSampleBuffer {
     var count: Int { get }
     subscript(index: Int) -> Int32 { get set }
+    /// An opaque row address valid only with this buffer's row/column accessor.
+    /// Callers provide validated geometry and never access padding as samples.
+    func rowAddress(_ y: Int, width: Int) -> Int
+    subscript(row row: Int, column column: Int) -> Int32 { get set }
+}
+
+extension ModularSampleBuffer {
+    @inline(__always)
+    package func rowAddress(_ y: Int, width: Int) -> Int { y * width }
+    @inline(__always)
+    package subscript(row row: Int, column column: Int) -> Int32 {
+        get { self[row + column] }
+        set { self[row + column] = newValue }
+    }
 }
 
 extension Array: ModularSampleBuffer where Element == Int32 {}

@@ -45,6 +45,25 @@ package enum ANSTokenStreamWriterError: Error, Sendable {
     case invalidReplay
 }
 
+/// Exact UInt32 division for a validated positive ANS frequency. The ceiling
+/// reciprocal can overestimate the quotient by at most one; the product check
+/// corrects it. Zero-frequency entries are retained as zero and rejected by the
+/// writer before this operation. This changes no entropy or rounding semantics.
+package enum ANSReciprocalDivision {
+    @inline(__always) package static func reciprocal(_ frequency: UInt32) -> UInt64 {
+        frequency == 0 ? 0 : ((UInt64(1) << 32) + UInt64(frequency) - 1) / UInt64(frequency)
+    }
+    @inline(__always) package static func divide(_ value: UInt32, frequency: UInt32,
+                                                reciprocal: UInt64) -> (quotient: UInt32, remainder: UInt32) {
+        // For frequency >= 1 the first product is at most (2^32-1)*2^32,
+        // and the estimated quotient times frequency is at most value+frequency.
+        let estimate = (UInt64(value) &* reciprocal) >> 32
+        let product = estimate &* UInt64(frequency)
+        let quotient = UInt32(estimate) &- (product > UInt64(value) ? 1 : 0)
+        return (quotient, value &- quotient &* frequency)
+    }
+}
+
 /// Buffers context-routed integer tokens and emits them as one
 /// interleaved rANS bitstream (init + refill words + HybridUint extra
 /// bits) matching `TokenStreamReader`'s ANS path.
@@ -55,7 +74,9 @@ package struct ANSTokenStreamWriter {
     /// Per-cluster encode state derived from the on-wire frequencies.
     private struct ClusterEnc {
         let freq: [UInt32]                 // per symbol (the wire counts)
-        let slotForResidue: [[UInt32]]     // [symbol][residue] → rANS slot
+        let reciprocal: [UInt64]          // exact quotient via corrected multiplication
+        let residueStart: [Int]           // symbol -> first residue
+        let slotForResidue: [UInt32]      // contiguous 4096-slot inverse table
     }
     private let clusters: [ClusterEnc]
 
@@ -94,23 +115,22 @@ package struct ANSTokenStreamWriter {
             } catch let e as AliasTableError {
                 throw ANSTokenStreamWriterError.alias(e)
             }
-            var slotForResidue = [[UInt32]](
-                repeating: [], count: freq.count)
-            for s in 0..<freq.count where freq[s] > 0 {
-                slotForResidue[s] = [UInt32](
-                    repeating: 0, count: Int(freq[s]))
+            var starts = [Int](repeating: 0, count: freq.count)
+            var total = 0
+            for symbol in freq.indices {
+                starts[symbol] = total
+                total += Int(freq[symbol])
             }
+            var slotForResidue = [UInt32](repeating: 0, count: total)
             for slot in 0..<range {
                 let lr = alias.lookup(slot: UInt32(slot))
-                let sym = lr.value
-                let off = Int(lr.offset)
-                if sym >= 0 && sym < slotForResidue.count
-                    && off < slotForResidue[sym].count {
-                    slotForResidue[sym][off] = UInt32(slot)
+                let sym = lr.value, off = Int(lr.offset)
+                if sym >= 0 && sym < freq.count && off < Int(freq[sym]) {
+                    slotForResidue[starts[sym] + off] = UInt32(slot)
                 }
             }
-            built.append(ClusterEnc(
-                freq: freq, slotForResidue: slotForResidue))
+            built.append(ClusterEnc(freq: freq, reciprocal: freq.map(ANSReciprocalDivision.reciprocal), residueStart: starts,
+                                    slotForResidue: slotForResidue))
         }
         self.clusters = built
     }
@@ -178,7 +198,7 @@ package struct ANSTokenStreamWriter {
             // Encode step (inverse of the alias decode step).
             let offset = state % f
             let q = state / f
-            let slot = enc.slotForResidue[Int(t.symbol)][Int(offset)]
+            let slot = enc.slotForResidue[enc.residueStart[Int(t.symbol)] + Int(offset)]
             state = q &* range &+ slot
             i -= 1
         }
@@ -208,20 +228,34 @@ package struct ANSTokenStreamWriter {
         let enc = clusters[0], config = header.uintConfigs[0]
         var hasRefill = [UInt8](repeating: 0, count: symbols.count / 8 + (symbols.count % 8 == 0 ? 0 : 1))
         var state = ANSConstants.initialState
-        for i in symbols.indices.reversed() {
-            if i & 255 == 0 { try ScalarEncodingWork.checkpoint() }
-            let symbol = Int(symbols[i])
-            guard symbol < enc.freq.count, enc.freq[symbol] > 0 else {
-                throw ANSTokenStreamWriterError.symbolHasZeroFrequency(cluster: 0, symbol: symbol)
+        try enc.reciprocal.withUnsafeBufferPointer { reciprocals in
+            try enc.freq.withUnsafeBufferPointer { frequencies in
+                try enc.residueStart.withUnsafeBufferPointer { starts in
+                    try enc.slotForResidue.withUnsafeBufferPointer { slots in
+                        try symbols.withUnsafeMutableBufferPointer { mutableSymbols in
+                            try hasRefill.withUnsafeMutableBufferPointer { flags in
+                                for i in mutableSymbols.indices.reversed() {
+                                    if i & 255 == 0 { try ScalarEncodingWork.checkpoint() }
+                                    let symbol = Int(mutableSymbols[i])
+                                    guard symbol < frequencies.count, frequencies[symbol] > 0 else {
+                                        throw ANSTokenStreamWriterError.symbolHasZeroFrequency(cluster: 0, symbol: symbol)
+                                    }
+                                    let f = frequencies[symbol]
+                                    if UInt64(state) >= UInt64(f) << UInt64(32 - ANSConstants.logTabSize) {
+                                        mutableSymbols[i] = UInt16(truncatingIfNeeded: state)
+                                        flags[i / 8] |= UInt8(1 << (i % 8))
+                                        state >>= 16
+                                    }
+                                    let division = ANSReciprocalDivision.divide(state,
+                                        frequency: f, reciprocal: reciprocals[symbol])
+                                    state = division.quotient &* UInt32(ANSConstants.tabSize)
+                                        &+ slots[starts[symbol] + Int(division.remainder)]
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            let f = enc.freq[symbol]
-            if UInt64(state) >= UInt64(f) << UInt64(32 - ANSConstants.logTabSize) {
-                symbols[i] = UInt16(truncatingIfNeeded: state)
-                hasRefill[i / 8] |= UInt8(1 << (i % 8))
-                state >>= 16
-            }
-            state = (state / f) &* UInt32(ANSConstants.tabSize)
-                &+ enc.slotForResidue[symbol][Int(state % f)]
         }
         w.write(bits: 32, value: state)
         var index = 0
@@ -239,6 +273,49 @@ package struct ANSTokenStreamWriter {
         try ScalarEncodingWork.checkpoint()
     }
 
+    /// Walk successive immutable chunks as ONE entropy stream, in reverse.
+    /// Keeping the four table buffers borrowed across the complete walk avoids
+    /// per-symbol table retains and avoids a full-image flattened symbol copy.
+    package func refillWordCount(singleClusterChunks chunks: [[UInt16]]) throws -> Int {
+        try ScalarEncodingWork.checkpoint()
+        guard clusters.count == 1 else {
+            throw ANSTokenStreamWriterError.clusterOutOfRange(clusters.count, max: 1)
+        }
+        let enc = clusters[0]
+        return try enc.reciprocal.withUnsafeBufferPointer { reciprocals in
+            return try enc.freq.withUnsafeBufferPointer { frequencies in
+                try enc.residueStart.withUnsafeBufferPointer { starts in
+                    try enc.slotForResidue.withUnsafeBufferPointer { slots in
+                        var refills = 0, processed = 0
+                        var state = ANSConstants.initialState
+                        for chunk in chunks.reversed() {
+                            try chunk.withUnsafeBufferPointer { symbols in
+                                for i in symbols.indices.reversed() {
+                                    if processed & 255 == 0 { try ScalarEncodingWork.checkpoint() }
+                                    processed += 1
+                                    let symbol = Int(symbols[i])
+                                    guard symbol < frequencies.count, frequencies[symbol] > 0 else {
+                                        throw ANSTokenStreamWriterError.symbolHasZeroFrequency(cluster: 0, symbol: symbol)
+                                    }
+                                    let frequency = frequencies[symbol]
+                                    if UInt64(state) >= UInt64(frequency) << UInt64(32 - ANSConstants.logTabSize) {
+                                        refills += 1
+                                        state >>= 16
+                                    }
+                                    let division = ANSReciprocalDivision.divide(state,
+                                        frequency: frequency, reciprocal: reciprocals[symbol])
+                                    state = division.quotient &* UInt32(ANSConstants.tabSize)
+                                        &+ slots[starts[symbol] + Int(division.remainder)]
+                                }
+                            }
+                        }
+                        return refills
+                    }
+                }
+            }
+        }
+    }
+
     /// Number of buffered tokens.
     package var tokenCount: Int { pending.count }
 
@@ -254,6 +331,12 @@ package struct ANSTokenStreamWriter {
     package func refillWordCount(
         symbols: [UInt16], clusters clusterIdx: [UInt8]? = nil
     ) throws -> Int {
+        if clusterIdx == nil, clusters.count == 1 {
+            return try refillWordCount(singleClusterChunks: [symbols])
+        }
+        guard clusterIdx == nil || clusterIdx?.count == symbols.count else {
+            throw ANSTokenStreamWriterError.invalidReplay
+        }
         let range = UInt32(ANSConstants.tabSize)
         let tables = self.clusters
         var refills = 0
@@ -263,6 +346,9 @@ package struct ANSTokenStreamWriter {
             if i & 255 == 0 { try ScalarEncodingWork.checkpoint() }
             let cl = clusterIdx.map { Int($0[i]) } ?? 0
             let sym = Int(symbols[i])
+            guard cl < tables.count else {
+                throw ANSTokenStreamWriterError.clusterOutOfRange(cl, max: tables.count - 1)
+            }
             let enc = tables[cl]
             guard sym < enc.freq.count, enc.freq[sym] > 0 else {
                 throw ANSTokenStreamWriterError.symbolHasZeroFrequency(
@@ -276,7 +362,7 @@ package struct ANSTokenStreamWriter {
             }
             let offset = state % f
             let q = state / f
-            state = q &* range &+ enc.slotForResidue[sym][Int(offset)]
+            state = q &* range &+ enc.slotForResidue[enc.residueStart[sym] + Int(offset)]
             i -= 1
         }
         return refills

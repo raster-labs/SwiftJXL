@@ -182,6 +182,7 @@ package struct TokenStreamReader: Sendable {
     /// bits (ANS mode, with state init / renorm reads coming from the
     /// same BitReader). Drains any pending LZ77 copy before reading
     /// new ANS symbols.
+    @inline(__always)
     package mutating func readToken(
         context ctx: Int, from r: inout BitReader
     ) throws -> UInt32 {
@@ -243,6 +244,7 @@ package struct TokenStreamReader: Sendable {
 
     /// Prefix-code symbol read (the raw HybridUint token, before
     /// extra-bits expansion).
+    @inline(__always)
     private func readPrefixSymbol(
         cluster: Int, from r: inout BitReader
     ) throws -> UInt32 {
@@ -255,6 +257,7 @@ package struct TokenStreamReader: Sendable {
     }
 
     /// rANS symbol read (the raw HybridUint token).
+    @inline(__always)
     private mutating func readANSSymbol(
         cluster: Int, from r: inout BitReader
     ) throws -> UInt32 {
@@ -271,6 +274,7 @@ package struct TokenStreamReader: Sendable {
     }
 
     /// HybridUint extra-bits expansion at this cluster's config.
+    @inline(__always)
     private func expand(
         symbol: UInt32, cluster: Int, from r: inout BitReader
     ) throws -> UInt32 {

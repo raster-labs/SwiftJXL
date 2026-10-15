@@ -12,22 +12,69 @@ package enum VarDCTError: Error, Equatable { case invalidTransform, nonFiniteSam
 /// Axes are powers of two from 2 through 64; DC is the sample mean. This is
 /// the reference path for subsequent pixel integration, not a public codec mode.
 package struct ScaledDCT: Sendable {
-    package enum Direction: Sendable { case forward, inverse }
+    package enum Direction: Sendable, Equatable { case forward, inverse }
     package let rows: Int
     package let columns: Int
     private let budget: ScalarOperationBudget
-    private let rowMatrix: [Float]
-    private let columnMatrix: [Float]
+    // Four output-frequency lanes per input sample. Coefficients are rounded
+    // through Float once, retaining the reference matrix exactly; promotion to
+    // Double is moved out of every dot product into plan construction.
+    private let rowMatrix: [SIMD4<Double>]
+    private let columnMatrix: [SIMD4<Double>]
+
+    /// Construction-only axis owners, scoped to one operation and direction.
+    /// Fixed slots need no additional dictionary/array allocation. Plans retain
+    /// immutable Array owners; the mutable bank never enters parallel work.
+    package struct AxisBank: ~Copyable {
+        fileprivate let budget: ScalarOperationBudget
+        fileprivate let direction: Direction
+        private var axis2: [SIMD4<Double>]?, axis4: [SIMD4<Double>]?
+        private var axis8: [SIMD4<Double>]?, axis16: [SIMD4<Double>]?
+        private var axis32: [SIMD4<Double>]?, axis64: [SIMD4<Double>]?
+        package init(direction: Direction, budget: ScalarOperationBudget) {
+            self.direction = direction; self.budget = budget
+        }
+        fileprivate mutating func matrix(_ n: Int) throws -> [SIMD4<Double>] {
+            try budget.checkpoint()
+            let cached: [SIMD4<Double>]?
+            switch n {
+            case 2: cached = axis2
+            case 4: cached = axis4
+            case 8: cached = axis8
+            case 16: cached = axis16
+            case 32: cached = axis32
+            case 64: cached = axis64
+            default: throw VarDCTError.invalidTransform
+            }
+            if let cached { return cached }
+            let value = try ScaledDCT.matrix(n, direction: direction, budget: budget)
+            switch n {
+            case 2: axis2 = value
+            case 4: axis4 = value
+            case 8: axis8 = value
+            case 16: axis16 = value
+            case 32: axis32 = value
+            default: axis64 = value
+            }
+            return value
+        }
+    }
 
     package init(rows: Int, columns: Int, direction: Direction,
                  budget: ScalarOperationBudget) throws {
-        guard Self.valid(rows), Self.valid(columns) else { throw VarDCTError.invalidTransform }
+        var axes = AxisBank(direction: direction, budget: budget)
+        try self.init(rows: rows, columns: columns, direction: direction, budget: budget, axes: &axes)
+    }
+    package init(rows: Int, columns: Int, direction: Direction,
+                 budget: ScalarOperationBudget, axes: inout AxisBank) throws {
+        guard Self.valid(rows), Self.valid(columns), axes.budget === budget,
+              axes.direction == direction else { throw VarDCTError.invalidTransform }
         self.rows = rows; self.columns = columns; self.budget = budget
-        // Checked axes bound all following products. Charge both matrices even
-        // for square blocks, before allocation, through the operation budget.
-        try budget.reserveWorkspace((rows * rows + columns * columns) * MemoryLayout<Float>.stride)
-        rowMatrix = try Self.matrix(rows, direction: direction, budget: budget)
-        columnMatrix = try Self.matrix(columns, direction: direction, budget: budget)
+        // Preserve conservative per-plan admission even when an immutable axis
+        // owner is shared. No cache hit can bypass this operation's budget.
+        try budget.reserveWorkspace(((rows + 3) / 4 * rows + (columns + 3) / 4 * columns) * MemoryLayout<SIMD4<Double>>.stride)
+        rowMatrix = try axes.matrix(rows)
+        columnMatrix = try axes.matrix(columns)
     }
 
     /// Plans retain their operation budget, so copying a plan cannot evade admission.
@@ -46,7 +93,7 @@ package struct ScaledDCT: Sendable {
             try budget.checkpoint()
             for u in 0..<columns {
                 var sum: Double = 0
-                for x in 0..<columns { sum += Double(columnMatrix[u * columns + x]) * Double(input[y * columns + x]) }
+                for x in 0..<columns { sum += columnMatrix[(u / 4) * columns + x][u % 4] * Double(input[y * columns + x]) }
                 guard Float(sum).isFinite else { throw VarDCTError.nonFiniteSample }
                 temporary[y * columns + u] = Float(sum)
             }
@@ -55,7 +102,7 @@ package struct ScaledDCT: Sendable {
             try budget.checkpoint()
             for u in 0..<rows {
                 var sum: Double = 0
-                for y in 0..<rows { sum += Double(rowMatrix[u * rows + y]) * Double(temporary[y * columns + x]) }
+                for y in 0..<rows { sum += rowMatrix[(u / 4) * rows + y][u % 4] * Double(temporary[y * columns + x]) }
                 guard Float(sum).isFinite else { throw VarDCTError.nonFiniteSample }
                 output[u * columns + x] = Float(sum)
             }
@@ -77,6 +124,10 @@ package struct ScaledDCT: Sendable {
             output = [Float](repeating: 0, count: capacity)
         }
         package func value(at index: Int) -> Float { output[index] }
+        /// Synchronous read borrow; callers may not retain the pointer.
+        package borrowing func withValues<Result>(_ body: (UnsafeBufferPointer<Float>) throws -> Result) rethrows -> Result {
+            try output.withUnsafeBufferPointer(body)
+        }
     }
 
     /// Synchronous source borrow; no pointer escapes. The caller retains the
@@ -86,22 +137,73 @@ package struct ScaledDCT: Sendable {
         guard input.count == rows * columns, workspace.output.count >= input.count,
               workspace.budget === budget else { throw VarDCTError.invalidTransform }
         guard input.allSatisfy(\.isFinite) else { throw VarDCTError.nonFiniteSample }
-        for y in 0..<rows {
-            try budget.checkpoint()
-            for u in 0..<columns {
-                var sum: Double = 0
-                for x in 0..<columns { sum += Double(columnMatrix[u * columns + x]) * Double(input[y * columns + x]) }
-                guard Float(sum).isFinite else { throw VarDCTError.nonFiniteSample }
-                workspace.temporary[y * columns + u] = Float(sum)
-            }
-        }
-        for x in 0..<columns {
-            try budget.checkpoint()
-            for u in 0..<rows {
-                var sum: Double = 0
-                for y in 0..<rows { sum += Double(rowMatrix[u * rows + y]) * Double(workspace.temporary[y * columns + x]) }
-                guard Float(sum).isFinite else { throw VarDCTError.nonFiniteSample }
-                workspace.output[u * columns + x] = Float(sum)
+        // All four borrows are synchronous and cover one bounded transform.
+        // The noncopyable workspace supplies disjoint uniquely owned arrays;
+        // establishing uniqueness once removes a COW check per output sample.
+        try columnMatrix.withUnsafeBufferPointer { horizontal in
+            try rowMatrix.withUnsafeBufferPointer { vertical in
+                try workspace.temporary.withUnsafeMutableBufferPointer { temporary in
+                    try workspace.output.withUnsafeMutableBufferPointer { output in
+                        for y in 0..<rows {
+                            // Batch complete rows within the original bound:
+                            // no more than 4096 multiply-adds between checks.
+                            if y % max(1, 4096 / (columns * columns)) == 0 { try budget.checkpoint() }
+                            let base = y * columns
+                            var u = 0
+                            // Four independent dot products share each input
+                            // load. Every lane retains the scalar sum order;
+                            // no horizontal reassociation or reduced precision.
+                            while u + 3 < columns {
+                                var sums = SIMD4<Double>(repeating: 0)
+                                for x in 0..<columns {
+                                    let weights = horizontal[(u / 4) * columns + x]
+                                    sums += weights * SIMD4<Double>(repeating: Double(input[base + x]))
+                                }
+                                for lane in 0..<4 {
+                                    let value = Float(sums[lane])
+                                    guard value.isFinite else { throw VarDCTError.nonFiniteSample }
+                                    temporary[base + u + lane] = value
+                                }
+                                u += 4
+                            }
+                            while u < columns {
+                                var sum: Double = 0
+                                for x in 0..<columns {
+                                    sum += horizontal[(u / 4) * columns + x][u % 4] * Double(input[base + x])
+                                }
+                                guard Float(sum).isFinite else { throw VarDCTError.nonFiniteSample }
+                                temporary[base + u] = Float(sum)
+                                u += 1
+                            }
+                        }
+                        for x in 0..<columns {
+                            if x % max(1, 4096 / (rows * rows)) == 0 { try budget.checkpoint() }
+                            var u = 0
+                            while u + 3 < rows {
+                                var sums = SIMD4<Double>(repeating: 0)
+                                for y in 0..<rows {
+                                    let weights = vertical[(u / 4) * rows + y]
+                                    sums += weights * SIMD4<Double>(repeating: Double(temporary[y * columns + x]))
+                                }
+                                for lane in 0..<4 {
+                                    let value = Float(sums[lane])
+                                    guard value.isFinite else { throw VarDCTError.nonFiniteSample }
+                                    output[(u + lane) * columns + x] = value
+                                }
+                                u += 4
+                            }
+                            while u < rows {
+                                var sum: Double = 0
+                                for y in 0..<rows {
+                                    sum += vertical[(u / 4) * rows + y][u % 4] * Double(temporary[y * columns + x])
+                                }
+                                guard Float(sum).isFinite else { throw VarDCTError.nonFiniteSample }
+                                output[u * columns + x] = Float(sum)
+                                u += 1
+                            }
+                        }
+                    }
+                }
             }
         }
         try budget.checkpoint()
@@ -109,12 +211,12 @@ package struct ScaledDCT: Sendable {
 
     private static func valid(_ n: Int) -> Bool { (2...64).contains(n) && n & (n - 1) == 0 }
     private static func matrix(_ n: Int, direction: Direction,
-                               budget: ScalarOperationBudget) throws -> [Float] {
+                               budget: ScalarOperationBudget) throws -> [SIMD4<Double>] {
         // Double angles avoid the large-block Float-angle error measured in
-        // the pinned predecessor. Matrices/storage remain Float; sums widen.
+        // the pinned predecessor. Coefficients retain Float rounding; sums widen.
         let nf = Double(n), rootTwo = sqrt(2.0)
         let scale = direction == .forward ? rootTwo / nf : rootTwo
-        var result = [Float](repeating: 0, count: n * n)
+        var result = [SIMD4<Double>](repeating: .zero, count: (n + 3) / 4 * n)
         for u in 0..<n {
             try budget.checkpoint()
             for y in 0..<n {
@@ -122,7 +224,7 @@ package struct ScaledDCT: Sendable {
                 let position = direction == .forward ? y : u
                 let alpha = frequency == 0 ? 1 / rootTwo : 1
                 let angle = (Double(position) + 0.5) * Double(frequency) * .pi / nf
-                result[u * n + y] = Float(alpha * cos(angle) * scale)
+                result[(u / 4) * n + y][u % 4] = Double(Float(alpha * cos(angle) * scale))
             }
         }
         return result

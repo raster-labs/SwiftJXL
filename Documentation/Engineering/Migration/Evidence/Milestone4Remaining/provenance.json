@@ -1,0 +1,31 @@
+{
+  "mergedBaseline": "efce6a973c96d3e49e9facc3510966d7ab0563a1",
+  "continuationCheckpoint": "540a0b13c035c587915a5226a4f47f7db2f37bac",
+  "sharedBaseTree": "3a9e4823887b56d299a4ab68c4d171a93a7e6619",
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contract": "0.10.0",
+  "references": [
+    {
+      "source": "Sources/JXLSwift/JPEG/JPEGLosslessDecoder.swift",
+      "revision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+      "licence": "Apache-2.0",
+      "successorPath": "Sources/SwiftJXLCore/JPEG/JPEGLosslessPixelDecoder.swift",
+      "disposition": "Predictor formulae adapted per ITU-T T.81 Annex H; bounded framing, restart-row validation, resource admission and direct owning-destination emission are new."
+    },
+    {
+      "source": "libjxl/lib/jxl/render_pipeline/stage_write.cc",
+      "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+      "licence": "BSD-3-Clause",
+      "licenceFile": "Documentation/ThirdParty/libjxl-LICENSE.txt",
+      "successorPath": "Sources/SwiftJXLCore/VarDCT/VarDCTNumerics.swift",
+      "disposition": "Retained the 32x32 blue-noise output quantisation pattern for explicit .libjxl012ARMInteger 8-bit colour compatibility, with dual Apache-2.0 AND BSD-3-Clause attribution."
+    },
+    {
+      "source": "libjxl/lib/jxl/quantizer-inl.h",
+      "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+      "licence": "BSD-3-Clause",
+      "successorPath": "Sources/SwiftJXLCore/VarDCT/VarDCTNumerics.swift",
+      "disposition": "Implemented the ARM RecipEstimate 8-bit significand midpoint-bin rule mathematically in integer arithmetic for explicit .libjxl012ARMInteger compatibility."
+    }
+  ]
+}

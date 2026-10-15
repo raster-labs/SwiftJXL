@@ -1,0 +1,33 @@
+{
+  "source": "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTNumerics.swift",
+  "sourceSHA256": "0192a79d9858d296679df2ef3afb53229e17383ed7a83a6cce4ef527f7ce00ac",
+  "harnessSHA256": "46beb27bd08ac248858b0e66990bf70b42d429e336d4b2d99d8d3c0d5962e257",
+  "binarySHA256": "59c3ca65f5c2dbb7003af5d01c3b7534000ffb24679ec05745332ca373d05279",
+  "vectorSHA256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+  "compiler": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "compileCommand": [
+    "xcrun",
+    "swiftc",
+    "-O",
+    "-parse-as-library",
+    "-package-name",
+    "SwiftJXL",
+    "-module-cache-path",
+    "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-remaining/work/final/arm/module-cache",
+    "/Users/raster/Documents/Codex/2026-10-07/https-github-com-raster-labs-swiftjxl/work/SwiftJXL-vardct-public/Sources/SwiftJXLCore/VarDCT/VarDCTNumerics.swift",
+    "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-remaining/work/final/arm/reciprocal-swift.swift",
+    "-o",
+    "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-remaining/work/final/arm/reciprocal-swift"
+  ],
+  "compileExit": 0,
+  "runCommand": [
+    "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-remaining/work/final/arm/reciprocal-swift",
+    "/Users/raster/Documents/Codex/2026-10-14/swiftjxl-milestone4-remaining/work/final/arm/reciprocal-vectors.json"
+  ],
+  "runExit": 0,
+  "result": {
+    "hardwareVectors": 45826,
+    "mismatches": 0
+  },
+  "initialHarnessFailure": "Unavailable CocoaError.Code member in scratch audit only; initial exit1 retained in reciprocal-swift-initial-compile.txt; fixed without production change"
+}

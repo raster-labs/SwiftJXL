@@ -32,7 +32,7 @@ def main():
         assert d['pixelContainers']==['codestream','iso']
         assert d['canEncodeAnimation'] is True and d['canDecodeAnimation'] is True
         assert d['maximumAnimationFrames']==256 and d['defaultMaximumAnimationFrames']==64
-        assert d['jpegPixelInputFormat']=='jpeg-srgb' and d['jpegPixelMeaningfulBits']==[8]
+        assert d['jpegPixelInputFormat']=='jpeg-srgb' and d['jpegPixelMeaningfulBits']==list(range(8,17))
         return d
     try:
         root=cli('--help');assert 'USAGE:' in root.stdout and 'transcode' in root.stdout and not root.stderr
@@ -42,6 +42,13 @@ def main():
         assert '--json' in command and 'EXIT STATUS' in command
         for form in [['--version'],['version'],['--version','--quiet']]:assert cli(*form).stdout==tool+' '+version+'\n'
         baseline=document(cli('capabilities','--json'))
+        # The library can decode 2-bit SOF3, but neither CLI pixel export nor
+        # JPEG XL encoding may silently widen its declared precision to 8 bits.
+        low_precision=repo/'Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor1-pt0.jpg'
+        report['low_precision_jpeg_sha256']=hashlib.sha256(low_precision.read_bytes()).hexdigest()
+        for verb,extra in [('decode',['--output-format','pnm-srgb']),('encode',[])]:
+            rejected=cli(verb,'-i',low_precision,'--input-format','jpeg-srgb',*extra,expected=4)
+            assert not rejected.stdout
         for level in range(1,6):
             for form in [['-'+'v'*level],['-v']*level,['--verbose',str(level)],['--verbose='+str(level)],
                          ['-verbose:',str(level)],['-verbose:'+str(level)],['--verbose','+'*level],['--verbose='+'+'*level]]:

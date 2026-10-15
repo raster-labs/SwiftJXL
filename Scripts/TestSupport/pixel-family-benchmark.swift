@@ -49,6 +49,7 @@ private struct BenchError: Error { let message: String }
         }
         let durations = (0..<count).map { UInt32(10 + $0 * 5) }
         #if PREDECESSOR
+        let workerPolicy = "predecessor-native"
         let sources = expected.map { bytes -> ImageFrame in
             var frame = ImageFrame(width: width, height: height, channels: channels,
                 pixelType: bits == 8 ? .uint8 : .uint16, colorSpace: channels < 3 ? .grayscale : .sRGB,
@@ -78,6 +79,15 @@ private struct BenchError: Error { let message: String }
             return (pixels, Double(elapsed.seconds) * 1000 + Double(elapsed.attoseconds) / 1e15)
         }
         #else
+        let workerPolicy = ProcessInfo.processInfo.environment["SWIFTJXL_BENCHMARK_WORKERS"] ?? "1"
+        let workerLimit: Int
+        if workerPolicy == "default" { workerLimit = ResourceLimits.default.maximumWorkers }
+        else {
+            guard let value = Int(workerPolicy), (1...8).contains(value) else {
+                throw BenchError(message: "Worker policy must be default or 1...8")
+            }
+            workerLimit = value
+        }
         let roles: [ComponentRole] = (channels < 3 ? [.grey] : [.red,.green,.blue]) + (channels % 2 == 0 ? [.alpha] : [])
         let plane = try PlaneDescriptor(width: width, height: height, components: Array(roles.indices),
             sampleStride: sampleBytes, pixelStride: channels * sampleBytes,
@@ -91,7 +101,7 @@ private struct BenchError: Error { let message: String }
             }
         }
         let limits = try ResourceLimits(maximumWorkspaceBytes: 2 * 1024 * 1024 * 1024,
-            maximumWorkers: 1, maximumMemoryBytes: 3 * 1024 * 1024 * 1024)
+            maximumWorkers: workerLimit, maximumMemoryBytes: 3 * 1024 * 1024 * 1024)
         let encodeOptions = EncodeOptions(resourceLimits: limits), decodeOptions = DecodeOptions(resourceLimits: limits)
         let configuration = try EncoderConfiguration(mode: lossy ? .lossy : .lossless,
             codecOptions: .init(varDCT: lossy ? .init(distance: distance) : nil))
@@ -159,12 +169,16 @@ private struct BenchError: Error { let message: String }
             if i >= warmups { retained.append(Int(heap.size_in_use)) }
         }
         var usage = rusage(); try require(getrusage(RUSAGE_SELF, &usage) == 0, "RSS")
-        let report: [String: Any] = ["family": a[1], "operation": operation, "width": width, "height": height,
+        var report: [String: Any] = ["family": a[1], "operation": operation, "width": width, "height": height,
             "channels": channels, "bits": bits, "frameCount": count, "distance": distance,
             "encodedBytes": ownEncoded.count, "inputBytes": input.count, "warmups": warmups,
             "milliseconds": times, "retainedProcessHeapBytes": retained, "processPeakRSSBytes": usage.ru_maxrss,
             "thermalStart": thermalStart, "thermalEnd": ProcessInfo.processInfo.thermalState.rawValue,
-            "caller": "generic executor", "note": "API calls are timed; sample materialisation and validation follow outside timing. Heap is a process endpoint, not peak workspace or leak proof. Queue depth one; all frames in each sequence are retained by decodeAll. Successor worker ceiling one and explicit 2GiB workspace/3GiB aggregate; predecessor native policy unchanged."]
+            "workerPolicy": workerPolicy,
+            "caller": "generic executor", "note": "API calls are timed; sample materialisation and validation follow outside timing. Heap is a process endpoint, not peak workspace or leak proof. Queue depth one; all frames in each sequence are retained by decodeAll. Successor worker policy is recorded with explicit 2GiB workspace/3GiB aggregate; predecessor native policy is unchanged."]
+        #if !PREDECESSOR
+        report["maximumWorkers"] = limits.maximumWorkers
+        #endif
         print(String(decoding: try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys]), as: UTF8.self))
     }
     static func main() async {

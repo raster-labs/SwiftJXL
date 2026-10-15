@@ -7,7 +7,8 @@ import Foundation
 /// DCT default-matrix reconstruction into admitted algorithm planes, not a
 /// final image or public capability. No successful pixels are published here.
 package enum VarDCTReconstruction {
-    package static func xyb(_ coefficients: VarDCTCoefficients) throws -> [[Float]] {
+    package static func xyb(_ coefficients: VarDCTCoefficients,
+                            numericalMode: VarDCTNumericalMode = .scalarNearest) throws -> [[Float]] {
         let e = coefficients.envelope, budget = e.budget
         if let unsupported = coefficients.strategies.transforms.first(where: { !VarDCTQuantWeights.supports($0.identifier) }) {
             throw VarDCTError.unsupportedStrategy(unsupported.identifier)
@@ -36,6 +37,18 @@ package enum VarDCTReconstruction {
         let dm: [Float] = [powf(0.8, Float(e.frame.xQmScale) - 2), 1, powf(0.8, Float(e.frame.bQmScale) - 2)]
         var planes = (0..<3).map { _ in [Float](repeating: 0, count: samples) }
         let tilesX = (bx + 7) / 8
+        // Strategy identifiers have fixed geometry in the validated map. Keep
+        // at most 21 immutable tables/plans per operation; never retain them
+        // globally or recompute their pow/cos tables for each image block.
+        try budget.reserveWorkspace(21 * (MemoryLayout<[Float]?>.stride + MemoryLayout<ScaledDCT?>.stride))
+        var weightTables = [[Float]?](repeating: nil, count: 21)
+        var transforms = [ScaledDCT?](repeating: nil, count: 21)
+        var largestTransform = 64
+        for (index, strategy) in coefficients.strategies.transforms.enumerated() {
+            if index & 255 == 0 { try budget.checkpoint() }
+            largestTransform = max(largestTransform, strategy.coveredCells * 64)
+        }
+        var scratch = try ScaledDCT.Workspace(capacity: largestTransform, budget: budget)
         for strategy in coefficients.strategies.transforms {
             try budget.checkpoint()
             let x = strategy.x, y = strategy.y, tile = (y / 8) * tilesX + x / 8
@@ -44,9 +57,15 @@ package enum VarDCTReconstruction {
             let isAFV = (14...17).contains(strategy.identifier)
             let isSmall = [1,2,3,12,13].contains(strategy.identifier)
             let transpose = !isAFV && !isSmall && rows >= columns
-            let weights = try VarDCTQuantWeights.make(identifier: strategy.identifier,
-                rows: codedRows, columns: codedColumns, budget: budget)
-            let transform = try ScaledDCT(rows: rows, columns: columns, direction: .inverse, budget: budget)
+            let identifier = strategy.identifier
+            if weightTables[identifier] == nil {
+                weightTables[identifier] = try VarDCTQuantWeights.make(identifier: identifier,
+                    rows: codedRows, columns: codedColumns, budget: budget)
+            }
+            guard let weights = weightTables[identifier] else { throw VarDCTError.invalidTransform }
+            if !isAFV && !isSmall && transforms[identifier] == nil {
+                transforms[identifier] = try ScaledDCT(rows: rows, columns: columns, direction: .inverse, budget: budget)
+            }
             try budget.reserveWorkspace(size * 3 * 4 + strategy.coveredCells * 3 * 4)
             var block = (0..<3).map { _ in [Float](repeating: 0, count: size) }
             let acX = coefficients.baseX + Float(coefficients.xSlopes[tile]) / Float(coefficients.colourFactor)
@@ -55,6 +74,10 @@ package enum VarDCTReconstruction {
             // LLF coefficients are a forward transform of the covered DC cells,
             // resampled into the full transform's low-frequency corner.
             for c in 0..<3 {
+                if strategy.coveredCells == 1 {
+                    block[c][0] = dc[c][y * bx + x]
+                    continue
+                }
                 let low = try lowFrequencies(dc[c], stride: bx, strategy: strategy, budget: budget)
                 for yy in 0..<strategy.cellsY { for xx in 0..<strategy.cellsX {
                     block[c][yy * columns + xx] = low[yy * strategy.cellsX + xx]
@@ -66,20 +89,28 @@ package enum VarDCTReconstruction {
                 if row < codedRows / 8, column < codedColumns / 8 { continue }
                 let to = transpose ? column * columns + row : k
                 let from = strategy.coefficientOffset + k
-                let luma = adjust(coefficients.ac[1][from], channel: 1) / weights[size + k] * invQuant
+                let luma = adjust(coefficients.ac[1][from], channel: 1, numericalMode: numericalMode) / weights[size + k] * invQuant
                 block[1][to] = luma
-                block[0][to] = adjust(coefficients.ac[0][from], channel: 0) / weights[k] * invQuant * dm[0] + acX * luma
-                block[2][to] = adjust(coefficients.ac[2][from], channel: 2) / weights[2 * size + k] * invQuant * dm[2] + acB * luma
+                block[0][to] = adjust(coefficients.ac[0][from], channel: 0, numericalMode: numericalMode) / weights[k] * invQuant * dm[0] + acX * luma
+                block[2][to] = adjust(coefficients.ac[2][from], channel: 2, numericalMode: numericalMode) / weights[2 * size + k] * invQuant * dm[2] + acB * luma
             }
             for c in 0..<3 {
-                let pixels: [Float]
-                if isAFV { pixels = try VarDCTAFV.inverse(block[c], kind: strategy.identifier - 14, budget: budget) }
-                else if isSmall { pixels = try VarDCTSmallTransforms.inverse(block[c], identifier: strategy.identifier, budget: budget) }
-                else { pixels = try transform.apply(block[c]) }
-                for row in 0..<rows {
-                    try budget.checkpoint()
-                    for column in 0..<columns {
-                        planes[c][(y * 8 + row) * width + x * 8 + column] = pixels[row * columns + column]
+                if isAFV || isSmall {
+                    let pixels = isAFV
+                        ? try VarDCTAFV.inverse(block[c], kind: identifier - 14, budget: budget)
+                        : try VarDCTSmallTransforms.inverse(block[c], identifier: identifier, budget: budget)
+                    try pixels.withUnsafeBufferPointer {
+                        try copyBlock($0, into: &planes[c], x: x * 8, y: y * 8,
+                                      rows: rows, columns: columns, stride: width, budget: budget)
+                    }
+                } else {
+                    guard let transform = transforms[identifier] else { throw VarDCTError.invalidTransform }
+                    try block[c].withUnsafeBufferPointer {
+                        try transform.apply($0, workspace: &scratch)
+                    }
+                    try scratch.withValues {
+                        try copyBlock($0, into: &planes[c], x: x * 8, y: y * 8,
+                                      rows: rows, columns: columns, stride: width, budget: budget)
                     }
                 }
             }
@@ -108,14 +139,35 @@ package enum VarDCTReconstruction {
         return planes
     }
 
-    private static func adjust(_ value: Int32, channel: Int) -> Float {
+    /// Both buffers are synchronously borrowed, and the validated strategy map
+    /// proves the source extent and destination rectangle. Establish destination
+    /// uniqueness once per block instead of once per output sample.
+    private static func copyBlock(_ pixels: UnsafeBufferPointer<Float>, into plane: inout [Float],
+                                  x: Int, y: Int, rows: Int, columns: Int, stride: Int,
+                                  budget: ScalarOperationBudget) throws {
+        try plane.withUnsafeMutableBufferPointer { destination in
+            for row in 0..<rows {
+                try budget.checkpoint()
+                let sourceOffset = row * columns, destinationOffset = (y + row) * stride + x
+                for column in 0..<columns {
+                    destination[destinationOffset + column] = pixels[sourceOffset + column]
+                }
+            }
+        }
+    }
+
+    private static func adjust(_ value: Int32, channel: Int, numericalMode: VarDCTNumericalMode) -> Float {
         // Avoid abs/negation of Int32.min inherited from the predecessor.
         if value == 0 { return 0 }
         let bias: [Float] = [1 - 0.05465007330715401, 1 - 0.07005449891748593, 1 - 0.049935103337343655]
         if value == 1 { return bias[channel] }
         if value == -1 { return -bias[channel] }
         let q = Float(value)
-        return q - 0.145 / q
+        switch numericalMode {
+        case .scalarNearest: return q - 0.145 / q
+        case .libjxl012ARMInteger:
+            return q.addingProduct(-0.145, VarDCTReferenceNumerics.reciprocalEstimate(value))
+        }
     }
     private static func lowFrequencies(_ dc: [Float], stride: Int,
                                        strategy: VarDCTStrategyMap.Transform,

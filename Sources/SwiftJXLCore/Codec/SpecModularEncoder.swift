@@ -607,6 +607,22 @@ package enum SpecModularEncoder {
         let sections: [Data]
     }
 
+    /// The caller has validated the complete plane and rectangle. Neighbours
+    /// fall back at rectangle edges, not at the parent image edges. Borrowing
+    /// the parent plane avoids a full rectangle copy for each predictor trial.
+    @inline(__always)
+    private static func predictionNeighbours(_ pixels: UnsafeBufferPointer<Int32>,
+        x: Int, y: Int, origin: Int, stride: Int, width: Int) -> Neighbourhood {
+        let i = origin + y * stride + x
+        let w: Int32 = x > 0 ? pixels[i - 1] : (y > 0 ? pixels[i - stride] : 0)
+        let n = y > 0 ? pixels[i - stride] : w
+        return Neighbourhood(w: w, n: n,
+            nw: x > 0 && y > 0 ? pixels[i - stride - 1] : (x > 0 ? w : n),
+            ne: y > 0 && x + 1 < width ? pixels[i - stride + 1] : n,
+            ww: x > 1 ? pixels[i - 2] : w,
+            nn: y > 1 ? pixels[i - 2 * stride] : n)
+    }
+
     /// Cheap entropy proxy used by the RCT cost-gate: the total number of
     /// significant bits of the zig-zag-packed ClampedGradient residuals
     /// over a channel (bit-length of each packed residual; 0 for an exact
@@ -620,13 +636,15 @@ package enum SpecModularEncoder {
         _ ch: [Int32], width: Int, height: Int
     ) throws -> Int {
         var bits = 0
-        for y in 0..<height {
-            try ScalarEncodingWork.checkpoint()
-            for x in 0..<width {
-                let nbh = Neighbourhood(at: x, y, in: ch, width: width)
-                let pred = Predictor.gradient.apply(to: nbh)
-                let packed = ZigZag.pack(ch[y * width + x] &- pred)
-                bits += packed == 0 ? 0 : (32 - packed.leadingZeroBitCount)
+        try ch.withUnsafeBufferPointer { plane in
+            for y in 0..<height {
+                try ScalarEncodingWork.checkpoint()
+                for x in 0..<width {
+                    let nbh = predictionNeighbours(plane, x: x, y: y, origin: 0, stride: width, width: width)
+                    let pred = Predictor.gradient.apply(to: nbh)
+                    let packed = ZigZag.pack(plane[y * width + x] &- pred)
+                    bits += packed == 0 ? 0 : (32 - packed.leadingZeroBitCount)
+                }
             }
         }
         return bits
@@ -645,12 +663,17 @@ package enum SpecModularEncoder {
         effort: Int = 9, applyRCT: Bool = false
     ) throws -> EncodedSections {
         try Task.checkCancellation()
+        // Fold the constant-plane check into mandatory sample validation. A
+        // common constant uses one zero-residual leaf and no per-pixel payload.
+        let constant = channels.first?.first ?? 0
+        var allConstant = !channels.isEmpty
         for channel in channels {
             guard channel.count == width * height else {
                 throw SpecModularEncoderError.unsupportedFrame("Samples exceed declared geometry")
             }
             for i in channel.indices {
                 if i & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
+                if channel[i] != constant { allConstant = false }
                 guard channel[i] >= 0, channel[i] <= sampleHi else {
                     throw SpecModularEncoderError.unsupportedFrame("Samples exceed declared precision")
                 }
@@ -668,6 +691,35 @@ package enum SpecModularEncoder {
         let numDcGroupsX = (width + dcGroupDim - 1) / dcGroupDim
         let numDcGroupsY = (height + dcGroupDim - 1) / dcGroupDim
         let numDcGroups = numDcGroupsX * numDcGroupsY
+
+        if allConstant {
+            let header = EntropySectionHeader(lz77: .disabled,
+                contextMap: .trivial(numContexts: 1), usePrefixCode: true,
+                logAlphaSize: 15, uintConfigs: [.raw4])
+            let codebook = MultiClusterCodebook(
+                huffmanTables: [try PrefixCodeTable(lengths: [0])],
+                ansCounts: [], alphabetSizes: [1])
+            var global = BitWriter()
+            global.writeBit(true); global.writeBit(true)
+            try writeGlobalTreeAndPostCodebook(to: &global, postHeader: header,
+                postCodebook: codebook, rawPredictor: 0, predictorOffset: Int64(constant))
+            try GroupHeader.default.write(to: &global)
+            // Prefix symbol zero has no bits, including the empty global stream.
+            // Keep required ANS terminal states on all nonconstant ANS paths.
+            var sections = [global.finishToData()]
+            if numGroups > 1 {
+                sections.append(contentsOf: repeatElement(Data(), count: numDcGroups + 1))
+                var group = BitWriter()
+                try GroupHeader.default.write(to: &group)
+                let bytes = group.finishToData()
+                for _ in 0..<numGroups {
+                    try ScalarEncodingWork.checkpoint()
+                    sections.append(bytes)
+                }
+            }
+            try ScalarEncodingWork.checkpoint()
+            return EncodedSections(groupSizeShift: groupSizeShift, sections: sections)
+        }
 
         // YCoCg-R reversible colour transform (§C.7.7). For RGB/RGBA
         // (`applyRCT`, ≥ 3 colour channels) decorrelate R,G,B → Y,Co,Cg
@@ -776,58 +828,60 @@ package enum SpecModularEncoder {
                 let rectX0 = gx * groupDim, rectY0 = gy * groupDim
                 let rectW = min(groupDim, width - rectX0)
                 let rectH = min(groupDim, height - rectY0)
-                ScalarStorageAudit.current?.workingPlane(rectW * rectH * 4)
-                var rect = [Int32](repeating: 0, count: rectW * rectH)
-                for ry in 0..<rectH {
-                    try ScalarEncodingWork.checkpoint()
-                    let s = (rectY0 + ry) * width + rectX0
-                    for rx in 0..<rectW { rect[ry * rectW + rx] = pix[s + rx] }
-                }
-                var packed = [UInt32]()
-                packed.reserveCapacity(rectW * rectH)
-                var symbols = [UInt16]()
-                symbols.reserveCapacity(rectW * rectH)
+                let origin = rectY0 * width + rectX0
+                var packed = [UInt32](repeating: 0, count: rectW * rectH)
+                var symbols = [UInt16](repeating: 0, count: rectW * rectH)
                 var histo = [Int](repeating: 0, count: postCfg.maxToken + 1)
                 var maxTok = 0
                 var extraNBits = 0
-                if useWP {
-                    var wp = WeightedPredictor(
-                        header: .default, xsize: max(1, rectW))
-                    for ry in 0..<rectH {
-                        try ScalarEncodingWork.checkpoint()
-                        for rx in 0..<rectW {
-                            let nbh = Neighbourhood(at: rx, ry, in: rect, width: rectW)
-                            let pred = wp.predict(
-                                x: rx, y: ry, xsize: rectW,
-                                n: nbh.n, w: nbh.w, ne: nbh.ne, nw: nbh.nw, nn: nbh.nn)
-                            let actual = rect[ry * rectW + rx]
-                            let p = ZigZag.pack(actual &- pred)
-                            let exp = postCfg.encode(p)
-                            let t = Int(exp.token)
-                            histo[t] += 1; if t > maxTok { maxTok = t }
-                            packed.append(p)
-                            symbols.append(UInt16(truncatingIfNeeded: exp.token))
-                            extraNBits += exp.extraNBits
-                            wp.update(actual: actual, x: rx, y: ry, xsize: rectW)
-                        }
-                    }
-                } else {
-                    for ry in 0..<rectH {
-                        try ScalarEncodingWork.checkpoint()
-                        for rx in 0..<rectW {
-                            let nbh = Neighbourhood(at: rx, ry, in: rect, width: rectW)
-                            // No [0, sampleHi] clamp — match the decoder's
-                            // ClampedGradient (id 5, local clamp only) so the
-                            // RCT-transformed Co/Cg channels (signed / >
-                            // sampleHi) round-trip. No-op for in-range data.
-                            let pred = Predictor.gradient.apply(to: nbh)
-                            let p = ZigZag.pack(rect[ry * rectW + rx] &- pred)
-                            let exp = postCfg.encode(p)
-                            let t = Int(exp.token)
-                            histo[t] += 1; if t > maxTok { maxTok = t }
-                            packed.append(p)
-                            symbols.append(UInt16(truncatingIfNeeded: exp.token))
-                            extraNBits += exp.extraNBits
+                // All buffers have validated fixed geometry; these synchronous
+                // borrows retain their owners and cannot escape the prediction loop.
+                try packed.withUnsafeMutableBufferPointer { packedValues in
+                    try symbols.withUnsafeMutableBufferPointer { symbolValues in
+                        try histo.withUnsafeMutableBufferPointer { histogram in
+                            try pix.withUnsafeBufferPointer { plane in
+                                if useWP {
+                                    var wp = WeightedPredictor(
+                                        header: .default, xsize: max(1, rectW))
+                                    for ry in 0..<rectH {
+                                        try ScalarEncodingWork.checkpoint()
+                                        for rx in 0..<rectW {
+                                            let nbh = predictionNeighbours(plane, x: rx, y: ry, origin: origin, stride: width, width: rectW)
+                                            let pred = wp.predict(
+                                                x: rx, y: ry, xsize: rectW,
+                                                n: nbh.n, w: nbh.w, ne: nbh.ne, nw: nbh.nw, nn: nbh.nn)
+                                            let actual = plane[origin + ry * width + rx]
+                                            let p = ZigZag.pack(actual &- pred)
+                                            let exp = postCfg.encode(p)
+                                            let t = Int(exp.token)
+                                            histogram[t] += 1; if t > maxTok { maxTok = t }
+                                            packedValues[ry * rectW + rx] = p
+                                            symbolValues[ry * rectW + rx] = UInt16(truncatingIfNeeded: exp.token)
+                                            extraNBits += exp.extraNBits
+                                            wp.update(actual: actual, x: rx, y: ry, xsize: rectW)
+                                        }
+                                    }
+                                } else {
+                                    for ry in 0..<rectH {
+                                        try ScalarEncodingWork.checkpoint()
+                                        for rx in 0..<rectW {
+                                            let nbh = predictionNeighbours(plane, x: rx, y: ry, origin: origin, stride: width, width: rectW)
+                                            // No [0, sampleHi] clamp — match the decoder's
+                                            // ClampedGradient (id 5, local clamp only) so the
+                                            // RCT-transformed Co/Cg channels (signed / >
+                                            // sampleHi) round-trip. No-op for in-range data.
+                                            let pred = Predictor.gradient.apply(to: nbh)
+                                            let p = ZigZag.pack(plane[origin + ry * width + rx] &- pred)
+                                            let exp = postCfg.encode(p)
+                                            let t = Int(exp.token)
+                                            histogram[t] += 1; if t > maxTok { maxTok = t }
+                                            packedValues[ry * rectW + rx] = p
+                                            symbolValues[ry * rectW + rx] = UInt16(truncatingIfNeeded: exp.token)
+                                            extraNBits += exp.extraNBits
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -920,14 +974,20 @@ package enum SpecModularEncoder {
                         }
                     }
                 } else {
-                    var aw = try ANSTokenStreamWriter(
+                    let aw = try ANSTokenStreamWriter(
                         header: postHeader, codebook: postCodebook)
-                    for ci in 0..<chCount {
-                        for v in perGroupPerChannelPacked[groupIdx][ci] {
-                            try aw.writeToken(context: 0, value: v)
+                    let packed = perGroupPerChannelPacked[groupIdx]
+                    var symbols: [UInt16] = []
+                    symbols.reserveCapacity(packed.reduce(0) { $0 + $1.count })
+                    for channel in packed {
+                        for i in channel.indices {
+                            if i & 255 == 0 { try ScalarEncodingWork.checkpoint() }
+                            symbols.append(UInt16(postCfg.tokenOnly(channel[i])))
                         }
                     }
-                    try aw.finish(to: &sec)
+                    try aw.finishSingleCluster(symbols: &symbols, replay: { emit in
+                        for channel in packed { for value in channel { try emit(value) } }
+                    }, to: &sec)
                 }
                 sec.alignToByte()
                 return sec.finishToData()
@@ -1713,13 +1773,13 @@ package enum SpecModularEncoder {
         to w: inout BitWriter,
         postHeader: EntropySectionHeader,
         postCodebook: MultiClusterCodebook,
-        rawPredictor: UInt32 = 5
+        rawPredictor: UInt32 = 5, predictorOffset: Int64 = 0
     ) throws {
         let treeUintCfg = HybridUintConfig(
             splitExponent: 0, msbInToken: 0, lsbInToken: 0
         )
-        let treeAlphabet = 16
-        let treeLengths: [UInt8] = Array(repeating: 4, count: treeAlphabet)
+        let treeAlphabet = predictorOffset == 0 ? 16 : 32
+        let treeLengths: [UInt8] = Array(repeating: predictorOffset == 0 ? 4 : 5, count: treeAlphabet)
         let treeTable = try PrefixCodeTable(lengths: treeLengths)
         let treeCodebook = MultiClusterCodebook(
             huffmanTables: [treeTable], ansCounts: [],
@@ -1738,7 +1798,7 @@ package enum SpecModularEncoder {
                 property: -1, splitVal: 0,
                 leftChildOrLeafId: 0, rightChild: 0,
                 predictor: .gradient,    // enum field unused on wire
-                predictorOffset: 0,
+                predictorOffset: predictorOffset,
                 multiplier: 1,
                 rawPredictor: rawPredictor   // 5 = ClampedGradient, 6 = WP
             )
@@ -1889,13 +1949,19 @@ package enum SpecModularEncoder {
                         }
                     }
                 } else {
-                    var aw = try ANSTokenStreamWriter(
+                    let aw = try ANSTokenStreamWriter(
                         header: postHeader, codebook: postCodebook)
-                    aw.reserveCapacity(width * height * channels.count)
+                    var symbols: [UInt16] = []
+                    symbols.reserveCapacity(width * height * channels.count)
                     for packed in packedPerChannel {
-                        for v in packed { try aw.writeToken(context: 0, value: v) }
+                        for i in packed.indices {
+                            if i & 255 == 0 { try ScalarEncodingWork.checkpoint() }
+                            symbols.append(UInt16(postCfg.tokenOnly(packed[i])))
+                        }
                     }
-                    try aw.finish(to: &sec)
+                    try aw.finishSingleCluster(symbols: &symbols, replay: { emit in
+                        for packed in packedPerChannel { for value in packed { try emit(value) } }
+                    }, to: &sec)
                 }
                 sec.alignToByte()
                 return sec.finishToData()
@@ -2904,24 +2970,16 @@ package enum SpecModularEncoder {
         // bits. Only the reverse state walk (whose renorm decisions
         // depend on the alias slots) has to run. The section is ONE
         // interleaved stream spanning every channel back-to-back, so
-        // the walk runs over the flattened symbol sequence.
+        // the walk continues across the channel chunks without flattening.
         var ansBits = Int.max
         if let cand = ansCand {
             let hc = try headerCodebookBits(cand.0, cand.1)
             if hc != Int.max,
                let aw = try ModularEffortWork.candidate({ try ANSTokenStreamWriter(
                    header: cand.0, codebook: cand.1) }) {
-                let all: [UInt16]
-                if symbolsPerChannel.count == 1 {
-                    all = symbolsPerChannel[0]
-                } else {
-                    var flat: [UInt16] = []
-                    flat.reserveCapacity(
-                        symbolsPerChannel.reduce(0) { $0 + $1.count })
-                    for s in symbolsPerChannel { flat.append(contentsOf: s) }
-                    all = flat
-                }
-                if let r = try ModularEffortWork.candidate({ try aw.refillWordCount(symbols: all) }) {
+                if let r = try ModularEffortWork.candidate({
+                    try aw.refillWordCount(singleClusterChunks: symbolsPerChannel)
+                }) {
                     ansBits = hc + 32 + 16 * r + totalExtraNBits
                 }
             }
@@ -2955,53 +3013,59 @@ package enum SpecModularEncoder {
         var maxUsedToken = 0
         var totalExtraNBits = 0
         for pix32 in channels {
-            var packed = [UInt32]()
-            packed.reserveCapacity(width * height)
-            var symbols = [UInt16]()
-            symbols.reserveCapacity(width * height)
-            if useWP {
-                var wp = WeightedPredictor(
-                    header: .default, xsize: max(1, width))
-                for y in 0..<height {
-                    try ScalarEncodingWork.checkpoint()
-                    for x in 0..<width {
-                        let nbh = Neighbourhood(at: x, y, in: pix32, width: width)
-                        let pred = wp.predict(
-                            x: x, y: y, xsize: width,
-                            n: nbh.n, w: nbh.w, ne: nbh.ne, nw: nbh.nw, nn: nbh.nn)
-                        let actual = pix32[y * width + x]
-                        let p = ZigZag.pack(actual &- pred)
-                        let exp = postCfg.encode(p)
-                        let t = Int(exp.token)
-                        fullHisto[t] += 1
-                        if t > maxUsedToken { maxUsedToken = t }
-                        packed.append(p)
-                        symbols.append(UInt16(truncatingIfNeeded: exp.token))
-                        totalExtraNBits += exp.extraNBits
-                        wp.update(actual: actual, x: x, y: y, xsize: width)
-                    }
-                }
-            } else {
-                for y in 0..<height {
-                    try ScalarEncodingWork.checkpoint()
-                    for x in 0..<width {
-                        let nbh = Neighbourhood(at: x, y, in: pix32, width: width)
-                        // No [0, sampleHi] clamp here: the gradient's own
-                        // [min(W,N), max(W,N)] clamp IS the decoder/libjxl
-                        // semantics (`applyLibjxlPredictor` id 5). The extra
-                        // bound was a no-op for in-range channels but would
-                        // diverge from the decoder for the RCT-transformed
-                        // chroma channels (signed / > sampleHi), breaking the
-                        // round trip.
-                        let pred = Predictor.gradient.apply(to: nbh)
-                        let p = ZigZag.pack(pix32[y * width + x] &- pred)
-                        let exp = postCfg.encode(p)
-                        let t = Int(exp.token)
-                        fullHisto[t] += 1
-                        if t > maxUsedToken { maxUsedToken = t }
-                        packed.append(p)
-                        symbols.append(UInt16(truncatingIfNeeded: exp.token))
-                        totalExtraNBits += exp.extraNBits
+            var packed = [UInt32](repeating: 0, count: width * height)
+            var symbols = [UInt16](repeating: 0, count: width * height)
+            try packed.withUnsafeMutableBufferPointer { packedValues in
+                try symbols.withUnsafeMutableBufferPointer { symbolValues in
+                    try fullHisto.withUnsafeMutableBufferPointer { histogram in
+                        try pix32.withUnsafeBufferPointer { plane in
+                            if useWP {
+                                var wp = WeightedPredictor(
+                                    header: .default, xsize: max(1, width))
+                                for y in 0..<height {
+                                    try ScalarEncodingWork.checkpoint()
+                                    for x in 0..<width {
+                                        let nbh = predictionNeighbours(plane, x: x, y: y, origin: 0, stride: width, width: width)
+                                        let pred = wp.predict(
+                                            x: x, y: y, xsize: width,
+                                            n: nbh.n, w: nbh.w, ne: nbh.ne, nw: nbh.nw, nn: nbh.nn)
+                                        let actual = plane[y * width + x]
+                                        let p = ZigZag.pack(actual &- pred)
+                                        let exp = postCfg.encode(p)
+                                        let t = Int(exp.token)
+                                        histogram[t] += 1
+                                        if t > maxUsedToken { maxUsedToken = t }
+                                        packedValues[y * width + x] = p
+                                        symbolValues[y * width + x] = UInt16(truncatingIfNeeded: exp.token)
+                                        totalExtraNBits += exp.extraNBits
+                                        wp.update(actual: actual, x: x, y: y, xsize: width)
+                                    }
+                                }
+                            } else {
+                                for y in 0..<height {
+                                    try ScalarEncodingWork.checkpoint()
+                                    for x in 0..<width {
+                                        let nbh = predictionNeighbours(plane, x: x, y: y, origin: 0, stride: width, width: width)
+                                        // No [0, sampleHi] clamp here: the gradient's own
+                                        // [min(W,N), max(W,N)] clamp IS the decoder/libjxl
+                                        // semantics (`applyLibjxlPredictor` id 5). The extra
+                                        // bound was a no-op for in-range channels but would
+                                        // diverge from the decoder for the RCT-transformed
+                                        // chroma channels (signed / > sampleHi), breaking the
+                                        // round trip.
+                                        let pred = Predictor.gradient.apply(to: nbh)
+                                        let p = ZigZag.pack(plane[y * width + x] &- pred)
+                                        let exp = postCfg.encode(p)
+                                        let t = Int(exp.token)
+                                        histogram[t] += 1
+                                        if t > maxUsedToken { maxUsedToken = t }
+                                        packedValues[y * width + x] = p
+                                        symbolValues[y * width + x] = UInt16(truncatingIfNeeded: exp.token)
+                                        totalExtraNBits += exp.extraNBits
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

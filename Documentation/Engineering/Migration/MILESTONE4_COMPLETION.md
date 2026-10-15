@@ -1,5 +1,9 @@
 # Milestone 4 completion plan and evidence
 
+This record applies to checkpoint `540a0b1`. The subsequent owner-requested
+[remaining-work follow-up](MILESTONE4_REMAINING.md) has separate source and
+validation evidence; the results here do not qualify those later changes.
+
 Contract: **0.10.0**. Pinned predecessor: **57e81cb9e2411d1efac435b429a306a031744c1e**.
 Starting main: **cce875c1620b5ca40971ee9fff5f02ab0ba42d58** (PR31, merged by the owner).
 

@@ -1,0 +1,612 @@
+{
+  "info": {
+    "arguments": [
+      "devicectl",
+      "list",
+      "devices",
+      "--json-output",
+      "<work-final>/runtime/physical-devices.json"
+    ],
+    "commandType": "devicectl.list.devices",
+    "environment": {
+      "TERM": "dumb"
+    },
+    "jsonVersion": 5,
+    "outcome": "success",
+    "version": "642.16"
+  },
+  "result": {
+    "devices": [
+      {
+        "_deprecationNotice": {
+          "deprecatedFields": [
+            "hardwareProperties",
+            "deviceProperties",
+            "connectionProperties"
+          ],
+          "message": "The 'hardwareProperties', 'deviceProperties', 'connectionProperties' fields are deprecated and will be removed in a future release. Use the 'properties' dictionary instead.",
+          "replacement": "properties"
+        },
+        "capabilities": [
+          {
+            "featureIdentifier": "com.apple.dt.coredevice.device.boot",
+            "name": "Boot Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.default.user.credentials",
+            "name": "Modify Credentials for Default Users for a Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.tags",
+            "name": "Modify Tags"
+          },
+          {
+            "featureIdentifier": "com.apple.dt.coredevice.plugin.removedevice",
+            "name": "Remove Provisioned Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.renamedevice",
+            "name": "Rename Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.resetContentAndSettings",
+            "name": "Reset Settings and Content"
+          }
+        ],
+        "connectionProperties": {
+          "authenticationType": "implicit",
+          "isMobileDeviceOnly": false,
+          "pairingState": "paired",
+          "potentialHostnames": [],
+          "transportType": "sameMachine",
+          "tunnelState": "disconnected"
+        },
+        "deviceProperties": {
+          "bootState": "shutdown",
+          "ddiServicesAvailable": false,
+          "hasInternalOSBuild": false,
+          "name": "Approved M1 Apple TV",
+          "osBuildUpdate": "23L470",
+          "osVersionNumber": "26.5",
+          "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin"
+        },
+        "hardwareProperties": {
+          "cpuType": {
+            "name": "arm64",
+            "subType": 0,
+            "type": 16777228
+          },
+          "deviceType": "appleTV",
+          "hardwareModel": "J255",
+          "marketingName": "Apple TV 4K (3rd generation)",
+          "platform": "tvOS",
+          "productType": "AppleTV14,1",
+          "reality": "simulated",
+          "supportedCPUTypes": [
+            {
+              "name": "arm64",
+              "subType": 0,
+              "type": 16777228
+            }
+          ],
+          "udid": "3D94F933-ACD1-4640-9C8E-AF975C979765"
+        },
+        "identifier": "3D94F933-ACD1-4640-9C8E-AF975C979765",
+        "properties": {
+          "connection": {
+            "authenticationType": "implicit",
+            "pairingState": "paired",
+            "state": "disconnected",
+            "transportType": "sameMachine"
+          },
+          "hardware": {
+            "cpuType": {
+              "subtype": 0,
+              "type": 16777228
+            },
+            "deviceType": "appleTV",
+            "hasActionButton": false,
+            "marketingName": "Apple TV 4K (3rd generation)",
+            "platform": "tvOS",
+            "productType": "AppleTV14,1",
+            "reality": "simulated",
+            "supportedCPUTypes": [
+              {
+                "subtype": 0,
+                "type": 16777228
+              }
+            ],
+            "supportsSiri": true,
+            "udid": "3D94F933-ACD1-4640-9C8E-AF975C979765"
+          },
+          "software": {
+            "osBuildVersions": {
+              "buildVersion": {
+                "majorLetterComponent": "L",
+                "majorNumberComponent": 23,
+                "name": "23L470",
+                "revisionVersion": {
+                  "components": [
+                    23,
+                    12,
+                    470,
+                    0,
+                    0
+                  ],
+                  "originalComponentsCount": 5,
+                  "stringValue": "23.12.470.0.0"
+                },
+                "updateNumberComponent": 470
+              }
+            },
+            "osVersionNumber": {
+              "components": [
+                26,
+                5,
+                0,
+                0,
+                0
+              ],
+              "originalComponentsCount": 2,
+              "stringValue": "26.5"
+            }
+          },
+          "state": {
+            "bootState": "shutdown",
+            "name": "Approved M1 Apple TV",
+            "preparednessState": 0,
+            "visibilityClass": "simulators"
+          }
+        },
+        "propertyDisplayNames": null,
+        "visibilityClass": "simulators"
+      },
+      {
+        "_deprecationNotice": {
+          "deprecatedFields": [
+            "hardwareProperties",
+            "deviceProperties",
+            "connectionProperties"
+          ],
+          "message": "The 'hardwareProperties', 'deviceProperties', 'connectionProperties' fields are deprecated and will be removed in a future release. Use the 'properties' dictionary instead.",
+          "replacement": "properties"
+        },
+        "capabilities": [
+          {
+            "featureIdentifier": "com.apple.dt.coredevice.device.boot",
+            "name": "Boot Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.default.user.credentials",
+            "name": "Modify Credentials for Default Users for a Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.tags",
+            "name": "Modify Tags"
+          },
+          {
+            "featureIdentifier": "com.apple.dt.coredevice.plugin.removedevice",
+            "name": "Remove Provisioned Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.renamedevice",
+            "name": "Rename Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.resetContentAndSettings",
+            "name": "Reset Settings and Content"
+          }
+        ],
+        "connectionProperties": {
+          "authenticationType": "implicit",
+          "isMobileDeviceOnly": false,
+          "pairingState": "paired",
+          "potentialHostnames": [],
+          "transportType": "sameMachine",
+          "tunnelState": "disconnected"
+        },
+        "deviceProperties": {
+          "bootState": "shutdown",
+          "ddiServicesAvailable": false,
+          "hasInternalOSBuild": false,
+          "name": "Approved M1 Vision Pro",
+          "osBuildUpdate": "23O470",
+          "osVersionNumber": "26.5",
+          "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin"
+        },
+        "hardwareProperties": {
+          "cpuType": {
+            "name": "arm64",
+            "subType": 0,
+            "type": 16777228
+          },
+          "deviceType": "realityDevice",
+          "hardwareModel": "N301",
+          "marketingName": "Apple Vision Pro",
+          "platform": "visionOS",
+          "productType": "RealityDevice14,1",
+          "reality": "simulated",
+          "supportedCPUTypes": [
+            {
+              "name": "arm64",
+              "subType": 0,
+              "type": 16777228
+            }
+          ],
+          "udid": "F02D2301-204A-4440-A465-2E9D40313D24"
+        },
+        "identifier": "F02D2301-204A-4440-A465-2E9D40313D24",
+        "properties": {
+          "connection": {
+            "authenticationType": "implicit",
+            "pairingState": "paired",
+            "state": "disconnected",
+            "transportType": "sameMachine"
+          },
+          "hardware": {
+            "cpuType": {
+              "subtype": 0,
+              "type": 16777228
+            },
+            "deviceType": "realityDevice",
+            "hasActionButton": false,
+            "marketingName": "Apple Vision Pro",
+            "platform": "visionOS",
+            "productType": "RealityDevice14,1",
+            "reality": "simulated",
+            "supportedBiometrics": [
+              "opticID"
+            ],
+            "supportedCPUTypes": [
+              {
+                "subtype": 0,
+                "type": 16777228
+              }
+            ],
+            "supportsSiri": true,
+            "udid": "F02D2301-204A-4440-A465-2E9D40313D24"
+          },
+          "software": {
+            "osBuildVersions": {
+              "buildVersion": {
+                "majorLetterComponent": "O",
+                "majorNumberComponent": 23,
+                "name": "23O470",
+                "revisionVersion": {
+                  "components": [
+                    23,
+                    15,
+                    470,
+                    0,
+                    0
+                  ],
+                  "originalComponentsCount": 5,
+                  "stringValue": "23.15.470.0.0"
+                },
+                "updateNumberComponent": 470
+              }
+            },
+            "osVersionNumber": {
+              "components": [
+                26,
+                5,
+                0,
+                0,
+                0
+              ],
+              "originalComponentsCount": 2,
+              "stringValue": "26.5"
+            }
+          },
+          "state": {
+            "bootState": "shutdown",
+            "name": "Approved M1 Vision Pro",
+            "preparednessState": 0,
+            "visibilityClass": "simulators"
+          }
+        },
+        "propertyDisplayNames": null,
+        "visibilityClass": "simulators"
+      },
+      {
+        "_deprecationNotice": {
+          "deprecatedFields": [
+            "hardwareProperties",
+            "deviceProperties",
+            "connectionProperties"
+          ],
+          "message": "The 'hardwareProperties', 'deviceProperties', 'connectionProperties' fields are deprecated and will be removed in a future release. Use the 'properties' dictionary instead.",
+          "replacement": "properties"
+        },
+        "capabilities": [
+          {
+            "featureIdentifier": "com.apple.dt.coredevice.device.boot",
+            "name": "Boot Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.default.user.credentials",
+            "name": "Modify Credentials for Default Users for a Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.tags",
+            "name": "Modify Tags"
+          },
+          {
+            "featureIdentifier": "com.apple.dt.coredevice.plugin.removedevice",
+            "name": "Remove Provisioned Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.renamedevice",
+            "name": "Rename Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.resetContentAndSettings",
+            "name": "Reset Settings and Content"
+          }
+        ],
+        "connectionProperties": {
+          "authenticationType": "implicit",
+          "isMobileDeviceOnly": false,
+          "pairingState": "paired",
+          "potentialHostnames": [],
+          "transportType": "sameMachine",
+          "tunnelState": "disconnected"
+        },
+        "deviceProperties": {
+          "bootState": "shutdown",
+          "ddiServicesAvailable": false,
+          "hasInternalOSBuild": false,
+          "name": "Approved M1 iPad",
+          "osBuildUpdate": "23F77",
+          "osVersionNumber": "26.5",
+          "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin"
+        },
+        "hardwareProperties": {
+          "cpuType": {
+            "name": "arm64",
+            "subType": 0,
+            "type": 16777228
+          },
+          "deviceType": "iPad",
+          "hardwareModel": "J821",
+          "marketingName": "iPad Pro 13-inch (M5)",
+          "platform": "iOS",
+          "productType": "iPad17,4",
+          "reality": "simulated",
+          "supportedCPUTypes": [
+            {
+              "name": "arm64",
+              "subType": 0,
+              "type": 16777228
+            }
+          ],
+          "udid": "BC5FFB6A-17AA-486C-ADDE-30E6E41DE277"
+        },
+        "identifier": "BC5FFB6A-17AA-486C-ADDE-30E6E41DE277",
+        "properties": {
+          "connection": {
+            "authenticationType": "implicit",
+            "pairingState": "paired",
+            "state": "disconnected",
+            "transportType": "sameMachine"
+          },
+          "hardware": {
+            "cpuType": {
+              "subtype": 0,
+              "type": 16777228
+            },
+            "deviceType": "iPad",
+            "hasActionButton": false,
+            "marketingName": "iPad Pro 13-inch (M5)",
+            "platform": "iOS",
+            "productType": "iPad17,4",
+            "reality": "simulated",
+            "supportedBiometrics": [
+              "faceID"
+            ],
+            "supportedCPUTypes": [
+              {
+                "subtype": 0,
+                "type": 16777228
+              }
+            ],
+            "supportsSiri": true,
+            "udid": "BC5FFB6A-17AA-486C-ADDE-30E6E41DE277"
+          },
+          "software": {
+            "osBuildVersions": {
+              "buildVersion": {
+                "majorLetterComponent": "F",
+                "majorNumberComponent": 23,
+                "name": "23F77",
+                "revisionVersion": {
+                  "components": [
+                    23,
+                    6,
+                    77,
+                    0,
+                    0
+                  ],
+                  "originalComponentsCount": 5,
+                  "stringValue": "23.6.77.0.0"
+                },
+                "updateNumberComponent": 77
+              }
+            },
+            "osVersionNumber": {
+              "components": [
+                26,
+                5,
+                0,
+                0,
+                0
+              ],
+              "originalComponentsCount": 2,
+              "stringValue": "26.5"
+            }
+          },
+          "state": {
+            "bootState": "shutdown",
+            "name": "Approved M1 iPad",
+            "preparednessState": 0,
+            "visibilityClass": "simulators"
+          }
+        },
+        "propertyDisplayNames": null,
+        "visibilityClass": "simulators"
+      },
+      {
+        "_deprecationNotice": {
+          "deprecatedFields": [
+            "hardwareProperties",
+            "deviceProperties",
+            "connectionProperties"
+          ],
+          "message": "The 'hardwareProperties', 'deviceProperties', 'connectionProperties' fields are deprecated and will be removed in a future release. Use the 'properties' dictionary instead.",
+          "replacement": "properties"
+        },
+        "capabilities": [
+          {
+            "featureIdentifier": "com.apple.dt.coredevice.device.boot",
+            "name": "Boot Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.companiondevicepairing",
+            "name": "Companion Device Pairing"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.default.user.credentials",
+            "name": "Modify Credentials for Default Users for a Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.tags",
+            "name": "Modify Tags"
+          },
+          {
+            "featureIdentifier": "com.apple.dt.coredevice.plugin.removedevice",
+            "name": "Remove Provisioned Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.renamedevice",
+            "name": "Rename Device"
+          },
+          {
+            "featureIdentifier": "com.apple.coredevice.feature.resetContentAndSettings",
+            "name": "Reset Settings and Content"
+          }
+        ],
+        "connectionProperties": {
+          "authenticationType": "implicit",
+          "isMobileDeviceOnly": false,
+          "pairingState": "paired",
+          "potentialHostnames": [],
+          "transportType": "sameMachine",
+          "tunnelState": "disconnected"
+        },
+        "deviceProperties": {
+          "bootState": "shutdown",
+          "ddiServicesAvailable": false,
+          "hasInternalOSBuild": false,
+          "name": "Approved M1 iPhone",
+          "osBuildUpdate": "23F77",
+          "osVersionNumber": "26.5",
+          "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin"
+        },
+        "hardwareProperties": {
+          "cpuType": {
+            "name": "arm64",
+            "subType": 0,
+            "type": 16777228
+          },
+          "deviceType": "iPhone",
+          "hardwareModel": "V53",
+          "marketingName": "iPhone 17 Pro",
+          "platform": "iOS",
+          "productType": "iPhone18,1",
+          "reality": "simulated",
+          "supportedCPUTypes": [
+            {
+              "name": "arm64",
+              "subType": 0,
+              "type": 16777228
+            }
+          ],
+          "udid": "51070181-408A-48EB-A954-B3898EAE2F68"
+        },
+        "identifier": "51070181-408A-48EB-A954-B3898EAE2F68",
+        "properties": {
+          "connection": {
+            "authenticationType": "implicit",
+            "pairingState": "paired",
+            "state": "disconnected",
+            "transportType": "sameMachine"
+          },
+          "hardware": {
+            "cpuType": {
+              "subtype": 0,
+              "type": 16777228
+            },
+            "deviceType": "iPhone",
+            "hasActionButton": true,
+            "marketingName": "iPhone 17 Pro",
+            "platform": "iOS",
+            "productType": "iPhone18,1",
+            "reality": "simulated",
+            "supportedBiometrics": [
+              "faceID"
+            ],
+            "supportedCPUTypes": [
+              {
+                "subtype": 0,
+                "type": 16777228
+              }
+            ],
+            "supportsSiri": true,
+            "udid": "51070181-408A-48EB-A954-B3898EAE2F68"
+          },
+          "software": {
+            "osBuildVersions": {
+              "buildVersion": {
+                "majorLetterComponent": "F",
+                "majorNumberComponent": 23,
+                "name": "23F77",
+                "revisionVersion": {
+                  "components": [
+                    23,
+                    6,
+                    77,
+                    0,
+                    0
+                  ],
+                  "originalComponentsCount": 5,
+                  "stringValue": "23.6.77.0.0"
+                },
+                "updateNumberComponent": 77
+              }
+            },
+            "osVersionNumber": {
+              "components": [
+                26,
+                5,
+                0,
+                0,
+                0
+              ],
+              "originalComponentsCount": 2,
+              "stringValue": "26.5"
+            }
+          },
+          "state": {
+            "bootState": "shutdown",
+            "name": "Approved M1 iPhone",
+            "preparednessState": 0,
+            "visibilityClass": "simulators"
+          }
+        },
+        "propertyDisplayNames": null,
+        "visibilityClass": "simulators"
+      }
+    ]
+  },
+  "rawReportSHA256": "63d706350126b8d0a1035b537004dca03ae8a58b82edcc7998047b8366644ad3"
+}
