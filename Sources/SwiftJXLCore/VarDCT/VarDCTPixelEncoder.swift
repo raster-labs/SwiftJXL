@@ -56,17 +56,40 @@ package enum VarDCTPixelEncoder {
         if gaborish || adaptiveQuantisation || largeStrategySearch {
             let visible = try ScalarOperationBudget.product(first.width, first.height)
             try budget.reserveWorkspace(ScalarOperationBudget.product(visible, 3 * MemoryLayout<Float>.stride))
-            var planes = (0..<3).map { _ in [Float](repeating: 0, count: visible) }
-            for y in 0..<first.height { for x in 0..<first.width {
-                if x & 255 == 0 { try budget.checkpoint() }
-                func linear(_ c: Int) throws -> Double {
-                    let v = Double(try source.sample(channel: c, x: x, y: y)) / Double(source.maximum)
-                    return v <= 0.04045 ? v / 12.92 : pow((v + 0.055) / 1.055, 2.4)
+            let conversion = try bitsPerSample == 8
+                ? VarDCTEncoderPreparation.EightBitConversion(grayscale: grayscale, budget: budget) : nil
+            // Separate local owners permit simultaneous exclusive plane borrows.
+            var planes = try { () throws -> [[Float]] in
+                var firstPlane = [Float](repeating: 0, count: visible)
+                var secondPlane = [Float](repeating: 0, count: visible)
+                var thirdPlane = [Float](repeating: 0, count: visible)
+                try firstPlane.withUnsafeMutableBufferPointer { xPlane in
+                    try secondPlane.withUnsafeMutableBufferPointer { yPlane in
+                        try thirdPlane.withUnsafeMutableBufferPointer { bPlane in
+                            for y in 0..<first.height { for x in 0..<first.width {
+                                if x & 255 == 0 { try budget.checkpoint() }
+                                let i = y * first.width + x
+                                if grayscale, let conversion {
+                                    let sample = try source.sample(channel: 0, x: x, y: y)
+                                    let p = conversion.grayscale[Int(sample)]
+                                    xPlane[i] = p.0; yPlane[i] = p.1; bPlane[i] = p.2
+                                } else {
+                                    func linear(_ c: Int) throws -> Double {
+                                        let sample = try source.sample(channel: c, x: x, y: y)
+                                        if let conversion { return conversion.linear[Int(sample)] }
+                                        let v = Double(sample) / Double(source.maximum)
+                                        return v <= 0.04045 ? v / 12.92 : pow((v + 0.055) / 1.055, 2.4)
+                                    }
+                                    let r = try linear(0), g = try grayscale ? r : linear(1), b = try grayscale ? r : linear(2)
+                                    let p = try DefaultOpsin.forward((r,g,b))
+                                    xPlane[i] = Float(p.X); yPlane[i] = Float(p.Y); bPlane[i] = Float(p.B)
+                                }
+                            } }
+                        }
+                    }
                 }
-                let r = try linear(0), g = try grayscale ? r : linear(1), b = try grayscale ? r : linear(2)
-                let p = try DefaultOpsin.forward((r,g,b)), i = y * first.width + x
-                planes[0][i] = Float(p.X); planes[1][i] = Float(p.Y); planes[2][i] = Float(p.B)
-            } }
+                return [firstPlane, secondPlane, thirdPlane]
+            }()
             if gaborish {
                 for c in 0..<3 { planes[c] = try VarDCTEncoderPreparation.inverseGaborish(planes[c],
                     width: first.width, height: first.height, budget: budget) }
@@ -74,10 +97,16 @@ package enum VarDCTPixelEncoder {
             prepared = planes
         }
         if largeStrategySearch {
-            guard let prepared else { throw VarDCTError.invalidTransform }
-            let result = try VarDCTHierarchicalAnalysis.analyse(prepared, width: first.width,
-                height: first.height, scale: scale, distance: distance,
-                adaptiveQuantisation: adaptiveQuantisation, budget: budget)
+            let result: VarDCTHierarchicalAnalysis.Result
+            if let planes = prepared {
+                result = try VarDCTHierarchicalAnalysis.analyse(planes, width: first.width,
+                    height: first.height, scale: scale, distance: distance,
+                    adaptiveQuantisation: adaptiveQuantisation, budget: budget)
+            } else { throw VarDCTError.invalidTransform }
+            // Strategy selection has consumed the prepared working planes.
+            // Release their owners before entropy tokens/sections are built;
+            // coefficients and the original borrowed source remain sufficient.
+            prepared = nil
             let coefficients = Coefficients(width: first.width, height: first.height, blocksX: bx, blocksY: by,
                 bits: bitsPerSample, grayscale: grayscale, hasAlpha: alphaAssociated != nil,
                 globalScale: scale, quantAC: result.quantisation, strategies: result.strategies,

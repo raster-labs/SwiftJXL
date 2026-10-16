@@ -66,7 +66,7 @@ package struct JPEGEntropyReader {
 
     package mutating func magnitude(_ count: Int) throws -> Int32 {
         if count == 0 { return 0 }
-        guard (1...11).contains(count) else { throw JPEGEntropyError.malformed }
+        guard (1...15).contains(count) else { throw JPEGEntropyError.malformed }
         let value = try bits(count)
         return Int32(value >= 1 << (count - 1) ? value : value - ((1 << count) - 1))
     }

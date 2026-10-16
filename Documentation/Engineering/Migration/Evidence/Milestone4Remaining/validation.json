@@ -1,0 +1,1217 @@
+{
+  "schemaVersion": "1.0.0",
+  "evidenceCompleteAtUTC": "2026-10-15T14:15:46.958487+00:00",
+  "generatedAtUTC": "2026-10-15T14:15:46.958480+00:00",
+  "milestone": "Milestone 4 Remaining Work Follow-Up",
+  "overallStatus": "qualified_for_pr_review_with_explicit_unexecuted_gates",
+  "wholeMilestoneComplete": false,
+  "contractVersion": "0.10.0",
+  "commonContractManifestSHA256": "20f3236bc0d427c1af162c784e90adc0c89f10916b6f1fb4096c69ccb7b7d544",
+  "baseMainCommit": "efce6a973c96d3e49e9facc3510966d7ab0563a1",
+  "baseMainTree": "3a9e4823887b56d299a4ab68c4d171a93a7e6619",
+  "sourceManifestCount": 1195,
+  "packageSwiftSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+  "sourceManifest": {
+    "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/source-manifest.json",
+    "portableReportSHA256": "f47da5b05a22002b34b2e6238d765bc4f2eece7e771374f115a828567ed06a0f",
+    "sourceManifestCount": 1195,
+    "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+    "finalSourcePortableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/source-manifest-final.json",
+    "finalSourcePortableReportSHA256": "b5df7fdad4f12fbe48c50116c412b7eda74599df5cf26c847f49383ec09ac647",
+    "changedFilesInFinalSourceCount": 3,
+    "compiledObjectFilesIdenticalAcrossAllFourModes": true
+  },
+  "coreTestSuites": {
+    "release-6": {
+      "rawReportSHA256": "556d7bca06100008308e57931a5b75c65b1a1498b1b024a437be4e95abe5125d",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-6-report.json",
+      "portableReportSHA256": "802882a7e5d465a30eef8e229b93af75b0f5b879a976ca6296b5b9501838b27c",
+      "status": "passed",
+      "mode": "release",
+      "exitCode": 0,
+      "startedAtUTC": "2026-10-15T06:24:00.884366+00:00",
+      "finishedAtUTC": "2026-10-15T06:26:19.568064+00:00",
+      "seconds": 138.676881875,
+      "sourcesUnchanged": true,
+      "packageUnchanged": true,
+      "manifestCount": 1195,
+      "packageSwiftSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "discoveredDeclarations": 365,
+      "parameterisedCaseStarts": 1806,
+      "caseExecutions": 2048,
+      "xml": {
+        "declarations": 365,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "logSHA256": "21753518d967c9d89cece47b4f5e9cd7e5e5c4816fcb2e33c38463c3e56330bf",
+      "xmlSHA256": "ef10c634b678792406a634562d542d7833db1be64675fb4f4ec1389c6e58c0b0",
+      "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-6-run.log.gz",
+      "portableLogGzSHA256": "80d851705c643048b4be48f21f48269110b4dce1ff3d2432d8df03160b86bf31",
+      "portableXmlGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-6-tests.xml.gz",
+      "portableXmlGzSHA256": "b122f828c62189d1f5dc181e81a5379708f6535e8f43f6aa267da994cd3b549b"
+    },
+    "asan-2": {
+      "rawReportSHA256": "276b789bf23c3dddaa4fee2ccbfb2b5f999c37ca9cf26c103cef4c0c6acdf60c",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/asan-2-report.json",
+      "portableReportSHA256": "8d227373ed9f66530c9341cc19ba93389e1eeb4c40120a452c29aadbbfe8e241",
+      "status": "passed",
+      "mode": "asan",
+      "exitCode": 0,
+      "startedAtUTC": "2026-10-15T07:07:14.177344+00:00",
+      "finishedAtUTC": "2026-10-15T07:09:51.715130+00:00",
+      "seconds": 157.532810542,
+      "sourcesUnchanged": true,
+      "packageUnchanged": true,
+      "manifestCount": 1195,
+      "packageSwiftSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "discoveredDeclarations": 365,
+      "parameterisedCaseStarts": 1806,
+      "caseExecutions": 2048,
+      "xml": {
+        "declarations": 365,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "logSHA256": "c513bd5b11e45a4eca0f803dd8abc8aa6c1a3f52492ea434269d4903d98d4de2",
+      "xmlSHA256": "8d02571835cd10947108caf2bef52ab429ffaeee376318f3e4f2286998c6c8aa",
+      "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/asan-2-run.log.gz",
+      "portableLogGzSHA256": "318b5f636edc353a80b5ad471f75f8ff1337203276f9a48470be5f7b550097e0",
+      "portableXmlGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/asan-2-tests.xml.gz",
+      "portableXmlGzSHA256": "dff1e2f01c3a944c35b4dcee5224d3c3cd624aea09e8d73efad53f7f6a115501"
+    },
+    "debug-1": {
+      "rawReportSHA256": "09d8583b266ce437f651de4ab4d636a8a072f700ddcb95b1af72fe49633a673b",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/debug-1-report.json",
+      "portableReportSHA256": "1927469397712799539b86541e1497d8f4e14b0664ded75c0e944384dcd52928",
+      "status": "passed",
+      "mode": "debug",
+      "exitCode": 0,
+      "startedAtUTC": "2026-10-15T09:37:12.922420+00:00",
+      "finishedAtUTC": "2026-10-15T09:48:23.026762+00:00",
+      "seconds": 670.095734125,
+      "sourcesUnchanged": true,
+      "packageUnchanged": true,
+      "manifestCount": 1195,
+      "packageSwiftSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "discoveredDeclarations": 365,
+      "parameterisedCaseStarts": 1806,
+      "caseExecutions": 2048,
+      "xml": {
+        "declarations": 365,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "logSHA256": "ec37904008b1d4b453d93272757d409c698471d6b9e95fe4c7341a5efd2c8032",
+      "xmlSHA256": "d2f9d1bba49675f74bddbe67bb23306d4e11f74715c99e14b9e0e032e61b2c43",
+      "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/debug-1-run.log.gz",
+      "portableLogGzSHA256": "e5c3478097d61204f22caaae337ea77ec11fbbc427026f359eb1a4ef3c03c9ae",
+      "portableXmlGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/debug-1-tests.xml.gz",
+      "portableXmlGzSHA256": "36d738fbe8f8ab549e4c6b543889981c18be18cd9cd7a50f648c760fef9d39d2"
+    },
+    "tsan-1": {
+      "rawReportSHA256": "2c5ce9ec32039f55d77c95a266aac4ea88cc35adbad446bb3a867773051e8fb7",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/tsan-1-report.json",
+      "portableReportSHA256": "bfa468c1152577578d00d0bd2cbf6464b73c4e7bf2b53ad4475aad917f94e478",
+      "status": "passed",
+      "mode": "tsan",
+      "exitCode": 0,
+      "startedAtUTC": "2026-10-15T09:49:52.579527+00:00",
+      "finishedAtUTC": "2026-10-15T10:05:34.638883+00:00",
+      "seconds": 942.050330875,
+      "sourcesUnchanged": true,
+      "packageUnchanged": true,
+      "manifestCount": 1195,
+      "packageSwiftSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "discoveredDeclarations": 365,
+      "parameterisedCaseStarts": 1806,
+      "caseExecutions": 2048,
+      "xml": {
+        "declarations": 365,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "logSHA256": "51b850255da7d74d7acbcda3a8f77774e84204f4e09d9c3f403fe6121de3e5dc",
+      "xmlSHA256": "c451cbe27dec6e5ab4c6b11b3dd9f11a6d6f7299de1ec467d0e5031f04e2fd24",
+      "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/tsan-1-run.log.gz",
+      "portableLogGzSHA256": "f17e28867bf19707b6df319945005b360e92ae24c3dabbc8cde43e0bdc4fc09f",
+      "portableXmlGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/tsan-1-tests.xml.gz",
+      "portableXmlGzSHA256": "b0c59e09a06fb6d24e84c25e4c96c31815b3e64f7e6c986fbbe223d1f48af7f2"
+    },
+    "release-8": {
+      "rawReportSHA256": "fa1c5de31dab6e07b953e7cec1032cd4b94a80ec7098822095df84e48b70da11",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-8-report.json",
+      "portableReportSHA256": "3c54320bcce61f86df6501b69ef217ecd65e1ee36109fefcd6b6e2634301c82b",
+      "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-8-run.log.gz",
+      "portableLogGzSHA256": "a1e802eab740328b2addb399c87802630fd43447017f850c9d4c9b91a56bbeef",
+      "portableXmlGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-8-tests.xml.gz",
+      "portableXmlGzSHA256": "30aee88a9b280d9412ed5cdc4da8053bd093a8cde86aea6a6afced69aac05d65",
+      "status": "passed",
+      "exitCode": 0,
+      "startedAtUTC": "2026-10-15T15:04:22.222355+00:00",
+      "finishedAtUTC": "2026-10-15T15:06:43.090665+00:00",
+      "seconds": 140.865894291,
+      "sourcesUnchanged": true,
+      "manifestCount": 1195,
+      "packageSwiftSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "logSHA256": "5747de9bde592c3070659992bc3f8185a48da617f0d7ea4c7562f3373a14650f",
+      "xmlSHA256": "765fc3571765e6139d2418372c8f71ca4189f708383a622a92a254f65ab0c9c9",
+      "xml": {
+        "declarations": 365,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": 2048,
+      "parameterisedCaseStarts": 1806
+    }
+  },
+  "armQualification": {
+    "caseCountAuditRawSHA256": "7430104619badd72963863cc3dbf849e02bfcdc5da9d945f7e62c93911c21259",
+    "portableCaseCountAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/arm-case-count-audit.json",
+    "portableCaseCountAuditSHA256": "7430104619badd72963863cc3dbf849e02bfcdc5da9d945f7e62c93911c21259",
+    "portableEvidenceAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/arm-evidence-audit.json",
+    "portableEvidenceAuditSHA256": "5db8a639524fc8d8a25f2c660c233021c96d0e53b42db89a5b5d29f142908d75",
+    "portableReciprocalSwiftReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/arm-reciprocal-swift-report.json",
+    "portableReciprocalSwiftReportSHA256": "99a8209b87eb1123ba8653b15e6ce30e716bbf861c044c2950f10d30452a5f8f",
+    "totalCasesPerSuite": 123,
+    "suitesVerified": [
+      "release-6",
+      "asan-2",
+      "debug-1",
+      "tsan-1"
+    ],
+    "hardwareReciprocalVectorsVerified": 45826,
+    "hardwareVectorsSHA256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b"
+  },
+  "cliQualification": {
+    "cli-release": {
+      "rawReportSHA256": "61edd960fb515485184bb2a42e8d6379988f5cef803023d133a66cb3386ece4e",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/cli-release-report.json",
+      "portableReportSHA256": "b5868bd683c52f794194003ade80d1ee557270cda360498dc91e3ea6da8b53ea",
+      "status": "passed",
+      "mode": "release",
+      "startedAtUTC": "2026-10-15T09:34:12.996016+00:00",
+      "finishedAtUTC": "2026-10-15T09:35:20.582348+00:00",
+      "sourcesUnchanged": true,
+      "binaryUnchanged": true,
+      "binarySHA256": "49f68715363a5f980cf91c2fdea01d10ecfb56ade850f5c361195d193d739bd7",
+      "commandCount": 11,
+      "allZeroExit": true,
+      "totalRunSeconds": 67.54411025099999,
+      "runs": [
+        {
+          "name": "build",
+          "exitCode": 0,
+          "seconds": 46.3260555,
+          "stdoutSHA256": "45ee22c10d28bcc6f96f990ca019506c76bdcff2ee7c60528e5732fde1c6f218",
+          "stderrSHA256": "4d1d0bdf0f9f88a62c489492678c53c733ee3a26abede5de7f6630000d308731"
+        },
+        {
+          "name": "cli-release-foundation",
+          "exitCode": 0,
+          "seconds": 2.133444209000004,
+          "stdoutSHA256": "29b692939fb6f2dcc8d712fcb770829921a8eb582580460f3c0b832ebae1b809",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-release-payload",
+          "exitCode": 0,
+          "seconds": 2.045060250000006,
+          "stdoutSHA256": "dab6144c99854b8af05312825bd96b73b82dbf74e320423c8b29382f25c679d4",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-release-nrrd",
+          "exitCode": 0,
+          "seconds": 3.5516840000000016,
+          "stdoutSHA256": "3bc98a66ee6ec959fa315bd5957157904df2741a8340048d328e0287e57d28d3",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-release-pnm",
+          "exitCode": 0,
+          "seconds": 2.279030167000002,
+          "stdoutSHA256": "5d45b7dd85c28a9d0f1a2f86d86707de98d30c80d7f366a1828313a520ad9b21",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-release-low-precision",
+          "exitCode": 0,
+          "seconds": 0.6075602919999952,
+          "stdoutSHA256": "8a766826cbc5b494d3d5be6981978ecac6881b6096741490259778a06e1a4321",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-release-vardct",
+          "exitCode": 0,
+          "seconds": 1.1400014579999933,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-release-vardct-encode",
+          "exitCode": 0,
+          "seconds": 2.804396791000002,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-release-native-jpeg",
+          "exitCode": 0,
+          "seconds": 1.4682892920000015,
+          "stdoutSHA256": "e682ad4b1116ffc4a21cf6d5b5afd26585f8d46c7d35e46e645ef83646427b6e",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-completion-release",
+          "exitCode": 0,
+          "seconds": 3.6155897919999944,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-release-jpeg-extended",
+          "exitCode": 0,
+          "seconds": 1.572998499999997,
+          "stdoutSHA256": "1fa052bc33ee0136fd0380324a6188dea2cf9e3159f367712d1eeb67ef9f73df",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    "cli-asan": {
+      "rawReportSHA256": "d3fa1ebbfb1fa4a7c8a7f1d1dcccdc84d0aac365c6b5c4316b87acae95b286ba",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/cli-asan-report.json",
+      "portableReportSHA256": "8c01451564efdfd20b6deaeb6339eaa06a7e7ba848112f467350b2209c8ad139",
+      "status": "passed",
+      "mode": "asan",
+      "startedAtUTC": "2026-10-15T09:35:29.598423+00:00",
+      "finishedAtUTC": "2026-10-15T09:37:01.011598+00:00",
+      "sourcesUnchanged": true,
+      "binaryUnchanged": true,
+      "binarySHA256": "97bb9c88fac79b2acef177aeba0b855f01eaec1473309fb8a78a78a55dcc4aa0",
+      "commandCount": 11,
+      "allZeroExit": true,
+      "totalRunSeconds": 91.36646379299998,
+      "runs": [
+        {
+          "name": "build",
+          "exitCode": 0,
+          "seconds": 50.092231292,
+          "stdoutSHA256": "781b5db4b4359c6234afdcd9487cf3903c238165fc85dafea03712a7ec45c5da",
+          "stderrSHA256": "4d1d0bdf0f9f88a62c489492678c53c733ee3a26abede5de7f6630000d308731"
+        },
+        {
+          "name": "cli-asan-foundation",
+          "exitCode": 0,
+          "seconds": 3.1540472909999977,
+          "stdoutSHA256": "29b692939fb6f2dcc8d712fcb770829921a8eb582580460f3c0b832ebae1b809",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-asan-payload",
+          "exitCode": 0,
+          "seconds": 3.3435844169999953,
+          "stdoutSHA256": "dab6144c99854b8af05312825bd96b73b82dbf74e320423c8b29382f25c679d4",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-asan-nrrd",
+          "exitCode": 0,
+          "seconds": 4.759659083999999,
+          "stdoutSHA256": "3bc98a66ee6ec959fa315bd5957157904df2741a8340048d328e0287e57d28d3",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-asan-pnm",
+          "exitCode": 0,
+          "seconds": 5.897789707999998,
+          "stdoutSHA256": "5d45b7dd85c28a9d0f1a2f86d86707de98d30c80d7f366a1828313a520ad9b21",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-asan-low-precision",
+          "exitCode": 0,
+          "seconds": 1.7867640420000015,
+          "stdoutSHA256": "8a766826cbc5b494d3d5be6981978ecac6881b6096741490259778a06e1a4321",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-asan-vardct",
+          "exitCode": 0,
+          "seconds": 3.2999885840000047,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-asan-vardct-encode",
+          "exitCode": 0,
+          "seconds": 7.334338916999997,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-asan-native-jpeg",
+          "exitCode": 0,
+          "seconds": 2.712011374999989,
+          "stdoutSHA256": "e682ad4b1116ffc4a21cf6d5b5afd26585f8d46c7d35e46e645ef83646427b6e",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-completion-asan",
+          "exitCode": 0,
+          "seconds": 4.705864708000007,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-asan-jpeg-extended",
+          "exitCode": 0,
+          "seconds": 4.28018437499999,
+          "stdoutSHA256": "1fa052bc33ee0136fd0380324a6188dea2cf9e3159f367712d1eeb67ef9f73df",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    "cli-debug": {
+      "rawReportSHA256": "f0970a16983b807e352aa144d267154de966fa6e0d9148b0f21a2608940b721e",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/cli-debug-report.json",
+      "portableReportSHA256": "09529846359f06230822f465a80853d0c65d4d13799a7b2c7d03c434f6379c66",
+      "status": "passed",
+      "mode": "debug",
+      "startedAtUTC": "2026-10-15T09:48:31.971741+00:00",
+      "finishedAtUTC": "2026-10-15T09:49:41.302840+00:00",
+      "sourcesUnchanged": true,
+      "binaryUnchanged": true,
+      "binarySHA256": "ad5c875d94badf91db052a7a635e0b6cb7c246638fee011e15105c7bae0513bb",
+      "commandCount": 11,
+      "allZeroExit": true,
+      "totalRunSeconds": 69.28604212500001,
+      "runs": [
+        {
+          "name": "build",
+          "exitCode": 0,
+          "seconds": 1.819773208,
+          "stdoutSHA256": "a4a59ad6d10c36d29499a90227c9b434332e02f1640289a82cfd1372277b4510",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-debug-foundation",
+          "exitCode": 0,
+          "seconds": 2.060175792,
+          "stdoutSHA256": "29b692939fb6f2dcc8d712fcb770829921a8eb582580460f3c0b832ebae1b809",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-debug-payload",
+          "exitCode": 0,
+          "seconds": 2.0589059169999997,
+          "stdoutSHA256": "dab6144c99854b8af05312825bd96b73b82dbf74e320423c8b29382f25c679d4",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-debug-nrrd",
+          "exitCode": 0,
+          "seconds": 3.729825667000001,
+          "stdoutSHA256": "3bc98a66ee6ec959fa315bd5957157904df2741a8340048d328e0287e57d28d3",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-debug-pnm",
+          "exitCode": 0,
+          "seconds": 3.0779429169999997,
+          "stdoutSHA256": "5d45b7dd85c28a9d0f1a2f86d86707de98d30c80d7f366a1828313a520ad9b21",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-debug-low-precision",
+          "exitCode": 0,
+          "seconds": 0.829124083,
+          "stdoutSHA256": "8a766826cbc5b494d3d5be6981978ecac6881b6096741490259778a06e1a4321",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-debug-vardct",
+          "exitCode": 0,
+          "seconds": 3.7897422080000016,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-debug-vardct-encode",
+          "exitCode": 0,
+          "seconds": 5.337274000000001,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-debug-native-jpeg",
+          "exitCode": 0,
+          "seconds": 4.8044221249999985,
+          "stdoutSHA256": "e682ad4b1116ffc4a21cf6d5b5afd26585f8d46c7d35e46e645ef83646427b6e",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-completion-debug",
+          "exitCode": 0,
+          "seconds": 39.741407208000005,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-debug-jpeg-extended",
+          "exitCode": 0,
+          "seconds": 2.037448999999995,
+          "stdoutSHA256": "1fa052bc33ee0136fd0380324a6188dea2cf9e3159f367712d1eeb67ef9f73df",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    "cli-tsan": {
+      "rawReportSHA256": "635ed46d0b4162130846513d9bb5fc15ba5285c817bdf11b0f419db7a00e27dd",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/cli-tsan-report.json",
+      "portableReportSHA256": "18a21ffaf6817a252b4fcbfce484ecde01360559e736f3273a96819db3e4348c",
+      "status": "passed",
+      "mode": "tsan",
+      "startedAtUTC": "2026-10-15T10:06:05.296954+00:00",
+      "finishedAtUTC": "2026-10-15T10:59:14.876010+00:00",
+      "sourcesUnchanged": true,
+      "binaryUnchanged": true,
+      "binarySHA256": "12f124338c0c75ed88c21a6c64ac6ff278167d08ab77b2e52f3ba2e8c92486e6",
+      "commandCount": 11,
+      "allZeroExit": true,
+      "totalRunSeconds": 3189.5013512950004,
+      "runs": [
+        {
+          "name": "build",
+          "exitCode": 0,
+          "seconds": 46.036921625,
+          "stdoutSHA256": "4f75589e649ef367517899ab3aa6925f0686c1225c93f8b35fb0fc9fc918bcbf",
+          "stderrSHA256": "4d1d0bdf0f9f88a62c489492678c53c733ee3a26abede5de7f6630000d308731"
+        },
+        {
+          "name": "cli-tsan-foundation",
+          "exitCode": 0,
+          "seconds": 190.818244542,
+          "stdoutSHA256": "29b692939fb6f2dcc8d712fcb770829921a8eb582580460f3c0b832ebae1b809",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-tsan-payload",
+          "exitCode": 0,
+          "seconds": 214.97973975,
+          "stdoutSHA256": "dab6144c99854b8af05312825bd96b73b82dbf74e320423c8b29382f25c679d4",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-tsan-nrrd",
+          "exitCode": 0,
+          "seconds": 241.34154595900003,
+          "stdoutSHA256": "3bc98a66ee6ec959fa315bd5957157904df2741a8340048d328e0287e57d28d3",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-tsan-pnm",
+          "exitCode": 0,
+          "seconds": 566.5406997090001,
+          "stdoutSHA256": "5d45b7dd85c28a9d0f1a2f86d86707de98d30c80d7f366a1828313a520ad9b21",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-tsan-low-precision",
+          "exitCode": 0,
+          "seconds": 166.54292691699993,
+          "stdoutSHA256": "8a766826cbc5b494d3d5be6981978ecac6881b6096741490259778a06e1a4321",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-tsan-vardct",
+          "exitCode": 0,
+          "seconds": 266.87151266700016,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-tsan-vardct-encode",
+          "exitCode": 0,
+          "seconds": 664.5122737089998,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-tsan-native-jpeg",
+          "exitCode": 0,
+          "seconds": 187.21320920900007,
+          "stdoutSHA256": "e682ad4b1116ffc4a21cf6d5b5afd26585f8d46c7d35e46e645ef83646427b6e",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-completion-tsan",
+          "exitCode": 0,
+          "seconds": 210.526344375,
+          "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "cli-tsan-jpeg-extended",
+          "exitCode": 0,
+          "seconds": 434.11793283299994,
+          "stdoutSHA256": "1fa052bc33ee0136fd0380324a6188dea2cf9e3159f367712d1eeb67ef9f73df",
+          "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  },
+  "standaloneConsumer": {
+    "rawReportSHA256": "49025bb58b3f2acfc2d3c6cefcc090b334082598557c9d7fb1cdb1bf0f058fc0",
+    "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/consumer-final-report.json",
+    "portableReportSHA256": "38b676e78ccef78ae5cad5a263587f901c74a3ced2a2be7408fb262c6f38000d",
+    "status": "passed",
+    "startedAtUTC": "2026-10-15T09:33:12.263506+00:00",
+    "finishedAtUTC": "2026-10-15T09:34:00.856082+00:00",
+    "sourcesUnchanged": true,
+    "runs": [
+      {
+        "name": "CLIValidationFixtures-manifest",
+        "exitCode": 0,
+        "seconds": 1.7493295420000001,
+        "stdoutSHA256": "b5521a1f4db4973c9d3d6e0f2cb525c91607617dec82eb4b0d29b93ea2e5fc1b",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "ContractConsumer-manifest",
+        "exitCode": 0,
+        "seconds": 0.7687014169999999,
+        "stdoutSHA256": "0665571147a946d50261ef41229210fa80e190a09a6121b20efb990d9e50a901",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "MemoryProbe-manifest",
+        "exitCode": 0,
+        "seconds": 0.7718413750000002,
+        "stdoutSHA256": "c126f866b8053d2a1c2879305d0f0251166c7edb3aecbd8f95822558953ca80e",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "consumer",
+        "exitCode": 0,
+        "seconds": 45.246892292,
+        "stdoutSHA256": "f09a41816de48deb2ce9717a474218ba25f1ef1ef8b96eb08147eaa4cd7c57f8",
+        "stderrSHA256": "3135f9600f99c16edc8972c62f3cdf662c73bfc4c8300dee98c072f3f2ab97b5"
+      }
+    ]
+  },
+  "platformQualification": {
+    "rawReportSHA256": "79f00ec23232f58ccfd3a2eb39ef145a5fab26c6e6cc4d7caa1c9eb87ca8ac22",
+    "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/platform-validation-report.json",
+    "portableReportSHA256": "2eb1afdd4e45de2e6ece2d040f5c242f9585f09c4d4a0a717803226655cdbd08",
+    "status": "passed",
+    "startedAtUTC": "2026-10-15T10:59:31.546222+00:00",
+    "finishedAtUTC": "2026-10-15T11:04:50.040696+00:00",
+    "scope": "Ten SDK builds and four simulator smoke probes; no full simulator-suite, native Intel or physical-device pass.",
+    "hostEnvironment": {
+      "architecture": "arm64",
+      "sw_vers": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434"
+    },
+    "commands": [
+      {
+        "command": [
+          "xcrun",
+          "swift",
+          "--version"
+        ],
+        "exitCode": 0,
+        "logSHA256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc"
+      },
+      {
+        "command": [
+          "xcodebuild",
+          "-version"
+        ],
+        "exitCode": 0,
+        "logSHA256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77"
+      },
+      {
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/qualification/refresh-platforms.py"
+        ],
+        "exitCode": 0,
+        "logSHA256": "a6e2be90c2fd5b38beed6987d38654424cc050e6174a90fe9011174842b75f89"
+      },
+      {
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/qualification/compile-runtime.py"
+        ],
+        "exitCode": 0,
+        "logSHA256": "5a42eef49c3b8ef465d8fe556f5a38bd355b49c87a798242f100a4220bb19785"
+      },
+      {
+        "command": [
+          "xcrun",
+          "simctl",
+          "list",
+          "runtimes",
+          "-j"
+        ],
+        "exitCode": 0,
+        "logSHA256": "c73ba5bed73e3d8b91bbe474bcd2160c8be8a3e7bb632ee14ceed15ae7919da6"
+      },
+      {
+        "command": [
+          "xcrun",
+          "devicectl",
+          "list",
+          "devices",
+          "--json-output",
+          "<work-final>/runtime/physical-devices.json"
+        ],
+        "exitCode": 0,
+        "logSHA256": "919e489de86abb0e04b09d0ac5fad67b4d54206e28d7f7b6207611e5996f1839"
+      },
+      {
+        "command": [
+          "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+          "<repo>/Scripts/TestSupport/run-apple-runtime-probe.py",
+          "<work-final>/runtime"
+        ],
+        "exitCode": 0,
+        "logSHA256": "f4b20a19b550aeed06a22e1eb1bb8e7ad87f5c8eed5dd2dae596b08682ee25e8"
+      }
+    ],
+    "sdkBuilds": {
+      "rawReportSHA256": "9380c64a841aac064a2bc1047f23f0b31e074adabb6d6a31827c21e5c8f08ae2",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/sdk-builds-report.json",
+      "portableReportSHA256": "49f23dd3d012ddc3ad9e21629c643c682be499f3ffda8a82e4b22756d812fc04",
+      "entryCount": 10,
+      "allZeroExit": true,
+      "runs": [
+        {
+          "profile": "ios-device",
+          "triple": "arm64-apple-ios26.0",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk",
+          "exit": 0,
+          "seconds": 17.321368542
+        },
+        {
+          "profile": "ios-simulator",
+          "triple": "arm64-apple-ios26.0-simulator",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+          "exit": 0,
+          "seconds": 14.886453083
+        },
+        {
+          "profile": "tvos-device",
+          "triple": "arm64-apple-tvos26.0",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS27.0.sdk",
+          "exit": 0,
+          "seconds": 16.426646917
+        },
+        {
+          "profile": "tvos-simulator",
+          "triple": "arm64-apple-tvos26.0-simulator",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVSimulator.platform/Developer/SDKs/AppleTVSimulator27.0.sdk",
+          "exit": 0,
+          "seconds": 17.445465041
+        },
+        {
+          "profile": "visionos-device",
+          "triple": "arm64-apple-xros26.0",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS27.0.sdk",
+          "exit": 0,
+          "seconds": 16.387721166999995
+        },
+        {
+          "profile": "visionos-simulator",
+          "triple": "arm64-apple-xros26.0-simulator",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/XRSimulator.platform/Developer/SDKs/XRSimulator27.0.sdk",
+          "exit": 0,
+          "seconds": 15.210840958999995
+        },
+        {
+          "profile": "watchos-device",
+          "triple": "arm64-apple-watchos26.0",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/WatchOS.platform/Developer/SDKs/WatchOS27.0.sdk",
+          "exit": 0,
+          "seconds": 14.712583042000006
+        },
+        {
+          "profile": "watchos-device-32",
+          "triple": "arm64_32-apple-watchos26.0",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/WatchOS.platform/Developer/SDKs/WatchOS27.0.sdk",
+          "exit": 0,
+          "seconds": 14.711784332999997
+        },
+        {
+          "profile": "watchos-simulator",
+          "triple": "arm64-apple-watchos26.0-simulator",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator27.0.sdk",
+          "exit": 0,
+          "seconds": 14.837063083000004
+        },
+        {
+          "profile": "macos-intel",
+          "triple": "x86_64-apple-macosx26.0",
+          "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+          "exit": 0,
+          "seconds": 16.116897584000014
+        }
+      ]
+    },
+    "simulatorSmokeProbes": {
+      "rawReportSHA256": "bcd724b97777aa4aa2cf2532d4988049065794e2bf9ea1eb9b4919d492751ad1",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/runtime-report.json",
+      "portableReportSHA256": "695d73d8da1bf9cc2d5ee9694b9fd767948305554608ae8c3db660d4267ccc8b",
+      "entryCount": 4,
+      "allPassed": true,
+      "runtimeVersions": {
+        "ios": "26.5",
+        "tvos": "26.5",
+        "visionos": "26.5",
+        "watchos": "26.0"
+      },
+      "runs": [
+        {
+          "platform": "ios",
+          "runtimeVersion": "26.5",
+          "runtimeBuild": "23F77",
+          "deviceUUID": "ff1e3d95-8d0a-4a4e-b326-2d3490ad91e1",
+          "result": {
+            "checks": [
+              "12-bit lossless",
+              "caller destination owner",
+              "shared-storage reports",
+              "exact animation timing",
+              "separate retained frame owners",
+              "independent VarDCT12",
+              "independent RGBA16 animation",
+              "low-memory rejection",
+              "cancellation",
+              "cancellation after destination writes",
+              "failed destination invalidation",
+              "Watch profile and exact round trip",
+              "explicit pixel container",
+              "independent JPEG pixel decoding",
+              "extended JPEG precision metadata and ownership"
+            ],
+            "jpegExtendedCases": 91,
+            "memoryCeilingBytes": 33554432,
+            "status": "passed",
+            "varDCTPeakLSB": 0,
+            "varDCTRMSLSB": 0
+          }
+        },
+        {
+          "platform": "tvos",
+          "runtimeVersion": "26.5",
+          "runtimeBuild": "23L470",
+          "deviceUUID": "8b890dfc-3891-4cc7-90f3-7b2d90f85519",
+          "result": {
+            "checks": [
+              "12-bit lossless",
+              "caller destination owner",
+              "shared-storage reports",
+              "exact animation timing",
+              "separate retained frame owners",
+              "independent VarDCT12",
+              "independent RGBA16 animation",
+              "low-memory rejection",
+              "cancellation",
+              "cancellation after destination writes",
+              "failed destination invalidation",
+              "Watch profile and exact round trip",
+              "explicit pixel container",
+              "independent JPEG pixel decoding",
+              "extended JPEG precision metadata and ownership"
+            ],
+            "jpegExtendedCases": 91,
+            "memoryCeilingBytes": 33554432,
+            "status": "passed",
+            "varDCTPeakLSB": 0,
+            "varDCTRMSLSB": 0
+          }
+        },
+        {
+          "platform": "visionos",
+          "runtimeVersion": "26.5",
+          "runtimeBuild": "23O470",
+          "deviceUUID": "1ce3cdd6-f55d-4a83-a768-cd2510cb0258",
+          "result": {
+            "checks": [
+              "12-bit lossless",
+              "caller destination owner",
+              "shared-storage reports",
+              "exact animation timing",
+              "separate retained frame owners",
+              "independent VarDCT12",
+              "independent RGBA16 animation",
+              "low-memory rejection",
+              "cancellation",
+              "cancellation after destination writes",
+              "failed destination invalidation",
+              "Watch profile and exact round trip",
+              "explicit pixel container",
+              "independent JPEG pixel decoding",
+              "extended JPEG precision metadata and ownership"
+            ],
+            "jpegExtendedCases": 91,
+            "memoryCeilingBytes": 33554432,
+            "status": "passed",
+            "varDCTPeakLSB": 0,
+            "varDCTRMSLSB": 0
+          }
+        },
+        {
+          "platform": "watchos",
+          "runtimeVersion": "26.0",
+          "runtimeBuild": "23R353",
+          "deviceUUID": "f0344349-5ab5-4f47-b9e9-2e1698d7d59b",
+          "result": {
+            "checks": [
+              "12-bit lossless",
+              "caller destination owner",
+              "shared-storage reports",
+              "exact animation timing",
+              "separate retained frame owners",
+              "independent VarDCT12",
+              "independent RGBA16 animation",
+              "low-memory rejection",
+              "cancellation",
+              "cancellation after destination writes",
+              "failed destination invalidation",
+              "Watch profile and exact round trip",
+              "explicit pixel container",
+              "independent JPEG pixel decoding",
+              "extended JPEG precision metadata and ownership"
+            ],
+            "jpegExtendedCases": 91,
+            "memoryCeilingBytes": 33554432,
+            "status": "passed",
+            "varDCTPeakLSB": 0,
+            "varDCTRMSLSB": 0
+          }
+        }
+      ]
+    },
+    "runtimeInventory": {
+      "rawReportSHA256": "c73ba5bed73e3d8b91bbe474bcd2160c8be8a3e7bb632ee14ceed15ae7919da6",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/runtimes.json",
+      "portableReportSHA256": "4ef7babcbe25197a560635135351ef50ff6296a81ce71763ca8677c5a1471533",
+      "installedSimRuntimes": [
+        {
+          "name": "iOS 26.5",
+          "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+          "version": "26.5",
+          "buildversion": "23F77",
+          "isAvailable": true
+        },
+        {
+          "name": "iOS 27.0",
+          "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+          "version": "27.0",
+          "buildversion": "24A434",
+          "isAvailable": true
+        },
+        {
+          "name": "tvOS 26.5",
+          "identifier": "com.apple.CoreSimulator.SimRuntime.tvOS-26-5",
+          "version": "26.5",
+          "buildversion": "23L470",
+          "isAvailable": true
+        },
+        {
+          "name": "watchOS 26.0",
+          "identifier": "com.apple.CoreSimulator.SimRuntime.watchOS-26-0",
+          "version": "26.0",
+          "buildversion": "23R353",
+          "isAvailable": true
+        },
+        {
+          "name": "watchOS 27.0",
+          "identifier": "com.apple.CoreSimulator.SimRuntime.watchOS-27-0",
+          "version": "27.0",
+          "buildversion": "24R362",
+          "isAvailable": true
+        },
+        {
+          "name": "visionOS 26.5",
+          "identifier": "com.apple.CoreSimulator.SimRuntime.xrOS-26-5",
+          "version": "26.5",
+          "buildversion": "23O470",
+          "isAvailable": true
+        }
+      ]
+    },
+    "deviceInventory": {
+      "rawReportSHA256": "63d706350126b8d0a1035b537004dca03ae8a58b82edcc7998047b8366644ad3",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/physical-devices.json",
+      "portableReportSHA256": "920b5786ea66488462035fc371c452743eeda20fc421eb27bcad36e059d5f2fc",
+      "totalEntries": 4,
+      "simulatedEntries": 4,
+      "physicalEntries": 0
+    },
+    "iosSimulatorSuiteQualification": {
+      "runnerScript": "Scripts/TestSupport/qualify-ios-simulator.py",
+      "runnerScriptSHA256": "4be74712e4a1fe7a2b1da5e189c15e9e5b0bdb0d3f6383124592d3830001c6d4",
+      "nonEmptyOutputDirectoryGuardProof": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-nonempty-guard-proof.json",
+      "nonEmptyOutputDirectoryGuardProofSHA256": "e86eb22b9d81d20085c08b253837fdad4aacf1102993a47ec34f32ef7b205145",
+      "expectedIOSDeclarations": 359,
+      "expectedIOSCases": 1955,
+      "excludedMacOSOnlyDeclarations": 6,
+      "excludedMacOSOnlyCases": 93,
+      "armIntegerCasesPerRun": 123,
+      "hardwareReciprocalVectorsPerRun": 45826,
+      "minimumFloorRuntime26_0Release": {
+        "runtimeVersion": "26.0",
+        "runtimeBuild": "23A343",
+        "runtimeIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+        "sourceTree": "post_swift62_fix_final_1195_files",
+        "status": "passed",
+        "startedAtUTC": "2026-10-15T15:09:27.677380+00:00",
+        "finishedAtUTC": "2026-10-15T15:14:06.361030+00:00",
+        "seconds": 204.146533,
+        "declarations": 359,
+        "cases": 1955,
+        "failures": 0,
+        "skips": 0,
+        "reciprocalSentinelsVerified": true,
+        "validatorSelfTestPassed": true,
+        "evaluationMode": "contemporaneous_live_run",
+        "runnerNonDriftStatus": "verified_unchanged",
+        "rawReportSHA256": "f4b154a022e5ad0ab77c5835e1cd5235452c784279b1778e61400ffe48721670",
+        "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.0-release-report.json",
+        "portableReportSHA256": "f688785c06ea63ab9a89e23e05ede46fefd24e27534be9fd3aaf32a1f48ad7d7",
+        "portableValidatorSelfTest": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.0-release-validator-self-test.json",
+        "portableValidatorSelfTestSHA256": "867b66abb87b4a3d49e1f4416f970c1e8fa9dc5f49dc305174dfdccd4ac98991",
+        "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.0-release-xcodebuild.log.gz",
+        "portableLogGzSHA256": "7941b85703d837bd3fd19316d92030521197290d2a60daccc1380e50ec8288a1"
+      },
+      "ios26_5Release": {
+        "runtimeVersion": "26.5",
+        "runtimeBuild": "23F77",
+        "runtimeIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+        "sourceTree": "pre_swift62_fix_1195_files_identical_compiled_objects",
+        "status": "passed",
+        "startedAtUTC": "2026-10-15T12:00:43.934777+00:00",
+        "finishedAtUTC": "2026-10-15T12:08:15.891646+00:00",
+        "seconds": 272.139227,
+        "declarations": 359,
+        "cases": 1955,
+        "failures": 0,
+        "skips": 0,
+        "reciprocalSentinelsVerified": true,
+        "validatorSelfTestPassed": true,
+        "evaluationMode": "historical_reaudit",
+        "runnerNonDriftStatus": "unknown_not_captured_at_execution",
+        "rawReportSHA256": "5c1fd162f14360f91a4b9a2173dab2530ae81b3ce8e44621695c6ebe6cad4ba8",
+        "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-release-report.json",
+        "portableReportSHA256": "992ead1eb274de5f4b69026d06f64f8d415d3478a16e0500148b607d11e2fd4a",
+        "portableValidatorSelfTest": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-release-validator-self-test.json",
+        "portableValidatorSelfTestSHA256": "024597eaa9c12d452f7945632b323612ddd80352ace47452edea3576b64c3422",
+        "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-release-xcodebuild.log.gz",
+        "portableLogGzSHA256": "ff732e49008f522d990f6e90e0829581d3e0aa32d6fb30aa398ef6b29f1f404a"
+      },
+      "ios26_5DebugAndSanitizers": {
+        "runtimeVersion": "26.5",
+        "runtimeBuild": "23F77",
+        "runtimeIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+        "sourceTree": "pre_swift62_fix_1195_files_identical_compiled_objects",
+        "status": "passed",
+        "startedAtUTC": "2026-10-15T12:22:31.046216+00:00",
+        "finishedAtUTC": "2026-10-15T13:26:17.160279+00:00",
+        "evaluationMode": "contemporaneous_live_run",
+        "runnerNonDriftStatus": "verified_unchanged",
+        "rawReportSHA256": "3b77f5ef50def3c85d5b92ec9037a4f0e18785f11fc05f4a7ed8582f30412607",
+        "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-debug-sanitizers-report.json",
+        "portableReportSHA256": "c51ac0bf55593254a69b5b8f2e61b19d331e336240fd8283d52640b9e7ed5b1c",
+        "portableValidatorSelfTest": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-debug-sanitizers-validator-self-test.json",
+        "portableValidatorSelfTestSHA256": "a75cdafdbae09392f1fa4492d71abe7416a93a0bef1fe11fea344037d62df881",
+        "configurations": {
+          "debug": {
+            "status": "passed",
+            "startedAtUTC": "2026-10-15T12:23:04.644318+00:00",
+            "finishedAtUTC": "2026-10-15T12:32:45.803495+00:00",
+            "seconds": 581.159022,
+            "declarations": 359,
+            "cases": 1955,
+            "failures": 0,
+            "skips": 0,
+            "sanitizers": [],
+            "builtArtifactsCaptured": true,
+            "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-debug-xcodebuild.log.gz",
+            "portableLogGzSHA256": "29ed72cff4d0127659dc6f005d16af5ef95ab784a9fd65d811cfb831f8e25d4c"
+          },
+          "asan": {
+            "status": "passed",
+            "startedAtUTC": "2026-10-15T12:43:48.841237+00:00",
+            "finishedAtUTC": "2026-10-15T12:58:41.869451+00:00",
+            "seconds": 893.028165,
+            "declarations": 359,
+            "cases": 1955,
+            "failures": 0,
+            "skips": 0,
+            "sanitizers": [
+              "address"
+            ],
+            "builtArtifactsCaptured": true,
+            "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-asan-xcodebuild.log.gz",
+            "portableLogGzSHA256": "132243cd059de4d910a792de84a97a8e81aaea4292d465903b3ce49c006c17be"
+          },
+          "tsan": {
+            "status": "passed",
+            "startedAtUTC": "2026-10-15T12:58:44.055246+00:00",
+            "finishedAtUTC": "2026-10-15T13:26:11.041229+00:00",
+            "seconds": 1646.985931,
+            "declarations": 359,
+            "cases": 1955,
+            "failures": 0,
+            "skips": 0,
+            "sanitizers": [
+              "thread"
+            ],
+            "builtArtifactsCaptured": true,
+            "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-tsan-xcodebuild.log.gz",
+            "portableLogGzSHA256": "f82a2ed2055561dd310791d929569e319161d071b8ecf9f4fdfdf17f6c5126aa"
+          }
+        }
+      }
+    }
+  },
+  "performanceQualification": {
+    "finalSummaryRawSHA256": "2cbb1f8148abed19a18ab56c7eefc069e61b9726ef440b4d4aa82ca821d99f46",
+    "portablePerformanceSummary": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/performance.json",
+    "portablePerformanceSummarySHA256": "bd85589677342ac9d61d1b6dfd9c8e958de41ebb1af0c9e45f145ec2e04cbae8",
+    "portablePerformanceRawGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/performance-raw.json.gz",
+    "portablePerformanceRawGzSHA256": "7d1ecb94638d894972f9fb2f2323d48f8494bd000d2326e98f30dfa6bebeeac8",
+    "generatedAtUTC": "2026-10-15T06:38:41.702875+00:00",
+    "sourceMatchesRelease6": true,
+    "primarySummary": {
+      "rows": 48,
+      "paired": 37,
+      "candidateOnly": 11,
+      "repeatedLatencyTriggers": 0,
+      "repeatedRSSTriggers": 0,
+      "losslessSizeTriggers": 0
+    },
+    "publicDefaultPixelSummary": {
+      "rows": 36,
+      "paired": 28,
+      "candidateOnly": 8,
+      "repeatedLatencyTriggers": 0,
+      "repeatedRSSTriggers": 0,
+      "losslessSizeTriggers": 0
+    },
+    "nativeJPEGSummary": {
+      "rows": 12,
+      "paired": 9,
+      "candidateOnly": 3,
+      "repeatedLatencyTriggers": 0,
+      "repeatedRSSTriggers": 0,
+      "losslessSizeTriggers": 0
+    },
+    "oneWorkerDiagnosticSummary": {
+      "rows": 36,
+      "paired": 28,
+      "candidateOnly": 8,
+      "repeatedLatencyTriggers": 10,
+      "repeatedRSSTriggers": 0,
+      "losslessSizeTriggers": 0
+    },
+    "candidateOnlyPrimaryRowCount": 11,
+    "diagnosticTriggerRowCount": 10
+  },
+  "unexecutedRequiredGates": [
+    {
+      "gate": "Exact macOS 26.0 native/VM runtime execution",
+      "status": "unexecuted",
+      "reason": "Local Apple Silicon workstation runs macOS 27.0.1 (build 26A434) with ~6.0 GiB free disk space and no local macOS 26.0 VM image installed; GitHub Actions macos-26-arm64 hosted runners run macOS 26.6.2 (build 25G83). Note: iOS 26.0 (build 23A343) and watchOS 26.0 (build 23R353) minimum-floor simulator runtimes are installed and executed locally."
+    },
+    {
+      "gate": "Out-of-scope hardware and non-iOS/macOS simulator targets (Intel x86_64 macOS, physical iPhone/iPad/Apple TV/Apple Watch/Vision Pro devices, full test-bundle execution on tvOS/watchOS/visionOS simulators)",
+      "status": "out_of_scope_unexecuted",
+      "reason": "Owner-scoped qualification for this slice targets this Apple Silicon Mac and installed iOS simulators (iOS 26.0 build 23A343 and iOS 26.5 build 23F77, which both passed all 359 compatible declarations / 1,955 cases). Intel x86_64, physical devices (0 attached), and full test bundles on tvOS/watchOS/visionOS simulators (covered by 10-target SDK builds and standalone smoke probes) remain unqualified/out of scope."
+    },
+    {
+      "gate": "3x3600s continuous malformed-JPEG mutation campaign gate",
+      "status": "unexecuted",
+      "reason": "Security work is scoped to defensive source review, bounds/arithmetic hardening, and deterministic regression/sanitizer suites."
+    },
+    {
+      "gate": "Hosted GitHub Actions CI verification on the updated PR #33 head commit",
+      "status": "pending_ci_execution",
+      "reason": "Run 38726940479 on commit eaf011e914ee2ab36af5266d7fba9a8e42471ecf identified Swift 6.2 expression type-checking timeouts in VarDCTSmallAnalysis.swift, VarDCTEncoderPreparationTests.swift, and VarDCTWorkspaceTests.swift; the additive repair commit will be verified on GitHub Actions after push."
+    }
+  ],
+  "swift62CompatibilityFixQualification": {
+    "summary": "Extracted the 90-line withUnsafeMutableBufferPointer closure body in VarDCTSmallAnalysis.swift into a private helper method apply(_:identifier:buffer:dct:) and added explicit closure parameter/return type annotations to VarDCTEncoderPreparationTests.swift and VarDCTWorkspaceTests.swift to resolve Swift 6.2 expression type-checking timeouts observed on Linux and macOS in GitHub Actions runs 38726940479 and 38750702077.",
+    "portableFinalSourceManifest": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/source-manifest-final.json",
+    "portableFinalSourceManifestSHA256": "b5df7fdad4f12fbe48c50116c412b7eda74599df5cf26c847f49383ec09ac647",
+    "changedFilesSincePreFix": [
+      "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift",
+      "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift",
+      "Tests/SwiftJXLCoreTests/VarDCTWorkspaceTests.swift"
+    ],
+    "compiledObjectEqualityVerified": {
+      "SwiftJXL_o_Release": true,
+      "SwiftJXL_o_Debug": true,
+      "SwiftJXL_o_ASan": true,
+      "SwiftJXL_o_TSan": true,
+      "SwiftJXLCore_o_Note": "SwiftJXLCore.o reflects the extracted private helper symbol VarDCTSmallAnalysis.apply(_:identifier:buffer:dct:) with zero numerical, order, ownership, or default changes; verified by full Release native and iOS 26.0 Simulator suites plus targeted Debug/ASan/TSan VarDCT suites."
+    },
+    "postFixNativeSuites": {
+      "release-8": {
+        "scope": "full_365_declarations_2048_cases",
+        "rawReportSHA256": "fa1c5de31dab6e07b953e7cec1032cd4b94a80ec7098822095df84e48b70da11",
+        "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-8-report.json",
+        "portableReportSHA256": "3c54320bcce61f86df6501b69ef217ecd65e1ee36109fefcd6b6e2634301c82b",
+        "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-8-run.log.gz",
+        "portableLogGzSHA256": "a1e802eab740328b2addb399c87802630fd43447017f850c9d4c9b91a56bbeef",
+        "portableXmlGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-8-tests.xml.gz",
+        "portableXmlGzSHA256": "30aee88a9b280d9412ed5cdc4da8053bd093a8cde86aea6a6afced69aac05d65",
+        "status": "passed",
+        "seconds": 140.865894291,
+        "declarations": 365,
+        "cases": 2048
+      },
+      "debug-3-vardct": {
+        "scope": "targeted_changed_vardct_suites_and_full_object_build",
+        "rawReportSHA256": "8f5cd0cc053fe7cc1b66ab583b6e9c1ede6aa1a75e8db3ad520158462d5915fd",
+        "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/debug-3-vardct-report.json",
+        "portableReportSHA256": "f03bdee67daff3bff438089c1edd245b3161e3ac738b332d02554a8104122bc3",
+        "status": "passed",
+        "seconds": 70.092826625,
+        "declarations": 17,
+        "cases": 43
+      },
+      "asan-4-vardct": {
+        "scope": "targeted_changed_vardct_suites_and_full_object_build",
+        "rawReportSHA256": "3e2498dda592448150bf2211cfd6e764fbd4851673bda840ca4f9d720261a1fc",
+        "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/asan-4-vardct-report.json",
+        "portableReportSHA256": "62c4891c70164da335b0ba3f7e6043431d56767b77ebcfd9149e7484cc38c122",
+        "status": "passed",
+        "seconds": 116.327681708,
+        "declarations": 17,
+        "cases": 43
+      },
+      "tsan-3-vardct": {
+        "scope": "targeted_changed_vardct_suites_and_full_object_build",
+        "rawReportSHA256": "571a3fd7e1c40ad0372af94f2711e615f8d04f2e742b8151a9a0c2c5c5b8b609",
+        "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/tsan-3-vardct-report.json",
+        "portableReportSHA256": "000cd2f3debdfd0e72adae80aeffe04cb0fbd8ba74864ba4fd0210a34855e96c",
+        "status": "passed",
+        "seconds": 118.834132458,
+        "declarations": 17,
+        "cases": 43
+      }
+    }
+  }
+}

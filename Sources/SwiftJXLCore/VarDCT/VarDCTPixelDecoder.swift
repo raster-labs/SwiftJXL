@@ -4,7 +4,7 @@ import Foundation
 /// Internal scalar pixel integration. Public capability remains separately gated
 /// by profile, fidelity, ownership and interoperability qualification.
 package enum VarDCTPixelDecoder {
-    /// Writes encoded sRGB samples with explicit nearest-integer conversion,
+    /// Writes encoded sRGB samples with the explicitly selected numerical mode,
     /// preserving the frame's meaningful precision and exact unassociated alpha.
     /// The caller retains an exclusive synchronous borrow of non-overlapping
     /// component storage and must discard/poison that owner if this call throws.
@@ -12,7 +12,8 @@ package enum VarDCTPixelDecoder {
     /// untouched; this function never allocates a second packed pixel image.
     package static func decode(_ envelope: VarDCTFrameEnvelope,
                                into bytes: UnsafeMutableRawBufferPointer,
-                               layouts: [ModularChannelLayout]) throws {
+                               layouts: [ModularChannelLayout],
+                               numericalMode: VarDCTNumericalMode = .scalarNearest) throws {
         let budget = envelope.budget
         try budget.checkpoint()
         // XYB may be reconstructed independently of its original ICC profile,
@@ -31,7 +32,7 @@ package enum VarDCTPixelDecoder {
         try budget.reservePixels(bytes.count)
         try budget.reserveWorkspace(1024) // at most four borrowed channel descriptors
         let coefficients = try VarDCTCoefficients.read(envelope)
-        let planes = try VarDCTReconstruction.xyb(coefficients)
+        let planes = try VarDCTReconstruction.xyb(coefficients, numericalMode: numericalMode)
         let maximum = Double((1 << bits) - 1)
         var destination = layouts.map { BorrowedModularChannel(bytes: bytes, layout: $0) }
         for y in 0..<envelope.height {
@@ -41,10 +42,13 @@ package enum VarDCTPixelDecoder {
                 let i = y * envelope.width + x
                 let rgb = try DefaultOpsin.inverse((X: Double(planes[0][i]),
                     Y: Double(planes[1][i]), B: Double(planes[2][i])))
-                destination[0][i] = encodeSRGB(rgb.R, maximum: maximum)
+                destination[0][i] = encodeSRGB(rgb.R, maximum: maximum, bits: bits, x: x, y: y,
+                    channel: 0, numericalMode: numericalMode)
                 if !grayscale {
-                    destination[1][i] = encodeSRGB(rgb.G, maximum: maximum)
-                    destination[2][i] = encodeSRGB(rgb.B, maximum: maximum)
+                    destination[1][i] = encodeSRGB(rgb.G, maximum: maximum, bits: bits, x: x, y: y,
+                    channel: 1, numericalMode: numericalMode)
+                    destination[2][i] = encodeSRGB(rgb.B, maximum: maximum, bits: bits, x: x, y: y,
+                    channel: 2, numericalMode: numericalMode)
                 }
                 if let values = coefficients.alpha { destination[colours][i] = values[i] }
             }
@@ -52,12 +56,17 @@ package enum VarDCTPixelDecoder {
         try budget.checkpoint()
     }
 
-    private static func encodeSRGB(_ linear: Double, maximum: Double) -> Int32 {
+    private static func encodeSRGB(_ linear: Double, maximum: Double, bits: Int,
+                                   x: Int, y: Int, channel: Int,
+                                   numericalMode: VarDCTNumericalMode) -> Int32 {
         // Clipping here is the explicit bounded integer output representation,
         // following reconstruction in the codestream's declared sRGB space.
         let bounded = min(1, max(0, linear))
         let encoded = bounded <= 0.0031308 ? 12.92 * bounded
             : 1.055 * pow(bounded, 1 / 2.4) - 0.055
+        if numericalMode == .libjxl012ARMInteger {
+            return VarDCTReferenceNumerics.integer(encoded, bits: bits, x: x, y: y, channel: channel)
+        }
         return Int32((min(1, max(0, encoded)) * maximum).rounded())
     }
 }

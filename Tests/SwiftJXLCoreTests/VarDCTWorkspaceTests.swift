@@ -16,7 +16,9 @@ struct VarDCTWorkspaceTests {
         var scratch = try VarDCTSmallAnalysis.Workspace(budget: operation)
         let admitted = operation.reservedWorkspaceBytes
         for repetition in 0..<3 { for id in [17,0,16,1,15,2,14,3,13,12] {
-            let pixels = (0..<64).map { Float(($0 * 17 + repetition * 11) % 29 - 14) / 31 }
+            let pixels: [Float] = (0..<64).map { (index: Int) -> Float in
+                Float((index * 17 + repetition * 11) % 29 - 14) / 31
+            }
             let expected = try reference.apply(pixels, identifier: id)
             try pixels.withUnsafeBufferPointer { try plan.apply($0, identifier: id, workspace: &scratch) }
             for i in 0..<64 { #expect(scratch.value(at: i) == expected[i]) }
@@ -32,7 +34,9 @@ struct VarDCTWorkspaceTests {
             let admitted = operation.reservedWorkspaceBytes
             for repetition in 0..<2 {
                 let count = plan.rows * plan.columns
-                let pixels = (0..<count).map { Float(($0 * 11 + repetition * 3) % 23 - 11) / 29 }
+                let pixels: [Float] = (0..<count).map { (index: Int) -> Float in
+                    Float((index * 11 + repetition * 3) % 23 - 11) / 29
+                }
                 let expected = try reference.apply(pixels)
                 try pixels.withUnsafeBufferPointer { try plan.apply($0, workspace: &scratch) }
                 for i in 0..<count { #expect(scratch.coefficient(at: i) == expected.coefficients[i]) }
@@ -41,6 +45,118 @@ struct VarDCTWorkspaceTests {
             }
         }
     }
+    @Test(arguments: [2, 4, 8, 16, 32, 64])
+    func scopedDCTBorrowPreservesScalarArithmetic(_ rows: Int) throws {
+        for columns in [2, 8, 64] {
+            for direction in [ScaledDCT.Direction.forward, .inverse] {
+                let operation = try budget()
+                let plan = try ScaledDCT(rows: rows, columns: columns, direction: direction, budget: operation)
+                var scratch = try ScaledDCT.Workspace(capacity: rows * columns, budget: operation)
+                for seed in [0, 1] {
+                    let pixels: [Float] = (0..<(rows * columns)).map { (index: Int) -> Float in
+                        Float((index * 113 + seed * 29) % 257 - 128) / 31
+                    }
+                    let expected = try plan.apply(pixels)
+                    let admitted = operation.reservedWorkspaceBytes
+                    try pixels.withUnsafeBufferPointer { try plan.apply($0, workspace: &scratch) }
+                    for index in pixels.indices { #expect(scratch.value(at: index).bitPattern == expected[index].bitPattern) }
+                    #expect(operation.reservedWorkspaceBytes == admitted)
+                }
+            }
+        }
+    }
+
+    @Test(arguments: [4,5,6,7,8,9,10,11,18,19,20])
+    func cachedLargeDCFactorsRetainOriginalArithmetic(_ identifier: Int) throws {
+        let operation = try budget(), plan = try VarDCTLargeAnalysis(identifier: identifier, budget: operation)
+        let count = plan.rows * plan.columns, cellsX = plan.columns / 8, cellsY = plan.rows / 8
+        let input: [Float] = (0..<count).map { (index: Int) -> Float in
+            Float((index * 113 + 29) % 257 - 128) / 31
+        }
+        let scalar = try ScaledDCT(rows: plan.rows, columns: plan.columns, direction: .forward, budget: operation).apply(input)
+        var scratch = try VarDCTLargeAnalysis.Workspace(capacity: count, budget: operation)
+        try input.withUnsafeBufferPointer { try plan.apply($0, workspace: &scratch) }
+        for y in 0..<plan.rows { for x in 0..<plan.columns {
+            let target = plan.rows >= plan.columns ? x * plan.rows + y : y * plan.columns + x
+            #expect(scratch.coefficient(at: target).bitPattern == scalar[y * plan.columns + x].bitPattern)
+        } }
+        // Uncached definition retained from the original implementation. Keep
+        // every division and multiplication in the normative evaluation order.
+        let scales: [Int: [Double]] = [1:[1],2:[1,1.108937353592731823],
+            4:[1,1.025760096781116015,1.108937353592731823,1.270559368765487251],
+            8:[1,1.0063534990068217,1.0257600967811158,1.0593017296817173,
+                1.1089373535927318,1.1777765381970435,1.2705593687654873,1.3944898413647777]]
+        let sx = try #require(scales[cellsX]), sy = try #require(scales[cellsY])
+        for y in 0..<cellsY { for x in 0..<cellsX {
+            var sum: Double = 0
+            for v in 0..<cellsY { for u in 0..<cellsX {
+                let value = Double(scalar[v * plan.columns + u]) / (sx[u] * sy[v])
+                let normalisation = (u == 0 ? 1 : sqrt(2)) * (v == 0 ? 1 : sqrt(2))
+                sum += value * normalisation * cos((Double(x) + 0.5) * Double(u) * .pi / Double(cellsX))
+                    * cos((Double(y) + 0.5) * Double(v) * .pi / Double(cellsY))
+            } }
+            #expect(scratch.dcValue(at: y * cellsX + x).bitPattern == Float(sum).bitPattern)
+        } }
+    }
+
+
+    @Test(arguments: [ScaledDCT.Direction.forward, .inverse])
+    func sharedAxesPreserveEveryShapeAndAdmission(_ direction: ScaledDCT.Direction) throws {
+        let operation = try budget()
+        var axes = ScaledDCT.AxisBank(direction: direction, budget: operation)
+        for rows in [2, 4, 8, 16, 32, 64] { for columns in [2, 8, 64] {
+            let shared = try ScaledDCT(rows: rows, columns: columns, direction: direction,
+                budget: operation, axes: &axes)
+            let reference = try ScaledDCT(rows: rows, columns: columns, direction: direction, budget: budget())
+            let input: [Float] = (0..<(rows * columns)).map { (index: Int) -> Float in
+                Float((index * 31 + rows * 7) % 113 - 56) / 37
+            }
+            let actual = try shared.apply(input), expected = try reference.apply(input)
+            for i in input.indices { #expect(actual[i].bitPattern == expected[i].bitPattern) }
+        } }
+        let before = operation.reservedWorkspaceBytes
+        #expect(throws: VarDCTError.invalidTransform) {
+            _ = try ScaledDCT(rows: 8, columns: 8, direction: direction, budget: budget(), axes: &axes)
+        }
+        #expect(throws: VarDCTError.invalidTransform) {
+            _ = try ScaledDCT(rows: 8, columns: 8, direction: direction == .forward ? .inverse : .forward,
+                budget: operation, axes: &axes)
+        }
+        #expect(throws: VarDCTError.invalidTransform) {
+            _ = try ScaledDCT(rows: 3, columns: 8, direction: direction, budget: operation, axes: &axes)
+        }
+        #expect(operation.reservedWorkspaceBytes == before)
+        let limited = try budget(1024)
+        var limitedAxes = ScaledDCT.AxisBank(direction: direction, budget: limited)
+        _ = try ScaledDCT(rows: 8, columns: 8, direction: direction, budget: limited, axes: &limitedAxes)
+        #expect(throws: ScalarModularError.self) {
+            _ = try ScaledDCT(rows: 8, columns: 8, direction: direction, budget: limited, axes: &limitedAxes)
+        }
+        #expect(limited.reservedWorkspaceBytes == 1024)
+        let cancellation = ScalarOperationCancellation(), cancelled = try budget(cancellation: cancellation)
+        var cancelledAxes = ScaledDCT.AxisBank(direction: direction, budget: cancelled)
+        cancellation.cancel()
+        #expect(throws: CancellationError.self) {
+            _ = try ScaledDCT(rows: 8, columns: 8, direction: direction, budget: cancelled, axes: &cancelledAxes)
+        }
+        #expect(cancelled.reservedWorkspaceBytes == 0)
+    }
+
+    @Test(arguments: [2, 64])
+    func scopedDCTRejectsCancellationBeforeScratchWrite(_ axis: Int) throws {
+        let cancellation = ScalarOperationCancellation(), operation = try budget(cancellation: cancellation)
+        let plan = try ScaledDCT(rows: axis, columns: axis, direction: .forward, budget: operation)
+        var scratch = try ScaledDCT.Workspace(capacity: axis * axis, budget: operation)
+        let input: [Float] = (0..<(axis * axis)).map { (index: Int) -> Float in Float(index % 13) / 31 }
+        try input.withUnsafeBufferPointer { try plan.apply($0, workspace: &scratch) }
+        let before = (0..<input.count).map { scratch.value(at: $0).bitPattern }
+        cancellation.cancel()
+        #expect(throws: CancellationError.self) {
+            try input.withUnsafeBufferPointer { try plan.apply($0, workspace: &scratch) }
+        }
+        for i in input.indices { #expect(scratch.value(at: i).bitPattern == before[i]) }
+    }
+
     @Test func scratchCannotCrossBudgetsOrAdmitInsufficientCapacity() throws {
         let operation = try budget(), other = try budget()
         let small = try VarDCTSmallAnalysis(budget: operation)
@@ -69,11 +185,22 @@ struct VarDCTWorkspaceTests {
         let pixels = [Float](repeating: 0.375, count: 64)
         try pixels.withUnsafeBufferPointer { try plan.apply($0, identifier: 0, workspace: &scratch) }
         let before = (0..<64).map { scratch.value(at: $0) }
+        let large = try VarDCTLargeAnalysis(identifier: 6, budget: operation)
+        var largeScratch = try VarDCTLargeAnalysis.Workspace(budget: operation)
+        let largePixels: [Float] = (0..<128).map { (index: Int) -> Float in Float(index % 19 - 9) / 23 }
+        try largePixels.withUnsafeBufferPointer { try large.apply($0, workspace: &largeScratch) }
+        let beforeLarge = (0..<128).map { largeScratch.coefficient(at: $0).bitPattern }
+        let beforeDC = (0..<2).map { largeScratch.dcValue(at: $0).bitPattern }
         let admitted = operation.reservedWorkspaceBytes
         cancellation.cancel()
         #expect(throws: CancellationError.self) {
             try pixels.withUnsafeBufferPointer { try plan.apply($0, identifier: 1, workspace: &scratch) }
         }
+        #expect(throws: CancellationError.self) {
+            try largePixels.withUnsafeBufferPointer { try large.apply($0, workspace: &largeScratch) }
+        }
+        for i in 0..<128 { #expect(largeScratch.coefficient(at: i).bitPattern == beforeLarge[i]) }
+        for i in 0..<2 { #expect(largeScratch.dcValue(at: i).bitPattern == beforeDC[i]) }
         #expect(operation.reservedWorkspaceBytes == admitted)
         for i in 0..<64 { #expect(scratch.value(at: i) == before[i]) }
     }

@@ -48,21 +48,31 @@ struct BorrowedModularChannel: ModularSampleBuffer {
     let bytes: UnsafeMutableRawBufferPointer
     let layout: ModularChannelLayout
     var count: Int { layout.width * layout.height }
-    subscript(index: Int) -> Int32 {
+    @inline(__always)
+    func rowAddress(_ y: Int, width: Int) -> Int { layout.offset + y * layout.rowBytes }
+
+    // Decode loops calculate each row address once. This avoids division and
+    // remainder for every neighbour while preserving the same scoped borrow.
+    @inline(__always)
+    subscript(row row: Int, column column: Int) -> Int32 {
         get {
-            let p = layout.offset + (index / layout.width) * layout.rowBytes + (index % layout.width) * layout.pixelStride
+            let p = row + column * layout.pixelStride
             let first = Int32(bytes[p])
             if layout.storageBits == 8 { return first }
             let second = Int32(bytes[p + 1])
             return layout.littleEndian ? first | (second << 8) : (first << 8) | second
         }
         set {
-            let p = layout.offset + (index / layout.width) * layout.rowBytes + (index % layout.width) * layout.pixelStride
+            let p = row + column * layout.pixelStride
             let low = UInt8(truncatingIfNeeded: newValue), high = UInt8(truncatingIfNeeded: newValue >> 8)
             if layout.storageBits == 8 { bytes[p] = low; return }
             bytes[p] = layout.littleEndian ? low : high
             bytes[p + 1] = layout.littleEndian ? high : low
         }
+    }
+    subscript(index: Int) -> Int32 {
+        get { self[row: rowAddress(index / layout.width, width: layout.width), column: index % layout.width] }
+        set { self[row: rowAddress(index / layout.width, width: layout.width), column: index % layout.width] = newValue }
     }
 }
 

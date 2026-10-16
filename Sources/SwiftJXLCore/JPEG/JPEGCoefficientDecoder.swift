@@ -21,6 +21,7 @@ package struct JPEGDecodedCoefficients: Sendable {
 }
 
 package struct JPEGCoefficientPolicy: Sendable {
+    package let pixelProfile: Bool
     package let maximumInputBytes: Int
     package let maximumCoefficientBytes: Int
     package let maximumMemoryBytes: Int
@@ -29,7 +30,7 @@ package struct JPEGCoefficientPolicy: Sendable {
     package let deadline: ContinuousClock.Instant
     private let workCheckpoint: @Sendable () throws -> Void
 
-    package init(maximumInputBytes: Int = 64 * 1024 * 1024,
+    package init(pixelProfile: Bool = false, maximumInputBytes: Int = 64 * 1024 * 1024,
                  maximumCoefficientBytes: Int = 64 * 1024 * 1024,
                  maximumMemoryBytes: Int = 256 * 1024 * 1024,
                  maximumPaddingRecords: Int = 65536,
@@ -39,6 +40,7 @@ package struct JPEGCoefficientPolicy: Sendable {
         guard maximumInputBytes > 0, maximumCoefficientBytes > 0, maximumMemoryBytes > 0,
               (1...65536).contains(maximumPaddingRecords),
               (1...65536).contains(maximumScanEvents) else { throw JPEGEntropyError.resourceLimit }
+        self.pixelProfile = pixelProfile
         self.maximumInputBytes = maximumInputBytes; self.maximumCoefficientBytes = maximumCoefficientBytes
         self.maximumMemoryBytes = maximumMemoryBytes; self.maximumPaddingRecords = maximumPaddingRecords
         self.maximumScanEvents = maximumScanEvents
@@ -102,7 +104,7 @@ package struct JPEGCoefficientDecoder {
             case 0xc0...0xc2:
                 guard frame == nil else { throw JPEGEntropyError.unsupported }
                 let layout = try JPEGFrameLayout(data: data, segment: segment,
-                                                maximumCoefficientBytes: policy.maximumCoefficientBytes)
+                                                maximumCoefficientBytes: policy.maximumCoefficientBytes, pixelProfile: policy.pixelProfile)
                 try policy.admit(input: data.count, coefficients: layout.coefficientCount)
                 coefficients = layout.components.map {
                     Array(repeating: 0, count: $0.paddedBlocksWide * $0.paddedBlocksHigh * 64)
@@ -163,7 +165,7 @@ package struct JPEGCoefficientDecoder {
             let total = counts.reduce(0, +)
             guard total <= 256, total <= range.upperBound - offset else { throw JPEGEntropyError.malformed }
             let symbols = (0..<total).map { byte(offset + $0) }; offset += total
-            guard symbols.allSatisfy({ kind == 0 ? $0 <= 11 : ($0 & 15) <= 10 }) else {
+            guard symbols.allSatisfy({ kind == 0 ? $0 <= (policy.pixelProfile ? 15 : 11) : ($0 & 15) <= (policy.pixelProfile ? 14 : 10) }) else {
                 throw JPEGEntropyError.malformed
             }
             huffman[kind * 4 + id] = try JPEGHuffmanTable(counts: counts, symbols: symbols)
@@ -255,7 +257,7 @@ package struct JPEGCoefficientDecoder {
                     var events = BlockEvents()
                     try Self.decodeBlock(values: &coefficients[ci], base: block * 64, bits: &bits,
                         dc: huffman[component.dc], ac: huffman[4 + component.ac], predictor: &predictors[ci],
-                        ss: ss, se: se, ah: ah, al: al, progressive: progressive, eobRun: &eobRun, events: &events)
+                        ss: ss, se: se, ah: ah, al: al, progressive: progressive, eobRun: &eobRun, precision: frame.precision, events: &events)
                     let added = (events.reset ? 1 : 0) + (events.extraZeroRuns > 0 ? 1 : 0)
                     guard added <= policy.maximumScanEvents - reconstructionEvents else { throw JPEGEntropyError.resourceLimit }
                     reconstructionEvents += added
@@ -277,11 +279,12 @@ package struct JPEGCoefficientDecoder {
     private static func decodeBlock(values: inout [Int32], base: Int, bits: inout JPEGEntropyReader,
                                     dc: JPEGHuffmanTable?, ac: JPEGHuffmanTable?, predictor: inout Int32,
                                     ss: Int, se: Int, ah: Int, al: Int, progressive: Bool, eobRun: inout Int,
-                                    events: inout BlockEvents) throws {
+                                    precision: Int, events: inout BlockEvents) throws {
         if ss == 0 {
             if ah == 0 {
                 guard let dc else { throw JPEGEntropyError.malformed }
                 let category = Int(try dc.symbol(&bits))
+                guard category <= (precision == 12 ? 15 : 11) else { throw JPEGEntropyError.malformed }
                 let delta = try bits.magnitude(category)
                 let (next, overflow) = predictor.addingReportingOverflow(delta)
                 guard !overflow, next >= -32768, next <= 32767 else { throw JPEGEntropyError.malformed }
@@ -314,7 +317,7 @@ package struct JPEGCoefficientDecoder {
                     break
                 }
                 k += run
-                guard k <= se, size <= 10 else { throw JPEGEntropyError.malformed }
+                guard k <= se, size <= (precision == 12 ? 14 : 10) else { throw JPEGEntropyError.malformed }
                 values[base + JPEGZigZag.order[k]] = try bits.magnitude(size) * Int32(1 << al)
                 events.extraZeroRuns = 0
                 k += 1

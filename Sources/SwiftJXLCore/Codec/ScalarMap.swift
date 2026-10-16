@@ -36,6 +36,8 @@ func parallelMap<T: Sendable>(_ count: Int, _ work: @Sendable (Int) throws -> T)
                     for index in stride(from: worker, to: count, by: workers) {
                         let result = Result {
                             try context.checkpoint()
+                            audit?.workerStarted()
+                            defer { audit?.workerCompleted() }
                             return try work(index)
                         }
                         results.withLock { $0[index] = result }

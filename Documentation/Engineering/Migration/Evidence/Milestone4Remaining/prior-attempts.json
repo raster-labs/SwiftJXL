@@ -1,0 +1,320 @@
+{
+  "scope": "Retained intermediate and prior-source qualification attempts, including failed discovery attempt release-4 and superseded 355/361/362/363-declaration runs.",
+  "attempts": [
+    {
+      "name": "release-1",
+      "status": "passed",
+      "startedAtUTC": "2026-10-15T05:20:17.303857+00:00",
+      "finishedAtUTC": "2026-10-15T05:22:35.175145+00:00",
+      "exitCode": 0,
+      "discoveredDeclarations": 361,
+      "xml": {
+        "declarations": 361,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": 2035,
+      "failure": null,
+      "runs": [
+        {
+          "name": "compiler",
+          "exitCode": 0,
+          "seconds": 0.13253858400000001,
+          "logSHA256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc"
+        },
+        {
+          "name": "compiler-path",
+          "exitCode": 0,
+          "seconds": 0.010200540999999952,
+          "logSHA256": "61282ac0b52d5cc453e4e3ca66457a6dcfad2d726fa60800bbf74209a1b30e72"
+        },
+        {
+          "name": "discovery",
+          "exitCode": 0,
+          "seconds": 112.924577333,
+          "logSHA256": "4bfd28a3814fb173b6474fdf1e7105cba8cd3f59d6dab2c249b4a7e9e24d1dcc"
+        },
+        {
+          "name": "tests",
+          "exitCode": 0,
+          "seconds": 24.045992291999994,
+          "logSHA256": "f101789e38d6d2db4c14cb2b218c2f06c907a5486fc301f11c118297971b11a3"
+        }
+      ],
+      "reportSHA256": "9c34bc9e1a5f328e5b22da20f8cfe16a68def66da4eff2e2c583c873b78bf3e0"
+    },
+    {
+      "name": "release-2",
+      "status": "passed",
+      "startedAtUTC": "2026-10-15T05:37:35.531743+00:00",
+      "finishedAtUTC": "2026-10-15T05:40:08.547799+00:00",
+      "exitCode": 0,
+      "discoveredDeclarations": 362,
+      "xml": {
+        "declarations": 362,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": 2036,
+      "failure": null,
+      "runs": [
+        {
+          "name": "compiler",
+          "exitCode": 0,
+          "seconds": 0.13210124999999998,
+          "logSHA256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc"
+        },
+        {
+          "name": "compiler-path",
+          "exitCode": 0,
+          "seconds": 0.01041983299999999,
+          "logSHA256": "61282ac0b52d5cc453e4e3ca66457a6dcfad2d726fa60800bbf74209a1b30e72"
+        },
+        {
+          "name": "discovery",
+          "exitCode": 0,
+          "seconds": 126.540940916,
+          "logSHA256": "d9f4362484381923bf85b98c76463a3c428ed2ca3033a11ad67015ef444cf8f0"
+        },
+        {
+          "name": "tests",
+          "exitCode": 0,
+          "seconds": 25.312774708999996,
+          "logSHA256": "5425dadd315c0ce7e9a68a60fd6925fb68a498895cf3cc127ef228264c5125c5"
+        }
+      ],
+      "reportSHA256": "57d3a182560efd4a2cdead4b3ac169eb21f81f29a8b38712bf03aff35003c92a"
+    },
+    {
+      "name": "release-3",
+      "status": "passed",
+      "startedAtUTC": "2026-10-15T05:51:19.787855+00:00",
+      "finishedAtUTC": "2026-10-15T05:53:59.644594+00:00",
+      "exitCode": 0,
+      "discoveredDeclarations": 363,
+      "xml": {
+        "declarations": 363,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": 2040,
+      "failure": null,
+      "runs": [
+        {
+          "name": "compiler",
+          "exitCode": 0,
+          "seconds": 0.12430470799999999,
+          "logSHA256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc"
+        },
+        {
+          "name": "compiler-path",
+          "exitCode": 0,
+          "seconds": 0.010014958000000018,
+          "logSHA256": "61282ac0b52d5cc453e4e3ca66457a6dcfad2d726fa60800bbf74209a1b30e72"
+        },
+        {
+          "name": "discovery",
+          "exitCode": 0,
+          "seconds": 134.172178041,
+          "logSHA256": "c599c3513c9a97618efffeee380b65d2b9d2a43bee32ad07f9561d2e355fc00a"
+        },
+        {
+          "name": "tests",
+          "exitCode": 0,
+          "seconds": 24.51722029200002,
+          "logSHA256": "f7490965739aa82087173c02c99b57f43ec7f045c7197ec89e41f58621e5df79"
+        }
+      ],
+      "reportSHA256": "591ad04afe3e5b7e49577772f17d0f3ec5d67e8f4389c76239a375beec9f3b6e"
+    },
+    {
+      "name": "release-4",
+      "status": "failed",
+      "startedAtUTC": "2026-10-15T06:06:32.595466+00:00",
+      "finishedAtUTC": "2026-10-15T06:06:42.571168+00:00",
+      "exitCode": null,
+      "discoveredDeclarations": null,
+      "xml": null,
+      "caseExecutions": null,
+      "failure": "AssertionError('Discovery failed')",
+      "runs": [
+        {
+          "name": "compiler",
+          "exitCode": 0,
+          "seconds": 0.13339891600000003,
+          "logSHA256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc"
+        },
+        {
+          "name": "compiler-path",
+          "exitCode": 0,
+          "seconds": 0.01029912500000002,
+          "logSHA256": "61282ac0b52d5cc453e4e3ca66457a6dcfad2d726fa60800bbf74209a1b30e72"
+        },
+        {
+          "name": "discovery",
+          "exitCode": 1,
+          "seconds": 9.305260708999999,
+          "logSHA256": "bd1830db04056c699cdeedcffa7ddba5e76ce209592ab9790fbf55d990721a07"
+        }
+      ],
+      "reportSHA256": "d87f70f78dda73966a3890bfdc1e25ff77cc5066f0b00cc97c1e297afaef401b"
+    },
+    {
+      "name": "release-5",
+      "status": "passed",
+      "startedAtUTC": "2026-10-15T06:09:17.924639+00:00",
+      "finishedAtUTC": "2026-10-15T06:11:38.974783+00:00",
+      "exitCode": 0,
+      "discoveredDeclarations": 363,
+      "xml": {
+        "declarations": 363,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": 2046,
+      "failure": null,
+      "runs": [
+        {
+          "name": "compiler",
+          "exitCode": 0,
+          "seconds": 0.12760149999999998,
+          "logSHA256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc"
+        },
+        {
+          "name": "compiler-path",
+          "exitCode": 0,
+          "seconds": 0.010473499999999969,
+          "logSHA256": "61282ac0b52d5cc453e4e3ca66457a6dcfad2d726fa60800bbf74209a1b30e72"
+        },
+        {
+          "name": "discovery",
+          "exitCode": 0,
+          "seconds": 115.609078417,
+          "logSHA256": "e9db64c226de5b3e4462ee1f3c952a86a7c3c5d07f460d78a0f6a5b4e57c6399"
+        },
+        {
+          "name": "tests",
+          "exitCode": 0,
+          "seconds": 24.50023883300001,
+          "logSHA256": "d91655e1dfbba569cdeafeebb97e3ad1b2727ad9bb9bda488dae843e4b0673d7"
+        }
+      ],
+      "reportSHA256": "aba386ccc4ec83f2857dee3c2e2337dbe03814d347781be3be91a0a5726884df"
+    },
+    {
+      "name": "asan-1",
+      "status": "passed",
+      "startedAtUTC": "2026-10-15T05:24:02.284124+00:00",
+      "finishedAtUTC": "2026-10-15T05:26:32.138682+00:00",
+      "exitCode": 0,
+      "discoveredDeclarations": 361,
+      "xml": {
+        "declarations": 361,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": 2035,
+      "failure": null,
+      "runs": [
+        {
+          "name": "compiler",
+          "exitCode": 0,
+          "seconds": 0.147898417,
+          "logSHA256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc"
+        },
+        {
+          "name": "compiler-path",
+          "exitCode": 0,
+          "seconds": 0.006394332999999974,
+          "logSHA256": "61282ac0b52d5cc453e4e3ca66457a6dcfad2d726fa60800bbf74209a1b30e72"
+        },
+        {
+          "name": "discovery",
+          "exitCode": 0,
+          "seconds": 112.461468625,
+          "logSHA256": "03b94f06418bbbed943bec4da848b9251e352f9021ac298cd37acbbecf791026"
+        },
+        {
+          "name": "tests",
+          "exitCode": 0,
+          "seconds": 36.442948458000004,
+          "logSHA256": "7d3681ee39fc86641371d5e6cd3f29d1797da7c75c432fa7495f2ee9a64e1079"
+        }
+      ],
+      "reportSHA256": "ec5e5b73550eae6a1711af68429e675c60efd2fdcb1baf87558acbe303a503bd"
+    },
+    {
+      "name": "2026-10-14-release-7",
+      "status": "passed",
+      "startedAtUTC": "2026-10-14T15:07:24.701587+00:00",
+      "finishedAtUTC": null,
+      "exitCode": 0,
+      "discoveredDeclarations": null,
+      "xml": {
+        "declarations": 355,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": null,
+      "note": "Prior 355-declaration source snapshot before final VarDCT/JPEG/audit additions; superseded by 365-declaration freeze-6.",
+      "reportSHA256": "5d4bf202b9a79239ef144e494ff6faf382bfa879c319d5730d730bc36468acea"
+    },
+    {
+      "name": "2026-10-14-asan-7",
+      "status": "passed",
+      "startedAtUTC": "2026-10-14T15:07:24.767358+00:00",
+      "finishedAtUTC": null,
+      "exitCode": 0,
+      "discoveredDeclarations": null,
+      "xml": {
+        "declarations": 355,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": null,
+      "note": "Prior 355-declaration source snapshot before final VarDCT/JPEG/audit additions; superseded by 365-declaration freeze-6.",
+      "reportSHA256": "01f378fa82bc63c71c32738a6d28a057ecfc67a04b534f1b6508187142e1dac6"
+    },
+    {
+      "name": "2026-10-14-release-8",
+      "status": "passed",
+      "startedAtUTC": "2026-10-14T15:26:05.559200+00:00",
+      "finishedAtUTC": null,
+      "exitCode": 0,
+      "discoveredDeclarations": null,
+      "xml": {
+        "declarations": 360,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": null,
+      "note": "Prior 355-declaration source snapshot before final VarDCT/JPEG/audit additions; superseded by 365-declaration freeze-6.",
+      "reportSHA256": "ddcab2dc6baeed396b248965806ce6da320bfbd84ec7f4e40a90d0e483e81700"
+    },
+    {
+      "name": "2026-10-14-asan-8",
+      "status": "passed",
+      "startedAtUTC": "2026-10-14T15:26:07.605945+00:00",
+      "finishedAtUTC": null,
+      "exitCode": 0,
+      "discoveredDeclarations": null,
+      "xml": {
+        "declarations": 360,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      },
+      "caseExecutions": null,
+      "note": "Prior 355-declaration source snapshot before final VarDCT/JPEG/audit additions; superseded by 365-declaration freeze-6.",
+      "reportSHA256": "b1398d57c28b31944e900c2b6858bbfd4e0c445b3df7bf650c20c458d446a427"
+    }
+  ]
+}

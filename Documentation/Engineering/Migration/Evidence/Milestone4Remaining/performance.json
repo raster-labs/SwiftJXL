@@ -1,0 +1,315 @@
+{
+  "status": "public-default-and-native-gates-passed; constrained-policy-diagnostic-latency-triggers-retained",
+  "generatedAtUTC": "2026-10-15T06:38:41.702875+00:00",
+  "primarySummary": {
+    "rows": 48,
+    "paired": 37,
+    "candidateOnly": 11,
+    "repeatedLatencyTriggers": 0,
+    "repeatedRSSTriggers": 0,
+    "losslessSizeTriggers": 0
+  },
+  "publicDefaultPixelSummary": {
+    "rows": 36,
+    "paired": 28,
+    "candidateOnly": 8,
+    "repeatedLatencyTriggers": 0,
+    "repeatedRSSTriggers": 0,
+    "losslessSizeTriggers": 0
+  },
+  "nativeJPEGSummary": {
+    "rows": 12,
+    "paired": 9,
+    "candidateOnly": 3,
+    "repeatedLatencyTriggers": 0,
+    "repeatedRSSTriggers": 0,
+    "losslessSizeTriggers": 0
+  },
+  "oneWorkerDiagnosticSummary": {
+    "rows": 36,
+    "paired": 28,
+    "candidateOnly": 8,
+    "repeatedLatencyTriggers": 10,
+    "repeatedRSSTriggers": 0,
+    "losslessSizeTriggers": 0
+  },
+  "method": {
+    "warmupsPerProcess": 5,
+    "timedValuesPerImplementationPerRound": 20,
+    "rounds": [
+      "ABBA",
+      "BAAB"
+    ],
+    "thresholds": {
+      "repeatedLatencyPercent": 5,
+      "repeatedProcessRSSPercent": 5,
+      "unchangedLosslessSizePercent": 1
+    },
+    "allThermalSamplesNominal": true,
+    "maxConcurrentBenchmarkProcesses": 1,
+    "scope": "API call latency; process lifetime RSS includes source preparation, encode/decode preflight and sample materialisation. RSS is not isolated codec workspace or leak proof."
+  },
+  "interpretation": {
+    "retainedOneWorker": "Successor maximumWorkers=1; predecessor native scheduling unchanged. Modular predecessor always uses concurrentPerform; VarDCT hierarchy schedules serially but invokes the Accelerate matrix backend. This is resource-constrained diagnostic evidence, not a matched-worker and matched-backend comparison.",
+    "publicDefault": "Successor public maximumWorkers default is 8; final VarDCT hierarchical search uses min(3, maximumWorkers, tileCount), while Modular retains its existing worker policy. Predecessor native scheduling is unchanged. Product-default comparison keeps original 5% latency/RSS and 1% unchanged lossless size investigation thresholds.",
+    "numerics": "Predecessor Apple VarDCT uses operation-independent cached Float matrices with vDSP_mmul/mtrans. Successor uses operation-owned matrices rounded through Float, promoted to Double, with exact scalar sum ordering in packed SIMD lanes. Differences are not attributed solely to API overhead.",
+    "scope": "Retain every measured row, including diagnostic triggers. No original result is replaced, relaxed, or described as passing because another policy passed."
+  },
+  "caveats": [
+    "Gray distance0.5 encode remains near the RSS threshold: +4.7183% in both final full rounds. Focused9 had +5.0704/+4.7119%, which did not repeat. Preserve these raw values; no threshold was relaxed.",
+    "Ten constrained one-worker latency rows remain slower than the unchanged predecessor native scheduler/Accelerate backend. They are diagnostics, not passed matched-worker/matched-backend gates.",
+    "Eleven candidate-only primary rows retain original predecessor-ineligibility reasons from the pinned plans; they establish candidate correctness/timing, not comparative speedups.",
+    "Qualification is local macOS arm64; unavailable hardware and platform checks are tracked separately by qualification."
+  ],
+  "diagnosticTriggerRows": [
+    {
+      "case": "modular-bicycles",
+      "operation": "encode",
+      "latencyChangePercent": [
+        63.99185677595292,
+        62.9606570858017
+      ],
+      "rssChangePercent": [
+        -66.94028649605666,
+        -66.9216831085162
+      ]
+    },
+    {
+      "case": "modular-bicycles",
+      "operation": "decode",
+      "latencyChangePercent": [
+        74.1202404007892,
+        76.33900033222345
+      ],
+      "rssChangePercent": [
+        -64.08842197417378,
+        -63.61580417719834
+      ]
+    },
+    {
+      "case": "modular-grey16-large",
+      "operation": "decode",
+      "latencyChangePercent": [
+        140.43039554691538,
+        141.4211254972484
+      ],
+      "rssChangePercent": [
+        -66.76707556071713,
+        -66.88602834827886
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d0.5",
+      "operation": "encode",
+      "latencyChangePercent": [
+        48.358153386933346,
+        46.711585139734304
+      ],
+      "rssChangePercent": [
+        -1.5503875968992276,
+        -1.5198511166253148
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d1",
+      "operation": "encode",
+      "latencyChangePercent": [
+        53.762823032021736,
+        54.53495403692774
+      ],
+      "rssChangePercent": [
+        -1.2168486739469575,
+        7.490636704119846
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d3",
+      "operation": "encode",
+      "latencyChangePercent": [
+        69.29872569259584,
+        67.67434626502987
+      ],
+      "rssChangePercent": [
+        -0.6591337099811634,
+        -0.6591337099811634
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d0.5",
+      "operation": "encode",
+      "latencyChangePercent": [
+        99.21581573452352,
+        97.90262906816014
+      ],
+      "rssChangePercent": [
+        -0.8450704225352101,
+        -0.9135628952916419
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d1",
+      "operation": "encode",
+      "latencyChangePercent": [
+        97.66068406451038,
+        97.78756968183187
+      ],
+      "rssChangePercent": [
+        -3.0683403068340276,
+        -3.140265177948365
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d3",
+      "operation": "encode",
+      "latencyChangePercent": [
+        98.24887893401598,
+        99.32475916379617
+      ],
+      "rssChangePercent": [
+        -4.621848739495793,
+        -4.625087596355993
+      ]
+    },
+    {
+      "case": "vardct-animation-animation-crop",
+      "operation": "encode",
+      "latencyChangePercent": [
+        52.27782266324699,
+        54.15740473484127
+      ],
+      "rssChangePercent": [
+        -3.9568345323740983,
+        -3.9568345323740983
+      ]
+    }
+  ],
+  "binding": {
+    "releaseQualification": {
+      "report": "<work-final>/release-6/report.json",
+      "reportSHA256": "556d7bca06100008308e57931a5b75c65b1a1498b1b024a437be4e95abe5125d",
+      "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834"
+    },
+    "runnerBuildPath": "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/build.json",
+    "runnerBuildSHA256": "18e7b6d70f299983474e7e56f1e7233fca9826a99d48e20db192c7d71363d5a1",
+    "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+    "sourcesUnchangedAtSummary": true,
+    "packageUnchangedAtSummary": true,
+    "releaseObjectSHA256": {
+      "<repo>/.build/out/Products/Release/SwiftJXL.o": "1102488958caf5f9385e3bfdaa56fa5abb057abc39209dcfd2ebeb6737931ac2",
+      "<repo>/.build/out/Products/Release/SwiftJXLCore.o": "2e44f687c9dc25eba26c7b10d3e3260ab87697929fb5eb4c97fd996dc46c77b2"
+    },
+    "candidateBinaries": {
+      "family-candidate": "1e4d01c2fa7098b9ae215176efa59c5e88e0d387e0c834357b787fefdffee019",
+      "native-candidate": "36b48f532a44e74a6643ab1d3e74625e0088b6fe8195581f1da2d57a333b6be3",
+      "jpeg-pixel-candidate": "0853be3ddfa0316ecb00c9b5b5b24203838fb955c38fd83ef03a5e843a30e020"
+    },
+    "baselineProvenance": {
+      "jpeg-pixel-predecessor": {
+        "expected": "266462fd487e6aae38a1a56baf6f00e89498b62aeda8892ac8a940bfb623997a",
+        "actual": "266462fd487e6aae38a1a56baf6f00e89498b62aeda8892ac8a940bfb623997a"
+      },
+      "family-predecessor": {
+        "expected": "5aea25a8caf8b4d74e139617b49ee894e60b08b5169381e16565c951f040901f",
+        "actual": "5aea25a8caf8b4d74e139617b49ee894e60b08b5169381e16565c951f040901f"
+      },
+      "native-predecessor": {
+        "expected": "0da2f57424b952de9084d7d7d8b86161788912e2b6c5524ac1a7d39e50ccc959",
+        "actual": "0da2f57424b952de9084d7d7d8b86161788912e2b6c5524ac1a7d39e50ccc959"
+      }
+    },
+    "matrixFiles": {
+      "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/public-default-final-2/manifest.json": "6794ab36d9ae37b72def20ca7bce1a0001c88c3ef5ce032d87fe3d1fc549d4c8",
+      "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/public-default-final-2/results.json": "cf16c4675625f6e5dfcd1654a97bba5a075144c7809e8195e643936ccecf6b1c",
+      "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/constrained-final-1/manifest.json": "a016c2dfeb37233f3d5db3f0c7e9a82e345b5f9766468f9bcb734b4515d3aa9c",
+      "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/constrained-final-1/results.json": "77671a1136e12be17aa5e1b8dd346a783032d74027e7ccfd4c53b05ad6fd4c50",
+      "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/native-results-3/manifest.json": "360ac0399c57ab157baffc37972583711136bdae55852f543fa471cb9f2473d4",
+      "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/native-results-3/results.json": "cfa7bb258d16a5bbda9d1bc17ad59ceb8dc8ef755b24a25ba34953f37928672f",
+      "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/native-results-3/preflights.json": "1654527fab111906e05388c3a0304027affd047f4b9d8f810d4e8eb02e85023a"
+    },
+    "sourceManifestSHA256": "ff9a4420c71860fa22e33744bf97580196a7706d85cd6cf6ab6f5a722345b06d",
+    "sourceManifestLocation": "sourceSHA256 object in runner build and detailed evidence",
+    "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+    "predecessorBackendProvenance": {
+      "path": "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/comparison-policies.json",
+      "sha256": "ea9c034ecd9812eeb1076480be94578b918dfaa21b08d404aeaad5bf0296ae08"
+    }
+  },
+  "fidelity": {
+    "pixelCases": 18,
+    "independentScalarMaximumLSB": 1,
+    "independentScalarMaximumRMSLSB": 0.10694815798662465,
+    "maximumAlphaErrorLSB": 0,
+    "modularCasesExact": 7,
+    "maximumUnchangedLosslessSizeChangePercent": 0.0015042740185489123,
+    "all18DefaultAndOneWorkerStreamsByteIdentical": true,
+    "all18Freeze5AndFreeze6StreamsByteIdentical": true,
+    "nativeCasesIndependentlyRestoredExactly": 4,
+    "jpegPixelCasesMatchingPriorQualifiedSHA256": 4
+  },
+  "candidateOnlyPrimaryRows": [
+    {
+      "case": "vardct-bicycles-crop-d0.5",
+      "operation": "decode"
+    },
+    {
+      "case": "vardct-bicycles-crop-d1",
+      "operation": "decode"
+    },
+    {
+      "case": "vardct-bicycles-crop-d3",
+      "operation": "decode"
+    },
+    {
+      "case": "vardct-rgba16-small-d0.5",
+      "operation": "decode"
+    },
+    {
+      "case": "vardct-rgba16-small-d1",
+      "operation": "decode"
+    },
+    {
+      "case": "vardct-rgba16-small-d3",
+      "operation": "decode"
+    },
+    {
+      "case": "vardct-animation-animation-crop",
+      "operation": "decode"
+    },
+    {
+      "case": "vardct-animation-rgba16-small",
+      "operation": "decode"
+    },
+    {
+      "case": "native-bicycles-progressive",
+      "operation": "forward"
+    },
+    {
+      "case": "native-bicycles-progressive",
+      "operation": "reverse"
+    },
+    {
+      "case": "jpeg-pixels-bicycles-progressive",
+      "operation": "decode"
+    }
+  ],
+  "grayRSSPercent": {
+    "vardct-grayscale-d0.5": [
+      4.718309859154934,
+      4.718309859154934
+    ],
+    "vardct-grayscale-d1": [
+      4.184100418410042,
+      3.8354253835425345
+    ],
+    "vardct-grayscale-d3": [
+      2.939118264520646,
+      2.6610644257702987
+    ]
+  },
+  "detailedEvidence": {
+    "path": "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/final-evidence.json",
+    "sha256": "c5fcc47346db3f6481db1875708d5ab43be0f03322f274130a61cd2144e0dec5",
+    "contains": "All84 measured rows, complete per-file source manifest, baseline provenance, all preflight metrics and stream hashes, retained prior attempts and diagnostics."
+  },
+  "rawReportSHA256": "2cbb1f8148abed19a18ab56c7eefc069e61b9726ef440b4d4aa82ca821d99f46"
+}

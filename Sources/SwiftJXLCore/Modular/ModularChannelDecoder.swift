@@ -72,6 +72,12 @@ package func decodeModularChannel<Storage: ModularSampleBuffer>(
             sampleMaximum: sampleMaximum, out: &out)
         return
     }
+    if tree.nodes.count == 1, tree.nodes[0].isLeaf, tree.nodes[0].rawPredictor == 0 {
+        try decodeSingleLeafZero(width: width, height: height, staticChannel: staticChannel,
+            leaf: tree.nodes[0], stream: &stream, from: &r,
+            sampleMaximum: sampleMaximum, out: &out)
+        return
+    }
     var wp = WeightedPredictor(header: wpHeader, xsize: width)
     // Reused 16-element properties array — allocating a fresh
     // `[Int32]` per pixel was a measurable hot spot.
@@ -96,6 +102,9 @@ package func decodeModularChannel<Storage: ModularSampleBuffer>(
     }
     for y in 0..<height {
         try Task.checkCancellation()
+        let rowBase = out.rowAddress(y, width: width)
+        let prevRow = y > 0 ? out.rowAddress(y - 1, width: width) : rowBase
+        let prev2Row = y > 1 ? out.rowAddress(y - 2, width: width) : prevRow
         for x in 0..<width {
             // libjxl edge fall-backs (per `lib/jxl/modular/encoding/
             // context_predict.h::Predict`):
@@ -105,24 +114,21 @@ package func decodeModularChannel<Storage: ModularSampleBuffer>(
             //   topright: (x+1<w && y) ? pp[1-onerow] : top
             //   leftleft: x>1 ? pp[-2] : left
             //   toptop:   y>1 ? pp[-2*onerow] : top
-            let rowBase = y * width
-            let prevRow = (y - 1) * width
-            let prev2Row = (y - 2) * width
             let left: Int32
             if x > 0 {
-                left = out[rowBase + x - 1]
+                left = out[row: rowBase, column: x - 1]
             } else if y > 0 {
-                left = out[prevRow + x]
+                left = out[row: prevRow, column: x]
             } else {
                 left = 0
             }
-            let top: Int32 = y > 0 ? out[prevRow + x] : left
+            let top: Int32 = y > 0 ? out[row: prevRow, column: x] : left
             let topLeft: Int32 = (x > 0 && y > 0)
-                ? out[prevRow + x - 1] : left
+                ? out[row: prevRow, column: x - 1] : left
             let topRight: Int32 = (x + 1 < width && y > 0)
-                ? out[prevRow + x + 1] : top
-            let leftLeft: Int32 = x > 1 ? out[rowBase + x - 2] : left
-            let topTop: Int32 = y > 1 ? out[prev2Row + x] : top
+                ? out[row: prevRow, column: x + 1] : top
+            let leftLeft: Int32 = x > 1 ? out[row: rowBase, column: x - 2] : left
+            let topTop: Int32 = y > 1 ? out[row: prev2Row, column: x] : top
             // Property 15 (WP property) only needed when the tree
             // branches on it OR uses predictor 6 — `treeUsesWP`
             // captures both. Skipping `wp.propertyValue` for
@@ -193,7 +199,7 @@ package func decodeModularChannel<Storage: ModularSampleBuffer>(
             if let sampleMaximum, value < 0 || value > sampleMaximum {
                 throw BitstreamError.malformedValue("Sample outside declared precision")
             }
-            out[rowBase + x] = value
+            out[row: rowBase, column: x] = value
             if treeUsesWP {
                 wp.update(actual: value, x: x, y: y, xsize: width)
             }
@@ -212,14 +218,15 @@ private func decodeSingleLeafGradient<Storage: ModularSampleBuffer>(
 ) throws {
     for y in 0..<height {
         try Task.checkCancellation()
-        let rowBase = y * width, prevRow = (y - 1) * width
+        let rowBase = out.rowAddress(y, width: width)
+        let prevRow = y > 0 ? out.rowAddress(y - 1, width: width) : rowBase
         for x in 0..<width {
             let left: Int32
-            if x > 0 { left = out[rowBase + x - 1] }
-            else if y > 0 { left = out[prevRow + x] }
+            if x > 0 { left = out[row: rowBase, column: x - 1] }
+            else if y > 0 { left = out[row: prevRow, column: x] }
             else { left = 0 }
-            let top: Int32 = y > 0 ? out[prevRow + x] : left
-            let topLeft: Int32 = x > 0 && y > 0 ? out[prevRow + x - 1] : left
+            let top: Int32 = y > 0 ? out[row: prevRow, column: x] : left
+            let topLeft: Int32 = x > 0 && y > 0 ? out[row: prevRow, column: x - 1] : left
             let token: UInt32
             do { token = try stream.readToken(context: leaf.leafId, from: &r) }
             catch let error as TokenStreamReaderError {
@@ -236,7 +243,37 @@ private func decodeSingleLeafGradient<Storage: ModularSampleBuffer>(
             if let sampleMaximum, value < 0 || value > sampleMaximum {
                 throw BitstreamError.malformedValue("Sample outside declared precision")
             }
-            out[rowBase + x] = value
+            out[row: rowBase, column: x] = value
+        }
+    }
+}
+
+/// A zero predictor has no sample dependencies. Read every token even for a
+/// zero-bit prefix alphabet: this preserves LZ77/history, truncation errors and
+/// the reader's cancellation/deadline checkpoint at most every 256 operations.
+private func decodeSingleLeafZero<Storage: ModularSampleBuffer>(
+    width: Int, height: Int, staticChannel: Int32, leaf: ModularTreeNode,
+    stream: inout TokenStreamReader, from r: inout BitReader,
+    sampleMaximum: Int32?, out: inout Storage
+) throws {
+    for y in 0..<height {
+        try Task.checkCancellation()
+        let row = out.rowAddress(y, width: width)
+        for x in 0..<width {
+            let token: UInt32
+            do { token = try stream.readToken(context: leaf.leafId, from: &r) }
+            catch let error as TokenStreamReaderError {
+                throw ModularChannelDecoderError.tokenAtPosition(
+                    x: x, y: y, channel: staticChannel, inner: error)
+            }
+            let scaled = Int32(truncatingIfNeeded:
+                Int64(ZigZag.unpack(token)) &* Int64(leaf.multiplier))
+            let value = Int32(truncatingIfNeeded:
+                Int64(leaf.predictorOffset) &+ Int64(scaled))
+            if let sampleMaximum, value < 0 || value > sampleMaximum {
+                throw BitstreamError.malformedValue("Sample outside declared precision")
+            }
+            out[row: row, column: x] = value
         }
     }
 }

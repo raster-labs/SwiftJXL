@@ -129,12 +129,14 @@ struct ModularParallelTests {
     @Test func publicCancellationAfterWorkersJoinPreventsPublication() async throws {
         let source = try image(width: 1025, height: 7), audit = ScalarStorageAudit()
         let reachedCompletion = Mutex(false)
+        let completionAudit = Mutex<ScalarStorageAudit.Snapshot?>(nil)
         let task = Task {
             try await ScalarStorageAudit.$current.withValue(audit) {
                 try await Encoder().encode(source, options: .init(
                     resourceLimits: .init(maximumWorkers: 8), progress: { update in
                         if update.phase == .completed {
                             reachedCompletion.withLock { $0 = true }
+                            completionAudit.withLock { $0 = audit.snapshot }
                             withUnsafeCurrentTask { $0?.cancel() }
                         }
                     }))
@@ -143,7 +145,15 @@ struct ModularParallelTests {
         do { _ = try await task.value; Issue.record("Cancelled encoder returned a result") }
         catch is CancellationError {}
         #expect(reachedCompletion.withLock { $0 })
-        #expect(audit.snapshot.workingPlaneAllocations >= 2)
+        let completed = try #require(completionAudit.withLock { $0 })
+        // Observe real entered workers and their join before publication, rather
+        // than using temporary rectangle allocations as an indirect proxy.
+        #expect(completed.workerJobsStarted > 0)
+        #expect(completed.workerJobsCompleted == completed.workerJobsStarted)
+        #expect(completed.activeWorkerJobs == 0)
+        // Residual trials borrow this one input plane instead of copying tiles.
+        #expect(completed.workingPlaneAllocations == 1)
+        #expect(completed.workingPlaneBytes == 1025 * 7 * MemoryLayout<Int32>.stride)
         // Cancellation must prevent publication without affecting source ownership.
         #expect(try source.storage.withUnsafeBytes { $0.count } == source.descriptor.requiredByteCount)
     }

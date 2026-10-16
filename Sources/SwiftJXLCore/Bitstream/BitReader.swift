@@ -75,6 +75,9 @@ package struct BitReader: Sendable {
     // every token/bit read. The check frequency and deadline are unchanged.
     @inline(never)
     private func checkCancellationAndDeadline() throws {
+        // GCD group workers have no Swift task; the shared operation flag must
+        // observe cancellation at the same bounded token/bit-read interval.
+        try budget?.checkpoint()
         try Task.checkCancellation()
         guard ContinuousClock.now < deadline else {
             throw ScalarModularError.resourceLimit

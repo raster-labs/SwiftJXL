@@ -21,8 +21,14 @@ package struct ModularDecodedFrame: Sendable {
 
 package enum ModularFrameDecoder {
     fileprivate typealias Entropy = (ModularTree, EntropySectionHeader, MultiClusterCodebook)
-    private struct Rect {
+    private struct Rect: Sendable {
         let channel: Int, x: Int, y: Int, width: Int, height: Int
+    }
+
+    private struct GroupResult: Sendable {
+        let image: ModularImage
+        let rectangles: [Rect]
+        let wroteDirectly: Bool
     }
 
     /// Immutable preparation contains compressed input, colour metadata and geometry.
@@ -230,21 +236,65 @@ package enum ModularFrameDecoder {
         if plan.multipleSections {
             // No AC-global payload exists for this integer Modular profile.
             guard plan.toc.entrySizes[1 + plan.dcCount] == 0 else { throw ScalarModularError.unsupportedProfile }
+            // Large identity images may use bounded group scratch to honour the
+            // worker policy; small identity images and worker=1 retain direct
+            // destination decoding. No full-frame scratch is added by workers.
+            // A direct-output batch never retains every tile in the image.
+            let batchLimit = min(budget.maximumWorkers, direct == nil ? plan.groupCount : plan.groupCount - 1)
+            let parallel = batchLimit > 1 && plan.groupCount > 1
+                && (direct == nil || width * height >= 1024 * 1024)
+            let parentGeometry: [ModularChannel]
+            if parallel {
+                try ModularImage.admitDescriptors(image.channels.count, budget: budget)
+                parentGeometry = try image.channels.map {
+                    try ModularChannel(width: $0.width, height: $0.height, hshift: $0.hshift, vshift: $0.vshift)
+                }
+            } else { parentGeometry = [] }
+            // DC groups remain ordered; only independent AC groups in one pass
+            // run together. Previous passes are fully merged before the next.
             for dc in 0..<plan.dcCount {
                 var r = try plan.section(1 + dc)
-                try decodeGroup(image: &image, written: &written, first: globalEnd,
+                let result = try decodeGroup(parentChannels: image.channels, first: globalEnd,
                     x: (dc % plan.dcX) * plan.dcDimension, y: (dc / plan.dcX) * plan.dcDimension,
                     quantum: plan.dcDimension, minShift: 3, maxShift: 31, groupID: Int32(1 + dc),
                     reader: &r, global: plan.global, bitDepth: plan.bitsPerSample, budget: budget, destination: direct)
+                try mergeGroup(result, image: &image, written: &written, bitDepth: plan.bitsPerSample,
+                    budget: budget, destination: direct)
             }
+            let first = globalEnd
             for pass in 0..<plan.passes {
-                for group in 0..<plan.groupCount {
-                    var r = try plan.section(2 + plan.dcCount + pass * plan.groupCount + group)
-                    try decodeGroup(image: &image, written: &written, first: globalEnd,
-                        x: (group % plan.groupsX) * plan.groupDimension, y: (group / plan.groupsX) * plan.groupDimension,
-                        quantum: plan.groupDimension, minShift: plan.brackets[pass].0, maxShift: plan.brackets[pass].1,
-                        groupID: Int32(1 + plan.dcCount + pass * plan.groupCount + group),
-                        reader: &r, global: plan.global, bitDepth: plan.bitsPerSample, budget: budget, destination: direct)
+                if parallel {
+                    var base = 0
+                    while base < plan.groupCount {
+                        let batchBase = base, count = min(batchLimit, plan.groupCount - base)
+                        let results = try modularDecodeBatch(count: count, budget: budget) { index in
+                            let group = batchBase + index
+                            var r = try plan.section(2 + plan.dcCount + pass * plan.groupCount + group)
+                            return try decodeGroup(parentChannels: parentGeometry, first: first,
+                                x: (group % plan.groupsX) * plan.groupDimension, y: (group / plan.groupsX) * plan.groupDimension,
+                                quantum: plan.groupDimension, minShift: plan.brackets[pass].0, maxShift: plan.brackets[pass].1,
+                                groupID: Int32(1 + plan.dcCount + pass * plan.groupCount + group),
+                                reader: &r, global: plan.global, bitDepth: plan.bitsPerSample, budget: budget)
+                        }
+                        // The exclusive caller borrow is used only here, after
+                        // all workers join. Results own at most one batch of tiles.
+                        for result in results {
+                            try mergeGroup(result, image: &image, written: &written, bitDepth: plan.bitsPerSample,
+                                budget: budget, destination: direct)
+                        }
+                        base += count
+                    }
+                } else {
+                    for group in 0..<plan.groupCount {
+                        var r = try plan.section(2 + plan.dcCount + pass * plan.groupCount + group)
+                        let result = try decodeGroup(parentChannels: image.channels, first: globalEnd,
+                            x: (group % plan.groupsX) * plan.groupDimension, y: (group / plan.groupsX) * plan.groupDimension,
+                            quantum: plan.groupDimension, minShift: plan.brackets[pass].0, maxShift: plan.brackets[pass].1,
+                            groupID: Int32(1 + plan.dcCount + pass * plan.groupCount + group),
+                            reader: &r, global: plan.global, bitDepth: plan.bitsPerSample, budget: budget, destination: direct)
+                        try mergeGroup(result, image: &image, written: &written, bitDepth: plan.bitsPerSample,
+                            budget: budget, destination: direct)
+                    }
                 }
             }
         }
@@ -363,16 +413,16 @@ package enum ModularFrameDecoder {
         }
         if samples > 0 { try stream.finish() }
     }
-    private static func decodeGroup(image: inout ModularImage, written: inout [Int], first: Int,
+    private static func decodeGroup(parentChannels: [ModularChannel], first: Int,
                                     x: Int, y: Int, quantum: Int, minShift: Int, maxShift: Int, groupID: Int32,
                                     reader: inout BitReader, global: Entropy?, bitDepth: Int,
-                                    budget: ScalarOperationBudget, destination: BorrowedModularDestination? = nil) throws {
+                                    budget: ScalarOperationBudget, destination: BorrowedModularDestination? = nil) throws -> GroupResult {
         try budget.checkpoint()
-        try ModularImage.admitDescriptors(image.channels.count - first, budget: budget)
-        try budget.reserveWorkspace((image.channels.count - first) * MemoryLayout<Rect>.stride + 128)
+        try ModularImage.admitDescriptors(parentChannels.count - first, budget: budget)
+        try budget.reserveWorkspace((parentChannels.count - first) * MemoryLayout<Rect>.stride + 128)
         var rectangles: [Rect] = [], geometry: [ModularChannel] = []
-        for c in first..<image.channels.count {
-            let channel = image.channels[c], shift = min(channel.hshift, channel.vshift)
+        for c in first..<parentChannels.count {
+            let channel = parentChannels[c], shift = min(channel.hshift, channel.vshift)
             guard shift >= minShift, shift <= maxShift else { continue }
             let qx = quantum >> channel.hshift, qy = quantum >> channel.vshift
             guard qx > 0, qy > 0 else { throw ScalarModularError.unsupportedProfile }
@@ -382,7 +432,10 @@ package enum ModularFrameDecoder {
             geometry.append(try ModularChannel(width: w, height: h, hshift: channel.hshift, vshift: channel.vshift))
             rectangles.append(Rect(channel: c, x: x0, y: y0, width: w, height: h))
         }
-        if geometry.isEmpty { try finishSection(&reader); return }
+        if geometry.isEmpty {
+            try finishSection(&reader)
+            return GroupResult(image: try ModularImage(channels: []), rectangles: [], wroteDirectly: true)
+        }
         let header = try GroupHeader.read(from: &reader)
         let selected = try entropy(header, global: global, reader: &reader, samples: quantum * quantum)
         var subimage = try ModularImage(channels: geometry)
@@ -408,15 +461,28 @@ package enum ModularFrameDecoder {
         guard subimage.nbMetaChannels == 0, subimage.channels.count == rectangles.count else {
             throw ScalarModularError.invalidInput("Invalid group channel count")
         }
-        for (index, rect) in rectangles.enumerated() {
-            let channel = subimage.channels[index]
-            guard channel.sameGeometry(as: geometry[index]) else { throw ScalarModularError.invalidInput("Invalid group geometry") }
+        for index in rectangles.indices {
+            guard subimage.channels[index].sameGeometry(as: geometry[index]) else {
+                throw ScalarModularError.invalidInput("Invalid group geometry")
+            }
+        }
+        return GroupResult(image: subimage, rectangles: rectangles, wroteDirectly: direct != nil)
+    }
+
+    private static func mergeGroup(_ result: GroupResult, image: inout ModularImage, written: inout [Int],
+                                   bitDepth: Int, budget: ScalarOperationBudget,
+                                   destination: BorrowedModularDestination?) throws {
+        try budget.checkpoint()
+        for (index, rect) in result.rectangles.enumerated() {
+            let channel = result.image.channels[index]
             let parentWidth = image.channels[rect.channel].width
             // Rectangles are checked/clipped to their parent above. These
             // synchronous borrows never escape and no parallel writes occur.
-            if let groupDestination {
-                if direct == nil {
-                    var output = BorrowedModularChannel(bytes: groupDestination.bytes, layout: groupDestination.layouts[index])
+            if let destination {
+                if !result.wroteDirectly {
+                    let layout = try destination.layouts[rect.channel].rectangle(x: rect.x, y: rect.y,
+                        width: rect.width, height: rect.height)
+                    var output = BorrowedModularChannel(bytes: destination.bytes, layout: layout)
                     let maximum = (Int32(1) << bitDepth) - 1
                     for i in channel.pixels.indices {
                         if i & 1023 == 0 { try budget.checkpoint() }

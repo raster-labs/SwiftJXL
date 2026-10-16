@@ -95,6 +95,7 @@ extension HybridUintConfig {
     /// Encode a value into (token, extra_bits, extra_nbits). The caller
     /// is responsible for emitting the token via the entropy coder and
     /// then writing `extra_nbits` of `extra_bits` to the bit writer.
+    @inline(__always)
     package func encode(_ value: UInt32) -> HybridUintToken {
         let split = UInt32(1) &<< UInt32(splitExponent)
         if value < split {
@@ -166,6 +167,7 @@ extension HybridUintConfig {
     /// coder) and the bit reader (positioned at the extra-bits payload),
     /// recover the original value. Reads `extra_nbits` bits from `r` for
     /// large tokens; small tokens read 0 bits.
+    @inline(__always)
     package func decode(token: UInt32, from r: inout BitReader) throws -> UInt32 {
         let split = UInt32(1) &<< UInt32(splitExponent)
         if token < split {
