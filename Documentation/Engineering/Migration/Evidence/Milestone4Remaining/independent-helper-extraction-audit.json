@@ -1,0 +1,20 @@
+{
+  "auditedAtUTC": "2026-10-16T05:37:49.357155+00:00",
+  "head": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+  "passed": true,
+  "checks": {
+    "helperBodyEqualsOldBodyWithListedTypingAndIndexBindings": true,
+    "sameUnsafeBorrowAndValidation": true,
+    "helperCalledSynchronouslyInsideBorrow": true,
+    "callerCheckpointStillAfterBorrow": true,
+    "twoSwiftFilesChanged": true,
+    "testChangeOnlyExplicitClosureSignature": true
+  },
+  "changedSwiftFiles": [
+    "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift"
+  ],
+  "testDiff": "diff --git a/Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift b/Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift\nindex eea8d1b..3885fa1 100644\n--- a/Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift\n+++ b/Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift\n@@ -153,7 +153,7 @@ struct VarDCTEncoderPreparationTests {\n         var offset = 0\n         for (width,height) in [(1,1),(2,3),(7,5),(8,8),(17,9)] {\n             for pattern in 0..<3 { for c in 0..<3 {\n-                let input: [Float] = (0..<(width * height)).map { i in\n+                let input: [Float] = (0..<(width * height)).map { (i: Int) -> Float in\n                     let x = i % width, y = i / width\n                     return pattern == 0 ? 0.375 : pattern == 1 ? (x == 0 && y == 0 ? 1 : 0) : Float((x * 17 + y * 11 + c * 7) % 29 - 14) / 31\n                 }\n",
+  "review": "Pointer slices remain disjoint within the same live borrow; the private helper is synchronous and no owner/pointer escapes. Arithmetic ordering in transform body is unchanged after local integer-expression bindings. Production core object changed, so historical performance cannot be reused solely via public-module object equality.",
+  "sourceSHA256": "050613c8c9f5dda57227c53e1fdbeabf267b684e63e0833d314147659543bac2"
+}

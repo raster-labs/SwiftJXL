@@ -1,0 +1,1190 @@
+{
+  "auditedAtUTC": "2026-10-16T05:51:36.238843+00:00",
+  "status": "passed",
+  "checkCount": 289,
+  "rawProcessesAudited": 288,
+  "sourceRevision": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+  "summarySHA256": "ae2cf9ed4c75b8f85f7a54e9bcc71b447357ab6ac28c2f8dff38b3474184301d",
+  "matrices": {
+    "vardct-public-default": {
+      "rows": 22,
+      "paired": 14,
+      "candidateOnly": 8,
+      "repeatedLatencyTriggers": 0,
+      "repeatedRSSTriggers": 0,
+      "losslessSizeTriggers": 0
+    },
+    "vardct-constrained-w1": {
+      "rows": 22,
+      "paired": 14,
+      "candidateOnly": 8,
+      "repeatedLatencyTriggers": 7,
+      "repeatedRSSTriggers": 0,
+      "losslessSizeTriggers": 0
+    }
+  },
+  "limits": [
+    "Integrity audit recomputed timing aggregates and flags from retained process output; did not rerun benchmarks.",
+    "Oracle recorded metrics and stream identity were checked; no new decode was performed.",
+    "Constrained one-worker performance findings remain open, despite passing data-integrity audit.",
+    "Historical unaffected Modular and native rows were not re-executed in this subset."
+  ],
+  "checks": [
+    {
+      "check": "119 current production source hashes",
+      "passed": true
+    },
+    {
+      "check": "package and release-8 report binding",
+      "passed": true
+    },
+    {
+      "check": "release objects match build",
+      "passed": true
+    },
+    {
+      "check": "family-candidate binary and harness binding",
+      "passed": true
+    },
+    {
+      "check": "native-candidate binary and harness binding",
+      "passed": true
+    },
+    {
+      "check": "jpeg-pixel-candidate binary and harness binding",
+      "passed": true
+    },
+    {
+      "check": "summary matrix hashes",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default manifest candidate and measurement policy",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-decode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-decode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-decode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-decode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-decode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-decode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-decode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-decode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-decode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-decode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-decode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-decode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default summary",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-animation-crop oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-animation-rgba16-small oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d0.5 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d1 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-bicycles-crop-d3 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d0.5 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d1 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-grayscale-d3 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d0.5 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d1 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-public-default/vardct-rgba16-small-d3 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1 manifest candidate and measurement policy",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-decode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-decode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-decode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-decode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-decode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-decode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-decode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-decode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-decode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-decode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-decode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-decode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-encode/round0/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-encode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-encode/round0 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-encode/round1/predecessor raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-encode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-encode/round1 percentages",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-encode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-decode/round0/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-decode/round1/candidate raw aggregation",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small-decode threshold flags",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1 summary",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-animation-crop oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-animation-rgba16-small oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d0.5 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d1 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-bicycles-crop-d3 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d0.5 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d1 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-grayscale-d3 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d0.5 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d1 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-constrained-w1/vardct-rgba16-small-d3 oracle metrics and stream binding",
+      "passed": true
+    },
+    {
+      "check": "vardct-animation-animation-crop all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-animation-rgba16-small all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-bicycles-crop-d0.5 all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-bicycles-crop-d1 all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-bicycles-crop-d3 all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-grayscale-d0.5 all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-grayscale-d1 all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-grayscale-d3 all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-rgba16-small-d0.5 all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-rgba16-small-d1 all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "vardct-rgba16-small-d3 all four streams byte identical",
+      "passed": true
+    },
+    {
+      "check": "fidelity summary 11 cases",
+      "passed": true
+    }
+  ]
+}

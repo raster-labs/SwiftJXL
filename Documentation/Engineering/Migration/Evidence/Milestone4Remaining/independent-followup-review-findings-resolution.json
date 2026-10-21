@@ -1,0 +1,98 @@
+{
+  "resolvedAtUTC": "2026-10-16T06:54:32.389557+00:00",
+  "head": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+  "mergedPullRequest": {
+    "number": 33,
+    "url": "https://github.com/raster-labs/SwiftJXL/pull/33",
+    "mergeCommit": "dcdbec1abb75d5b6c6d5484f786ba3308c8e17a8",
+    "mergedAtUTC": "2026-10-16T05:37:07Z",
+    "prHeadCIRun": {
+      "runId": 38760811777,
+      "head": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+      "status": "completed",
+      "conclusion": "success",
+      "succeededJobs": 12,
+      "totalJobs": 12
+    },
+    "postMergeMainCIRun": {
+      "runId": 38856715114,
+      "head": "dcdbec1abb75d5b6c6d5484f786ba3308c8e17a8",
+      "status": "completed",
+      "conclusion": "success",
+      "succeededJobs": 12,
+      "totalJobs": 12,
+      "durationDisplayed": "46m 22s",
+      "verifiedAtUTC": "2026-10-16T06:26:38.240772+00:00",
+      "verificationReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-main-ci-success.json",
+      "preservedHistoricalInProgressSnapshot": {
+        "statusAtInspection": "in_progress",
+        "inspectedAtUTC": "2026-10-16T05:57:29Z",
+        "file": "/Users/raster/Documents/Codex/2026-10-15/i/outputs/independent-main-ci-checkpoint.json",
+        "archivedInSupplementFinalZip": "audit/independent-main-ci-checkpoint.json"
+      }
+    }
+  },
+  "preservedHistoricalFindingsFile": "/Users/raster/Documents/Codex/2026-10-15/i/outputs/independent-followup-review-findings.json",
+  "preservedHistoricalFindingsSHA256": "b8544ee2d3580fe251d207be255a22033436ae4eec737edcbe9d743e901a989a",
+  "preservedPostFixProseFindingFile": "/Users/raster/Documents/Codex/2026-10-15/i/outputs/independent-postfix-prose-finding.json",
+  "preservedPostFixProseFindingSHA256": "571adc72d6720567a1d088049a58722e28da5241fc4e010ab7d4f1e98c327733",
+  "status": "all_nine_initial_findings_and_postfix_prose_finding_resolved_locally; open_perf03_and_unexecuted_gates_explicitly_retained",
+  "resolutions": [
+    {
+      "findingArea": "P1 Swift 6.2 compatibility",
+      "status": "resolved",
+      "evidence": "Extracted VarDCTSmallAnalysis.apply(_:identifier:buffer:dct:) in 294ed8fdf57eb97ca46003171f2b012a4618a14b; verified by independent-helper-extraction-audit.json, native release-8 (365/2048), targeted debug-3-vardct/asan-4-vardct/tsan-3-vardct (3 suites / 17 declarations / 43 cases), ios-simulator-26.0-release-2 (359/1955), and all 12 hosted CI jobs in PR run 38760811777 and post-merge main run 38856715114 (including Linux Swift 6.2.4 on x86_64/arm64 and tools-6.2 consumer)."
+    },
+    {
+      "findingArea": "P2 Milestone definitions",
+      "status": "resolved",
+      "evidence": "Restored exact IMPLEMENTATION.md definitions in MILESTONE4_REMAINING.md and validation.json: 1 contract feasibility, 2 migration baseline, 3 shared-storage path, 4 feature/platform coverage (excluding Milestone 5)."
+    },
+    {
+      "findingArea": "P2 Native release-7 prose",
+      "status": "resolved",
+      "evidence": "Recorded exact release-7 timestamps (2026-10-15T13:50:53.448920+00:00 to 13:53:53.728321+00:00), duration (180.271404792 s), report SHA-256 (ddd2ee28e7ac6a2820687382ce4393ef00503ebf30f4364636a44592cc127dc7), and tests.log SHA-256 (2b89eab76e11778c76ab6670bcdfb985ca1d0cdd22d136968d8c32159c979767) as superseded historical intermediate evidence."
+    },
+    {
+      "findingArea": "P2 iOS 26.5 timing prose",
+      "status": "resolved",
+      "evidence": "Separated overall runner window (12:22:31.046216 to 13:26:17.160279 UTC, 3826.113789 s) from main xcodebuild test durations: Debug 12:23:04.644318 to 12:32:45.803495 UTC (581.159022 s, followed by negative sentinels until 12:43:48 UTC), ASan 12:43:48.841237 to 12:58:41.869451 UTC (893.028165 s), TSan 12:58:44.055246 to 13:26:11.041229 UTC (1646.985931 s); similarly separated overall vs main test durations for iOS 26.5 Release (451.956675 s vs 272.139227 s) and iOS 26.0 Release (278.683374 s vs 204.146533 s)."
+    },
+    {
+      "findingArea": "P2 Re-audit provenance preservation",
+      "status": "resolved",
+      "evidence": "Updated Scripts/TestSupport/qualify-ios-simulator.py (SHA-256 72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065) so --audit-existing preserves both report.original.json and validator-self-test.original.json along with originalStatus, originalAcceptance, and originalValidatorSelfTest; verified by 13 checks in independent-reaudit-preservation-audit.json."
+    },
+    {
+      "findingArea": "P2 Portable evidence completeness",
+      "status": "resolved",
+      "evidence": "Packaged independent-evidence-supplement.zip (78 entries, SHA-256 37ab2910ffc291ba3c6efe7ab1c7ed76b1480cb640f1fa5fb6982916a5ebb9aa) and independent-evidence-supplement-final.zip (39 entries, SHA-256 6d13aa6bbfde48025c649d3233b2d72f182f75e97b05bd80f9c841655fb78ea9), verified by 146 checks in independent-evidence-archives-audit.json, plus performance-postfix-vardct-raw.json.gz (SHA-256 395b0f16ec034af3664a319703bfa63a9b327972e1ce7376ca5553b378d6ba59), verified by 1,428 checks in independent-portable-postfix-performance-audit.json."
+    },
+    {
+      "findingArea": "P2 Object-equality claim scope",
+      "status": "resolved",
+      "evidence": "Clarified in MILESTONE4_REMAINING.md, MILESTONE4_PERFORMANCE_FOLLOWUP.md, and validation.json (sourceManifest.compiledObjectFilesIdenticalAcrossAllFourModes=false) that object equality compares revisions within each respective build configuration on native macOS Swift 6.4 only (not between Release/Debug/ASan/TSan, whose SwiftJXL.o hashes are distinct: 11024889..., 47446af4..., 223c69fe..., e6033a9c..., and not on iOS or Swift 6.2). Between pre-fix eaf011e and final 294ed8f, SwiftJXL.o remained byte-identical within each configuration while SwiftJXLCore.o changed within each configuration due to helper extraction (whereas superseded ecdb529 had both unchanged within each configuration); post-fix VarDCT performance and iOS 26.0 Release were re-qualified on 294ed8f."
+    },
+    {
+      "findingArea": "P3 Audit reference path",
+      "status": "resolved",
+      "evidence": "Copied referenced audit JSONs into Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ using exact filenames (including independent-ios26-0-results-audit.json) and replaced author-machine absolute links with portable relative links."
+    },
+    {
+      "findingArea": "P3 Re-audit labeling",
+      "status": "resolved",
+      "evidence": "Scripts/TestSupport/qualify-ios-simulator.py sets evaluationMode to historical_reaudit when historical execution bindings are incomplete (ios-simulator-release, missing original runner/DerivedData artifact hashes) versus reaudited_with_contemporaneous_bindings when full contemporaneous runner and built-product bindings are present (verified across two offline re-audit iterations on ios-simulator-26.0-release-2 in the 13-check independent-reaudit-preservation-audit.json), while setting reaudited=true and preserving originalAcceptance and originalValidatorSelfTest."
+    },
+    {
+      "findingArea": "P2 Post-fix performance prose numerics and raw matrix/process portability",
+      "status": "resolved",
+      "evidence": "Generated all post-fix one-worker VarDCT latency/RSS pairs and default grayscale encode latency/RSS pairs in MILESTONE4_PERFORMANCE_FOLLOWUP.md directly from independent-postfix-prose-finding.json and performance-postfix-vardct.json, disclosed the single-round >5% default excursions that did not repeat across both ABBA and BAAB rounds, and packaged all raw post-fix matrices and 288 process outputs in performance-postfix-vardct-raw.json.gz (verified by 1,428 checks)."
+    }
+  ],
+  "remainingOpenOrPendingGates": [
+    "Exact macOS 26.0 native/VM runtime execution: pending, environment unavailable (explicitly deferred by owner; local host is macOS 27.0.1 26A434; GitHub macos-26-arm64 runner is macOS 26.6.2 25G83)",
+    "Three 3,600-second ASan JPEG mutation campaigns (jpeg-inspect, jpeg-decode, jpeg-caller): not executed",
+    "Ten constrained single-worker (maximumWorkers=1) latency findings (3 Modular + 7 VarDCT): open under PERF-03 (require optimisation or explicit owner acceptance of the baseline before stable release)",
+    "Local post-merge documentation, runner preservation, and portable-evidence follow-up on codex/swiftjxl-milestone4-remaining: local/uncommitted (not in merged PR #33)"
+  ]
+}

@@ -1,0 +1,607 @@
+{
+  "auditedAtUTC": "2026-10-16T06:14:33.102428+00:00",
+  "passed": true,
+  "checkCount": 146,
+  "archives": [
+    {
+      "file": "independent-evidence-supplement.zip",
+      "entries": 78,
+      "sha256": "37ab2910ffc291ba3c6efe7ab1c7ed76b1480cb640f1fa5fb6982916a5ebb9aa"
+    },
+    {
+      "file": "independent-evidence-supplement-final.zip",
+      "entries": 39,
+      "sha256": "6d13aa6bbfde48025c649d3233b2d72f182f75e97b05bd80f9c841655fb78ea9"
+    }
+  ],
+  "checks": [
+    {
+      "check": "independent-evidence-supplement-manifest.json archive size/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json exact evidence and metadata inventory",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json embedded manifest agrees",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json member integrity",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/audit/independent-ios-asan-live-build-snapshot.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/audit/independent-ios-completed-run-bindings.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/audit/independent-ios-debug-build-bindings.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/audit/independent-ios-results-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/audit/independent-ios-tsan-live-build-snapshot.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/audit/independent-ios26-0-bindings-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/audit/independent-ios26-0-results-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/audit/independent-ios26-0-selftest-repair-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/audit/independent-portable-followup-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/preserved/ios-release-before-reaudit-report.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/preserved/ios26-release-original-report.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/preserved/ios26-validator-self-test-original.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/preserved/qualification-runner-11d1f427.py bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/preserved/qualification-runner-475cd8a7.py bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/devices-after.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/devices-before.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/build-artifacts.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/build-bindings.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/reciprocal-sentinels.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/reciprocal-sentinels/corrupt-vectors.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/reciprocal-sentinels/corrupted_vector_bitpattern.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/reciprocal-sentinels/missing_file_path.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/reciprocal-sentinels/short-vectors.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/reciprocal-sentinels/short_vector_count_below_40000.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/summary.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/release/tests.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/report.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/report.original.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/runtime-matches.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/runtimes.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/source-manifest-after.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/source-manifest-before.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/source-manifest.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-26.0-release/validator-self-test.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/asan/build-artifacts.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/asan/build-bindings.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/asan/summary.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/asan/tests.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/build-artifacts.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/build-bindings.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/corrupt-vectors.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/corrupted_vector_bitpattern.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/missing_file_path.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/short-vectors.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/short_vector_count_below_40000.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/summary.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/debug/tests.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/devices-after.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/devices-before.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/report.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/runtime-matches.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/runtimes.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/source-manifest-after.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/source-manifest-before.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/source-manifest.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/tsan/build-artifacts.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/tsan/build-bindings.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/tsan/summary.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/tsan/tests.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-debug-sanitizers/validator-self-test.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/devices-after.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/devices-before.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/release/build-bindings.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/release/reciprocal-sentinels.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/release/reciprocal-sentinels/corrupt-vectors.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/release/reciprocal-sentinels/corrupted_vector_bitpattern.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/release/reciprocal-sentinels/missing_file_path.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/release/reciprocal-sentinels/short-vectors.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/release/reciprocal-sentinels/short_vector_count_below_40000.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/release/summary.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/release/tests.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/report.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/report.original.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/runtime-matches.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/runtimes.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/source-manifest.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-manifest.json/raw/ios-simulator-release/validator-self-test.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json archive size/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json exact evidence and metadata inventory",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json member integrity",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-helper-extraction-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-ios-release-bindings.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-ios-runner-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-ios-runner-safeguards-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-ios-validator-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-ios26-0-second-bindings-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-ios26-0-second-results-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-macos-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-main-ci-checkpoint.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-platform-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-portable-294ed8f-followup-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-portable-evidence-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-postfix-native-294ed8f-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-postfix-performance-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-reaudit-preservation-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-swift62-compatibility-diff-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/independent-validation-audit.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/audit/verified-pr33-merge.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/preserved/qualification-runner-4be74712.py bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/preserved/qualify-ios-simulator-72c81175.py bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/devices-after.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/devices-after.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/devices-before.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/devices-before.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/build-artifacts.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/build-artifacts.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/build-bindings.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/build-bindings.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/corrupt-vectors.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/corrupt-vectors.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/corrupted_vector_bitpattern.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/corrupted_vector_bitpattern.log equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/missing_file_path.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/missing_file_path.log equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/short-vectors.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/short-vectors.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/short_vector_count_below_40000.log bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/reciprocal-sentinels/short_vector_count_below_40000.log equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/summary.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/summary.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/release/tests.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/release/tests.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/report.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/report.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/runtime-matches.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/runtime-matches.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/runtimes.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/runtimes.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/source-manifest-after.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/source-manifest-after.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/source-manifest-before.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/source-manifest-before.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/source-manifest.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/source-manifest.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "independent-evidence-supplement-final-manifest.json/raw/ios-simulator-26.0-release-2/validator-self-test.json bytes/hash",
+      "passed": true
+    },
+    {
+      "check": "raw/ios-simulator-26.0-release-2/validator-self-test.json equals retained raw evidence",
+      "passed": true
+    },
+    {
+      "check": "second iOS execution runner hash",
+      "passed": true
+    },
+    {
+      "check": "updated auditor snapshot matches checked code",
+      "passed": true
+    },
+    {
+      "check": "original independent archive preserved byte-identical",
+      "passed": true
+    }
+  ],
+  "limits": [
+    "This audit checks archive integrity, raw second iOS run and runner bindings. Historical archive reflects its capture time; later re-audits are separate evidence.",
+    "No simulator or codec tests were rerun."
+  ]
+}

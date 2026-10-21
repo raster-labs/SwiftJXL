@@ -142,4 +142,72 @@ struct VarDCTTransformTests {
         #expect(result)
         #expect(b.reservedWorkspaceBytes == 0)
     }
+
+    @Test func workspaceApplyEnforces4096MultiplyAddCheckpointBound() throws {
+        let sizes = [2, 4, 8, 16, 32, 64]
+        for rows in sizes {
+            for cols in sizes {
+                let cancellation = ScalarOperationCancellation()
+                let b = try ScalarOperationBudget(
+                    retainedBytes: 0,
+                    maximumWorkspaceBytes: 4 * 1024 * 1024,
+                    maximumMemoryBytes: 4 * 1024 * 1024,
+                    maximumDecodedBytes: 4 * 1024 * 1024,
+                    maximumCompressedBytes: 4 * 1024 * 1024,
+                    deadline: .now.advanced(by: .seconds(60)),
+                    cancellation: cancellation
+                )
+                let plan = try ScaledDCT(rows: rows, columns: cols, direction: .forward, budget: b)
+                var ws = try ScaledDCT.Workspace(capacity: rows * cols, budget: b)
+                let input = [Float](repeating: 0.25, count: rows * cols)
+                cancellation.resetCheckpointCount()
+                try input.withUnsafeBufferPointer { try plan.apply($0, workspace: &ws) }
+
+                let hStep = max(1, 4096 / (cols * cols))
+                let expectedHorizontal = (rows - 1) / hStep + 1
+                let expectedVertical: Int
+                if cols >= 4 {
+                    let vBatchStep = max(4, 4096 / (rows * rows))
+                    let vFreqStep = max(4, 4096 / (4 * rows))
+                    let batches = cols / 4
+                    let batchEntryChecks = (cols - 4) / vBatchStep + 1
+                    let intraBatchFreqChecks = batches * ((rows - 4) / vFreqStep)
+                    expectedVertical = batchEntryChecks + intraBatchFreqChecks
+                } else {
+                    let vSingleStep = max(1, 4096 / (rows * rows))
+                    expectedVertical = (cols - 1) / vSingleStep + 1
+                }
+                let expectedTotal = 1 + expectedHorizontal + expectedVertical + 1
+                #expect(cancellation.checkpointCount == expectedTotal)
+                let totalMultiplyAdds = rows * cols * (rows + cols)
+                let loopIntervals = expectedHorizontal + expectedVertical
+                #expect(totalMultiplyAdds <= loopIntervals * 4096)
+            }
+        }
+
+        // Deterministic intra-batch vertical cancellation for 64x64:
+        // Entry = 1, Horizontal (64 rows) = 64 -> checkpoint 66 is x=0,u=0;
+        // checkpoints 67, 68, 69 are the intra-batch checks at u=16, 32, 48
+        // inside the first 4-column vertical batch.
+        for cancelAt in [1, 65, 66, 67, 68, 69, 130] {
+            let cancellation = ScalarOperationCancellation()
+            let b = try ScalarOperationBudget(
+                retainedBytes: 0,
+                maximumWorkspaceBytes: 4 * 1024 * 1024,
+                maximumMemoryBytes: 4 * 1024 * 1024,
+                maximumDecodedBytes: 4 * 1024 * 1024,
+                maximumCompressedBytes: 4 * 1024 * 1024,
+                deadline: .now.advanced(by: .seconds(60)),
+                cancellation: cancellation
+            )
+            let plan = try ScaledDCT(rows: 64, columns: 64, direction: .forward, budget: b)
+            var ws = try ScaledDCT.Workspace(capacity: 4096, budget: b)
+            let input = [Float](repeating: 0.5, count: 4096)
+            cancellation.resetCheckpointCount(cancelAfter: cancelAt)
+            #expect(throws: CancellationError.self) {
+                try input.withUnsafeBufferPointer { try plan.apply($0, workspace: &ws) }
+            }
+            #expect(cancellation.checkpointCount == cancelAt)
+        }
+    }
 }

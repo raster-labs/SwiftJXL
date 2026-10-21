@@ -1,0 +1,24 @@
+{
+  "verifiedAtUTC": "2026-10-16T06:26:38.240772+00:00",
+  "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/38856715114",
+  "runId": 38856715114,
+  "head": "dcdbec1abb75d5b6c6d5484f786ba3308c8e17a8",
+  "branch": "main",
+  "status": "completed",
+  "conclusion": "success",
+  "totalJobs": 12,
+  "succeededJobs": 12,
+  "durationDisplayed": "46m 22s",
+  "source": "Public GitHub Actions workflow page freshly reloaded in browser",
+  "observedGroups": {
+    "sanitizers": 2,
+    "linuxCompilerArchitectureMatrix": 4,
+    "macOSDebug": 1,
+    "contractIdentity": 1,
+    "AppleSDK": 1,
+    "independentConsumer": 1,
+    "independentInterop": 1,
+    "macOSAggregate": 1
+  },
+  "note": "Separate post-merge run passed. Earlier PR run38760811777 passed all12 jobs on294ed8f. This does not cover unpublished local documentation/harness edits."
+}

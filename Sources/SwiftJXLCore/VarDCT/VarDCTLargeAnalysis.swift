@@ -67,6 +67,15 @@ package struct VarDCTLargeAnalysis: Sendable {
             return dct.value(at: rows >= columns ? (index % rows) * columns + index / rows : index)
         }
         package func dcValue(at index: Int) -> Float { dc[index] }
+        package borrowing func withRawDCTAndDC<Result>(
+            _ body: (UnsafeBufferPointer<Float>, UnsafeBufferPointer<Float>) throws -> Result
+        ) rethrows -> Result {
+            try dct.withValues { dctBuf in
+                try dc.withUnsafeBufferPointer { dcBuf in
+                    try body(dctBuf, dcBuf)
+                }
+            }
+        }
     }
     package func apply(_ pixels: [Float]) throws -> (dc: [Float], coefficients: [Float]) {
         guard pixels.count == rows * columns else { throw VarDCTError.invalidTransform }
@@ -82,23 +91,50 @@ package struct VarDCTLargeAnalysis: Sendable {
         try budget.checkpoint()
         guard pixels.count == rows * columns, workspace.capacity >= pixels.count,
               workspace.budget === budget else { throw VarDCTError.invalidTransform }
-        let cellsY = rows / 8, cellsX = columns / 8
+        let cellsY = rows / 8, cellsX = columns / 8, cellCount = cellsY &* cellsX
         try plan.apply(pixels, workspace: &workspace.dct)
         try workspace.dct.withValues { values in
             try workspace.dc.withUnsafeMutableBufferPointer { dc in
-                for y in 0..<cellsY { for x in 0..<cellsX {
-                    try budget.checkpoint()
-                    var sum: Double = 0
-                    for v in 0..<cellsY { for u in 0..<cellsX {
-                        let frequency = v * cellsX + u
-                        let value = Double(values[v * columns + u]) / dcScaleProducts[frequency]
-                        sum += value * dcNormalisations[frequency] * dcHorizontal[x * cellsX + u]
-                            * dcVertical[y * cellsY + v]
-                    } }
-                    let value = Float(sum)
-                    guard value.isFinite else { throw VarDCTError.nonFiniteSample }
-                    dc[y * cellsX + x] = value
-                } }
+                try dcScaleProducts.withUnsafeBufferPointer { scales in
+                    try dcNormalisations.withUnsafeBufferPointer { norms in
+                        try dcHorizontal.withUnsafeBufferPointer { horiz in
+                            try dcVertical.withUnsafeBufferPointer { vert in
+                                let valPtr = values.baseAddress!
+                                let dcPtr = dc.baseAddress!
+                                let scalePtr = scales.baseAddress!
+                                let normPtr = norms.baseAddress!
+                                let hPtr = horiz.baseAddress!
+                                let vPtr = vert.baseAddress!
+                                try withUnsafeTemporaryAllocation(of: Double.self, capacity: cellCount) { scaledFreq in
+                                    let sfPtr = scaledFreq.baseAddress!
+                                    for v in 0..<cellsY {
+                                        for u in 0..<cellsX {
+                                            let frequency = v &* cellsX &+ u
+                                            let value = Double(valPtr[v &* columns &+ u]) / scalePtr[frequency]
+                                            sfPtr[frequency] = value * normPtr[frequency]
+                                        }
+                                    }
+                                    for y in 0..<cellsY {
+                                        for x in 0..<cellsX {
+                                            try budget.checkpoint()
+                                            var sum: Double = 0
+                                            for v in 0..<cellsY {
+                                                let vWeight = vPtr[y &* cellsY &+ v]
+                                                for u in 0..<cellsX {
+                                                    let frequency = v &* cellsX &+ u
+                                                    sum += sfPtr[frequency] * hPtr[x &* cellsX &+ u] * vWeight
+                                                }
+                                            }
+                                            let value = Float(sum)
+                                            guard value.isFinite else { throw VarDCTError.nonFiniteSample }
+                                            dcPtr[y &* cellsX &+ x] = value
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         workspace.rows = rows; workspace.columns = columns

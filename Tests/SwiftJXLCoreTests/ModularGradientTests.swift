@@ -144,6 +144,129 @@ struct ModularGradientTests {
             set { values[index]=newValue;writes+=1;if writes==1 { withUnsafeCurrentTask { $0?.cancel() } } }
         }
     }
+    private func ansStream(_ residuals: [Int32]) throws -> (Data, EntropySectionHeader, MultiClusterCodebook) {
+        let distribution = try ANSDistribution(rawFrequencies:
+            [UInt32](repeating: 1, count: HybridUintConfig.raw4.maxToken + 1))
+        var histBits = BitWriter()
+        let wire = try SpecANSDistribution.writeHistogram(
+            distribution.frequencies.map(Int32.init), to: &histBits)
+        let header = EntropySectionHeader(
+            lz77: .disabled,
+            contextMap: try ContextMap(numClusters: 1, map: [0, 0]),
+            usePrefixCode: false,
+            logAlphaSize: max(5, Int(ceilLog2(UInt32(wire.count)))),
+            uintConfigs: [.raw4]
+        )
+        let book = MultiClusterCodebook(huffmanTables: [], ansCounts: [wire], alphabetSizes: [wire.count])
+        var writer = try ANSTokenStreamWriter(header: header, codebook: book)
+        for value in residuals {
+            try writer.writeToken(context: 0, value: ZigZag.pack(value))
+        }
+        var bits = BitWriter()
+        try writer.finish(to: &bits)
+        return (bits.finishToData(), header, book)
+    }
+
+    @Test
+    func ansSingleLeafGradientPreservesSignedWrappingOnTransformedPlanes() throws {
+        // M4-AUD-03 regression: on a 2x2 signed transformed plane (sampleMaximum == nil),
+        // row 0 = [-1, 1] (NW = -1, N = 1) and row 1 col 0 = Int32.max (W = 2147483647)
+        // with residual = 0 at (1, 1) must wrap W &+ N &- NW = -2147483647 and clamp
+        // to min(W, N) = 1, matching the generic wrapping Int32 predictor.
+        let counterexampleResiduals: [Int32] = [
+            -1, // (0, 0): left=0 -> val = -1 (NW)
+            2,  // (1, 0): left=-1 -> val = 1 (N)
+            Int32(bitPattern: UInt32(Int32.max) &+ 1), // (0, 1): top=-1 -> val = Int32.max (W)
+            0   // (1, 1): residual = 0 -> wrapping gradient clamps to 1
+        ]
+        let (data0, header0, book0) = try ansStream(counterexampleResiduals)
+        let checkReader = TokenStreamReader(header: header0, codebook: book0)
+        #expect(checkReader.canUseSingleContextANS(context: 0))
+        let specialised0 = try decode(
+            data0, header: header0, book: book0,
+            width: 2, height: 2, branching: false, raw: 5,
+            offset: 0, multiplier: 1, maximum: nil
+        )
+        let generic0 = try decode(
+            data0, header: header0, book: book0,
+            width: 2, height: 2, branching: true, raw: 5,
+            offset: 0, multiplier: 1, maximum: nil
+        )
+        #expect(specialised0 == [-1, 1, .max, 1])
+        #expect(specialised0 == generic0)
+
+        // Also test negative wrapping boundary (W = Int32.min, N = -1, NW = 1, residual = 0 -> -1)
+        // and multi-row signed extremes through the single-context ANS fast path.
+        let negativeBoundaryResiduals: [Int32] = [
+            1,  // (0, 0): val = 1 (NW)
+            -2, // (1, 0): left=1 -> val = -1 (N)
+            Int32.min &- 1, // (0, 1): top=1 -> val = Int32.min (W)
+            0   // (1, 1): W &+ N &- NW = 2147483646 -> clamps to max(W, N) = -1
+        ]
+        let (data1, header1, book1) = try ansStream(negativeBoundaryResiduals)
+        let specialised1 = try decode(
+            data1, header: header1, book: book1,
+            width: 2, height: 2, branching: false, raw: 5,
+            offset: 0, multiplier: 1, maximum: nil
+        )
+        let generic1 = try decode(
+            data1, header: header1, book: book1,
+            width: 2, height: 2, branching: true, raw: 5,
+            offset: 0, multiplier: 1, maximum: nil
+        )
+        #expect(specialised1 == [1, -1, .min, -1])
+        #expect(specialised1 == generic1)
+
+        let patterns: [Int32] = [.max, .min, 0, -1, 1, 0x3FFF_FFFF, -0x3FFF_FFFF, 65535, -65535]
+        let multiResiduals = (0..<(17 * 5)).map { patterns[($0 * 7 + 3) % patterns.count] }
+        let (data2, header2, book2) = try ansStream(multiResiduals)
+        let specialised2 = try decode(
+            data2, header: header2, book: book2,
+            width: 17, height: 5, branching: false, raw: 5,
+            offset: 0, multiplier: 1, maximum: nil
+        )
+        let generic2 = try decode(
+            data2, header: header2, book: book2,
+            width: 17, height: 5, branching: true, raw: 5,
+            offset: 0, multiplier: 1, maximum: nil
+        )
+        #expect(specialised2 == generic2)
+    }
+
+    @Test(arguments: [Int32(255), Int32(65535), Int32(0x3FFF_FFFF)])
+    func ansSingleLeafGradientUnitTransformShortcutMatchesReference(_ maxSample: Int32) throws {
+        let width = 19, height = 4
+        let anchors: [Int32] = [0, 1, maxSample / 2, maxSample - 1, maxSample]
+        let expectedSamples: [Int32] = (0..<(width * height)).map { idx in
+            anchors[(idx * 5 + idx / width * 3) % anchors.count]
+        }
+        var residuals: [Int32] = []
+        residuals.reserveCapacity(expectedSamples.count)
+        for y in 0..<height {
+            for x in 0..<width {
+                let i = y * width + x
+                let w: Int32 = x > 0 ? expectedSamples[i - 1] : (y > 0 ? expectedSamples[i - width] : 0)
+                let n: Int32 = y > 0 ? expectedSamples[i - width] : w
+                let nw: Int32 = (x > 0 && y > 0) ? expectedSamples[i - width - 1] : w
+                let predicted = min(max(w &+ n &- nw, min(w, n)), max(w, n))
+                residuals.append(expectedSamples[i] &- predicted)
+            }
+        }
+        let (data, header, book) = try ansStream(residuals)
+        let specialised = try decode(
+            data, header: header, book: book,
+            width: width, height: height, branching: false, raw: 5,
+            offset: 0, multiplier: 1, maximum: maxSample
+        )
+        let generic = try decode(
+            data, header: header, book: book,
+            width: width, height: height, branching: true, raw: 5,
+            offset: 0, multiplier: 1, maximum: maxSample
+        )
+        #expect(specialised == expectedSamples)
+        #expect(specialised == generic)
+    }
+
     @Test(arguments:[false,true])
     func zeroBitTokensStillObserveCancellationWithin256Writes(_ branching:Bool) async throws {
         for predictor: UInt32 in [0,5] {

@@ -30,11 +30,21 @@ package enum AliasTableError: Error, Sendable {
 
 package struct AliasTable: Sendable {
     package struct Entry: Sendable {
-        package var cutoff: UInt16
-        package var rightValue: UInt16
-        package var freq0: UInt16
-        package var offsets1: UInt16
-        package var freq1: UInt16
+        package var cutoff: UInt16 = 0
+        package var rightValue: UInt16 = 0
+        package var freq0: UInt16 = 0
+        package var offsets1: UInt16 = 0
+        package var freq1: UInt16 = 0
+
+        package init(
+            cutoff: UInt16, rightValue: UInt16, freq0: UInt16, offsets1: UInt16, freq1: UInt16
+        ) {
+            self.cutoff = cutoff
+            self.rightValue = rightValue
+            self.freq0 = freq0
+            self.offsets1 = offsets1
+            self.freq1 = freq1
+        }
     }
     package struct LookupResult: Sendable {
         package let value: Int     // symbol
@@ -164,5 +174,46 @@ package struct AliasTable: Sendable {
             : UInt32(pos)
         let freq = greater ? UInt32(entry.freq1) : UInt32(entry.freq0)
         return LookupResult(value: value, offset: offsetVal, freq: freq)
+    }
+
+    /// Build a flat `range`-entry table indexed directly by `slot = state & (range - 1)`.
+    /// Each `UInt64` packs `offsetPlusP` in bits `0..<16`, `symbol` in bits `16..<32`,
+    /// and `freq` in bits `32..<48` (with bits `48..<64` zero).
+    package func buildFlatSlots() -> [UInt64] {
+        let entrySize = entrySizeMinusOne + 1
+        let tableSize = entries.count
+        let range = tableSize &* entrySize
+        return [UInt64](unsafeUninitializedCapacity: range) { buffer, initializedCount in
+            guard let dst = buffer.baseAddress else {
+                initializedCount = 0
+                return
+            }
+            entries.withUnsafeBufferPointer { srcBuf in
+                guard let src = srcBuf.baseAddress else { return }
+                var outIdx = 0
+                for i in 0..<tableSize {
+                    let entry = src[i]
+                    let cut = Int(entry.cutoff)
+                    let sym0 = UInt64(truncatingIfNeeded: i) & 0xFFFF
+                    let freq0 = UInt64(entry.freq0)
+                    let base0 = (sym0 &<< 16) | (freq0 &<< 32)
+                    var p = 0
+                    while p < cut {
+                        dst[outIdx &+ p] = UInt64(truncatingIfNeeded: p) | base0
+                        p &+= 1
+                    }
+                    let sym1 = UInt64(entry.rightValue)
+                    let freq1 = UInt64(entry.freq1)
+                    let off1 = Int(entry.offsets1)
+                    let base1 = (sym1 &<< 16) | (freq1 &<< 32)
+                    while p < entrySize {
+                        dst[outIdx &+ p] = UInt64(truncatingIfNeeded: (off1 &+ p) & 0xFFFF) | base1
+                        p &+= 1
+                    }
+                    outIdx &+= entrySize
+                }
+            }
+            initializedCount = range
+        }
     }
 }

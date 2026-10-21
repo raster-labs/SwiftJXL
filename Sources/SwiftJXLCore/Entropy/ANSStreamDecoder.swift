@@ -67,24 +67,13 @@ package struct ANSStreamDecoder: Sendable {
         var aliases: [AliasTable] = []
         aliases.reserveCapacity(counts.count)
         for c in counts {
-            // libjxl trims trailing zeros for the alias-table input;
-            // the alias table itself does the trim too, but we keep
-            // the original counts in `distributions` for diagnostics.
             aliases.append(try AliasTable(
                 distribution: c,
                 logRange: ANSConstants.logTabSize,
                 logAlphaSize: logAlphaSize
             ))
         }
-        // Also build a simple distribution view (for `currentState`
-        // diagnostics — not used in lookup).
-        var dists: [ANSDistribution] = []
-        dists.reserveCapacity(counts.count)
-        for c in counts {
-            let raw = c.map { UInt32(bitPattern: $0) }
-            dists.append(try ANSDistribution(rawFrequencies: raw))
-        }
-        self.distributions = dists
+        self.distributions = []
         self.aliasTables = aliases
         self.useAliasTables = true
         self.clusterCount = aliases.count
@@ -151,6 +140,12 @@ package struct ANSStreamDecoder: Sendable {
 
     /// Current state — primarily for diagnostics / testing.
     package var currentState: UInt32 { state }
+
+    @inline(__always)
+    package mutating func updateState(_ newState: UInt32, initialised newInitialised: Bool) {
+        self.state = newState
+        self.initialised = newInitialised
+    }
 }
 
 /// Streaming-format rANS encoder. Companion to `ANSStreamDecoder`:

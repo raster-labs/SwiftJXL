@@ -42,22 +42,22 @@ package struct BitReader: Sendable {
     package let data: Data
     /// Contiguous copy of `data` (copied once at init) — the hot read
     /// path indexes this instead of going through `Data` subscripts.
-    private let bytes: [UInt8]
+    package let bytes: [UInt8]
     /// Absolute bit position in the stream (0 = LSB of first byte).
     /// Source of truth for bounds checks.
-    private var pos: Int
+    package var pos: Int
     /// Lookahead accumulator: the next `bitCount` stream bits starting
     /// at `pos`, LSB-first (the bit at `pos` is bit 0 of `bitBuf`).
-    private var bitBuf: UInt64
+    package var bitBuf: UInt64
     /// Number of valid bits in `bitBuf`.
-    private var bitCount: Int
+    package var bitCount: Int
     /// Next index in `bytes` to load into the accumulator.
-    private var nextByte: Int
+    package var nextByte: Int
     private var nestingDepth = 0
-    private var operations = 0
+    package var operations = 0
     package let scalarProfile: Bool
     package let budget: ScalarOperationBudget?
-    private let deadline: ContinuousClock.Instant
+    package let deadline: ContinuousClock.Instant
     private let maximumNestingDepth: Int
     private let maximumEntropyTableBytes: Int
     private var reservedEntropyTableBytes = 0
@@ -79,6 +79,21 @@ package struct BitReader: Sendable {
         // observe cancellation at the same bounded token/bit-read interval.
         try budget?.checkpoint()
         try Task.checkCancellation()
+        guard ContinuousClock.now < deadline else {
+            throw ScalarModularError.resourceLimit
+        }
+    }
+
+    @inline(never)
+    package static func checkCancellationAndDeadline(
+        budget: ScalarOperationBudget?,
+        deadline: ContinuousClock.Instant
+    ) throws {
+        if let budget {
+            try budget.checkCancellationOnly()
+        } else {
+            try Task.checkCancellation()
+        }
         guard ContinuousClock.now < deadline else {
             throw ScalarModularError.resourceLimit
         }
@@ -150,7 +165,6 @@ package struct BitReader: Sendable {
     }
 
     /// Top up the accumulator from `bytes` (to ≥ 57 bits, or to EOF).
-    @inline(__always)
     private mutating func refill() {
         while bitCount <= 56 && nextByte < bytes.count {
             bitBuf |= UInt64(bytes[nextByte]) &<< UInt64(bitCount)
