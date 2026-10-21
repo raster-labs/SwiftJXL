@@ -1,0 +1,61 @@
+{
+  "auditedAtUTC": "2026-10-16T05:53:50.161966+00:00",
+  "status": "passed",
+  "runnerSHA256": "72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065",
+  "checkCount": 13,
+  "checks": [
+    {
+      "check": "iteration1 original report byte preservation",
+      "passed": true
+    },
+    {
+      "check": "iteration1 original validator byte preservation",
+      "passed": true
+    },
+    {
+      "check": "iteration1 original metadata preserved",
+      "passed": true
+    },
+    {
+      "check": "iteration1 backup hashes",
+      "passed": true
+    },
+    {
+      "check": "iteration1 explicit re-audit evaluation mode",
+      "passed": true
+    },
+    {
+      "check": "iteration1 original qualification and eight validator scenarios retained",
+      "passed": true
+    },
+    {
+      "check": "iteration2 original report byte preservation",
+      "passed": true
+    },
+    {
+      "check": "iteration2 original validator byte preservation",
+      "passed": true
+    },
+    {
+      "check": "iteration2 original metadata preserved",
+      "passed": true
+    },
+    {
+      "check": "iteration2 backup hashes",
+      "passed": true
+    },
+    {
+      "check": "iteration2 explicit re-audit evaluation mode",
+      "passed": true
+    },
+    {
+      "check": "iteration2 original qualification and eight validator scenarios retained",
+      "passed": true
+    },
+    {
+      "check": "live raw source report remains unchanged",
+      "passed": true
+    }
+  ],
+  "scope": "Offline re-audit twice against isolated copies of retained iOS26.0 results; no simulator or benchmark execution. Original report and validator outputs remain byte-identical."
+}

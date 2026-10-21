@@ -47,7 +47,7 @@ package enum VarDCTEncoderPreparation {
         let g: [Float] = [-0.09495815671340026, -0.041031725066768575,
             0.013710004822696948, 0.006510206083837737, -0.0014789063378272242]
         let normalise = Float(1 / (1 + Double(4 * (g[0] + g[1] + g[2] + g[4] + 2 * g[3]))))
-        let w = g.map { $0 * normalise }
+        let w0 = g[0] * normalise, w1 = g[1] * normalise, w2 = g[2] * normalise, w3 = g[3] * normalise, w4 = g[4] * normalise
         func mirror(_ coordinate: Int, _ size: Int) -> Int {
             if size == 1 { return 0 }
             if coordinate < 0 { return -coordinate - 1 }
@@ -57,24 +57,49 @@ package enum VarDCTEncoderPreparation {
         var output = [Float](repeating: 0, count: input.count)
         try input.withUnsafeBufferPointer { source in
             try output.withUnsafeMutableBufferPointer { target in
+                let src = source.baseAddress!
+                let dst = target.baseAddress!
                 for y in 0..<height {
-                    let row = y * width
-                    let ym1 = mirror(y - 1, height) * width, yp1 = mirror(y + 1, height) * width
-                    let ym2 = mirror(y - 2, height) * width, yp2 = mirror(y + 2, height) * width
-                    for x in 0..<width {
-                        if x & 255 == 0 { try budget.checkpoint() }
+                    try budget.checkpoint()
+                    let row = y &* width
+                    let ym1 = mirror(y - 1, height) &* width, yp1 = mirror(y + 1, height) &* width
+                    let ym2 = mirror(y - 2, height) &* width, yp2 = mirror(y + 2, height) &* width
+                    let interiorStart = min(width, 2)
+                    let interiorEnd = max(interiorStart, width - 2)
+                    for x in 0..<interiorStart {
                         let xm1 = mirror(x - 1, width), xp1 = mirror(x + 1, width)
                         let xm2 = mirror(x - 2, width), xp2 = mirror(x + 2, width)
-                        // Preserve the scalar expression's left-to-right Float
-                        // sums; only address calculation and ownership change.
-                        let axis1 = source[row + xm1] + source[row + xp1] + source[ym1 + x] + source[yp1 + x]
-                        let diag1 = source[ym1 + xm1] + source[ym1 + xp1] + source[yp1 + xm1] + source[yp1 + xp1]
-                        let axis2 = source[row + xm2] + source[row + xp2] + source[ym2 + x] + source[yp2 + x]
-                        let knight = source[ym1 + xm2] + source[yp1 + xm2] + source[ym1 + xp2] + source[yp1 + xp2] + source[ym2 + xm1] + source[ym2 + xp1] + source[yp2 + xm1] + source[yp2 + xp1]
-                        let corner = source[ym2 + xm2] + source[ym2 + xp2] + source[yp2 + xm2] + source[yp2 + xp2]
-                        let value = normalise * source[row + x] + w[0] * axis1 + w[1] * diag1 + w[2] * axis2 + w[3] * knight + w[4] * corner
+                        let axis1 = src[row &+ xm1] + src[row &+ xp1] + src[ym1 &+ x] + src[yp1 &+ x]
+                        let diag1 = src[ym1 &+ xm1] + src[ym1 &+ xp1] + src[yp1 &+ xm1] + src[yp1 &+ xp1]
+                        let axis2 = src[row &+ xm2] + src[row &+ xp2] + src[ym2 &+ x] + src[yp2 &+ x]
+                        let knight = src[ym1 &+ xm2] + src[yp1 &+ xm2] + src[ym1 &+ xp2] + src[yp1 &+ xp2] + src[ym2 &+ xm1] + src[ym2 &+ xp1] + src[yp2 &+ xm1] + src[yp2 &+ xp1]
+                        let corner = src[ym2 &+ xm2] + src[ym2 &+ xp2] + src[yp2 &+ xm2] + src[yp2 &+ xp2]
+                        let value = normalise * src[row &+ x] + w0 * axis1 + w1 * diag1 + w2 * axis2 + w3 * knight + w4 * corner
                         guard value.isFinite else { throw VarDCTError.nonFiniteSample }
-                        target[row + x] = value
+                        dst[row &+ x] = value
+                    }
+                    for x in interiorStart..<interiorEnd {
+                        let xm1 = x &- 1, xp1 = x &+ 1, xm2 = x &- 2, xp2 = x &+ 2
+                        let axis1 = src[row &+ xm1] + src[row &+ xp1] + src[ym1 &+ x] + src[yp1 &+ x]
+                        let diag1 = src[ym1 &+ xm1] + src[ym1 &+ xp1] + src[yp1 &+ xm1] + src[yp1 &+ xp1]
+                        let axis2 = src[row &+ xm2] + src[row &+ xp2] + src[ym2 &+ x] + src[yp2 &+ x]
+                        let knight = src[ym1 &+ xm2] + src[yp1 &+ xm2] + src[ym1 &+ xp2] + src[yp1 &+ xp2] + src[ym2 &+ xm1] + src[ym2 &+ xp1] + src[yp2 &+ xm1] + src[yp2 &+ xp1]
+                        let corner = src[ym2 &+ xm2] + src[ym2 &+ xp2] + src[yp2 &+ xm2] + src[yp2 &+ xp2]
+                        let value = normalise * src[row &+ x] + w0 * axis1 + w1 * diag1 + w2 * axis2 + w3 * knight + w4 * corner
+                        guard value.isFinite else { throw VarDCTError.nonFiniteSample }
+                        dst[row &+ x] = value
+                    }
+                    for x in interiorEnd..<width {
+                        let xm1 = mirror(x - 1, width), xp1 = mirror(x + 1, width)
+                        let xm2 = mirror(x - 2, width), xp2 = mirror(x + 2, width)
+                        let axis1 = src[row &+ xm1] + src[row &+ xp1] + src[ym1 &+ x] + src[yp1 &+ x]
+                        let diag1 = src[ym1 &+ xm1] + src[ym1 &+ xp1] + src[yp1 &+ xm1] + src[yp1 &+ xp1]
+                        let axis2 = src[row &+ xm2] + src[row &+ xp2] + src[ym2 &+ x] + src[yp2 &+ x]
+                        let knight = src[ym1 &+ xm2] + src[yp1 &+ xm2] + src[ym1 &+ xp2] + src[yp1 &+ xp2] + src[ym2 &+ xm1] + src[ym2 &+ xp1] + src[yp2 &+ xm1] + src[yp2 &+ xp1]
+                        let corner = src[ym2 &+ xm2] + src[ym2 &+ xp2] + src[yp2 &+ xm2] + src[yp2 &+ xp2]
+                        let value = normalise * src[row &+ x] + w0 * axis1 + w1 * diag1 + w2 * axis2 + w3 * knight + w4 * corner
+                        guard value.isFinite else { throw VarDCTError.nonFiniteSample }
+                        dst[row &+ x] = value
                     }
                 }
             }

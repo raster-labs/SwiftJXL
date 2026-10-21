@@ -1,0 +1,324 @@
+{
+  "createdAtUTC": "2026-10-15T14:38:53.782375+00:00",
+  "scope": "Supplemental independently reviewed iOS qualification evidence. Original execution data preserved byte-for-byte; historical runner scripts are archived for provenance, not executed by this packaging operation.",
+  "files": {
+    "audit/independent-ios-asan-live-build-snapshot.json": {
+      "sha256": "414b3700160553e9039a59c42fe464448d8e18d79da98ea950ddde6c30bd4e1c",
+      "bytes": 5799
+    },
+    "audit/independent-ios-completed-run-bindings.json": {
+      "sha256": "69da19ffc0e58b90934db6769153df5b5813a7afc17bb12d86e8a205df7be910",
+      "bytes": 2959
+    },
+    "audit/independent-ios-debug-build-bindings.json": {
+      "sha256": "330de802582899c58bd6f6943513fce2643f6e177afae4baee747ab996815c56",
+      "bytes": 3076
+    },
+    "audit/independent-ios-results-audit.json": {
+      "sha256": "7d6c431da1f50058dcffd0e7f92112a6a0ac447142a7479d697f17e412a3c4a8",
+      "bytes": 6895
+    },
+    "audit/independent-ios-tsan-live-build-snapshot.json": {
+      "sha256": "84f8f7b899f88ddfa62b5b26d37bfa72e5a33fdb18170fb209e050701230edbf",
+      "bytes": 5799
+    },
+    "audit/independent-ios26-0-bindings-audit.json": {
+      "sha256": "4766f59e188b52ac3b405a8f8f875650b36818967a56ed6c9ea1787caa48ee27",
+      "bytes": 2666
+    },
+    "audit/independent-ios26-0-results-audit.json": {
+      "sha256": "3dda86bcf1cd2106b6471b10fedd81eb0052c1796ca9204f830a2b4a791e3aee",
+      "bytes": 1803
+    },
+    "audit/independent-ios26-0-selftest-repair-audit.json": {
+      "sha256": "984fb74cfda1b50a62502c2f25b5b54e3ee5393a2d39e07f1afec311498e95f9",
+      "bytes": 2620
+    },
+    "audit/independent-portable-followup-audit.json": {
+      "sha256": "4f8b52a56d2f7e81a80c3015b9aabfe8e63e7849a7d742309a97c857be434bf8",
+      "bytes": 4106
+    },
+    "preserved/ios-release-before-reaudit-report.json": {
+      "sha256": "d70f101f0115de16699d6cbd05ef87e965c579f51786dc5b2d4e619c7a35f876",
+      "bytes": 180176
+    },
+    "preserved/ios26-release-original-report.json": {
+      "sha256": "1ce05362ae165321c56d17b7348b641b5625f52ed1a776b91e7927831e213dc4",
+      "bytes": 2453949
+    },
+    "preserved/ios26-validator-self-test-original.json": {
+      "sha256": "6950ed29b8b546d051e1507dac87b11ecfb9bb801620fdfe12fc04aaa23dd3e6",
+      "bytes": 1636
+    },
+    "preserved/qualification-runner-11d1f427.py": {
+      "sha256": "11d1f427a9310807b584345e7f54d8390f53cce289095ba22451ccdcfb382eed",
+      "bytes": 66217
+    },
+    "preserved/qualification-runner-475cd8a7.py": {
+      "sha256": "475cd8a7fdc0e3f471ac43664a8fadaea7855c69939ca5f062a313f02bd7785a",
+      "bytes": 67040
+    },
+    "raw/ios-simulator-26.0-release/devices-after.json": {
+      "sha256": "1b5fc6910864d015864e9511bc53eb30d3307cc21a87a9a743e91937b546ec65",
+      "bytes": 30077
+    },
+    "raw/ios-simulator-26.0-release/devices-before.json": {
+      "sha256": "1b5fc6910864d015864e9511bc53eb30d3307cc21a87a9a743e91937b546ec65",
+      "bytes": 30077
+    },
+    "raw/ios-simulator-26.0-release/release/build-artifacts.json": {
+      "sha256": "e47b21a95ddfa39f64ed86d602fb840e5d71f8ffe341df4639bffa0f36f4380e",
+      "bytes": 15768
+    },
+    "raw/ios-simulator-26.0-release/release/build-bindings.json": {
+      "sha256": "ad977b7c761f3c146b8e2b20693d36d894137b52b849defa72a49fe08f056679",
+      "bytes": 12092
+    },
+    "raw/ios-simulator-26.0-release/release/reciprocal-sentinels.json": {
+      "sha256": "f51ccdd4dfa4345279dee5c211c553b827939bb78247b1aaff300037e148c80b",
+      "bytes": 2744
+    },
+    "raw/ios-simulator-26.0-release/release/reciprocal-sentinels/corrupt-vectors.json": {
+      "sha256": "4a8ec2114cdf1f1e74770f764e83976d819e8c1e5b7598d7b749a048e4891a98",
+      "bytes": 679991
+    },
+    "raw/ios-simulator-26.0-release/release/reciprocal-sentinels/corrupted_vector_bitpattern.log": {
+      "sha256": "8f61766c3a2570780275655cae94508dd0296b2b5d6ca7ccc62d3aeb64c3d7b0",
+      "bytes": 3364
+    },
+    "raw/ios-simulator-26.0-release/release/reciprocal-sentinels/missing_file_path.log": {
+      "sha256": "e4d7441b36a7a5cd1bd8ef149dfa384ae513cf8954ba4e7860da006b7e61f6d1",
+      "bytes": 3447
+    },
+    "raw/ios-simulator-26.0-release/release/reciprocal-sentinels/short-vectors.json": {
+      "sha256": "115396ec1ae20fb80580a9d9d4a93a326edefe1eeacaf6336beaa528306cf027",
+      "bytes": 18
+    },
+    "raw/ios-simulator-26.0-release/release/reciprocal-sentinels/short_vector_count_below_40000.log": {
+      "sha256": "1d5fe173a68cf5885b238a06bc26ce847b40137ba02e6126c1424bf1b21e7275",
+      "bytes": 3232
+    },
+    "raw/ios-simulator-26.0-release/release/summary.json": {
+      "sha256": "5d4c6f0576b78bde53a180ade2cf1dbd3a3636165e58c086545dd9e88a61461b",
+      "bytes": 1332
+    },
+    "raw/ios-simulator-26.0-release/release/tests.json": {
+      "sha256": "b0c8c9c734401bb46c6fc29ef309dd401a93158ae20862f6fa00e8660809bec9",
+      "bytes": 1135706
+    },
+    "raw/ios-simulator-26.0-release/report.json": {
+      "sha256": "df136d434e2e3746469db41970eea397c4c96a417e367b7d2c4e61f8df433be9",
+      "bytes": 2454923
+    },
+    "raw/ios-simulator-26.0-release/report.original.json": {
+      "sha256": "1ce05362ae165321c56d17b7348b641b5625f52ed1a776b91e7927831e213dc4",
+      "bytes": 2453949
+    },
+    "raw/ios-simulator-26.0-release/runtime-matches.json": {
+      "sha256": "b668b321a257f48d97fd7572f6f2a22fd984c8489ea717c344fa7598977fa851",
+      "bytes": 1307
+    },
+    "raw/ios-simulator-26.0-release/runtimes.json": {
+      "sha256": "dd0b8e7a0ad0947b692e9f4776808e0ee5a7e688a182b2b8c51fd49b80306577",
+      "bytes": 5572
+    },
+    "raw/ios-simulator-26.0-release/source-manifest-after.json": {
+      "sha256": "746ba268be0d03551e5d178cb189d375ec601649430935f7bff041af60d2640c",
+      "bytes": 167771
+    },
+    "raw/ios-simulator-26.0-release/source-manifest-before.json": {
+      "sha256": "3d03a2ed285bf0f2b45608598b72f269dbf6d7f9e9a61069563a29ff43de0658",
+      "bytes": 167771
+    },
+    "raw/ios-simulator-26.0-release/source-manifest.json": {
+      "sha256": "4ee451e5c1424f1e519d67c8d3815375b3b23205d1f3a6a2e2325b0c667e1793",
+      "bytes": 167716
+    },
+    "raw/ios-simulator-26.0-release/validator-self-test.json": {
+      "sha256": "f006eb2e5213f2ba99c96c6191ab4afa1e23bd33d282ff392ada433553360774",
+      "bytes": 1668
+    },
+    "raw/ios-simulator-debug-sanitizers/asan/build-artifacts.json": {
+      "sha256": "e306896cf711be8fe547ec47a569af86488dedbf73a6828aa38ebdcd34d79bd0",
+      "bytes": 15741
+    },
+    "raw/ios-simulator-debug-sanitizers/asan/build-bindings.json": {
+      "sha256": "ad977b7c761f3c146b8e2b20693d36d894137b52b849defa72a49fe08f056679",
+      "bytes": 12092
+    },
+    "raw/ios-simulator-debug-sanitizers/asan/summary.json": {
+      "sha256": "c63b3b397611c0524feaf0e3eb3f9c4959c0875f9f9deb38006a33ef142eb733",
+      "bytes": 1331
+    },
+    "raw/ios-simulator-debug-sanitizers/asan/tests.json": {
+      "sha256": "7b2106f0ef36c4aa534fe28e7709d0e23741049669b0787fcddef70fd5a7ce15",
+      "bytes": 1130264
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/build-artifacts.json": {
+      "sha256": "c5fa9b156480300bd6c3ba5c7e4ae8120cf95ea8b84f6dc0ac4bfec5f7d4e931",
+      "bytes": 15741
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/build-bindings.json": {
+      "sha256": "ad977b7c761f3c146b8e2b20693d36d894137b52b849defa72a49fe08f056679",
+      "bytes": 12092
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels.json": {
+      "sha256": "dcaaf84ce6df65ea169e41346d729171158d7883c8709d168316af70129d67e8",
+      "bytes": 2747
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/corrupt-vectors.json": {
+      "sha256": "9b4215085ba3f2aa1265475b1a41e2669511fb479b358fddeb647b8b2f59fae3",
+      "bytes": 679991
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/corrupted_vector_bitpattern.log": {
+      "sha256": "b63453484d859011b126b6f5cc9f85b8a4c29c5859f03b9f23ef8bd4b3120c0a",
+      "bytes": 15643192
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/missing_file_path.log": {
+      "sha256": "a4ef3272ff2f6b7731d38586346d70a0084b1f407f9f13100437b2e22099aaff",
+      "bytes": 3363
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/short-vectors.json": {
+      "sha256": "96fd6431f5d54a75c0e2322173d50a3a633ba5b5b6db419daed38a591b74c9f1",
+      "bytes": 18
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/reciprocal-sentinels/short_vector_count_below_40000.log": {
+      "sha256": "18b7447bb5fa3cb25e139c72603ad98c9582cef9f5ad1f0c0f065a4260119f61",
+      "bytes": 3613
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/summary.json": {
+      "sha256": "be9058014ebba6a4202745861426e6672496622eeba1f5c94bf1296da19ef082",
+      "bytes": 1331
+    },
+    "raw/ios-simulator-debug-sanitizers/debug/tests.json": {
+      "sha256": "ef1fb1ff1cf8592e9b0455d0cd20675129a0bd9398ffbefbf74213ab2147f17c",
+      "bytes": 1131971
+    },
+    "raw/ios-simulator-debug-sanitizers/devices-after.json": {
+      "sha256": "6aa35d0addb6060c61f3b63689370601f466dc5c3d513d1a952f40aecfb972f3",
+      "bytes": 24186
+    },
+    "raw/ios-simulator-debug-sanitizers/devices-before.json": {
+      "sha256": "6aa35d0addb6060c61f3b63689370601f466dc5c3d513d1a952f40aecfb972f3",
+      "bytes": 24186
+    },
+    "raw/ios-simulator-debug-sanitizers/report.json": {
+      "sha256": "3b77f5ef50def3c85d5b92ec9037a4f0e18785f11fc05f4a7ed8582f30412607",
+      "bytes": 6320152
+    },
+    "raw/ios-simulator-debug-sanitizers/runtime-matches.json": {
+      "sha256": "b668b321a257f48d97fd7572f6f2a22fd984c8489ea717c344fa7598977fa851",
+      "bytes": 1307
+    },
+    "raw/ios-simulator-debug-sanitizers/runtimes.json": {
+      "sha256": "1f1a525ae63f337c52cc5e154b89b1c44a4dfc11524bc4a0ff269816e078aedf",
+      "bytes": 4507
+    },
+    "raw/ios-simulator-debug-sanitizers/source-manifest-after.json": {
+      "sha256": "154591228f9697bbf3bd5cb8513a6d4d2abc8167e1e774a0f24c7fedca6aaa15",
+      "bytes": 167771
+    },
+    "raw/ios-simulator-debug-sanitizers/source-manifest-before.json": {
+      "sha256": "76c8bee5974b87044de06220a20f8ebabf9c62edde8693ec88384618253f7991",
+      "bytes": 167771
+    },
+    "raw/ios-simulator-debug-sanitizers/source-manifest.json": {
+      "sha256": "557f29d05fafccec5bf439e558d80cd6add47f0b3544fd8ca1762a042d3059e8",
+      "bytes": 167716
+    },
+    "raw/ios-simulator-debug-sanitizers/tsan/build-artifacts.json": {
+      "sha256": "86d69a8ade26b4e4e29ea5c8ba7e5f9128b98c6f0da2f32dc327bff4395dd3ec",
+      "bytes": 15741
+    },
+    "raw/ios-simulator-debug-sanitizers/tsan/build-bindings.json": {
+      "sha256": "ad977b7c761f3c146b8e2b20693d36d894137b52b849defa72a49fe08f056679",
+      "bytes": 12092
+    },
+    "raw/ios-simulator-debug-sanitizers/tsan/summary.json": {
+      "sha256": "3c44680d5b761ee0a37d92bf8a17b1e05879f1c6e7bf7b60a43b5d9842da46f2",
+      "bytes": 1331
+    },
+    "raw/ios-simulator-debug-sanitizers/tsan/tests.json": {
+      "sha256": "34e24220175235209c671fad395b6f4024100a41b824250761e242798280e815",
+      "bytes": 1129118
+    },
+    "raw/ios-simulator-debug-sanitizers/validator-self-test.json": {
+      "sha256": "8a8afdc0b03f8d273c760254a3818e4097ca8d23be99863087d5a25b69249758",
+      "bytes": 1668
+    },
+    "raw/ios-simulator-release/devices-after.json": {
+      "sha256": "6aa35d0addb6060c61f3b63689370601f466dc5c3d513d1a952f40aecfb972f3",
+      "bytes": 24186
+    },
+    "raw/ios-simulator-release/devices-before.json": {
+      "sha256": "6aa35d0addb6060c61f3b63689370601f466dc5c3d513d1a952f40aecfb972f3",
+      "bytes": 24186
+    },
+    "raw/ios-simulator-release/release/build-bindings.json": {
+      "sha256": "ad977b7c761f3c146b8e2b20693d36d894137b52b849defa72a49fe08f056679",
+      "bytes": 12092
+    },
+    "raw/ios-simulator-release/release/reciprocal-sentinels.json": {
+      "sha256": "63d03f60a0367fb4efd0f285b72b123b746b4ba3970a71bccd894cbc0bfd6276",
+      "bytes": 2734
+    },
+    "raw/ios-simulator-release/release/reciprocal-sentinels/corrupt-vectors.json": {
+      "sha256": "9b4215085ba3f2aa1265475b1a41e2669511fb479b358fddeb647b8b2f59fae3",
+      "bytes": 679991
+    },
+    "raw/ios-simulator-release/release/reciprocal-sentinels/corrupted_vector_bitpattern.log": {
+      "sha256": "148bc39b81c280ff8f32fb028adee04fb0704de2ebe8f0295e9c4d53536d3761",
+      "bytes": 15643039
+    },
+    "raw/ios-simulator-release/release/reciprocal-sentinels/missing_file_path.log": {
+      "sha256": "8f3fc667ff3a1fabb414f43077d6dde84694bd9585411d94effad36d89ddfd82",
+      "bytes": 3424
+    },
+    "raw/ios-simulator-release/release/reciprocal-sentinels/short-vectors.json": {
+      "sha256": "96fd6431f5d54a75c0e2322173d50a3a633ba5b5b6db419daed38a591b74c9f1",
+      "bytes": 18
+    },
+    "raw/ios-simulator-release/release/reciprocal-sentinels/short_vector_count_below_40000.log": {
+      "sha256": "3e4f890726cdee5a4c4276167ccccec5a550921e31f60032a9361df0978bdfae",
+      "bytes": 3674
+    },
+    "raw/ios-simulator-release/release/summary.json": {
+      "sha256": "36c6a45c24e9f895934da171a3576931a4e216f8d56d8148ddced3ab8654a285",
+      "bytes": 1331
+    },
+    "raw/ios-simulator-release/release/tests.json": {
+      "sha256": "eb1066a6281e939d9ccf03d9255daa9fab9aba6f0a8c2bcc770fad00722a4f5f",
+      "bytes": 1135809
+    },
+    "raw/ios-simulator-release/report.json": {
+      "sha256": "5c1fd162f14360f91a4b9a2173dab2530ae81b3ce8e44621695c6ebe6cad4ba8",
+      "bytes": 2101190
+    },
+    "raw/ios-simulator-release/report.original.json": {
+      "sha256": "d70f101f0115de16699d6cbd05ef87e965c579f51786dc5b2d4e619c7a35f876",
+      "bytes": 180176
+    },
+    "raw/ios-simulator-release/runtime-matches.json": {
+      "sha256": "b668b321a257f48d97fd7572f6f2a22fd984c8489ea717c344fa7598977fa851",
+      "bytes": 1307
+    },
+    "raw/ios-simulator-release/runtimes.json": {
+      "sha256": "5bd88fd7a1502366f8a48dd53516e7e6da5e7c8648b5e0f8b5373da7b3ad3a8c",
+      "bytes": 4507
+    },
+    "raw/ios-simulator-release/source-manifest.json": {
+      "sha256": "54a2d307f1674b99890113831bc1c765e7284276652db9f0a72d4ba3779434a1",
+      "bytes": 167630
+    },
+    "raw/ios-simulator-release/validator-self-test.json": {
+      "sha256": "725de7c5843c8980b8ce02467338bc78ff6e1e11d02661fd19fee70c3535419d",
+      "bytes": 1722
+    }
+  },
+  "archive": {
+    "file": "independent-evidence-supplement.zip",
+    "bytes": 3378376,
+    "sha256": "37ab2910ffc291ba3c6efe7ab1c7ed76b1480cb640f1fa5fb6982916a5ebb9aa",
+    "verifiedEntries": 78
+  }
+}

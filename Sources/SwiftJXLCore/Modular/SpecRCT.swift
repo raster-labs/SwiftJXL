@@ -32,32 +32,35 @@ package enum SpecRCT {
         try channel0.withUnsafeMutableBufferPointer { input0 in
             try channel1.withUnsafeMutableBufferPointer { input1 in
                 try channel2.withUnsafeMutableBufferPointer { input2 in
-                    let outputs: (UnsafeMutableBufferPointer<Int32>, UnsafeMutableBufferPointer<Int32>, UnsafeMutableBufferPointer<Int32>)
-                    switch permutation {
-                    case 0: outputs = (input0,input1,input2)
-                    case 1: outputs = (input1,input2,input0)
-                    case 2: outputs = (input2,input0,input1)
-                    case 3: outputs = (input0,input2,input1)
-                    case 4: outputs = (input1,input0,input2)
-                    default: outputs = (input2,input1,input0)
-                    }
                     let count = input0.count
+                    guard count > 0 else { return }
+                    let in0 = input0.baseAddress!, in1 = input1.baseAddress!, in2 = input2.baseAddress!
+                    let outputs: (UnsafeMutablePointer<Int32>, UnsafeMutablePointer<Int32>, UnsafeMutablePointer<Int32>)
+                    switch permutation {
+                    case 0: outputs = (in0, in1, in2)
+                    case 1: outputs = (in1, in2, in0)
+                    case 2: outputs = (in2, in0, in1)
+                    case 3: outputs = (in0, in2, in1)
+                    case 4: outputs = (in1, in0, in2)
+                    default: outputs = (in2, in1, in0)
+                    }
+                    let out0 = outputs.0, out1 = outputs.1, out2 = outputs.2
                     var start = 0
                     while start < count {
                         try checkpoint()
                         let end = start + min(1024, count - start)
                         if custom == 6 {
                             for i in start..<end {
-                                let first = input0[i], second = input1[i], third = input2[i]
+                                let first = in0[i], second = in1[i], third = in2[i]
                                 let temporary = first &- (third >> 1)
                                 let b = third &+ temporary
                                 let c = temporary &- (second >> 1)
                                 let a = c &+ second
-                                outputs.0[i] = a; outputs.1[i] = b; outputs.2[i] = c
+                                out0[i] = a; out1[i] = b; out2[i] = c
                             }
                         } else {
                             for i in start..<end {
-                                let first = input0[i], second = input1[i], third = input2[i]
+                                let first = in0[i], second = in1[i], third = in2[i]
                                 let c = custom & 1 != 0 ? third &+ first : third
                                 let b: Int32
                                 switch custom >> 1 {
@@ -65,7 +68,7 @@ package enum SpecRCT {
                                 case 2: b = second &+ ((first &+ c) >> 1)
                                 default: b = second
                                 }
-                                outputs.0[i] = first; outputs.1[i] = b; outputs.2[i] = c
+                                out0[i] = first; out1[i] = b; out2[i] = c
                             }
                         }
                         start = end

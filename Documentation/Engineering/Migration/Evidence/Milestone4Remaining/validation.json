@@ -1,9 +1,10 @@
 {
   "schemaVersion": "1.0.0",
-  "evidenceCompleteAtUTC": "2026-10-15T14:15:46.958487+00:00",
-  "generatedAtUTC": "2026-10-15T14:15:46.958480+00:00",
+  "evidenceCompleteAtUTC": "2026-10-21T10:15:00+00:00",
+  "generatedAtUTC": "2026-10-21T10:15:00+00:00",
+  "preservedInitialEvidenceCompleteAtUTC": "2026-10-16T06:50:40.532103+00:00",
   "milestone": "Milestone 4 Remaining Work Follow-Up",
-  "overallStatus": "qualified_for_pr_review_with_explicit_unexecuted_gates",
+  "overallStatus": "local_m4_opt_10_and_jpeg_3_accepted_with_explicit_pending_ci_and_platform_gates",
   "wholeMilestoneComplete": false,
   "contractVersion": "0.10.0",
   "commonContractManifestSHA256": "20f3236bc0d427c1af162c784e90adc0c89f10916b6f1fb4096c69ccb7b7d544",
@@ -19,7 +20,17 @@
     "finalSourcePortableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/source-manifest-final.json",
     "finalSourcePortableReportSHA256": "b5df7fdad4f12fbe48c50116c412b7eda74599df5cf26c847f49383ec09ac647",
     "changedFilesInFinalSourceCount": 3,
-    "compiledObjectFilesIdenticalAcrossAllFourModes": true
+    "compiledObjectFilesIdenticalAcrossAllFourModes": false,
+    "swiftJXLObjectUnchangedBetweenRevisionsWithinEachOfFourModes_NativeMacOSSwift64": true,
+    "swiftJXLCoreObjectUnchangedBetweenRevisionsWithinEachOfFourModes_AfterHelperExtraction": false,
+    "historicalClosureAttemptECDB529BothObjectsUnchangedBetweenRevisionsWithinEachOfFourModes_NativeMacOSSwift64": true,
+    "swiftJXLObjectSHA256ByMode_NativeMacOSSwift64": {
+      "Release": "1102488958caf5f9385e3bfdaa56fa5abb057abc39209dcfd2ebeb6737931ac2",
+      "Debug": "47446af4eb3bc777b3dfe4eb6bec879b4cb0766fe044bddbddddd36020838e22",
+      "ASan": "223c69fe5db536a0fccc1f4775bc5b5dbc28602e241fbfadea1baf0f2a9b2cf8",
+      "TSan": "e6033a9cc623c77206f04505fbaad183b74fd1323718232f08bac2d6fe8c7f5a"
+    },
+    "compiledObjectEqualityScope": "Under native macOS Swift 6.4 (swiftlang-6.4.0.34.1), object equality compares revisions within each respective build configuration (not between Release/Debug/ASan/TSan, whose SwiftJXL.o hashes are distinct: 11024889..., 47446af4..., 223c69fe..., e6033a9c...). Between pre-fix eaf011e and final 294ed8f, SwiftJXL.o remained byte-for-byte unchanged within each of the four configurations, whereas SwiftJXLCore.o changed within each configuration (Release 2e44f687... -> 813d5b71..., Debug 43e7d7d5... -> 4d9cb8fe..., ASan ec36f6a5... -> cb6f557d..., TSan 96fd20ae... -> 779656a4...) due to extracting private helper VarDCTSmallAnalysis.apply(_:identifier:buffer:dct:). Only the superseded closure-annotation commit ecdb529 (release-7) had both SwiftJXL.o and SwiftJXLCore.o unchanged from eaf011e within each configuration on native macOS Swift 6.4. Object-file equality was measured on native macOS Swift 6.4 only, not on iOS or Swift 6.2."
   },
   "coreTestSuites": {
     "release-6": {
@@ -171,7 +182,11 @@
         "skips": 0
       },
       "caseExecutions": 2048,
-      "parameterisedCaseStarts": 1806
+      "parameterisedCaseStarts": 1806,
+      "mode": "release",
+      "packageUnchanged": true,
+      "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "discoveredDeclarations": 365
     }
   },
   "armQualification": {
@@ -961,7 +976,7 @@
     },
     "iosSimulatorSuiteQualification": {
       "runnerScript": "Scripts/TestSupport/qualify-ios-simulator.py",
-      "runnerScriptSHA256": "4be74712e4a1fe7a2b1da5e189c15e9e5b0bdb0d3f6383124592d3830001c6d4",
+      "runnerScriptSHA256": "72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065",
       "nonEmptyOutputDirectoryGuardProof": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-nonempty-guard-proof.json",
       "nonEmptyOutputDirectoryGuardProofSHA256": "e86eb22b9d81d20085c08b253837fdad4aacf1102993a47ec34f32ef7b205145",
       "expectedIOSDeclarations": 359,
@@ -993,13 +1008,20 @@
         "portableValidatorSelfTest": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.0-release-validator-self-test.json",
         "portableValidatorSelfTestSHA256": "867b66abb87b4a3d49e1f4416f970c1e8fa9dc5f49dc305174dfdccd4ac98991",
         "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.0-release-xcodebuild.log.gz",
-        "portableLogGzSHA256": "7941b85703d837bd3fd19316d92030521197290d2a60daccc1380e50ec8288a1"
+        "portableLogGzSHA256": "7941b85703d837bd3fd19316d92030521197290d2a60daccc1380e50ec8288a1",
+        "sourceCommit": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+        "overallRunnerStartedAtUTC": "2026-10-15T15:09:27.677380+00:00",
+        "overallRunnerFinishedAtUTC": "2026-10-15T15:14:06.361030+00:00",
+        "overallRunnerSeconds": 278.683374,
+        "mainXcodebuildTestStartedAtUTC": "2026-10-15T15:09:56.150062+00:00",
+        "mainXcodebuildTestFinishedAtUTC": "2026-10-15T15:13:20.297049+00:00",
+        "mainXcodebuildTestSeconds": 204.146533
       },
       "ios26_5Release": {
         "runtimeVersion": "26.5",
         "runtimeBuild": "23F77",
         "runtimeIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
-        "sourceTree": "pre_swift62_fix_1195_files_identical_compiled_objects",
+        "sourceTree": "pre_swift62_fix_1195_files_eaf011e914ee2ab36af5266d7fba9a8e42471ecf",
         "status": "passed",
         "startedAtUTC": "2026-10-15T12:00:43.934777+00:00",
         "finishedAtUTC": "2026-10-15T12:08:15.891646+00:00",
@@ -1012,19 +1034,29 @@
         "validatorSelfTestPassed": true,
         "evaluationMode": "historical_reaudit",
         "runnerNonDriftStatus": "unknown_not_captured_at_execution",
-        "rawReportSHA256": "5c1fd162f14360f91a4b9a2173dab2530ae81b3ce8e44621695c6ebe6cad4ba8",
+        "rawReportSHA256": "a4982c85571ca32eccca98782497749a7136cb35e3d4b3b90e907af58d144992",
         "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-release-report.json",
-        "portableReportSHA256": "992ead1eb274de5f4b69026d06f64f8d415d3478a16e0500148b607d11e2fd4a",
+        "portableReportSHA256": "c85cf93713c187daf9d2d1a432baf876b27e4b23515feea307980c65098f0d3b",
         "portableValidatorSelfTest": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-release-validator-self-test.json",
-        "portableValidatorSelfTestSHA256": "024597eaa9c12d452f7945632b323612ddd80352ace47452edea3576b64c3422",
+        "portableValidatorSelfTestSHA256": "4d0c85c889c2e33f7eb460739d034259d00821732da76a8adc937b84d2b57fad",
         "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-release-xcodebuild.log.gz",
-        "portableLogGzSHA256": "ff732e49008f522d990f6e90e0829581d3e0aa32d6fb30aa398ef6b29f1f404a"
+        "portableLogGzSHA256": "ff732e49008f522d990f6e90e0829581d3e0aa32d6fb30aa398ef6b29f1f404a",
+        "sourceCommit": "eaf011e914ee2ab36af5266d7fba9a8e42471ecf",
+        "overallRunnerStartedAtUTC": "2026-10-15T12:00:43.934777+00:00",
+        "overallRunnerFinishedAtUTC": "2026-10-15T12:08:15.891646+00:00",
+        "overallRunnerSeconds": 451.956675,
+        "mainXcodebuildTestStartedAtUTC": "2026-10-15T12:01:43.778286+00:00",
+        "mainXcodebuildTestFinishedAtUTC": "2026-10-15T12:06:15.918318+00:00",
+        "mainXcodebuildTestSeconds": 272.139227,
+        "preservedOriginalReportSHA256": "d70f101f0115de16699d6cbd05ef87e965c579f51786dc5b2d4e619c7a35f876",
+        "preservedInitialReauditReportSHA256": "5c1fd162f14360f91a4b9a2173dab2530ae81b3ce8e44621695c6ebe6cad4ba8",
+        "preservedInitialValidatorSelfTestSHA256": "725de7c5843c8980b8ce02467338bc78ff6e1e11d02661fd19fee70c3535419d"
       },
       "ios26_5DebugAndSanitizers": {
         "runtimeVersion": "26.5",
         "runtimeBuild": "23F77",
         "runtimeIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
-        "sourceTree": "pre_swift62_fix_1195_files_identical_compiled_objects",
+        "sourceTree": "pre_swift62_fix_1195_files_eaf011e914ee2ab36af5266d7fba9a8e42471ecf",
         "status": "passed",
         "startedAtUTC": "2026-10-15T12:22:31.046216+00:00",
         "finishedAtUTC": "2026-10-15T13:26:17.160279+00:00",
@@ -1048,7 +1080,8 @@
             "sanitizers": [],
             "builtArtifactsCaptured": true,
             "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-debug-xcodebuild.log.gz",
-            "portableLogGzSHA256": "29ed72cff4d0127659dc6f005d16af5ef95ab784a9fd65d811cfb831f8e25d4c"
+            "portableLogGzSHA256": "29ed72cff4d0127659dc6f005d16af5ef95ab784a9fd65d811cfb831f8e25d4c",
+            "timingScope": "main_xcodebuild_test_command_followed_by_negative_reciprocal_sentinels_until_12_43_48Z"
           },
           "asan": {
             "status": "passed",
@@ -1064,7 +1097,8 @@
             ],
             "builtArtifactsCaptured": true,
             "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-asan-xcodebuild.log.gz",
-            "portableLogGzSHA256": "132243cd059de4d910a792de84a97a8e81aaea4292d465903b3ce49c006c17be"
+            "portableLogGzSHA256": "132243cd059de4d910a792de84a97a8e81aaea4292d465903b3ce49c006c17be",
+            "timingScope": "main_xcodebuild_test_command"
           },
           "tsan": {
             "status": "passed",
@@ -1080,9 +1114,19 @@
             ],
             "builtArtifactsCaptured": true,
             "portableLogGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ios-simulator-26.5-tsan-xcodebuild.log.gz",
-            "portableLogGzSHA256": "f82a2ed2055561dd310791d929569e319161d071b8ecf9f4fdfdf17f6c5126aa"
+            "portableLogGzSHA256": "f82a2ed2055561dd310791d929569e319161d071b8ecf9f4fdfdf17f6c5126aa",
+            "timingScope": "main_xcodebuild_test_command"
           }
-        }
+        },
+        "sourceCommit": "eaf011e914ee2ab36af5266d7fba9a8e42471ecf",
+        "overallRunnerSeconds": 3826.113789
+      },
+      "executionRunnerSnapshots": {
+        "ios26_5_release_initial": "not_captured_before_reaudit",
+        "ios26_5_debug_asan_tsan": "11d1f427a9310807b584345e7f54d8390f53cce289095ba22451ccdcfb382eed",
+        "ios26_0_release_first_ecdb529": "475cd8a7b4f78087279f58ca65f95f94a5955a0e2eb2d282c8b02348cd117021",
+        "ios26_0_release_2_final_294ed8f": "4be74712e4a1fe7a2b1da5e189c15e9e5b0bdb0d3f6383124592d3830001c6d4",
+        "currentCheckedInRunnerWithReauditPreservation": "72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065"
       }
     }
   },
@@ -1127,30 +1171,353 @@
       "losslessSizeTriggers": 0
     },
     "candidateOnlyPrimaryRowCount": 11,
-    "diagnosticTriggerRowCount": 10
+    "diagnosticTriggerRowCount": 10,
+    "postFixVarDCTQualification": {
+      "sourceCommit": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+      "generatedAtUTC": "2026-10-16T05:46:59.141327+00:00",
+      "rawSummarySHA256": "ae2cf9ed4c75b8f85f7a54e9bcc71b447357ab6ac28c2f8dff38b3474184301d",
+      "portableSummary": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/performance-postfix-vardct.json",
+      "portableSummarySHA256": "ef5306684d0b675bc13916d79585f64205778acddc99b00ebb112baf529dd935",
+      "portableRawMatricesAndProcessesGz": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/performance-postfix-vardct-raw.json.gz",
+      "portableRawMatricesAndProcessesGzSHA256": "395b0f16ec034af3664a319703bfa63a9b327972e1ce7376ca5553b378d6ba59",
+      "uncompressedRawArchiveJSONSHA256": "fcd9cb249461031f7ee96c4abce9ade8c117cbe47c40969572e752c94ed9e357",
+      "independentAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-postfix-performance-audit.json",
+      "independentAuditSHA256": "47c4ab6c2697dc2d5b8cbd476adbb2f71472bff349193fe24f9838f934b8c22f",
+      "independentAuditChecksPassed": 289,
+      "rawProcessesAudited": 288,
+      "publicDefaultVarDCTSummary": {
+        "rows": 22,
+        "paired": 14,
+        "candidateOnly": 8,
+        "repeatedLatencyTriggers": 0,
+        "repeatedRSSTriggers": 0,
+        "losslessSizeTriggers": 0
+      },
+      "oneWorkerDiagnosticVarDCTSummary": {
+        "rows": 22,
+        "paired": 14,
+        "candidateOnly": 8,
+        "repeatedLatencyTriggers": 7,
+        "repeatedRSSTriggers": 0,
+        "losslessSizeTriggers": 0
+      },
+      "combinedOpenOneWorkerDiagnosticTriggerCount": 10,
+      "all11StreamsByteIdenticalAcrossPreFixPostFixDefaultAndOneWorker": true,
+      "portableRawArchiveAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-portable-postfix-performance-audit.json",
+      "portableRawArchiveAuditSHA256": "3951f6569e642921c5f80fafe1518648576de818e860679798698f34022e80e2",
+      "portableRawArchiveAuditChecksPassed": 1428
+    }
   },
   "unexecutedRequiredGates": [
     {
+      "gate": "Hosted GitHub Actions 12-job CI rerun on the frozen M4-OPT-10 / M4-JPEG-3 working tree (Linux Swift 6.2.4 / 6.4.1 x86_64 + arm64 Release/Debug/ASan/TSan, hosted macOS 26 build/test/CLI/audit)",
+      "status": "pending_assigned_to_github_ci",
+      "reason": "The frozen M4-OPT-10 / M4-JPEG-3 source patch (source.patch SHA-256 58b17e31ab21f57e694276acd778f688bda59804429a12814e5f39e987f0a150 on base commit 294ed8fdf57eb97ca46003171f2b012a4618a14b) remains local and uncommitted per owner instruction; hosted 12-job CI runs 38760811777 and 38856715114 passed 12/12 on 294ed8f / dcdbec1 prior to the local M4-OPT-10 source changes."
+    },
+    {
       "gate": "Exact macOS 26.0 native/VM runtime execution",
-      "status": "unexecuted",
-      "reason": "Local Apple Silicon workstation runs macOS 27.0.1 (build 26A434) with ~6.0 GiB free disk space and no local macOS 26.0 VM image installed; GitHub Actions macos-26-arm64 hosted runners run macOS 26.6.2 (build 25G83). Note: iOS 26.0 (build 23A343) and watchOS 26.0 (build 23R353) minimum-floor simulator runtimes are installed and executed locally."
+      "status": "pending_assigned_to_github_ci_or_dedicated_runner",
+      "reason": "Local Apple Silicon workstation runs macOS 27.0.1 (build 26A434) without an exact macOS 26.0 VM/runtime, and GitHub Actions macos-26-arm64 hosted runners run macOS 26.6.2 (build 25G83). Exact iOS 26.0 (build 23A343) and watchOS 26.0 (build 23R353) minimum-floor simulator runtimes were executed locally."
+    },
+    {
+      "gate": "Full current-source iOS Simulator Debug / ASan / TSan test-bundle reruns and CLI TSan rerun",
+      "status": "not_rerun_on_m4opt10_patch_historical_eaf011e_preserved",
+      "reason": "Current-source M4-OPT-10 iOS Simulator qualification executed Release only on iOS 26.0 (23A343) and iOS 26.5 (23F77) (both 362 declarations / 1,960 leaf cases passed), and current-source CLI qualification executed Release, Debug, and ASan (11/11 commands each) plus native macOS Debug/ASan/TSan on all 16 affected suites (120 declarations / 490 cases each). Full 359-declaration / 1,955-case iOS 26.5 Debug/ASan/TSan and 11-command CLI TSan remain preserved historical evidence on pre-M4-OPT-10 source eaf011e914ee2ab36af5266d7fba9a8e42471ecf and are not claimed as current-source reruns."
     },
     {
       "gate": "Out-of-scope hardware and non-iOS/macOS simulator targets (Intel x86_64 macOS, physical iPhone/iPad/Apple TV/Apple Watch/Vision Pro devices, full test-bundle execution on tvOS/watchOS/visionOS simulators)",
-      "status": "out_of_scope_unexecuted",
-      "reason": "Owner-scoped qualification for this slice targets this Apple Silicon Mac and installed iOS simulators (iOS 26.0 build 23A343 and iOS 26.5 build 23F77, which both passed all 359 compatible declarations / 1,955 cases). Intel x86_64, physical devices (0 attached), and full test bundles on tvOS/watchOS/visionOS simulators (covered by 10-target SDK builds and standalone smoke probes) remain unqualified/out of scope."
-    },
-    {
-      "gate": "3x3600s continuous malformed-JPEG mutation campaign gate",
-      "status": "unexecuted",
-      "reason": "Security work is scoped to defensive source review, bounds/arithmetic hardening, and deterministic regression/sanitizer suites."
-    },
-    {
-      "gate": "Hosted GitHub Actions CI verification on the updated PR #33 head commit",
-      "status": "pending_ci_execution",
-      "reason": "Run 38726940479 on commit eaf011e914ee2ab36af5266d7fba9a8e42471ecf identified Swift 6.2 expression type-checking timeouts in VarDCTSmallAnalysis.swift, VarDCTEncoderPreparationTests.swift, and VarDCTWorkspaceTests.swift; the additive repair commit will be verified on GitHub Actions after push."
+      "status": "out_of_local_scope_pending_ci_or_device_runners",
+      "reason": "Owner-scoped local qualification targets this Apple Silicon Mac (macOS 27.0.1 build 26A434) and installed iOS Simulators 26.0 (23A343) and 26.5 (23F77). Native Intel x86_64 macOS, physical Apple devices (0 attached), and full test-bundle execution on tvOS/watchOS/visionOS simulators remain outside local scope."
     }
   ],
+  "resolvedLocalGatesInThisFollowUp": [
+    {
+      "gate": "10 constrained single-worker (maximumWorkers=1) latency findings (3 Modular + 7 VarDCT) under PERF-03 (M4-OPT-10)",
+      "status": "resolved_and_independently_accepted_by_codex",
+      "codexAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/performance-findings-final-audit-20261021.json",
+      "codexAuditReceiptSHA256": "2e89ec44aebb9efeb9d3ea4cc551cc9a5a3692118613c1238c6ca4137f8f2a5e",
+      "checksPassed": 53,
+      "findingsAccepted": 10,
+      "summary": "All 10 original single-worker diagnostic findings (3 Modular + 7 VarDCT) and all 28 paired rows in full-matrix-pass4/constrained-w1/results.json (SHA-256 0693ad9a1d628697eaa819d011a6e94f884ed7bfef4b248871560064763be675) passed with 0 repeated latency, RSS, or lossless-size triggers at maximumWorkers=1, while public-default-r2 (36 rows) and native-results-r2 (12 rows) also passed with 0 repeated triggers and byte-identical encoded streams."
+    },
+    {
+      "gate": "3x3600s continuous malformed-JPEG ASan mutation campaign gate (jpeg-inspect, jpeg-decode, jpeg-caller) (M4-JPEG-3)",
+      "status": "resolved_and_independently_accepted_by_codex",
+      "codexAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/jpeg-campaigns-final-audit-20261021.json",
+      "codexAuditReceiptSHA256": "b735bf06a78e5ed9a929272c4d67129563a0d77939d486ca0b0aa0077fe3aa57",
+      "aggregateChecksPassed": 17,
+      "perCampaignChecksPassed": 314,
+      "campaignsAccepted": 3,
+      "totalIterations": 515643,
+      "totalCampaignSeconds": 10800.024211,
+      "summary": "All three 3,600-second continuous ASan malformed-JPEG mutation campaigns (inspect-r2: 148,773 iterations / 3600.009459s; decode: 183,899 iterations / 3600.007505s; caller: 182,971 iterations / 3600.007247s; each after 144/144 deterministic preflight seeds and 4/4 canary self-tests) completed with actual child exit 0, 0 crashes, 0 ASan findings, 0 timeouts, and 0 unaccepted statuses."
+    }
+  ],
+  "m4Opt10AndJpeg3LocalQualification": {
+    "status": "completed_and_independently_accepted_by_codex",
+    "baseCommit": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+    "freezeManifestV2": {
+      "path": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/implementation-freeze-m4opt10-v2.json",
+      "sha256": "e7b9281764542ff013c5e8c4cbce4e583f90a1dda480e3079999639aefe0fff1",
+      "sourceManifestCount": 1195,
+      "sourceAndTestSwiftFiles": 200,
+      "modifiedProductionAndTestFiles": 23,
+      "sourcePatchPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/optimisation/full-matrix-pass4/source.patch",
+      "sourcePatchSHA256": "58b17e31ab21f57e694276acd778f688bda59804429a12814e5f39e987f0a150",
+      "sourceFilesManifestPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/optimisation/full-matrix-pass4/source-files.sha256",
+      "sourceFilesManifestSHA256": "c65670fde46038c8506b96211d7a0bbf6e9e895a0b00c594c4ea141f7cef15ad",
+      "packageSwiftSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "jpegMutationProbeSwiftPath": "Scripts/TestSupport/jpeg-mutation-probe.swift",
+      "jpegMutationProbeSwiftSHA256": "3957cb4d42efc0d35a9d68d18d555fc442c878d78ca2155124e7ed3d17bf8918",
+      "preservedInitialFreezeManifestPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/implementation-freeze-m4opt10.json",
+      "preservedInitialFreezeManifestSHA256": "6cddf82c92064a94bc57aec8623898602658b6fdf9787851123c125a7371ccaa",
+      "preservedFailedReleaseReportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/release-m4opt10/report.json",
+      "preservedFailedReleaseReportSHA256": "0a9675fa5300ec34eef748ec6f517e0e2f7238369799c8bc87930a58d8272933",
+      "preservedFailedReleaseReportNote": "In initial release-m4opt10, SpecRCTTests.cancellationIsBoundedAndDeadlineCallbackIsHonoured failed at Tests/SwiftJXLCoreTests/SpecRCTTests.swift:55:9 (tests.log line 2046) because the previous SpecRCT.inverse checkpoint interval was 4096 triples; ModularGradientTests passed at tests.log line 1006. Restoring the checkpoint interval from 4096 triples to 1024 triples (3072 operations) in SpecRCT.inverse allowed the third-checkpoint cancellation test to preserve a.suffix(2048) and pass release-m4opt10-v2."
+    },
+    "fullMatrixPass4": {
+      "directory": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/optimisation/full-matrix-pass4",
+      "buildJsonSHA256": "e102772533f3e6620499c5050c2292717c060988c2c2ae393de756ebca053c3c",
+      "buildReceiptJsonSHA256": "59880964eeca178c0af23dbcb328d668d82aa7802d7b0ab9b6e4fa94f422dac6",
+      "finalSummaryJsonSHA256": "3597acf8070f76528db8e1a53b535e22db2fae98263c3b7c7083f14f8886b0ed",
+      "releaseObjects": {
+        "SwiftJXL_o_SHA256": "148c8ccd707e78977054214979e5be18b5370375b05fe67e7e57af1d31f137b5",
+        "SwiftJXLCore_o_SHA256": "66f11776858c5bbcf9de7e33cc91801e278e2bd2d872470102b6a51ef94c564f"
+      },
+      "candidateBinaries": {
+        "familyCandidateSHA256": "ce2aae431fadd450d72ea1a633d97dd07176934571611ee45a86deddb1396a3c",
+        "nativeCandidateSHA256": "c28348b4ad0591cb5507b4f76cde26a014b96182a293a116b092786dced1855f",
+        "jpegPixelCandidateSHA256": "94c9d9722f41b21a439d93fa4ef3113a71d447b51162e3cc3239f639c9a9e309"
+      },
+      "matrices": {
+        "publicDefaultR2": {
+          "resultsJsonPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/optimisation/full-matrix-pass4/public-default-r2/results.json",
+          "resultsJsonSHA256": "5186e82b760115a778fdcc25a73ce0b6ed599d81c4667d13deaa5f993accdd9c",
+          "rows": 36,
+          "paired": 28,
+          "candidateOnly": 8,
+          "repeatedLatencyTriggers": 0,
+          "repeatedRSSTriggers": 0,
+          "losslessSizeTriggers": 0,
+          "codexAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pass4-default-r2-audit.json",
+          "codexAuditReceiptSHA256": "72d6e00c147eaa9833b96479307141087a8d6bc7e45596dcf2bbe39cc37a12d0",
+          "codexChecksPassed": 1052
+        },
+        "nativeResultsR2": {
+          "resultsJsonPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/optimisation/full-matrix-pass4/native-results-r2/results.json",
+          "resultsJsonSHA256": "564e8ada1ecddb8a590b8dc4e9c9232de8388193b63d668383aabc261dd69183",
+          "rows": 12,
+          "paired": 9,
+          "candidateOnly": 3,
+          "repeatedLatencyTriggers": 0,
+          "repeatedRSSTriggers": 0,
+          "losslessSizeTriggers": 0,
+          "codexAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pass4-native-r2-audit.json",
+          "codexAuditReceiptSHA256": "873e467c059d810e9a711bc5de3502b6bc6e633ec58b1eb2c417695b381fd47b",
+          "codexChecksPassed": 461
+        },
+        "constrainedW1": {
+          "resultsJsonPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/optimisation/full-matrix-pass4/constrained-w1/results.json",
+          "resultsJsonSHA256": "0693ad9a1d628697eaa819d011a6e94f884ed7bfef4b248871560064763be675",
+          "manifestJsonSHA256": "67fd460f2ecebf995d08439f4d152015f18af92b4b3230e577a27d40284d7e43",
+          "rows": 36,
+          "paired": 28,
+          "candidateOnly": 8,
+          "candidateWorkers": 1,
+          "repeatedLatencyTriggers": 0,
+          "repeatedRSSTriggers": 0,
+          "losslessSizeTriggers": 0,
+          "original10Perf03FindingsResolved": 10,
+          "codexResumeAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/resume-audit.json",
+          "codexResumeAuditReceiptSHA256": "e4773c45889824c93ff034c382d11bfa9dede3b238918f45c6b57170e1b263b7",
+          "codexResumeAuditChecksPassed": 210,
+          "codexFinalPerfFindingsAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/performance-findings-final-audit-20261021.json",
+          "codexFinalPerfFindingsAuditReceiptSHA256": "2e89ec44aebb9efeb9d3ea4cc551cc9a5a3692118613c1238c6ca4137f8f2a5e",
+          "codexFinalPerfFindingsChecksPassed": 53
+        }
+      },
+      "encodedStreamByteIdentity": {
+        "verifiedByDirectPreFlightJXLSHA256Comparison": true,
+        "all18CurrentDefaultAndConstrainedW1StreamsMatchRelease6": true,
+        "all11VarDCTStreamsMatchPostFixRelease8": true
+      }
+    },
+    "qualificationSuites": {
+      "summaryPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final-qualification-summary.json",
+      "summarySHA256": "deac26ce30ec1e132b93f31743a142027cba9898d9b74919749f69b31981a479",
+      "codexNativeQualificationAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/native-qualification-audit-20261021.json",
+      "codexNativeQualificationAuditReceiptSHA256": "4e30d26ae210a29234e586c0bfd2b70d6bb36429234b2d1fcd84f5d21050fd2d",
+      "codexNativeQualificationChecksPassed": 789,
+      "nativeSuites": {
+        "release-m4opt10-v2": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/release-m4opt10-v2/report.json",
+          "reportSHA256": "c69d70c391db8a9444507327fdd8d2c995a5568f949c8d0ebf59f7696ec7268c",
+          "status": "passed",
+          "declarations": 368,
+          "parameterisedCaseStarts": 1809,
+          "cases": 2053,
+          "seconds": 162.48334170799998
+        },
+        "debug-m4opt10": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/debug-m4opt10/report.json",
+          "reportSHA256": "67e6d103e7d3ecae6bf6cfa962838dc598ba9be75ddbfa2efbb4cd34a6736c0c",
+          "status": "passed",
+          "scope": "all_16_affected_suites",
+          "declarations": 120,
+          "cases": 490,
+          "seconds": 64.36454579100001
+        },
+        "asan-m4opt10": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/asan-m4opt10/report.json",
+          "reportSHA256": "b1076e966fd8bbbc720c41c7c34b649e269b3fa3d4750570619001cb683a74a9",
+          "status": "passed",
+          "scope": "all_16_affected_suites",
+          "declarations": 120,
+          "cases": 490,
+          "seconds": 140.344170792,
+          "SwiftJXL_o_SHA256": "e3e807c72b173cea992dbeb9c225c68bf7b0e1caff6e79c156feefba7d8b2fbb",
+          "SwiftJXLCore_o_SHA256": "6de41ae4f6f2b7096ae25660112e96ad10f94a59703e12bb5857292186f712f9"
+        },
+        "tsan-m4opt10": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/tsan-m4opt10/report.json",
+          "reportSHA256": "c28b479f2fa8b9a97cba1e639f74f596db555428d2ae10bc1b0ca0dbf80f022c",
+          "status": "passed",
+          "scope": "all_16_affected_suites",
+          "declarations": 120,
+          "cases": 490,
+          "seconds": 177.079872416
+        },
+        "consumer-m4opt10": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/consumer-m4opt10/report.json",
+          "reportSHA256": "e27e86c6eb905682928dd6e035b845b92010f7d5da1aa322880277b6944bc090",
+          "status": "passed",
+          "runsPassed": 4
+        },
+        "cli-release-m4opt10": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/cli-release-m4opt10/report.json",
+          "reportSHA256": "9d17b6ccf1902f6ff61860ac952188403c9e764cbba4905a635b51505bbd63ba",
+          "status": "passed",
+          "commandsPassed": 11
+        },
+        "cli-debug-m4opt10": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/cli-debug-m4opt10/report.json",
+          "reportSHA256": "478cd98a4c0ea9d8eb0be48248db3496f32e88b5e16495a731a3655644732eda",
+          "status": "passed",
+          "commandsPassed": 11
+        },
+        "cli-asan-m4opt10": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/cli-asan-m4opt10/report.json",
+          "reportSHA256": "fc9cc2404b4482023133b8983f6193bc78549559f8b0c89ed5f76663f0320893",
+          "status": "passed",
+          "commandsPassed": 11
+        }
+      },
+      "iosSimulatorReleaseSuites": {
+        "runnerScriptPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/qualify-ios-simulator-m4opt10.py",
+        "runnerScriptSHA256": "27c36cd818c772b8758c9502172063f2d371a142c1189b38eaf93ffea167f951",
+        "checkKeyLabelNote": "The validator check keys macOS365Minus6ExcludedEquals359 and macOS2048Minus93ExcludedEquals1955 retain their historical key names while their actual evaluated expressions enforce the updated frozen-source counts 368 - 6 == 362 declarations and 2053 - 93 == 1960 leaf cases.",
+        "ios26_0Release": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/ios-simulator-26.0-release-m4opt10/report.json",
+          "reportSHA256": "94f9616b7634b133a73e53e543d4804562fc21f3df4c66d8304f8b9369e7992b",
+          "runtimeVersion": "26.0",
+          "runtimeBuild": "23A343",
+          "status": "passed",
+          "declarations": 362,
+          "cases": 1960,
+          "overallRunnerSeconds": 292.671642,
+          "mainXcodebuildTestSeconds": 205.514231,
+          "codexAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/ios-26.0-qualification-audit-20261021.json",
+          "codexAuditReceiptSHA256": "fb694798d7cbdfce33986611e94ba1f994b77712387192937382e5c5e3f432dd",
+          "codexChecksPassed": 33
+        },
+        "ios26_5Release": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/qualification/final/ios-simulator-26.5-release-m4opt10/report.json",
+          "reportSHA256": "3eb6597379b9fee4a56fd3aeb3c8fce6d802d2275f9f22c4df5a0597c1c8b407",
+          "runtimeVersion": "26.5",
+          "runtimeBuild": "23F77",
+          "status": "passed",
+          "declarations": 362,
+          "cases": 1960,
+          "overallRunnerSeconds": 1023.989677,
+          "mainXcodebuildTestSeconds": 851.825809,
+          "codexAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/ios-26.5-qualification-audit-20261021.json",
+          "codexAuditReceiptSHA256": "288d530b240ebbd5778e81610aa7d4858d92c860e33b5661c1c60213b09dd632",
+          "codexChecksPassed": 33
+        }
+      }
+    },
+    "asanJpegMutationCampaigns": {
+      "probeBuildJsonPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/jpeg-qualification/final-asan-campaigns/build.json",
+      "probeBuildJsonSHA256": "787a968ba63c0b0b9d04d25b43bfa9461694a8f73c75abac1100cdf062c6d077",
+      "probeBinaryPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/jpeg-qualification/final-asan-campaigns/jpeg-mutation-probe",
+      "probeBinarySHA256": "b8fd3f0af01d997d70cb1415ff065825f76c580064e7159d1de8a0f282f2e377",
+      "canariesPassed": 4,
+      "codexProbeBuildAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/asan-probe-build-audit-20261021.json",
+      "codexProbeBuildAuditReceiptSHA256": "aa987724b4e5ec58e14c1b0c73e821df080a3a0f0b9fda52a778abeb47024231",
+      "codexProbeBuildChecksPassed": 46,
+      "preservedInitialInspectSetupFailureLog": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/jpeg-qualification/final-asan-campaigns/inspect.log",
+      "preservedInitialInspectSetupFailureLogSHA256": "35a182fb57a2bf5423c2cfdc400339f10920aa44ffeb7c6b2eeab191e6f787c5",
+      "campaignsJsonPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/jpeg-qualification/final-asan-campaigns/campaigns.json",
+      "campaignsJsonSHA256": "7945595621f4943815d9b57b7dbea3c15c4876430c144b6ab39578cc05d1dd88",
+      "qualificationJsonPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/jpeg-qualification/final-asan-campaigns/qualification.json",
+      "qualificationJsonSHA256": "82a660d5e653d4fa7a3ef199b23a4e6ad9d3f5710e691c52f92e8f18ec610cdb",
+      "codexFinalCampaignsAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/jpeg-campaigns-final-audit-20261021.json",
+      "codexFinalCampaignsAuditReceiptSHA256": "b735bf06a78e5ed9a929272c4d67129563a0d77939d486ca0b0aa0077fe3aa57",
+      "codexFinalCampaignsChecksPassed": 17,
+      "totalIterations": 515643,
+      "totalSeconds": 10800.024211,
+      "campaigns": {
+        "jpeg-inspect": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/jpeg-qualification/final-asan-campaigns/inspect-r2/report.json",
+          "reportSHA256": "e0babf60c85bf2cfc7da0671cdc8053564cda16909d5ea904c764469bc5fc13f",
+          "terminalLogPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/logs/jpeg-campaign-inspect-r2.log",
+          "terminalLogSHA256": "fb4a95994ca4d16b33e62abf71f3d6c6fa6b8e8504fb8d2ef75dab6585acbee3",
+          "preflightSeedsAccepted": 144,
+          "durationSeconds": 3600.0094587080002,
+          "iterations": 148773,
+          "rejected": 107912,
+          "accepted": 40861,
+          "peakRSSBytes": 33128448,
+          "exitCode": 0,
+          "codexAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/jpeg-inspect-campaign-audit-20261021.json",
+          "codexAuditReceiptSHA256": "04c246a7353a3395637012e4e43099f7f3ad50b0695c75c1f46c9b4bcdff7a05",
+          "codexChecksPassed": 314
+        },
+        "jpeg-decode": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/jpeg-qualification/final-asan-campaigns/decode/report.json",
+          "reportSHA256": "f9099c6834e7114e547842beed9f6d8dd4a4c53df0731e1c2bc75f90eac4e50a",
+          "terminalLogPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/logs/jpeg-campaign-decode.log",
+          "terminalLogSHA256": "feb69fd935bb49f7b47ac0a8ed47bc4b0d96efb26b42f508750adf5be4bfef98",
+          "preflightSeedsAccepted": 144,
+          "durationSeconds": 3600.007504834,
+          "iterations": 183899,
+          "rejected": 173385,
+          "accepted": 10514,
+          "peakRSSBytes": 35504128,
+          "exitCode": 0,
+          "codexAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/jpeg-decode-campaign-audit-20261021.json",
+          "codexAuditReceiptSHA256": "822baf96ee7583183b86ce5905ea9f28e83000946122a8fdf4beef139ac7b447",
+          "codexChecksPassed": 314
+        },
+        "jpeg-caller": {
+          "reportPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/jpeg-qualification/final-asan-campaigns/caller/report.json",
+          "reportSHA256": "b8236733c801ea3a794fa00198ed1444aac2e476b9b12c0fa9cf09695f23bb7c",
+          "terminalLogPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/logs/jpeg-campaign-caller.log",
+          "terminalLogSHA256": "69c5550c4eaa5da51c176df54addcbbc640dc1a737ba978cf00b079add0c2bc1",
+          "preflightSeedsAccepted": 144,
+          "durationSeconds": 3600.007247458,
+          "iterations": 182971,
+          "rejected": 172508,
+          "accepted": 10463,
+          "peakRSSBytes": 35536896,
+          "exitCode": 0,
+          "codexAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/jpeg-caller-campaign-audit-20261021.json",
+          "codexAuditReceiptSHA256": "670ef4f7d7d298caceb2fa4a0401ee039947a1d5b9d49dbb4ba92b9c296fe05c",
+          "codexChecksPassed": 314
+        }
+      }
+    }
+  },
   "swift62CompatibilityFixQualification": {
     "summary": "Extracted the 90-line withUnsafeMutableBufferPointer closure body in VarDCTSmallAnalysis.swift into a private helper method apply(_:identifier:buffer:dct:) and added explicit closure parameter/return type annotations to VarDCTEncoderPreparationTests.swift and VarDCTWorkspaceTests.swift to resolve Swift 6.2 expression type-checking timeouts observed on Linux and macOS in GitHub Actions runs 38726940479 and 38750702077.",
     "portableFinalSourceManifest": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/source-manifest-final.json",
@@ -1161,11 +1528,50 @@
       "Tests/SwiftJXLCoreTests/VarDCTWorkspaceTests.swift"
     ],
     "compiledObjectEqualityVerified": {
-      "SwiftJXL_o_Release": true,
-      "SwiftJXL_o_Debug": true,
-      "SwiftJXL_o_ASan": true,
-      "SwiftJXL_o_TSan": true,
-      "SwiftJXLCore_o_Note": "SwiftJXLCore.o reflects the extracted private helper symbol VarDCTSmallAnalysis.apply(_:identifier:buffer:dct:) with zero numerical, order, ownership, or default changes; verified by full Release native and iOS 26.0 Simulator suites plus targeted Debug/ASan/TSan VarDCT suites."
+      "measurementToolchain": "native_macos_swift_6.4_swiftlang_6.4.0.34.1_only",
+      "comparisonSemantics": "between_revisions_within_each_respective_build_configuration_not_between_modes",
+      "SwiftJXL_o_UnchangedBetweenEAF011EAnd294ED8FByMode": {
+        "Release": {
+          "unchanged": true,
+          "sha256": "1102488958caf5f9385e3bfdaa56fa5abb057abc39209dcfd2ebeb6737931ac2"
+        },
+        "Debug": {
+          "unchanged": true,
+          "sha256": "47446af4eb3bc777b3dfe4eb6bec879b4cb0766fe044bddbddddd36020838e22"
+        },
+        "ASan": {
+          "unchanged": true,
+          "sha256": "223c69fe5db536a0fccc1f4775bc5b5dbc28602e241fbfadea1baf0f2a9b2cf8"
+        },
+        "TSan": {
+          "unchanged": true,
+          "sha256": "e6033a9cc623c77206f04505fbaad183b74fd1323718232f08bac2d6fe8c7f5a"
+        }
+      },
+      "SwiftJXLCore_o_ChangedBetweenEAF011EAnd294ED8FByMode": {
+        "Release": {
+          "unchanged": false,
+          "preFixSHA256": "2e44f687c9dc25eba26c7b10d3e3260ab87697929fb5eb4c97fd996dc46c77b2",
+          "postFixSHA256": "813d5b7132feffc779b14de6f6a855c5d6116ce3f7a1be4351610fd3e2a36bbd"
+        },
+        "Debug": {
+          "unchanged": false,
+          "preFixSHA256": "43e7d7d5081e9f9914ac372ae0cebae02c342e70724aded480fcb9584f8919e3",
+          "postFixSHA256": "4d9cb8fe534f93c404536c1c5917b489f0f86536f21e16bd2c3113a528794b04"
+        },
+        "ASan": {
+          "unchanged": false,
+          "preFixSHA256": "ec36f6a57911462ca00b7c18ed58920b585cdabd987370ae136b948d6b7f64b5",
+          "postFixSHA256": "cb6f557ddb2953a8c0808ff58a172a3277d6e6a5ff7d56720351c36c9465b710"
+        },
+        "TSan": {
+          "unchanged": false,
+          "preFixSHA256": "96fd20ae511f4eb3f4d13d9d7229cd4d07cc04b2d0bab880981d4ec80b93cd18",
+          "postFixSHA256": "779656a422e62f43eceade74a832992c24cf8b09dc18a8b6adcc8a229007462b"
+        }
+      },
+      "SwiftJXLCore_o_UnchangedBetweenEAF011EAndSupersededECDB529WithinEachMode": true,
+      "SwiftJXLCore_o_Note": "In final commit 294ed8fdf57eb97ca46003171f2b012a4618a14b, SwiftJXLCore.o changed within each mode to emit the extracted private helper symbol VarDCTSmallAnalysis.apply(_:identifier:buffer:dct:) with zero numerical, order, ownership, or default changes; verified by full Release native (release-8), full iOS 26.0 Simulator Release (ios-simulator-26.0-release-2), targeted Debug/ASan/TSan VarDCT suites, fresh 22-row default and one-worker VarDCT benchmarks, and 12 hosted CI jobs in both PR run 38760811777 and post-merge main run 38856715114."
     },
     "postFixNativeSuites": {
       "release-8": {
@@ -1190,7 +1596,14 @@
         "status": "passed",
         "seconds": 70.092826625,
         "declarations": 17,
-        "cases": 43
+        "cases": 43,
+        "executedSuites": [
+          "VarDCTWorkspaceTests",
+          "VarDCTEncoderPreparationTests",
+          "VarDCTSmallAnalysisTests"
+        ],
+        "suiteCount": 3,
+        "testStepSeconds": 1.977308625
       },
       "asan-4-vardct": {
         "scope": "targeted_changed_vardct_suites_and_full_object_build",
@@ -1200,7 +1613,14 @@
         "status": "passed",
         "seconds": 116.327681708,
         "declarations": 17,
-        "cases": 43
+        "cases": 43,
+        "executedSuites": [
+          "VarDCTWorkspaceTests",
+          "VarDCTEncoderPreparationTests",
+          "VarDCTSmallAnalysisTests"
+        ],
+        "suiteCount": 3,
+        "testStepSeconds": 1.040230917
       },
       "tsan-3-vardct": {
         "scope": "targeted_changed_vardct_suites_and_full_object_build",
@@ -1210,8 +1630,141 @@
         "status": "passed",
         "seconds": 118.834132458,
         "declarations": 17,
-        "cases": 43
+        "cases": 43,
+        "executedSuites": [
+          "VarDCTWorkspaceTests",
+          "VarDCTEncoderPreparationTests",
+          "VarDCTSmallAnalysisTests"
+        ],
+        "suiteCount": 3,
+        "testStepSeconds": 5.629265417
       }
+    }
+  },
+  "headCommit": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+  "mergedPR33": {
+    "pullRequest": 33,
+    "url": "https://github.com/raster-labs/SwiftJXL/pull/33",
+    "headCommit": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+    "mergeCommit": "dcdbec1abb75d5b6c6d5484f786ba3308c8e17a8",
+    "mergedAtUTC": "2026-10-16T05:37:07Z",
+    "postMergeMainWorkflowRun": {
+      "runId": 38856715114,
+      "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/38856715114",
+      "headCommit": "dcdbec1abb75d5b6c6d5484f786ba3308c8e17a8",
+      "status": "completed",
+      "conclusion": "success",
+      "totalJobs": 12,
+      "succeededJobs": 12,
+      "durationDisplayed": "46m 22s",
+      "verifiedAtUTC": "2026-10-16T06:26:38.240772+00:00",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-main-ci-success.json",
+      "portableReportSHA256": "bf137e7c902b35bed4b2f879c45303db633e39826a69700d9a8ad345658a0637",
+      "preservedHistoricalInProgressSnapshot": {
+        "statusAtInspection": "in_progress",
+        "inspectedAtUTC": "2026-10-16T05:57:29Z",
+        "archivedIn": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-evidence-supplement-final.zip",
+        "memberPath": "audit/independent-main-ci-checkpoint.json"
+      }
+    }
+  },
+  "hostedCIQualification": {
+    "runId": 38760811777,
+    "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/38760811777",
+    "headSha": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+    "pullRequest": 33,
+    "status": "completed",
+    "conclusion": "success",
+    "startedAtUTC": "2026-10-15T15:29:43Z",
+    "updatedAtUTC": "2026-10-15T17:30:38Z",
+    "totalJobs": 12,
+    "succeededJobs": 12,
+    "failedJobs": 0,
+    "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/ci-run-38760811777-report.json",
+    "portableReportSHA256": "ed873eaa93209718cbdef379e64daebc379a34e7333df1629269120bbdcd5977",
+    "actualToolchainsFromStepLogs": {
+      "linuxSwift62Jobs": "Swift 6.2.4 (swift-6.2.4-RELEASE) on Ubuntu 24.04.5 LTS (x86_64 and aarch64)",
+      "linuxSwift64Jobs": "Swift 6.4.1 (swift-6.4.1-RELEASE) on Ubuntu 24.04.5 LTS (x86_64 and aarch64)",
+      "hostedMacOS26Jobs": "Apple Swift 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101) / Xcode 26.6 (17F113) on macOS 26.6.2 (25G83) despite workflow job labels naming Swift 6.2 and macOS 26"
+    },
+    "postMergeMainRun38856715114": {
+      "runId": 38856715114,
+      "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/38856715114",
+      "headSha": "dcdbec1abb75d5b6c6d5484f786ba3308c8e17a8",
+      "branch": "main",
+      "status": "completed",
+      "conclusion": "success",
+      "totalJobs": 12,
+      "succeededJobs": 12,
+      "failedJobs": 0,
+      "durationDisplayed": "46m 22s",
+      "verifiedAtUTC": "2026-10-16T06:26:38.240772+00:00",
+      "portableReport": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-main-ci-success.json",
+      "portableReportSHA256": "bf137e7c902b35bed4b2f879c45303db633e39826a69700d9a8ad345658a0637"
+    }
+  },
+  "supplementalEvidenceArchivesAndIndependentAudits": {
+    "iosSupplementArchive": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-evidence-supplement.zip",
+    "iosSupplementArchiveSHA256": "37ab2910ffc291ba3c6efe7ab1c7ed76b1480cb640f1fa5fb6982916a5ebb9aa",
+    "iosSupplementManifest": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-evidence-supplement-manifest.json",
+    "iosSupplementManifestSHA256": "37dd54e2f4f085235efbe08b5f92bd82d956b7cc61cd1b7549c475d3a48822fe",
+    "iosSupplementFinalArchive": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-evidence-supplement-final.zip",
+    "iosSupplementFinalArchiveSHA256": "6d13aa6bbfde48025c649d3233b2d72f182f75e97b05bd80f9c841655fb78ea9",
+    "iosSupplementFinalManifest": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-evidence-supplement-final-manifest.json",
+    "iosSupplementFinalManifestSHA256": "b5cdf973729fb60e35cf4f4e74c88b08988be80e61cf463a2b0fa38e7a2dbb0d",
+    "archivesAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-evidence-archives-audit.json",
+    "archivesAuditSHA256": "4e60abb86c4bde689f4ee4d0588d41ca79cd45c8d1465f8f4af0f785b6822c75",
+    "ios26_5ResultsAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-ios-results-audit.json",
+    "ios26_5ResultsAuditSHA256": "7d6c431da1f50058dcffd0e7f92112a6a0ac447142a7479d697f17e412a3c4a8",
+    "ios26_0FirstResultsAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-ios26-0-results-audit.json",
+    "ios26_0FirstResultsAuditSHA256": "3dda86bcf1cd2106b6471b10fedd81eb0052c1796ca9204f830a2b4a791e3aee",
+    "ios26_0SecondResultsAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-ios26-0-second-results-audit.json",
+    "ios26_0SecondResultsAuditSHA256": "60a6a2205275b517144d37e8e043ee3448f6f60d94c73d66b615639e364634c3",
+    "ios26_0SecondBindingsAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-ios26-0-second-bindings-audit.json",
+    "ios26_0SecondBindingsAuditSHA256": "4db054c850c4683604720d8b409952ad1f6f8c4608af003bef42c60a2dca2a62",
+    "helperExtractionAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-helper-extraction-audit.json",
+    "helperExtractionAuditSHA256": "9f4bd9289daf6242ecf234165f287dd08679fb5908d278530c035b63a508e183",
+    "postFixPerformanceAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-postfix-performance-audit.json",
+    "postFixPerformanceAuditSHA256": "47c4ab6c2697dc2d5b8cbd476adbb2f71472bff349193fe24f9838f934b8c22f",
+    "reauditPreservationAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-reaudit-preservation-audit.json",
+    "reauditPreservationAuditSHA256": "a27f07069b6d1813d7f79f6082adbb09051690ed076c23aa9f0bb28f7839fd1d",
+    "followupFindingsResolution": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-followup-review-findings-resolution.json",
+    "followupFindingsResolutionSHA256": "b7ecda20623a9b8ddc78429f25915ae37dddb6b888db80abe8de83d570a19426",
+    "mainCISuccessVerification": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-main-ci-success.json",
+    "mainCISuccessVerificationSHA256": "bf137e7c902b35bed4b2f879c45303db633e39826a69700d9a8ad345658a0637",
+    "portablePostFixPerformanceArchiveAudit": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/independent-portable-postfix-performance-audit.json",
+    "portablePostFixPerformanceArchiveAuditSHA256": "3951f6569e642921c5f80fafe1518648576de818e860679798698f34022e80e2"
+  },
+  "milestones1Through4Summary": {
+    "milestone1_contractFeasibility": {
+      "status": "complete_within_defined_scope",
+      "completed": "Swift 6.2-minimum / Swift 6.4-qualified package, independent public API and owning-memory types (ImageBuffer, EncodedImage), descriptor validation, safe Span/RawSpan adapter experiment, standalone ContractConsumer package, and swiftjxl-cli foundation verified on macOS, iOS Simulator, and Linux Swift 6.2.4 & 6.4.1 in CI runs 38760811777 & 38856715114.",
+      "pending": []
+    },
+    "milestone2_migrationBaseline": {
+      "status": "complete_within_defined_scope",
+      "completed": "Pinned predecessor (57e81cb9e2411d1efac435b429a306a031744c1e) inventory and path-level provenance, smallest native scalar Modular lossless path, and independent encode/decode sample/precision verification with zero external runtime codec dependencies.",
+      "pending": []
+    },
+    "milestone3_sharedStoragePath": {
+      "status": "complete_within_defined_scope",
+      "completed": "Direct final decode into caller storage, encode from compatible sealed owning storage, required-sharing allocation-site/copy/lifetime/cancellation proofs, and bounded native JPEG transcode/reconstruction codec extension.",
+      "pending": []
+    },
+    "milestone4_featureAndPlatformCoverage": {
+      "status": "local_m4_opt_10_and_jpeg_3_accepted_pending_github_ci_and_platform_gates",
+      "completed": "Extended Modular/VarDCT modes, layouts, colour/alpha/ICC, PNM/NRRD CLI operations, independent-frame animation, explicit libjxl 0.12.0 ARM integer reference profile (123 cases + 45,826 hardware reciprocal vectors), extended JPEG pixel decoding (12-bit DCT, 2-16-bit SOF3, ICC/Exif), full native macOS suites on frozen M4-OPT-10 source (release-m4opt10-v2: 368 declarations / 2,053 cases) + all 16 affected suites in Debug/ASan/TSan (120 declarations / 490 cases each), standalone ContractConsumer (4/4) and CLI Release/Debug/ASan (11/11 commands each), full iOS Simulator Release suites on iOS 26.0 (23A343) and iOS 26.5 (23F77) (362 declarations / 1,960 cases each; historical eaf011e iOS 26.5 Debug/ASan/TSan and CLI TSan preserved), 10/10 constrained single-worker (maximumWorkers=1) latency findings resolved and independently accepted by Codex in full-matrix-pass4 (0 repeated triggers across 28 paired constrained-w1 rows, 36 public-default-r2 rows, and 12 native-results-r2 rows; byte-identical encoded streams), and 3/3 3,600-second ASan malformed-JPEG mutation campaigns (jpeg-inspect, jpeg-decode, jpeg-caller: 515,643 total iterations across 10,800.024211s after 144-seed preflights and 4/4 canaries, 0 crashes/ASan/timeouts) independently accepted by Codex.",
+      "pending": [
+        "Hosted GitHub Actions 12-job CI rerun on the frozen M4-OPT-10 / M4-JPEG-3 working tree (Linux Swift 6.2.4 / 6.4.1 x86_64 + arm64 Release/Debug/ASan/TSan, hosted macOS 26 build/test/CLI/audit)",
+        "Exact macOS 26.0 native/VM runtime execution (pending, assigned to GitHub CI or dedicated macOS 26.0 runner)",
+        "Full current-source iOS Simulator Debug / ASan / TSan test-bundle reruns and CLI TSan rerun (current-source iOS qualification is Release only; historical iOS 26.5 Debug/ASan/TSan and CLI TSan on eaf011e914ee2ab36af5266d7fba9a8e42471ecf are preserved separately)",
+        "Local M4-OPT-10 / M4-JPEG-3 source, test, and documentation changes on codex/swiftjxl-milestone4-remaining remain local and uncommitted per owner instruction"
+      ],
+      "outOfOwnerCompletionScope": [
+        "Native Intel (x86_64) macOS runtime execution",
+        "Physical iPhone/iPad/Apple TV/Apple Watch/Vision Pro device execution",
+        "Full XCTest/Swift Testing bundle execution inside tvOS, watchOS, and visionOS simulators"
+      ]
     }
   }
 }

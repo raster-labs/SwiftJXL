@@ -1,0 +1,1482 @@
+{
+  "runId": 38760811777,
+  "name": "SwiftJXL migration checks",
+  "headBranch": "codex/swiftjxl-milestone4-remaining",
+  "headSha": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+  "status": "completed",
+  "conclusion": "success",
+  "runAttempt": 2,
+  "createdAt": "2026-10-15T15:29:43Z",
+  "updatedAt": "2026-10-15T17:30:38Z",
+  "htmlUrl": "https://github.com/raster-labs/SwiftJXL/actions/runs/38760811777",
+  "totalJobs": 12,
+  "succeededJobs": 12,
+  "failedJobs": 0,
+  "hostedMacOSRuntimeLimitation": {
+    "runnerLabel": "macos-26",
+    "actualRunnerImage": "macos-26-arm64",
+    "actualOSVersion": "26.6.2",
+    "actualOSBuild": "25G83",
+    "actualArchitecture": "arm64",
+    "exactMacOS26_0Satisfied": false,
+    "officialGitHubLimitations": [
+      "https://github.com/actions/runner-images/blob/main/images/macos/macos-26-arm64-Readme.md (ships macOS 26.6.2 25G83, not 26.0)",
+      "https://docs.github.com/en/actions/reference/runners/github-hosted-runners#limitations-for-arm64-macos-runners (nested virtualisation unsupported on hosted arm64 macOS runners)",
+      "https://docs.github.com/en/actions/how-tos/manage-runners/larger-runners/use-custom-images#setting-up-an-image-generation-runner (custom runner images exclude macOS)"
+    ]
+  },
+  "jobs": [
+    {
+      "id": 116539261317,
+      "name": "macOS 26 debug / Swift 6.2",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T16:28:38Z",
+      "completedAt": "2026-10-15T16:46:54Z",
+      "runnerName": "GitHub Actions 1000002741",
+      "labels": [
+        "macos-26"
+      ],
+      "operatingSystemFromSetupLog": [
+        "macOS",
+        "26.6.2",
+        "25G83"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "macos-26-arm64",
+        "version": "20260907.0351.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)",
+      "xcodeVersion": "Xcode 26.6 / Build version 17F113",
+      "rawLogBytes": 415697,
+      "rawLogSHA256": "1db8809c05cdf39ab9ff6a238172c282b80b83d94edbdd1e0738e9c5886e5de8",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:28:39Z",
+          "completedAt": "2026-10-15T16:28:40Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:28:40Z",
+          "completedAt": "2026-10-15T16:28:46Z"
+        },
+        {
+          "number": 3,
+          "name": "Run swift --version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:28:46Z",
+          "completedAt": "2026-10-15T16:28:50Z"
+        },
+        {
+          "number": 4,
+          "name": "Run xcodebuild -version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:28:50Z",
+          "completedAt": "2026-10-15T16:28:50Z"
+        },
+        {
+          "number": 5,
+          "name": "Run swift build",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:28:50Z",
+          "completedAt": "2026-10-15T16:29:46Z"
+        },
+        {
+          "number": 6,
+          "name": "Run swift test --no-parallel",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:29:46Z",
+          "completedAt": "2026-10-15T16:45:43Z"
+        },
+        {
+          "number": 7,
+          "name": "Python for pinned NRRD test oracle",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:45:43Z",
+          "completedAt": "2026-10-15T16:45:43Z"
+        },
+        {
+          "number": 8,
+          "name": "Install test-only NRRD oracle",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:45:43Z",
+          "completedAt": "2026-10-15T16:45:50Z"
+        },
+        {
+          "number": 9,
+          "name": "CLI and staged manual installation",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:45:50Z",
+          "completedAt": "2026-10-15T16:45:52Z"
+        },
+        {
+          "number": 10,
+          "name": "CLI supported payloads",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:45:52Z",
+          "completedAt": "2026-10-15T16:46:41Z"
+        },
+        {
+          "number": 11,
+          "name": "NRRD CLI interoperability",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:46:41Z",
+          "completedAt": "2026-10-15T16:46:47Z"
+        },
+        {
+          "number": 12,
+          "name": "Preserve CLI evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:46:47Z",
+          "completedAt": "2026-10-15T16:46:49Z"
+        },
+        {
+          "number": 23,
+          "name": "Post Python for pinned NRRD test oracle",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:46:49Z",
+          "completedAt": "2026-10-15T16:46:49Z"
+        },
+        {
+          "number": 24,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:46:49Z",
+          "completedAt": "2026-10-15T16:46:49Z"
+        },
+        {
+          "number": 25,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:46:49Z",
+          "completedAt": "2026-10-15T16:46:52Z"
+        }
+      ]
+    },
+    {
+      "id": 116539261551,
+      "name": "macOS 26 address sanitizer / Swift 6.2",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T16:31:51Z",
+      "completedAt": "2026-10-15T16:40:10Z",
+      "runnerName": "GitHub Actions 1000002742",
+      "labels": [
+        "macos-26"
+      ],
+      "operatingSystemFromSetupLog": [
+        "macOS",
+        "26.6.2",
+        "25G83"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "macos-26-arm64",
+        "version": "20260907.0351.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)",
+      "xcodeVersion": "Xcode 26.6 / Build version 17F113",
+      "rawLogBytes": 387210,
+      "rawLogSHA256": "599f6ea6124cf87f71e5109bb58e59314019e4570780cfaa73300dceff114633",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:31:52Z",
+          "completedAt": "2026-10-15T16:31:53Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:31:53Z",
+          "completedAt": "2026-10-15T16:31:57Z"
+        },
+        {
+          "number": 3,
+          "name": "Run swift --version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:31:57Z",
+          "completedAt": "2026-10-15T16:32:03Z"
+        },
+        {
+          "number": 4,
+          "name": "Run xcodebuild -version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:32:03Z",
+          "completedAt": "2026-10-15T16:32:03Z"
+        },
+        {
+          "number": 5,
+          "name": "Full sanitizer suite",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:32:03Z",
+          "completedAt": "2026-10-15T16:37:39Z"
+        },
+        {
+          "number": 6,
+          "name": "Python for pinned NRRD test oracle",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:37:39Z",
+          "completedAt": "2026-10-15T16:37:40Z"
+        },
+        {
+          "number": 7,
+          "name": "Install test-only NRRD oracle",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:37:40Z",
+          "completedAt": "2026-10-15T16:37:49Z"
+        },
+        {
+          "number": 8,
+          "name": "Generate CLI fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:37:49Z",
+          "completedAt": "2026-10-15T16:38:28Z"
+        },
+        {
+          "number": 9,
+          "name": "CLI sanitizer payload checks",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:38:28Z",
+          "completedAt": "2026-10-15T16:38:43Z"
+        },
+        {
+          "number": 10,
+          "name": "CLI sanitizer VarDCT decode checks",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:38:43Z",
+          "completedAt": "2026-10-15T16:39:02Z"
+        },
+        {
+          "number": 11,
+          "name": "CLI sanitizer VarDCT encode checks",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:39:02Z",
+          "completedAt": "2026-10-15T16:39:42Z"
+        },
+        {
+          "number": 12,
+          "name": "CLI sanitizer NRRD interoperability",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:39:42Z",
+          "completedAt": "2026-10-15T16:40:04Z"
+        },
+        {
+          "number": 13,
+          "name": "Preserve CLI evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:40:04Z",
+          "completedAt": "2026-10-15T16:40:06Z"
+        },
+        {
+          "number": 25,
+          "name": "Post Python for pinned NRRD test oracle",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:40:06Z",
+          "completedAt": "2026-10-15T16:40:06Z"
+        },
+        {
+          "number": 26,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:40:06Z",
+          "completedAt": "2026-10-15T16:40:06Z"
+        },
+        {
+          "number": 27,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:40:06Z",
+          "completedAt": "2026-10-15T16:40:09Z"
+        }
+      ]
+    },
+    {
+      "id": 116539261748,
+      "name": "Apple OS 26 library SDK builds / Swift 6.2",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T16:40:19Z",
+      "completedAt": "2026-10-15T16:47:51Z",
+      "runnerName": "GitHub Actions 1000002745",
+      "labels": [
+        "macos-26"
+      ],
+      "operatingSystemFromSetupLog": [
+        "macOS",
+        "26.6.2",
+        "25G83"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "macos-26-arm64",
+        "version": "20261013.0424.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": null,
+      "xcodeVersion": null,
+      "rawLogBytes": 14775,
+      "rawLogSHA256": "5f8ff539cc232e43a433cc0fb311e1b53115966a6dbef9b5f48b42892ba4f6c9",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:40:20Z",
+          "completedAt": "2026-10-15T16:40:21Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:40:21Z",
+          "completedAt": "2026-10-15T16:40:26Z"
+        },
+        {
+          "number": 3,
+          "name": "Compile every Apple device/simulator library target",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:40:26Z",
+          "completedAt": "2026-10-15T16:47:43Z"
+        },
+        {
+          "number": 4,
+          "name": "Preserve SDK identities, commands and outcomes",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:47:43Z",
+          "completedAt": "2026-10-15T16:47:45Z"
+        },
+        {
+          "number": 8,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:47:45Z",
+          "completedAt": "2026-10-15T16:47:45Z"
+        },
+        {
+          "number": 9,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:47:46Z",
+          "completedAt": "2026-10-15T16:47:47Z"
+        }
+      ]
+    },
+    {
+      "id": 116539261919,
+      "name": "macOS 26 thread sanitizer / Swift 6.2",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T16:41:52Z",
+      "completedAt": "2026-10-15T17:30:30Z",
+      "runnerName": "GitHub Actions 1000002746",
+      "labels": [
+        "macos-26"
+      ],
+      "operatingSystemFromSetupLog": [
+        "macOS",
+        "26.6.2",
+        "25G83"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "macos-26-arm64",
+        "version": "20260907.0351.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)",
+      "xcodeVersion": "Xcode 26.6 / Build version 17F113",
+      "rawLogBytes": 387213,
+      "rawLogSHA256": "b33887766b3487490497755ee82e8ae6c28eb153b77b4a65d65276a4ae41e083",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:41:52Z",
+          "completedAt": "2026-10-15T16:41:53Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:41:53Z",
+          "completedAt": "2026-10-15T16:41:57Z"
+        },
+        {
+          "number": 3,
+          "name": "Run swift --version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:41:57Z",
+          "completedAt": "2026-10-15T16:42:01Z"
+        },
+        {
+          "number": 4,
+          "name": "Run xcodebuild -version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:42:01Z",
+          "completedAt": "2026-10-15T16:42:02Z"
+        },
+        {
+          "number": 5,
+          "name": "Full sanitizer suite",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:42:02Z",
+          "completedAt": "2026-10-15T16:59:45Z"
+        },
+        {
+          "number": 6,
+          "name": "Python for pinned NRRD test oracle",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:59:45Z",
+          "completedAt": "2026-10-15T16:59:46Z"
+        },
+        {
+          "number": 7,
+          "name": "Install test-only NRRD oracle",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:59:46Z",
+          "completedAt": "2026-10-15T16:59:55Z"
+        },
+        {
+          "number": 8,
+          "name": "Generate CLI fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T16:59:55Z",
+          "completedAt": "2026-10-15T17:00:38Z"
+        },
+        {
+          "number": 9,
+          "name": "CLI sanitizer payload checks",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:00:38Z",
+          "completedAt": "2026-10-15T17:05:14Z"
+        },
+        {
+          "number": 10,
+          "name": "CLI sanitizer VarDCT decode checks",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:05:14Z",
+          "completedAt": "2026-10-15T17:10:53Z"
+        },
+        {
+          "number": 11,
+          "name": "CLI sanitizer VarDCT encode checks",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:10:53Z",
+          "completedAt": "2026-10-15T17:25:16Z"
+        },
+        {
+          "number": 12,
+          "name": "CLI sanitizer NRRD interoperability",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:25:16Z",
+          "completedAt": "2026-10-15T17:30:23Z"
+        },
+        {
+          "number": 13,
+          "name": "Preserve CLI evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:30:23Z",
+          "completedAt": "2026-10-15T17:30:25Z"
+        },
+        {
+          "number": 25,
+          "name": "Post Python for pinned NRRD test oracle",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:30:25Z",
+          "completedAt": "2026-10-15T17:30:25Z"
+        },
+        {
+          "number": 26,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:30:25Z",
+          "completedAt": "2026-10-15T17:30:25Z"
+        },
+        {
+          "number": 27,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:30:25Z",
+          "completedAt": "2026-10-15T17:30:28Z"
+        }
+      ]
+    },
+    {
+      "id": 116539263116,
+      "name": "Shared contract byte-identity",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T15:29:48Z",
+      "completedAt": "2026-10-15T15:29:54Z",
+      "runnerName": "GitHub Actions 1000002703",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "operatingSystemFromSetupLog": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "ubuntu-24.04",
+        "version": "20261004.327.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": null,
+      "xcodeVersion": null,
+      "rawLogBytes": 12574,
+      "rawLogSHA256": "06102a90f2ab1afccdcd44f28363a781c7562c8c47db1ed2b28d58a3c77d6a22",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:49Z",
+          "completedAt": "2026-10-15T15:29:49Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:49Z",
+          "completedAt": "2026-10-15T15:29:52Z"
+        },
+        {
+          "number": 3,
+          "name": "Verify COMMON_CONTRACT_SHA256.txt matches the documents",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:52Z",
+          "completedAt": "2026-10-15T15:29:52Z"
+        },
+        {
+          "number": 6,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:52Z",
+          "completedAt": "2026-10-15T15:29:52Z"
+        },
+        {
+          "number": 7,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:52Z",
+          "completedAt": "2026-10-15T15:29:52Z"
+        }
+      ]
+    },
+    {
+      "id": 116539263882,
+      "name": "Swift 6.2 / ubuntu-24.04-arm",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T15:29:49Z",
+      "completedAt": "2026-10-15T15:44:37Z",
+      "runnerName": "GitHub Actions 1000002701",
+      "labels": [
+        "ubuntu-24.04-arm"
+      ],
+      "operatingSystemFromSetupLog": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "ubuntu-24.04-arm",
+        "version": "20261012.149.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": "Swift version 6.2.4 (swift-6.2.4-RELEASE)",
+      "xcodeVersion": null,
+      "rawLogBytes": 826782,
+      "rawLogSHA256": "a6a253cdb3427bf8b186ccdc08d1ae2fcda63f31131ff04e8ee88dc0a90e0f76",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:50Z",
+          "completedAt": "2026-10-15T15:29:51Z"
+        },
+        {
+          "number": 2,
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:51Z",
+          "completedAt": "2026-10-15T15:30:20Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:20Z",
+          "completedAt": "2026-10-15T15:30:23Z"
+        },
+        {
+          "number": 4,
+          "name": "Run swift --version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:23Z",
+          "completedAt": "2026-10-15T15:30:24Z"
+        },
+        {
+          "number": 5,
+          "name": "Run swift build",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:24Z",
+          "completedAt": "2026-10-15T15:30:46Z"
+        },
+        {
+          "number": 6,
+          "name": "Run swift test --no-parallel",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:46Z",
+          "completedAt": "2026-10-15T15:38:39Z"
+        },
+        {
+          "number": 7,
+          "name": "Run swift build -c release",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:38:39Z",
+          "completedAt": "2026-10-15T15:40:09Z"
+        },
+        {
+          "number": 8,
+          "name": "Run swift test -c release --no-parallel",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:40:09Z",
+          "completedAt": "2026-10-15T15:43:27Z"
+        },
+        {
+          "number": 9,
+          "name": "CLI stream and report checks (debug and release)",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:43:27Z",
+          "completedAt": "2026-10-15T15:44:32Z"
+        },
+        {
+          "number": 10,
+          "name": "Preserve CLI evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:44:32Z",
+          "completedAt": "2026-10-15T15:44:33Z"
+        },
+        {
+          "number": 19,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:44:33Z",
+          "completedAt": "2026-10-15T15:44:33Z"
+        },
+        {
+          "number": 20,
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:44:33Z",
+          "completedAt": "2026-10-15T15:44:34Z"
+        },
+        {
+          "number": 21,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:44:34Z",
+          "completedAt": "2026-10-15T15:44:34Z"
+        }
+      ]
+    },
+    {
+      "id": 116539263994,
+      "name": "Swift 6.4 / ubuntu-24.04",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T15:29:46Z",
+      "completedAt": "2026-10-15T15:47:40Z",
+      "runnerName": "GitHub Actions 1000002694",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "operatingSystemFromSetupLog": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "ubuntu-24.04",
+        "version": "20261012.334.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": "Swift version 6.4.1 (swift-6.4.1-RELEASE)",
+      "xcodeVersion": null,
+      "rawLogBytes": 730843,
+      "rawLogSHA256": "521272f974ccd5eb1ea7b9dea506d1f867965367e4bdc1a99eb9ebef706cd184",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:47Z",
+          "completedAt": "2026-10-15T15:29:48Z"
+        },
+        {
+          "number": 2,
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:48Z",
+          "completedAt": "2026-10-15T15:30:15Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:15Z",
+          "completedAt": "2026-10-15T15:30:20Z"
+        },
+        {
+          "number": 4,
+          "name": "Run swift --version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:20Z",
+          "completedAt": "2026-10-15T15:30:21Z"
+        },
+        {
+          "number": 5,
+          "name": "Run swift build",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:21Z",
+          "completedAt": "2026-10-15T15:30:49Z"
+        },
+        {
+          "number": 6,
+          "name": "Run swift test --no-parallel",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:49Z",
+          "completedAt": "2026-10-15T15:39:41Z"
+        },
+        {
+          "number": 7,
+          "name": "Run swift build -c release",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:39:41Z",
+          "completedAt": "2026-10-15T15:41:13Z"
+        },
+        {
+          "number": 8,
+          "name": "Run swift test -c release --no-parallel",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:41:13Z",
+          "completedAt": "2026-10-15T15:46:23Z"
+        },
+        {
+          "number": 9,
+          "name": "CLI stream and report checks (debug and release)",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:46:23Z",
+          "completedAt": "2026-10-15T15:47:37Z"
+        },
+        {
+          "number": 10,
+          "name": "Preserve CLI evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:47:37Z",
+          "completedAt": "2026-10-15T15:47:38Z"
+        },
+        {
+          "number": 19,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:47:38Z",
+          "completedAt": "2026-10-15T15:47:38Z"
+        },
+        {
+          "number": 20,
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:47:38Z",
+          "completedAt": "2026-10-15T15:47:39Z"
+        },
+        {
+          "number": 21,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:47:39Z",
+          "completedAt": "2026-10-15T15:47:39Z"
+        }
+      ]
+    },
+    {
+      "id": 116539264324,
+      "name": "Independent consumer resolves at tools 6.2",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T15:29:47Z",
+      "completedAt": "2026-10-15T15:30:53Z",
+      "runnerName": "GitHub Actions 1000002702",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "operatingSystemFromSetupLog": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "ubuntu-24.04",
+        "version": "20261012.334.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": null,
+      "xcodeVersion": null,
+      "rawLogBytes": 43998,
+      "rawLogSHA256": "0bd5c7bb236ed113cd2c666df46d3dc16758c57ef8f711eaf51d8bbb42a5321d",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:48Z",
+          "completedAt": "2026-10-15T15:29:48Z"
+        },
+        {
+          "number": 2,
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:48Z",
+          "completedAt": "2026-10-15T15:30:15Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:15Z",
+          "completedAt": "2026-10-15T15:30:17Z"
+        },
+        {
+          "number": 4,
+          "name": "Build a fresh consumer against the checkout",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:17Z",
+          "completedAt": "2026-10-15T15:30:50Z"
+        },
+        {
+          "number": 7,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:50Z",
+          "completedAt": "2026-10-15T15:30:51Z"
+        },
+        {
+          "number": 8,
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:51Z",
+          "completedAt": "2026-10-15T15:30:51Z"
+        },
+        {
+          "number": 9,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:51Z",
+          "completedAt": "2026-10-15T15:30:51Z"
+        }
+      ]
+    },
+    {
+      "id": 116539266485,
+      "name": "Swift 6.4 / ubuntu-24.04-arm",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T15:29:49Z",
+      "completedAt": "2026-10-15T15:46:45Z",
+      "runnerName": "GitHub Actions 1000002700",
+      "labels": [
+        "ubuntu-24.04-arm"
+      ],
+      "operatingSystemFromSetupLog": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "ubuntu-24.04-arm",
+        "version": "20261012.149.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": "Swift version 6.4.1 (swift-6.4.1-RELEASE)",
+      "xcodeVersion": null,
+      "rawLogBytes": 730953,
+      "rawLogSHA256": "f557d381feabc28123c2893a538a8d8f556e01ca8979313b112b48feb4633421",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:50Z",
+          "completedAt": "2026-10-15T15:29:50Z"
+        },
+        {
+          "number": 2,
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:50Z",
+          "completedAt": "2026-10-15T15:30:17Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:17Z",
+          "completedAt": "2026-10-15T15:30:20Z"
+        },
+        {
+          "number": 4,
+          "name": "Run swift --version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:20Z",
+          "completedAt": "2026-10-15T15:30:20Z"
+        },
+        {
+          "number": 5,
+          "name": "Run swift build",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:20Z",
+          "completedAt": "2026-10-15T15:30:38Z"
+        },
+        {
+          "number": 6,
+          "name": "Run swift test --no-parallel",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:38Z",
+          "completedAt": "2026-10-15T15:39:25Z"
+        },
+        {
+          "number": 7,
+          "name": "Run swift build -c release",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:39:25Z",
+          "completedAt": "2026-10-15T15:40:54Z"
+        },
+        {
+          "number": 8,
+          "name": "Run swift test -c release --no-parallel",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:40:54Z",
+          "completedAt": "2026-10-15T15:45:39Z"
+        },
+        {
+          "number": 9,
+          "name": "CLI stream and report checks (debug and release)",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:45:39Z",
+          "completedAt": "2026-10-15T15:46:42Z"
+        },
+        {
+          "number": 10,
+          "name": "Preserve CLI evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:46:42Z",
+          "completedAt": "2026-10-15T15:46:43Z"
+        },
+        {
+          "number": 19,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:46:43Z",
+          "completedAt": "2026-10-15T15:46:43Z"
+        },
+        {
+          "number": 20,
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:46:43Z",
+          "completedAt": "2026-10-15T15:46:44Z"
+        },
+        {
+          "number": 21,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:46:44Z",
+          "completedAt": "2026-10-15T15:46:44Z"
+        }
+      ]
+    },
+    {
+      "id": 116539331673,
+      "name": "Swift 6.2 / ubuntu-24.04",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T15:29:46Z",
+      "completedAt": "2026-10-15T15:42:51Z",
+      "runnerName": "GitHub Actions 1000002693",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "operatingSystemFromSetupLog": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "ubuntu-24.04",
+        "version": "20261012.334.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": "Swift version 6.2.4 (swift-6.2.4-RELEASE)",
+      "xcodeVersion": null,
+      "rawLogBytes": 826392,
+      "rawLogSHA256": "a1b02b8551575c72e3e96b15b4cda0449fbc6156d382a241bd0bef17806d5690",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:47Z",
+          "completedAt": "2026-10-15T15:29:48Z"
+        },
+        {
+          "number": 2,
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:48Z",
+          "completedAt": "2026-10-15T15:30:28Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:28Z",
+          "completedAt": "2026-10-15T15:30:31Z"
+        },
+        {
+          "number": 4,
+          "name": "Run swift --version",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:31Z",
+          "completedAt": "2026-10-15T15:30:32Z"
+        },
+        {
+          "number": 5,
+          "name": "Run swift build",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:32Z",
+          "completedAt": "2026-10-15T15:30:56Z"
+        },
+        {
+          "number": 6,
+          "name": "Run swift test --no-parallel",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:56Z",
+          "completedAt": "2026-10-15T15:37:37Z"
+        },
+        {
+          "number": 7,
+          "name": "Run swift build -c release",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:37:37Z",
+          "completedAt": "2026-10-15T15:38:50Z"
+        },
+        {
+          "number": 8,
+          "name": "Run swift test -c release --no-parallel",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:38:50Z",
+          "completedAt": "2026-10-15T15:41:40Z"
+        },
+        {
+          "number": 9,
+          "name": "CLI stream and report checks (debug and release)",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:41:40Z",
+          "completedAt": "2026-10-15T15:42:46Z"
+        },
+        {
+          "number": 10,
+          "name": "Preserve CLI evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:42:46Z",
+          "completedAt": "2026-10-15T15:42:48Z"
+        },
+        {
+          "number": 19,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:42:48Z",
+          "completedAt": "2026-10-15T15:42:48Z"
+        },
+        {
+          "number": 20,
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:42:48Z",
+          "completedAt": "2026-10-15T15:42:49Z"
+        },
+        {
+          "number": 21,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:42:49Z",
+          "completedAt": "2026-10-15T15:42:49Z"
+        }
+      ]
+    },
+    {
+      "id": 116539336360,
+      "name": "Pinned libjxl 0.12.0 interoperability / Swift 6.4",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T15:29:46Z",
+      "completedAt": "2026-10-15T15:56:35Z",
+      "runnerName": "GitHub Actions 1000002695",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "operatingSystemFromSetupLog": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "ubuntu-24.04",
+        "version": "20261004.327.1"
+      },
+      "checkedOutHeadPrefix": "43c04e0",
+      "swiftVersion": null,
+      "xcodeVersion": null,
+      "rawLogBytes": 99449,
+      "rawLogSHA256": "ba5f7f8c4768bf9c780bd7b080a4c79d8330bb664ece46ddc713ea1f579c5532",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:47Z",
+          "completedAt": "2026-10-15T15:29:48Z"
+        },
+        {
+          "number": 2,
+          "name": "Initialize containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:29:48Z",
+          "completedAt": "2026-10-15T15:30:18Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:18Z",
+          "completedAt": "2026-10-15T15:30:20Z"
+        },
+        {
+          "number": 4,
+          "name": "Build pinned test-only reference tools",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:30:20Z",
+          "completedAt": "2026-10-15T15:33:28Z"
+        },
+        {
+          "number": 5,
+          "name": "Require debug and release oracle tests",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:33:28Z",
+          "completedAt": "2026-10-15T15:49:14Z"
+        },
+        {
+          "number": 6,
+          "name": "Require extended Modular boundary and interpretation matrix",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:49:14Z",
+          "completedAt": "2026-10-15T15:54:03Z"
+        },
+        {
+          "number": 7,
+          "name": "Require JPEG pixels, containers and CLI animation interoperability",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:54:03Z",
+          "completedAt": "2026-10-15T15:55:34Z"
+        },
+        {
+          "number": 8,
+          "name": "Recheck JPEG coefficient snapshots independently",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:55:34Z",
+          "completedAt": "2026-10-15T15:55:34Z"
+        },
+        {
+          "number": 9,
+          "name": "Recheck JPEG reconstruction-event vectors independently",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:55:34Z",
+          "completedAt": "2026-10-15T15:55:34Z"
+        },
+        {
+          "number": 10,
+          "name": "Independently validate native Brotli framing fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:55:34Z",
+          "completedAt": "2026-10-15T15:55:34Z"
+        },
+        {
+          "number": 11,
+          "name": "Independently validate compressed Brotli and dictionary fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:55:34Z",
+          "completedAt": "2026-10-15T15:55:34Z"
+        },
+        {
+          "number": 12,
+          "name": "NRRD and libjxl independent CLI interoperability",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:55:34Z",
+          "completedAt": "2026-10-15T15:56:13Z"
+        },
+        {
+          "number": 13,
+          "name": "Native JPEG CLI independent interoperability",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:56:13Z",
+          "completedAt": "2026-10-15T15:56:20Z"
+        },
+        {
+          "number": 14,
+          "name": "PNM colour and libjxl independent CLI interoperability",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:56:20Z",
+          "completedAt": "2026-10-15T15:56:32Z"
+        },
+        {
+          "number": 15,
+          "name": "Preserve oracle evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:56:32Z",
+          "completedAt": "2026-10-15T15:56:32Z"
+        },
+        {
+          "number": 29,
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:56:32Z",
+          "completedAt": "2026-10-15T15:56:32Z"
+        },
+        {
+          "number": 30,
+          "name": "Stop containers",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:56:32Z",
+          "completedAt": "2026-10-15T15:56:33Z"
+        },
+        {
+          "number": 31,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T15:56:33Z",
+          "completedAt": "2026-10-15T15:56:33Z"
+        }
+      ]
+    },
+    {
+      "id": 116570244976,
+      "name": "macOS 26 / Swift 6.2",
+      "status": "completed",
+      "conclusion": "success",
+      "runAttempt": 2,
+      "startedAt": "2026-10-15T17:30:33Z",
+      "completedAt": "2026-10-15T17:30:38Z",
+      "runnerName": "GitHub Actions 1000002748",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "operatingSystemFromSetupLog": [
+        "Ubuntu",
+        "24.04.5",
+        "LTS"
+      ],
+      "runnerImageFromSetupLog": {
+        "image": "ubuntu-24.04",
+        "version": "20261012.334.1"
+      },
+      "checkedOutHeadPrefix": null,
+      "swiftVersion": null,
+      "xcodeVersion": null,
+      "rawLogBytes": 2243,
+      "rawLogSHA256": "1f6063e56e5ddadffc13a5acf9e6d527258a3765f987b14f4ecdfa6995902fff",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:30:34Z",
+          "completedAt": "2026-10-15T17:30:35Z"
+        },
+        {
+          "number": 2,
+          "name": "Require debug and both sanitizers to pass",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:30:35Z",
+          "completedAt": "2026-10-15T17:30:35Z"
+        },
+        {
+          "number": 3,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-15T17:30:35Z",
+          "completedAt": "2026-10-15T17:30:35Z"
+        }
+      ]
+    }
+  ]
+}

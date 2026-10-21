@@ -1,6 +1,5 @@
 {
-  "rawReportSHA256": "725de7c5843c8980b8ce02467338bc78ff6e1e11d02661fd19fee70c3535419d",
-  "auditedAtUTC": "2026-10-15T12:21:23.312313+00:00",
+  "auditedAtUTC": "2026-10-16T05:54:00.282395+00:00",
   "allScenariosBehavedAsExpected": true,
   "scenarios": [
     {
@@ -66,8 +65,10 @@
       "failedChecks": [
         "contemporaneousPreAndPostManifestsRecorded",
         "runnerHashRecordedAndUnchanged",
+        "armReciprocalVectorsUnchanged",
         "builtArtifactsRecordedForAllRuns"
       ]
     }
-  ]
+  ],
+  "rawReportSHA256": "d1591fb15f84b9d842d6ee36c6a6eb819f0cb567fa049a20a60f82ecd0a54470"
 }

@@ -27,7 +27,8 @@ package enum VarDCTHierarchicalAnalysis {
         var small: VarDCTSmallAnalysis.Workspace
         var large: VarDCTLargeAnalysis.Workspace
         var pixels: [Float]
-        var challenger: [Int32] = []
+        var challenger: [Int32]
+        var largeChallenger: [Int32]
         init(budget: ScalarOperationBudget) throws {
             // Complete every throwing step before initializing noncopyable
             // stored fields; local owners unwind normally on admission failure.
@@ -38,8 +39,12 @@ package enum VarDCTHierarchicalAnalysis {
             // large transforms need only one channel at a time. Admission
             // remains the original conservative three-large-channel allowance.
             let pixels = [Float](repeating: 0, count: 192 + 4096)
+            let challenger = [Int32](repeating: 0, count: 195)
+            let largeChallenger = [Int32](repeating: 0, count: 12480)
             self.small = consume small; self.large = consume large
             self.pixels = pixels
+            self.challenger = challenger
+            self.largeChallenger = largeChallenger
         }
     }
     private final class WorkerState: Sendable {
@@ -60,7 +65,10 @@ package enum VarDCTHierarchicalAnalysis {
         try budget.reserveWorkspace(cells * (64 * 24 + 256))
         var axes = ScaledDCT.AxisBank(direction: .forward, budget: budget)
         let small = try VarDCTSmallAnalysis(budget: budget, axes: &axes)
-        var largeConstruction: [Int: VarDCTLargeAnalysis] = [:], weightConstruction: [Int: [Float]] = [:], orderConstruction: [Int: [Int]] = [:]
+        var largeConstruction = [VarDCTLargeAnalysis?](repeating: nil, count: 21)
+        var weightConstruction = [[Float]](repeating: [], count: 21)
+        var orderConstruction = [[Int]](repeating: [], count: 21)
+        var sharedOrders: [Int: [Int]] = [:]
         let ids = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
         for id in ids {
             // Larger partitions cannot be selected if either cell axis is
@@ -75,46 +83,61 @@ package enum VarDCTHierarchicalAnalysis {
             } else { rows = 8; columns = 8 }
             weightConstruction[id] = try VarDCTQuantWeights.make(identifier: id, rows: rows, columns: columns, budget: budget)
             let orderKey = max(rows, columns) * 64 + min(rows, columns)
-            if orderConstruction[orderKey] != nil {
+            if let existing = sharedOrders[orderKey] {
                 // Identical normalized shapes use one immutable scan owner,
                 // while each original per-strategy admission remains charged.
                 try budget.reserveWorkspace(rows * columns * MemoryLayout<Int>.stride)
                 try budget.checkpoint()
+                orderConstruction[id] = existing
             } else {
-                orderConstruction[orderKey] = try VarDCTOrders.natural(width: max(rows, columns) / 8,
+                let created = try VarDCTOrders.natural(width: max(rows, columns) / 8,
                     height: min(rows, columns) / 8, budget: budget)
+                sharedOrders[orderKey] = created
+                orderConstruction[id] = created
             }
         }
         let large = largeConstruction, weights = weightConstruction, orders = orderConstruction
         let dcScale = [4096.0,512,256].map { Double(scale) * 17 * $0 / 65536 }
-        @Sendable func quantise(_ value: Double) throws -> Int32 {
+        let scaleOver65536 = Double(scale) / 65536.0
+        @Sendable @inline(__always) func quantise(_ value: Double) throws -> Int32 {
             let rounded = value.rounded()
-            guard rounded.isFinite, rounded >= Double(Int32.min), rounded <= Double(Int32.max) else {
+            guard rounded >= Double(Int32.min), rounded <= Double(Int32.max) else {
                 throw VarDCTError.nonFiniteSample
             }
             return Int32(rounded)
         }
         var qf = [Int32](repeating: 5, count: cells)
         if adaptiveQuantisation {
-            var patch: [Float] = []
-            for y in 0..<by { for x in 0..<bx {
-                // Keep the original conservative per-cell admission, but reuse
-                // a single patch owner rather than allocate three channel arrays
-                // and their outer owner before immediately reducing the samples.
-                try budget.reserveWorkspace(192 * MemoryLayout<Float>.stride)
-                if patch.isEmpty { patch = [Float](repeating: 0, count: 192) }
-                try patch.withUnsafeMutableBufferPointer { target in
-                    for yy in 0..<8 {
-                        try budget.checkpoint()
-                        for xx in 0..<8 {
-                            let source = min(height - 1, y * 8 + yy) * width + min(width - 1, x * 8 + xx)
-                            for c in 0..<3 { target[c * 64 + yy * 8 + xx] = planes[c][source] }
+            try budget.reserveWorkspace(cells * 192 * MemoryLayout<Float>.stride)
+            var patch = [Float](repeating: 0, count: 192)
+            try planes[0].withUnsafeBufferPointer { p0 in
+                try planes[1].withUnsafeBufferPointer { p1 in
+                    try planes[2].withUnsafeBufferPointer { p2 in
+                        try patch.withUnsafeMutableBufferPointer { target in
+                            let f0 = p0.baseAddress!, f1 = p1.baseAddress!, f2 = p2.baseAddress!
+                            let tPtr = target.baseAddress!
+                            for y in 0..<by {
+                                try budget.checkpoint()
+                                for x in 0..<bx {
+                                    for yy in 0..<8 {
+                                        let rowOffset = min(height &- 1, y &* 8 &+ yy) &* width
+                                        let dstRow = yy &* 8
+                                        for xx in 0..<8 {
+                                            let source = rowOffset &+ min(width &- 1, x &* 8 &+ xx)
+                                            let at = dstRow &+ xx
+                                            tPtr[at] = f0[source]
+                                            tPtr[64 &+ at] = f1[source]
+                                            tPtr[128 &+ at] = f2[source]
+                                        }
+                                    }
+                                    qf[y &* bx &+ x] = try VarDCTEncoderPreparation.quantisation(
+                                        UnsafeBufferPointer(target), distance: distance)
+                                }
+                            }
                         }
                     }
-                    qf[y * bx + x] = try VarDCTEncoderPreparation.quantisation(
-                        UnsafeBufferPointer(target), distance: distance)
                 }
-            } }
+            }
         }
         let quantisationField = qf
         // Every tile starts on eight-cell boundaries in both axes, so no
@@ -138,122 +161,196 @@ package enum VarDCTHierarchicalAnalysis {
                 // transform/pixel owners. Move the challenger into a separate local
                 // owner to avoid overlapping inout access during evaluate().
                 var smallChallenger: [Int32] = []
+                var largeChallenger: [Int32] = []
                 swap(&smallChallenger, &scratch.challenger)
-                defer { swap(&smallChallenger, &scratch.challenger) }
-                var previousPatch: (x: Int, y: Int, rows: Int, columns: Int)?
-                func evaluate(_ id: Int, _ x: Int, _ y: Int, _ q: Int32,
-                              values: inout [Int32]) throws -> Int {
-                    try budget.checkpoint()
-                    let rows = large[id]?.rows ?? 8, columns = large[id]?.columns ?? 8
-                    let count = rows * columns, covered = count / 64
-                    let orderKey = max(rows, columns) * 64 + min(rows, columns)
-                    guard let weight = weights[id], let order = orders[orderKey] else { throw VarDCTError.invalidTransform }
+                swap(&largeChallenger, &scratch.largeChallenger)
+                defer {
+                    swap(&smallChallenger, &scratch.challenger)
+                    swap(&largeChallenger, &scratch.largeChallenger)
+                }
+                var previousPatch: (x: Int, y: Int)?
+                func evaluateInto(_ id: Int, _ x: Int, _ y: Int, _ q: Int32,
+                                  reuseSubtransforms: Bool,
+                                  target: UnsafeMutablePointer<Int32>) throws -> Int {
+                    let plan = large[id]
+                    let rows = plan?.rows ?? 8, columns = plan?.columns ?? 8
+                    let count = rows &* columns, covered = count &>> 6
+                    let weight = weights[id], order = orders[id]
+                    guard !weight.isEmpty, !order.isEmpty else { throw VarDCTError.invalidTransform }
+                    let qDouble = Double(q)
                     if count == 64 && (previousPatch?.x != x || previousPatch?.y != y) {
-                        try planes[0].withUnsafeBufferPointer { first in
-                            try planes[1].withUnsafeBufferPointer { second in
-                                try planes[2].withUnsafeBufferPointer { third in
-                                    try scratch.pixels.withUnsafeMutableBufferPointer { target in
-                                        for yy in 0..<rows {
-                                            try budget.checkpoint()
-                                            let sourceRow = min(height - 1, y * 8 + yy) * width
-                                            for xx in 0..<columns {
-                                                let source = sourceRow + min(width - 1, x * 8 + xx)
-                                                let at = yy * columns + xx
-                                                target[at] = first[source]
-                                                target[64 + at] = second[source]
-                                                target[128 + at] = third[source] - second[source]
+                        planes[0].withUnsafeBufferPointer { first in
+                            planes[1].withUnsafeBufferPointer { second in
+                                planes[2].withUnsafeBufferPointer { third in
+                                    scratch.pixels.withUnsafeMutableBufferPointer { pixBuf in
+                                        let f0 = first.baseAddress!, f1 = second.baseAddress!, f2 = third.baseAddress!
+                                        let tPtr = pixBuf.baseAddress!
+                                        for yy in 0..<8 {
+                                            let sourceRow = min(height &- 1, y &* 8 &+ yy) &* width
+                                            let dstRow = yy &* 8
+                                            for xx in 0..<8 {
+                                                let source = sourceRow &+ min(width &- 1, x &* 8 &+ xx)
+                                                let at = dstRow &+ xx
+                                                tPtr[at] = f0[source]
+                                                let lum = f1[source]
+                                                tPtr[64 &+ at] = lum
+                                                tPtr[128 &+ at] = f2[source] - lum
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                        previousPatch = (x, y, rows, columns)
+                        previousPatch = (x, y)
                     }
-                    try budget.reserveWorkspace((count + covered) * 3 * MemoryLayout<Int32>.stride)
-                    if values.isEmpty { values = [Int32](repeating: 0, count: (count + covered) * 3) }
-                    guard values.count == (count + covered) * 3 else { throw VarDCTError.invalidTransform }
                     var cost = 0
-                    // Reuse occurs only for 8x8 trials: every DC and non-DC AC
-                    // position is overwritten. The omitted AC DC slot starts at
-                    // zero and is never written by any of the small strategies.
-                    try values.withUnsafeMutableBufferPointer { target in
-                        for c in 0..<3 {
-                            let base = c * (count + covered)
-                            if let plan = large[id] {
-                                // Fill only the channel immediately consumed by
-                                // this transform. The small-cell cache prefix
-                                // survives every large trial unchanged.
-                                try planes[c].withUnsafeBufferPointer { channel in
-                                    try planes[1].withUnsafeBufferPointer { luminance in
-                                        try scratch.pixels.withUnsafeMutableBufferPointer { pixels in
-                                            for yy in 0..<rows {
-                                                try budget.checkpoint()
-                                                let sourceRow = min(height - 1, y * 8 + yy) * width
-                                                for xx in 0..<columns {
-                                                    let source = sourceRow + min(width - 1, x * 8 + xx)
-                                                    pixels[192 + yy * columns + xx] = c == 2
-                                                        ? channel[source] - luminance[source] : channel[source]
+                    try weight.withUnsafeBufferPointer { wBuf in
+                        try order.withUnsafeBufferPointer { oBuf in
+                            let wPtr = wBuf.baseAddress!
+                            let ordPtr = oBuf.baseAddress!
+                            if let plan {
+                                let transpose = rows >= columns
+                                let rowMask = rows &- 1
+                                let rowShift = rows.trailingZeroBitCount
+                                let colShift = columns.trailingZeroBitCount
+                                for c in 0..<3 {
+                                    let base = c &* (count &+ covered)
+                                    planes[c].withUnsafeBufferPointer { channel in
+                                        planes[1].withUnsafeBufferPointer { luminance in
+                                            scratch.pixels.withUnsafeMutableBufferPointer { pixels in
+                                                let chPtr = channel.baseAddress!
+                                                let lumPtr = luminance.baseAddress!
+                                                let pPtr = pixels.baseAddress! + 192
+                                                if c == 2 {
+                                                    for yy in 0..<rows {
+                                                        let sourceRow = min(height &- 1, y &* 8 &+ yy) &* width
+                                                        let dstRow = yy &* columns
+                                                        for xx in 0..<columns {
+                                                            let source = sourceRow &+ min(width &- 1, x &* 8 &+ xx)
+                                                            pPtr[dstRow &+ xx] = chPtr[source] - lumPtr[source]
+                                                        }
+                                                    }
+                                                } else {
+                                                    for yy in 0..<rows {
+                                                        let sourceRow = min(height &- 1, y &* 8 &+ yy) &* width
+                                                        let dstRow = yy &* columns
+                                                        for xx in 0..<columns {
+                                                            let source = sourceRow &+ min(width &- 1, x &* 8 &+ xx)
+                                                            pPtr[dstRow &+ xx] = chPtr[source]
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                try scratch.pixels.withUnsafeBufferPointer {
-                                    try plan.apply(UnsafeBufferPointer(rebasing: $0[192..<(192 + count)]), workspace: &scratch.large)
+                                    try scratch.pixels.withUnsafeBufferPointer {
+                                        try plan.apply(UnsafeBufferPointer(rebasing: $0[192..<(192 &+ count)]),
+                                                       workspace: &scratch.large)
+                                    }
+                                    try scratch.large.withRawDCTAndDC { dctBuf, dcBuf in
+                                        let dctPtr = dctBuf.baseAddress!
+                                        let dcPtr = dcBuf.baseAddress!
+                                        let dcS = dcScale[c]
+                                        let wChannel = wPtr + (c &* count)
+                                        let outAC = target + (base &+ covered)
+                                        for k in 0..<covered {
+                                            target[base &+ k] = try quantise(Double(dcPtr[k]) * dcS)
+                                            outAC[ordPtr[k]] = 0
+                                        }
+                                        var last = 0, magnitude = 0
+                                        if transpose {
+                                            for k in covered..<count {
+                                                let position = ordPtr[k]
+                                                let rawIdx = ((position & rowMask) &<< colShift) | (position &>> rowShift)
+                                                let coefficient = dctPtr[rawIdx]
+                                                let value = try quantise(Double(coefficient) * Double(wChannel[position])
+                                                    * scaleOver65536 * qDouble)
+                                                outAC[position] = value
+                                                if value != 0 {
+                                                    last = k
+                                                    magnitude &+= 32 &- value.magnitude.leadingZeroBitCount
+                                                }
+                                            }
+                                        } else {
+                                            for k in covered..<count {
+                                                let position = ordPtr[k]
+                                                let coefficient = dctPtr[position]
+                                                let value = try quantise(Double(coefficient) * Double(wChannel[position])
+                                                    * scaleOver65536 * qDouble)
+                                                outAC[position] = value
+                                                if value != 0 {
+                                                    last = k
+                                                    magnitude &+= 32 &- value.magnitude.leadingZeroBitCount
+                                                }
+                                            }
+                                        }
+                                        cost &+= 4 &+ 2 &* last &+ magnitude
+                                    }
                                 }
                             } else {
-                                try scratch.pixels.withUnsafeBufferPointer {
-                                    try small.apply(UnsafeBufferPointer(rebasing: $0[(c * 64)..<(c * 64 + 64)]), identifier: id, workspace: &scratch.small)
+                                for c in 0..<3 {
+                                    let base = c &* 65
+                                    try scratch.pixels.withUnsafeBufferPointer {
+                                        try small.apply(UnsafeBufferPointer(rebasing: $0[(c &* 64)..<(c &* 64 &+ 64)]),
+                                                        identifier: id, workspace: &scratch.small,
+                                                        channelSlot: c, reuseSubtransforms: reuseSubtransforms)
+                                    }
+                                    try scratch.small.withValues { smBuf in
+                                        let smPtr = smBuf.baseAddress!
+                                        let wChannel = wPtr + (c &* 64)
+                                        let outAC = target + (base &+ 1)
+                                        target[base] = try quantise(Double(smPtr[0]) * dcScale[c])
+                                        outAC[0] = 0
+                                        var last = 0, magnitude = 0
+                                        for k in 1..<64 {
+                                            let position = ordPtr[k]
+                                            let coefficient = smPtr[position]
+                                            let value = try quantise(Double(coefficient) * Double(wChannel[position])
+                                                * scaleOver65536 * qDouble)
+                                            outAC[position] = value
+                                            if value != 0 {
+                                                last = k
+                                                magnitude &+= 32 &- value.magnitude.leadingZeroBitCount
+                                            }
+                                        }
+                                        cost &+= 4 &+ 2 &* last &+ magnitude
+                                    }
                                 }
                             }
-                            for k in 0..<covered {
-                                let value = covered > 1 ? scratch.large.dcValue(at: k) : scratch.small.value(at: 0)
-                                target[base + k] = try quantise(Double(value) * dcScale[c])
-                            }
-                            var last = 0, magnitude = 0
-                            // Natural scans place all DC frequencies first, including the
-                            // non-contiguous low-frequency rectangle of large transforms.
-                            for k in covered..<count {
-                                let position = order[k]
-                                let coefficient = covered > 1 ? scratch.large.coefficient(at: position) : scratch.small.value(at: position)
-                                let value = try quantise(Double(coefficient) * Double(weight[c * count + position])
-                                    * Double(scale) / 65536 * Double(q))
-                                target[base + covered + position] = value
-                                if value != 0 { last = k; magnitude += 32 - value.magnitude.leadingZeroBitCount }
-                            }
-                            cost += 4 + 2 * last + magnitude
                         }
                     }
                     return cost
                 }
-                func trial(_ id: Int, _ x: Int, _ y: Int, _ q: Int32) throws -> Pick {
-                    var values: [Int32] = []
-                    let cost = try evaluate(id, x, y, q, values: &values)
-                    let rows = large[id]?.rows ?? 8, columns = large[id]?.columns ?? 8
-                    return Pick(id: id, x: x, y: y, width: columns / 8, height: rows / 8, q: q, values: values, cost: cost)
-                }
                 func cell(_ x: Int, _ y: Int, _ q: Int32) throws -> Pick {
-                    var best = try trial(0,x,y,q)
-                    let initial = best.cost
+                    try budget.checkpoint()
+                    var bestValues = [Int32](repeating: 0, count: 195)
+                    var bestCost = try bestValues.withUnsafeMutableBufferPointer {
+                        try evaluateInto(0, x, y, q, reuseSubtransforms: false, target: $0.baseAddress!)
+                    }
+                    var bestId = 0
+                    let initial = bestCost
                     if initial > 54 {
                         for id in [13,12,3,2,1,17,16,15,14] where id < 14 || initial > 120 {
-                            let cost = try evaluate(id, x, y, q, values: &smallChallenger)
-                            if cost <= best.cost {
-                                swap(&best.values, &smallChallenger)
-                                best.id = id; best.cost = cost
+                            let cost = try smallChallenger.withUnsafeMutableBufferPointer {
+                                try evaluateInto(id, x, y, q, reuseSubtransforms: true, target: $0.baseAddress!)
+                            }
+                            if cost <= bestCost {
+                                swap(&bestValues, &smallChallenger)
+                                bestId = id; bestCost = cost
                             }
                         }
                     }
-                    return best
+                    return Pick(id: bestId, x: x, y: y, width: 1, height: 1, q: q, values: bestValues, cost: bestCost)
                 }
                 func region(_ x: Int, _ y: Int, _ size: Int, _ q: Int32) throws -> [Pick] {
                     if size == 1 { return [try cell(x,y,q)] }
                     let half = size / 2
                     var split: [Pick] = []
+                    split.reserveCapacity(size * size)
                     for (dx,dy) in [(0,0),(half,0),(0,half),(half,half)] {
                         split += try region(x+dx,y+dy,half,q)
                     }
+                    try budget.checkpoint()
                     let square = size == 2 ? 4 : size == 4 ? 5 : 18
                     let vertical = size == 2 ? 6 : size == 4 ? 10 : 19
                     let horizontal = size == 2 ? 7 : size == 4 ? 11 : 20
@@ -263,18 +360,74 @@ package enum VarDCTHierarchicalAnalysis {
                     var best = split, cost = split.reduce(0) { $0 + $1.cost }
                     var rank = size == 2 ? 3 : 0
                     split.removeAll(keepingCapacity: false)
-                    func consider(_ candidate: [Pick], rank candidateRank: Int) {
-                        let candidateCost = candidate.reduce(0) { $0 + $1.cost }
-                        if candidateCost < cost || (candidateCost == cost && candidateRank < rank) {
-                            best = candidate; cost = candidateCost; rank = candidateRank
+                    try largeChallenger.withUnsafeMutableBufferPointer { chalBuf in
+                        let chalPtr = chalBuf.baseAddress!
+                        let sqLen = (size &* size &* 65) &* 3
+                        let sqRank = size == 2 ? 0 : 1
+                        let sqCost = try evaluateInto(square, x, y, q, reuseSubtransforms: false, target: chalPtr)
+                        if sqCost < cost || (sqCost == cost && sqRank < rank) {
+                            best = [Pick(id: square, x: x, y: y, width: size, height: size, q: q,
+                                         values: Array(chalBuf[0..<sqLen]), cost: sqCost)]
+                            cost = sqCost; rank = sqRank
                         }
-                    }
-                    consider([try trial(square,x,y,q)], rank: size == 2 ? 0 : 1)
-                    consider([try trial(vertical,x,y,q), try trial(vertical,x+half,y,q)], rank: size == 2 ? 1 : 2)
-                    consider([try trial(horizontal,x,y,q), try trial(horizontal,x,y+half,q)], rank: size == 2 ? 2 : 3)
-                    if size == 4 {
-                        consider(try (0..<4).map { try trial(8,x+$0,y,q) }, rank: 4)
-                        consider(try (0..<4).map { try trial(9,x,y+$0,q) }, rank: 5)
+                        let halfLen = (half &* size &* 65) &* 3
+                        let vRank = size == 2 ? 1 : 2
+                        let vc0 = try evaluateInto(vertical, x, y, q, reuseSubtransforms: false, target: chalPtr)
+                        let vc1 = try evaluateInto(vertical, x + half, y, q, reuseSubtransforms: false, target: chalPtr + halfLen)
+                        let vCost = vc0 + vc1
+                        if vCost < cost || (vCost == cost && vRank < rank) {
+                            best = [
+                                Pick(id: vertical, x: x, y: y, width: half, height: size, q: q,
+                                     values: Array(chalBuf[0..<halfLen]), cost: vc0),
+                                Pick(id: vertical, x: x + half, y: y, width: half, height: size, q: q,
+                                     values: Array(chalBuf[halfLen..<(2 &* halfLen)]), cost: vc1)
+                            ]
+                            cost = vCost; rank = vRank
+                        }
+                        let hRank = size == 2 ? 2 : 3
+                        let hc0 = try evaluateInto(horizontal, x, y, q, reuseSubtransforms: false, target: chalPtr)
+                        let hc1 = try evaluateInto(horizontal, x, y + half, q, reuseSubtransforms: false, target: chalPtr + halfLen)
+                        let hCost = hc0 + hc1
+                        if hCost < cost || (hCost == cost && hRank < rank) {
+                            best = [
+                                Pick(id: horizontal, x: x, y: y, width: size, height: half, q: q,
+                                     values: Array(chalBuf[0..<halfLen]), cost: hc0),
+                                Pick(id: horizontal, x: x, y: y + half, width: size, height: half, q: q,
+                                     values: Array(chalBuf[halfLen..<(2 &* halfLen)]), cost: hc1)
+                            ]
+                            cost = hCost; rank = hRank
+                        }
+                        if size == 4 {
+                            let stripLen: Int = 4 * 65 * 3
+                            let c8_0 = try evaluateInto(8, x, y, q, reuseSubtransforms: false, target: chalPtr)
+                            let c8_1 = try evaluateInto(8, x + 1, y, q, reuseSubtransforms: false, target: chalPtr + stripLen)
+                            let c8_2 = try evaluateInto(8, x + 2, y, q, reuseSubtransforms: false, target: chalPtr + (2 * stripLen))
+                            let c8_3 = try evaluateInto(8, x + 3, y, q, reuseSubtransforms: false, target: chalPtr + (3 * stripLen))
+                            let cost8 = c8_0 + c8_1 + c8_2 + c8_3
+                            if cost8 < cost || (cost8 == cost && 4 < rank) {
+                                best = [
+                                    Pick(id: 8, x: x, y: y, width: 1, height: 4, q: q, values: Array(chalBuf[0..<stripLen]), cost: c8_0),
+                                    Pick(id: 8, x: x + 1, y: y, width: 1, height: 4, q: q, values: Array(chalBuf[stripLen..<(2 * stripLen)]), cost: c8_1),
+                                    Pick(id: 8, x: x + 2, y: y, width: 1, height: 4, q: q, values: Array(chalBuf[(2 * stripLen)..<(3 * stripLen)]), cost: c8_2),
+                                    Pick(id: 8, x: x + 3, y: y, width: 1, height: 4, q: q, values: Array(chalBuf[(3 * stripLen)..<(4 * stripLen)]), cost: c8_3)
+                                ]
+                                cost = cost8; rank = 4
+                            }
+                            let c9_0 = try evaluateInto(9, x, y, q, reuseSubtransforms: false, target: chalPtr)
+                            let c9_1 = try evaluateInto(9, x, y + 1, q, reuseSubtransforms: false, target: chalPtr + stripLen)
+                            let c9_2 = try evaluateInto(9, x, y + 2, q, reuseSubtransforms: false, target: chalPtr + (2 * stripLen))
+                            let c9_3 = try evaluateInto(9, x, y + 3, q, reuseSubtransforms: false, target: chalPtr + (3 * stripLen))
+                            let cost9 = c9_0 + c9_1 + c9_2 + c9_3
+                            if cost9 < cost || (cost9 == cost && 5 < rank) {
+                                best = [
+                                    Pick(id: 9, x: x, y: y, width: 4, height: 1, q: q, values: Array(chalBuf[0..<stripLen]), cost: c9_0),
+                                    Pick(id: 9, x: x, y: y + 1, width: 4, height: 1, q: q, values: Array(chalBuf[stripLen..<(2 * stripLen)]), cost: c9_1),
+                                    Pick(id: 9, x: x, y: y + 2, width: 4, height: 1, q: q, values: Array(chalBuf[(2 * stripLen)..<(3 * stripLen)]), cost: c9_2),
+                                    Pick(id: 9, x: x, y: y + 3, width: 4, height: 1, q: q, values: Array(chalBuf[(3 * stripLen)..<(4 * stripLen)]), cost: c9_3)
+                                ]
+                                cost = cost9; rank = 5
+                            }
+                        }
                     }
                     return best
                 }

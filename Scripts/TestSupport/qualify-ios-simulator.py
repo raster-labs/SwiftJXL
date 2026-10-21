@@ -563,7 +563,11 @@ def evaluate_run_acceptance(
     }
 
 
-def evaluate_report_acceptance(report: dict[str, Any], is_reaudit: bool = False) -> dict[str, Any]:
+def evaluate_report_acceptance(
+    report: dict[str, Any],
+    is_reaudit: bool = False,
+    reaudited_evaluation: bool = False,
+) -> dict[str, Any]:
     runs = report.get("runs") or []
     run_checks = {
         r["configuration"]: r.get("acceptance", {}).get("passed", False)
@@ -610,9 +614,17 @@ def evaluate_report_acceptance(report: dict[str, Any], is_reaudit: bool = False)
         )
 
     failed_checks = [k for k, v in checks.items() if not v]
+    if is_reaudit:
+        eval_mode = "historical_reaudit"
+    elif reaudited_evaluation:
+        eval_mode = "reaudited_with_contemporaneous_bindings"
+    else:
+        eval_mode = "contemporaneous_live_run"
+
     return {
         "passed": len(failed_checks) == 0,
-        "evaluationMode": "historical_reaudit" if is_reaudit else "contemporaneous_live_run",
+        "evaluationMode": eval_mode,
+        "reaudited": bool(is_reaudit or reaudited_evaluation),
         "runnerNonDriftStatus": (
             "unknown_not_captured_at_execution"
             if is_reaudit and not report.get("runnerSHA256")
@@ -859,6 +871,15 @@ def audit_existing_directory(
         shutil.copy2(report_path, orig_backup_path)
 
     existing = json.loads(orig_backup_path.read_text())
+    orig_status = existing.get("status")
+    orig_acceptance = copy.deepcopy(existing.get("acceptance"))
+    orig_validator_self_test = copy.deepcopy(existing.get("validatorSelfTest"))
+
+    st_path = out_dir / "validator-self-test.json"
+    st_orig_backup_path = out_dir / "validator-self-test.original.json"
+    if orig_validator_self_test is not None and st_path.exists() and not st_orig_backup_path.exists():
+        shutil.copy2(st_path, st_orig_backup_path)
+
     expected_identities = load_expected_identities(baseline_report_path)
 
     auditor_path = pathlib.Path(__file__).resolve()
@@ -970,7 +991,15 @@ def audit_existing_directory(
     has_full_contemporaneous_bindings = (
         had_contemporaneous_runner_sha and (not any_missing_built_artifacts) and has_pre_manifest
     )
-    rep_acc = evaluate_report_acceptance(existing, is_reaudit=not has_full_contemporaneous_bindings)
+    rep_acc = evaluate_report_acceptance(
+        existing,
+        is_reaudit=not has_full_contemporaneous_bindings,
+        reaudited_evaluation=True,
+    )
+    if orig_status is not None:
+        existing["originalStatus"] = orig_status
+    if orig_acceptance is not None:
+        existing["originalAcceptance"] = orig_acceptance
     existing["acceptance"] = rep_acc
     limitations: list[str] = []
     if not had_contemporaneous_runner_sha:
@@ -987,6 +1016,8 @@ def audit_existing_directory(
         "auditorSHA256": auditor_sha,
         "originalReportBackupPath": str(orig_backup_path),
         "originalReportBackupSHA256": sha256_file(orig_backup_path),
+        "originalValidatorSelfTestBackupPath": str(st_orig_backup_path) if st_orig_backup_path.exists() else None,
+        "originalValidatorSelfTestBackupSHA256": sha256_file(st_orig_backup_path) if st_orig_backup_path.exists() else None,
         "contemporaneousRunnerHashCaptured": had_contemporaneous_runner_sha,
         "contemporaneousDerivedDataArtifactsCaptured": not any_missing_built_artifacts,
         "contemporaneousPreRunManifestFileCaptured": has_pre_manifest,
@@ -1007,15 +1038,19 @@ def audit_existing_directory(
     }
     existing["status"] = "passed" if rep_acc["passed"] else "failed"
 
+    if orig_validator_self_test is not None:
+        existing["originalValidatorSelfTest"] = orig_validator_self_test
+
     if run_self_test and existing.get("runs"):
         st = run_validator_self_test(
             existing, expected_identities, last_log_text, is_reaudit=not has_full_contemporaneous_bindings
         )
-        st_path = out_dir / "validator-self-test.json"
         st_path.write_text(json.dumps(st, indent=2) + "\n")
         existing["validatorSelfTest"] = {
             "path": str(st_path),
             "sha256": sha256_file(st_path),
+            "originalBackupPath": str(st_orig_backup_path) if st_orig_backup_path.exists() else None,
+            "originalBackupSHA256": sha256_file(st_orig_backup_path) if st_orig_backup_path.exists() else None,
             "allScenariosBehavedAsExpected": st["allScenariosBehavedAsExpected"],
             "scenarioCount": len(st["scenarios"]),
         }

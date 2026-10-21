@@ -1,0 +1,51 @@
+{
+  "auditedAtUTC": "2026-10-16T05:37:08.475280+00:00",
+  "requiredRuntimeVersion": "26.0",
+  "records": [
+    {
+      "folder": "/Users/raster/Documents/Codex/2026-10-15/in-our-previous-chat-i-could-2/work/qualification/final/ios-simulator-26.0-release-2/release",
+      "passed": true,
+      "checks": {
+        "exactIdentitySet": true,
+        "noDuplicateDeclarations": true,
+        "noDuplicateCases": true,
+        "expectedDeclarationCount": true,
+        "expectedCaseCount": true,
+        "allCasesPassed": true,
+        "allDeclarationsPassed": true,
+        "consoleDeclarationsAgree": true,
+        "consoleCasesAgree": true,
+        "summaryPassed": true,
+        "summaryCountsAgree": true,
+        "summaryNoFailuresOrSkips": true,
+        "correctRuntime": true,
+        "logArchiveIdentical": true
+      },
+      "declarations": 359,
+      "cases": 1955,
+      "caseResults": {
+        "Passed": 1955
+      },
+      "missingTestIdentities": [],
+      "unexpectedTestIdentities": [],
+      "devices": [
+        {
+          "architecture": "arm64",
+          "deviceId": "C9BCD5A3-2FBD-46D6-B2DD-73CE84342DCB",
+          "deviceName": "SwiftJXL-iOS-Suite-d1b05a25",
+          "modelName": "iPhone 17 Pro",
+          "osBuildNumber": "23A343",
+          "osVersion": "26.0",
+          "platform": "iOS Simulator"
+        }
+      ],
+      "artifacts": {
+        "tests.json": "43ba9e0ac1cc9b5c730b68749e8daf688c0ba67627761ff6c23d6306ef842196",
+        "summary.json": "b0aab693a87bfa9a36576ada407572af36e66feec024f6b509e206dba3e9868a",
+        "xcodebuild.log": "0406a37f72efd54f7630c93f105e8c108e021d279688c38be8228fd373b9bf51"
+      },
+      "note": "Independent raw-result audit. Source/binary/vector binding and harness acceptance are separately audited."
+    }
+  ],
+  "passed": true
+}

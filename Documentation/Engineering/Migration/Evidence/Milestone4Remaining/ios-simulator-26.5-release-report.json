@@ -1,5 +1,4 @@
 {
-  "rawReportSHA256": "5c1fd162f14360f91a4b9a2173dab2530ae81b3ce8e44621695c6ebe6cad4ba8",
   "schemaVersion": 1,
   "startedAtUTC": "2026-10-15T12:00:43.934777+00:00",
   "gitHead": "eaf011e914ee2ab36af5266d7fba9a8e42471ecf",
@@ -34882,9 +34881,11 @@
     "excludedMacOSDeclarations": 6,
     "expectedIOSDeclarations": 359
   },
+  "originalStatus": "passed",
   "acceptance": {
     "passed": true,
     "evaluationMode": "historical_reaudit",
+    "reaudited": true,
     "runnerNonDriftStatus": "unknown_not_captured_at_execution",
     "checks": {
       "hasExecutedRuns": true,
@@ -34901,11 +34902,13 @@
     "failedChecks": []
   },
   "reaudit": {
-    "auditedAtUTC": "2026-10-15T12:21:23.238940+00:00",
+    "auditedAtUTC": "2026-10-16T05:54:00.206784+00:00",
     "auditorPath": "Scripts/TestSupport/qualify-ios-simulator.py",
-    "auditorSHA256": "11d1f427a9310807b584345e7f54d8390f53cce289095ba22451ccdcfb382eed",
+    "auditorSHA256": "72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065",
     "originalReportBackupPath": "<work-final>/ios-simulator-release/report.original.json",
     "originalReportBackupSHA256": "d70f101f0115de16699d6cbd05ef87e965c579f51786dc5b2d4e619c7a35f876",
+    "originalValidatorSelfTestBackupPath": null,
+    "originalValidatorSelfTestBackupSHA256": null,
     "contemporaneousRunnerHashCaptured": false,
     "contemporaneousDerivedDataArtifactsCaptured": false,
     "contemporaneousPreRunManifestFileCaptured": false,
@@ -34918,8 +34921,11 @@
   },
   "validatorSelfTest": {
     "path": "<work-final>/ios-simulator-release/validator-self-test.json",
-    "sha256": "725de7c5843c8980b8ce02467338bc78ff6e1e11d02661fd19fee70c3535419d",
+    "sha256": "d1591fb15f84b9d842d6ee36c6a6eb819f0cb567fa049a20a60f82ecd0a54470",
+    "originalBackupPath": null,
+    "originalBackupSHA256": null,
     "allScenariosBehavedAsExpected": true,
     "scenarioCount": 8
-  }
+  },
+  "rawReportSHA256": "a4982c85571ca32eccca98782497749a7136cb35e3d4b3b90e907af58d144992"
 }
