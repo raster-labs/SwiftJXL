@@ -46,7 +46,13 @@ struct BorrowedModularDestination {
 /// decode. The decode loop checks precision before writing a sample.
 struct BorrowedModularChannel: ModularSampleBuffer {
     let bytes: UnsafeMutableRawBufferPointer
+    let base: UnsafeMutablePointer<UInt8>
     let layout: ModularChannelLayout
+    init(bytes: UnsafeMutableRawBufferPointer, layout: ModularChannelLayout) {
+        self.bytes = bytes
+        self.base = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+        self.layout = layout
+    }
     var count: Int { layout.width * layout.height }
     @inline(__always)
     func rowAddress(_ y: Int, width: Int) -> Int { layout.offset + y * layout.rowBytes }
@@ -56,23 +62,129 @@ struct BorrowedModularChannel: ModularSampleBuffer {
     @inline(__always)
     subscript(row row: Int, column column: Int) -> Int32 {
         get {
-            let p = row + column * layout.pixelStride
-            let first = Int32(bytes[p])
+            let p = row &+ column &* layout.pixelStride
+            let first = Int32(base[p])
             if layout.storageBits == 8 { return first }
-            let second = Int32(bytes[p + 1])
-            return layout.littleEndian ? first | (second << 8) : (first << 8) | second
+            let second = Int32(base[p &+ 1])
+            return layout.littleEndian ? first | (second &<< 8) : (first &<< 8) | second
         }
-        set {
-            let p = row + column * layout.pixelStride
-            let low = UInt8(truncatingIfNeeded: newValue), high = UInt8(truncatingIfNeeded: newValue >> 8)
-            if layout.storageBits == 8 { bytes[p] = low; return }
-            bytes[p] = layout.littleEndian ? low : high
-            bytes[p + 1] = layout.littleEndian ? high : low
+        nonmutating set {
+            let p = row &+ column &* layout.pixelStride
+            let low = UInt8(truncatingIfNeeded: newValue)
+            if layout.storageBits == 8 { base[p] = low; return }
+            let high = UInt8(truncatingIfNeeded: newValue &>> 8)
+            if layout.littleEndian {
+                base[p] = low
+                base[p &+ 1] = high
+            } else {
+                base[p] = high
+                base[p &+ 1] = low
+            }
         }
     }
     subscript(index: Int) -> Int32 {
         get { self[row: rowAddress(index / layout.width, width: layout.width), column: index % layout.width] }
-        set { self[row: rowAddress(index / layout.width, width: layout.width), column: index % layout.width] = newValue }
+        nonmutating set { self[row: rowAddress(index / layout.width, width: layout.width), column: index % layout.width] = newValue }
+    }
+}
+
+struct BorrowedModularChannel8: ModularSampleBuffer {
+    let base: UnsafeMutablePointer<UInt8>
+    let width: Int
+    let height: Int
+    let offset: Int
+    let rowBytes: Int
+    let pixelStride: Int
+
+    init(bytes: UnsafeMutableRawBufferPointer, layout: ModularChannelLayout) {
+        self.base = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+        self.width = layout.width
+        self.height = layout.height
+        self.offset = layout.offset
+        self.rowBytes = layout.rowBytes
+        self.pixelStride = layout.pixelStride
+    }
+    var count: Int { width * height }
+    @inline(__always)
+    func rowAddress(_ y: Int, width: Int) -> Int { offset &+ y &* rowBytes }
+    @inline(__always)
+    subscript(row row: Int, column column: Int) -> Int32 {
+        get { Int32(base[row &+ column &* pixelStride]) }
+        nonmutating set { base[row &+ column &* pixelStride] = UInt8(truncatingIfNeeded: newValue) }
+    }
+    subscript(index: Int) -> Int32 {
+        get { self[row: rowAddress(index / width, width: width), column: index % width] }
+        nonmutating set { self[row: rowAddress(index / width, width: width), column: index % width] = newValue }
+    }
+}
+
+struct BorrowedModularChannel16LE: ModularSampleBuffer {
+    let raw: UnsafeMutableRawPointer
+    let width: Int
+    let height: Int
+    let offset: Int
+    let rowBytes: Int
+    let pixelStride: Int
+
+    init(bytes: UnsafeMutableRawBufferPointer, layout: ModularChannelLayout) {
+        self.raw = bytes.baseAddress!
+        self.width = layout.width
+        self.height = layout.height
+        self.offset = layout.offset
+        self.rowBytes = layout.rowBytes
+        self.pixelStride = layout.pixelStride
+    }
+    var count: Int { width * height }
+    @inline(__always)
+    func rowAddress(_ y: Int, width: Int) -> Int { offset &+ y &* rowBytes }
+    @inline(__always)
+    subscript(row row: Int, column column: Int) -> Int32 {
+        get {
+            let p = row &+ column &* pixelStride
+            return Int32(UInt16(littleEndian: raw.loadUnaligned(fromByteOffset: p, as: UInt16.self)))
+        }
+        nonmutating set {
+            let p = row &+ column &* pixelStride
+            raw.storeBytes(of: UInt16(truncatingIfNeeded: newValue).littleEndian, toByteOffset: p, as: UInt16.self)
+        }
+    }
+    subscript(index: Int) -> Int32 {
+        get { self[row: rowAddress(index / width, width: width), column: index % width] }
+        nonmutating set { self[row: rowAddress(index / width, width: width), column: index % width] = newValue }
+    }
+}
+
+struct BorrowedModularChannel16LEContiguous: ModularSampleBuffer {
+    let raw: UnsafeMutableRawPointer
+    let width: Int
+    let height: Int
+    let offset: Int
+    let rowBytes: Int
+
+    init(bytes: UnsafeMutableRawBufferPointer, layout: ModularChannelLayout) {
+        self.raw = bytes.baseAddress!
+        self.width = layout.width
+        self.height = layout.height
+        self.offset = layout.offset
+        self.rowBytes = layout.rowBytes
+    }
+    var count: Int { width * height }
+    @inline(__always)
+    func rowAddress(_ y: Int, width: Int) -> Int { offset &+ y &* rowBytes }
+    @inline(__always)
+    subscript(row row: Int, column column: Int) -> Int32 {
+        get {
+            let p = row &+ (column &<< 1)
+            return Int32(UInt16(littleEndian: raw.loadUnaligned(fromByteOffset: p, as: UInt16.self)))
+        }
+        nonmutating set {
+            let p = row &+ (column &<< 1)
+            raw.storeBytes(of: UInt16(truncatingIfNeeded: newValue).littleEndian, toByteOffset: p, as: UInt16.self)
+        }
+    }
+    subscript(index: Int) -> Int32 {
+        get { self[row: rowAddress(index / width, width: width), column: index % width] }
+        nonmutating set { self[row: rowAddress(index / width, width: width), column: index % width] = newValue }
     }
 }
 
@@ -90,28 +202,70 @@ package enum ModularStorageEncoder {
         }
         let limit = try budget.admitModularEncoder(width: first.width, height: first.height, channels: layouts.count)
         return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: limit)) {
-            let n = first.width * first.height, maximum = (Int32(1) << bitsPerSample) - 1
+            let width = first.width, height = first.height
+            let n = width * height, maximum = (Int32(1) << bitsPerSample) - 1
+            let rowStep = max(1, 4096 / max(1, width))
             var channels: [[Int32]] = []
             channels.reserveCapacity(layouts.count)
+            let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
             for layout in layouts {
                 ScalarStorageAudit.current?.workingPlane(n * 4)
                 var plane = [Int32](repeating: 0, count: n)
-                for y in 0..<first.height {
-                    try ScalarEncodingWork.checkpoint()
-                    for x in 0..<first.width {
-                        if x & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
-                        let p = layout.offset + y * layout.rowBytes + x * layout.pixelStride
-                        var value = Int32(bytes[p])
-                        if layout.storageBits == 16 {
-                            value = layout.littleEndian ? value | (Int32(bytes[p + 1]) << 8) : (value << 8) | Int32(bytes[p + 1])
+                try plane.withUnsafeMutableBufferPointer { dst in
+                    let dstBase = dst.baseAddress!
+                    let stride = layout.pixelStride
+                    if layout.storageBits == 8 {
+                        for y in 0..<height {
+                            if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
+                            var p = layout.offset &+ y &* layout.rowBytes
+                            let dstRow = y &* width
+                            if bitsPerSample >= 8 {
+                                for x in 0..<width {
+                                    if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                    dstBase[dstRow &+ x] = Int32(rawBase[p])
+                                    p &+= stride
+                                }
+                            } else {
+                                for x in 0..<width {
+                                    if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                    let value = Int32(rawBase[p])
+                                    guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                                    dstBase[dstRow &+ x] = value
+                                    p &+= stride
+                                }
+                            }
                         }
-                        guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
-                        plane[y * first.width + x] = value
+                    } else if layout.littleEndian {
+                        for y in 0..<height {
+                            if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
+                            var p = layout.offset &+ y &* layout.rowBytes
+                            let dstRow = y &* width
+                            for x in 0..<width {
+                                if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                let value = Int32(rawBase[p]) | (Int32(rawBase[p &+ 1]) &<< 8)
+                                guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                                dstBase[dstRow &+ x] = value
+                                p &+= stride
+                            }
+                        }
+                    } else {
+                        for y in 0..<height {
+                            if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
+                            var p = layout.offset &+ y &* layout.rowBytes
+                            let dstRow = y &* width
+                            for x in 0..<width {
+                                if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                let value = (Int32(rawBase[p]) &<< 8) | Int32(rawBase[p &+ 1])
+                                guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                                dstBase[dstRow &+ x] = value
+                                p &+= stride
+                            }
+                        }
                     }
                 }
                 channels.append(plane)
             }
-            let data = try SpecModularEncoder.encodeInteger(width: first.width, height: first.height,
+            let data = try SpecModularEncoder.encodeInteger(width: width, height: height,
                 bitsPerSample: bitsPerSample, grayscale: grayscale, alphaAssociated: alphaAssociated,
                 channels: channels, renderingIntent: renderingIntent, transferFunction: transferFunction)
             try ScalarEncodingWork.checkpoint()

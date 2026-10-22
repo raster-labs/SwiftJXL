@@ -1,0 +1,78 @@
+{
+  "auditedAtUTC": "2026-10-16T05:38:55.796749+00:00",
+  "head": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+  "passed": true,
+  "checks": {
+    "exactRuntime26_0": true,
+    "all1195SourceHashesMatchCurrent": true,
+    "sourceAndPackageNonDrift": true,
+    "manifestHashBindingsMatch": true,
+    "executionRunnerAvailableAndBound": true,
+    "independentRawResultsPass": true,
+    "retainedArtifactHashesMatch": true,
+    "45826VectorsPinnedAndUnchanged": true,
+    "exactlyOneCorruptedVector": true,
+    "threeExpectedSingleIssueSentinels": true,
+    "simulatorRemoved": true,
+    "contemporaneousAcceptedRun": true,
+    "selfTestArtifactBound": true,
+    "capturedBuiltArtifactsRetained": true
+  },
+  "reportSHA256": "f4b154a022e5ad0ab77c5835e1cd5235452c784279b1778e61400ffe48721670",
+  "runnerSHA256": "4be74712e4a1fe7a2b1da5e189c15e9e5b0bdb0d3f6383124592d3830001c6d4",
+  "runtime": {
+    "version": "26.0",
+    "build": "23A343",
+    "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-0",
+    "satisfiesMinimumFloor26_0": true
+  },
+  "declarations": 359,
+  "cases": 1955,
+  "artifacts": [
+    {
+      "field": "logPath",
+      "hashMatches": true
+    },
+    {
+      "field": "gzipLogPath",
+      "hashMatches": true
+    },
+    {
+      "field": "summaryJsonPath",
+      "hashMatches": true
+    },
+    {
+      "field": "testsJsonPath",
+      "hashMatches": true
+    },
+    {
+      "field": "buildBindingsJsonPath",
+      "hashMatches": true
+    },
+    {
+      "field": "buildArtifactsJsonPath",
+      "hashMatches": true
+    }
+  ],
+  "sentinels": [
+    {
+      "name": "missing_file_path",
+      "verified": true,
+      "bytes": 3455
+    },
+    {
+      "name": "short_vector_count_below_40000",
+      "verified": true,
+      "bytes": 3237
+    },
+    {
+      "name": "corrupted_vector_bitpattern",
+      "verified": true,
+      "bytes": 3369
+    }
+  ],
+  "limitations": [
+    "Runner captured live built artifact hashes before cleanup; Codex independently verified retained manifests and result exports, not those deleted live binaries.",
+    "Full iOS26.0 Release is qualified; other configurations here are historical iOS26.5 runs."
+  ]
+}

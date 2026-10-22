@@ -243,18 +243,15 @@ package enum ModularFrameDecoder {
             let batchLimit = min(budget.maximumWorkers, direct == nil ? plan.groupCount : plan.groupCount - 1)
             let parallel = batchLimit > 1 && plan.groupCount > 1
                 && (direct == nil || width * height >= 1024 * 1024)
-            let parentGeometry: [ModularChannel]
-            if parallel {
-                try ModularImage.admitDescriptors(image.channels.count, budget: budget)
-                parentGeometry = try image.channels.map {
-                    try ModularChannel(width: $0.width, height: $0.height, hshift: $0.hshift, vshift: $0.vshift)
-                }
-            } else { parentGeometry = [] }
+            try ModularImage.admitDescriptors(image.channels.count, budget: budget)
+            let parentGeometry: [ModularChannel] = try image.channels.map {
+                try ModularChannel(width: $0.width, height: $0.height, hshift: $0.hshift, vshift: $0.vshift)
+            }
             // DC groups remain ordered; only independent AC groups in one pass
             // run together. Previous passes are fully merged before the next.
             for dc in 0..<plan.dcCount {
                 var r = try plan.section(1 + dc)
-                let result = try decodeGroup(parentChannels: image.channels, first: globalEnd,
+                let result = try decodeGroup(parentChannels: parentGeometry, first: globalEnd,
                     x: (dc % plan.dcX) * plan.dcDimension, y: (dc / plan.dcX) * plan.dcDimension,
                     quantum: plan.dcDimension, minShift: 3, maxShift: 31, groupID: Int32(1 + dc),
                     reader: &r, global: plan.global, bitDepth: plan.bitsPerSample, budget: budget, destination: direct)
@@ -287,7 +284,7 @@ package enum ModularFrameDecoder {
                 } else {
                     for group in 0..<plan.groupCount {
                         var r = try plan.section(2 + plan.dcCount + pass * plan.groupCount + group)
-                        let result = try decodeGroup(parentChannels: image.channels, first: globalEnd,
+                        let result = try decodeGroup(parentChannels: parentGeometry, first: globalEnd,
                             x: (group % plan.groupsX) * plan.groupDimension, y: (group / plan.groupsX) * plan.groupDimension,
                             quantum: plan.groupDimension, minShift: plan.brackets[pass].0, maxShift: plan.brackets[pass].1,
                             groupID: Int32(1 + plan.dcCount + pass * plan.groupCount + group),
@@ -309,17 +306,174 @@ package enum ModularFrameDecoder {
             throw ScalarModularError.invalidInput("Invalid restored channel count")
         }
         let maximum = (Int32(1) << plan.bitsPerSample) - 1
-        for (c, channel) in image.channels.enumerated() {
+        let maxU = UInt32(bitPattern: maximum)
+        let rowStep = max(1, 4096 / max(1, width))
+        for channel in image.channels {
             guard channel.width == width, channel.height == height, channel.hshift == 0, channel.vshift == 0 else {
                 throw ScalarModularError.invalidInput("Invalid restored channel geometry")
             }
-            var output = destination.map { BorrowedModularChannel(bytes: $0.bytes, layout: $0.layouts[c]) }
-            for i in channel.pixels.indices {
-                if i & 1023 == 0 { try budget.checkpoint() }
-                guard channel.pixels[i] >= 0, channel.pixels[i] <= maximum else {
-                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+        }
+        if let destination, channels == 3, !image.channels[0].pixels.isEmpty,
+           let raw = destination.bytes.baseAddress {
+            let l0 = destination.layouts[0], l1 = destination.layouts[1], l2 = destination.layouts[2]
+            if l0.storageBits == 16, l1.storageBits == 16, l2.storageBits == 16,
+               l0.littleEndian, l1.littleEndian, l2.littleEndian,
+               l0.pixelStride == 6, l1.pixelStride == 6, l2.pixelStride == 6,
+               l1.offset == l0.offset + 2, l2.offset == l0.offset + 4,
+               l1.rowBytes == l0.rowBytes, l2.rowBytes == l0.rowBytes {
+                try image.channels[0].pixels.withUnsafeBufferPointer { b0 in
+                    try image.channels[1].pixels.withUnsafeBufferPointer { b1 in
+                        try image.channels[2].pixels.withUnsafeBufferPointer { b2 in
+                            let p0 = b0.baseAddress!, p1 = b1.baseAddress!, p2 = b2.baseAddress!
+                            for y in 0..<height {
+                                if y % rowStep == 0 { try budget.checkpoint() }
+                                var p = l0.offset &+ y &* l0.rowBytes
+                                let srcRow = y &* width
+                                var x0 = 0
+                                while x0 < width {
+                                    if x0 > 0 { try budget.checkpoint() }
+                                    let xEnd = min(width, x0 &+ 4096)
+                                    for x in x0..<xEnd {
+                                        let idx = srcRow &+ x
+                                        let s0 = p0[idx], s1 = p1[idx], s2 = p2[idx]
+                                        if (UInt32(bitPattern: s0) | UInt32(bitPattern: s1) | UInt32(bitPattern: s2)) > maxU {
+                                            throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                        }
+                                        raw.storeBytes(of: UInt16(truncatingIfNeeded: s0).littleEndian, toByteOffset: p, as: UInt16.self)
+                                        raw.storeBytes(of: UInt16(truncatingIfNeeded: s1).littleEndian, toByteOffset: p &+ 2, as: UInt16.self)
+                                        raw.storeBytes(of: UInt16(truncatingIfNeeded: s2).littleEndian, toByteOffset: p &+ 4, as: UInt16.self)
+                                        p &+= 6
+                                    }
+                                    x0 = xEnd
+                                }
+                            }
+                        }
+                    }
                 }
-                if output != nil { output?[i] = channel.pixels[i] }
+                return ModularDecodedFrame(width: width, height: height, bitsPerSample: plan.bitsPerSample,
+                    grayscale: plan.grayscale, alphaAssociated: plan.alphaAssociated,
+                    renderingIntent: plan.renderingIntent, transferFunction: plan.transferFunction,
+                    iccProfile: plan.iccProfile, image: image)
+            } else if l0.storageBits == 8, l1.storageBits == 8, l2.storageBits == 8,
+                      l0.pixelStride == 3, l1.pixelStride == 3, l2.pixelStride == 3,
+                      l1.offset == l0.offset + 1, l2.offset == l0.offset + 2,
+                      l1.rowBytes == l0.rowBytes, l2.rowBytes == l0.rowBytes {
+                let base = raw.assumingMemoryBound(to: UInt8.self)
+                try image.channels[0].pixels.withUnsafeBufferPointer { b0 in
+                    try image.channels[1].pixels.withUnsafeBufferPointer { b1 in
+                        try image.channels[2].pixels.withUnsafeBufferPointer { b2 in
+                            let p0 = b0.baseAddress!, p1 = b1.baseAddress!, p2 = b2.baseAddress!
+                            for y in 0..<height {
+                                if y % rowStep == 0 { try budget.checkpoint() }
+                                var p = l0.offset &+ y &* l0.rowBytes
+                                let srcRow = y &* width
+                                var x0 = 0
+                                while x0 < width {
+                                    if x0 > 0 { try budget.checkpoint() }
+                                    let xEnd = min(width, x0 &+ 4096)
+                                    for x in x0..<xEnd {
+                                        let idx = srcRow &+ x
+                                        let s0 = p0[idx], s1 = p1[idx], s2 = p2[idx]
+                                        if (UInt32(bitPattern: s0) | UInt32(bitPattern: s1) | UInt32(bitPattern: s2)) > maxU {
+                                            throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                        }
+                                        base[p] = UInt8(truncatingIfNeeded: s0)
+                                        base[p &+ 1] = UInt8(truncatingIfNeeded: s1)
+                                        base[p &+ 2] = UInt8(truncatingIfNeeded: s2)
+                                        p &+= 3
+                                    }
+                                    x0 = xEnd
+                                }
+                            }
+                        }
+                    }
+                }
+                return ModularDecodedFrame(width: width, height: height, bitsPerSample: plan.bitsPerSample,
+                    grayscale: plan.grayscale, alphaAssociated: plan.alphaAssociated,
+                    renderingIntent: plan.renderingIntent, transferFunction: plan.transferFunction,
+                    iccProfile: plan.iccProfile, image: image)
+            }
+        }
+        for (c, channel) in image.channels.enumerated() {
+            let output = destination.map { BorrowedModularChannel(bytes: $0.bytes, layout: $0.layouts[c]) }
+            try channel.pixels.withUnsafeBufferPointer { pixels in
+                guard !pixels.isEmpty else { return }
+                let srcBase = pixels.baseAddress!
+                if let output {
+                    let base = output.base
+                    let layout = output.layout
+                    let stride = layout.pixelStride
+                    if layout.storageBits == 8 {
+                        for y in 0..<height {
+                            if y % rowStep == 0 { try budget.checkpoint() }
+                            var p = layout.offset &+ y &* layout.rowBytes
+                            let srcRow = y &* width
+                            var x0 = 0
+                            while x0 < width {
+                                if x0 > 0 { try budget.checkpoint() }
+                                let xEnd = min(width, x0 &+ 4096)
+                                for x in x0..<xEnd {
+                                    let sample = srcBase[srcRow &+ x]
+                                    guard UInt32(bitPattern: sample) <= maxU else {
+                                        throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                    }
+                                    base[p] = UInt8(truncatingIfNeeded: sample)
+                                    p &+= stride
+                                }
+                                x0 = xEnd
+                            }
+                        }
+                    } else if layout.littleEndian {
+                        let raw = output.bytes.baseAddress!
+                        for y in 0..<height {
+                            if y % rowStep == 0 { try budget.checkpoint() }
+                            var p = layout.offset &+ y &* layout.rowBytes
+                            let srcRow = y &* width
+                            var x0 = 0
+                            while x0 < width {
+                                if x0 > 0 { try budget.checkpoint() }
+                                let xEnd = min(width, x0 &+ 4096)
+                                for x in x0..<xEnd {
+                                    let sample = srcBase[srcRow &+ x]
+                                    guard UInt32(bitPattern: sample) <= maxU else {
+                                        throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                    }
+                                    raw.storeBytes(of: UInt16(truncatingIfNeeded: sample).littleEndian, toByteOffset: p, as: UInt16.self)
+                                    p &+= stride
+                                }
+                                x0 = xEnd
+                            }
+                        }
+                    } else {
+                        for y in 0..<height {
+                            if y % rowStep == 0 { try budget.checkpoint() }
+                            var p = layout.offset &+ y &* layout.rowBytes
+                            let srcRow = y &* width
+                            var x0 = 0
+                            while x0 < width {
+                                if x0 > 0 { try budget.checkpoint() }
+                                let xEnd = min(width, x0 &+ 4096)
+                                for x in x0..<xEnd {
+                                    let sample = srcBase[srcRow &+ x]
+                                    guard UInt32(bitPattern: sample) <= maxU else {
+                                        throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                    }
+                                    base[p] = UInt8(truncatingIfNeeded: sample &>> 8)
+                                    base[p &+ 1] = UInt8(truncatingIfNeeded: sample)
+                                    p &+= stride
+                                }
+                                x0 = xEnd
+                            }
+                        }
+                    }
+                } else {
+                    for i in 0..<pixels.count {
+                        if i & 4095 == 0 { try budget.checkpoint() }
+                        guard UInt32(bitPattern: srcBase[i]) <= maxU else {
+                            throw ScalarModularError.invalidInput("Sample outside declared precision")
+                        }
+                    }
+                }
             }
         }
         return ModularDecodedFrame(width: width, height: height, bitsPerSample: plan.bitsPerSample,
@@ -395,19 +549,41 @@ package enum ModularFrameDecoder {
             try budget.reserveWorkspace(ScalarOperationBudget.product(selected.2.ansCounts.count, 64 * 1024))
         }
         var stream = TokenStreamReader(header: selected.1, codebook: selected.2, distanceMultiplier: distance)
+        let maxSample = (Int32(1) << bitDepth) - 1
         for c in 0..<count where image.channels[c].sampleCount > 0 {
             let width = image.channels[c].width, height = image.channels[c].height
             try budget.reserveWorkspace(ScalarOperationBudget.sum(192 * (width + 2), 1024))
             if let destination {
-                var plane = BorrowedModularChannel(bytes: destination.bytes, layout: destination.layouts[c])
-                try decodeModularChannel(width: width, height: height, staticChannel: Int32(c), groupId: groupID,
-                    tree: selected.0, stream: &stream, from: &reader, wpHeader: predictor,
-                    sampleMaximum: (Int32(1) << bitDepth) - 1, out: &plane)
+                let layout = destination.layouts[c]
+                if layout.storageBits == 8 {
+                    var plane = BorrowedModularChannel8(bytes: destination.bytes, layout: layout)
+                    try decodeModularChannel(width: width, height: height, staticChannel: Int32(c), groupId: groupID,
+                        tree: selected.0, stream: &stream, from: &reader, wpHeader: predictor,
+                        sampleMaximum: maxSample, out: &plane)
+                } else if layout.littleEndian && layout.pixelStride == 2 {
+                    var plane = BorrowedModularChannel16LEContiguous(bytes: destination.bytes, layout: layout)
+                    try decodeModularChannel(width: width, height: height, staticChannel: Int32(c), groupId: groupID,
+                        tree: selected.0, stream: &stream, from: &reader, wpHeader: predictor,
+                        sampleMaximum: maxSample, out: &plane)
+                } else if layout.littleEndian {
+                    var plane = BorrowedModularChannel16LE(bytes: destination.bytes, layout: layout)
+                    try decodeModularChannel(width: width, height: height, staticChannel: Int32(c), groupId: groupID,
+                        tree: selected.0, stream: &stream, from: &reader, wpHeader: predictor,
+                        sampleMaximum: maxSample, out: &plane)
+                } else {
+                    var plane = BorrowedModularChannel(bytes: destination.bytes, layout: layout)
+                    try decodeModularChannel(width: width, height: height, staticChannel: Int32(c), groupId: groupID,
+                        tree: selected.0, stream: &stream, from: &reader, wpHeader: predictor,
+                        sampleMaximum: maxSample, out: &plane)
+                }
             } else {
                 var plane: [Int32] = []
                 swap(&plane, &image.channels[c].pixels)
-                try decodeModularChannel(width: width, height: height, staticChannel: Int32(c), groupId: groupID,
-                    tree: selected.0, stream: &stream, from: &reader, wpHeader: predictor, out: &plane)
+                try plane.withUnsafeMutableBufferPointer { buf in
+                    var target = buf
+                    try decodeModularChannel(width: width, height: height, staticChannel: Int32(c), groupId: groupID,
+                        tree: selected.0, stream: &stream, from: &reader, wpHeader: predictor, out: &target)
+                }
                 image.channels[c].pixels = plane
             }
         }
@@ -473,35 +649,88 @@ package enum ModularFrameDecoder {
                                    bitDepth: Int, budget: ScalarOperationBudget,
                                    destination: BorrowedModularDestination?) throws {
         try budget.checkpoint()
+        let maximum = (Int32(1) << bitDepth) - 1
+        let maxU = UInt32(bitPattern: maximum)
         for (index, rect) in result.rectangles.enumerated() {
             let channel = result.image.channels[index]
             let parentWidth = image.channels[rect.channel].width
+            let rowStep = max(1, 4096 / max(1, rect.width))
             // Rectangles are checked/clipped to their parent above. These
             // synchronous borrows never escape and no parallel writes occur.
             if let destination {
                 if !result.wroteDirectly {
                     let layout = try destination.layouts[rect.channel].rectangle(x: rect.x, y: rect.y,
                         width: rect.width, height: rect.height)
-                    var output = BorrowedModularChannel(bytes: destination.bytes, layout: layout)
-                    let maximum = (Int32(1) << bitDepth) - 1
-                    for i in channel.pixels.indices {
-                        if i & 1023 == 0 { try budget.checkpoint() }
-                        let sample = channel.pixels[i]
-                        guard sample >= 0, sample <= maximum else {
-                            throw ScalarModularError.invalidInput("Group sample outside declared precision")
+                    let output = BorrowedModularChannel(bytes: destination.bytes, layout: layout)
+                    try channel.pixels.withUnsafeBufferPointer { pixels in
+                        let srcBase = pixels.baseAddress!
+                        let base = output.base
+                        let stride = layout.pixelStride
+                        if layout.storageBits == 8 {
+                            for y in 0..<rect.height {
+                                if y % rowStep == 0 { try budget.checkpoint() }
+                                var p = layout.offset &+ y &* layout.rowBytes
+                                let srcRow = y &* rect.width
+                                for x in 0..<rect.width {
+                                    if rect.width > 4096 && x > 0 && (x & 4095 == 0) { try budget.checkpoint() }
+                                    let sample = srcBase[srcRow &+ x]
+                                    guard UInt32(bitPattern: sample) <= maxU else {
+                                        throw ScalarModularError.invalidInput("Group sample outside declared precision")
+                                    }
+                                    base[p] = UInt8(truncatingIfNeeded: sample)
+                                    p &+= stride
+                                }
+                            }
+                        } else if layout.littleEndian {
+                            let raw = output.bytes.baseAddress!
+                            for y in 0..<rect.height {
+                                if y % rowStep == 0 { try budget.checkpoint() }
+                                var p = layout.offset &+ y &* layout.rowBytes
+                                let srcRow = y &* rect.width
+                                for x in 0..<rect.width {
+                                    if rect.width > 4096 && x > 0 && (x & 4095 == 0) { try budget.checkpoint() }
+                                    let sample = srcBase[srcRow &+ x]
+                                    guard UInt32(bitPattern: sample) <= maxU else {
+                                        throw ScalarModularError.invalidInput("Group sample outside declared precision")
+                                    }
+                                    raw.storeBytes(of: UInt16(truncatingIfNeeded: sample).littleEndian, toByteOffset: p, as: UInt16.self)
+                                    p &+= stride
+                                }
+                            }
+                        } else {
+                            for y in 0..<rect.height {
+                                if y % rowStep == 0 { try budget.checkpoint() }
+                                var p = layout.offset &+ y &* layout.rowBytes
+                                let srcRow = y &* rect.width
+                                for x in 0..<rect.width {
+                                    if rect.width > 4096 && x > 0 && (x & 4095 == 0) { try budget.checkpoint() }
+                                    let sample = srcBase[srcRow &+ x]
+                                    guard UInt32(bitPattern: sample) <= maxU else {
+                                        throw ScalarModularError.invalidInput("Group sample outside declared precision")
+                                    }
+                                    base[p] = UInt8(truncatingIfNeeded: sample &>> 8)
+                                    base[p &+ 1] = UInt8(truncatingIfNeeded: sample)
+                                    p &+= stride
+                                }
+                            }
                         }
-                        output[i] = sample
                     }
                 }
             } else {
                 try image.channels[rect.channel].pixels.withUnsafeMutableBufferPointer { destination in
                     try channel.pixels.withUnsafeBufferPointer { source in
+                        let dstBase = destination.baseAddress!
+                        let srcBase = source.baseAddress!
                         for row in 0..<rect.height {
-                            try budget.checkpoint()
-                            let offset = (rect.y + row) * parentWidth + rect.x
-                            for column in 0..<rect.width {
-                                if column & 1023 == 0 { try budget.checkpoint() }
-                                destination[offset + column] = source[row * rect.width + column]
+                            if row % rowStep == 0 { try budget.checkpoint() }
+                            let offset = (rect.y &+ row) &* parentWidth &+ rect.x
+                            let srcOffset = row &* rect.width
+                            var c0 = 0
+                            while c0 < rect.width {
+                                if c0 > 0 { try budget.checkpoint() }
+                                let chunk = min(rect.width - c0, 4096)
+                                (dstBase + offset + c0).update(from: srcBase + srcOffset + c0, count: chunk)
+                                c0 &+= chunk
                             }
                         }
                     }

@@ -6,10 +6,26 @@ import Synchronization
 /// no image memory; the task cancellation handler may set it on any executor.
 package final class ScalarOperationCancellation: Sendable {
     private let cancelled = Atomic<Bool>(false)
+    private let cancelAfterCheckpoints = Atomic<Int>(.max)
+    private let checkpoints = Atomic<Int>(0)
     package init() {}
     package func cancel() { cancelled.store(true, ordering: .relaxed) }
+    package var checkpointCount: Int { checkpoints.load(ordering: .relaxed) }
+    package func resetCheckpointCount(cancelAfter: Int = .max - 1) {
+        cancelled.store(false, ordering: .relaxed)
+        checkpoints.store(0, ordering: .relaxed)
+        cancelAfterCheckpoints.store(cancelAfter, ordering: .relaxed)
+    }
     package func checkpoint() throws {
         if cancelled.load(ordering: .relaxed) { throw CancellationError() }
+        let limit = cancelAfterCheckpoints.load(ordering: .relaxed)
+        if limit != .max {
+            let count = checkpoints.wrappingAdd(1, ordering: .relaxed).newValue
+            if count >= limit {
+                cancelled.store(true, ordering: .relaxed)
+                throw CancellationError()
+            }
+        }
     }
 }
 
@@ -43,6 +59,10 @@ package final class ScalarOperationBudget: Sendable {
         self.deadline = deadline
         self.maximumWorkers = min(maximumWorkers, 8)
         self.cancellation = cancellation
+    }
+    package func checkCancellationOnly() throws {
+        try Task.checkCancellation()
+        try cancellation?.checkpoint()
     }
     package func checkpoint() throws {
         try Task.checkCancellation()
@@ -141,7 +161,7 @@ package final class ScalarEncodingWork: Sendable {
     @TaskLocal package static var current: ScalarEncodingWork?
     package let budget: ScalarOperationBudget
     package let writerByteLimit: Int
-    private let overflow = Mutex(false)
+    private let overflow = Atomic<Bool>(false)
     package init(budget: ScalarOperationBudget, writerByteLimit: Int) {
         self.budget = budget; self.writerByteLimit = writerByteLimit
     }
@@ -151,13 +171,16 @@ package final class ScalarEncodingWork: Sendable {
             throw ScalarModularError.resourceLimit
         }
     }
-    package func rejectGrowth() { overflow.withLock { $0 = true } }
+    package func rejectGrowth() { overflow.store(true, ordering: .relaxed) }
     package func checkpoint() throws {
         try budget.checkpoint()
-        guard !overflow.withLock({ $0 }) else { throw ScalarModularError.resourceLimit }
+        guard !overflow.load(ordering: .relaxed) else { throw ScalarModularError.resourceLimit }
     }
     package static func checkpoint() throws {
-        try Task.checkCancellation()
-        try current?.checkpoint()
+        if let current {
+            try current.checkpoint()
+        } else {
+            try Task.checkCancellation()
+        }
     }
 }

@@ -1,0 +1,4463 @@
+{
+  "status": "postfix-vardct-public-default-passed; seven-vardct-one-worker-diagnostic-latency-triggers-reproduced",
+  "generatedAtUTC": "2026-10-16T05:46:59.141327+00:00",
+  "rationale": "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift extracted its 90-line withUnsafeMutableBufferPointer closure body into private helper apply(_:identifier:buffer:dct:) for Linux Swift 6.2 type-checking, changing SwiftJXLCore.o in release-8 while leaving SwiftJXL.o byte-identical. All 11 VarDCT benchmark cases (22 rows: 14 paired with predecessor, 8 candidate-only decode) were re-executed under both --candidate-workers default and --candidate-workers 1 with unchanged tolerances, admission budgets, and defaults.",
+  "publicDefaultVarDCTSummary": {
+    "rows": 22,
+    "paired": 14,
+    "candidateOnly": 8,
+    "repeatedLatencyTriggers": 0,
+    "repeatedRSSTriggers": 0,
+    "losslessSizeTriggers": 0
+  },
+  "oneWorkerDiagnosticVarDCTSummary": {
+    "rows": 22,
+    "paired": 14,
+    "candidateOnly": 8,
+    "repeatedLatencyTriggers": 7,
+    "repeatedRSSTriggers": 0,
+    "losslessSizeTriggers": 0
+  },
+  "combinedWithUnchangedModularAndNative": {
+    "primary48RowSummary": {
+      "rows": 48,
+      "paired": 37,
+      "candidateOnly": 11,
+      "repeatedLatencyTriggers": 0,
+      "repeatedRSSTriggers": 0,
+      "losslessSizeTriggers": 0
+    },
+    "constrained36RowDiagnosticSummary": {
+      "rows": 36,
+      "paired": 28,
+      "candidateOnly": 8,
+      "repeatedLatencyTriggers": 10,
+      "modularLatencyTriggers": 3,
+      "vardctLatencyTriggers": 7,
+      "repeatedRSSTriggers": 0,
+      "losslessSizeTriggers": 0
+    },
+    "perf03Disposition": "Under PERF-03, the 10 constrained one-worker (maximumWorkers=1) latency triggers reflect the deliberate safety/correctness/determinism design (enforcing explicit single-worker admission, bounded <=4096 multiply-add cancellation checkpoints, and cross-platform deterministic Double-accumulated scalar DCT sum order against a predecessor that still invokes DispatchQueue.concurrentPerform and Apple Accelerate vDSP_mmul/vDSP_mtrans Float matrices). Per PERF-03, the coding agent does not waive these 10 rows; they remain open diagnostic findings requiring explicit owner acceptance of the constrained-worker baseline or further single-worker kernel optimisation before a stable release."
+  },
+  "binding": {
+    "releaseQualification": {
+      "report": "Documentation/Engineering/Migration/Evidence/Milestone4Remaining/release-8-report.json",
+      "rawReportSHA256": "fa1c5de31dab6e07b953e7cec1032cd4b94a80ec7098822095df84e48b70da11",
+      "packageSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834"
+    },
+    "releaseObjectSHA256": {
+      "SwiftJXL.o": "1102488958caf5f9385e3bfdaa56fa5abb057abc39209dcfd2ebeb6737931ac2",
+      "SwiftJXLCore.o": "813d5b7132feffc779b14de6f6a855c5d6116ce3f7a1be4351610fd3e2a36bbd"
+    },
+    "candidateBinaries": {
+      "family-candidate": "75e38fe12bf29bb0aa305185f6d3deba9943f77b4c332fb71d1af499a42540aa",
+      "native-candidate": "eb96e120b39c1c5fba94bac2c73c282fd4085d3a1538459a3861d6744b64f00d",
+      "jpeg-pixel-candidate": "4384c714ab9a342d070dfccd50ce5c9a5590ead433d418083b377480bb9fc7ee"
+    },
+    "executionRecords": {
+      "vardctPublicDefault": {
+        "command": [
+          "python3",
+          "<repo>/Scripts/TestSupport/milestone4-performance.py",
+          "--baseline-directory",
+          "<local-work>/2026-10-14/swiftjxl-milestone4-completion/work/final/bench",
+          "--candidate",
+          "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/postfix-release8/family-candidate",
+          "--output",
+          "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/postfix-release8/vardct-public-default",
+          "--candidate-workers",
+          "default",
+          "--case",
+          "vardct-bicycles-crop-d0.5",
+          "--case",
+          "vardct-bicycles-crop-d1",
+          "--case",
+          "vardct-bicycles-crop-d3",
+          "--case",
+          "vardct-grayscale-d0.5",
+          "--case",
+          "vardct-grayscale-d1",
+          "--case",
+          "vardct-grayscale-d3",
+          "--case",
+          "vardct-rgba16-small-d0.5",
+          "--case",
+          "vardct-rgba16-small-d1",
+          "--case",
+          "vardct-rgba16-small-d3",
+          "--case",
+          "vardct-animation-animation-crop",
+          "--case",
+          "vardct-animation-rgba16-small"
+        ],
+        "exitCode": 0,
+        "seconds": 73.30653179199999
+      },
+      "vardctConstrainedOneWorker": {
+        "command": [
+          "python3",
+          "<repo>/Scripts/TestSupport/milestone4-performance.py",
+          "--baseline-directory",
+          "<local-work>/2026-10-14/swiftjxl-milestone4-completion/work/final/bench",
+          "--candidate",
+          "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/postfix-release8/family-candidate",
+          "--output",
+          "<local-work>/2026-10-15/in-our-previous-chat-i-could-2/work/performance/postfix-release8/vardct-constrained-w1",
+          "--candidate-workers",
+          "1",
+          "--case",
+          "vardct-bicycles-crop-d0.5",
+          "--case",
+          "vardct-bicycles-crop-d1",
+          "--case",
+          "vardct-bicycles-crop-d3",
+          "--case",
+          "vardct-grayscale-d0.5",
+          "--case",
+          "vardct-grayscale-d1",
+          "--case",
+          "vardct-grayscale-d3",
+          "--case",
+          "vardct-rgba16-small-d0.5",
+          "--case",
+          "vardct-rgba16-small-d1",
+          "--case",
+          "vardct-rgba16-small-d3",
+          "--case",
+          "vardct-animation-animation-crop",
+          "--case",
+          "vardct-animation-rgba16-small"
+        ],
+        "exitCode": 1,
+        "seconds": 104.74016920800001
+      }
+    },
+    "matrixFiles": {
+      "vardct-public-default/manifest.json": "9a8e72417b12e9e9d4a28c2580f44c5aae7620f2566d5233acb7f5e1d229dc7f",
+      "vardct-public-default/results.json": "5ccb188eabf9ef7e0fb603a3d70d813f231145ed5c7d6ac5750cb61d412e1229",
+      "vardct-constrained-w1/manifest.json": "1e8c2bb6798a0245712699f469072550c1ad55acac10f1b63553aaa68e192931",
+      "vardct-constrained-w1/results.json": "6c385ce11890d5bc34584707f3dbe01e381633cb017115453bd9ffbaba670f9b"
+    }
+  },
+  "fidelity": {
+    "vardctCases": 11,
+    "independentScalarMaximumLSB": 1,
+    "independentScalarMaximumRMSLSB": 0.10694815798662465,
+    "maximumAlphaErrorLSB": 0,
+    "all11StreamsByteIdenticalAcrossPreFixPostFixDefaultAndOneWorker": true,
+    "streamEquivalence": [
+      {
+        "case": "vardct-animation-animation-crop",
+        "postFixDefaultSHA256": "88f290de5830ee27abbc2b7915991a493f071c016242dd57348b7debc0ff95ab",
+        "postFixOneWorkerSHA256": "88f290de5830ee27abbc2b7915991a493f071c016242dd57348b7debc0ff95ab",
+        "preFixDefaultSHA256": "88f290de5830ee27abbc2b7915991a493f071c016242dd57348b7debc0ff95ab",
+        "preFixOneWorkerSHA256": "88f290de5830ee27abbc2b7915991a493f071c016242dd57348b7debc0ff95ab",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-animation-rgba16-small",
+        "postFixDefaultSHA256": "848d6489efdac0793c8206bb2551f02bd0e10d197d8ff80069cd48cef0d43084",
+        "postFixOneWorkerSHA256": "848d6489efdac0793c8206bb2551f02bd0e10d197d8ff80069cd48cef0d43084",
+        "preFixDefaultSHA256": "848d6489efdac0793c8206bb2551f02bd0e10d197d8ff80069cd48cef0d43084",
+        "preFixOneWorkerSHA256": "848d6489efdac0793c8206bb2551f02bd0e10d197d8ff80069cd48cef0d43084",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-bicycles-crop-d0.5",
+        "postFixDefaultSHA256": "0fa43eabcbb38e9f45ea3b1cdf5c3323daf54464aab06f0676f34efb5aa41c9a",
+        "postFixOneWorkerSHA256": "0fa43eabcbb38e9f45ea3b1cdf5c3323daf54464aab06f0676f34efb5aa41c9a",
+        "preFixDefaultSHA256": "0fa43eabcbb38e9f45ea3b1cdf5c3323daf54464aab06f0676f34efb5aa41c9a",
+        "preFixOneWorkerSHA256": "0fa43eabcbb38e9f45ea3b1cdf5c3323daf54464aab06f0676f34efb5aa41c9a",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-bicycles-crop-d1",
+        "postFixDefaultSHA256": "79a6ea9d5d27cd5cc2b811f7e6f8140821f6cd2379b6e861bd299ecc9ea5ffb2",
+        "postFixOneWorkerSHA256": "79a6ea9d5d27cd5cc2b811f7e6f8140821f6cd2379b6e861bd299ecc9ea5ffb2",
+        "preFixDefaultSHA256": "79a6ea9d5d27cd5cc2b811f7e6f8140821f6cd2379b6e861bd299ecc9ea5ffb2",
+        "preFixOneWorkerSHA256": "79a6ea9d5d27cd5cc2b811f7e6f8140821f6cd2379b6e861bd299ecc9ea5ffb2",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-bicycles-crop-d3",
+        "postFixDefaultSHA256": "6887d208c798402a57adefd42c09d166d50d6d5e6a8d9f8fa2d5d3e74f39b472",
+        "postFixOneWorkerSHA256": "6887d208c798402a57adefd42c09d166d50d6d5e6a8d9f8fa2d5d3e74f39b472",
+        "preFixDefaultSHA256": "6887d208c798402a57adefd42c09d166d50d6d5e6a8d9f8fa2d5d3e74f39b472",
+        "preFixOneWorkerSHA256": "6887d208c798402a57adefd42c09d166d50d6d5e6a8d9f8fa2d5d3e74f39b472",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-grayscale-d0.5",
+        "postFixDefaultSHA256": "b666275ab585d68a53b5b1b0e79bc098fea3f8dfe8c7f3e67bca3f2bbc55287a",
+        "postFixOneWorkerSHA256": "b666275ab585d68a53b5b1b0e79bc098fea3f8dfe8c7f3e67bca3f2bbc55287a",
+        "preFixDefaultSHA256": "b666275ab585d68a53b5b1b0e79bc098fea3f8dfe8c7f3e67bca3f2bbc55287a",
+        "preFixOneWorkerSHA256": "b666275ab585d68a53b5b1b0e79bc098fea3f8dfe8c7f3e67bca3f2bbc55287a",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-grayscale-d1",
+        "postFixDefaultSHA256": "1605187c55739147de684b97a357c1c586babf7a7495091948b7d631e6ea809e",
+        "postFixOneWorkerSHA256": "1605187c55739147de684b97a357c1c586babf7a7495091948b7d631e6ea809e",
+        "preFixDefaultSHA256": "1605187c55739147de684b97a357c1c586babf7a7495091948b7d631e6ea809e",
+        "preFixOneWorkerSHA256": "1605187c55739147de684b97a357c1c586babf7a7495091948b7d631e6ea809e",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-grayscale-d3",
+        "postFixDefaultSHA256": "b322680c9848fae7fe8441e95b5eb4a1b2de958d2a7a761708fa1f9ac8ad2455",
+        "postFixOneWorkerSHA256": "b322680c9848fae7fe8441e95b5eb4a1b2de958d2a7a761708fa1f9ac8ad2455",
+        "preFixDefaultSHA256": "b322680c9848fae7fe8441e95b5eb4a1b2de958d2a7a761708fa1f9ac8ad2455",
+        "preFixOneWorkerSHA256": "b322680c9848fae7fe8441e95b5eb4a1b2de958d2a7a761708fa1f9ac8ad2455",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-rgba16-small-d0.5",
+        "postFixDefaultSHA256": "94b931826234f62aa9a55e80cbb1096ec9637aa7fd39244ee1c54537d520a663",
+        "postFixOneWorkerSHA256": "94b931826234f62aa9a55e80cbb1096ec9637aa7fd39244ee1c54537d520a663",
+        "preFixDefaultSHA256": "94b931826234f62aa9a55e80cbb1096ec9637aa7fd39244ee1c54537d520a663",
+        "preFixOneWorkerSHA256": "94b931826234f62aa9a55e80cbb1096ec9637aa7fd39244ee1c54537d520a663",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-rgba16-small-d1",
+        "postFixDefaultSHA256": "9200e14b81038fa81d46de9773fc8c916692d4ca2e646567f724025fa2e0ad68",
+        "postFixOneWorkerSHA256": "9200e14b81038fa81d46de9773fc8c916692d4ca2e646567f724025fa2e0ad68",
+        "preFixDefaultSHA256": "9200e14b81038fa81d46de9773fc8c916692d4ca2e646567f724025fa2e0ad68",
+        "preFixOneWorkerSHA256": "9200e14b81038fa81d46de9773fc8c916692d4ca2e646567f724025fa2e0ad68",
+        "allFourByteIdentical": true
+      },
+      {
+        "case": "vardct-rgba16-small-d3",
+        "postFixDefaultSHA256": "b151c936d27b83820906c18c24fbc5581a6f8e00c98b1046db8b1a8e51d87def",
+        "postFixOneWorkerSHA256": "b151c936d27b83820906c18c24fbc5581a6f8e00c98b1046db8b1a8e51d87def",
+        "preFixDefaultSHA256": "b151c936d27b83820906c18c24fbc5581a6f8e00c98b1046db8b1a8e51d87def",
+        "preFixOneWorkerSHA256": "b151c936d27b83820906c18c24fbc5581a6f8e00c98b1046db8b1a8e51d87def",
+        "allFourByteIdentical": true
+      }
+    ],
+    "preflights": [
+      {
+        "case": "vardct-animation-animation-crop",
+        "sourceColourRMSLSB": 13.086197943643912,
+        "sourcePSNRDB": 25.794533904467976,
+        "encodedBytes": 14293,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 16.260006840255393,
+          "psnrDB": 23.908389129539582,
+          "encodedBytes": 14463
+        },
+        "maxLSB": 1,
+        "rmsLSB": 0.010376841900902612,
+        "sourceRMSLSB": 13.086197943643912,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "5d89d27dc66a0a5b68c076aebb7c83231487d364ba366f3c0532a6f9e3337926",
+        "streamSHA256": "88f290de5830ee27abbc2b7915991a493f071c016242dd57348b7debc0ff95ab"
+      },
+      {
+        "case": "vardct-animation-rgba16-small",
+        "sourceColourRMSLSB": 130.29268487813258,
+        "sourcePSNRDB": 54.03106540591007,
+        "encodedBytes": 823,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 131.72210287911216,
+          "psnrDB": 53.93629296741003,
+          "encodedBytes": 825
+        },
+        "maxLSB": 1,
+        "rmsLSB": 0.10437071518085825,
+        "sourceRMSLSB": 112.8367750317434,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "0e05766d6419f8399705cc8e47407db34ac3e8c7fa040dc78cc9d2bef7d2decd",
+        "streamSHA256": "848d6489efdac0793c8206bb2551f02bd0e10d197d8ff80069cd48cef0d43084"
+      },
+      {
+        "case": "vardct-bicycles-crop-d0.5",
+        "sourceColourRMSLSB": 2.1412972602379483,
+        "sourcePSNRDB": 41.517264382176336,
+        "encodedBytes": 148172,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 1.3382267841925486,
+          "psnrDB": 45.60020925069358,
+          "encodedBytes": 148309
+        },
+        "maxLSB": 1,
+        "rmsLSB": 0.006385118052984961,
+        "sourceRMSLSB": 2.1412972602379483,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "809b5eb35f95199d1fbe26fa0e6f4383515581cca5bd131c2f0c67818dabf83e",
+        "streamSHA256": "0fa43eabcbb38e9f45ea3b1cdf5c3323daf54464aab06f0676f34efb5aa41c9a"
+      },
+      {
+        "case": "vardct-bicycles-crop-d1",
+        "sourceColourRMSLSB": 2.7434658369656293,
+        "sourcePSNRDB": 39.364812478486854,
+        "encodedBytes": 103594,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 2.267047156256942,
+          "psnrDB": 41.021592531343465,
+          "encodedBytes": 103587
+        },
+        "maxLSB": 1,
+        "rmsLSB": 0.0064841180350730275,
+        "sourceRMSLSB": 2.7434658369656293,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "809b5eb35f95199d1fbe26fa0e6f4383515581cca5bd131c2f0c67818dabf83e",
+        "streamSHA256": "79a6ea9d5d27cd5cc2b811f7e6f8140821f6cd2379b6e861bd299ecc9ea5ffb2"
+      },
+      {
+        "case": "vardct-bicycles-crop-d3",
+        "sourceColourRMSLSB": 5.792550407851028,
+        "sourcePSNRDB": 32.8734071728828,
+        "encodedBytes": 55163,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 5.516846738234078,
+          "psnrDB": 33.2969852261122,
+          "encodedBytes": 55245
+        },
+        "maxLSB": 1,
+        "rmsLSB": 0.005972731032093707,
+        "sourceRMSLSB": 5.792550407851028,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "809b5eb35f95199d1fbe26fa0e6f4383515581cca5bd131c2f0c67818dabf83e",
+        "streamSHA256": "6887d208c798402a57adefd42c09d166d50d6d5e6a8d9f8fa2d5d3e74f39b472"
+      },
+      {
+        "case": "vardct-grayscale-d0.5",
+        "sourceColourRMSLSB": 0.35046397817750113,
+        "sourcePSNRDB": 57.23793588061051,
+        "encodedBytes": 2382,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 0.3313689162426502,
+          "psnrDB": 57.72456826071391,
+          "encodedBytes": 2370
+        },
+        "maxLSB": 1,
+        "rmsLSB": 0.005,
+        "sourceRMSLSB": 0.35046397817750113,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "77918e281acc0d91b023ec8e40fface076ffe651f2c0895c233b8fb9f5538045",
+        "streamSHA256": "b666275ab585d68a53b5b1b0e79bc098fea3f8dfe8c7f3e67bca3f2bbc55287a"
+      },
+      {
+        "case": "vardct-grayscale-d1",
+        "sourceColourRMSLSB": 0.46776062254106,
+        "sourcePSNRDB": 54.73033043206517,
+        "encodedBytes": 1676,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 0.40602514772114734,
+          "psnrDB": 55.95974494805639,
+          "encodedBytes": 1991
+        },
+        "maxLSB": 0,
+        "rmsLSB": 0.0,
+        "sourceRMSLSB": 0.46776062254106,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "77918e281acc0d91b023ec8e40fface076ffe651f2c0895c233b8fb9f5538045",
+        "streamSHA256": "1605187c55739147de684b97a357c1c586babf7a7495091948b7d631e6ea809e"
+      },
+      {
+        "case": "vardct-grayscale-d3",
+        "sourceColourRMSLSB": 0.7508828137599102,
+        "sourcePSNRDB": 50.61936032288453,
+        "encodedBytes": 1121,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 0.6961817777661851,
+          "psnrDB": 51.276350575854565,
+          "encodedBytes": 1121
+        },
+        "maxLSB": 0,
+        "rmsLSB": 0.0,
+        "sourceRMSLSB": 0.7508828137599102,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "77918e281acc0d91b023ec8e40fface076ffe651f2c0895c233b8fb9f5538045",
+        "streamSHA256": "b322680c9848fae7fe8441e95b5eb4a1b2de958d2a7a761708fa1f9ac8ad2455"
+      },
+      {
+        "case": "vardct-rgba16-small-d0.5",
+        "sourceColourRMSLSB": 167.38014604414812,
+        "sourcePSNRDB": 51.85538722615433,
+        "encodedBytes": 285,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 87.5868350580583,
+          "psnrDB": 57.48068940657956,
+          "encodedBytes": 291
+        },
+        "maxLSB": 1,
+        "rmsLSB": 0.07001400420140048,
+        "sourceRMSLSB": 144.95545856338168,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "0e05766d6419f8399705cc8e47407db34ac3e8c7fa040dc78cc9d2bef7d2decd",
+        "streamSHA256": "94b931826234f62aa9a55e80cbb1096ec9637aa7fd39244ee1c54537d520a663"
+      },
+      {
+        "case": "vardct-rgba16-small-d1",
+        "sourceColourRMSLSB": 128.46656355670808,
+        "sourcePSNRDB": 54.15366393478398,
+        "encodedBytes": 280,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 128.47384264079903,
+          "psnrDB": 54.153171794820224,
+          "encodedBytes": 280
+        },
+        "maxLSB": 1,
+        "rmsLSB": 0.10694815798662465,
+        "sourceRMSLSB": 111.25530757699737,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "0e05766d6419f8399705cc8e47407db34ac3e8c7fa040dc78cc9d2bef7d2decd",
+        "streamSHA256": "9200e14b81038fa81d46de9773fc8c916692d4ca2e646567f724025fa2e0ad68"
+      },
+      {
+        "case": "vardct-rgba16-small-d3",
+        "sourceColourRMSLSB": 380.71507939344866,
+        "sourcePSNRDB": 44.71746450078971,
+        "encodedBytes": 270,
+        "pinnedPredecessorRateDistortion": {
+          "rmsLSB": 380.71984306283616,
+          "psnrDB": 44.71735581991534,
+          "encodedBytes": 270
+        },
+        "maxLSB": 1,
+        "rmsLSB": 0.07001400420140048,
+        "sourceRMSLSB": 329.708930358536,
+        "alphaMaxLSB": 0,
+        "exactSource": false,
+        "fixtureSHA256": "0e05766d6419f8399705cc8e47407db34ac3e8c7fa040dc78cc9d2bef7d2decd",
+        "streamSHA256": "b151c936d27b83820906c18c24fbc5581a6f8e00c98b1046db8b1a8e51d87def"
+      }
+    ]
+  },
+  "publicDefaultVarDCTRows": [
+    {
+      "case": "vardct-bicycles-crop-d0.5",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -31.623972233842203,
+          "rssChangePercent": -0.4318322023442289,
+          "sizeChangePercent": -0.09237470416495475,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 169.9408335,
+              "p95MS": 187.057625,
+              "medianProcessPeakRSSBytes": 26558464.0,
+              "encodedBytes": 148309,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 116.1987915,
+              "p95MS": 121.772,
+              "medianProcessPeakRSSBytes": 26443776.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -30.187326316269935,
+          "rssChangePercent": -2.3731830317413216,
+          "sizeChangePercent": -0.09237470416495475,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 170.53914600000002,
+              "p95MS": 183.975583,
+              "medianProcessPeakRSSBytes": 27615232.0,
+              "encodedBytes": 148309,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 119.05793750000001,
+              "p95MS": 126.849,
+              "medianProcessPeakRSSBytes": 26959872.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d0.5",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 46.598479,
+              "p95MS": 64.736834,
+              "medianProcessPeakRSSBytes": 31318016.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 44.6026665,
+              "p95MS": 46.85725,
+              "medianProcessPeakRSSBytes": 28573696.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d1",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -28.355529057839814,
+          "rssChangePercent": 5.976806422836756,
+          "sizeChangePercent": 0.006757604718732324,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 152.766208,
+              "p95MS": 169.52775,
+              "medianProcessPeakRSSBytes": 27549696.0,
+              "encodedBytes": 103587,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 109.4485415,
+              "p95MS": 126.062541,
+              "medianProcessPeakRSSBytes": 29196288.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -29.475085553310464,
+          "rssChangePercent": -0.7418856259659989,
+          "sizeChangePercent": 0.006757604718732324,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 152.1529375,
+              "p95MS": 153.576042,
+              "medianProcessPeakRSSBytes": 26501120.0,
+              "encodedBytes": 103587,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 107.305729,
+              "p95MS": 114.021042,
+              "medianProcessPeakRSSBytes": 26304512.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d1",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 41.658500000000004,
+              "p95MS": 43.118458,
+              "medianProcessPeakRSSBytes": 29179904.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 41.2567915,
+              "p95MS": 42.978459,
+              "medianProcessPeakRSSBytes": 27967488.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d3",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -22.561111842655034,
+          "rssChangePercent": 0.24968789013732895,
+          "sizeChangePercent": -0.1484297221468034,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 115.1028335,
+              "p95MS": 119.203625,
+              "medianProcessPeakRSSBytes": 26247168.0,
+              "encodedBytes": 55245,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 89.1343545,
+              "p95MS": 91.614875,
+              "medianProcessPeakRSSBytes": 26312704.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -22.01983093264256,
+          "rssChangePercent": 2.5593008739076106,
+          "sizeChangePercent": -0.1484297221468034,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 114.62839600000001,
+              "p95MS": 116.765541,
+              "medianProcessPeakRSSBytes": 26247168.0,
+              "encodedBytes": 55245,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 89.387417,
+              "p95MS": 108.702167,
+              "medianProcessPeakRSSBytes": 26918912.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d3",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 32.3060205,
+              "p95MS": 35.054209,
+              "medianProcessPeakRSSBytes": 29335552.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 32.118624499999996,
+              "p95MS": 33.592333,
+              "medianProcessPeakRSSBytes": 27746304.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d0.5",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 1.8501454494444403,
+          "rssChangePercent": 3.3793103448275907,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 11.291896000000001,
+              "p95MS": 12.786208,
+              "medianProcessPeakRSSBytes": 11878400.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 11.5008125,
+              "p95MS": 13.357042,
+              "medianProcessPeakRSSBytes": 12279808.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 14.941251151423597,
+          "rssChangePercent": 6.363636363636371,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 11.0737915,
+              "p95MS": 11.584416,
+              "medianProcessPeakRSSBytes": 11714560.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 12.728354499999998,
+              "p95MS": 14.889417,
+              "medianProcessPeakRSSBytes": 12460032.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d0.5",
+      "operation": "decode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -17.67260158081747,
+          "rssChangePercent": -0.20979020979020602,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 5.171374999999999,
+              "p95MS": 5.332583,
+              "medianProcessPeakRSSBytes": 11714560.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.2574585,
+              "p95MS": 4.678208,
+              "medianProcessPeakRSSBytes": 11689984.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -20.386699965721554,
+          "rssChangePercent": -0.20979020979020602,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 5.10525,
+              "p95MS": 5.273583,
+              "medianProcessPeakRSSBytes": 11714560.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.064458,
+              "p95MS": 4.217792,
+              "medianProcessPeakRSSBytes": 11689984.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d1",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -13.487771144554483,
+          "rssChangePercent": 2.219140083217752,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 11.017854499999999,
+              "p95MS": 11.29625,
+              "medianProcessPeakRSSBytes": 11812864.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 9.5317915,
+              "p95MS": 11.524292,
+              "medianProcessPeakRSSBytes": 12075008.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -12.090170294718227,
+          "rssChangePercent": 1.664355062413314,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 10.9381255,
+              "p95MS": 11.147875,
+              "medianProcessPeakRSSBytes": 11812864.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 9.6156875,
+              "p95MS": 11.085667,
+              "medianProcessPeakRSSBytes": 12009472.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d1",
+      "operation": "decode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -15.958457527116376,
+          "rssChangePercent": -3.090659340659341,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 4.945396499999999,
+              "p95MS": 5.114833,
+              "medianProcessPeakRSSBytes": 11927552.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.1561875,
+              "p95MS": 4.306334,
+              "medianProcessPeakRSSBytes": 11558912.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -15.579191219240784,
+          "rssChangePercent": -1.810584958217265,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 4.942625,
+              "p95MS": 5.097542,
+              "medianProcessPeakRSSBytes": 11763712.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.172604,
+              "p95MS": 4.424667,
+              "medianProcessPeakRSSBytes": 11550720.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d3",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -16.40535550300536,
+          "rssChangePercent": -0.13802622498274575,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 10.968979000000001,
+              "p95MS": 11.225708,
+              "medianProcessPeakRSSBytes": 11870208.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 9.169478999999999,
+              "p95MS": 9.528458,
+              "medianProcessPeakRSSBytes": 11853824.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -15.372968750923278,
+          "rssChangePercent": -1.9073569482288777,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 10.9156665,
+              "p95MS": 11.437084,
+              "medianProcessPeakRSSBytes": 12025856.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 9.2376045,
+              "p95MS": 9.856834,
+              "medianProcessPeakRSSBytes": 11796480.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d3",
+      "operation": "decode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -10.468068241092965,
+          "rssChangePercent": -3.28441649196366,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 5.028582999999999,
+              "p95MS": 5.136459,
+              "medianProcessPeakRSSBytes": 11722752.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.5021875,
+              "p95MS": 4.646417,
+              "medianProcessPeakRSSBytes": 11337728.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -10.677184647559123,
+          "rssChangePercent": -2.867132867132871,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 5.174187,
+              "p95MS": 5.499208,
+              "medianProcessPeakRSSBytes": 11714560.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.6217295,
+              "p95MS": 5.442667,
+              "medianProcessPeakRSSBytes": 11378688.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d0.5",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -31.8532928688678,
+          "rssChangePercent": -1.4912280701754432,
+          "sizeChangePercent": -2.0618556701030966,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.3767915,
+              "p95MS": 0.400416,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 291,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.25677099999999997,
+              "p95MS": 0.281208,
+              "medianProcessPeakRSSBytes": 9199616.0,
+              "encodedBytes": 285,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -33.02745111567841,
+          "rssChangePercent": -1.6666666666666718,
+          "sizeChangePercent": -2.0618556701030966,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.3768335,
+              "p95MS": 0.386833,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 291,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.252375,
+              "p95MS": 0.2605,
+              "medianProcessPeakRSSBytes": 9183232.0,
+              "encodedBytes": 285,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d0.5",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.06572900000000001,
+              "p95MS": 0.071083,
+              "medianProcessPeakRSSBytes": 9027584.0,
+              "encodedBytes": 285,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.064042,
+              "p95MS": 0.069875,
+              "medianProcessPeakRSSBytes": 9011200.0,
+              "encodedBytes": 285,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d1",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -34.413060208179566,
+          "rssChangePercent": -2.280701754385961,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.380729,
+              "p95MS": 0.407959,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.2497085,
+              "p95MS": 0.275167,
+              "medianProcessPeakRSSBytes": 9125888.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -33.579734812889285,
+          "rssChangePercent": -2.1071115013169495,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.37777099999999997,
+              "p95MS": 0.388125,
+              "medianProcessPeakRSSBytes": 9330688.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.2509165,
+              "p95MS": 0.269708,
+              "medianProcessPeakRSSBytes": 9134080.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d1",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.061896,
+              "p95MS": 0.066417,
+              "medianProcessPeakRSSBytes": 9019392.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.063292,
+              "p95MS": 0.075375,
+              "medianProcessPeakRSSBytes": 9019392.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d3",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -33.97282780741387,
+          "rssChangePercent": -2.4454148471615755,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.382229,
+              "p95MS": 0.427833,
+              "medianProcessPeakRSSBytes": 9379840.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.252375,
+              "p95MS": 0.259125,
+              "medianProcessPeakRSSBytes": 9150464.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -32.59261886121288,
+          "rssChangePercent": -2.1052631578947323,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.366583,
+              "p95MS": 0.377375,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.247104,
+              "p95MS": 0.272958,
+              "medianProcessPeakRSSBytes": 9142272.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d3",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.060438,
+              "p95MS": 0.084042,
+              "medianProcessPeakRSSBytes": 9019392.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.0610415,
+              "p95MS": 0.066167,
+              "medianProcessPeakRSSBytes": 9019392.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-animation-animation-crop",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -11.054935935759936,
+          "rssChangePercent": -3.0670470756062773,
+          "sizeChangePercent": -1.1754131231418108,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 15.634229000000001,
+              "p95MS": 16.277125,
+              "medianProcessPeakRSSBytes": 11485184.0,
+              "encodedBytes": 14463,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 13.905875,
+              "p95MS": 14.16325,
+              "medianProcessPeakRSSBytes": 11132928.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -8.703760497565415,
+          "rssChangePercent": -3.5561877667140807,
+          "sizeChangePercent": -1.1754131231418108,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 15.3267085,
+              "p95MS": 15.5345,
+              "medianProcessPeakRSSBytes": 11517952.0,
+              "encodedBytes": 14463,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 13.992708499999999,
+              "p95MS": 14.731916,
+              "medianProcessPeakRSSBytes": 11108352.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-animation-animation-crop",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 4.2531455000000005,
+              "p95MS": 4.553625,
+              "medianProcessPeakRSSBytes": 11010048.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 4.227354,
+              "p95MS": 4.600084,
+              "medianProcessPeakRSSBytes": 11034624.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-animation-rgba16-small",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -31.364308310846333,
+          "rssChangePercent": -0.5291005291005346,
+          "sizeChangePercent": -0.24242424242424399,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 1.1137915,
+              "p95MS": 1.205667,
+              "medianProcessPeakRSSBytes": 9289728.0,
+              "encodedBytes": 825,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.7644585,
+              "p95MS": 0.82625,
+              "medianProcessPeakRSSBytes": 9240576.0,
+              "encodedBytes": 823,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -31.402650996424008,
+          "rssChangePercent": -1.7436791630340065,
+          "sizeChangePercent": -0.24242424242424399,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 1.1139584999999999,
+              "p95MS": 1.183333,
+              "medianProcessPeakRSSBytes": 9396224.0,
+              "encodedBytes": 825,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.764146,
+              "p95MS": 0.811084,
+              "medianProcessPeakRSSBytes": 9232384.0,
+              "encodedBytes": 823,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-animation-rgba16-small",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.1832085,
+              "p95MS": 0.210458,
+              "medianProcessPeakRSSBytes": 9297920.0,
+              "encodedBytes": 823,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.186562,
+              "p95MS": 0.24425,
+              "medianProcessPeakRSSBytes": 9289728.0,
+              "encodedBytes": 823,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "oneWorkerDiagnosticVarDCTRows": [
+    {
+      "case": "vardct-bicycles-crop-d0.5",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 53.19428888077509,
+          "rssChangePercent": 2.3946650500151545,
+          "sizeChangePercent": -0.09237470416495475,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 171.458021,
+              "p95MS": 184.832458,
+              "medianProcessPeakRSSBytes": 27025408.0,
+              "encodedBytes": 148309,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 262.663896,
+              "p95MS": 291.331458,
+              "medianProcessPeakRSSBytes": 27672576.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 61.975994593295304,
+          "rssChangePercent": -7.818131411144991,
+          "sizeChangePercent": -0.09237470416495475,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 180.1459585,
+              "p95MS": 229.176,
+              "medianProcessPeakRSSBytes": 29548544.0,
+              "encodedBytes": 148309,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 291.793208,
+              "p95MS": 355.285083,
+              "medianProcessPeakRSSBytes": 27238400.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d0.5",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 45.2262705,
+              "p95MS": 46.641334,
+              "medianProcessPeakRSSBytes": 29638656.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 45.873082999999994,
+              "p95MS": 50.726333,
+              "medianProcessPeakRSSBytes": 28655616.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d1",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 57.214459749210754,
+          "rssChangePercent": -2.327024511324849,
+          "sizeChangePercent": 0.006757604718732324,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 152.65306249999998,
+              "p95MS": 155.935791,
+              "medianProcessPeakRSSBytes": 26402816.0,
+              "encodedBytes": 103587,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 239.9926875,
+              "p95MS": 252.944292,
+              "medianProcessPeakRSSBytes": 25788416.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 57.8222459582642,
+          "rssChangePercent": -2.4518932340161337,
+          "sizeChangePercent": 0.006757604718732324,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 152.3861665,
+              "p95MS": 155.489792,
+              "medianProcessPeakRSSBytes": 26394624.0,
+              "encodedBytes": 103587,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 240.4992705,
+              "p95MS": 249.913708,
+              "medianProcessPeakRSSBytes": 25747456.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d1",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 41.662688,
+              "p95MS": 42.3765,
+              "medianProcessPeakRSSBytes": 27557888.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 41.841667,
+              "p95MS": 42.407167,
+              "medianProcessPeakRSSBytes": 27574272.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d3",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 72.85345516248496,
+          "rssChangePercent": -1.6806722689075682,
+          "sizeChangePercent": -0.1484297221468034,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 114.94172900000001,
+              "p95MS": 118.627291,
+              "medianProcessPeakRSSBytes": 26320896.0,
+              "encodedBytes": 55245,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 198.68075,
+              "p95MS": 205.842166,
+              "medianProcessPeakRSSBytes": 25878528.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 73.84961096903315,
+          "rssChangePercent": -1.3732833957553092,
+          "sizeChangePercent": -0.1484297221468034,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 114.602188,
+              "p95MS": 117.807417,
+              "medianProcessPeakRSSBytes": 26247168.0,
+              "encodedBytes": 55245,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 199.235458,
+              "p95MS": 205.202375,
+              "medianProcessPeakRSSBytes": 25886720.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d3",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 32.887771,
+              "p95MS": 34.513334,
+              "medianProcessPeakRSSBytes": 27516928.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 32.721396,
+              "p95MS": 32.853916,
+              "medianProcessPeakRSSBytes": 29114368.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d0.5",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 103.69651954200907,
+          "rssChangePercent": -5.1820728291316565,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 10.98275,
+              "p95MS": 11.228167,
+              "medianProcessPeakRSSBytes": 11698176.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.3714795,
+              "p95MS": 23.659666,
+              "medianProcessPeakRSSBytes": 11091968.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 104.8268776375584,
+          "rssChangePercent": -5.112044817927175,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 11.0017705,
+              "p95MS": 11.1655,
+              "medianProcessPeakRSSBytes": 11698176.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.534582999999998,
+              "p95MS": 23.85425,
+              "medianProcessPeakRSSBytes": 11100160.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d0.5",
+      "operation": "decode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -16.52865899131035,
+          "rssChangePercent": -4.90196078431373,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 5.024479,
+              "p95MS": 5.207625,
+              "medianProcessPeakRSSBytes": 11698176.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.194,
+              "p95MS": 4.635208,
+              "medianProcessPeakRSSBytes": 11124736.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -19.983113294743184,
+          "rssChangePercent": -4.90196078431373,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 5.109937,
+              "p95MS": 5.386,
+              "medianProcessPeakRSSBytes": 11698176.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.0888124999999995,
+              "p95MS": 4.206792,
+              "medianProcessPeakRSSBytes": 11124736.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d1",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 104.59337057662484,
+          "rssChangePercent": -7.501720578114246,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 11.0086045,
+              "p95MS": 11.152042,
+              "medianProcessPeakRSSBytes": 11902976.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.522875,
+              "p95MS": 23.050125,
+              "medianProcessPeakRSSBytes": 11010048.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 105.26516079480524,
+          "rssChangePercent": -6.652806652806653,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 10.935459,
+              "p95MS": 11.095041,
+              "medianProcessPeakRSSBytes": 11821056.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.4466875,
+              "p95MS": 24.039125,
+              "medianProcessPeakRSSBytes": 11034624.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d1",
+      "operation": "decode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -16.625301286236606,
+          "rssChangePercent": -8.041237113402067,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 5.0535415,
+              "p95MS": 5.495541,
+              "medianProcessPeakRSSBytes": 11919360.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.213374999999999,
+              "p95MS": 4.363416,
+              "medianProcessPeakRSSBytes": 10960896.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -15.2569458331282,
+          "rssChangePercent": -6.903765690376574,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 4.935729,
+              "p95MS": 5.022833,
+              "medianProcessPeakRSSBytes": 11747328.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.1826875,
+              "p95MS": 4.27625,
+              "medianProcessPeakRSSBytes": 10936320.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d3",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 102.45683819136997,
+          "rssChangePercent": -5.342465753424652,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 11.1949375,
+              "p95MS": 12.567084,
+              "medianProcessPeakRSSBytes": 11960320.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.6649165,
+              "p95MS": 27.846625,
+              "medianProcessPeakRSSBytes": 11321344.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 106.45207703708905,
+          "rssChangePercent": -7.660167130919215,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 10.936083,
+              "p95MS": 11.048167,
+              "medianProcessPeakRSSBytes": 11763712.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.5777705,
+              "p95MS": 24.225833,
+              "medianProcessPeakRSSBytes": 10862592.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d3",
+      "operation": "decode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -9.491018144164265,
+          "rssChangePercent": -9.103641456582634,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 5.0705835,
+              "p95MS": 5.18275,
+              "medianProcessPeakRSSBytes": 11698176.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.5893335,
+              "p95MS": 4.769625,
+              "medianProcessPeakRSSBytes": 10633216.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -9.881357950366931,
+          "rssChangePercent": -8.969866853538889,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 5.097771,
+              "p95MS": 5.379959,
+              "medianProcessPeakRSSBytes": 11689984.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 4.594042,
+              "p95MS": 4.837375,
+              "medianProcessPeakRSSBytes": 10641408.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d0.5",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -34.04294497871669,
+          "rssChangePercent": -1.403508771929829,
+          "sizeChangePercent": -2.0618556701030966,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.3964375,
+              "p95MS": 0.424209,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 291,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.2614785,
+              "p95MS": 0.326167,
+              "medianProcessPeakRSSBytes": 9207808.0,
+              "encodedBytes": 285,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -30.866430183811676,
+          "rssChangePercent": -0.35087719298245723,
+          "sizeChangePercent": -2.0618556701030966,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.387625,
+              "p95MS": 0.453542,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 291,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.26797899999999997,
+              "p95MS": 0.332959,
+              "medianProcessPeakRSSBytes": 9306112.0,
+              "encodedBytes": 285,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d0.5",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.065354,
+              "p95MS": 0.072125,
+              "medianProcessPeakRSSBytes": 9027584.0,
+              "encodedBytes": 285,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.06489600000000001,
+              "p95MS": 0.071125,
+              "medianProcessPeakRSSBytes": 9003008.0,
+              "encodedBytes": 285,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d1",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -32.731566670047386,
+          "rssChangePercent": -2.1052631578947323,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.3796045,
+              "p95MS": 0.430458,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.25535399999999997,
+              "p95MS": 0.265583,
+              "medianProcessPeakRSSBytes": 9142272.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -32.35687981252092,
+          "rssChangePercent": -2.1929824561403466,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.373375,
+              "p95MS": 0.376291,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.2525625,
+              "p95MS": 0.284792,
+              "medianProcessPeakRSSBytes": 9134080.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d1",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.061771,
+              "p95MS": 0.068167,
+              "medianProcessPeakRSSBytes": 9027584.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.0617085,
+              "p95MS": 0.065917,
+              "medianProcessPeakRSSBytes": 9027584.0,
+              "encodedBytes": 280,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d3",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -32.666475643178735,
+          "rssChangePercent": -1.7543859649122862,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.376917,
+              "p95MS": 0.387458,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.2537915,
+              "p95MS": 0.272792,
+              "medianProcessPeakRSSBytes": 9175040.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -31.51173083046833,
+          "rssChangePercent": -1.8421052631578894,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 0.370562,
+              "p95MS": 0.410958,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.25379149999999995,
+              "p95MS": 0.285792,
+              "medianProcessPeakRSSBytes": 9166848.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-rgba16-small-d3",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.0618125,
+              "p95MS": 0.067375,
+              "medianProcessPeakRSSBytes": 9043968.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.06268750000000001,
+              "p95MS": 0.071209,
+              "medianProcessPeakRSSBytes": 9035776.0,
+              "encodedBytes": 270,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-animation-animation-crop",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 56.230359611934475,
+          "rssChangePercent": -6.205420827389441,
+          "sizeChangePercent": -1.1754131231418108,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 15.576958000000001,
+              "p95MS": 16.118542,
+              "medianProcessPeakRSSBytes": 11485184.0,
+              "encodedBytes": 14463,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 24.3359375,
+              "p95MS": 24.505125,
+              "medianProcessPeakRSSBytes": 10772480.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 56.16690144713776,
+          "rssChangePercent": -5.3342816500711265,
+          "sizeChangePercent": -1.1754131231418108,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 15.527270999999999,
+              "p95MS": 16.077625,
+              "medianProcessPeakRSSBytes": 11517952.0,
+              "encodedBytes": 14463,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 24.248458,
+              "p95MS": 25.355625,
+              "medianProcessPeakRSSBytes": 10903552.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-animation-animation-crop",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 4.1833545,
+              "p95MS": 4.311916,
+              "medianProcessPeakRSSBytes": 10723328.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 4.141146,
+              "p95MS": 4.262042,
+              "medianProcessPeakRSSBytes": 10731520.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-animation-rgba16-small",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": -31.367307319741787,
+          "rssChangePercent": -0.5300353356890497,
+          "sizeChangePercent": -0.24242424242424399,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 1.1278335,
+              "p95MS": 1.2245,
+              "medianProcessPeakRSSBytes": 9273344.0,
+              "encodedBytes": 825,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.7740625,
+              "p95MS": 0.819917,
+              "medianProcessPeakRSSBytes": 9224192.0,
+              "encodedBytes": 823,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": -32.85970256844486,
+          "rssChangePercent": -0.9556907037358786,
+          "sizeChangePercent": -0.24242424242424399,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 1.159729,
+              "p95MS": 1.273084,
+              "medianProcessPeakRSSBytes": 9428992.0,
+              "encodedBytes": 825,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 0.7786455000000001,
+              "p95MS": 0.843459,
+              "medianProcessPeakRSSBytes": 9338880.0,
+              "encodedBytes": 823,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-animation-rgba16-small",
+      "operation": "decode",
+      "implementations": [
+        "candidate"
+      ],
+      "latencyTrigger": false,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.1837915,
+              "p95MS": 0.188209,
+              "medianProcessPeakRSSBytes": 9281536.0,
+              "encodedBytes": 823,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "implementations": {
+            "candidate": {
+              "medianMS": 0.186021,
+              "p95MS": 0.206333,
+              "medianProcessPeakRSSBytes": 9281536.0,
+              "encodedBytes": 823,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "oneWorkerDiagnosticTriggerRows": [
+    {
+      "case": "vardct-bicycles-crop-d0.5",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 53.19428888077509,
+          "rssChangePercent": 2.3946650500151545,
+          "sizeChangePercent": -0.09237470416495475,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 171.458021,
+              "p95MS": 184.832458,
+              "medianProcessPeakRSSBytes": 27025408.0,
+              "encodedBytes": 148309,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 262.663896,
+              "p95MS": 291.331458,
+              "medianProcessPeakRSSBytes": 27672576.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 61.975994593295304,
+          "rssChangePercent": -7.818131411144991,
+          "sizeChangePercent": -0.09237470416495475,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 180.1459585,
+              "p95MS": 229.176,
+              "medianProcessPeakRSSBytes": 29548544.0,
+              "encodedBytes": 148309,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 291.793208,
+              "p95MS": 355.285083,
+              "medianProcessPeakRSSBytes": 27238400.0,
+              "encodedBytes": 148172,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d1",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 57.214459749210754,
+          "rssChangePercent": -2.327024511324849,
+          "sizeChangePercent": 0.006757604718732324,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 152.65306249999998,
+              "p95MS": 155.935791,
+              "medianProcessPeakRSSBytes": 26402816.0,
+              "encodedBytes": 103587,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 239.9926875,
+              "p95MS": 252.944292,
+              "medianProcessPeakRSSBytes": 25788416.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 57.8222459582642,
+          "rssChangePercent": -2.4518932340161337,
+          "sizeChangePercent": 0.006757604718732324,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 152.3861665,
+              "p95MS": 155.489792,
+              "medianProcessPeakRSSBytes": 26394624.0,
+              "encodedBytes": 103587,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 240.4992705,
+              "p95MS": 249.913708,
+              "medianProcessPeakRSSBytes": 25747456.0,
+              "encodedBytes": 103594,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-bicycles-crop-d3",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 72.85345516248496,
+          "rssChangePercent": -1.6806722689075682,
+          "sizeChangePercent": -0.1484297221468034,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 114.94172900000001,
+              "p95MS": 118.627291,
+              "medianProcessPeakRSSBytes": 26320896.0,
+              "encodedBytes": 55245,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 198.68075,
+              "p95MS": 205.842166,
+              "medianProcessPeakRSSBytes": 25878528.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 73.84961096903315,
+          "rssChangePercent": -1.3732833957553092,
+          "sizeChangePercent": -0.1484297221468034,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 114.602188,
+              "p95MS": 117.807417,
+              "medianProcessPeakRSSBytes": 26247168.0,
+              "encodedBytes": 55245,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 199.235458,
+              "p95MS": 205.202375,
+              "medianProcessPeakRSSBytes": 25886720.0,
+              "encodedBytes": 55163,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d0.5",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 103.69651954200907,
+          "rssChangePercent": -5.1820728291316565,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 10.98275,
+              "p95MS": 11.228167,
+              "medianProcessPeakRSSBytes": 11698176.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.3714795,
+              "p95MS": 23.659666,
+              "medianProcessPeakRSSBytes": 11091968.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 104.8268776375584,
+          "rssChangePercent": -5.112044817927175,
+          "sizeChangePercent": 0.5063291139240533,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 11.0017705,
+              "p95MS": 11.1655,
+              "medianProcessPeakRSSBytes": 11698176.0,
+              "encodedBytes": 2370,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.534582999999998,
+              "p95MS": 23.85425,
+              "medianProcessPeakRSSBytes": 11100160.0,
+              "encodedBytes": 2382,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d1",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 104.59337057662484,
+          "rssChangePercent": -7.501720578114246,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 11.0086045,
+              "p95MS": 11.152042,
+              "medianProcessPeakRSSBytes": 11902976.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.522875,
+              "p95MS": 23.050125,
+              "medianProcessPeakRSSBytes": 11010048.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 105.26516079480524,
+          "rssChangePercent": -6.652806652806653,
+          "sizeChangePercent": -15.821195379206433,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 10.935459,
+              "p95MS": 11.095041,
+              "medianProcessPeakRSSBytes": 11821056.0,
+              "encodedBytes": 1991,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.4466875,
+              "p95MS": 24.039125,
+              "medianProcessPeakRSSBytes": 11034624.0,
+              "encodedBytes": 1676,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-grayscale-d3",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 102.45683819136997,
+          "rssChangePercent": -5.342465753424652,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 11.1949375,
+              "p95MS": 12.567084,
+              "medianProcessPeakRSSBytes": 11960320.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.6649165,
+              "p95MS": 27.846625,
+              "medianProcessPeakRSSBytes": 11321344.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 106.45207703708905,
+          "rssChangePercent": -7.660167130919215,
+          "sizeChangePercent": 0.0,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 10.936083,
+              "p95MS": 11.048167,
+              "medianProcessPeakRSSBytes": 11763712.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 22.5777705,
+              "p95MS": 24.225833,
+              "medianProcessPeakRSSBytes": 10862592.0,
+              "encodedBytes": 1121,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "case": "vardct-animation-animation-crop",
+      "operation": "encode",
+      "implementations": [
+        "predecessor",
+        "candidate"
+      ],
+      "latencyTrigger": true,
+      "rssTrigger": false,
+      "losslessSizeTrigger": false,
+      "rounds": [
+        {
+          "latencyChangePercent": 56.230359611934475,
+          "rssChangePercent": -6.205420827389441,
+          "sizeChangePercent": -1.1754131231418108,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 15.576958000000001,
+              "p95MS": 16.118542,
+              "medianProcessPeakRSSBytes": 11485184.0,
+              "encodedBytes": 14463,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 24.3359375,
+              "p95MS": 24.505125,
+              "medianProcessPeakRSSBytes": 10772480.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "latencyChangePercent": 56.16690144713776,
+          "rssChangePercent": -5.3342816500711265,
+          "sizeChangePercent": -1.1754131231418108,
+          "implementations": {
+            "predecessor": {
+              "medianMS": 15.527270999999999,
+              "p95MS": 16.077625,
+              "medianProcessPeakRSSBytes": 11517952.0,
+              "encodedBytes": 14463,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            "candidate": {
+              "medianMS": 24.248458,
+              "p95MS": 25.355625,
+              "medianProcessPeakRSSBytes": 10903552.0,
+              "encodedBytes": 14293,
+              "thermalStates": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "rawReportSHA256": "ae2cf9ed4c75b8f85f7a54e9bcc71b447357ab6ac28c2f8dff38b3474184301d"
+}

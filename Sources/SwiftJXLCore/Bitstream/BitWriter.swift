@@ -69,22 +69,22 @@ package struct BitWriter: Sendable {
     package var bitCount: Int { bytes.count * 8 + accBits }
 
     /// Append `count` bits of `value` (LSB-first). 0 ≤ count ≤ 32.
+    @inline(__always)
     package mutating func write(bits count: Int, value: UInt32) {
         precondition(count >= 0 && count <= 32, "bit count must be 0...32")
         if count == 0 { return }
-        guard admit((accBits + count + 7) / 8) else { return }
+        guard admit((accBits &+ count &+ 7) >> 3) else { return }
         // Mask `value` to its low `count` bits, then shift into place above the
         // existing `accBits` pending bits. `accBits` ≤ 7 and `count` ≤ 32, so
         // the result occupies < 40 bits — well within `UInt64`.
         let mask: UInt64 = count == 32 ? 0xFFFF_FFFF
-            : (UInt64(1) << UInt64(count)) - 1
-        acc |= (UInt64(value) & mask) << UInt64(accBits)
-        accBits += count
+            : (UInt64(1) &<< UInt64(count)) &- 1
+        acc |= (UInt64(value) & mask) &<< UInt64(accBits)
+        accBits &+= count
         while accBits >= 8 {
-            guard admit(1) else { acc = 0; accBits = 0; return }
-            bytes.append(UInt8(acc & 0xFF))
+            bytes.append(UInt8(truncatingIfNeeded: acc))
             acc &>>= 8
-            accBits -= 8
+            accBits &-= 8
         }
     }
 

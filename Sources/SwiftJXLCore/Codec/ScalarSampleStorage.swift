@@ -25,6 +25,7 @@ extension ModularSampleBuffer {
 }
 
 extension Array: ModularSampleBuffer where Element == Int32 {}
+extension UnsafeMutableBufferPointer: ModularSampleBuffer where Element == Int32 {}
 
 /// Checked byte geometry for a single unsigned 16-bit plane. Meaningful bits
 /// remain low-aligned; neither padding nor gaps between samples are addressed.

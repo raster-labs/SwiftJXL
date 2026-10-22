@@ -69,17 +69,53 @@ package enum VarDCTAFV {
                              into output: UnsafeMutableBufferPointer<Float>,
                              budget: ScalarOperationBudget) throws {
         try budget.checkpoint()
-        guard pixels.count == 16, output.count == 16 else { throw VarDCTError.invalidTransform }
-        guard pixels.allSatisfy(\.isFinite) else { throw VarDCTError.nonFiniteSample }
-        for k in 0..<16 {
-            var sum: Double = 0
-            for i in 0..<16 { sum += Double(pixels[i]) * Double(basis[k][i]) }
-            let value = Float(sum)
-            guard value.isFinite else { throw VarDCTError.nonFiniteSample }
-            output[k] = value
+        guard pixels.count == 16, output.count == 16,
+              let inPtr = pixels.baseAddress, let outPtr = output.baseAddress else { throw VarDCTError.invalidTransform }
+        for i in 0..<16 {
+            if !inPtr[i].isFinite { throw VarDCTError.nonFiniteSample }
+        }
+        try forwardBasisSIMD.withUnsafeBufferPointer { bBuf in
+            let bPtr = bBuf.baseAddress!
+            var sums0 = SIMD4<Double>(repeating: 0)
+            var sums1 = SIMD4<Double>(repeating: 0)
+            var sums2 = SIMD4<Double>(repeating: 0)
+            var sums3 = SIMD4<Double>(repeating: 0)
+            for i in 0..<16 {
+                let p = SIMD4<Double>(repeating: Double(inPtr[i]))
+                let idx = i &<< 2
+                sums0 += bPtr[idx] * p
+                sums1 += bPtr[idx &+ 1] * p
+                sums2 += bPtr[idx &+ 2] * p
+                sums3 += bPtr[idx &+ 3] * p
+            }
+            for lane in 0..<4 {
+                let v0 = Float(sums0[lane]), v1 = Float(sums1[lane]), v2 = Float(sums2[lane]), v3 = Float(sums3[lane])
+                guard v0.isFinite && v1.isFinite && v2.isFinite && v3.isFinite else {
+                    throw VarDCTError.nonFiniteSample
+                }
+                outPtr[lane] = v0
+                outPtr[4 &+ lane] = v1
+                outPtr[8 &+ lane] = v2
+                outPtr[12 &+ lane] = v3
+            }
         }
         try budget.checkpoint()
     }
+    private static let forwardBasisSIMD: [SIMD4<Double>] = {
+        var result = [SIMD4<Double>](repeating: .zero, count: 64)
+        for i in 0..<16 {
+            for group in 0..<4 {
+                let k = group * 4
+                result[i * 4 + group] = SIMD4<Double>(
+                    Double(basis[k][i]),
+                    Double(basis[k + 1][i]),
+                    Double(basis[k + 2][i]),
+                    Double(basis[k + 3][i])
+                )
+            }
+        }
+        return result
+    }()
     private static let basis: [[Float]] = [
         // Row 0: DC (constant = 1/4).
         [0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,

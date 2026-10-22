@@ -242,6 +242,34 @@ package struct TokenStreamReader: Sendable {
         }
     }
 
+    /// True when `ctx` can be decoded through the fast non-LZ77 single-cluster
+    /// alias-table reader without changing any bitstream or error semantics.
+    package func canUseSingleContextANS(context ctx: Int) -> Bool {
+        !usePrefixCode && !ansUnavailable && ansDecoder.useAliasTables
+            && !lz77Enabled && copyRemaining == 0
+            && ctx >= 0 && ctx < userCtxBound
+            && Int(ctxMap[ctx]) < numHistograms
+            && Int(ctxMap[ctx]) < ansDecoder.aliasTables.count
+    }
+
+    @inline(__always)
+    package func singleContextANSCluster(
+        context ctx: Int
+    ) -> (alias: AliasTable, config: HybridUintConfig, state: UInt32, initialised: Bool) {
+        let cluster = Int(ctxMap[ctx])
+        return (
+            ansDecoder.aliasTables[cluster],
+            uintConfigs[cluster],
+            ansDecoder.currentState,
+            ansDecoder.hasInitialised
+        )
+    }
+
+    @inline(__always)
+    package mutating func updateSingleContextANSState(_ state: UInt32, initialised: Bool) {
+        ansDecoder.updateState(state, initialised: initialised)
+    }
+
     /// Prefix-code symbol read (the raw HybridUint token, before
     /// extra-bits expansion).
     @inline(__always)

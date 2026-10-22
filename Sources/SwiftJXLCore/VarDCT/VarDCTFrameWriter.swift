@@ -7,12 +7,15 @@ import Foundation
 private struct VarDCTPrefix {
     let header: EntropySectionHeader
     let codebook: MultiClusterCodebook
+    let table: PrefixCodeTable
     init(histogram: [Int], contexts: Int) throws {
         let size = max(2, (histogram.lastIndex(where: { $0 != 0 }) ?? 0) + 1)
         var counts = Array(histogram.prefix(size))
         if counts.filter({ $0 != 0 }).count == 1 { counts[counts[0] == 0 ? 0 : 1] = 1 }
         let lengths = lengthLimitedCanonicalHuffman(counts: counts, maxLength: 15, alphabetSize: size)
-        codebook = MultiClusterCodebook(huffmanTables: [try PrefixCodeTable(lengths: lengths)],
+        let tbl = try PrefixCodeTable(lengths: lengths)
+        table = tbl
+        codebook = MultiClusterCodebook(huffmanTables: [tbl],
             ansCounts: [], alphabetSizes: [size])
         header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: contexts),
             usePrefixCode: true, logAlphaSize: 15, uintConfigs: [.raw4])
@@ -21,8 +24,18 @@ private struct VarDCTPrefix {
         try header.write(to: &writer, numContexts: contexts)
         try codebook.write(to: &writer, header: header)
     }
+    @inline(__always)
     func write(_ value: UInt32, to writer: inout BitWriter) throws {
-        try TokenStreamWriter(header: header, codebook: codebook).writeToken(context: 0, value: value, to: &writer)
+        try writer.checkpointToken()
+        let exp = HybridUintConfig.raw4.encode(value)
+        do {
+            try table.encode(Int(exp.token), to: &writer)
+        } catch let e as PrefixCodeError {
+            throw TokenStreamWriterError.prefix(e)
+        }
+        if exp.extraNBits > 0 {
+            writer.write(bits: exp.extraNBits, value: exp.extraBits)
+        }
     }
 }
 
@@ -171,44 +184,73 @@ struct VarDCTFrameWriter {
         let x0 = group % groupsX * 32, y0 = group / groupsX * 32
         let width = min(32, coefficients.blocksX - x0), height = min(32, coefficients.blocksY - y0)
         if let transforms = coefficients.transforms {
-            var orders: [Int: [Int]] = [:]
+            var orders = [[Int]?](repeating: nil, count: 16)
             for transform in transforms where transform.x >= x0 && transform.x < x0 + width && transform.y >= y0 && transform.y < y0 + height {
                 try budget.checkpoint()
-                let covered = transform.coveredCells, count = covered * 64, offset = transform.coefficientOffset
+                let covered = transform.coveredCells, count = covered &* 64, offset = transform.coefficientOffset
+                let bucket = transform.orderBucket
                 let order: [Int]
-                if let cached = orders[transform.orderBucket] { order = cached }
+                if let cached = orders[bucket] { order = cached }
                 else {
                     order = try VarDCTOrders.natural(width: max(transform.cellsX,transform.cellsY),
                         height: min(transform.cellsX,transform.cellsY), budget: budget)
-                    orders[transform.orderBucket] = order
+                    orders[bucket] = order
                 }
-                for c in [1,0,2] {
-                    var nonzeros = 0
-                    for k in covered..<count where coefficients.ac[c][offset + order[k]] != 0 { nonzeros += 1 }
-                    try emit(UInt32(nonzeros))
-                    for k in covered..<count {
-                        if nonzeros == 0 { break }
-                        let value = coefficients.ac[c][offset + order[k]]
-                        try emit(ZigZag.pack(value)); if value != 0 { nonzeros -= 1 }
+                try order.withUnsafeBufferPointer { ordBuf in
+                    let ordPtr = ordBuf.baseAddress!
+                    for c in [1,0,2] {
+                        try coefficients.ac[c].withUnsafeBufferPointer { acBuf in
+                            let acPtr = acBuf.baseAddress! + offset
+                            var nonzeros = 0
+                            var lastK = 0
+                            for k in covered..<count {
+                                if acPtr[ordPtr[k]] != 0 {
+                                    nonzeros &+= 1
+                                    lastK = k
+                                }
+                            }
+                            try emit(UInt32(nonzeros))
+                            if nonzeros > 0 {
+                                for k in covered...lastK {
+                                    let value = acPtr[ordPtr[k]]
+                                    try emit(ZigZag.pack(value))
+                                }
+                            }
+                        }
                     }
                 }
             }
             return
         }
-        for y in 0..<height { for x in 0..<width {
-            try budget.checkpoint()
-            let offset = ((y0 + y) * coefficients.blocksX + x0 + x) * 64
-            for c in [1,0,2] {
-                var nonzeros = 0
-                for k in 1..<64 where coefficients.ac[c][offset + Self.order[k]] != 0 { nonzeros += 1 }
-                try emit(UInt32(nonzeros))
-                for k in 1..<64 {
-                    if nonzeros == 0 { break }
-                    let value = coefficients.ac[c][offset + Self.order[k]]
-                    try emit(ZigZag.pack(value)); if value != 0 { nonzeros -= 1 }
+        try Self.order.withUnsafeBufferPointer { ordBuf in
+            let ordPtr = ordBuf.baseAddress!
+            for y in 0..<height {
+                try budget.checkpoint()
+                for x in 0..<width {
+                    let offset = ((y0 + y) * coefficients.blocksX + x0 + x) * 64
+                    for c in [1,0,2] {
+                        try coefficients.ac[c].withUnsafeBufferPointer { acBuf in
+                            let acPtr = acBuf.baseAddress! + offset
+                            var nonzeros = 0
+                            var lastK = 0
+                            for k in 1..<64 {
+                                if acPtr[ordPtr[k]] != 0 {
+                                    nonzeros &+= 1
+                                    lastK = k
+                                }
+                            }
+                            try emit(UInt32(nonzeros))
+                            if nonzeros > 0 {
+                                for k in 1...lastK {
+                                    let value = acPtr[ordPtr[k]]
+                                    try emit(ZigZag.pack(value))
+                                }
+                            }
+                        }
+                    }
                 }
             }
-        } }
+        }
     }
     private func tree(to writer: inout BitWriter) throws {
         let code = MultiClusterCodebook(huffmanTables: [try PrefixCodeTable(lengths: [UInt8](repeating: 4, count: 16))],
