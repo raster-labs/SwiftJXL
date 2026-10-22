@@ -1,10 +1,11 @@
 {
   "schemaVersion": "1.0.0",
-  "evidenceCompleteAtUTC": "2026-10-21T10:15:00+00:00",
-  "generatedAtUTC": "2026-10-21T10:15:00+00:00",
+  "evidenceCompleteAtUTC": "2026-10-22T08:40:00+00:00",
+  "generatedAtUTC": "2026-10-22T08:40:00+00:00",
+  "preservedPreM4RemoteGatesDocsEvidenceCompleteAtUTC": "2026-10-21T10:15:00+00:00",
   "preservedInitialEvidenceCompleteAtUTC": "2026-10-16T06:50:40.532103+00:00",
   "milestone": "Milestone 4 Remaining Work Follow-Up",
-  "overallStatus": "local_m4_opt_10_and_jpeg_3_accepted_with_explicit_pending_ci_and_platform_gates",
+  "overallStatus": "local_and_hosted_ci_m4_opt_10_and_jpeg_3_accepted_with_explicit_unqualified_platform_and_sanitizer_gates",
   "wholeMilestoneComplete": false,
   "contractVersion": "0.10.0",
   "commonContractManifestSHA256": "20f3236bc0d427c1af162c784e90adc0c89f10916b6f1fb4096c69ccb7b7d544",
@@ -1210,24 +1211,46 @@
   },
   "unexecutedRequiredGates": [
     {
-      "gate": "Hosted GitHub Actions 12-job CI rerun on clean branch codex/swiftjxl-milestone4-ci-qualification (Draft PR #35, https://github.com/raster-labs/SwiftJXL/pull/35; Linux Swift 6.2 / 6.4 x86_64 + aarch64 Debug/Release builds/tests/CLI; hosted macos-26 Debug + Release-configured ASan/TSan full test suites and selected CLI checks; 10-target Apple SDK compilation; tools-6.2 consumer; pinned libjxl 0.12.0 interop)",
-      "status": "pending_assigned_to_github_ci",
-      "reason": "Historical 12-job CI runs 38760811777 and 38856715114 passed 12/12 on 294ed8f / dcdbec1 prior to the M4-OPT-10 source changes. Under owner M4-CI-PUBLICATION authority, the frozen M4-OPT-10 / M4-JPEG-3 changes are published on clean feature branch codex/swiftjxl-milestone4-ci-qualification in Draft PR #35 (superseding closed historical Draft PR #34 on codex/swiftjxl-milestone4-remaining). Under .github/workflows/contract.yml, Linux matrix jobs run Debug/Release (not ASan/TSan), macos-sanitizers runs full Release-configured ASan/TSan test suites plus 4 selected CLI checks (payload, vardct, vardct-encode, nrrd) rather than the full 10-group CLI TSan matrix, and apple-sdk-builds is compilation only; actual compiler/runtime versions for the Draft PR #35 run must be taken from its step logs."
+      "gateNumber": 1,
+      "gate": "Linux ASan/TSan",
+      "status": "not_run",
+      "reason": "Only workflow 'SwiftJXL migration checks' (.github/workflows/contract.yml, ID 361085399) exists in raster-labs/SwiftJXL across all 101 observed remote runs. Its 4 linux matrix jobs (119646720681, 119646720514, 119646720577, 119646720583 in PR #35 run 39724985023; 119673512692, 119673512675, 119673512662, 119673512789 in post-merge main run 39733431471) and independent-oracle (119646720708 / 119673512776) execute uninstrumented Debug and Release inside containers swift:6.2-noble (Swift 6.2.4) and swift:6.4-noble (Swift 6.4.1) on x86_64 and aarch64 without --sanitize address or --sanitize thread."
     },
     {
+      "gateNumber": 2,
       "gate": "Exact macOS 26.0 native/VM runtime execution",
-      "status": "pending_assigned_to_github_ci_or_dedicated_runner",
-      "reason": "Local Apple Silicon workstation runs macOS 27.0.1 (build 26A434) without an exact macOS 26.0 VM/runtime, and GitHub Actions macos-26-arm64 hosted runners ran macOS 26.6.2 (build 25G83) in historical runs 38760811777 and 38856715114 (actual OS/compiler versions for the Draft PR #35 run are pending its step logs). Exact iOS 26.0 (build 23A343) and watchOS 26.0 (build 23R353) minimum-floor simulator runtimes were executed locally."
+      "status": "unavailable",
+      "reason": "Hosted macos-26 jobs (119646720727, 119646720561, 119646720713, 119646720369 in 39724985023; 119673512783, 119673512651, 119673512613, 119673512585 in 39733431471) compile for deployment target floor arm64-apple-macosx26.0 (Apple Swift 6.3.3 / Xcode 26.6 17F113) and execute on runner image macos-26-arm64 (20261013.0424.1), whose actual OS is macOS 26.6.2 (build 25G83), while the local workstation runs macOS 27.0.1 (build 26A434). Exact iOS 26.0 (build 23A343) and watchOS 26.0 (build 23R353) minimum-floor simulator runtimes were executed locally."
     },
     {
-      "gate": "Full current-source iOS Simulator Debug / ASan / TSan test-bundle reruns and full 10-group CLI TSan rerun",
-      "status": "not_rerun_on_m4opt10_patch_historical_eaf011e_preserved",
-      "reason": "Current-source M4-OPT-10 iOS Simulator qualification executed Release only on iOS 26.0 (23A343) and iOS 26.5 (23F77) (both 362 declarations / 1,960 leaf cases passed), and current-source CLI qualification executed Release, Debug, and ASan (11/11 commands each) plus native macOS Debug/ASan/TSan on all 16 affected suites (120 declarations / 490 cases each). Hosted CI macos-sanitizers covers full macOS Release-configured ASan/TSan test suites and 4 selected CLI scripts (and Linux CI runs Debug/Release without ASan/TSan), whereas full 359-declaration / 1,955-case iOS 26.5 Debug/ASan/TSan and the full 11-command (10-group) CLI TSan matrix remain preserved historical evidence on pre-M4-OPT-10 source eaf011e914ee2ab36af5266d7fba9a8e42471ecf and are not claimed as current-source or hosted-CI reruns."
+      "gateNumber": 3,
+      "gate": "Native Intel x86_64 macOS runtime",
+      "status": "not_run",
+      "reason": "Job 'Apple OS 26 library SDK builds / Swift 6.2' (119646720369 in 39724985023, artifact 12402783354; 119673512585 in 39733431471, artifact 12406431533) runs python3 Scripts/validate-apple-sdks.py --build-system native --output \"${{ runner.temp }}/apple-sdk-builds\" on macos-26-arm64 (xcrun swift build --disable-sandbox ... --build-system native --jobs 2 --target SwiftJXL --triple x86_64-apple-macosx26.0 --sdk <macosx_sdk_path>, terminal log line macos-intel 0, runtimeTested: false). Native Intel (x86_64) macOS build/run and core/CLI runtime qualification remain unexecuted."
     },
     {
-      "gate": "Out-of-scope hardware and non-iOS/macOS simulator targets (Intel x86_64 macOS, physical iPhone/iPad/Apple TV/Apple Watch/Vision Pro devices, full test-bundle execution on tvOS/watchOS/visionOS simulators)",
-      "status": "out_of_local_scope_pending_ci_or_device_runners",
-      "reason": "Owner-scoped local qualification targets this Apple Silicon Mac (macOS 27.0.1 build 26A434) and installed iOS Simulators 26.0 (23A343) and 26.5 (23F77). Native Intel x86_64 macOS, physical Apple devices (0 attached), and full test-bundle execution on tvOS/watchOS/visionOS simulators remain uncovered by both local scope and .github/workflows/contract.yml (where apple-sdk-builds performs compilation only)."
+      "gateNumber": 4,
+      "gate": "Physical Apple devices",
+      "status": "unavailable",
+      "reason": "Job 'Apple OS 26 library SDK builds / Swift 6.2' (119646720369 / 119673512585, artifacts 12402783354 / 12406431533) cross-compiles library target SwiftJXL for ios-device (arm64-apple-ios26.0), tvos-device (arm64-apple-tvos26.0), visionos-device (arm64-apple-xros26.0), watchos-device (arm64-apple-watchos26.0), and watchos-device-32 (arm64_32-apple-watchos26.0) with runtimeTested: false. No physical-device execution evidence exists in remote CI, and the historical local device inventory (physical-devices.json, bound to 2026-10-15 / eaf011e) recorded 0 attached physical devices."
+    },
+    {
+      "gateNumber": 5,
+      "gate": "Current-source iOS Simulator Debug/ASan/TSan test bundles",
+      "status": "not_run",
+      "reason": "Remote CI (119646720369 / 119673512585, artifacts 12402783354 / 12406431533) only cross-compiles library target SwiftJXL for ios-simulator (arm64-apple-ios26.0-simulator, terminal log line ios-simulator 0, runtimeTested: false) and launches zero simulator test bundles. Local qualification on current M4-OPT-10 source (tree 35f5bcf) executed Release only on iOS 26.0 (23A343) and iOS 26.5 (23F77) (362 declarations / 1,960 leaf cases each), whereas iOS 26.5 Debug/ASan/TSan (359 declarations / 1,955 cases each in ios-simulator-26.5-debug-sanitizers-report.json) is bound to historical pre-M4-OPT-10 commit eaf011e914ee2ab36af5266d7fba9a8e42471ecf."
+    },
+    {
+      "gateNumber": 6,
+      "gate": "Full ten-group CLI TSan matrix",
+      "status": "partial",
+      "reason": "Hosted job 'macOS 26 thread sanitizer / Swift 6.2' (119646720713 in 39724985023, artifact 12404422023 cli-macos-thread provider digest 0c0becb7...; 119673512613 in 39733431471, artifact 12407483792 provider digest 022885fd..., full log main-tsan-full.log sha256 a08e058c...) ran swift test -c release --scratch-path .build/thread --sanitize thread --no-parallel (runner summary: 368 tests in 80 suites after 577.888s in PR run and 498.509s in main run, with 4 oracle-gated skipped declarations) and 4 of 10 CLI groups (payload 104 checks, vardct, vardct-encode, nrrd 114 checks; 4 uploaded reports) on macOS 26.6.2 (25G83) arm64. The remaining 6 of 10 CLI groups (foundation, pnm, low-precision, native-jpeg, cli-completion, jpeg-extended) were not executed under TSan on current source (the historical full 11-command cli-tsan run in cli-tsan-report.json on eaf011e914ee2ab36af5266d7fba9a8e42471ecf differs in 21 production-source hashes)."
+    },
+    {
+      "gateNumber": 7,
+      "gate": "Full tvOS/watchOS/visionOS simulator runtime test bundles",
+      "status": "not_run",
+      "reason": "Job 'Apple OS 26 library SDK builds / Swift 6.2' (119646720369 / 119673512585, artifacts 12402783354 / 12406431533) compiles library target SwiftJXL for tvos-simulator (arm64-apple-tvos26.0-simulator), visionos-simulator (arm64-apple-xros26.0-simulator), and watchos-simulator (arm64-apple-watchos26.0-simulator) with runtimeTested: false, and local runtime-report.json executed 15-check + 91-JPEG-case smoke probes on historical eaf011e rather than full applicable XCTest/Swift Testing bundles."
     }
   ],
   "resolvedLocalGatesInThisFollowUp": [
@@ -1251,6 +1274,23 @@
       "totalIterations": 515643,
       "totalCampaignSeconds": 10800.024211,
       "summary": "All three 3,600-second continuous ASan malformed-JPEG mutation campaigns (inspect-r2: 148,773 iterations / 3600.009459s; decode: 183,899 iterations / 3600.007505s; caller: 182,971 iterations / 3600.007247s; each after 144/144 deterministic preflight seeds and 4/4 canary self-tests) completed with actual child exit 0, 0 crashes, 0 ASan findings, 0 timeouts, and 0 unaccepted statuses."
+    },
+    {
+      "gate": "Hosted GitHub Actions 12-job CI qualification on PR #35 (a5545dbd3e49f9a51cd45558e0561ffb685c955c, tested merge commit c56be063c4de4f59d297e78d80cc55d247bd377c, run 39724985023) and squash-merged main (a6c8dbf17903735cac21f7059b495ce4d88cfc0b, run 39733431471) on identical tree 35f5bcf2388229dcff0b507bd996b7919575a939 under workflow 'SwiftJXL migration checks' (M4-CI-PUBLICATION / M4-REMOTE-GATES-DOCS)",
+      "status": "resolved_and_independently_accepted_by_codex",
+      "prRunAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-ci-terminal-audit-20261022-0544.json",
+      "prRunAuditReceiptSHA256": "fe4dea58e85deb36ce7f0a58d0e796bd53896bb4dad6412be7f1a1e819a9ea5b",
+      "mergedMainAuditReceipt": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-merged-main-audit-20261022-0720.json",
+      "mergedMainAuditReceiptSHA256": "fb89c41748c8a6aa8b361a6ed1c58da13fe72e00ce4b14fe179b5143254efcff",
+      "independentEvidenceAuditReceipt": "/Users/raster/Documents/Codex/2026-10-22/swiftjxl-remote-qualification-docs/work/independent-evidence-audit.json",
+      "independentEvidenceAuditReceiptSHA256": "95b47ff41bdea6f9cc7ce2be574c45258765eedf04829f89fb629502db8c09b6",
+      "remoteGatesEvidenceMatrix": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/reconciliation/m4-remote-gates-evidence-matrix-20261022.json",
+      "remoteGatesEvidenceMatrixSHA256": "eeecb4de6a28b8b8d57639ccd824036075cc61e597caa1d09b79b86bac5c6e18",
+      "prRunId": 39724985023,
+      "mainRunId": 39733431471,
+      "jobsSucceededPerRun": 12,
+      "artifactsUploadedPerRun": 9,
+      "summary": "After repairing the hidden-directory .build/independent-oracle/** upload defect (M4-CI-AUD-01) from 5a063f819d5ef08a5a6152f047b19ea66b4a6d4a (run 39588599503) in commit a5545dbd3e49f9a51cd45558e0561ffb685c955c, both PR #35 run 39724985023 and squash-merged main run 39733431471 (a6c8dbf17903735cac21f7059b495ce4d88cfc0b, identical tree 35f5bcf2388229dcff0b507bd996b7919575a939) passed 12/12 jobs and uploaded all 9/9 artifacts, while the 7 remaining platform/sanitizer gates not covered by .github/workflows/contract.yml are explicitly audited and recorded in unexecutedRequiredGates and mergedPR35AndRemoteGatesAudit."
     }
   ],
   "m4Opt10AndJpeg3LocalQualification": {
@@ -1641,7 +1681,136 @@
       }
     }
   },
-  "headCommit": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+  "headCommit": "a6c8dbf17903735cac21f7059b495ce4d88cfc0b",
+  "headTree": "35f5bcf2388229dcff0b507bd996b7919575a939",
+  "preservedPreM4Opt10HeadCommit": "294ed8fdf57eb97ca46003171f2b012a4618a14b",
+  "mergedPR35AndRemoteGatesAudit": {
+    "taskId": "M4-REMOTE-GATES-DOCS",
+    "evidenceMatrixPath": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/reconciliation/m4-remote-gates-evidence-matrix-20261022.json",
+    "evidenceMatrixSHA256": "eeecb4de6a28b8b8d57639ccd824036075cc61e597caa1d09b79b86bac5c6e18",
+    "preservedDraftV1Path": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/reconciliation/m4-remote-gates-evidence-matrix-20261022.draft-v1-preserved.json",
+    "preservedDraftV1SHA256": "cc5a207d207caa047e234575004471bc5c20da7a5393ee7673429d3bc147bdd8",
+    "preservedDraftV2Path": "/Users/raster/Documents/Codex/2026-10-16/proceed-with-the-optimization-route-using/work/reconciliation/m4-remote-gates-evidence-matrix-20261022.draft-v2-preserved.json",
+    "preservedDraftV2SHA256": "ed047f7017a2b0411b8f50bf856fd24f31a755e201e5774f5571313244ec7e5f",
+    "pullRequest": 35,
+    "url": "https://github.com/raster-labs/SwiftJXL/pull/35",
+    "branch": "codex/swiftjxl-milestone4-ci-qualification",
+    "headCommit": "a5545dbd3e49f9a51cd45558e0561ffb685c955c",
+    "testedMergeCommit": "c56be063c4de4f59d297e78d80cc55d247bd377c",
+    "squashMergeMainCommit": "a6c8dbf17903735cac21f7059b495ce4d88cfc0b",
+    "commonTreeSHA": "35f5bcf2388229dcff0b507bd996b7919575a939",
+    "mergedAtUTC": "2026-10-22T06:21:27Z",
+    "onlyWorkflowFile": ".github/workflows/contract.yml",
+    "onlyWorkflowId": 361085399,
+    "onlyWorkflowName": "SwiftJXL migration checks",
+    "workflowFileSHA256": "9ee1f814b329db0b9df5f2a2b049fe97347eb6f7270e5c893af8da9c53a398bf",
+    "remoteRunInventoryObservedCount": 101,
+    "preservedHistoricalPR35Runs": [
+      {
+        "runId": 39587552892,
+        "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/39587552892",
+        "headSha": "ef3edb9b302966966369a8d3b7009cb959d17e42",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "note": "Initial PR #35 commit before status-document reconciliation commit 5a063f819d5ef08a5a6152f047b19ea66b4a6d4a (git diff ef3edb9b302966966369a8d3b7009cb959d17e42 a5545db touches only .github/workflows/contract.yml and the three status documents; production/test sources are identical)."
+      },
+      {
+        "runId": 39588599503,
+        "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/39588599503",
+        "headSha": "5a063f819d5ef08a5a6152f047b19ea66b4a6d4a",
+        "treeSha": "76f1abf2c08d0f8212a9b952c0345d48aca964e0",
+        "status": "completed",
+        "conclusion": "success",
+        "jobsSucceeded": "12/12",
+        "note": "All 12 jobs succeeded on M4-OPT-10 source, but actions/upload-artifact@v4 in independent-oracle skipped hidden .build/independent-oracle/** paths (8 artifacts uploaded instead of 9; finding M4-CI-AUD-01), repaired by adding include-hidden-files: true and if-no-files-found: error in commit a5545dbd3e49f9a51cd45558e0561ffb685c955c."
+      }
+    ],
+    "acceptedPRRun39724985023": {
+      "runId": 39724985023,
+      "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/39724985023",
+      "headSha": "a5545dbd3e49f9a51cd45558e0561ffb685c955c",
+      "testedMergeCommit": "c56be063c4de4f59d297e78d80cc55d247bd377c",
+      "treeSha": "35f5bcf2388229dcff0b507bd996b7919575a939",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAtUTC": "2026-10-22T04:54:26Z",
+      "completedAtUTC": "2026-10-22T05:38:29Z",
+      "totalJobs": 12,
+      "succeededJobs": 12,
+      "artifactsUploaded": 9
+    },
+    "postMergeMainRun39733431471": {
+      "runId": 39733431471,
+      "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/39733431471",
+      "headSha": "a6c8dbf17903735cac21f7059b495ce4d88cfc0b",
+      "treeSha": "35f5bcf2388229dcff0b507bd996b7919575a939",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAtUTC": "2026-10-22T06:21:29Z",
+      "completedAtUTC": "2026-10-22T07:04:26Z",
+      "totalJobs": 12,
+      "succeededJobs": 12,
+      "artifactsUploaded": 9
+    },
+    "referencedCodexAuditReceipts": {
+      "localValidationFinalAudit": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/local-validation-final-audit-20261021.json",
+        "sha256": "eb73039ef85ffe0a24128b3457c0cb993026d1ab853e36dc7863cf4a1c9419ef"
+      },
+      "ciWorkflowCoverageAudit": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/ci-workflow-coverage-audit-20261021.json",
+        "sha256": "aa824af66c5b3e75fc75d8d0f5aca1210b368def943d69fe9582ec6a7898345c"
+      },
+      "pr35CiProgressAudit": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-ci-progress-audit-20261022-0522.json",
+        "sha256": "6801948aa22d81e092acd1683d89f2b63457b3949bfbbaf8a0472983583f7a9b"
+      },
+      "pr35CiTerminalAudit": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-ci-terminal-audit-20261022-0544.json",
+        "sha256": "fe4dea58e85deb36ce7f0a58d0e796bd53896bb4dad6412be7f1a1e819a9ea5b"
+      },
+      "pr35MergedMainAudit": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-merged-main-audit-20261022-0720.json",
+        "sha256": "fb89c41748c8a6aa8b361a6ed1c58da13fe72e00ce4b14fe179b5143254efcff"
+      },
+      "tsanFinalAudit": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-ci-run-39724985023/tsan-final-audit.json",
+        "sha256": "d9a9110eb6f5c2ec81118c3adb863eba55affb29014f27325cb83e2846501a18"
+      },
+      "linuxConsumerContractAudit": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-ci-run-39724985023/linux-consumer-contract-audit.json",
+        "sha256": "25e068295d4b4d9d074bb3ce88407084dab2528da3f06f6a12d4f78342136e69"
+      },
+      "macosSdkAudit": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-ci-run-39724985023/macos-sdk-audit.json",
+        "sha256": "b9e6754464fdc0b054d5e86d40b848bffddeaf3e0a8469a7cb7acf2995e4284a"
+      },
+      "oracleMainAuditV2": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-ci-run-39724985023/oracle-main-audit-v2.json",
+        "sha256": "82142419c89ee0638d037867662a8ecb7c3c699161b867716195080bfb303f0f"
+      },
+      "oracleAuxiliaryAudit": {
+        "path": "/Users/raster/Documents/Codex/2026-10-21/i-would-like-to-check-the/outputs/pr35-ci-run-39724985023/oracle-auxiliary-audit.json",
+        "sha256": "80755facae9af1f1ef9fdc1a6a279a945b19d2405bb15df6dee36770413306d0"
+      },
+      "independentEvidenceAudit20261022": {
+        "path": "/Users/raster/Documents/Codex/2026-10-22/swiftjxl-remote-qualification-docs/work/independent-evidence-audit.json",
+        "sha256": "95b47ff41bdea6f9cc7ce2be574c45258765eedf04829f89fb629502db8c09b6"
+      },
+      "independentGateMatrix20261022": {
+        "path": "/Users/raster/Documents/Codex/2026-10-22/swiftjxl-remote-qualification-docs/work/gate-matrix.json",
+        "sha256": "6e7124a12c8bc403b083108cc57260e424a447826aa0ebdf05ee7b0e118b4fa6"
+      },
+      "mainArtifactsLiveListing": {
+        "path": "/Users/raster/Documents/Codex/2026-10-22/swiftjxl-remote-qualification-docs/work/main-artifacts-live.json",
+        "sha256": "422a3e3f0e9f63ce1d781dcb0006a6a1c7e0da42a756427da14243cb02b06658"
+      },
+      "mainTsanFullLog": {
+        "path": "/Users/raster/Documents/Codex/2026-10-22/swiftjxl-remote-qualification-docs/work/main-tsan-full.log",
+        "sha256": "a08e058c3a85f2df210f67d455b218b93a1a869c975b70f6c47792fbbb7a0ef4"
+      }
+    }
+  },
   "mergedPR33": {
     "pullRequest": 33,
     "url": "https://github.com/raster-labs/SwiftJXL/pull/33",
@@ -1738,7 +1907,7 @@
   "milestones1Through4Summary": {
     "milestone1_contractFeasibility": {
       "status": "complete_within_defined_scope",
-      "completed": "Swift 6.2-minimum / Swift 6.4-qualified package, independent public API and owning-memory types (ImageBuffer, EncodedImage), descriptor validation, safe Span/RawSpan adapter experiment, standalone ContractConsumer package, and swiftjxl-cli foundation verified on macOS, iOS Simulator, and Linux Swift 6.2.4 & 6.4.1 in CI runs 38760811777 & 38856715114.",
+      "completed": "Swift 6.2-minimum / Swift 6.4-qualified package, independent public API and owning-memory types (ImageBuffer, EncodedImage), descriptor validation, safe Span/RawSpan adapter experiment, standalone ContractConsumer package, and swiftjxl-cli foundation verified on macOS, iOS Simulator, and Linux Swift 6.2.4 & 6.4.1 in CI runs 38760811777, 38856715114, 39724985023, and 39733431471.",
       "pending": []
     },
     "milestone2_migrationBaseline": {
@@ -1752,17 +1921,18 @@
       "pending": []
     },
     "milestone4_featureAndPlatformCoverage": {
-      "status": "local_m4_opt_10_and_jpeg_3_accepted_pending_github_ci_and_platform_gates",
-      "completed": "Extended Modular/VarDCT modes, layouts, colour/alpha/ICC, PNM/NRRD CLI operations, independent-frame animation, explicit libjxl 0.12.0 ARM integer reference profile (123 cases + 45,826 hardware reciprocal vectors), extended JPEG pixel decoding (12-bit DCT, 2-16-bit SOF3, ICC/Exif), full native macOS suites on frozen M4-OPT-10 source (release-m4opt10-v2: 368 declarations / 2,053 cases) + all 16 affected suites in Debug/ASan/TSan (120 declarations / 490 cases each), standalone ContractConsumer (4/4) and CLI Release/Debug/ASan (11/11 commands each), full iOS Simulator Release suites on iOS 26.0 (23A343) and iOS 26.5 (23F77) (362 declarations / 1,960 cases each; historical eaf011e iOS 26.5 Debug/ASan/TSan and CLI TSan preserved), 10/10 constrained single-worker (maximumWorkers=1) latency findings resolved and independently accepted by Codex in full-matrix-pass4 (0 repeated triggers across 28 paired constrained-w1 rows, 36 public-default-r2 rows, and 12 native-results-r2 rows; byte-identical encoded streams), and 3/3 3,600-second ASan malformed-JPEG mutation campaigns (jpeg-inspect, jpeg-decode, jpeg-caller: 515,643 total iterations across 10,800.024211s after 144-seed preflights and 4/4 canaries, 0 crashes/ASan/timeouts) independently accepted by Codex.",
+      "status": "local_and_hosted_ci_m4_opt_10_and_jpeg_3_accepted_with_explicit_unqualified_platform_and_sanitizer_gates",
+      "completed": "Extended Modular/VarDCT modes, layouts, colour/alpha/ICC, PNM/NRRD CLI operations, independent-frame animation, explicit libjxl 0.12.0 ARM integer reference profile (123 cases + 45,826 hardware reciprocal vectors), extended JPEG pixel decoding (12-bit DCT, 2-16-bit SOF3, ICC/Exif), full native macOS suites on frozen M4-OPT-10 source (release-m4opt10-v2: 368 declarations / 2,053 cases) + all 16 affected suites in Debug/ASan/TSan (120 declarations / 490 cases each), standalone ContractConsumer (4/4) and CLI Release/Debug/ASan (11/11 commands each), full iOS Simulator Release suites on iOS 26.0 (23A343) and iOS 26.5 (23F77) (362 declarations / 1,960 cases each; historical eaf011e iOS 26.5 Debug/ASan/TSan and CLI TSan preserved), 10/10 constrained single-worker (maximumWorkers=1) latency findings resolved and independently accepted by Codex in full-matrix-pass4 (0 repeated triggers across 28 paired constrained-w1 rows, 36 public-default-r2 rows, and 12 native-results-r2 rows; byte-identical encoded streams), 3/3 3,600-second ASan malformed-JPEG mutation campaigns (jpeg-inspect, jpeg-decode, jpeg-caller: 515,643 total iterations across 10,800.024211s after 144-seed preflights and 4/4 canaries, 0 crashes/ASan/timeouts) independently accepted by Codex, and 12/12 hosted GitHub Actions CI jobs under workflow 'SwiftJXL migration checks' (.github/workflows/contract.yml) passed and uploaded 9/9 artifacts on both PR #35 (a5545dbd3e49f9a51cd45558e0561ffb685c955c, tested merge commit c56be063c4de4f59d297e78d80cc55d247bd377c, run 39724985023) and squash-merged main (a6c8dbf17903735cac21f7059b495ce4d88cfc0b, run 39733431471) on identical tree 35f5bcf2388229dcff0b507bd996b7919575a939.",
       "pending": [
-        "Hosted GitHub Actions 12-job CI rerun on clean branch codex/swiftjxl-milestone4-ci-qualification in Draft PR #35 (https://github.com/raster-labs/SwiftJXL/pull/35, superseding closed historical Draft PR #34 on codex/swiftjxl-milestone4-remaining; Linux Swift 6.2 / 6.4 x86_64 + aarch64 Debug/Release builds/tests/CLI without ASan/TSan; hosted macos-26 Debug + Release-configured ASan/TSan full test suites and 4 selected CLI checks; 10-target Apple SDK compilation; tools-6.2 consumer; pinned libjxl 0.12.0 interop; actual compiler/runtime versions pending new step logs)",
-        "Exact macOS 26.0 native/VM runtime execution (pending; uncovered by local macOS 27.0.1 and hosted macos-26 runners, which ran macOS 26.6.2 in historical runs)",
-        "Linux ASan/TSan, full current-source iOS Simulator Debug / ASan / TSan test-bundle reruns, and full 10-group CLI TSan rerun (current-source iOS qualification is Release only, Linux CI runs Debug/Release only, and hosted CI macos-sanitizers runs 4 selected CLI scripts rather than all 10 CLI groups; historical iOS 26.5 Debug/ASan/TSan and full 11-command CLI TSan on eaf011e914ee2ab36af5266d7fba9a8e42471ecf are preserved separately)"
+        "1. Linux ASan/TSan (not_run): .github/workflows/contract.yml Linux jobs run uninstrumented Debug/Release only on Swift 6.2.4 and 6.4.1 (x86_64 and aarch64).",
+        "2. Exact macOS 26.0 native/VM runtime execution (unavailable): local workstation runs macOS 27.0.1 (build 26A434) and hosted macos-26-arm64 runner image 20261013.0424.1 runs macOS 26.6.2 (build 25G83).",
+        "5. Current-source iOS Simulator Debug / ASan / TSan test-bundle reruns (not_run): remote CI compiles ios-simulator library only (runtimeTested: false), and local current-source iOS qualification executed Release only (362/1,960 on 26.0 and 26.5), while iOS 26.5 Debug/ASan/TSan (359/1,955) is historical on eaf011e914ee2ab36af5266d7fba9a8e42471ecf.",
+        "6. Full 10-group CLI TSan matrix (partial — 4/10 run, 6/10 uncovered): hosted macos-sanitizers TSan job (119646720713 / 119673512613) ran payload, vardct, vardct-encode, and nrrd (4/10), while foundation, pnm, low-precision, native-jpeg, cli-completion, and jpeg-extended (6/10) were not re-run under TSan on current source (historical full 11-command cli-tsan on eaf011e914ee2ab36af5266d7fba9a8e42471ecf differs in 21 production-source hashes)."
       ],
       "outOfOwnerCompletionScope": [
-        "Native Intel (x86_64) macOS runtime execution",
-        "Physical iPhone/iPad/Apple TV/Apple Watch/Vision Pro device execution",
-        "Full XCTest/Swift Testing bundle execution inside tvOS, watchOS, and visionOS simulators"
+        "3. Native Intel (x86_64) macOS runtime execution (not_run; cross-compiled in apple-sdk-builds with runtimeTested: false)",
+        "4. Physical iPhone/iPad/Apple TV/Apple Watch/Vision Pro device execution (unavailable; cross-compiled in apple-sdk-builds with runtimeTested: false; 0 attached devices in historical local inventory)",
+        "7. Full XCTest/Swift Testing bundle execution inside tvOS, watchOS, and visionOS simulators (not_run; cross-compiled in apple-sdk-builds with runtimeTested: false; 4 historical smoke probes bound to eaf011e)"
       ]
     }
   }
