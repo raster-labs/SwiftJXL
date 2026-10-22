@@ -337,4 +337,5 @@ jobs:
             .build/brotli-framing-evidence/report.json
             .build/brotli-decoder-evidence/report.json
             .build/jpeg-event-evidence/report.json
-          if-no-files-found: warn
+          include-hidden-files: true
+          if-no-files-found: error
