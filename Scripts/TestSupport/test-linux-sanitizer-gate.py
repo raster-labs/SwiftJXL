@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Acceptance parser must reject missing tests, skips and sanitizer findings."""
 import importlib.util
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -13,6 +14,31 @@ spec.loader.exec_module(gate)
 
 
 class LinuxSanitizerGateTests(unittest.TestCase):
+    def test_profile_oracle_requires_complete_unique_semantic_coverage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaises(RuntimeError):
+                gate.profile_evidence(root)
+            records = []
+            for bits in range(8, 17):
+                for channels, associated in [(1, 0), (2, 0), (2, 1), (3, 0), (4, 0), (4, 1)]:
+                    for transfer in (1, 13):
+                        for intent in (0, 1, 2, 3):
+                            records.append(dict(width=5, height=3, bits=bits, channels=channels,
+                                                premultiplied=associated, transferFunction=transfer, renderingIntent=intent))
+            for index, record in enumerate(records):
+                target = root / ("public-matrix-" + str(index))
+                target.mkdir()
+                (target / "oracle.json").write_text(json.dumps(record))
+            self.assertEqual(gate.profile_evidence(root)["observed"], 432)
+            target = root / "public-matrix-431/oracle.json"
+            target.write_text(json.dumps(records[0]))
+            with self.assertRaises(RuntimeError):
+                gate.profile_evidence(root)
+            target.write_text(json.dumps(dict(records[-1], width=6)))
+            with self.assertRaises(RuntimeError):
+                gate.profile_evidence(root)
+
     def test_intentional_swift_race_requires_an_actual_finding_and_configured_exit(self):
         expected = ["WARNING: ThreadSanitizer: data race", "WARNING: ThreadSanitizer: Swift access race"]
         for diagnostic in expected:

@@ -180,6 +180,8 @@ struct JPEGBridgeFrameTests {
         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
         while process.isRunning && ContinuousClock.now < deadline { Thread.sleep(forTimeInterval: 0.01) }
         if process.isRunning { process.terminate(); Issue.record("djxl timed out"); throw CancellationError() }
+        // Release Foundation's process/run-loop ownership after bounded polling.
+        process.waitUntilExit()
         try #require(process.terminationStatus == 0, "Oracle failed: \(log.path)")
         #expect(try Data(contentsOf: restored) == source)
 
@@ -194,6 +196,7 @@ struct JPEGBridgeFrameTests {
         let encoderDeadline = ContinuousClock.now.advanced(by: .seconds(30))
         while encoder.isRunning && ContinuousClock.now < encoderDeadline { Thread.sleep(forTimeInterval: 0.01) }
         if encoder.isRunning { encoder.terminate(); Issue.record("cjxl timed out"); throw CancellationError() }
+        encoder.waitUntilExit()
         try #require(encoder.terminationStatus == 0, "Oracle encoder failed: \(log.path)")
         let referenceData = try Data(contentsOf: reference)
         guard case .iso(let boxes) = try parseJXLContainer(referenceData) else {

@@ -362,6 +362,8 @@ struct JPEGReconstructionMetadataTests {
         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
         while process.isRunning && ContinuousClock.now < deadline { Thread.sleep(forTimeInterval: 0.01) }
         if process.isRunning { process.terminate(); Issue.record("Oracle timed out: \(executable)"); throw CancellationError() }
+        // Release Foundation's process/run-loop ownership after bounded polling.
+        process.waitUntilExit()
         try #require(process.terminationStatus == 0, "Oracle failed; log: \(log.path)")
     }
     #endif

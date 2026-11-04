@@ -202,6 +202,8 @@ struct NativeTranscoderPublicTests {
         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
         while process.isRunning && ContinuousClock.now < deadline { Thread.sleep(forTimeInterval: 0.01) }
         if process.isRunning { process.terminate(); Issue.record("Reference tool timed out"); throw CancellationError() }
+        // Release Foundation's process/run-loop ownership after bounded polling.
+        process.waitUntilExit()
         try #require(process.terminationStatus == 0, "Reference failed: \(log.path)")
     }
     #endif

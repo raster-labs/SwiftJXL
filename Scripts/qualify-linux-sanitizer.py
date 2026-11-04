@@ -22,7 +22,8 @@ import xml.etree.ElementTree as ET
 ORACLE_REVISION = "a7a9c787341cf703dede03c2009fa460cae5e5df"
 REQUIRED_TESTS = ["imageRetainsAdapterAndAllocationUntilLastReader", "concurrentReadersPreserveEveryLogicalSample",
                   "sharedSourceSurvivesCallerReleaseAndOneCancelledEncode", "concurrentEncodersShareOneImmutableSource",
-                  "cancellationInsideWorkerIsObservedAndAllWorkersJoin", "independentBothDirections"]
+                  "cancellationInsideWorkerIsObservedAndAllWorkersJoin", "independentBothDirections",
+                  "optionalFullRangeHardwareReciprocalVectors"]
 
 
 def require(condition, message):
@@ -39,6 +40,24 @@ def negative_probe_detected(exit_code, log, expected_diagnostics):
     # Swift access race or as a raw data race. Both are real TSan findings;
     # crashes, exclusivity traps and unavailable runtimes are not substitutes.
     return exit_code == 66 and any(diagnostic in log for diagnostic in expected_diagnostics)
+
+
+def profile_evidence(directory):
+    expected = {(bits, channels, associated, transfer, intent)
+                for bits in range(8, 17) for channels in range(1, 5)
+                for associated in ([0, 1] if channels % 2 == 0 else [0])
+                for transfer in [1, 13] for intent in range(4)}
+    paths = sorted(directory.glob("public-matrix-*/oracle.json"))
+    observed = []
+    for path in paths:
+        document = json.loads(path.read_text())
+        require(document.get("width") == 5 and document.get("height") == 3, "Independent profile dimensions mismatch")
+        observed.append(tuple(document.get(key) for key in
+                              ["bits", "channels", "premultiplied", "transferFunction", "renderingIntent"]))
+    require(len(observed) == len(expected) and set(observed) == expected,
+            "Missing, duplicated or unexpected independent profile outputs")
+    return {"passed": True, "expected": len(expected), "observed": len(observed),
+            "sha256": {str(path.relative_to(directory)): sha(path) for path in paths}}
 
 
 def test_evidence(xml, discovered, log):
@@ -72,6 +91,8 @@ def main():
     parser.add_argument("--architecture", choices=["x86_64", "aarch64"], required=True)
     parser.add_argument("--tools", type=Path, required=True)
     parser.add_argument("--oracle-manifest", type=Path, required=True)
+    parser.add_argument("--reciprocal-vectors", type=Path, required=True)
+    parser.add_argument("--reciprocal-manifest", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--timeout", type=int, default=3600)
     args = parser.parse_args()
@@ -86,13 +107,15 @@ def main():
                               "runnerArch": os.getenv("RUNNER_ARCH"), "imageVersion": os.getenv("ImageVersion")}}
     env = os.environ.copy()
     env.update(SWIFTJXL_ORACLE_BIN=str(args.tools.resolve()), SWIFTJXL_ORACLE_OUTPUT=str(output / "oracle-fixtures"),
+               SWIFTJXL_PROFILE_ORACLE=str(args.tools.resolve() / "swiftjxl-modular-profile-oracle"),
+               SWIFTJXL_ARM_RECIPROCAL_VECTORS=str(args.reciprocal_vectors.resolve()),
                ASAN_OPTIONS="halt_on_error=1:exitcode=66:detect_leaks=1", TSAN_OPTIONS="halt_on_error=1:exitcode=66")
     report["sanitizerOptions"] = {key: env[key] for key in ["ASAN_OPTIONS", "TSAN_OPTIONS"]}
 
     def save():
         (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
 
-    def run(label, command, expected_failure=None):
+    def run(label, command, expected_failure=None, expected_test_failure=None):
         print(label, flush=True)
         entry = {"label": label, "argv": list(map(str, command)), "cwd": str(repo), "log": label + ".log"}
         report["commands"].append(entry)
@@ -117,6 +140,12 @@ def main():
             entry["expectedDiagnostics"] = expected_failure
             require(negative_probe_detected(entry.get("exitCode"), text, expected_failure),
                     f"{label}: sanitizer did not detect the intentional invalid probe")
+        elif expected_test_failure:
+            entry["expectedTestFailure"] = expected_test_failure
+            require(entry.get("exitCode") == 1 and expected_test_failure in text,
+                    f"{label}: vector sentinel did not fail at its intended assertion")
+            require(not re.search(r"(?:ERROR: (?:AddressSanitizer|LeakSanitizer)|WARNING: ThreadSanitizer|FATAL: ThreadSanitizer)", text),
+                    f"{label}: sanitizer finding cannot satisfy a vector sentinel")
         else:
             require(entry.get("exitCode") == 0, f"{label} failed; see {entry['log']}")
         return text
@@ -136,7 +165,9 @@ def main():
         report["sourceRevision"] = run("source-revision", ["git", "-c", f"safe.directory={repo}", "rev-parse", "HEAD"]).strip()
         report["workingTree"] = run("source-status", ["git", "-c", f"safe.directory={repo}", "status", "--short"]).strip()
         require(not report["workingTree"], "Sanitizer qualification requires a clean checkout")
-        tracked = run("source-files", ["git", "-c", f"safe.directory={repo}", "ls-files", "Package.swift", "Sources", "Tests"]).splitlines()
+        tracked = run("source-files", ["git", "-c", f"safe.directory={repo}", "ls-files", "Package.swift", "VERSION", "Sources", "Tests",
+            "Scripts/TestSupport/modular-profile-oracle.c", "Scripts/TestSupport/modular-info-oracle.cmake",
+            "Scripts/Qualification/VarDCTARM/reciprocal-vectors.c"]).splitlines()
         report["sourceSHA256"] = fingerprint()
         run("runtime-packages", ["dpkg-query", "-W", "libc6", "libstdc++6", "libjpeg-turbo8", "libpng16-16t64", "libbrotli1"])
         report["environment"]["mmapRandomisationBits"] = Path("/proc/sys/vm/mmap_rnd_bits").read_text().strip()
@@ -149,6 +180,19 @@ def main():
             require(sha(binary) == oracle["binaries"][name]["sha256"], "Oracle binary SHA-256 mismatch")
             require("v0.12.0" in run(name + "-version", [binary, "--version"]), "Unexpected oracle version")
             run(name + "-linkage", ["ldd", binary])
+        profile = args.tools.resolve() / "swiftjxl-modular-profile-oracle"
+        require(sha(profile) == oracle["binaries"][profile.name]["sha256"], "Profile oracle binary SHA-256 mismatch")
+        require(sha(repo / "Scripts/TestSupport/modular-profile-oracle.c") == oracle["binaries"][profile.name]["sourceSHA256"],
+                "Profile oracle source SHA-256 mismatch")
+        run("profile-oracle-linkage", ["ldd", profile])
+        vectors = json.loads(args.reciprocal_vectors.read_text())
+        vector_manifest = json.loads(args.reciprocal_manifest.read_text())
+        require(vector_manifest["architecture"] == "aarch64" and vector_manifest["count"] == len(vectors) == 45826,
+                "Independent full-range ARM vector inventory mismatch")
+        require(vector_manifest["vectorsSHA256"] == sha(args.reciprocal_vectors)
+                and vector_manifest["sourceSHA256"] == sha(repo / "Scripts/Qualification/VarDCTARM/reciprocal-vectors.c"),
+                "Independent ARM vector source/data SHA-256 mismatch")
+        report["hardwareReciprocalVectors"] = {"manifest": vector_manifest, "manifestSHA256": sha(args.reciprocal_manifest), "sentinels": []}
         # This safe Swift probe must load and execute the actual sanitizer runtime.
         positive = output / "sanitizer-positive.swift"
         positive.write_text('let owner = UnsafeMutablePointer<Int>.allocate(capacity: 1)\nowner.initialize(to: 42)\n'
@@ -193,15 +237,46 @@ def main():
         finally:
             if xml.exists():
                 report["xunitSHA256"] = sha(xml)
-                cases = ET.parse(xml).findall(".//testcase")
-                report["xunitOutcome"] = {"executed": len(cases),
-                    "failed": sum(case.find("failure") is not None or case.find("error") is not None for case in cases),
-                    "skipped": sum(case.find("skipped") is not None for case in cases)}
+                try:
+                    cases = ET.parse(xml).findall(".//testcase")
+                    report["xunitOutcome"] = {"executed": len(cases),
+                        "failed": sum(case.find("failure") is not None or case.find("error") is not None for case in cases),
+                        "skipped": sum(case.find("skipped") is not None for case in cases)}
+                except ET.ParseError as error:
+                    # A halt-on-error sanitizer can terminate before XML closes.
+                    # Retain that artifact without replacing the failing command.
+                    report["xunitOutcome"] = {"complete": False, "parseError": str(error)}
         report["tests"] = test_evidence(xml, names, log)
+        report["independentProfileCoverage"] = profile_evidence(output / "oracle-fixtures")
+        for label, contents, expected_text in [
+            ("missing", None, "absent-vectors.json"),
+            ("short", [[2, 1056931840]], "vectors.count"),
+            ("corrupt", [[2, 0]] + [[2, 1056931840]] * 39999, "reciprocalEstimate(value).bitPattern")
+        ]:
+            path = output / ("absent-vectors.json" if contents is None else label + "-vectors.json")
+            if contents is not None:
+                path.write_text(json.dumps(contents) + "\n")
+            env["SWIFTJXL_ARM_RECIPROCAL_VECTORS"] = str(path)
+            sentinel_xml = output / ("vector-" + label + ".xml")
+            try:
+                run("vector-" + label, command + ["--skip-build", "--filter", "VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors",
+                    "--xunit-output", sentinel_xml], expected_test_failure=expected_text)
+            finally:
+                env["SWIFTJXL_ARM_RECIPROCAL_VECTORS"] = str(args.reciprocal_vectors.resolve())
+            cases = ET.parse(sentinel_xml).findall(".//testcase")
+            require(len(cases) == 1 and cases[0].find("failure") is not None and cases[0].find("skipped") is None,
+                    "Vector sentinel did not execute exactly one failing declaration")
+            report["hardwareReciprocalVectors"]["sentinels"].append({"name": label, "verified": True, "xunitSHA256": sha(sentinel_xml)})
         report["oracleFixtureSHA256"] = {str(path.relative_to(output)): sha(path)
                                         for path in sorted((output / "oracle-fixtures").rglob("*")) if path.is_file()}
         require(report["oracleFixtureSHA256"], "No retained oracle fixtures")
         require(fingerprint() == report["sourceSHA256"], "Source or fixture changed during validation")
+        require(sha(args.oracle_manifest) == report["oracleManifestSHA256"]
+                and sha(args.reciprocal_manifest) == report["hardwareReciprocalVectors"]["manifestSHA256"]
+                and sha(args.reciprocal_vectors) == vector_manifest["vectorsSHA256"]
+                and all(sha(args.tools.resolve() / name) == row["sha256"] for name, row in oracle["binaries"].items()),
+                "Independent oracle inputs changed during validation")
+        report["oracleInputsUnchanged"] = True
         report["sourceUnchanged"] = True
         report["status"] = "passed"
     except Exception as error:

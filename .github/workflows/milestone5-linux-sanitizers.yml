@@ -2,11 +2,24 @@ name: SwiftJXL Linux sanitizer qualification
 
 on:
   workflow_dispatch:
+    inputs:
+      sanitizer:
+        description: Sanitizer matrix to execute
+        type: choice
+        default: all
+        options: [all, address, thread]
+      oracle_run_id:
+        description: Optional prior successful run providing matching pinned oracle and ARM-vector artifacts
+        type: string
+        default: ''
   pull_request:
     paths:
       - '.github/workflows/milestone5-linux-sanitizers.yml'
       - 'Scripts/qualify-linux-sanitizer.py'
       - 'Scripts/TestSupport/test-linux-sanitizer-gate.py'
+      - 'Scripts/TestSupport/modular-profile-oracle.c'
+      - 'Scripts/TestSupport/modular-info-oracle.cmake'
+      - 'Scripts/Qualification/VarDCTARM/reciprocal-vectors.c'
       - 'Package.swift'
       - 'Sources/**'
       - 'Tests/**'
@@ -15,15 +28,21 @@ on:
     paths:
       - '.github/workflows/milestone5-linux-sanitizers.yml'
       - 'Scripts/qualify-linux-sanitizer.py'
+      - 'Scripts/TestSupport/test-linux-sanitizer-gate.py'
+      - 'Scripts/TestSupport/modular-profile-oracle.c'
+      - 'Scripts/TestSupport/modular-info-oracle.cmake'
+      - 'Scripts/Qualification/VarDCTARM/reciprocal-vectors.c'
       - 'Package.swift'
       - 'Sources/**'
       - 'Tests/**'
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   oracle:
+    if: ${{ inputs.oracle_run_id == '' }}
     name: Pinned oracle / ${{ matrix.architecture }}
     runs-on: ${{ matrix.runner }}
     container: swift:6.4-noble
@@ -55,6 +74,7 @@ jobs:
           git -C "$RUNNER_TEMP/libjxl" submodule update --init --depth 1 third_party/brotli third_party/highway third_party/lcms
           git -C "$RUNNER_TEMP/libjxl" submodule status > .build/linux-oracle/submodules.txt
           cmake -S "$RUNNER_TEMP/libjxl" -B "$RUNNER_TEMP/libjxl/build" -G Ninja \
+            -DCMAKE_PROJECT_INCLUDE="$GITHUB_WORKSPACE/Scripts/TestSupport/modular-info-oracle.cmake" \
             -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF \
             -DJPEGXL_ENABLE_TOOLS=ON -DJPEGXL_ENABLE_BENCHMARK=OFF \
             -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_MANPAGES=OFF \
@@ -62,8 +82,9 @@ jobs:
             -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_ENABLE_OPENEXR=OFF \
             -DJPEGXL_ENABLE_SKCMS=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_BUNDLE_LIBPNG=OFF \
             > .build/linux-oracle/configure.log 2>&1
-          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl --parallel 2 > .build/linux-oracle/build.log 2>&1
+          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl swiftjxl-modular-profile-oracle --parallel 2 > .build/linux-oracle/build.log 2>&1
           cp "$RUNNER_TEMP/libjxl/build/tools/cjxl" "$RUNNER_TEMP/libjxl/build/tools/djxl" .build/linux-oracle/tools/
+          cp "$RUNNER_TEMP/libjxl/build/swiftjxl-modular-profile-oracle" .build/linux-oracle/tools/
           python3 - <<'PY'
           import hashlib, json, platform, subprocess
           from pathlib import Path
@@ -74,8 +95,39 @@ jobs:
               path = root / 'tools' / name
               data['binaries'][name] = {'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
                   'version': subprocess.run([str(path), '--version'], text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True).stdout}
+          profile = root / 'tools/swiftjxl-modular-profile-oracle'
+          data['binaries'][profile.name] = {'sha256': hashlib.sha256(profile.read_bytes()).hexdigest(),
+              'sourceSHA256': hashlib.sha256(Path('Scripts/TestSupport/modular-profile-oracle.c').read_bytes()).hexdigest()}
           (root / 'manifest.json').write_text(json.dumps(data, indent=2) + '\n')
           PY
+      - name: Generate independent reciprocal vectors on native ARM
+        if: matrix.architecture == 'aarch64'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .build/arm-vectors
+          clang -O2 -Wall -Wextra -Werror Scripts/Qualification/VarDCTARM/reciprocal-vectors.c -o .build/arm-vectors/generator
+          .build/arm-vectors/generator > .build/arm-vectors/vectors.json
+          python3 - <<'PY'
+          import hashlib, json, platform, subprocess
+          from pathlib import Path
+          root = Path('.build/arm-vectors')
+          sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+          vectors = json.loads((root/'vectors.json').read_text())
+          assert platform.machine() == 'aarch64' and len(vectors) == 45826
+          (root/'manifest.json').write_text(json.dumps({'architecture': platform.machine(), 'count': len(vectors),
+              'sourceSHA256': sha(Path('Scripts/Qualification/VarDCTARM/reciprocal-vectors.c')),
+              'binarySHA256': sha(root/'generator'), 'vectorsSHA256': sha(root/'vectors.json'),
+              'compiler': subprocess.check_output(['clang','--version'],text=True)},indent=2)+'\n')
+          PY
+      - name: Preserve independent ARM vector evidence
+        if: matrix.architecture == 'aarch64'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-sanitizer-arm-vectors
+          path: .build/arm-vectors
+          include-hidden-files: true
+          if-no-files-found: error
       - name: Preserve pinned oracle binaries and build evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -88,6 +140,7 @@ jobs:
   sanitizer:
     name: Linux ${{ matrix.architecture }} Swift ${{ matrix.swift }} ${{ matrix.sanitizer }}
     needs: oracle
+    if: ${{ !cancelled() && (needs.oracle.result == 'success' || (needs.oracle.result == 'skipped' && inputs.oracle_run_id != '')) }}
     runs-on: ${{ matrix.runner }}
     container:
       image: swift:${{ matrix.swift }}-noble
@@ -99,7 +152,7 @@ jobs:
       fail-fast: false
       matrix:
         swift: ['6.2', '6.4']
-        sanitizer: [address, thread]
+        sanitizer: ${{ fromJSON(inputs.sanitizer == 'address' && '["address"]' || inputs.sanitizer == 'thread' && '["thread"]' || '["address","thread"]') }}
         runner: [ubuntu-24.04, ubuntu-24.04-arm]
         include:
           - runner: ubuntu-24.04
@@ -121,9 +174,17 @@ jobs:
         with:
           name: linux-sanitizer-oracle-${{ matrix.architecture }}
           path: .build/oracle
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.oracle_run_id || github.run_id }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: linux-sanitizer-arm-vectors
+          path: .build/arm-vectors
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.oracle_run_id || github.run_id }}
       - name: Restore executable permissions and test gate rejection
         run: |
-          chmod +x .build/oracle/tools/cjxl .build/oracle/tools/djxl
+          chmod +x .build/oracle/tools/cjxl .build/oracle/tools/djxl .build/oracle/tools/swiftjxl-modular-profile-oracle
           python3 Scripts/TestSupport/test-linux-sanitizer-gate.py
       - name: Require runtime sentinels and complete instrumented suite
         run: >-
@@ -131,6 +192,7 @@ jobs:
           --sanitizer ${{ matrix.sanitizer }} --swift-line ${{ matrix.swift }}
           --architecture ${{ matrix.architecture }}
           --tools .build/oracle/tools --oracle-manifest .build/oracle/manifest.json
+          --reciprocal-vectors .build/arm-vectors/vectors.json --reciprocal-manifest .build/arm-vectors/manifest.json
           --output .build/linux-sanitizer-evidence
       - name: Preserve commands, exact source hashes and complete test results
         if: always()
@@ -143,5 +205,6 @@ jobs:
             .build/linux-sanitizer-evidence/*.xml
             .build/linux-sanitizer-evidence/*.swift
             .build/linux-sanitizer-evidence/discovered-tests.json
+            .build/linux-sanitizer-evidence/oracle-fixtures/public-matrix-*/oracle.json
           include-hidden-files: true
           if-no-files-found: error
