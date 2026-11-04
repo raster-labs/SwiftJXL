@@ -1,0 +1,147 @@
+name: SwiftJXL Linux sanitizer qualification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/milestone5-linux-sanitizers.yml'
+      - 'Scripts/qualify-linux-sanitizer.py'
+      - 'Scripts/TestSupport/test-linux-sanitizer-gate.py'
+      - 'Package.swift'
+      - 'Sources/**'
+      - 'Tests/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/milestone5-linux-sanitizers.yml'
+      - 'Scripts/qualify-linux-sanitizer.py'
+      - 'Package.swift'
+      - 'Sources/**'
+      - 'Tests/**'
+
+permissions:
+  contents: read
+
+jobs:
+  oracle:
+    name: Pinned oracle / ${{ matrix.architecture }}
+    runs-on: ${{ matrix.runner }}
+    container: swift:6.4-noble
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            architecture: x86_64
+          - runner: ubuntu-24.04-arm
+            architecture: aarch64
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Build immutable libjxl 0.12.0 oracle for the native architecture
+        shell: bash
+        run: |
+          set -euo pipefail
+          apt-get update
+          apt-get install -y --no-install-recommends python3 cmake ninja-build pkg-config libjpeg-dev libpng-dev libbrotli-dev
+          mkdir -p .build/linux-oracle/tools
+          git init "$RUNNER_TEMP/libjxl"
+          git -C "$RUNNER_TEMP/libjxl" remote add origin https://github.com/libjxl/libjxl.git
+          git -C "$RUNNER_TEMP/libjxl" fetch --depth 1 origin a7a9c787341cf703dede03c2009fa460cae5e5df
+          git -C "$RUNNER_TEMP/libjxl" checkout --detach FETCH_HEAD
+          test "$(git -C "$RUNNER_TEMP/libjxl" rev-parse HEAD)" = a7a9c787341cf703dede03c2009fa460cae5e5df
+          git -C "$RUNNER_TEMP/libjxl" submodule update --init --depth 1 third_party/brotli third_party/highway third_party/lcms
+          git -C "$RUNNER_TEMP/libjxl" submodule status > .build/linux-oracle/submodules.txt
+          cmake -S "$RUNNER_TEMP/libjxl" -B "$RUNNER_TEMP/libjxl/build" -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF \
+            -DJPEGXL_ENABLE_TOOLS=ON -DJPEGXL_ENABLE_BENCHMARK=OFF \
+            -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_MANPAGES=OFF \
+            -DJPEGXL_ENABLE_DOXYGEN=OFF -DJPEGXL_ENABLE_JNI=OFF \
+            -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_ENABLE_OPENEXR=OFF \
+            -DJPEGXL_ENABLE_SKCMS=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_BUNDLE_LIBPNG=OFF \
+            > .build/linux-oracle/configure.log 2>&1
+          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl --parallel 2 > .build/linux-oracle/build.log 2>&1
+          cp "$RUNNER_TEMP/libjxl/build/tools/cjxl" "$RUNNER_TEMP/libjxl/build/tools/djxl" .build/linux-oracle/tools/
+          python3 - <<'PY'
+          import hashlib, json, platform, subprocess
+          from pathlib import Path
+          root = Path('.build/linux-oracle')
+          data = {'revision': 'a7a9c787341cf703dede03c2009fa460cae5e5df', 'architecture': platform.machine(),
+                  'submodules': (root / 'submodules.txt').read_text(), 'binaries': {}}
+          for name in ['cjxl', 'djxl']:
+              path = root / 'tools' / name
+              data['binaries'][name] = {'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                  'version': subprocess.run([str(path), '--version'], text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True).stdout}
+          (root / 'manifest.json').write_text(json.dumps(data, indent=2) + '\n')
+          PY
+      - name: Preserve pinned oracle binaries and build evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-sanitizer-oracle-${{ matrix.architecture }}
+          path: .build/linux-oracle
+          include-hidden-files: true
+          if-no-files-found: error
+
+  sanitizer:
+    name: Linux ${{ matrix.architecture }} Swift ${{ matrix.swift }} ${{ matrix.sanitizer }}
+    needs: oracle
+    runs-on: ${{ matrix.runner }}
+    container:
+      image: swift:${{ matrix.swift }}-noble
+      # Permit sanitizer runtimes to request a supported address-space layout.
+      # No findings are suppressed and host ASLR settings are not changed.
+      options: --security-opt seccomp=unconfined
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        swift: ['6.2', '6.4']
+        sanitizer: [address, thread]
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
+        include:
+          - runner: ubuntu-24.04
+            architecture: x86_64
+          - runner: ubuntu-24.04-arm
+            architecture: aarch64
+    env:
+      QUALIFICATION_CONTAINER: swift:${{ matrix.swift }}-noble
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install harness and oracle runtime libraries
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3 libjpeg-turbo8 libpng16-16t64 libbrotli1
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: linux-sanitizer-oracle-${{ matrix.architecture }}
+          path: .build/oracle
+      - name: Restore executable permissions and test gate rejection
+        run: |
+          chmod +x .build/oracle/tools/cjxl .build/oracle/tools/djxl
+          python3 Scripts/TestSupport/test-linux-sanitizer-gate.py
+      - name: Require runtime sentinels and complete instrumented suite
+        run: >-
+          python3 Scripts/qualify-linux-sanitizer.py
+          --sanitizer ${{ matrix.sanitizer }} --swift-line ${{ matrix.swift }}
+          --architecture ${{ matrix.architecture }}
+          --tools .build/oracle/tools --oracle-manifest .build/oracle/manifest.json
+          --output .build/linux-sanitizer-evidence
+      - name: Preserve commands, exact source hashes and complete test results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-${{ matrix.architecture }}-swift-${{ matrix.swift }}-${{ matrix.sanitizer }}
+          path: |
+            .build/linux-sanitizer-evidence/report.json
+            .build/linux-sanitizer-evidence/*.log
+            .build/linux-sanitizer-evidence/*.xml
+            .build/linux-sanitizer-evidence/*.swift
+            .build/linux-sanitizer-evidence/discovered-tests.json
+          include-hidden-files: true
+          if-no-files-found: error
