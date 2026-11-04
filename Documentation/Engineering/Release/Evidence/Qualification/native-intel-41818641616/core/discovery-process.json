@@ -1,0 +1,31 @@
+{
+  "command": [
+    "xcrun",
+    "swift",
+    "test",
+    "-c",
+    "release",
+    "--disable-sandbox",
+    "--build-system",
+    "native",
+    "--no-parallel",
+    "--enable-swift-testing",
+    "--disable-xctest",
+    "--jobs",
+    "2",
+    "list"
+  ],
+  "exitCode": 0,
+  "stdout": "discovery.stdout.log",
+  "stderr": "discovery.stderr.log",
+  "seconds": 367.4760364200001,
+  "stdoutBytes": 31144,
+  "stdoutSHA256": "e5db6cec77b22176c885a72f73b0b8280f2641a5f28c945077fecced7a639556",
+  "stderrBytes": 1971,
+  "stderrSHA256": "07107ec541fa1ad9b5cc471b7575cbf42837b7ee6f4ba151569d858dffec2586",
+  "combinedLog": {
+    "path": "discovery.log",
+    "ordering": "stdout then stderr; not chronological",
+    "sha256": "bf219fbd752154b2f471f16495fe3d1dd438192b23959de5f45182e4ab9e6b7d"
+  }
+}

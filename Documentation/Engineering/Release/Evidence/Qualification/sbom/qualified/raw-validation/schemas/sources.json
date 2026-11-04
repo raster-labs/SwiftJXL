@@ -1,0 +1,27 @@
+[
+  {
+    "file": "spdx-3.0.1.schema.json",
+    "url": "https://spdx.org/schema/3.0.1/spdx-json-schema.json",
+    "sha256": "582c64e809d5b3ef9bd0c4de13a32391b47b0284a3e8d199569fb96f649234b1"
+  },
+  {
+    "file": "bom-1.7.schema.json",
+    "url": "https://cyclonedx.org/schema/bom-1.7.schema.json",
+    "sha256": "71152f97948eeeca2fd4a1434a9d29aab35d377be11828b504d029dfeeb1925a"
+  },
+  {
+    "file": "spdx.schema.json",
+    "url": "https://cyclonedx.org/schema/spdx.schema.json",
+    "sha256": "33863a360fc4d348e183d89c1ca7aa0877f481e7eb55be2d4102a30386188a10"
+  },
+  {
+    "file": "jsf-0.82.schema.json",
+    "url": "https://cyclonedx.org/schema/jsf-0.82.schema.json",
+    "sha256": "2faf5eb3651f2ae5f46091a131770d8d847bbd121139d19c85fc7051bfa58c46"
+  },
+  {
+    "file": "cryptography-defs.schema.json",
+    "url": "https://cyclonedx.org/schema/cryptography-defs.schema.json",
+    "sha256": "95897594e42f7229523fd7a03272da284e0591b1c49550a8b62a355df6357249"
+  }
+]

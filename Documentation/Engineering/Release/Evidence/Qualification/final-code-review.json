@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "review_type": "independent static source and call-site review with mechanical byte-projection checks",
+  "reviewed_at_utc": "2026-11-04T11:40:42.154449+00:00",
+  "baseline_commit": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+  "reviewed_commit": "e8f976a5765a13f1688576ff7835ee7cadefbabe",
+  "qualified_runtime_commit": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "contract_version": "0.10.0",
+  "findings": [],
+  "scope": {
+    "production_changed_files": 9,
+    "lock_usage_files": 7,
+    "new_linux_test_support_files": 2,
+    "existing_oracle_call_site_files": 8,
+    "linux_support_test_declarations": 6
+  },
+  "checks": [
+    {
+      "name": "complete_production_delta",
+      "result": "passed",
+      "detail": "The complete Package.swift/Sources delta consists only of the package-scoped lock helper, seven lock substitutions and one additional test-target dependency."
+    },
+    {
+      "name": "public_api_and_platform_path",
+      "result": "passed",
+      "detail": "All seven usage files become exact baseline bytes after replacing PackageMutex with Mutex and removing the one added SwiftJXLCore import. The new declaration is package-scoped. Non-Linux builds alias Synchronization.Mutex. Public declarations and codec algorithms remain unchanged."
+    },
+    {
+      "name": "qualified_runtime_continuity",
+      "result": "passed",
+      "detail": "git diff of Sources, Package.swift and VERSION between the qualified runtime commit and reviewed commit is empty. Reviewed working files match their committed bytes."
+    },
+    {
+      "name": "linux_lock_ownership_and_sendability",
+      "result": "passed",
+      "detail": "Final class owns private state and a non-recursive NSLock. Both synchronous nonescaping closure methods acquire the same lock and defer unlock across normal and throwing exits; failed try-lock does not enter the body. Consuming-sending initialisation and inout-sending/result boundaries retain noncopyable ownership. The local unchecked-Sendable proof matches these constraints; no pointer or asynchronous borrow is introduced."
+    },
+    {
+      "name": "existing_owners_join_copy_and_defaults",
+      "result": "passed",
+      "detail": "Image borrow admission, sealing and lease lifetime checks remain intact. Existing synchronous worker joins retain locked owners. Noncopyable VarDCT scratch is borrowed synchronously; existing per-worker overhead admission remains. The exact baseline projections establish unchanged checked codec arithmetic, copy/fidelity policy, samples and resource defaults."
+    },
+    {
+      "name": "test_oracle_argument_and_descriptor_ownership",
+      "result": "passed",
+      "detail": "The Linux-only test helper invokes posix_spawn directly without a shell. Embedded NUL strings are rejected; argv/environment allocations are owned through spawn and freed on every exit. FileHandle owners remain alive during descriptor duplication, file-action initialisation/errors/destruction are handled, and existing callers retain and close handles after the joined result."
+    },
+    {
+      "name": "test_oracle_exit_timeout_and_reaping",
+      "result": "passed",
+      "detail": "Positive bounded call-site timeouts use a monotonic clock. Spawn and wait errors are surfaced, EINTR is retried, normal and signal exit codes are bounded, and timeout cleanup kills and waits for the directly owned child. ECHILD explicitly relinquishes ownership before cleanup so an already reaped PID is not signalled."
+    },
+    {
+      "name": "linux_support_tests",
+      "result": "passed",
+      "detail": "Six tests exercise reader/writer consistency, typed-throw unlock and try-lock, noncopyable-owner release, literal argv and nonzero exit, timeout kill/reap, and rejected executable/NUL configuration. This review does not claim a new runtime execution."
+    }
+  ],
+  "reviewed_files": [
+    {
+      "path": "Package.swift",
+      "sha256": "55f41396dd50e9157dc6a4cc1fd5737a799786a51aa39eccfb9fe43d10db205b",
+      "bytes": 1070,
+      "baseline_sha256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+      "only_change": "SwiftJXLCore added to SwiftJXLTests dependencies"
+    },
+    {
+      "path": "Sources/SwiftJXLCore/PackageMutex.swift",
+      "sha256": "a1d38943186708b12e3f7dd0668663c17d74b6d43556bc3241f722acf970c112",
+      "bytes": 1695
+    },
+    {
+      "path": "Sources/SwiftJXL/Image.swift",
+      "sha256": "4b1621ee69796341652335646896ce33086fec9787377b441b83b231a76dd4d3",
+      "bytes": 10226,
+      "baseline_sha256": "ad4f87db872592214c1113bad412fc52efd0680078e822007b979c634a53f46f",
+      "baseline_byte_projection": "passed"
+    },
+    {
+      "path": "Sources/SwiftJXL/ImageStorage.swift",
+      "sha256": "c826a80310482a932f0033a8cd528ebe963f886e9ef680dc2ff3b421f00b5f59",
+      "bytes": 6190,
+      "baseline_sha256": "8cb882511ae13ab0347782a6e474bee82013b0812aa6756c4a0dba573d87cb3f",
+      "baseline_byte_projection": "passed"
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ModularDecodeBatch.swift",
+      "sha256": "7b145a574cc8e43dc29bee7570a9550aa461391e2b3a5568271cad81d87ec81b",
+      "bytes": 1812,
+      "baseline_sha256": "cb2d5e53ae8111ca82b058f39c6ca567f073a0b32736c0028ffcbec2436c72e9",
+      "baseline_byte_projection": "passed"
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ScalarMap.swift",
+      "sha256": "00214f4a29dbd44ab10464f3a29fb2dac42c234a9d6fdd1da605cd4fa7b4444d",
+      "bytes": 2749,
+      "baseline_sha256": "d1fb8b80c0c9ae043701015e39a54e9e8e6bf22ae2c94f4636bf859cb22caded",
+      "baseline_byte_projection": "passed"
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift",
+      "sha256": "c07a444e9d7aeb9db57cd65eea05e6b644658ecc2991e21a8ecf0f3eb02df60e",
+      "bytes": 9378,
+      "baseline_sha256": "1f9e04b243a7804a4aebb716567bf1a32ce0694a2abdd6d8b0e580224a977649",
+      "baseline_byte_projection": "passed"
+    },
+    {
+      "path": "Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift",
+      "sha256": "7e98b72cb9dc88cc91d508a85a4d9a40a2da89ddd7e865adb8b9f87cb8774434",
+      "bytes": 1715,
+      "baseline_sha256": "37666262d7fdf215bbe6522fbbd7b9eb8ca17a9b0cdfe77a08f3e7b656fda309",
+      "baseline_byte_projection": "passed"
+    },
+    {
+      "path": "Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift",
+      "sha256": "1fdf22e915659771211936ebca6f8b2ed75359c543e022784c0c9bda35fab128",
+      "bytes": 32970,
+      "baseline_sha256": "12924026b34519bd70b4e1938257b50923ef6c350baffd45e83d77e77a607334",
+      "baseline_byte_projection": "passed"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/LinuxOracleProcess.swift",
+      "sha256": "d40205dd7aa5507b7069959eaa7daf0e4b65c432f8030aa3da97956bfca5d71e",
+      "bytes": 4501
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/LinuxQualificationSupportTests.swift",
+      "sha256": "968b2c1c40167a42be672884761369648c3ba0f8e85f64fd5855c7ed02eee417",
+      "bytes": 4869
+    }
+  ],
+  "reviewed_oracle_call_sites": [
+    {
+      "path": "Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift",
+      "sha256": "7e503521281b990a5b817c8b043ce97aa6d967771b2f466324963601ff9f824c"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift",
+      "sha256": "6cfdf1e60fa29bca1492f8f9de7216a0e8f79670f255039c9e61489b85bcba86"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ModularEncoderTests.swift",
+      "sha256": "963b5d4c226537d64d2def03313f0a4a0d8df57a90b4dca9df0451d5c3db1d61"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ModularGroupBoundaryTests.swift",
+      "sha256": "d4c701e84f19101503b0a726264e8cbd1e5be91ff7659c87647f001271a3a5b1"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ModularProfileTests.swift",
+      "sha256": "99b65a6307033bfdee221e1d491ad12967a9f8f2010981d6f31905603832800f"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ModularPublicMatrixTests.swift",
+      "sha256": "140d728ea5698b08ba449c74756cf8c242f3d57bd5c16d91bbd32e131078ca7f"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/NativeTranscoderPublicTests.swift",
+      "sha256": "a54414618a0ce04c5c3c09665e095d310d5cd89fe3ff753e2dc21f0a17c153c8"
+    },
+    {
+      "path": "Tests/SwiftJXLCoreTests/ScalarOracleTests.swift",
+      "sha256": "e5e65f3d8fae72553294cd28f7bb798c141c85727a92e808bb87c311de581161"
+    }
+  ],
+  "linux_support_tests": [
+    "lockedValueSerialisesWritersAndConcurrentReaders",
+    "lockedValueUnlocksAfterTypedThrow",
+    "lockedValueRetainsAndReleasesNoncopyableOwner",
+    "oraclePassesLiteralArgumentsAndPreservesNonzeroExit",
+    "oracleTimeoutKillsAndReapsOwnedChild",
+    "oracleRejectsMissingExecutableAndEmbeddedNUL"
+  ],
+  "supporting_qualification_receipts": [
+    {
+      "path": "Documentation/Engineering/Release/Evidence/Qualification/linux-sanitizers/run-41818641469/independent-result-audit.json",
+      "sha256": "a04deec7c86e490f9a54c612c9eb40ff1947980e50bf58246ad475c823f8efd5"
+    },
+    {
+      "path": "Documentation/Engineering/Release/Evidence/Qualification/linux-lock-benchmark-independent-audit.json",
+      "sha256": "cc1f1b5273b491b783f14ca0dee9d0f841d84b8d5352ad975bb8035714e81b55"
+    },
+    {
+      "path": "Documentation/Engineering/Release/Evidence/Qualification/cli-tsan/independent-audit.json",
+      "sha256": "d38c175bb0ac6d1f82783fa38a63f59ad47e456a5a8a5ded31c0c806e561212d"
+    },
+    {
+      "path": "Documentation/Engineering/Release/Evidence/Qualification/macos26/independent-audit-00f03ff.json",
+      "sha256": "40233d71912250f9d284e6bff6a1a1370126f442b18b3720569d80d8a71da4fd"
+    },
+    {
+      "path": "Documentation/Engineering/Release/Evidence/Qualification/native-intel-41818641616/independent-audit.json",
+      "sha256": "c93f054c8d7b46a149cede7e5b53c281b8ae459e7ee0b0d5797e6ff5a67235f1"
+    }
+  ],
+  "limitations": [
+    "Static review and byte comparison do not establish general cross-version binary ABI compatibility or prove every possible runtime interleaving.",
+    "The Linux compatibility path introduces a heap box and NSLock; allocation counts and layout are not claimed unchanged. Retained sanitizer and controlled benchmark evidence covers its measured workloads, not every image or platform.",
+    "The oracle launcher is test-only and scoped to direct pinned executables, FileHandle output/error streams, the current working directory and the bounded positive timeouts used by its callers. It is not a general Foundation.Process replacement or a process-tree supervisor.",
+    "Existing runtime evidence is referenced by hash; no new build, sanitizer execution, physical Apple-device test or DICOMKit integration test was performed for this review."
+  ]
+}

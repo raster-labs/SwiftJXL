@@ -1,0 +1,39 @@
+/usr/bin/llvm-symbolizer: error: '[stack]': No such file or directory
+==================
+WARNING: ThreadSanitizer: Swift access race (pid=39)
+  Modifying access of Swift variable at 0xfffffffffab8 by thread T3:
+    #0 $s4main3runyyFySiYbXEfU_ySizYuYTXEfU_ /probe/mutex.swift (mutex-6.2+0x105fc4) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #1 $s4main3runyyFySiYbXEfU_ /probe/mutex.swift:6:36 (mutex-6.2+0x105fc4)
+    #2 $s4main3runyyFySiYbXEfU_TA /<compiler-generated> (mutex-6.2+0x106078) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #3 $sSiIgy_SiIegy_TRTA Block.swift.o (libswiftDispatch.so+0x1bd38) (BuildId: 00450748cbe98c0becfeeb1ebcf9f4caee324392)
+    #4 _____interceptor_dispatch_apply_f_block_invoke /home/build-user/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_libdispatch.cpp:550:5 (mutex-6.2+0x103bf8) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #5 _dispatch_apply_invoke crtstuff.c (libdispatch.so+0x226e4) (BuildId: 4d4f5f9785e666a3d43735fb31741e664d259842)
+
+  Previous write of size 1 at 0xfffffffffab8 by thread T1:
+    #0 $s4main3runyyFySiYbXEfU_ySizYuYTXEfU_ /probe/mutex.swift:6:50 (mutex-6.2+0x105fe0) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #1 $s4main3runyyFySiYbXEfU_ /probe/mutex.swift:6:36 (mutex-6.2+0x105fe0)
+    #2 $s4main3runyyFySiYbXEfU_TA /<compiler-generated> (mutex-6.2+0x106078) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #3 $sSiIgy_SiIegy_TRTA Block.swift.o (libswiftDispatch.so+0x1bd38) (BuildId: 00450748cbe98c0becfeeb1ebcf9f4caee324392)
+    #4 _____interceptor_dispatch_apply_f_block_invoke /home/build-user/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_libdispatch.cpp:550:5 (mutex-6.2+0x103bf8) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #5 _dispatch_apply_invoke crtstuff.c (libdispatch.so+0x226e4) (BuildId: 4d4f5f9785e666a3d43735fb31741e664d259842)
+
+  Location is stack of main thread.
+
+  Location is global '??' at 0xfffffffdf000 ([stack]+0x20ab8)
+
+  Thread T3 (tid=43, running) created by main thread at:
+    #0 pthread_create /home/build-user/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:1023:3 (mutex-6.2+0x780b8) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #1 _dispatch_root_queue_poke_slow queue.c (libdispatch.so+0x32000) (BuildId: 4d4f5f9785e666a3d43735fb31741e664d259842)
+    #2 dispatch_apply /home/build-user/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_libdispatch.cpp:524:3 (mutex-6.2+0x103850) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #3 $s8Dispatch0A5QueueC17concurrentPerform10iterations7executeySi_ySiXEtFZ <null> (libswiftDispatch.so+0x1cec0) (BuildId: 00450748cbe98c0becfeeb1ebcf9f4caee324392)
+    #4 main /probe/mutex.swift:11:1 (mutex-6.2+0x10618c) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+
+  Thread T1 (tid=41, running) created by main thread at:
+    #0 pthread_create /home/build-user/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:1023:3 (mutex-6.2+0x780b8) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #1 _dispatch_root_queue_poke_slow queue.c (libdispatch.so+0x32000) (BuildId: 4d4f5f9785e666a3d43735fb31741e664d259842)
+    #2 dispatch_apply /home/build-user/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_libdispatch.cpp:524:3 (mutex-6.2+0x103850) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+    #3 $s8Dispatch0A5QueueC17concurrentPerform10iterations7executeySi_ySiXEtFZ <null> (libswiftDispatch.so+0x1cec0) (BuildId: 00450748cbe98c0becfeeb1ebcf9f4caee324392)
+    #4 main /probe/mutex.swift:11:1 (mutex-6.2+0x10618c) (BuildId: 78b6ec77fb2902e4bcb37bac17b6f061407e5e94)
+
+SUMMARY: ThreadSanitizer: Swift access race /probe/mutex.swift in $s4main3runyyFySiYbXEfU_ySizYuYTXEfU_
+==================

@@ -1,0 +1,9 @@
+
+[stderr]
+Fetching /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-versioned/work/SwiftJXL.git
+[1/2861] Fetching swiftjxl
+Fetched /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-versioned/work/SwiftJXL.git (0.24s)
+Computing version for /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-versioned/work/SwiftJXL.git
+Computed /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-versioned/work/SwiftJXL.git at 2.1.0-dev.2 (0.54s)
+Creating working copy for /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-versioned/work/SwiftJXL.git
+Working copy of /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-versioned/work/SwiftJXL.git resolved at 2.1.0-dev.2

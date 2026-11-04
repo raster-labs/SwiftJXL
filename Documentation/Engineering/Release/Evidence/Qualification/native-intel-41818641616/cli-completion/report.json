@@ -1,0 +1,1846 @@
+{
+  "status": "passed",
+  "tools": {
+    "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli": "9186978676edd25aa32ecde9d21eb21b952e7c0b240a8f8463f0bbc1e3f308bb",
+    "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg": "ca58cb64e47d355a115d0ba32f59b32efb51d989080d712cd73b977e0bf75e92",
+    "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle": "c3a6f398b15bb94eccbd78b06ce42b5a2a7132a68de301b801ee7076157235c1",
+    "/Users/runner/work/_temp/jpeg-coefficient-oracle": "50795c3d6479693368bd3f64bbb0e6e3f2a831fd37f17f592bdb35b426ece45c"
+  },
+  "commands": [
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "ed52b0a9d23ef9c38cf5d15d5c851f2b711e81128e8c7729fe7ba7a0866e1a56"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "ed52b0a9d23ef9c38cf5d15d5c851f2b711e81128e8c7729fe7ba7a0866e1a56"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/gray.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "2f1054fcf53a9e0b5d53d5a359ec8567c84a6ee23dfb0bb04c77b75144301d00"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/gray.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/gray.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "0d0ae50821a585755fc3e7ddd53b8078e5f91e8248b8fa3e9c4ea5dc3dff7982"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/444.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "086e9b7fe00df71ade110747c230490beb265a9d93d0d31f18d56280bb1d94cc"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/444.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "086e9b7fe00df71ade110747c230490beb265a9d93d0d31f18d56280bb1d94cc"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/444.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "dbe2cfdc059b2524248195bd4881bf062c4903aa590628be614fe2586073bf32"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/444.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/444.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "7a1a1243f9bc33c3aa51bc3763def3fd2e16aafcd061fc22fa16edf9fd3c5612"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/422.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "043a9c3c2f5cc6f4966f8b0ed591bbe925d1d98a0caac03d8afd72451ba543ad"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/422.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "043a9c3c2f5cc6f4966f8b0ed591bbe925d1d98a0caac03d8afd72451ba543ad"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/422.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "ad56183e555f4c6b9bb73e7a642c534ae42bc2973e5c6a4012d6c19fea00aa1c"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/422.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/422.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "7a1a1243f9bc33c3aa51bc3763def3fd2e16aafcd061fc22fa16edf9fd3c5612"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/420.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "88f72df8d01202b9586030e1e84ff4617130eb043d66606a1a88325dbdcde6b5"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/420.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "88f72df8d01202b9586030e1e84ff4617130eb043d66606a1a88325dbdcde6b5"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/420.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "2bf0018e00b80f5329532642fe5c095032b6f9bab51e120115a7954ea19281fe"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/420.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/420.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "7a1a1243f9bc33c3aa51bc3763def3fd2e16aafcd061fc22fa16edf9fd3c5612"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/440.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "dad497e94abc7c5e90aad6718e8ef524c82a74ef1c623afb4fff44bb6537bec3"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/440.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "dad497e94abc7c5e90aad6718e8ef524c82a74ef1c623afb4fff44bb6537bec3"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/440.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "277833085495a58c2b55dfd6a46430ad9822011cd67e9907be97187ab5dbf85f"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/440.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/440.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "7a1a1243f9bc33c3aa51bc3763def3fd2e16aafcd061fc22fa16edf9fd3c5612"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "88f72df8d01202b9586030e1e84ff4617130eb043d66606a1a88325dbdcde6b5"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "88f72df8d01202b9586030e1e84ff4617130eb043d66606a1a88325dbdcde6b5"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "2bf0018e00b80f5329532642fe5c095032b6f9bab51e120115a7954ea19281fe"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/progressive.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/progressive.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "7a1a1243f9bc33c3aa51bc3763def3fd2e16aafcd061fc22fa16edf9fd3c5612"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/restart.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "88f72df8d01202b9586030e1e84ff4617130eb043d66606a1a88325dbdcde6b5"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/restart.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "88f72df8d01202b9586030e1e84ff4617130eb043d66606a1a88325dbdcde6b5"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/restart.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "2bf0018e00b80f5329532642fe5c095032b6f9bab51e120115a7954ea19281fe"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/restart.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/restart.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "7a1a1243f9bc33c3aa51bc3763def3fd2e16aafcd061fc22fa16edf9fd3c5612"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-422.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "031e7ae311415e6b253cd3e4871c9c59f6e3c28545bd5ccabe7e1179f7b66205"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-422.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "031e7ae311415e6b253cd3e4871c9c59f6e3c28545bd5ccabe7e1179f7b66205"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-422.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "a5c2bc990e5d4d594331aa5c0f37c253dea77b5fd77fdf813a56b87dbcc8f81b"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/progressive-422.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/progressive-422.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "3b111ec1b64ef797f1ddf99efe0518a51ac99de451db21993b8353e7cc2d7fd8"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-440.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "861e527355548748a1c0c5c3ff7c1dcf26b9e4a8980244fe466f5d1a1b2484d4"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-440.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "861e527355548748a1c0c5c3ff7c1dcf26b9e4a8980244fe466f5d1a1b2484d4"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-440.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "70b87b7dddf65309959998dbef4453f77591985e784b10ea9b149e6f5553db3c"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/progressive-440.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/progressive-440.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "3b111ec1b64ef797f1ddf99efe0518a51ac99de451db21993b8353e7cc2d7fd8"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "b2243053106c8e64cf9685e481deac5bb5bd3ccc46a72e6a401c45709979e0b9"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "b2243053106c8e64cf9685e481deac5bb5bd3ccc46a72e6a401c45709979e0b9"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/progressive-edge.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "1fc0da64f3e83f07cd10f15d918db93a72f8dd716a6d1ae62f016ef77ea4a1c0"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/progressive-edge.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/progressive-edge.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "3b111ec1b64ef797f1ddf99efe0518a51ac99de451db21993b8353e7cc2d7fd8"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/sequential-multiscan.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "b2243053106c8e64cf9685e481deac5bb5bd3ccc46a72e6a401c45709979e0b9"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/sequential-multiscan.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "b2243053106c8e64cf9685e481deac5bb5bd3ccc46a72e6a401c45709979e0b9"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEG/sequential-multiscan.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "1fc0da64f3e83f07cd10f15d918db93a72f8dd716a6d1ae62f016ef77ea4a1c0"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/sequential-multiscan.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/sequential-multiscan.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "3b111ec1b64ef797f1ddf99efe0518a51ac99de451db21993b8353e7cc2d7fd8"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "573e0aa18ccbbfdd586ab34b99ce33e2d1e590e65e18f2980cd61807480a6e5b"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "573e0aa18ccbbfdd586ab34b99ce33e2d1e590e65e18f2980cd61807480a6e5b"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "0f586999b9f48759874630c35bf846a1c804f1a669b069d4a597687ce252466a"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-rgb.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-rgb.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "7a1a1243f9bc33c3aa51bc3763def3fd2e16aafcd061fc22fa16edf9fd3c5612"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb-progressive.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "38569fe341591752632f4a4b3b6a94d5b1570bba630a7bec5a18f9f0e936fc11"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb-progressive.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "38569fe341591752632f4a4b3b6a94d5b1570bba630a7bec5a18f9f0e936fc11"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb-progressive.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "17c32bc09bfc9be9d323282bc092cbcc60009c77c4ce414360c89a81da3b4e06"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-rgb-progressive.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-rgb-progressive.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "7fdb40642b6ba6db5c4bb2bd5a11803d929563279f88d25537fca5e5ea059781"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/tiny.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "32a88252bbec18afe96c959bd80b0245b54ef8f63626572e93cd0ad8dfbcfa3f"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/tiny.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "32a88252bbec18afe96c959bd80b0245b54ef8f63626572e93cd0ad8dfbcfa3f"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/tiny.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "10c22bdb89f85aa775ba0a3aac55f0fa3f92f7cb191b250e0eb6b678d65b6daa"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-tiny.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-tiny.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "473747f67dbedaa894600b2ba3703fbedb54245e651db88c9eee771b479292ff"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/thin.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "0d40654d2929395ac43107abb1c8db12deafe0df0c9a8d316bb4d38a0e78ce62"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/thin.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "0d40654d2929395ac43107abb1c8db12deafe0df0c9a8d316bb4d38a0e78ce62"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/thin.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "4924f4bb4984fc7e88e831cbd2d15897f325ef488ca03ca7f2f7c08a21e6149f"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-thin.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-thin.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "3392c6760bd8f9cb5d8e1749f783bd7b5e9c15a6f1a96bcf94438c924fc49ca1"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/quant16.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "d56e3c356d3e65d715da7e1baa3ca12ab200a850bc8e2ac3e137d18bd1e36984"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/quant16.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "0a9a30f3b7a274c44d6cb3753e56d9797c25f18ba1d523bd1a928319ff868027"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/jpeg-coefficient-oracle",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/quant16.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "0fea63b19af30b62fb6f4087045b4557a6904d8a38876fec70b0ece1620426dd"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/quant16.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "50cf90b666d241fd093f24405e7e6e73eb7a84d045d72950ae14189cd7c91681"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-quant16.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-quant16.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "0d0ae50821a585755fc3e7ddd53b8078e5f91e8248b8fa3e9c4ea5dc3dff7982"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-420.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "3b4865829b5ac04095c24fe965a5c54b43a65c39ba2c5c7d6391f81afcd07f2e"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-420.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "e7300a68c9595736340f374ec8cb9a7fc529e74068b274b140125b0488b11653"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-420.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "32e9af15e7b96311496d4900706c046e9d2d2b1aefad15852b05f12986aed2ce"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-multigroup-420.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-multigroup-420.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "331620de22c8b590a1c43415935565f9e2edf7eb412d250ece65986e202b5eff"
+    },
+    {
+      "command": [
+        "/usr/local/Cellar/jpeg-turbo/3.2.0/bin/djpeg",
+        "-dct",
+        "float",
+        "-nosmooth",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-progressive-422.jpg"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "b95cee5b3bf98aa0328e0a9b3fd623dce132eb7e0de2490e8601983400a0b4dc"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-progressive-422.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "83435cd7c045da5a79181ef3c43d3391874796ea95df1df2a69b6744bcef31e6"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-progressive-422.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--container",
+        "iso"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "ebf24dd6a15567a4da1402c2774a4673e5b8fb73d226e6b2ea50a784de2e2ac3"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-multigroup-progressive-422.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/bridge-multigroup-progressive-422.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "dd33390a9a6269c873646f6196da60f440e9c2b3f03b6cd5d8fb71b1894495bf"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "--frame-duration",
+        "11,29,7",
+        "--ticks-per-second",
+        "24000/1001",
+        "--loop-count",
+        "4",
+        "--container",
+        "codestream",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "{\"encodedBytes\":1293,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"frameCount\":3,\"frames\":[{\"durationTicks\":11,\"index\":0},{\"durationTicks\":29,\"index\":1},{\"durationTicks\":7,\"index\":2}],\"loopCount\":4,\"operation\":\"encode\",\"ticksPerSecondDenominator\":1001,\"ticksPerSecondNumerator\":24000,\"totalTicks\":47}\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "e3935aba2125a8febc8bbeaf5848bc337a4dab97e9fdddbe095d6f4da0a330ea"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.jxl",
+        "--all-frames",
+        "--output-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream-decoded"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.jxl",
+        "--all-frames",
+        "--output-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream-decoded"
+      ],
+      "exit": 6,
+      "stderr": "swiftjxl-cli: Animation output directory already exists or is unavailable.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "inspect",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.jxl",
+        "--all-frames",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "828c3e0c61925fd7cdd90e55fb65b7b3d51fbc649c28357f724771968fc71a0a"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "validate",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.jxl",
+        "--all-frames",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "d4c3f5b769cb5160dd076b621bd7c2d4d9647eb332307bcc04385a88d2771530"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.jxl",
+        "--frame",
+        "1",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "2309dd3253eb6d2ea7e562fe24de2701f5c1ac6ed26205d546e6e4f7be249d50"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.jxl",
+        "--frame",
+        "3",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Frame index out of range.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "validate",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-codestream.jxl",
+        "--all-frames",
+        "--max-frames",
+        "2"
+      ],
+      "exit": 5,
+      "stderr": "swiftjxl-cli: Animation resource limit exceeded.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "--frame-duration",
+        "11,29,7",
+        "--ticks-per-second",
+        "24000/1001",
+        "--loop-count",
+        "4",
+        "--container",
+        "iso",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "{\"encodedBytes\":1333,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"frameCount\":3,\"frames\":[{\"durationTicks\":11,\"index\":0},{\"durationTicks\":29,\"index\":1},{\"durationTicks\":7,\"index\":2}],\"loopCount\":4,\"operation\":\"encode\",\"ticksPerSecondDenominator\":1001,\"ticksPerSecondNumerator\":24000,\"totalTicks\":47}\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "e3935aba2125a8febc8bbeaf5848bc337a4dab97e9fdddbe095d6f4da0a330ea"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.jxl",
+        "--all-frames",
+        "--output-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso-decoded"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.jxl",
+        "--all-frames",
+        "--output-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso-decoded"
+      ],
+      "exit": 6,
+      "stderr": "swiftjxl-cli: Animation output directory already exists or is unavailable.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "inspect",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.jxl",
+        "--all-frames",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "828c3e0c61925fd7cdd90e55fb65b7b3d51fbc649c28357f724771968fc71a0a"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "validate",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.jxl",
+        "--all-frames",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "d4c3f5b769cb5160dd076b621bd7c2d4d9647eb332307bcc04385a88d2771530"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.jxl",
+        "--frame",
+        "1",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "2309dd3253eb6d2ea7e562fe24de2701f5c1ac6ed26205d546e6e4f7be249d50"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.jxl",
+        "--frame",
+        "3",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Frame index out of range.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "validate",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-iso.jxl",
+        "--all-frames",
+        "--max-frames",
+        "2"
+      ],
+      "exit": 5,
+      "stderr": "swiftjxl-cli: Animation resource limit exceeded.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-alias.pam",
+        "--overwrite"
+      ],
+      "exit": 6,
+      "stderr": "swiftjxl-cli: Output aliases an animation source.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "--frame-duration",
+        "1,2"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Frame-duration count must be one or match the input count.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/8-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "--max-memory",
+        "300000"
+      ],
+      "exit": 5,
+      "stderr": "swiftjxl-cli: Animation resource limit exceeded.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "--frame-duration",
+        "11,29,7",
+        "--ticks-per-second",
+        "24000/1001",
+        "--loop-count",
+        "4",
+        "--container",
+        "codestream",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "{\"encodedBytes\":1482,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"frameCount\":3,\"frames\":[{\"durationTicks\":11,\"index\":0},{\"durationTicks\":29,\"index\":1},{\"durationTicks\":7,\"index\":2}],\"loopCount\":4,\"operation\":\"encode\",\"ticksPerSecondDenominator\":1001,\"ticksPerSecondNumerator\":24000,\"totalTicks\":47}\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "f2cb17f23499d0738b1cc4f1fec631dcaafb6e7c3f59f943da3e9a38017a9e18"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.jxl",
+        "--all-frames",
+        "--output-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream-decoded"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.jxl",
+        "--all-frames",
+        "--output-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream-decoded"
+      ],
+      "exit": 6,
+      "stderr": "swiftjxl-cli: Animation output directory already exists or is unavailable.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "inspect",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.jxl",
+        "--all-frames",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "5d441399d3272d0e8bf63f7a70f0074a5728c5f45b1c04f97b0d19c81ca1aa90"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "validate",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.jxl",
+        "--all-frames",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "a600b01546181ad4e070290835d0bf341a060c548e4f740a42565e4bd569478b"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.jxl",
+        "--frame",
+        "1",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "a4538cf8b607dbfc70ad73bc1a8ea944148857b923b653a19501233ff2fdfcb2"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.jxl",
+        "--frame",
+        "3",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Frame index out of range.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "validate",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-codestream.jxl",
+        "--all-frames",
+        "--max-frames",
+        "2"
+      ],
+      "exit": 5,
+      "stderr": "swiftjxl-cli: Animation resource limit exceeded.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "--frame-duration",
+        "11,29,7",
+        "--ticks-per-second",
+        "24000/1001",
+        "--loop-count",
+        "4",
+        "--container",
+        "iso",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "{\"encodedBytes\":1522,\"fidelity\":\"exact-samples\",\"format\":\"jpeg-xl\",\"frameCount\":3,\"frames\":[{\"durationTicks\":11,\"index\":0},{\"durationTicks\":29,\"index\":1},{\"durationTicks\":7,\"index\":2}],\"loopCount\":4,\"operation\":\"encode\",\"ticksPerSecondDenominator\":1001,\"ticksPerSecondNumerator\":24000,\"totalTicks\":47}\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/_temp/libjxl/build/swiftjxl-animation-pixel-oracle",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.jxl",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.float"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "f2cb17f23499d0738b1cc4f1fec631dcaafb6e7c3f59f943da3e9a38017a9e18"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.jxl",
+        "--all-frames",
+        "--output-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso-decoded"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.jxl",
+        "--all-frames",
+        "--output-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso-decoded"
+      ],
+      "exit": 6,
+      "stderr": "swiftjxl-cli: Animation output directory already exists or is unavailable.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "inspect",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.jxl",
+        "--all-frames",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "5d441399d3272d0e8bf63f7a70f0074a5728c5f45b1c04f97b0d19c81ca1aa90"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "validate",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.jxl",
+        "--all-frames",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "a600b01546181ad4e070290835d0bf341a060c548e4f740a42565e4bd569478b"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.jxl",
+        "--frame",
+        "1",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "stdoutSHA256": "a4538cf8b607dbfc70ad73bc1a8ea944148857b923b653a19501233ff2fdfcb2"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.jxl",
+        "--frame",
+        "3",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Frame index out of range.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "validate",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-iso.jxl",
+        "--all-frames",
+        "--max-frames",
+        "2"
+      ],
+      "exit": 5,
+      "stderr": "swiftjxl-cli: Animation resource limit exceeded.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-alias.pam",
+        "--overwrite"
+      ],
+      "exit": 6,
+      "stderr": "swiftjxl-cli: Output aliases an animation source.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "--frame-duration",
+        "1,2"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Frame-duration count must be one or match the input count.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-0.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-1.pam",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-completion/16-source-2.pam",
+        "--input-format",
+        "pnm-srgb",
+        "--max-memory",
+        "300000"
+      ],
+      "exit": 5,
+      "stderr": "swiftjxl-cli: Animation resource limit exceeded.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "--all-frames",
+        "--frame",
+        "0",
+        "-i",
+        "/nonexistent"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Use --frame for decode, or --all-frames for decode/inspect/validate, exclusively.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "--all-frames",
+        "-i",
+        "/nonexistent"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Use --frame for decode, or --all-frames for decode/inspect/validate, exclusively.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "inspect",
+        "--container",
+        "iso",
+        "-i",
+        "/nonexistent"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Container selection applies to encode only.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "--frame-duration",
+        "10",
+        "-i",
+        "/nonexistent"
+      ],
+      "exit": 2,
+      "stderr": "swiftjxl-cli: Timing requires multiple inputs or --animation.\n",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "checks": [
+    {
+      "jpeg": "gray",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "444",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "7f885e1aee4bceb301dd078d9b33a315884a43c1f69f5ab6a63bb663cdbb2c48",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "422",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "ebcdd110e922248a214056b0475fc697c946318b6f7b50773cb9c34d76299c78",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "420",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "5c6dcec836cf1bef8e97fceed20586946777a9ab9a30b5bce5fd0c0f595d6ff5",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "440",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "670ba52f24f3e5eae1c4187179fa106e7ba57236b4f29d276934ab6fbe8a1e32",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "progressive",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "6cd02cb0fc7e32acb37a4efa0677d9aaf116e0ae0a013922b434afd872eb8d6c",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "restart",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "74a73e68dc9ee18077bc10bffc753851df693a2950407660584a790e6678d57b",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "progressive-422",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "648ffc8b54df7af9b62515d7c8de069de14c1d05e45a8f43df0f1985a6f67c9c",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "progressive-440",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "d45eba883d67ba6f1ac8a2a44dd86ee6d07f170564f9d7bb7181a3c84a77ef2b",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "progressive-edge",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "05b12ae2e7d50dfca20d279081401acf651af511b1ad29ef0ec97a0a4c26953d",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "sequential-multiscan",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "2bbee2bf121035e0e9d5ad93fcf6f831a0f5138973355e43714df0decbc7aa94",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "bridge-rgb",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "cc132a8ef6ae044a24b714270e73d4bcbf684824f8488034c56489ee22731148",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "bridge-rgb-progressive",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "c7c5a34bf4568dd71f37259415f8d14a87fcdb9a4f03e24b61b4bb1704ecf538",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "bridge-tiny",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "8b1dc62b2bea95a0953f0bbe2c0a61e2ee5848dcf39aac53b5a1d540c9ba970d",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "bridge-thin",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "f8a3d2624abb1b0a639e9f1a952421727e60a4cdad6ca2def15692b37fffde23",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "bridge-quant16",
+      "maximumLSB": 0,
+      "rmsLSB": 0.0,
+      "sourceSHA256": "ee414037cbf2e3faf353ff6e424e00a44859edb07ee2802fbb5820d53c1bff89",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "bridge-multigroup-420",
+      "maximumLSB": 1,
+      "rmsLSB": 0.01867900212971477,
+      "sourceSHA256": "9bc914384d128570e32b1dad0361c3652d3130004e2eea9a34430479c77f0fa2",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "jpeg": "bridge-multigroup-progressive-422",
+      "maximumLSB": 2,
+      "rmsLSB": 0.017125494594609336,
+      "sourceSHA256": "fdeb164e43d1b99b24f9753d1631881eff7caa34b205938f390cf0ab98542026",
+      "exactJXLEncodingOfDecodedSamples": true
+    },
+    {
+      "animationBits": 8,
+      "channels": 3,
+      "container": "codestream",
+      "exactSamplesAndTiming": true
+    },
+    {
+      "animationBits": 8,
+      "channels": 3,
+      "container": "iso",
+      "exactSamplesAndTiming": true
+    },
+    {
+      "animationBits": 16,
+      "channels": 4,
+      "container": "codestream",
+      "exactSamplesAndTiming": true
+    },
+    {
+      "animationBits": 16,
+      "channels": 4,
+      "container": "iso",
+      "exactSamplesAndTiming": true
+    }
+  ],
+  "referenceDisagreements": [
+    {
+      "jpeg": "bridge-quant16",
+      "djpegMaximumLSB": 255,
+      "djpegRMSLSB": 41.562234719017574,
+      "classification": "adversarial out-of-range IDCT saturation",
+      "directFormulaExact": true,
+      "source": "https://github.com/libjpeg-turbo/libjpeg-turbo/blob/3.2.0/src/jdmaster.c#L362-L400"
+    }
+  ]
+}

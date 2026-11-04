@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "scope": "Executed actual oracle dependency/version/preparation/replay path; intercepted only the subsequent xcodebuild build with explicit exit73 to avoid a runtime test during preflight. Original diagnostic report correctly remains failed.",
+  "jpegReference": {
+    "oracle": "/opt/homebrew/Cellar/jpeg-turbo/3.2.1/bin/djpeg",
+    "oracleSHA256": "6d0302f8018b3322521cae94de7f58ab484db40f0cc8e0f0cb6e92d456fd5088",
+    "nonSystemDependencySHA256": {
+      "/opt/homebrew/Cellar/jpeg-turbo/3.2.1/lib/libjpeg.8.3.2.dylib": "14f622f5c236df60a7f97b3146785497f990a39f0481d4a53ccc0e5cb8a0df3d"
+    },
+    "removedDynamicLoaderEnvironmentKeys": [],
+    "version": "libjpeg-turbo version 3.2.1 (build 20261026)",
+    "sourceSHA256": "7a8eab307091a45dc833cdde0aee65cb43e5f5884629f0b2020d9f3e6eb77484",
+    "pgmSHA256": "16173656e4d1291fc8ee60c22733417ce1377a9a23da1f513d11da9403854bd0",
+    "rawSHA256": "44dfc4c3b10b0130036a7192313d9175c26019058c791d1e7c2fd850bda2da39",
+    "width": 31,
+    "height": 17,
+    "bytes": 527,
+    "replayedByteForByte": true,
+    "scope": "Independent host libjpeg-turbo integer-IDCT greyscale pixels; no device runtime codec dependency"
+  },
+  "rawReportSHA256": "98cf7b2b92aff5fb25b087acf23c39c173b7747b1f2228972606c4349b83f8a3",
+  "driverSHA256": "8cdc5084bae2acfc0d66591b25773a47b8296b0931ab6dd5db56f1a00027a796",
+  "preflightSHA256": "891cd315a8ed26ebb020c7c6f5314e0a96c6ebd351f0438cf482740c68441fc5",
+  "metadataBodyRejectedByPGMHeader": true
+}

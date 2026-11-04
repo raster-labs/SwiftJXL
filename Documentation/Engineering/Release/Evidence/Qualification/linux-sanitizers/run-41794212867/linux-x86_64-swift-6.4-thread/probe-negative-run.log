@@ -1,0 +1,22 @@
+==================
+WARNING: ThreadSanitizer: Swift access race (pid=601)
+  Modifying access of Swift variable at 0x5628fdd8ba40 by thread T2:
+    #0 $s4main6writerySvSgACF /__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/sanitizer-negative.swift (sanitizer-negative+0xfc9c9) (BuildId: ad7688ba348b9eb8a69d483ff0cef109911004d8)
+    #1 $s4main6writerySvSgACFTo /<compiler-generated> (sanitizer-negative+0xfc34d) (BuildId: ad7688ba348b9eb8a69d483ff0cef109911004d8)
+
+  Previous modifying access of Swift variable at 0x5628fdd8ba40 by thread T1:
+    #0 $s4main6writerySvSgACF /__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/sanitizer-negative.swift (sanitizer-negative+0xfc9c9) (BuildId: ad7688ba348b9eb8a69d483ff0cef109911004d8)
+    #1 $s4main6writerySvSgACFTo /<compiler-generated> (sanitizer-negative+0xfc34d) (BuildId: ad7688ba348b9eb8a69d483ff0cef109911004d8)
+
+  Location is global '$s4main6sharedSivp' of size 8 at 0x5628fdd8ba40 (sanitizer-negative+0x14b9a40)
+
+  Thread T2 (tid=604, running) created by main thread at:
+    #0 pthread_create /home/build-user/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:1094:3 (sanitizer-negative+0x7b60a) (BuildId: ad7688ba348b9eb8a69d483ff0cef109911004d8)
+    #1 main /__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/sanitizer-negative.swift:9:1 (sanitizer-negative+0xfc5ea) (BuildId: ad7688ba348b9eb8a69d483ff0cef109911004d8)
+
+  Thread T1 (tid=603, running) created by main thread at:
+    #0 pthread_create /home/build-user/llvm-project/compiler-rt/lib/tsan/rtl/tsan_interceptors_posix.cpp:1094:3 (sanitizer-negative+0x7b60a) (BuildId: ad7688ba348b9eb8a69d483ff0cef109911004d8)
+    #1 main /__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/sanitizer-negative.swift:8:1 (sanitizer-negative+0xfc5a2) (BuildId: ad7688ba348b9eb8a69d483ff0cef109911004d8)
+
+SUMMARY: ThreadSanitizer: Swift access race /__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/sanitizer-negative.swift in $s4main6writerySvSgACF
+==================

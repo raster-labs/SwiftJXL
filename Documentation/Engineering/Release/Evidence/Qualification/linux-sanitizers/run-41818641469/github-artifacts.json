@@ -1,0 +1,211 @@
+[
+  {
+    "id": 13317900249,
+    "name": "linux-x86_64-swift-6.2-thread",
+    "size_in_bytes": 426353,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13317900249",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13317900249/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:22:21Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:22:21Z",
+    "digest": "sha256:24456558e06a3234a5ce4196197b046b30e112298faf13fb18239378d80869c6",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13317235554,
+    "name": "linux-aarch64-swift-6.2-thread",
+    "size_in_bytes": 426469,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13317235554",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13317235554/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:21:46Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:21:46Z",
+    "digest": "sha256:477652647ad360332ac85ba3f45b2669a63decbfac929b866866608802f49f01",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13317135600,
+    "name": "linux-x86_64-swift-6.4-thread",
+    "size_in_bytes": 428220,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13317135600",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13317135600/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:23:48Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:23:48Z",
+    "digest": "sha256:44798187353b124385f6816cdeba1581ad55125635a31be9badfb53bf12c2df5",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13316791063,
+    "name": "linux-aarch64-swift-6.4-address",
+    "size_in_bytes": 429428,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316791063",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316791063/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:18:12Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:18:12Z",
+    "digest": "sha256:53183d788c85dbbc5faac805ba53bf00500361eeb4a226ef1f861adc449887c4",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13316731828,
+    "name": "linux-x86_64-swift-6.4-address",
+    "size_in_bytes": 431126,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316731828",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316731828/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:22:15Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:22:15Z",
+    "digest": "sha256:d561d852c139a8f8b95db4f19291343cf92cbf3560d69be2c2a37bf2b4042dfb",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13316452002,
+    "name": "linux-aarch64-swift-6.4-thread",
+    "size_in_bytes": 428292,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316452002",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316452002/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:23:10Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:23:10Z",
+    "digest": "sha256:d148fb5d54ab8c6ff70fe9646f446780cfd1247b9fdb152328941c87c0b7a5dc",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13316251512,
+    "name": "linux-sanitizer-arm-vectors",
+    "size_in_bytes": 146910,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316251512",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316251512/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:11:26Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:11:26Z",
+    "digest": "sha256:73b3e307933d0be1ed0c7f80a39e2915f5f4e66ec5f0d63e41f97c9cb26a27f3",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13316118293,
+    "name": "linux-aarch64-swift-6.2-address",
+    "size_in_bytes": 427665,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316118293",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316118293/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:16:59Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:16:59Z",
+    "digest": "sha256:d3b15618864a1c69084fe6b0fca22886f0dd663498d7a84b1ef5314211671c7a",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13316032783,
+    "name": "linux-sanitizer-oracle-aarch64",
+    "size_in_bytes": 6888667,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316032783",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13316032783/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:11:28Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:11:28Z",
+    "digest": "sha256:f33b96b6c56e1bfe03bc36820a9d22ee2245c097eef14a2a38d912c5ee41b696",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13315859990,
+    "name": "linux-x86_64-swift-6.2-address",
+    "size_in_bytes": 429158,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13315859990",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13315859990/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:17:58Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:17:58Z",
+    "digest": "sha256:31ed7ae1642b4c891e98b3eb3fde54c03e2ec66a633098475d4cf0b1563e4f9d",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  },
+  {
+    "id": 13315842667,
+    "name": "linux-sanitizer-oracle-x86_64",
+    "size_in_bytes": 5279314,
+    "url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13315842667",
+    "archive_download_url": "https://api.github.com/repos/raster-labs/SwiftJXL/actions/artifacts/13315842667/zip",
+    "expired": false,
+    "created_at": "2026-11-04T11:10:33Z",
+    "expires_at": "2027-02-02T11:06:30Z",
+    "updated_at": "2026-11-04T11:10:33Z",
+    "digest": "sha256:797b661679ae031cdf1b7fa606e4d278f6d144af233d65bc61d4ba1f8f906de3",
+    "workflow_run": {
+      "id": 41818641469,
+      "repository_id": 1373980147,
+      "head_repository_id": 1373980147,
+      "head_branch": "codex/milestone5-release-preparation",
+      "head_sha": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193"
+    }
+  }
+]

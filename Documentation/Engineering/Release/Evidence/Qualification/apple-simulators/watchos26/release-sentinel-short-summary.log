@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "E47C23A1-8DDB-4615-8D82-24EBC18523F8",
+        "deviceName" : "SwiftJXL-M5-watchos-8c0c8c1f",
+        "modelName" : "Apple Watch Series 11",
+        "osBuildNumber" : "23R353",
+        "osVersion" : "26.0",
+        "platform" : "watchOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "SwiftJXL-Package · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1793790986.519,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793790978.881,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Expectation failed: vectors.count >= 40_000\nvectors.count → 1\n40_000 → 40000",
+      "targetName" : "SwiftJXLCoreTests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()",
+      "testIdentifierURL" : "test://com.apple.xcode/SwiftJXL/SwiftJXLCoreTests/VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()",
+      "testName" : "optionalFullRangeHardwareReciprocalVectors()"
+    }
+  ],
+  "title" : "Test - SwiftJXL-Package",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

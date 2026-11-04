@@ -1,0 +1,93 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -scheme SwiftJXL-Package -configuration Release ENABLE_TESTABILITY=YES -destination "platform=watchOS Simulator,id=E47C23A1-8DDB-4615-8D82-24EBC18523F8" -derivedDataPath /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData -jobs 2 -parallel-testing-enabled NO "-only-testing:SwiftJXLTests" "-only-testing:SwiftJXLCoreTests" test -enumerate-tests -test-enumeration-format json -test-enumeration-style flat -test-enumeration-output-path /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-24cbd10-final/release/enumeration.json
+
+Build settings from command line:
+    ENABLE_TESTABILITY = YES
+
+Resolve Package Graph
+2026-11-04 16:45:40.356 xcodebuild[50408:8595391] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+
+
+Resolved source packages:
+  SwiftJXL: /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5
+
+Build Preparation
+Build task concurrency set to 2 via user default IDEBuildOperationMaxNumberOfConcurrentCompileTasks
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (7 targets)
+    Target 'swiftjxl-cli-product' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXLCore' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXL' in project 'SwiftJXL'
+    Target 'SwiftJXL-product' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXL' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXLCore' in project 'SwiftJXL'
+    Target 'SwiftJXLCoreTests-product' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXL_SwiftJXLCoreTests' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXLCore' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXL' in project 'SwiftJXL'
+    Target 'SwiftJXL_SwiftJXLCoreTests' in project 'SwiftJXL' (no dependencies)
+    Target 'SwiftJXLTests-product' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXLCore' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXL' in project 'SwiftJXL'
+    Target 'SwiftJXL' in project 'SwiftJXL'
+        ➜ Explicit dependency on target 'SwiftJXLCore' in project 'SwiftJXL'
+    Target 'SwiftJXLCore' in project 'SwiftJXL' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator27.2.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 1419c628eb96e891ee5da4fb29bc7c42
+Build description path: /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/XCBuildData/1419c628eb96e891ee5da4fb29bc7c42.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator27.2.sdk /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/SDKStatCaches.noindex/watchsimulator27.2-24S118-b9fa32cfc2bdb801fba35bd912eef9f2.sdkstatcache
+    cd /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.swiftpm/xcode
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/SDKs/WatchSimulator27.2.sdk -o /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/SDKStatCaches.noindex/watchsimulator27.2-24S118-b9fa32cfc2bdb801fba35bd912eef9f2.sdkstatcache
+
+ProcessInfoPlistFile /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXL_SwiftJXLCoreTests.bundle/Info.plist /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/SwiftJXL.build/Release-watchsimulator/SwiftJXL_SwiftJXLCoreTests-b.build/empty-SwiftJXL_SwiftJXLCoreTests.plist (in target 'SwiftJXL_SwiftJXLCoreTests' from project 'SwiftJXL')
+    cd /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5
+    builtin-infoPlistUtility /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/SwiftJXL.build/Release-watchsimulator/SwiftJXL_SwiftJXLCoreTests-b.build/empty-SwiftJXL_SwiftJXLCoreTests.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform watchsimulator -o /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXL_SwiftJXLCoreTests.bundle/Info.plist
+
+ProcessInfoPlistFile /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLTests.xctest/Info.plist /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/SwiftJXL.build/Release-watchsimulator/SwiftJXLTests-p.build/empty-SwiftJXLTests.plist (in target 'SwiftJXLTests-product' from project 'SwiftJXL')
+    cd /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5
+    builtin-infoPlistUtility /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/SwiftJXL.build/Release-watchsimulator/SwiftJXLTests-p.build/empty-SwiftJXLTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform watchsimulator -o /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLTests.xctest/Info.plist
+
+ProcessInfoPlistFile /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLCoreTests.xctest/Info.plist /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/SwiftJXL.build/Release-watchsimulator/SwiftJXLCoreTests-p.build/empty-SwiftJXLCoreTests.plist (in target 'SwiftJXLCoreTests-product' from project 'SwiftJXL')
+    cd /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5
+    builtin-infoPlistUtility /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/SwiftJXL.build/Release-watchsimulator/SwiftJXLCoreTests-p.build/empty-SwiftJXLCoreTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform watchsimulator -o /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLCoreTests.xctest/Info.plist
+
+CopySwiftLibs /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLTests.xctest (in target 'SwiftJXLTests-product' from project 'SwiftJXL')
+    cd /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLTests.xctest/SwiftJXLTests --scan-folder /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLTests.xctest/Frameworks --scan-folder /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLTests.xctest/PlugIns --scan-folder /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLTests.xctest/SystemExtensions --scan-folder /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLTests.xctest/Extensions --platform watchsimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Products/Release-watchsimulator/SwiftJXLTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/WatchSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/SwiftJXL.build/Release-watchsimulator/SwiftJXLTests-p.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+PruneExplicitPrecompiledModules /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+objc[50441]: Class _NoAnimationDelegate is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/watchOS_23R353/Library/Developer/CoreSimulator/Profiles/Runtimes/watchOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/SwiftUICore.framework/SwiftUICore (0x116748130) and /private/var/run/com.apple.security.cryptexd/mnt/watchOS_23R353/Library/Developer/CoreSimulator/Profiles/Runtimes/watchOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/UIKitCore.framework/UIKitCore (0x110c41d30). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[50449]: Class _NoAnimationDelegate is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/watchOS_23R353/Library/Developer/CoreSimulator/Profiles/Runtimes/watchOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/SwiftUICore.framework/SwiftUICore (0x116b38130) and /private/var/run/com.apple.security.cryptexd/mnt/watchOS_23R353/Library/Developer/CoreSimulator/Profiles/Runtimes/watchOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/UIKitCore.framework/UIKitCore (0x111031d30). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+
+Test session results, code coverage, and logs:
+	/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData/Logs/Test/Test-SwiftJXL-Package-2026.11.04_16-45-40-+0530.xcresult
+
+** TEST SUCCEEDED **
+

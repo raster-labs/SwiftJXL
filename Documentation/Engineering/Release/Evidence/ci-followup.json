@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "scope": "Preparation evidence after isolated synthetic gate-fixture correction; no stable release qualification",
+  "recordedUTC": "2026-11-04T07:06:05.345076+00:00",
+  "sourceGroupDigests": {
+    "runtime": "55b65dcea0a8b47f0608036b7d7e626106482c723ab025ff38c99625bf393b58",
+    "preparation": "d1688387c1b07df0afb370b40aee9c7be044f448aee0d53ca3226491e9826ecf"
+  },
+  "previousEvidence": {
+    "path": "Documentation/Engineering/Release/Evidence/validation.json",
+    "sha256": "fd83f09400bcc0f1f310a46b4cf0b70e2e705221c9f6bb134a7f6a7d6ad02d5f"
+  },
+  "failure": {
+    "workflowRun": 41789624221,
+    "job": 126439706918,
+    "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/41789624221/job/126439706918",
+    "cause": "The positive all-gates-ready test wrote every synthetic report to one path; gates with different source groups changed the bytes under earlier evidence hashes."
+  },
+  "correction": "Use one synthetic report filename per gate. The evidence validator is unchanged and retains strict hash checks.",
+  "changedPreparationFiles": [
+    "Scripts/test-release-gates.py"
+  ],
+  "validation": [
+    {
+      "command": "python3 Scripts/test-release-gates.py",
+      "exitCode": 0,
+      "tests": 14
+    }
+  ],
+  "reusedEvidence": "Runtime, consumer runner/example, documentation and provenance files are byte-identical to the prior passing preparation receipt. Only the test fixture filename changes. Original reports and failed CI run are retained.",
+  "stableReleaseReady": false,
+  "publicationAuthorised": false
+}

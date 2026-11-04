@@ -1,0 +1,9 @@
+◇ Test run started.
+↳ Testing Library Version: 6.2.4 (5ee435b15ad40ec)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite VarDCTARMIntegerTests started.
+◇ Test optionalFullRangeHardwareReciprocalVectors() started.
+✘ Test optionalFullRangeHardwareReciprocalVectors() recorded an issue at VarDCTARMIntegerTests.swift:234:9: Expectation failed: (vectors.count → 1) >= (40_000 → 40000)
+✘ Test optionalFullRangeHardwareReciprocalVectors() failed after 0.002 seconds with 1 issue.
+✘ Suite VarDCTARMIntegerTests failed after 0.003 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.004 seconds with 1 issue.

@@ -1,0 +1,9 @@
+modular-encode-w1 complete
+modular-encode-w4 complete
+modular-decode-w1 complete
+modular-decode-w4 complete
+vardct-encode-w1 complete
+vardct-encode-w4 complete
+vardct-decode-w1 complete
+vardct-decode-w4 complete
+{"status": "investigation-required", "triggers": [{"case": "modular-encode-w4", "metric": "latencyMedianMS"}]}

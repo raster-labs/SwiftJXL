@@ -1,0 +1,42 @@
+[
+  {
+    "id": 13315635235,
+    "name": "linux-x86_64-swift-6.2-address",
+    "digest": "dbad3c8fb6d1e0fc75e894250bd4fac940e449e9b742994d9780e2ee4af6d960"
+  },
+  {
+    "id": 13315360903,
+    "name": "linux-x86_64-swift-6.4-address",
+    "digest": "f12c3b352b153bac1129f9004e9c84688c553cdbf17372f3b5fbe5d55a43bf10"
+  },
+  {
+    "id": 13315166587,
+    "name": "linux-aarch64-swift-6.4-address",
+    "digest": "1ab1cc7cd70494c599add3e491211b1b7a412d981b68b746f1a49e560a5d2e26"
+  },
+  {
+    "id": 13315131176,
+    "name": "linux-x86_64-swift-6.4-thread",
+    "digest": "4f7f361869b9058569f6a39932340d2cd3827fefb4810c62fccd8f5d14e0d751"
+  },
+  {
+    "id": 13314916948,
+    "name": "linux-aarch64-swift-6.2-address",
+    "digest": "43f8577341eed3e2d6880ddcf0b98b3bece4f8b8e1b1b56b145e2fcaed7000ac"
+  },
+  {
+    "id": 13315870159,
+    "name": "linux-aarch64-swift-6.2-thread",
+    "digest": "bd44e88fc8a8072e32ea9766f701c0a30f53d462e1ab921a1fc6cf3a9cd9766c"
+  },
+  {
+    "id": 13315261963,
+    "name": "linux-aarch64-swift-6.4-thread",
+    "digest": "17522c4d1ed6e3a170d80e38edf8981032c31aba02ee5bb6b42414ad831dcea7"
+  },
+  {
+    "id": 13315062449,
+    "name": "linux-x86_64-swift-6.2-thread",
+    "digest": "78e641cb0b5b002ec02091cb1494cfc5c2ced340358546211c45f0ddc4323480"
+  }
+]

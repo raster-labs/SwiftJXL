@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "E47C23A1-8DDB-4615-8D82-24EBC18523F8",
+        "deviceName" : "SwiftJXL-M5-watchos-8c0c8c1f",
+        "modelName" : "Apple Watch Series 11",
+        "osBuildNumber" : "23R353",
+        "osVersion" : "26.0",
+        "platform" : "watchOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "SwiftJXL-Package · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1793790975.584,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793790962.436,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Caught error: Error Domain=NSCocoaErrorDomain Code=260 \"The file “absent-vectors.json” couldn’t be opened because there is no such file.\" UserInfo={NSFilePath=/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-24cbd10-final/release/absent-vectors.json, NSURL=file:///Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-24cbd10-final/release/absent-vectors.json, NSUnderlyingError=0x15891a910 {Error Domain=NSPOSIXErrorDomain Code=2 \"No such file or directory\"}}",
+      "targetName" : "SwiftJXLCoreTests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()",
+      "testIdentifierURL" : "test://com.apple.xcode/SwiftJXL/SwiftJXLCoreTests/VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()",
+      "testName" : "optionalFullRangeHardwareReciprocalVectors()"
+    }
+  ],
+  "title" : "Test - SwiftJXL-Package",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

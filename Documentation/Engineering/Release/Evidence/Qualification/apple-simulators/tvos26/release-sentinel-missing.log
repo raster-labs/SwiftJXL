@@ -1,0 +1,45 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -scheme SwiftJXL-Package -configuration Release ENABLE_TESTABILITY=YES -destination "platform=tvOS Simulator,id=E2434DB6-4D33-4C82-8380-A1FF76593726" -derivedDataPath /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-tvos26-suite-prebuild/DerivedData -jobs 2 -parallel-testing-enabled NO "-only-testing:SwiftJXLCoreTests/VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()" test-without-building -resultBundlePath /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-tvos26-00f03ff-final/release/sentinel-missing.xcresult
+
+Build settings from command line:
+    ENABLE_TESTABILITY = YES
+
+Resolve Package Graph
+2026-11-04 16:38:53.295 xcodebuild[46883:8566702] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+
+
+Resolved source packages:
+  SwiftJXL: /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5
+
+Writing result bundle at path:
+	/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-tvos26-00f03ff-final/release/sentinel-missing.xcresult
+
+objc[46896]: Class _NoAnimationDelegate is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/tvOS_23J352/Library/Developer/CoreSimulator/Profiles/Runtimes/tvOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/SwiftUICore.framework/SwiftUICore (0x1171ec128) and /private/var/run/com.apple.security.cryptexd/mnt/tvOS_23J352/Library/Developer/CoreSimulator/Profiles/Runtimes/tvOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/UIKitCore.framework/UIKitCore (0x111432490). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+Test Suite 'Selected tests' started at 2026-11-04 16:38:54.236.
+Test Suite 'SwiftJXLCoreTests.xctest' started at 2026-11-04 16:38:54.236.
+Test Suite 'SwiftJXLCoreTests.xctest' passed at 2026-11-04 16:38:54.236.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-04 16:38:54.237.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64-apple-tvos17.0-simulator
+◇ Suite VarDCTARMIntegerTests started.
+◇ Test optionalFullRangeHardwareReciprocalVectors() started.
+✘ Test optionalFullRangeHardwareReciprocalVectors() recorded an issue at VarDCTARMIntegerTests.swift:231:6: Caught error: Error Domain=NSCocoaErrorDomain Code=260 "The file “absent-vectors.json” couldn’t be opened because there is no such file." UserInfo={NSFilePath=/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-tvos26-00f03ff-final/release/absent-vectors.json, NSURL=file:///Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-tvos26-00f03ff-final/release/absent-vectors.json, NSUnderlyingError=0x6000037043c0 {Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory"}}
+✘ Test optionalFullRangeHardwareReciprocalVectors() failed after 0.004 seconds with 1 issue.
+✘ Suite VarDCTARMIntegerTests failed after 0.005 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.006 seconds with 1 issue.
+2026-11-04 16:39:05.737 xcodebuild[46883:8566702] [MT] IDETestOperationsObserverDebug: 12.301 elapsed -- Testing started completed.
+2026-11-04 16:39:05.737 xcodebuild[46883:8566702] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-04 16:39:05.737 xcodebuild[46883:8566702] [MT] IDETestOperationsObserverDebug: 12.301 sec, +12.301 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-tvos26-00f03ff-final/release/sentinel-missing.xcresult
+
+Failing tests:
+	VarDCTARMIntegerTests.optionalFullRangeHardwareReciprocalVectors()
+
+** TEST EXECUTE FAILED **
+
+Testing started

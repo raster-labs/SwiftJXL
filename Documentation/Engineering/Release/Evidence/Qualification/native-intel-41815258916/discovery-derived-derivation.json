@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "scope": "Derived discovery identities only; raw receipts unchanged",
+  "driverSHA256": "8130d9ebe2370a552f4bcedba3afa7fe03b5e89e911cb2684b80000280f22f18",
+  "rawLogSHA256": "0bc66fa58fe4e8b52838fb57d3bc2b26d7ce3d3aa383bc03da2e700946e343ba",
+  "rawInventorySHA256": "2ae12c254ace6e23a8cda64a9e190e90d6776a6f6611aba76dbfdc9efe47542e",
+  "xmlSHA256": "620fb4eb4ccd1d9f0a4524c3835dc7a944e154c8986458f0a92bd67874fa83b3",
+  "removedDiagnostic": "warning: '--build-system native' has been deprecated and will be removed in a future release; please report an issue at https://github.com/swiftlang/swift-package-manager/issues if you are unable to adopt the default build system.\n",
+  "diagnosticOccurrences": 0,
+  "separatorNormalisations": [
+    {
+      "from": "SwiftJXLTests.cancellationInProviderFinalisationPreventsPublication(_:)",
+      "to": "SwiftJXLTests/cancellationInProviderFinalisationPreventsPublication(_:)"
+    }
+  ],
+  "derivedLogSHA256": "0bc66fa58fe4e8b52838fb57d3bc2b26d7ce3d3aa383bc03da2e700946e343ba",
+  "derivedInventorySHA256": "ded6f31c2d47fad461a09331bf009caa26f7676b767030e412663f5deaf192aa",
+  "declarations": 368,
+  "executionDeclarations": 368,
+  "exactIdentitySetAgreement": true,
+  "missing": [],
+  "unexpected": []
+}

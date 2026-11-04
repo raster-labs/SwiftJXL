@@ -1,0 +1,10 @@
+{
+  "modular-encode-w4-r0-0-baseline.json": {
+    "sha256": "5a6bf7edc1c1ad3aae3f82bf88db22c9e848505b6fc087b8b9bafd6352b0f00b",
+    "bytes": 1259
+  },
+  "report.json": {
+    "sha256": "43d169f547c1066c6380f7d44714f0b1001b9d65710b850ba5dd5181f61b5122",
+    "bytes": 1351
+  }
+}

@@ -1,0 +1,1183 @@
+{
+  "binary": "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+  "binary_sha256": "9186978676edd25aa32ecde9d21eb21b952e7c0b240a8f8463f0bbc1e3f308bb",
+  "installer_sha256": "2ec55c5025e69e18e92ba76f738bee4fe5c9df4ea6b332ae9ec7140b8b55e693",
+  "test_runner_sha256": "9a369cd681e8157843711856f6c4e65baccd5e3a88170534c434e5d5732d8676",
+  "version": "2.1.0-dev.2",
+  "manual_sha256": "11d37c6ea7a925a1ef034ebe2f91823cd153ef731a3f867389236fb738b9f130",
+  "commands": [
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            NRRD or integer colour PNM/PAM/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded Modular and VarDCT decoding, NRRD/PNM and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            NRRD or integer colour PNM/PAM/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded Modular and VarDCT decoding, NRRD/PNM and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "-h"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            NRRD or integer colour PNM/PAM/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded Modular and VarDCT decoding, NRRD/PNM and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            NRRD or integer colour PNM/PAM/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded Modular and VarDCT decoding, NRRD/PNM and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli capabilities [--json] [OPTIONS]\n\nReport executable command support without reading files.\n--json writes one JSON document to stdout; diagnostics stay on stderr.\nReports integer colour image, NRRD/PNM and native JPEG reconstruction profiles.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli capabilities --json\n  swiftjxl-cli capabilities --verbose=+++\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "help",
+        "capabilities"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli capabilities [--json] [OPTIONS]\n\nReport executable command support without reading files.\n--json writes one JSON document to stdout; diagnostics stay on stderr.\nReports integer colour image, NRRD/PNM and native JPEG reconstruction profiles.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli capabilities --json\n  swiftjxl-cli capabilities --verbose=+++\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "-h"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli capabilities [--json] [OPTIONS]\n\nReport executable command support without reading files.\n--json writes one JSON document to stdout; diagnostics stay on stderr.\nReports integer colour image, NRRD/PNM and native JPEG reconstruction profiles.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli capabilities --json\n  swiftjxl-cli capabilities --verbose=+++\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--version",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor1-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor1-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exit_code": 4,
+      "expected_exit_code": 4,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Requires the supported unsigned integer pixel profile without ICC.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "+"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=+"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:2"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:3"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "+++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=+++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vvvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.008727098999997907\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.009488044999898193\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.008424047000062274\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.010079528999995091\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.00874725199992099\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:4"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.008422957999982827\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.008972993000043061\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.008749598000122205\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-vvvvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.009863816000006409\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-v",
+        "-v",
+        "-v",
+        "-v",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.00852313099994717\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.007893019999983153\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.007878118000007817\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:",
+        "5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.008766102000208775\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "-verbose:5"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.008048384999938207\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose",
+        "+++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.008384259999957067\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--verbose=+++++"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.00967032200014728\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--verbose",
+        "capabilities",
+        "--json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "-verbose",
+        "capabilities",
+        "--json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "-v",
+        "--verbose",
+        "2",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\nencode: true\ndecode: true\ninspect: true\nvalidate: true\ntranscode: true\nformats: jpeg, jpeg-xl, nrrd, pnm, pnm-srgb\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "-vv",
+        "-vvv"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\nencode: true\ndecode: true\ninspect: true\nvalidate: true\ntranscode: true\nformats: jpeg, jpeg-xl, nrrd, pnm, pnm-srgb\n",
+      "stderr": "[1] swiftjxl-cli: development version 2.1.0-dev.2\n[2] swiftjxl-cli: reporting capabilities\n[3] swiftjxl-cli: advertised formats: 5; CLI capabilities; library scalar API is separately available\n[4] swiftjxl-cli: elapsed seconds: 0.0004160890000548534\n[5] swiftjxl-cli: arguments validated; capability report emitted; no codec payload opened\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--json",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "{\"canDecode\":true,\"canDecodeAnimation\":true,\"canEncode\":true,\"canEncodeAnimation\":true,\"canInspect\":true,\"canTranscode\":true,\"canValidate\":true,\"defaultMaximumAnimationFrames\":64,\"encodeModes\":[\"lossless\",\"lossy\"],\"formats\":[\"jpeg\",\"jpeg-xl\",\"nrrd\",\"pnm\",\"pnm-srgb\",\"jpeg-srgb\"],\"interchangeFormat\":\"nrrd\",\"interchangeFormats\":[\"nrrd\",\"pnm\",\"pnm-srgb\"],\"interchangeMeaningfulBits\":16,\"jpegPixelInputFormat\":\"jpeg-srgb\",\"jpegPixelMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"jpegPixelProfile\":\"8\\/12-bit Huffman DCT grey\\/RGB with nearest chroma; 8..16-bit SOF3 grey\\/RGB; ICC\\/Exif\\/CMYK unsupported in CLI; explicit sRGB; interchange export and encoding require 8..16 bits\",\"lossyDistanceDefault\":1,\"lossyInterchangeFormats\":[\"nrrd\",\"pnm-srgb\"],\"lossyMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"maximumAnimationFrames\":256,\"maximumCompressedBytes\":4194304,\"maximumDecodeDimension\":1024,\"maximumEncodeDimension\":1024,\"maximumLossyAlphaDimension\":1024,\"maximumTranscodeDimension\":2048,\"minimumAppleOS\":\"26.0\",\"pixelContainers\":[\"codestream\",\"iso\"],\"pnmColourTransfers\":[\"bt709\",\"srgb-explicit-variant\"],\"pnmMeaningfulBits\":[8,9,10,11,12,13,14,15,16],\"profile\":\"integer Modular grey\\/RGB with optional alpha, inspect\\/validate 1..16 bits and encode 8..16 bits; VarDCT encode\\/decode 8..16-bit sRGB with straight alpha and grouped single-pass frames; explicit independent-frame animation; maximum dimension 1024\",\"tool\":\"swiftjxl-cli\",\"transcodePreservation\":\"original-bitstream\",\"transcodeProfileLimits\":[\"8-bit baseline, extended-sequential and progressive Huffman JPEG; one or three components\",\"Greyscale, 4:4:4, 4:2:2, 4:2:0 and 4:4:0; dimensions at most 2048 per side\",\"64 MiB compressed\\/coefficient limits; bounded metadata and caller resource ceilings\",\"Reverse requires one valid jbrd box and the supported single-pass DCT8 coefficient frame\",\"RGB\\/greyscale ICC profiles up to the caller limit (maximum 4 MiB); multiple DC groups\\/passes, arithmetic JPEG, CMYK and unsupported markers reject explicitly\"],\"version\":\"2.1.0-dev.2\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--help",
+        "--quiet"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2 \u2014 JPEG XL\nUSAGE: swiftjxl-cli [OPTIONS] <command> [OPTIONS]\n\nCOMMANDS\n  capabilities [--json]      Report executable command support.\n  inspect, validate         Inspect headers or validate the supported scalar frame.\n  encode, decode            NRRD or integer colour PNM/PAM/JPEG XL file and pipe conversion.\n  help [command]             Show global or command-specific help.\n  version                    Show the development version.\n  transcode                 Reversible native JPEG/JPEG XL coefficient conversion.\n\nRequires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.\nBounded Modular and VarDCT decoding, NRRD/PNM and native JPEG reconstruction profiles are available.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli -h\n  swiftjxl-cli help capabilities\n  swiftjxl-cli capabilities --json -vv\n  swiftjxl-cli capabilities -verbose: 3\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--verbose=0"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--verbose=6"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--verbose=10"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--verbose=99999999999999999999999999999"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--verbose=abc"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--verbose=++++++"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--verbose=+2"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--verbose=\u0661"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--verbose="
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--verbose=5",
+        "-v"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity exceeds the maximum level 5.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "-vvvvvv"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity exceeds the maximum level 5.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "-v",
+        "--quiet"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --quiet and verbosity cannot be combined.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--quiet",
+        "--verbose=1"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --quiet and verbosity cannot be combined.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--quiet",
+        "--verbose=0"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Verbosity must be 1 through 5, or + through +++++.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--unknown"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unknown option. Use swiftjxl-cli --help.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "bogus"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unknown command. Use swiftjxl-cli --help.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "help",
+        "bogus"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unknown command. Use swiftjxl-cli --help.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "extra"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Unexpected positional argument. Use --input or --output for codec commands.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--verbose:"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--json"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --json requires capabilities or a codec command.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--input",
+        "some-path"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Input/output and codec options require a codec command.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--output",
+        "x"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: Input/output and codec options require a codec command.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "capabilities",
+        "--version"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --version cannot be combined with a command or command options.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--input"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: An option is missing its value. Use --help for syntax.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "transcode",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "USAGE: swiftjxl-cli transcode --input PATH --input-format FORMAT --output-format FORMAT [OPTIONS]\n\nRecompress JPEG to JPEG XL or restore the original JPEG bytes from JXL.\nSupported pairs: jpeg -> jxl/jpeg-xl; jxl/jpeg-xl -> jpeg.\n8-bit baseline/extended/progressive Huffman JPEG; greyscale or three channels,\ncommon 444/422/420/440 sampling; dimensions <=2048. Input/output <=4194304 bytes.\nRGB/greyscale ICC is preserved; unsupported coefficient profiles return exit 4.\nReverse requires valid JPEG reconstruction data; no original-source fallback.\n\nCOMMAND OPTIONS\n  -i, --input PATH          Required regular file/pipe; '-' means stdin.\n  -o, --output PATH         Final binary output; default '-' means stdout.\n  --input-format FORMAT    jpeg, jxl or jpeg-xl; required.\n  --output-format FORMAT   jpeg, jxl or jpeg-xl; required, opposite format.\n  --mode lossless          Default; original JPEG byte preservation.\n  --json                   Write final JSON report to stderr after payload.\n  --overwrite              Atomically replace an existing final regular file.\n  --backend NAME           automatic or scalar-cpu; accelerated returns 4.\n  --copy-policy POLICY     require-sharing (default) or allow-copy.\n  --threads N              Worker ceiling 1..8; scalar work uses one.\n  --max-memory BYTES       Aggregate memory ceiling, including input/output.\n  --timeout SECONDS        Overall deadline, including pipe I/O.\nLossy/near-lossless modes, max-error, quality and source-file fallback are unsupported.\nLibrary processing stays in memory. Final files publish atomically; stdout\ncan contain partial bytes on I/O failure. JSON is emitted only after success.\n\nOPTIONS\n  -h, --help                 Show this help; also: help [command].\n  --version                  Show the development version.\n  -v, -vv ... -vvvvv         Increase verbosity (maximum 5).\n  --verbose LEVEL           Set verbosity to 1..5 or + through +++++.\n  --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.\n  -q, --quiet                Suppress optional diagnostics; errors remain visible.\n\nVERBOSITY (stderr only; default 0)\n  1 summary; 2 command stages; 3 capability details; 4 elapsed timing;\n  5 bounded diagnostic trace. Levels are cumulative. Quiet conflicts with verbosity.\n  Payload bytes, metadata, raw addresses and input/output paths are never logged.\n\nEXIT STATUS\n  0 success; 2 invalid usage; 3 malformed input; 4 unsupported feature;\n  5 resource/deadline; 6 I/O/storage failure (including a closed pipe);\n  7 internal failure; 130 user cancellation.\n\nMANUAL\n  man swiftjxl-cli (installed with the executable by Scripts/install-cli.sh).\n\nEXAMPLES\n  swiftjxl-cli transcode -i source.jpg --input-format jpeg --output-format jxl -o image.jxl\n  swiftjxl-cli transcode -i image.jxl --input-format jxl --output-format jpeg -o restored.jpg\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "transcode"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "swiftjxl-cli: --input is required.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--help"
+      ],
+      "condition": "stdout pipe with no readers",
+      "exit_code": 6,
+      "expected_exit_code": 6,
+      "stderr": "swiftjxl-cli: output I/O failure.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "Installed /Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/bin/swiftjxl-cli\nManual: /Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\nRead with: man -M \"/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man\" swiftjxl-cli\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "Installed /Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/bin/swiftjxl-cli\nManual: /Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\nRead with: man -M \"/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man\" swiftjxl-cli\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/bin/swiftjxl-cli",
+        "--version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "swiftjxl-cli 2.1.0-dev.2\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/man",
+        "-M",
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man",
+        "-w",
+        "swiftjxl-cli"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/mandoc",
+        "-T",
+        "lint",
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/mandoc",
+        "-T",
+        "ascii",
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "SWIFTJXL-CLI(1)          Swift Image Compression Suite         SWIFTJXL-CLI(1)\n\nN\bNA\bAM\bME\bE\n       swiftjxl-cli - image encoding, decoding, inspection and transcoding\n\nS\bSY\bYN\bNO\bOP\bPS\bSI\bIS\bS\n       s\bsw\bwi\bif\bft\btj\bjx\bxl\bl-\b-c\bcl\bli\bi [_\bo_\bp_\bt_\bi_\bo_\bn_\bs] _\bc_\bo_\bm_\bm_\ba_\bn_\bd [_\bo_\bp_\bt_\bi_\bo_\bn_\bs]\n\nD\bDE\bES\bSC\bCR\bRI\bIP\bPT\bTI\bIO\bON\bN\n       This development tool inspects headers and validates the complete\n       supported scalar JPEG XL frame using the public decoder. It also\n       provides help, version and executable capability reporting. This is not\n       a general JPEG XL validator.  Native transcode recompresses JPEG\n       coefficients to JPEG XL and reconstructs the original JPEG bytes from\n       valid reconstruction data, entirely in memory.  Build with Swift 6.2 or\n       later in Swift 6 language mode.  Apple OS minimum is 26.0.  CLI hosts\n       are macOS and Linux; consult qualification records for executed\n       coverage.\n\nC\bCO\bOM\bMM\bMA\bAN\bND\bDS\bS\n       c\bca\bap\bpa\bab\bbi\bil\bli\bit\bti\bie\bes\bs [\b[-\b--\b-j\bjs\bso\bon\bn]\b]\n              Report executable support. Inspect and validate are available;\n              encode and decode accept the explicit UInt16 NRRD and integer\n              PNM/PAM profiles.  JSON is one document on stdout.\n\n       h\bhe\bel\blp\bp [\b[c\bco\bom\bmm\bma\ban\bnd\bd]\b]\n              Show global or command-specific help. No arguments also show\n              global help.\n\n       v\bve\ber\brs\bsi\bio\bon\bn\n              Show the development version.\n\n       i\bin\bns\bsp\bpe\bec\bct\bt,\b, v\bva\bal\bli\bid\bda\bat\bte\be\n              Require -i/--input PATH; a hyphen reads stdin. Inspect reports\n              supported headers, without checking pixel integrity. Validate\n              decodes the entire supported frame in memory and discards\n              pixels. Supports unsigned greyscale/RGB Modular with optional\n              alpha, 1 through 16 meaningful bits, or bounded sRGB VarDCT at 8\n              through 16 bits, dimensions up to 1024, one frame and compressed\n              input at most 4 MiB. Unsupported profiles return 4.  Optional\n              -o/--output PATH writes a report; the default is stdout.  Use\n              --json for structured output, including pixelPayloadValidated.\n              File reports publish atomically; --overwrite permits replacement\n              of an existing regular file. Input aliases and output symlinks\n              are refused.  Failure preserves any previous report; partial\n              stdout cannot be rolled back.\n\n       I\bIn\bns\bsp\bpe\bec\bct\bti\bio\bon\bn a\ban\bnd\bd v\bva\bal\bli\bid\bda\bat\bti\bio\bon\bn l\bli\bim\bmi\bit\bts\bs\n              Input format is jxl or jpeg-xl. Backend is automatic (default)\n              or scalar-cpu; accelerated is unavailable. Copy policy defaults\n              to require-sharing; allow-copy is accepted. Threads is a ceiling\n              from 1 to 8.  Modular encoding, eligible Modular group decoding\n              and VarDCT encoding analysis use bounded workers. JPEG and\n              VarDCT pixel decoding remain serial.  Maximum memory is positive\n              bytes, default 1073741824, including command buffers and codec\n              admission; it is not a process RSS ceiling.  Timeout is positive\n              finite seconds, at most 31536000, default 120, checked\n              cooperatively across input, codec and output. Pipe polling\n              checks every 25 ms; filesystem calls depend on operating-system\n              scheduling. Ctrl+C returns 130.  Mode, max-error and output-\n              format do not apply to these two commands.\n\n       e\ben\bnc\bco\bod\bde\be,\b, d\bde\bec\bco\bod\bde\be\n              Encode requires --input-format; decode requires --output-format.\n              Select nrrd, pnm or pnm-srgb explicitly.  The compressed\n              endpoint defaults to jxl; jpeg-xl is also accepted.  Use\n              -i/--input and optional -o/--output; a hyphen denotes a stream.\n              Encode and decode dimensions are at most 1024.  The explicit\n              NRRD0005 profile is attached, raw, 2D, full-precision UInt16,\n              with little/big endian and x as fastest axis. Encode assigns\n              D65/sRGB and default intent. Decode rejects lower meaningful\n              precision or metadata that this profile cannot preserve. Header\n              limits: 16384 bytes, 64 lines, 1024 bytes per line. Detached\n              data, spatial metadata and custom keys reject.  Lossless mode is\n              the default; explicit --mode lossy selects VarDCT.  Lossy\n              requires pnm-srgb (8 through 16 bits) or nrrd (16-bit\n              greyscale), with optional straight alpha preserved exactly. All\n              CLI images, including alpha images, are limited to 1024 pixels\n              per axis and 1,048,576 pixels within resource limits.  Standard\n              BT.709 pnm rejects.  --distance FLOAT selects positive finite\n              JPEG XL perceptual distance, default 1; it is not a maximum\n              sample-error guarantee.  --gaborish on|off, --adaptive-\n              quantisation on|off and --dc-smoothing on|off default to on.\n              These controls require explicit encode --mode lossy;\n              incompatible use returns 2 before opening input.  Near-lossless\n              and max-error are unsupported. JSON reports lossy fidelity.\n              Memory, worker, timeout, backend and copy-policy limits are as\n              above.  Output is binary; JSON success reports go to stderr\n              after publication.  Requested verbosity also uses stderr.\n              Reporting failure cannot retract published output. Broken binary\n              output never emits a success report.  Encoding shares retained\n              input bytes with the codec; decoding writes borrowed rows\n              directly. No extra full-image serialisation array is created.\n              Shell pipes still copy bytes and do not share allocations\n              between processes.\n\nO\bOP\bPT\bTI\bIO\bON\bNS\bS\n       -\b-h\bh,\b, -\b--\b-h\bhe\bel\blp\bp\n              Show help, including after a command.\n\n       -\b--\b-v\bve\ber\brs\bsi\bio\bon\bn\n              Show the development version.\n\n       -\b-v\bv,\b, -\b-v\bvv\bv,\b, -\b-v\bvv\bvv\bv,\b, -\b-v\bvv\bvv\bvv\bv,\b, -\b-v\bvv\bvv\bvv\bvv\bv\n              Increase diagnostic verbosity, up to 5.\n\n       -\b--\b-v\bve\ber\brb\bbo\bos\bse\be L\bLE\bEV\bVE\bEL\bL,\b, -\b--\b-v\bve\ber\brb\bbo\bos\bse\be=\b=L\bLE\bEV\bVE\bEL\bL\n              Set level to 1 through 5, or + through +++++. Bare verbose\n              increments once.\n\n       -\b-v\bve\ber\brb\bbo\bos\bse\be:\b: L\bLE\bEV\bVE\bEL\bL,\b, -\b-v\bve\ber\brb\bbo\bos\bse\be:\b:L\bLE\bEV\bVE\bEL\bL\n              Equivalent explicit verbosity spelling; bare -verbose increments\n              once.\n\n       -\b-q\bq,\b, -\b--\b-q\bqu\bui\bie\bet\bt\n              Suppress optional diagnostics; errors remain visible. Conflicts\n              with verbosity.\n\nD\bDI\bIA\bAG\bGN\bNO\bOS\bST\bTI\bIC\bC L\bLE\bEV\bVE\bEL\bLS\bS\n       Default 0 reports errors only. Levels are cumulative: 1 summary; 2\n       stages; 3 capability/configuration details; 4 elapsed timing; 5 bounded\n       trace. Invalid levels or totals above 5 return 2.  Explicit levels set\n       and repeated flags increment in argument order.  Diagnostics use\n       stderr. Requested help/version/capability data uses stdout.  Diagnostic\n       writes do not wait for stderr to drain. An unavailable diagnostic\n       stream returns I/O failure (6). Final error messages are best effort\n       and cannot block the original failure, deadline (5) or cancellation\n       (130) exit status.  No payload bytes, metadata, raw addresses or\n       input/output paths are logged.\n\nE\bEX\bXI\bIT\bT S\bST\bTA\bAT\bTU\bUS\bS\n       0 success/help/version; 2 invalid usage; 3 malformed input; 4\n       unsupported feature/layout/backend/format; 5 resource/deadline; 6\n       input/output failure including a closed pipe; 7 internal failure; 130\n       user cancellation.\n\nE\bEX\bXA\bAM\bMP\bPL\bLE\bES\bS\n       swiftjxl-cli -h\n       swiftjxl-cli help capabilities\n       swiftjxl-cli capabilities --json -vv\n       swiftjxl-cli capabilities -verbose: 3\n       swiftjxl-cli capabilities --verbose=+++++\n\nI\bIN\bNS\bST\bTA\bAL\bLL\bLA\bAT\bTI\bIO\bON\bN\n       Scripts/install-cli.sh installs or updates the executable and this page\n       together.  Use --prefix for an absolute prefix (default /usr/local),\n       --destdir or DESTDIR for staging, and --binary for a prebuilt binary\n       matching VERSION.  Files are PREFIX/bin/swiftjxl-cli and\n       PREFIX/share/man/man1/swiftjxl-cli.1.  For custom prefixes use man -M\n       PREFIX/share/man swiftjxl-cli, or configure MANPATH.  No index refresh\n       is needed for direct lookup; no sudo runs automatically.\n\nS\bSE\bEE\bE A\bAL\bLS\bSO\bO\n       m\bma\ban\bn(1)\n\n       CLI.md and Documentation/Engineering/OS27CLI/README.md in the SwiftJXL\n       repository.\n\n\nN\bNA\bAT\bTI\bIV\bVE\bE J\bJP\bPE\bEG\bG T\bTR\bRA\bAN\bNS\bSC\bCO\bOD\bDI\bIN\bNG\bG\n       t\btr\bra\ban\bns\bsc\bco\bod\bde\be -\b--\b-i\bin\bnp\bpu\but\bt P\bPA\bAT\bTH\bH -\b--\b-i\bin\bnp\bpu\but\bt-\b-f\bfo\bor\brm\bma\bat\bt F\bFO\bOR\bRM\bMA\bAT\bT -\b--\b-o\bou\but\btp\bpu\but\bt-\b-f\bfo\bor\brm\bma\bat\bt F\bFO\bOR\bRM\bMA\bAT\bT\n       supports jpeg to jxl/jpeg-xl and the reverse pair. Both formats are\n       required.  Mode is lossless (default), preserving the original JPEG\n       bytes. The reverse operation needs valid reconstruction data; it never\n       consults an original JPEG.  Supports 8-bit baseline, extended and\n       progressive Huffman JPEG, greyscale or three components, common\n       444/422/420/440 sampling, dimensions up to 2048.  CLI input and output\n       are limited to 4 MiB. RGB/greyscale ICC profiles are preserved.\n       Unsupported frame profiles return 4.  Lossy/near-lossless, max-error\n       and source-file fallback are unavailable.  Output defaults to stdout;\n       --output selects an atomic final file transaction.  --overwrite\n       explicitly permits replacement. --json writes the final success report\n       to stderr after binary publication. Limits and stream behaviour follow\n       encode/decode; processing creates no intermediate image file.\n\n\nC\bCO\bOL\bLO\bOU\bUR\bR I\bIN\bNT\bTE\bER\bRC\bCH\bHA\bAN\bNG\bGE\bE\n       The pnm profile accepts one binary P5/P6/P7 image, greyscale or RGB,\n       with optional straight alpha, 8 to 16 meaningful bits and\n       MAXVAL=2^bits-1.  Dimensions are at most 1024; input is at most 4 MiB.\n       Multi-byte samples are big endian. Standard colour uses BT.709\n       transfer. The pnm-srgb variant requires explicit selection on both\n       import and export; file syntax alone cannot distinguish it. No\n       rescaling or colour conversion occurs.  Premultiplied alpha, ICC, other\n       interpretation metadata, unsupported tuple meanings and extra frames\n       reject. Headers are bounded to 16 KiB, numeric tokens to 64 bytes, and\n       PAM to 64 lines of at most 1024 bytes each.  After the P5/P6 MAXVAL\n       exactly one whitespace delimiter precedes the raster; any subsequent\n       whitespace or hash byte is sample data.\n\n\nA\bAN\bNI\bIM\bMA\bAT\bTI\bIO\bON\bN A\bAN\bND\bD C\bCO\bON\bNT\bTA\bAI\bIN\bNE\bER\bRS\bS\n       Encode accepts --container codestream|iso. Repeat -i with named images\n       for an animation, or specify --animation for a timed singleton. Use\n       --frame-duration TICKS (one value or a comma list), --ticks-per-second\n       NUMERATOR/DENOMINATOR, and --loop-count N. Defaults: 10 ticks, 100/1,\n       indefinite loops. --max-frames defaults to 64 and is capped at 256.\n\n       Decode --frame INDEX selects a zero-based frame. Decode --all-frames\n       requires a new output directory, writes numbered frame files and\n       timing.json, and refuses overwrite/stdout. Files are staged before\n       exclusive publication; a failure removes only this transaction's\n       entries. Directory publication is not atomic as a group.\n       Inspect/validate --all-frames reports the exact timeline; only validate\n       decodes pixels.\n\nJ\bJP\bPE\bEG\bG P\bPI\bIX\bXE\bEL\bL I\bIN\bNP\bPU\bUT\bT\n       Explicit --input-format jpeg-srgb enables bounded native 8-bit Huffman\n       grey/RGB DCT JPEG pixel decoding, with scalar IDCT and nearest chroma\n       upsampling, plus 12-bit DCT and 8..16-bit SOF3 grey/RGB.  JPEG pixel\n       export and JPEG XL encoding require 8..16 meaningful bits.  Lower-\n       precision SOF3 rejects without implicitly widening samples.  ICC/Exif,\n       CMYK and arithmetic profiles reject in the CLI. Use pnm-srgb for pixel\n       export. This path interprets samples as sRGB and is distinct from\n       original-JPEG byte preservation through transcode.\n\n2.1.0-dev.2                     October 8, 2026                SWIFTJXL-CLI(1)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Scripts/install-cli.sh",
+        "--prefix",
+        "relative",
+        "--binary",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Prefix and nonempty staging root must be absolute.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Scripts/install-cli.sh",
+        "--binary"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Missing option value.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/wrong version",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Binary version does not match this source and manual.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "stdout": "Installed /Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/bin/swiftjxl-cli\nManual: /Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man/man1/swiftjxl-cli.1\nRead with: man -M \"/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces/opt/suite tools/share/man\" swiftjxl-cli\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stale source/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces"
+      ],
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "stdout": "",
+      "stderr": "Manual version does not match VERSION.\n"
+    },
+    {
+      "argv": [
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Scripts/install-cli.sh",
+        "--binary",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/.build/x86_64-apple-macosx/release/swiftjxl-cli",
+        "--prefix",
+        "/opt/suite tools",
+        "--destdir",
+        "/Users/runner/work/_temp/m5-native-intel/cli-foundation/cli stage spaces gpnxpyp5/stage with spaces"
+      ],
+      "exit_code": 6,
+      "expected_exit_code": 6,
+      "stdout": "",
+      "stderr": "Refusing to replace a symlink or directory; choose a separate prefix.\n"
+    }
+  ],
+  "status": "passed",
+  "low_precision_jpeg_sha256": "c1a708288b9c0aab8b4045e4abbb846aceee62a8717dcf3192ef237dbe3bf350",
+  "checks": 98
+}

@@ -37,7 +37,7 @@ struct ModularParallelTests {
     @Test(arguments: [1, 2, 8, 100])
     func boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_ workers: Int) throws {
         let b = try budget(workers: workers), context = ScalarEncodingWork(budget: b, writerByteLimit: 1024)
-        let audit = ScalarStorageAudit(), counts = Mutex(Counts())
+        let audit = ScalarStorageAudit(), counts = PackageMutex(Counts())
         let results = try ScalarStorageAudit.$current.withValue(audit) {
             try ScalarEncodingWork.$current.withValue(context) {
                 try parallelMap(20) { index in
@@ -62,7 +62,7 @@ struct ModularParallelTests {
     }
 
     @Test func errorsAreOrderedAfterJoiningAndAdmissionPrecedesCallbacks() throws {
-        let completed = Mutex(0), context = ScalarEncodingWork(budget: try budget(workers: 8), writerByteLimit: 1024)
+        let completed = PackageMutex(0), context = ScalarEncodingWork(budget: try budget(workers: 8), writerByteLimit: 1024)
         do {
             _ = try ScalarEncodingWork.$current.withValue(context) {
                 try parallelMap(20) { index -> Int in
@@ -75,7 +75,7 @@ struct ModularParallelTests {
         } catch ProbeError.index(let index) { #expect(index == 3) }
         #expect(completed.withLock { $0 } == 20)
         let denied = ScalarEncodingWork(budget: try budget(workers: 8, workspace: 1), writerByteLimit: 1024)
-        let invoked = Mutex(false)
+        let invoked = PackageMutex(false)
         #expect(throws: ScalarModularError.self) {
             try ScalarEncodingWork.$current.withValue(denied) {
                 try parallelMap(8) { index in invoked.withLock { $0 = true }; return index }
@@ -107,7 +107,7 @@ struct ModularParallelTests {
     @Test func cancellationInsideWorkerIsObservedAndAllWorkersJoin() throws {
         let cancellation = ScalarOperationCancellation()
         let context = ScalarEncodingWork(budget: try budget(workers: 8, cancellation: cancellation), writerByteLimit: 1024)
-        let counts = Mutex(Counts())
+        let counts = PackageMutex(Counts())
         #expect(throws: CancellationError.self) {
             try ScalarEncodingWork.$current.withValue(context) {
                 _ = try parallelMap(20) { index -> Int in
@@ -128,8 +128,8 @@ struct ModularParallelTests {
 
     @Test func publicCancellationAfterWorkersJoinPreventsPublication() async throws {
         let source = try image(width: 1025, height: 7), audit = ScalarStorageAudit()
-        let reachedCompletion = Mutex(false)
-        let completionAudit = Mutex<ScalarStorageAudit.Snapshot?>(nil)
+        let reachedCompletion = PackageMutex(false)
+        let completionAudit = PackageMutex<ScalarStorageAudit.Snapshot?>(nil)
         let task = Task {
             try await ScalarStorageAudit.$current.withValue(audit) {
                 try await Encoder().encode(source, options: .init(

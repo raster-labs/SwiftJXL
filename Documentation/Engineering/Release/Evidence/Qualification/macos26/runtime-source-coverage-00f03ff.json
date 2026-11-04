@@ -1,0 +1,12 @@
+{
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "immutableSourceArchiveSHA256": "6ece82a5ca048965a56dcdbf54229bcd7a5217882426c7d93335adcd748a2a96",
+  "allArchiveFilesRecheckedBeforeAndAfter": 2839,
+  "runtimeReportSourceFileHashesMatched": 203,
+  "packageManifestHashMatched": true,
+  "freezeGroups": {
+    "runtime": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+    "qualification": "955c21c6cfc7b2e1650dad73f77e6de12cd3c7b5ea55e1f06c5624e3a444381d"
+  },
+  "allReportSourcesCoveredByFrozenArchive": true
+}

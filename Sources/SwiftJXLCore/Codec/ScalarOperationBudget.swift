@@ -34,7 +34,7 @@ package final class ScalarOperationCancellation: Sendable {
 /// reservation bounds, not measurements of allocator/RSS peaks.
 package final class ScalarOperationBudget: Sendable {
     private struct State { var workspace = 0; var pixels = 0; var output = 0 }
-    private let state = Mutex(State())
+    private let state = PackageMutex(State())
     private let retainedBytes: Int
     private let maximumWorkspaceBytes: Int
     private let maximumMemoryBytes: Int

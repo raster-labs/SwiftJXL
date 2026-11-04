@@ -28,7 +28,7 @@ struct AnimationEncoderTests {
             let durations: [UInt32] = [10, 300, .max]
             let frames = try (0..<3).map { try AnimationInputFrame(image: source(bits: bits, channels: channels, frame: $0), durationTicks: durations[$0]) }
             let encoder = try Encoder(configuration: .init(mode: lossy ? .lossy : .lossless))
-            let audit = ScalarStorageAudit(), progress = Mutex<[ProgressUpdate]>([])
+            let audit = ScalarStorageAudit(), progress = PackageMutex<[ProgressUpdate]>([])
             let encoded = try await ScalarStorageAudit.$current.withValue(audit) {
                 try await encoder.encodeAnimation(frames, animation: .init(loopCount: 3),
                     options: .init(copyPolicy: .requireSharedStorage, progress: { update in progress.withLock { $0.append(update) } }))

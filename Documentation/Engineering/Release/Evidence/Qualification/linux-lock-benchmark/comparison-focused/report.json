@@ -1,0 +1,27 @@
+{
+  "status": "failed",
+  "startedUTC": "2026-11-04T10:32:42.700912+00:00",
+  "image": "swift@sha256:bca121f6eb59fd80340d1296887b2698ed8f3eb9eca7d80c181f8af769dc7ee0",
+  "architecture": "aarch64",
+  "cpuset": "0-3",
+  "warmups": 3,
+  "timedIterations": 30,
+  "rounds": [
+    "ABBA",
+    "BAAB"
+  ],
+  "baselineRevision": "c917d6d5596378c5cb451f402de6ee1a62966003",
+  "candidateRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "binarySHA256": {
+    "baseline": "20bb25336aebfc21baed01fe276e1932744fb494e580920353c81e9d55f83b81",
+    "candidate": "40e1970d678cfd37ceb49176358947b29d5789580e568f4aac50c73986bd9c00"
+  },
+  "benchmarkSourceSHA256": "ecd55e965a0c6794dadce907c0eb66097ea07c4e76419642b23a900eaec7f945",
+  "driverSHA256": "2b9ed47d4284ae23398ef035193a38150828af4ed770c26e48662912ce855ad9",
+  "rows": [],
+  "runs": [],
+  "regressionTriggers": [],
+  "scope": "Controlled local native Linux ARM64 release comparison of the Linux lock change. Synthetic512x512RGB16; public API encode/decode latency and whole-process peakRSS. No general performance, heap-allocation or exact-workspace claim.",
+  "error": "[Errno 2] No such file or directory: '/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/linux-lock-benchmark/comparison-focused/modular-encode-w4-r0-0-baseline.jxl'",
+  "finishedUTC": "2026-11-04T10:32:44.006226+00:00"
+}

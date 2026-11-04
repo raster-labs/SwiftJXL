@@ -1,0 +1,191 @@
+{
+  "conclusion": "success",
+  "databaseId": 41815258916,
+  "headSha": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "jobs": [
+    {
+      "completedAt": "2026-11-04T10:36:31Z",
+      "conclusion": "success",
+      "databaseId": 126524269411,
+      "name": "Generate native ARM reciprocal reference vectors",
+      "startedAt": "2026-11-04T10:36:17Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-04T10:36:18Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-04T10:36:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:36:24Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-11-04T10:36:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:36:27Z",
+          "conclusion": "success",
+          "name": "Generate and bind hardware vectors",
+          "number": 3,
+          "startedAt": "2026-11-04T10:36:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:36:28Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "number": 4,
+          "startedAt": "2026-11-04T10:36:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:36:29Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 8,
+          "startedAt": "2026-11-04T10:36:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:36:29Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 9,
+          "startedAt": "2026-11-04T10:36:29Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/41815258916/job/126524269411"
+    },
+    {
+      "completedAt": "2026-11-04T10:56:18Z",
+      "conclusion": "success",
+      "databaseId": 126524390714,
+      "name": "Native Intel macOS core and CLI",
+      "startedAt": "2026-11-04T10:36:47Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-04T10:36:50Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-04T10:36:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:36:57Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-11-04T10:36:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:37:11Z",
+          "conclusion": "success",
+          "name": "Record and require native Intel host",
+          "number": 3,
+          "startedAt": "2026-11-04T10:36:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:37:11Z",
+          "conclusion": "success",
+          "name": "Retain native ARM vector provenance for Intel verification",
+          "number": 4,
+          "startedAt": "2026-11-04T10:37:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:37:12Z",
+          "conclusion": "success",
+          "name": "Python for the pinned NRRD oracle",
+          "number": 5,
+          "startedAt": "2026-11-04T10:37:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:42:07Z",
+          "conclusion": "success",
+          "name": "Build pinned independent reference tools",
+          "number": 6,
+          "startedAt": "2026-11-04T10:37:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:49:37Z",
+          "conclusion": "success",
+          "name": "Full native release library suite, with no oracle skips",
+          "number": 7,
+          "startedAt": "2026-11-04T10:42:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:53:35Z",
+          "conclusion": "success",
+          "name": "Build native CLI and generate public fixtures",
+          "number": 8,
+          "startedAt": "2026-11-04T10:49:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:54:14Z",
+          "conclusion": "success",
+          "name": "Native CLI profile and installation checks",
+          "number": 9,
+          "startedAt": "2026-11-04T10:53:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:54:15Z",
+          "conclusion": "success",
+          "name": "Require core and all ten CLI reports",
+          "number": 10,
+          "startedAt": "2026-11-04T10:54:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:56:14Z",
+          "conclusion": "success",
+          "name": "Preserve native host, source bindings and all outcomes",
+          "number": 11,
+          "startedAt": "2026-11-04T10:54:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:56:14Z",
+          "conclusion": "success",
+          "name": "Post Python for the pinned NRRD oracle",
+          "number": 21,
+          "startedAt": "2026-11-04T10:56:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:56:15Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 22,
+          "startedAt": "2026-11-04T10:56:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-04T10:56:15Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-11-04T10:56:15Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/41815258916/job/126524390714"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/raster-labs/SwiftJXL/actions/runs/41815258916"
+}

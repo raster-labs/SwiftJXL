@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import Foundation
+import SwiftJXLCore
 import Synchronization
 
 public struct ImageMetadata: Sendable, Equatable {
@@ -86,7 +87,7 @@ public final class ImageDestination: Sendable {
     public let storage: any WritableImageStorage
     private let lease: StorageWriteLease
     private let limits: ResourceLimits
-    private let started = Mutex(false)
+    private let started = PackageMutex(false)
 
     public init(descriptor: ImageDescriptor, storage: any WritableImageStorage,
                 limits: ResourceLimits = .default) throws {

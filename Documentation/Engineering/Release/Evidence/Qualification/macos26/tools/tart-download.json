@@ -1,0 +1,11 @@
+{
+  "version": "2.41.1",
+  "url": "https://github.com/openai/tart/releases/download/2.41.1/tart.tar.gz",
+  "bytes": 22959557,
+  "sha256": "e680a734febccfce7d4e910c1f7f13fc3b00f19a181c945e2d746de3214c32c2",
+  "upstreamAssetDigestVerified": true,
+  "licence": "FSL-1.1-ALv2",
+  "licenceSource": "https://github.com/openai/tart/blob/2.41.1/LICENSE",
+  "permittedUse": "Internal software testing, not a competing service",
+  "host": "Apple arm64 macOS27.0.1"
+}

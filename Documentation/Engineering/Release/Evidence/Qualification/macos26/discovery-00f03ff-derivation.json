@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "scope": "Derived discovery-name reconciliation only; original runtime logs and inventory are unchanged",
+  "rawDiscoveryLogSHA256": "5d7f65246c69af5004bb70836f5b36abe0048da918e3a7fbc64220ffb3e5c8fb",
+  "rawDiscoveryInventorySHA256": "ab4abf38db6cac7888205e2c430c22fdf67e26a60b21e6bc0caf36c5c7969964",
+  "executionXMLSHA256": "0a68e60fa96ecefa62935e6a6c434c6512b57dd78c4d3a4b50f6b831c24d42ff",
+  "removedDiagnostic": "warning: '--build-system native' has been deprecated and will be removed in a future release; please report an issue at https://github.com/swiftlang/swift-package-manager/issues if you are unable to adopt the default build system.\n",
+  "diagnosticOccurrences": 1,
+  "rejoinedIdentity": "SwiftJXLTests.APITests/rejectsInputLimitRequiredBackendAndDestructiveMetadataPolicy()",
+  "separatorNormalisations": [
+    {
+      "from": "SwiftJXLTests.cancellationInProviderFinalisationPreventsPublication(_:)",
+      "to": "SwiftJXLTests/cancellationInProviderFinalisationPreventsPublication(_:)",
+      "reason": "Swift Testing top-level function enumeration and xUnit classname/name use different separators"
+    }
+  ],
+  "derivedLogSHA256": "8ad74a63b798a125b7f5cb949d06a2e38278d6585c8c08b84359b6c2224dd088",
+  "derivedInventorySHA256": "ded6f31c2d47fad461a09331bf009caa26f7676b767030e412663f5deaf192aa",
+  "discoveredDeclarations": 368,
+  "executedDeclarations": 368,
+  "exactIdentitySetAgreement": true,
+  "missing": [],
+  "unexpected": []
+}

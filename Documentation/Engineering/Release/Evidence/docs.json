@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "checks": {
+    "compiledExampleMatchesMarkdown": true,
+    "canonicalSuccessorURL": true,
+    "localLinks": 109
+  },
+  "filesSHA256": {
+    "README.md": "066f236a039335257e22c2429ac1a2f939af708fb3eb4075a4d6bf03b7bf22d8",
+    "MIGRATION.md": "f72bfff0742e0fe0de653468ea7b8d3e9bdfade58ff64f9ed3830837e84d16ff",
+    "CLI.md": "0296138569d3d50096ccfee62a61b5cb613d314e23e3b60b251c497fcebcdf08",
+    "SECURITY.md": "2ecd1238402d77162633395c80fc09913f22d218622499440e471b706c8cede6",
+    "NOTICE": "53100225da5da07776b66f1f2bcf1d4763c06c27b36967c38492d76695a8c90d",
+    "THIRD_PARTY_NOTICES.md": "6919105dee2ef9807a17dbeb6b6275241ebf0a34858f16fef3a14afe5121cf28",
+    "Scripts/README.md": "85ef85308b20b16c4baf2c0942b37616564c2ac0db389948c840f30e2e5deaad",
+    "Documentation/Engineering/Release/README.md": "3a5de0de83ac5f12409053dbc1c5c700f2691446b6bd5787b1b4ae4d8cada330",
+    "Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift": "59f014ec9128eb870a277f80689f19e04a56a19359ce846f06bfcb72a0e3bbc6"
+  },
+  "limitations": [
+    "Links are checked for local targets, not external reachability or section anchors",
+    "Compilation is established by separate URL-consumer reports"
+  ]
+}

@@ -1,0 +1,1937 @@
+{
+  "status": "investigation-required",
+  "startedUTC": "2026-11-04T10:29:15.306220+00:00",
+  "image": "swift@sha256:bca121f6eb59fd80340d1296887b2698ed8f3eb9eca7d80c181f8af769dc7ee0",
+  "architecture": "aarch64",
+  "cpuset": "0-3",
+  "warmups": 3,
+  "timedIterations": 10,
+  "rounds": [
+    "ABBA",
+    "BAAB"
+  ],
+  "baselineRevision": "c917d6d5596378c5cb451f402de6ee1a62966003",
+  "candidateRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "binarySHA256": {
+    "baseline": "20bb25336aebfc21baed01fe276e1932744fb494e580920353c81e9d55f83b81",
+    "candidate": "40e1970d678cfd37ceb49176358947b29d5789580e568f4aac50c73986bd9c00"
+  },
+  "benchmarkSourceSHA256": "ecd55e965a0c6794dadce907c0eb66097ea07c4e76419642b23a900eaec7f945",
+  "driverSHA256": "62b26cff38d513df898e591f7ec6f68d701b6296ec0587bfc8d96c0e032c2d1a",
+  "rows": [
+    {
+      "case": "modular-encode-w1",
+      "rounds": [
+        {
+          "order": "ABBA",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w1-r0-0-baseline.json",
+                "rawSHA256": "76831ce5700af2b0728c9f9f56413cd20b56a5c074cadfc41d2145ac5cec3cec",
+                "latencyMedianMS": 44.737508000000005,
+                "latencyMinMS": 44.616217,
+                "latencyMaxMS": 44.939051,
+                "peakRSSBytes": 43565056,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w1-r0-3-baseline.json",
+                "rawSHA256": "3baa511e77390e29a352fa46d756ba38c64d9ad99d42249886a300ba5057c55b",
+                "latencyMedianMS": 39.1789555,
+                "latencyMinMS": 38.776704,
+                "latencyMaxMS": 40.644125,
+                "peakRSSBytes": 43696128,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w1-r0-1-candidate.json",
+                "rawSHA256": "2a4e4a54a4b58ba95b04e4a64dbaa21bf2092641a25318edfd140006a5e67364",
+                "latencyMedianMS": 41.682585,
+                "latencyMinMS": 41.186501,
+                "latencyMaxMS": 41.969836,
+                "peakRSSBytes": 43556864,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w1-r0-2-candidate.json",
+                "rawSHA256": "0c81700348264749ebd45b8cd0d4b45c2cbf9af7a381c0db6d743d176d4214cf",
+                "latencyMedianMS": 38.797809,
+                "latencyMinMS": 38.32712,
+                "latencyMaxMS": 39.116997,
+                "peakRSSBytes": 43700224,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 41.95823175,
+            "candidate": 40.240197,
+            "ratio": 0.9590536903405135
+          },
+          "peakRSSBytes": {
+            "baseline": 43630592.0,
+            "candidate": 43628544.0,
+            "ratio": 0.9999530604581299
+          }
+        },
+        {
+          "order": "BAAB",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w1-r1-1-baseline.json",
+                "rawSHA256": "8347842ffaf2e13683004850963b58e3d5ed2f5da521110aec706e0ae8d823fd",
+                "latencyMedianMS": 39.416519,
+                "latencyMinMS": 38.987539,
+                "latencyMaxMS": 40.345791,
+                "peakRSSBytes": 43638784,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w1-r1-2-baseline.json",
+                "rawSHA256": "d17eede3b3091defe78778ee1fbd69ef5bd58a7ad31581f8931821e575c87bc6",
+                "latencyMedianMS": 46.610179,
+                "latencyMinMS": 45.976761,
+                "latencyMaxMS": 47.110264,
+                "peakRSSBytes": 43790336,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w1-r1-0-candidate.json",
+                "rawSHA256": "1ef3fa3cee70fb4cb97deb3460aff7b8701d75a6be9f51138a36e3b5f3a58487",
+                "latencyMedianMS": 43.805777,
+                "latencyMinMS": 42.479254,
+                "latencyMaxMS": 45.431093,
+                "peakRSSBytes": 43565056,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w1-r1-3-candidate.json",
+                "rawSHA256": "1983295a724247bf8a2e9b8c130c13dd1f5bfce26bd54aa2d39cc4f35cb9aa07",
+                "latencyMedianMS": 39.419039,
+                "latencyMinMS": 39.143706,
+                "latencyMaxMS": 44.701217,
+                "peakRSSBytes": 43524096,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 43.013349000000005,
+            "candidate": 41.612408,
+            "ratio": 0.967430087808322
+          },
+          "peakRSSBytes": {
+            "baseline": 43714560.0,
+            "candidate": 43544576.0,
+            "ratio": 0.9961115015226049
+          }
+        }
+      ],
+      "identicalCompressedAndDecodedBytes": true,
+      "latencyMedianMSRepeatedRegression": false,
+      "peakRSSBytesRepeatedRegression": false
+    },
+    {
+      "case": "modular-encode-w4",
+      "rounds": [
+        {
+          "order": "ABBA",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w4-r0-0-baseline.json",
+                "rawSHA256": "10bb20fa308ebd9c90c3dff86c5b3e0e737fa051429e0dfc0a1470f6dfec6ebb",
+                "latencyMedianMS": 32.9042965,
+                "latencyMinMS": 31.62119,
+                "latencyMaxMS": 38.783038,
+                "peakRSSBytes": 45727744,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w4-r0-3-baseline.json",
+                "rawSHA256": "3143603ec18efcb1fe648d8a622e41b09291f859bf65e568f0a74e7ad7a2d959",
+                "latencyMedianMS": 50.48377000000001,
+                "latencyMinMS": 38.643871,
+                "latencyMaxMS": 60.638958,
+                "peakRSSBytes": 45600768,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w4-r0-1-candidate.json",
+                "rawSHA256": "ba75d8ac584677b9f97d97d4c9ebcd72bfd3d0e5a617c69fdae5eb03e0f469cc",
+                "latencyMedianMS": 43.529339,
+                "latencyMinMS": 36.045116,
+                "latencyMaxMS": 51.020896,
+                "peakRSSBytes": 45797376,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w4-r0-2-candidate.json",
+                "rawSHA256": "3819745a3f8abf5117a54fb68692ee0444f7554e57bd33d10e070e514f65615b",
+                "latencyMedianMS": 47.5629315,
+                "latencyMinMS": 44.295508,
+                "latencyMaxMS": 59.049497,
+                "peakRSSBytes": 45404160,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 41.694033250000004,
+            "candidate": 45.54613525,
+            "ratio": 1.0923897665860856
+          },
+          "peakRSSBytes": {
+            "baseline": 45664256.0,
+            "candidate": 45600768.0,
+            "ratio": 0.998609678432076
+          }
+        },
+        {
+          "order": "BAAB",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w4-r1-1-baseline.json",
+                "rawSHA256": "937e3656d9f54ad8c9c9782fca306521d151a3df3b18c437b19caa897bd95cf0",
+                "latencyMedianMS": 38.107891,
+                "latencyMinMS": 34.108404,
+                "latencyMaxMS": 46.884055,
+                "peakRSSBytes": 45625344,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w4-r1-2-baseline.json",
+                "rawSHA256": "aa6ba881834d4853cd5984da4bddf355419f1218d92fe6fa56e6d4eba200a43e",
+                "latencyMedianMS": 38.80708,
+                "latencyMinMS": 32.804568,
+                "latencyMaxMS": 50.992605,
+                "peakRSSBytes": 45780992,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w4-r1-0-candidate.json",
+                "rawSHA256": "e11988c5b6f421ec5c128650a309296c7b459ff60607d542a1e634d838fde6df",
+                "latencyMedianMS": 41.686065,
+                "latencyMinMS": 37.365202,
+                "latencyMaxMS": 54.619654,
+                "peakRSSBytes": 45772800,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w4-r1-3-candidate.json",
+                "rawSHA256": "970104a7c202834f023b3a92c6c160397dfe75a8315635025eb08315b8890d64",
+                "latencyMedianMS": 40.4115415,
+                "latencyMinMS": 35.220197,
+                "latencyMaxMS": 50.293646,
+                "peakRSSBytes": 45744128,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 38.457485500000004,
+            "candidate": 41.04880325,
+            "ratio": 1.0673813619457777
+          },
+          "peakRSSBytes": {
+            "baseline": 45703168.0,
+            "candidate": 45758464.0,
+            "ratio": 1.0012098942462806
+          }
+        }
+      ],
+      "identicalCompressedAndDecodedBytes": true,
+      "latencyMedianMSRepeatedRegression": true,
+      "peakRSSBytesRepeatedRegression": false
+    },
+    {
+      "case": "modular-decode-w1",
+      "rounds": [
+        {
+          "order": "ABBA",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-decode-w1-r0-0-baseline.json",
+                "rawSHA256": "5f97a0d65192cf07732b699e0590986a8979dfab6dc68dea777aead436647214",
+                "latencyMedianMS": 4.5086135,
+                "latencyMinMS": 4.315759,
+                "latencyMaxMS": 4.876177,
+                "peakRSSBytes": 38535168,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-decode-w1-r0-3-baseline.json",
+                "rawSHA256": "cfe5d49c4d608175b9b3b3fff617f01f53f792c92be8c4ff1b6074305917385c",
+                "latencyMedianMS": 4.767113999999999,
+                "latencyMinMS": 4.434176,
+                "latencyMaxMS": 5.304386,
+                "peakRSSBytes": 38666240,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-decode-w1-r0-1-candidate.json",
+                "rawSHA256": "a4aea414a02164ec16a6f4d159507b6773f408103e4ba7663650da901a815ff1",
+                "latencyMedianMS": 4.4772385,
+                "latencyMinMS": 4.348925,
+                "latencyMaxMS": 4.567135,
+                "peakRSSBytes": 38666240,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-decode-w1-r0-2-candidate.json",
+                "rawSHA256": "d26646cc5a1737f5f25cfa763fbbd873dc1009eb802184b945c4ef80debb19cc",
+                "latencyMedianMS": 4.719697,
+                "latencyMinMS": 4.335675,
+                "latencyMaxMS": 5.311719,
+                "peakRSSBytes": 38797312,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 4.637863749999999,
+            "candidate": 4.59846775,
+            "ratio": 0.991505571934924
+          },
+          "peakRSSBytes": {
+            "baseline": 38600704.0,
+            "candidate": 38731776.0,
+            "ratio": 1.00339558573854
+          }
+        },
+        {
+          "order": "BAAB",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-decode-w1-r1-1-baseline.json",
+                "rawSHA256": "9fa35b4758093c4e3284217321bbec073b6da252609a49f81405fb7b89e75345",
+                "latencyMedianMS": 4.5607385,
+                "latencyMinMS": 4.376384,
+                "latencyMaxMS": 4.650218,
+                "peakRSSBytes": 38666240,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-decode-w1-r1-2-baseline.json",
+                "rawSHA256": "823c1f295e051f985661443f003e83014f7bb83c050f8717b5f5329ba970e27a",
+                "latencyMedianMS": 4.7529889999999995,
+                "latencyMinMS": 4.408842,
+                "latencyMaxMS": 5.274469,
+                "peakRSSBytes": 38666240,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-decode-w1-r1-0-candidate.json",
+                "rawSHA256": "96419f1932f9bdcccc3ea2e7da436aa0edc8a76df3e9cba0b355a1f26fe3f1f1",
+                "latencyMedianMS": 4.703218,
+                "latencyMinMS": 4.420759,
+                "latencyMaxMS": 4.791802,
+                "peakRSSBytes": 38666240,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-decode-w1-r1-3-candidate.json",
+                "rawSHA256": "10b878352a7e2bd2ee5d4485264ff62e19d5cdb218b4098cef6bd9d5717ac717",
+                "latencyMedianMS": 4.475134499999999,
+                "latencyMinMS": 4.184801,
+                "latencyMaxMS": 5.840471,
+                "peakRSSBytes": 38666240,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 4.656863749999999,
+            "candidate": 4.5891762499999995,
+            "ratio": 0.9854650031364993
+          },
+          "peakRSSBytes": {
+            "baseline": 38666240.0,
+            "candidate": 38666240.0,
+            "ratio": 1.0
+          }
+        }
+      ],
+      "identicalCompressedAndDecodedBytes": true,
+      "latencyMedianMSRepeatedRegression": false,
+      "peakRSSBytesRepeatedRegression": false
+    },
+    {
+      "case": "modular-decode-w4",
+      "rounds": [
+        {
+          "order": "ABBA",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-decode-w4-r0-0-baseline.json",
+                "rawSHA256": "35d8ef9f1a3387a8c0e0dfd7fb5fb3198c868f572a1bcea4b360f112baf8ac67",
+                "latencyMedianMS": 4.478759500000001,
+                "latencyMinMS": 4.318384,
+                "latencyMaxMS": 4.600301,
+                "peakRSSBytes": 38797312,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-decode-w4-r0-3-baseline.json",
+                "rawSHA256": "b5040a6753e625b39ab0aae75631b330e3cc45f3591deeed0e76ce1bb0edf8ab",
+                "latencyMedianMS": 4.45228,
+                "latencyMinMS": 4.348342,
+                "latencyMaxMS": 4.525259,
+                "peakRSSBytes": 38797312,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-decode-w4-r0-1-candidate.json",
+                "rawSHA256": "63251d0f50f06b6e74f76407b06241147e18400b2f8107b9c2b321fd04e8632d",
+                "latencyMedianMS": 4.563738,
+                "latencyMinMS": 4.3208,
+                "latencyMaxMS": 5.072969,
+                "peakRSSBytes": 38666240,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-decode-w4-r0-2-candidate.json",
+                "rawSHA256": "a6327421bd1f7fe7ea069503a9e7e60a9acc3ec137d671f3c6a56ff61cde93c4",
+                "latencyMedianMS": 4.557822,
+                "latencyMinMS": 4.283133,
+                "latencyMaxMS": 5.210928,
+                "peakRSSBytes": 38666240,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 4.46551975,
+            "candidate": 4.560779999999999,
+            "ratio": 1.0213323992128798
+          },
+          "peakRSSBytes": {
+            "baseline": 38797312.0,
+            "candidate": 38666240.0,
+            "ratio": 0.9966216216216216
+          }
+        },
+        {
+          "order": "BAAB",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-decode-w4-r1-1-baseline.json",
+                "rawSHA256": "fe1fe10c2845ed1e6e18472ae292a813951ff8dad175acaffc410f86a2628a03",
+                "latencyMedianMS": 4.5367180000000005,
+                "latencyMinMS": 4.310217,
+                "latencyMaxMS": 4.673926,
+                "peakRSSBytes": 38928384,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-decode-w4-r1-2-baseline.json",
+                "rawSHA256": "438196ed6a2fda53c2f9126cc901cc19e60ea7e6d75b988ee82d2d2934e022d8",
+                "latencyMedianMS": 4.5821345,
+                "latencyMinMS": 4.436092,
+                "latencyMaxMS": 4.898344,
+                "peakRSSBytes": 38797312,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-decode-w4-r1-0-candidate.json",
+                "rawSHA256": "7399dd648869850e268d3e18e7e5facb2ac28cb602b255608d49fb8a34459692",
+                "latencyMedianMS": 5.1110315,
+                "latencyMinMS": 4.702051,
+                "latencyMaxMS": 6.438722,
+                "peakRSSBytes": 38535168,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-decode-w4-r1-3-candidate.json",
+                "rawSHA256": "87a72974646cd2c96733cbe57be8057503cf8e944f280e15a2fe6f22bf9f753d",
+                "latencyMedianMS": 4.9930520000000005,
+                "latencyMinMS": 4.655509,
+                "latencyMaxMS": 6.120762,
+                "peakRSSBytes": 38666240,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 4.5594262500000005,
+            "candidate": 5.052041750000001,
+            "ratio": 1.1080433091773334
+          },
+          "peakRSSBytes": {
+            "baseline": 38862848.0,
+            "candidate": 38600704.0,
+            "ratio": 0.9932546374367622
+          }
+        }
+      ],
+      "identicalCompressedAndDecodedBytes": true,
+      "latencyMedianMSRepeatedRegression": false,
+      "peakRSSBytesRepeatedRegression": false
+    },
+    {
+      "case": "vardct-encode-w1",
+      "rounds": [
+        {
+          "order": "ABBA",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "vardct-encode-w1-r0-0-baseline.json",
+                "rawSHA256": "74a8d87a74269fcdff541cf7cab562efa65af6cb8b81d7a29426939faccab797",
+                "latencyMedianMS": 168.307014,
+                "latencyMinMS": 166.561427,
+                "latencyMaxMS": 175.722655,
+                "peakRSSBytes": 35328000,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "baseline",
+                "raw": "vardct-encode-w1-r0-3-baseline.json",
+                "rawSHA256": "54dbaec7007ba7f8431824270b09934cceb1dca29a25f0a6ad96b5849837beea",
+                "latencyMedianMS": 200.972354,
+                "latencyMinMS": 181.280417,
+                "latencyMaxMS": 287.05251,
+                "peakRSSBytes": 35414016,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "vardct-encode-w1-r0-1-candidate.json",
+                "rawSHA256": "5b8812784006b6cf72b8ba1dd2b0fe15830d34b8b7107067ca39509893073e7f",
+                "latencyMedianMS": 172.00241749999998,
+                "latencyMinMS": 169.101849,
+                "latencyMaxMS": 178.358618,
+                "peakRSSBytes": 35442688,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "candidate",
+                "raw": "vardct-encode-w1-r0-2-candidate.json",
+                "rawSHA256": "496de47a2bf92b6e75ab901f3629347d40564f228b3c9b135f2ba995d3b769f4",
+                "latencyMedianMS": 196.1485935,
+                "latencyMinMS": 182.566669,
+                "latencyMaxMS": 266.549301,
+                "peakRSSBytes": 35438592,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 184.639684,
+            "candidate": 184.0755055,
+            "ratio": 0.996944435303518
+          },
+          "peakRSSBytes": {
+            "baseline": 35371008.0,
+            "candidate": 35440640.0,
+            "ratio": 1.001968617914423
+          }
+        },
+        {
+          "order": "BAAB",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "vardct-encode-w1-r1-1-baseline.json",
+                "rawSHA256": "3995985fb4899639e70e28a6fab6e2e808b1bae1e3f09ef8156363b8edd9d9a9",
+                "latencyMedianMS": 221.098626,
+                "latencyMinMS": 189.530352,
+                "latencyMaxMS": 309.360809,
+                "peakRSSBytes": 35319808,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "baseline",
+                "raw": "vardct-encode-w1-r1-2-baseline.json",
+                "rawSHA256": "107abe5e8120bd051f800639faebb86629b877a4cfb37f20970721b8c5501efb",
+                "latencyMedianMS": 195.9286365,
+                "latencyMinMS": 180.71921,
+                "latencyMaxMS": 235.704365,
+                "peakRSSBytes": 35438592,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "vardct-encode-w1-r1-0-candidate.json",
+                "rawSHA256": "5e981c296954752ab451f86873d97ca677c3691573cc40ceea86578fac79994b",
+                "latencyMedianMS": 261.3283745,
+                "latencyMinMS": 200.806041,
+                "latencyMaxMS": 325.522134,
+                "peakRSSBytes": 35377152,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "candidate",
+                "raw": "vardct-encode-w1-r1-3-candidate.json",
+                "rawSHA256": "cde0a3d01a4fa4276d3e89938ce6f79e9ad9504ae75edad0640f53bfbb357352",
+                "latencyMedianMS": 214.441217,
+                "latencyMinMS": 193.378777,
+                "latencyMaxMS": 271.414648,
+                "peakRSSBytes": 35438592,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 208.51363125,
+            "candidate": 237.88479575,
+            "ratio": 1.1408596854024622
+          },
+          "peakRSSBytes": {
+            "baseline": 35379200.0,
+            "candidate": 35407872.0,
+            "ratio": 1.0008104196816208
+          }
+        }
+      ],
+      "identicalCompressedAndDecodedBytes": true,
+      "latencyMedianMSRepeatedRegression": false,
+      "peakRSSBytesRepeatedRegression": false
+    },
+    {
+      "case": "vardct-encode-w4",
+      "rounds": [
+        {
+          "order": "ABBA",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "vardct-encode-w4-r0-0-baseline.json",
+                "rawSHA256": "83a2c7a2c85ef19204d7d3cadc52df85c4283b3f10bf05eb32ca8c0aaae95872",
+                "latencyMedianMS": 139.2727695,
+                "latencyMinMS": 106.848139,
+                "latencyMaxMS": 173.149444,
+                "peakRSSBytes": 35770368,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "baseline",
+                "raw": "vardct-encode-w4-r0-3-baseline.json",
+                "rawSHA256": "49ffe8c2bcdcd79bbabf3a0f360e6399840985d01ef881317140acc554717506",
+                "latencyMedianMS": 97.030474,
+                "latencyMinMS": 84.782136,
+                "latencyMaxMS": 108.832686,
+                "peakRSSBytes": 35905536,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "vardct-encode-w4-r0-1-candidate.json",
+                "rawSHA256": "347024c62df3263d455aa1154daf8b729107951ce6b9cc70171858b4e50f5a14",
+                "latencyMedianMS": 130.539314,
+                "latencyMinMS": 116.703994,
+                "latencyMaxMS": 154.700739,
+                "peakRSSBytes": 36098048,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "candidate",
+                "raw": "vardct-encode-w4-r0-2-candidate.json",
+                "rawSHA256": "4774124973a3cdf0de0496df9a7599391c181b4044c4856f0748e61df48b8274",
+                "latencyMedianMS": 107.55722399999999,
+                "latencyMinMS": 93.545445,
+                "latencyMaxMS": 134.188113,
+                "peakRSSBytes": 35897344,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 118.15162175,
+            "candidate": 119.04826899999999,
+            "ratio": 1.0075889542328689
+          },
+          "peakRSSBytes": {
+            "baseline": 35837952.0,
+            "candidate": 35997696.0,
+            "ratio": 1.0044573975655753
+          }
+        },
+        {
+          "order": "BAAB",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "vardct-encode-w4-r1-1-baseline.json",
+                "rawSHA256": "2fac33de609e21e8531dc7df095672df9c74b3e6a141bcf77830801eee899218",
+                "latencyMedianMS": 87.49676600000001,
+                "latencyMinMS": 80.563502,
+                "latencyMaxMS": 110.661065,
+                "peakRSSBytes": 35971072,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "baseline",
+                "raw": "vardct-encode-w4-r1-2-baseline.json",
+                "rawSHA256": "91373cd5e78f7c4d49841f643eb0368102a7e88d43fe81f238bb8e93117e1448",
+                "latencyMedianMS": 80.91875300000001,
+                "latencyMinMS": 78.791582,
+                "latencyMaxMS": 91.222733,
+                "peakRSSBytes": 36040704,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "vardct-encode-w4-r1-0-candidate.json",
+                "rawSHA256": "a319a5660172f8d3fac2b8cb3c7b606d7a420c70e24019c136ea5239729cb8ed",
+                "latencyMedianMS": 108.1612265,
+                "latencyMinMS": 92.81361,
+                "latencyMaxMS": 155.342324,
+                "peakRSSBytes": 35971072,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "candidate",
+                "raw": "vardct-encode-w4-r1-3-candidate.json",
+                "rawSHA256": "3eae7b852d6a637acadade85fd707703214d7fa9403b076e72e3b66bad4a7125",
+                "latencyMedianMS": 81.8815465,
+                "latencyMinMS": 79.999168,
+                "latencyMaxMS": 87.235808,
+                "peakRSSBytes": 35909632,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 84.20775950000001,
+            "candidate": 95.0213865,
+            "ratio": 1.1284160398543794
+          },
+          "peakRSSBytes": {
+            "baseline": 36005888.0,
+            "candidate": 35940352.0,
+            "ratio": 0.9981798532506684
+          }
+        }
+      ],
+      "identicalCompressedAndDecodedBytes": true,
+      "latencyMedianMSRepeatedRegression": false,
+      "peakRSSBytesRepeatedRegression": false
+    },
+    {
+      "case": "vardct-decode-w1",
+      "rounds": [
+        {
+          "order": "ABBA",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "vardct-decode-w1-r0-0-baseline.json",
+                "rawSHA256": "cf74270f89c1e4de5768c56a61321bc68a8c017a6041f0214c0e1a15ce938aa1",
+                "latencyMedianMS": 33.999926,
+                "latencyMinMS": 32.877319,
+                "latencyMaxMS": 37.267245,
+                "peakRSSBytes": 37539840,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "baseline",
+                "raw": "vardct-decode-w1-r0-3-baseline.json",
+                "rawSHA256": "908389ded8fd9e02726ca8c4ecd87029933f3326b286e8d7797b46e2d18d5aea",
+                "latencyMedianMS": 34.450863999999996,
+                "latencyMinMS": 33.157819,
+                "latencyMaxMS": 44.264717,
+                "peakRSSBytes": 37625856,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "vardct-decode-w1-r0-1-candidate.json",
+                "rawSHA256": "b29668e7796bc261168a9beddfdbc2c90bad9cb4b0b86fb6041ec43e512e99b1",
+                "latencyMedianMS": 34.1591965,
+                "latencyMinMS": 33.43107,
+                "latencyMaxMS": 36.601243,
+                "peakRSSBytes": 37535744,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "candidate",
+                "raw": "vardct-decode-w1-r0-2-candidate.json",
+                "rawSHA256": "957339ee7c37d9ef7f8b17fd9779020181bbd33b6f23443d9464bcd3a44a5982",
+                "latencyMedianMS": 34.4479685,
+                "latencyMinMS": 32.899819,
+                "latencyMaxMS": 37.052744,
+                "peakRSSBytes": 37535744,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 34.225395,
+            "candidate": 34.303582500000005,
+            "ratio": 1.00228448787808
+          },
+          "peakRSSBytes": {
+            "baseline": 37582848.0,
+            "candidate": 37535744.0,
+            "ratio": 0.9987466623072312
+          }
+        },
+        {
+          "order": "BAAB",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "vardct-decode-w1-r1-1-baseline.json",
+                "rawSHA256": "c5a543adc53c90ae75b2db3a0f55eef6f4b11bf3501b74258f00d98455fda63b",
+                "latencyMedianMS": 34.813218500000005,
+                "latencyMinMS": 32.79311,
+                "latencyMaxMS": 36.284285,
+                "peakRSSBytes": 37523456,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "baseline",
+                "raw": "vardct-decode-w1-r1-2-baseline.json",
+                "rawSHA256": "6bbaf947a888c72846a3de7531ea92a185f3f0709aee01a7701c8ea308c4eeb8",
+                "latencyMedianMS": 33.559466,
+                "latencyMinMS": 32.659652,
+                "latencyMaxMS": 34.09528,
+                "peakRSSBytes": 37560320,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "vardct-decode-w1-r1-0-candidate.json",
+                "rawSHA256": "069782c89bb704b6167dd6d7301daddcae5be74b3276c104d5a590027a74f2b0",
+                "latencyMedianMS": 34.9659065,
+                "latencyMinMS": 32.946861,
+                "latencyMaxMS": 38.213371,
+                "peakRSSBytes": 37539840,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "candidate",
+                "raw": "vardct-decode-w1-r1-3-candidate.json",
+                "rawSHA256": "dbb8c0fd844e1c162cddaeacef8421902c0843ccc76517d34f6e76d55b6de15b",
+                "latencyMedianMS": 36.8783065,
+                "latencyMinMS": 35.36799,
+                "latencyMaxMS": 44.453135,
+                "peakRSSBytes": 37539840,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 34.18634225,
+            "candidate": 35.9221065,
+            "ratio": 1.0507736170575546
+          },
+          "peakRSSBytes": {
+            "baseline": 37541888.0,
+            "candidate": 37539840.0,
+            "ratio": 0.9999454476024221
+          }
+        }
+      ],
+      "identicalCompressedAndDecodedBytes": true,
+      "latencyMedianMSRepeatedRegression": false,
+      "peakRSSBytesRepeatedRegression": false
+    },
+    {
+      "case": "vardct-decode-w4",
+      "rounds": [
+        {
+          "order": "ABBA",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "vardct-decode-w4-r0-0-baseline.json",
+                "rawSHA256": "6658f44c4003102145c44df822eea562645c29d625b30056a3c384547a2dba90",
+                "latencyMedianMS": 35.805304,
+                "latencyMinMS": 33.228319,
+                "latencyMaxMS": 50.735106,
+                "peakRSSBytes": 38469632,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "baseline",
+                "raw": "vardct-decode-w4-r0-3-baseline.json",
+                "rawSHA256": "bef6ec01347872a2702ebe3d98494db3a0762310e0a27919b767b2cb0be892f1",
+                "latencyMedianMS": 36.298868,
+                "latencyMinMS": 35.452699,
+                "latencyMaxMS": 40.407168,
+                "peakRSSBytes": 38658048,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "vardct-decode-w4-r0-1-candidate.json",
+                "rawSHA256": "80b7ae7e90adcec7063dae3148e915fbf01d5b057dc338121ac3af25227cbb08",
+                "latencyMedianMS": 41.8367335,
+                "latencyMinMS": 34.113614,
+                "latencyMaxMS": 49.997939,
+                "peakRSSBytes": 38129664,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "candidate",
+                "raw": "vardct-decode-w4-r0-2-candidate.json",
+                "rawSHA256": "93d2f24040f0f62ebfb09df9fad7fede56ebabe9e9bf6465ffd3164c7458d8e1",
+                "latencyMedianMS": 40.11373,
+                "latencyMinMS": 35.819075,
+                "latencyMaxMS": 48.424393,
+                "peakRSSBytes": 37801984,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 36.052086,
+            "candidate": 40.97523175,
+            "ratio": 1.1365564741524248
+          },
+          "peakRSSBytes": {
+            "baseline": 38563840.0,
+            "candidate": 37965824.0,
+            "ratio": 0.9844928305894849
+          }
+        },
+        {
+          "order": "BAAB",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "vardct-decode-w4-r1-1-baseline.json",
+                "rawSHA256": "a488e81e502389603c71781c9bd77e4e8178293b90c3dd8cbaa193bdc431ea2a",
+                "latencyMedianMS": 35.400991,
+                "latencyMinMS": 34.295405,
+                "latencyMaxMS": 38.047871,
+                "peakRSSBytes": 38526976,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "baseline",
+                "raw": "vardct-decode-w4-r1-2-baseline.json",
+                "rawSHA256": "636a7acf5f25fa9dda1da678581a806f6e5e6d4d7749e726fe1c6c145d241757",
+                "latencyMedianMS": 39.971396,
+                "latencyMinMS": 35.127324,
+                "latencyMaxMS": 46.392389,
+                "peakRSSBytes": 38526976,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "vardct-decode-w4-r1-0-candidate.json",
+                "rawSHA256": "8071de54ca06a5a567da3e38a5553c77453d39536608f974109e642cff35dc75",
+                "latencyMedianMS": 32.753298,
+                "latencyMinMS": 31.730067,
+                "latencyMaxMS": 33.29382,
+                "peakRSSBytes": 38146048,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              },
+              {
+                "side": "candidate",
+                "raw": "vardct-decode-w4-r1-3-candidate.json",
+                "rawSHA256": "8ba95cfef7c5c439299e4f4b32eed9aeed0a2ca77f3c9cd6f6d4317e01fb1ef6",
+                "latencyMedianMS": 36.629701499999996,
+                "latencyMinMS": 34.677615,
+                "latencyMaxMS": 41.501296,
+                "peakRSSBytes": 37847040,
+                "encodedBytes": 151757,
+                "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+                "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 37.6861935,
+            "candidate": 34.69149975,
+            "ratio": 0.9205360512199248
+          },
+          "peakRSSBytes": {
+            "baseline": 38526976.0,
+            "candidate": 37996544.0,
+            "ratio": 0.9862321922177334
+          }
+        }
+      ],
+      "identicalCompressedAndDecodedBytes": true,
+      "latencyMedianMSRepeatedRegression": false,
+      "peakRSSBytesRepeatedRegression": false
+    }
+  ],
+  "runs": [
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w1-r0-0-baseline.json",
+      "rawSHA256": "76831ce5700af2b0728c9f9f56413cd20b56a5c074cadfc41d2145ac5cec3cec",
+      "latencyMedianMS": 44.737508000000005,
+      "latencyMinMS": 44.616217,
+      "latencyMaxMS": 44.939051,
+      "peakRSSBytes": 43565056,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w1-r0-1-candidate.json",
+      "rawSHA256": "2a4e4a54a4b58ba95b04e4a64dbaa21bf2092641a25318edfd140006a5e67364",
+      "latencyMedianMS": 41.682585,
+      "latencyMinMS": 41.186501,
+      "latencyMaxMS": 41.969836,
+      "peakRSSBytes": 43556864,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w1-r0-2-candidate.json",
+      "rawSHA256": "0c81700348264749ebd45b8cd0d4b45c2cbf9af7a381c0db6d743d176d4214cf",
+      "latencyMedianMS": 38.797809,
+      "latencyMinMS": 38.32712,
+      "latencyMaxMS": 39.116997,
+      "peakRSSBytes": 43700224,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w1-r0-3-baseline.json",
+      "rawSHA256": "3baa511e77390e29a352fa46d756ba38c64d9ad99d42249886a300ba5057c55b",
+      "latencyMedianMS": 39.1789555,
+      "latencyMinMS": 38.776704,
+      "latencyMaxMS": 40.644125,
+      "peakRSSBytes": 43696128,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w1-r1-0-candidate.json",
+      "rawSHA256": "1ef3fa3cee70fb4cb97deb3460aff7b8701d75a6be9f51138a36e3b5f3a58487",
+      "latencyMedianMS": 43.805777,
+      "latencyMinMS": 42.479254,
+      "latencyMaxMS": 45.431093,
+      "peakRSSBytes": 43565056,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w1-r1-1-baseline.json",
+      "rawSHA256": "8347842ffaf2e13683004850963b58e3d5ed2f5da521110aec706e0ae8d823fd",
+      "latencyMedianMS": 39.416519,
+      "latencyMinMS": 38.987539,
+      "latencyMaxMS": 40.345791,
+      "peakRSSBytes": 43638784,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w1-r1-2-baseline.json",
+      "rawSHA256": "d17eede3b3091defe78778ee1fbd69ef5bd58a7ad31581f8931821e575c87bc6",
+      "latencyMedianMS": 46.610179,
+      "latencyMinMS": 45.976761,
+      "latencyMaxMS": 47.110264,
+      "peakRSSBytes": 43790336,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w1-r1-3-candidate.json",
+      "rawSHA256": "1983295a724247bf8a2e9b8c130c13dd1f5bfce26bd54aa2d39cc4f35cb9aa07",
+      "latencyMedianMS": 39.419039,
+      "latencyMinMS": 39.143706,
+      "latencyMaxMS": 44.701217,
+      "peakRSSBytes": 43524096,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w4-r0-0-baseline.json",
+      "rawSHA256": "10bb20fa308ebd9c90c3dff86c5b3e0e737fa051429e0dfc0a1470f6dfec6ebb",
+      "latencyMedianMS": 32.9042965,
+      "latencyMinMS": 31.62119,
+      "latencyMaxMS": 38.783038,
+      "peakRSSBytes": 45727744,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w4-r0-1-candidate.json",
+      "rawSHA256": "ba75d8ac584677b9f97d97d4c9ebcd72bfd3d0e5a617c69fdae5eb03e0f469cc",
+      "latencyMedianMS": 43.529339,
+      "latencyMinMS": 36.045116,
+      "latencyMaxMS": 51.020896,
+      "peakRSSBytes": 45797376,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w4-r0-2-candidate.json",
+      "rawSHA256": "3819745a3f8abf5117a54fb68692ee0444f7554e57bd33d10e070e514f65615b",
+      "latencyMedianMS": 47.5629315,
+      "latencyMinMS": 44.295508,
+      "latencyMaxMS": 59.049497,
+      "peakRSSBytes": 45404160,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w4-r0-3-baseline.json",
+      "rawSHA256": "3143603ec18efcb1fe648d8a622e41b09291f859bf65e568f0a74e7ad7a2d959",
+      "latencyMedianMS": 50.48377000000001,
+      "latencyMinMS": 38.643871,
+      "latencyMaxMS": 60.638958,
+      "peakRSSBytes": 45600768,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w4-r1-0-candidate.json",
+      "rawSHA256": "e11988c5b6f421ec5c128650a309296c7b459ff60607d542a1e634d838fde6df",
+      "latencyMedianMS": 41.686065,
+      "latencyMinMS": 37.365202,
+      "latencyMaxMS": 54.619654,
+      "peakRSSBytes": 45772800,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w4-r1-1-baseline.json",
+      "rawSHA256": "937e3656d9f54ad8c9c9782fca306521d151a3df3b18c437b19caa897bd95cf0",
+      "latencyMedianMS": 38.107891,
+      "latencyMinMS": 34.108404,
+      "latencyMaxMS": 46.884055,
+      "peakRSSBytes": 45625344,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w4-r1-2-baseline.json",
+      "rawSHA256": "aa6ba881834d4853cd5984da4bddf355419f1218d92fe6fa56e6d4eba200a43e",
+      "latencyMedianMS": 38.80708,
+      "latencyMinMS": 32.804568,
+      "latencyMaxMS": 50.992605,
+      "peakRSSBytes": 45780992,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w4-r1-3-candidate.json",
+      "rawSHA256": "970104a7c202834f023b3a92c6c160397dfe75a8315635025eb08315b8890d64",
+      "latencyMedianMS": 40.4115415,
+      "latencyMinMS": 35.220197,
+      "latencyMaxMS": 50.293646,
+      "peakRSSBytes": 45744128,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-decode-w1-r0-0-baseline.json",
+      "rawSHA256": "5f97a0d65192cf07732b699e0590986a8979dfab6dc68dea777aead436647214",
+      "latencyMedianMS": 4.5086135,
+      "latencyMinMS": 4.315759,
+      "latencyMaxMS": 4.876177,
+      "peakRSSBytes": 38535168,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-decode-w1-r0-1-candidate.json",
+      "rawSHA256": "a4aea414a02164ec16a6f4d159507b6773f408103e4ba7663650da901a815ff1",
+      "latencyMedianMS": 4.4772385,
+      "latencyMinMS": 4.348925,
+      "latencyMaxMS": 4.567135,
+      "peakRSSBytes": 38666240,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-decode-w1-r0-2-candidate.json",
+      "rawSHA256": "d26646cc5a1737f5f25cfa763fbbd873dc1009eb802184b945c4ef80debb19cc",
+      "latencyMedianMS": 4.719697,
+      "latencyMinMS": 4.335675,
+      "latencyMaxMS": 5.311719,
+      "peakRSSBytes": 38797312,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-decode-w1-r0-3-baseline.json",
+      "rawSHA256": "cfe5d49c4d608175b9b3b3fff617f01f53f792c92be8c4ff1b6074305917385c",
+      "latencyMedianMS": 4.767113999999999,
+      "latencyMinMS": 4.434176,
+      "latencyMaxMS": 5.304386,
+      "peakRSSBytes": 38666240,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-decode-w1-r1-0-candidate.json",
+      "rawSHA256": "96419f1932f9bdcccc3ea2e7da436aa0edc8a76df3e9cba0b355a1f26fe3f1f1",
+      "latencyMedianMS": 4.703218,
+      "latencyMinMS": 4.420759,
+      "latencyMaxMS": 4.791802,
+      "peakRSSBytes": 38666240,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-decode-w1-r1-1-baseline.json",
+      "rawSHA256": "9fa35b4758093c4e3284217321bbec073b6da252609a49f81405fb7b89e75345",
+      "latencyMedianMS": 4.5607385,
+      "latencyMinMS": 4.376384,
+      "latencyMaxMS": 4.650218,
+      "peakRSSBytes": 38666240,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-decode-w1-r1-2-baseline.json",
+      "rawSHA256": "823c1f295e051f985661443f003e83014f7bb83c050f8717b5f5329ba970e27a",
+      "latencyMedianMS": 4.7529889999999995,
+      "latencyMinMS": 4.408842,
+      "latencyMaxMS": 5.274469,
+      "peakRSSBytes": 38666240,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-decode-w1-r1-3-candidate.json",
+      "rawSHA256": "10b878352a7e2bd2ee5d4485264ff62e19d5cdb218b4098cef6bd9d5717ac717",
+      "latencyMedianMS": 4.475134499999999,
+      "latencyMinMS": 4.184801,
+      "latencyMaxMS": 5.840471,
+      "peakRSSBytes": 38666240,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-decode-w4-r0-0-baseline.json",
+      "rawSHA256": "35d8ef9f1a3387a8c0e0dfd7fb5fb3198c868f572a1bcea4b360f112baf8ac67",
+      "latencyMedianMS": 4.478759500000001,
+      "latencyMinMS": 4.318384,
+      "latencyMaxMS": 4.600301,
+      "peakRSSBytes": 38797312,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-decode-w4-r0-1-candidate.json",
+      "rawSHA256": "63251d0f50f06b6e74f76407b06241147e18400b2f8107b9c2b321fd04e8632d",
+      "latencyMedianMS": 4.563738,
+      "latencyMinMS": 4.3208,
+      "latencyMaxMS": 5.072969,
+      "peakRSSBytes": 38666240,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-decode-w4-r0-2-candidate.json",
+      "rawSHA256": "a6327421bd1f7fe7ea069503a9e7e60a9acc3ec137d671f3c6a56ff61cde93c4",
+      "latencyMedianMS": 4.557822,
+      "latencyMinMS": 4.283133,
+      "latencyMaxMS": 5.210928,
+      "peakRSSBytes": 38666240,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-decode-w4-r0-3-baseline.json",
+      "rawSHA256": "b5040a6753e625b39ab0aae75631b330e3cc45f3591deeed0e76ce1bb0edf8ab",
+      "latencyMedianMS": 4.45228,
+      "latencyMinMS": 4.348342,
+      "latencyMaxMS": 4.525259,
+      "peakRSSBytes": 38797312,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-decode-w4-r1-0-candidate.json",
+      "rawSHA256": "7399dd648869850e268d3e18e7e5facb2ac28cb602b255608d49fb8a34459692",
+      "latencyMedianMS": 5.1110315,
+      "latencyMinMS": 4.702051,
+      "latencyMaxMS": 6.438722,
+      "peakRSSBytes": 38535168,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-decode-w4-r1-1-baseline.json",
+      "rawSHA256": "fe1fe10c2845ed1e6e18472ae292a813951ff8dad175acaffc410f86a2628a03",
+      "latencyMedianMS": 4.5367180000000005,
+      "latencyMinMS": 4.310217,
+      "latencyMaxMS": 4.673926,
+      "peakRSSBytes": 38928384,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-decode-w4-r1-2-baseline.json",
+      "rawSHA256": "438196ed6a2fda53c2f9126cc901cc19e60ea7e6d75b988ee82d2d2934e022d8",
+      "latencyMedianMS": 4.5821345,
+      "latencyMinMS": 4.436092,
+      "latencyMaxMS": 4.898344,
+      "peakRSSBytes": 38797312,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-decode-w4-r1-3-candidate.json",
+      "rawSHA256": "87a72974646cd2c96733cbe57be8057503cf8e944f280e15a2fe6f22bf9f753d",
+      "latencyMedianMS": 4.9930520000000005,
+      "latencyMinMS": 4.655509,
+      "latencyMaxMS": 6.120762,
+      "peakRSSBytes": 38666240,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-encode-w1-r0-0-baseline.json",
+      "rawSHA256": "74a8d87a74269fcdff541cf7cab562efa65af6cb8b81d7a29426939faccab797",
+      "latencyMedianMS": 168.307014,
+      "latencyMinMS": 166.561427,
+      "latencyMaxMS": 175.722655,
+      "peakRSSBytes": 35328000,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-encode-w1-r0-1-candidate.json",
+      "rawSHA256": "5b8812784006b6cf72b8ba1dd2b0fe15830d34b8b7107067ca39509893073e7f",
+      "latencyMedianMS": 172.00241749999998,
+      "latencyMinMS": 169.101849,
+      "latencyMaxMS": 178.358618,
+      "peakRSSBytes": 35442688,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-encode-w1-r0-2-candidate.json",
+      "rawSHA256": "496de47a2bf92b6e75ab901f3629347d40564f228b3c9b135f2ba995d3b769f4",
+      "latencyMedianMS": 196.1485935,
+      "latencyMinMS": 182.566669,
+      "latencyMaxMS": 266.549301,
+      "peakRSSBytes": 35438592,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-encode-w1-r0-3-baseline.json",
+      "rawSHA256": "54dbaec7007ba7f8431824270b09934cceb1dca29a25f0a6ad96b5849837beea",
+      "latencyMedianMS": 200.972354,
+      "latencyMinMS": 181.280417,
+      "latencyMaxMS": 287.05251,
+      "peakRSSBytes": 35414016,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-encode-w1-r1-0-candidate.json",
+      "rawSHA256": "5e981c296954752ab451f86873d97ca677c3691573cc40ceea86578fac79994b",
+      "latencyMedianMS": 261.3283745,
+      "latencyMinMS": 200.806041,
+      "latencyMaxMS": 325.522134,
+      "peakRSSBytes": 35377152,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-encode-w1-r1-1-baseline.json",
+      "rawSHA256": "3995985fb4899639e70e28a6fab6e2e808b1bae1e3f09ef8156363b8edd9d9a9",
+      "latencyMedianMS": 221.098626,
+      "latencyMinMS": 189.530352,
+      "latencyMaxMS": 309.360809,
+      "peakRSSBytes": 35319808,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-encode-w1-r1-2-baseline.json",
+      "rawSHA256": "107abe5e8120bd051f800639faebb86629b877a4cfb37f20970721b8c5501efb",
+      "latencyMedianMS": 195.9286365,
+      "latencyMinMS": 180.71921,
+      "latencyMaxMS": 235.704365,
+      "peakRSSBytes": 35438592,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-encode-w1-r1-3-candidate.json",
+      "rawSHA256": "cde0a3d01a4fa4276d3e89938ce6f79e9ad9504ae75edad0640f53bfbb357352",
+      "latencyMedianMS": 214.441217,
+      "latencyMinMS": 193.378777,
+      "latencyMaxMS": 271.414648,
+      "peakRSSBytes": 35438592,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-encode-w4-r0-0-baseline.json",
+      "rawSHA256": "83a2c7a2c85ef19204d7d3cadc52df85c4283b3f10bf05eb32ca8c0aaae95872",
+      "latencyMedianMS": 139.2727695,
+      "latencyMinMS": 106.848139,
+      "latencyMaxMS": 173.149444,
+      "peakRSSBytes": 35770368,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-encode-w4-r0-1-candidate.json",
+      "rawSHA256": "347024c62df3263d455aa1154daf8b729107951ce6b9cc70171858b4e50f5a14",
+      "latencyMedianMS": 130.539314,
+      "latencyMinMS": 116.703994,
+      "latencyMaxMS": 154.700739,
+      "peakRSSBytes": 36098048,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-encode-w4-r0-2-candidate.json",
+      "rawSHA256": "4774124973a3cdf0de0496df9a7599391c181b4044c4856f0748e61df48b8274",
+      "latencyMedianMS": 107.55722399999999,
+      "latencyMinMS": 93.545445,
+      "latencyMaxMS": 134.188113,
+      "peakRSSBytes": 35897344,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-encode-w4-r0-3-baseline.json",
+      "rawSHA256": "49ffe8c2bcdcd79bbabf3a0f360e6399840985d01ef881317140acc554717506",
+      "latencyMedianMS": 97.030474,
+      "latencyMinMS": 84.782136,
+      "latencyMaxMS": 108.832686,
+      "peakRSSBytes": 35905536,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-encode-w4-r1-0-candidate.json",
+      "rawSHA256": "a319a5660172f8d3fac2b8cb3c7b606d7a420c70e24019c136ea5239729cb8ed",
+      "latencyMedianMS": 108.1612265,
+      "latencyMinMS": 92.81361,
+      "latencyMaxMS": 155.342324,
+      "peakRSSBytes": 35971072,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-encode-w4-r1-1-baseline.json",
+      "rawSHA256": "2fac33de609e21e8531dc7df095672df9c74b3e6a141bcf77830801eee899218",
+      "latencyMedianMS": 87.49676600000001,
+      "latencyMinMS": 80.563502,
+      "latencyMaxMS": 110.661065,
+      "peakRSSBytes": 35971072,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-encode-w4-r1-2-baseline.json",
+      "rawSHA256": "91373cd5e78f7c4d49841f643eb0368102a7e88d43fe81f238bb8e93117e1448",
+      "latencyMedianMS": 80.91875300000001,
+      "latencyMinMS": 78.791582,
+      "latencyMaxMS": 91.222733,
+      "peakRSSBytes": 36040704,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-encode-w4-r1-3-candidate.json",
+      "rawSHA256": "3eae7b852d6a637acadade85fd707703214d7fa9403b076e72e3b66bad4a7125",
+      "latencyMedianMS": 81.8815465,
+      "latencyMinMS": 79.999168,
+      "latencyMaxMS": 87.235808,
+      "peakRSSBytes": 35909632,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-decode-w1-r0-0-baseline.json",
+      "rawSHA256": "cf74270f89c1e4de5768c56a61321bc68a8c017a6041f0214c0e1a15ce938aa1",
+      "latencyMedianMS": 33.999926,
+      "latencyMinMS": 32.877319,
+      "latencyMaxMS": 37.267245,
+      "peakRSSBytes": 37539840,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-decode-w1-r0-1-candidate.json",
+      "rawSHA256": "b29668e7796bc261168a9beddfdbc2c90bad9cb4b0b86fb6041ec43e512e99b1",
+      "latencyMedianMS": 34.1591965,
+      "latencyMinMS": 33.43107,
+      "latencyMaxMS": 36.601243,
+      "peakRSSBytes": 37535744,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-decode-w1-r0-2-candidate.json",
+      "rawSHA256": "957339ee7c37d9ef7f8b17fd9779020181bbd33b6f23443d9464bcd3a44a5982",
+      "latencyMedianMS": 34.4479685,
+      "latencyMinMS": 32.899819,
+      "latencyMaxMS": 37.052744,
+      "peakRSSBytes": 37535744,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-decode-w1-r0-3-baseline.json",
+      "rawSHA256": "908389ded8fd9e02726ca8c4ecd87029933f3326b286e8d7797b46e2d18d5aea",
+      "latencyMedianMS": 34.450863999999996,
+      "latencyMinMS": 33.157819,
+      "latencyMaxMS": 44.264717,
+      "peakRSSBytes": 37625856,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-decode-w1-r1-0-candidate.json",
+      "rawSHA256": "069782c89bb704b6167dd6d7301daddcae5be74b3276c104d5a590027a74f2b0",
+      "latencyMedianMS": 34.9659065,
+      "latencyMinMS": 32.946861,
+      "latencyMaxMS": 38.213371,
+      "peakRSSBytes": 37539840,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-decode-w1-r1-1-baseline.json",
+      "rawSHA256": "c5a543adc53c90ae75b2db3a0f55eef6f4b11bf3501b74258f00d98455fda63b",
+      "latencyMedianMS": 34.813218500000005,
+      "latencyMinMS": 32.79311,
+      "latencyMaxMS": 36.284285,
+      "peakRSSBytes": 37523456,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-decode-w1-r1-2-baseline.json",
+      "rawSHA256": "6bbaf947a888c72846a3de7531ea92a185f3f0709aee01a7701c8ea308c4eeb8",
+      "latencyMedianMS": 33.559466,
+      "latencyMinMS": 32.659652,
+      "latencyMaxMS": 34.09528,
+      "peakRSSBytes": 37560320,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-decode-w1-r1-3-candidate.json",
+      "rawSHA256": "dbb8c0fd844e1c162cddaeacef8421902c0843ccc76517d34f6e76d55b6de15b",
+      "latencyMedianMS": 36.8783065,
+      "latencyMinMS": 35.36799,
+      "latencyMaxMS": 44.453135,
+      "peakRSSBytes": 37539840,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-decode-w4-r0-0-baseline.json",
+      "rawSHA256": "6658f44c4003102145c44df822eea562645c29d625b30056a3c384547a2dba90",
+      "latencyMedianMS": 35.805304,
+      "latencyMinMS": 33.228319,
+      "latencyMaxMS": 50.735106,
+      "peakRSSBytes": 38469632,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-decode-w4-r0-1-candidate.json",
+      "rawSHA256": "80b7ae7e90adcec7063dae3148e915fbf01d5b057dc338121ac3af25227cbb08",
+      "latencyMedianMS": 41.8367335,
+      "latencyMinMS": 34.113614,
+      "latencyMaxMS": 49.997939,
+      "peakRSSBytes": 38129664,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-decode-w4-r0-2-candidate.json",
+      "rawSHA256": "93d2f24040f0f62ebfb09df9fad7fede56ebabe9e9bf6465ffd3164c7458d8e1",
+      "latencyMedianMS": 40.11373,
+      "latencyMinMS": 35.819075,
+      "latencyMaxMS": 48.424393,
+      "peakRSSBytes": 37801984,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-decode-w4-r0-3-baseline.json",
+      "rawSHA256": "bef6ec01347872a2702ebe3d98494db3a0762310e0a27919b767b2cb0be892f1",
+      "latencyMedianMS": 36.298868,
+      "latencyMinMS": 35.452699,
+      "latencyMaxMS": 40.407168,
+      "peakRSSBytes": 38658048,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-decode-w4-r1-0-candidate.json",
+      "rawSHA256": "8071de54ca06a5a567da3e38a5553c77453d39536608f974109e642cff35dc75",
+      "latencyMedianMS": 32.753298,
+      "latencyMinMS": 31.730067,
+      "latencyMaxMS": 33.29382,
+      "peakRSSBytes": 38146048,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-decode-w4-r1-1-baseline.json",
+      "rawSHA256": "a488e81e502389603c71781c9bd77e4e8178293b90c3dd8cbaa193bdc431ea2a",
+      "latencyMedianMS": 35.400991,
+      "latencyMinMS": 34.295405,
+      "latencyMaxMS": 38.047871,
+      "peakRSSBytes": 38526976,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "baseline",
+      "raw": "vardct-decode-w4-r1-2-baseline.json",
+      "rawSHA256": "636a7acf5f25fa9dda1da678581a806f6e5e6d4d7749e726fe1c6c145d241757",
+      "latencyMedianMS": 39.971396,
+      "latencyMinMS": 35.127324,
+      "latencyMaxMS": 46.392389,
+      "peakRSSBytes": 38526976,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    },
+    {
+      "side": "candidate",
+      "raw": "vardct-decode-w4-r1-3-candidate.json",
+      "rawSHA256": "8ba95cfef7c5c439299e4f4b32eed9aeed0a2ca77f3c9cd6f6d4317e01fb1ef6",
+      "latencyMedianMS": 36.629701499999996,
+      "latencyMinMS": 34.677615,
+      "latencyMaxMS": 41.501296,
+      "peakRSSBytes": 37847040,
+      "encodedBytes": 151757,
+      "encodedSHA256": "58c99715f134e96dd7d991185f28e13d0c7e2bc95c34da93708a525c465d3166",
+      "decodedSHA256": "5cb7546de3e15b37f25930eceaf0b094b8341b4a66c47a4201ca198397fe9efe"
+    }
+  ],
+  "regressionTriggers": [
+    {
+      "case": "modular-encode-w4",
+      "metric": "latencyMedianMS"
+    }
+  ],
+  "scope": "Controlled local native Linux ARM64 release comparison of the Linux lock change. Synthetic512x512RGB16; public API encode/decode latency and whole-process peakRSS. No general performance, heap-allocation or exact-workspace claim.",
+  "finishedUTC": "2026-11-04T10:30:30.413930+00:00"
+}

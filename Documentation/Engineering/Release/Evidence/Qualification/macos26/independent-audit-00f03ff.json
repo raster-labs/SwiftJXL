@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "scope": "Independent read-only audit of exact macOS26.0 ARM virtual runtime receipts; no physical-device qualification",
+  "checks": {
+    "sixteenReceiptHashesMatch": true,
+    "sourceArchiveHashMatches": true,
+    "all2839ArchiveEntriesMatchManifest": true,
+    "all203RuntimeAndTestSourceHashesMatchCurrent": true,
+    "packageManifestMatchesCurrent": true,
+    "postExecutionNoArchiveChanges": true,
+    "exact260ARMVirtualRuntime": true,
+    "exact368DiscoveryExecutionIdentityAgreement": true,
+    "noXMLFailuresSkips": true,
+    "console2053CasesAgree": true,
+    "ARMReferenceExecuted": true,
+    "all432OracleReportHashesMatch": true,
+    "cli98ChecksPassed": true,
+    "runtimeSourcesAndReferenceInputsStable": true,
+    "originalReceiptHashesRemainUnchanged": true
+  },
+  "failedChecks": [],
+  "inputAuditSHA256": "7f9a140364e924f1b9a0dda195970c8c366389f7e399e5fe071212ffd1138cf1",
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "freezeGroups": {
+    "runtime": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+    "qualification": "955c21c6cfc7b2e1650dad73f77e6de12cd3c7b5ea55e1f06c5624e3a444381d"
+  },
+  "initialAuditSHA256": "d5dbfe6f81e4e47bb250dc78a1b2022f10726f84a674eaa7f9b6e7feb7540bbb",
+  "discoveryDerivation": {
+    "path": "discovery-00f03ff-derivation.json",
+    "sha256": "5bd72469537688d0750a645bf9f43312294929f6bfb46bcff001e8ba98998c0d",
+    "originalMetadataIssue": "One stderr warning split one discovery identifier; declaration count agreed, exact name reconciliation required the documented derivation."
+  }
+}

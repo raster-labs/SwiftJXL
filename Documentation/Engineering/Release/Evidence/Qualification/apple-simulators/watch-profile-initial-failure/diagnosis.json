@@ -1,0 +1,9 @@
+{
+  "status": "diagnosed",
+  "failure": "JPEG pixel owner and shape",
+  "initialHypothesis": "Optional allocation telemetry was initially suspected, then rejected by source inspection before any assertion was changed.",
+  "cause": "Helper supplied JBRD/gray.raw reconstruction metadata (17bytes, JFIF body) as a pixel oracle. Independent djpeg emits 31x17=527 greyscale pixels for pinned JPEG/gray.jpg.",
+  "sourceEvidence": "Documentation/Engineering/Migration/Evidence/NativeJPEG/generate-jbrd-fixtures.py:57-69",
+  "resolution": "Generate and replay independent host djpeg integer-IDCT reference; retain strict JPEG allocation counts1/0 and all sample/ownership checks.",
+  "rawFailureReportSHA256": "451ba2ceacd9b3c9caec304a0daf6734bbf665f9b26cb9b625dee31a9eacba08"
+}

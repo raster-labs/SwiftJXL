@@ -1,0 +1,14 @@
+[
+  {
+    "file": "spdx-model.ttl",
+    "url": "https://spdx.org/rdf/3.0.1/spdx-model.ttl",
+    "sha256": "30ebb4af2d70a9809044ef46f44cc3dc5125226d70f818a50ed2e1d5f404c593",
+    "retrievedUTC": "2026-11-04T07:12:55.983571+00:00"
+  },
+  {
+    "file": "spdx-context.jsonld",
+    "url": "https://spdx.org/rdf/3.0.1/spdx-context.jsonld",
+    "sha256": "c72b0928f094c83e5c127784edb1ebca2af74a104fcacc007c332b23cbc788bd",
+    "retrievedUTC": "2026-11-04T07:12:57.206151+00:00"
+  }
+]

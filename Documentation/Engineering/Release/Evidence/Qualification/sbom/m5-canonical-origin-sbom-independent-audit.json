@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "auditedUTC": "2026-11-04T10:51:22.573765+00:00",
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "runnerSHA256": "74aecc5ef013327afacf737529aa1501101f0bec4567c18cb75f606d73f79022",
+  "buildReportSHA256": "91aa0be1ef8d94b1065db56975257c6d74232c06ad38ab0b2afe2713df594148",
+  "sourceFilesRechecked": 1275,
+  "origin": "https://github.com/raster-labs/SwiftJXL.git",
+  "upstream": "refs/remotes/origin/codex/milestone5-release-preparation",
+  "canonicalRootPURLRetained": "pkg:swift/github.com/raster-labs/swiftjxl@00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "independentGitHubAliasRecheck": {
+    "repositoryID": "1373980147",
+    "canonicalName": "raster-labs/SwiftJXL",
+    "bothRoutesResolved": true
+  },
+  "artifacts": [
+    {
+      "specification": "spdx",
+      "rawSHA256": "70251db2ea6d1db943b7fac66d8c13d17f92f0dd9c7f9ac3504a6d81cf254637",
+      "derivedSHA256": "68ae656806d23c6125b4c76be77f2c1af357ef7459edbd3829ea2033b52e2979",
+      "editCount": 18,
+      "replayedExactBytes": true
+    },
+    {
+      "specification": "cyclonedx",
+      "rawSHA256": "5cad82cd4f69dd588680e7c2d6758243e7cfe7ab534481bcabd4de2d6843f189",
+      "derivedSHA256": "a6ec29c575b7c8c47a8d0bfc00e943564aaf75d3372ef0bb547a74c235a5222c",
+      "editCount": 6,
+      "replayedExactBytes": true
+    }
+  ],
+  "extraReferenceMutationSentinels": [
+    {
+      "case": "source-id",
+      "rejected": true,
+      "reason": "Other references to defective source nodes must be reviewed"
+    },
+    {
+      "case": "generates-id",
+      "rejected": true,
+      "reason": "Other references to defective source nodes must be reviewed"
+    }
+  ],
+  "unitTests": 6,
+  "unitTestResult": "passed",
+  "limitations": [
+    "Package graph derivation only, not a complete system or third-party inventory.",
+    "Raw SwiftPM emissions remain defective and are preserved byte-for-byte."
+  ],
+  "independentValidation": {
+    "spdx": {
+      "officialSchemaErrors": 0,
+      "officialSHACLConforms": true,
+      "requiredTimestampRemovalRejected": true
+    },
+    "cyclonedx": {
+      "officialSchemaErrors": 0
+    }
+  }
+}

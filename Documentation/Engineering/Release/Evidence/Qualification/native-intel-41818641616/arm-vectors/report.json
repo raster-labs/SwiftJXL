@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "architecture": "arm64",
+  "runtime": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+  "sourceRevision": "e8460d788fa0cc8a90e2ff958808fe2efdd60ce9",
+  "sourceSHA256": "d4d99728cdcdd90217815cc10f8109cc76c2850b87f9b817861bea2ffa1490f6",
+  "generatorSHA256": "4081cafa7ab85c209718cdb5d4bc2ed15f2d65edc5a4d5cb80c84ce14b2a863c",
+  "vectorCount": 45826,
+  "vectorsSHA256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+  "replayedByteForByte": true,
+  "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n"
+}

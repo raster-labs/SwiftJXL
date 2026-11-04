@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "verifiedArchiveFiles": 2839,
+  "changedArchiveFiles": [],
+  "finishedUnix": 1793789034.750635,
+  "runtime": "ProductName:\t\tmacOS\nProductVersion:\t\t26.0\nBuildVersion:\t\t25A354\n",
+  "machine": "arm64",
+  "binaries": {
+    ".build/arm64-apple-macosx/release/SwiftJXLPackageTests.xctest/Contents/MacOS/SwiftJXLPackageTests": {
+      "sha256": "d3f4411a3926208b6d597fba165bea572eb8710319857e9b8c4004ce38fafd5b",
+      "buildVersion": "/Users/admin/m5/source-00f03ff/.build/arm64-apple-macosx/release/SwiftJXLPackageTests.xctest/Contents/MacOS/SwiftJXLPackageTests:\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 26.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n"
+    },
+    ".build/arm64-apple-macosx/release/swiftjxl-cli": {
+      "sha256": "4002364219ba3f18414137b834d2905ef06f2922d3ced84817d8de6bfbace77e",
+      "buildVersion": "/Users/admin/m5/source-00f03ff/.build/arm64-apple-macosx/release/swiftjxl-cli:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 26.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "6423CB57-B4F0-4A4C-BBB3-7E1BDB8E5E0E",
+        "deviceName" : "SwiftJXL-M5-watchos-d371a0b1",
+        "modelName" : "Apple Watch Series 11",
+        "osBuildNumber" : "23R353",
+        "osVersion" : "26.0",
+        "platform" : "watchOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 6,
+      "passedTests" : 1954,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "SwiftJXL-Package · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1793790376.245,
+  "passedTests" : 360,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793790353.571,
+  "statistics" : [
+    {
+      "subtitle" : "1716 test runs",
+      "title" : "118 tests ran with dynamic parameters"
+    }
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Caught error: CodecError(category: SwiftJXL.CodecError.Category.resourceLimitExceeded, message: \"Scalar operation exceeded its memory or work limit.\")",
+      "targetName" : "SwiftJXLCoreTests",
+      "testIdentifier" : 215,
+      "testIdentifierString" : "ModularStorageTests/publicOwningColourDestination(_:_:)",
+      "testIdentifierURL" : "test://com.apple.xcode/SwiftJXL/SwiftJXLCoreTests/ModularStorageTests/publicOwningColourDestination(_:_:)",
+      "testName" : "publicOwningColourDestination(_:_:)"
+    },
+    {
+      "failureText" : "Caught error: CodecError(category: SwiftJXL.CodecError.Category.resourceLimitExceeded, message: \"Scalar operation exceeded its memory or work limit.\")",
+      "targetName" : "SwiftJXLCoreTests",
+      "testIdentifier" : 155,
+      "testIdentifierString" : "ModularDecodeParallelTests/serialDefaultAndEightWorkersAgreeWithCallerOwnership(_:)",
+      "testIdentifierURL" : "test://com.apple.xcode/SwiftJXL/SwiftJXLCoreTests/ModularDecodeParallelTests/serialDefaultAndEightWorkersAgreeWithCallerOwnership(_:)",
+      "testName" : "serialDefaultAndEightWorkersAgreeWithCallerOwnership(_:)"
+    }
+  ],
+  "title" : "Test - SwiftJXL-Package",
+  "topInsights" : [
+    {
+      "category" : "Common Failures",
+      "impact" : "100% of failures",
+      "text" : "6 runs of 2 tests failed with Caught error: CodecError(category: SwiftJXL.CodecError.Category.resourceLimitExceeded, message: \"Scalar operation exceeded its memory or work limit.\")"
+    },
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "18% of duration",
+      "text" : "6 longest test runs with outlier durations exceeding 0.08s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 362
+}

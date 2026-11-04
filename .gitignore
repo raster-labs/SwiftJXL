@@ -6,3 +6,6 @@
 # Local compiler coverage artefacts
 *.profraw
 *.profdata
+
+# Python validation-tool caches
+__pycache__/

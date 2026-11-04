@@ -12,9 +12,9 @@ private struct ProfileOwnerState: Sendable {
     var active = 0, finished = 0, destroyed = 0
 }
 /// Shares the actual sealed owner. Its borrow never escapes and all mutable
-/// instrumentation is protected by Mutex; no unchecked concurrency is needed.
+/// instrumentation is protected by PackageMutex; no unchecked concurrency is needed.
 private final class ProfileOwnerCounter: Sendable {
-    let value = Mutex(ProfileOwnerState())
+    let value = PackageMutex(ProfileOwnerState())
 }
 
 private final class ProfileReadOwner: ReadOnlyImageStorage {

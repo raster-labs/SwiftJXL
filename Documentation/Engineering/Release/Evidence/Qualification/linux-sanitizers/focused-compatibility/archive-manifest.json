@@ -1,0 +1,36 @@
+{
+  "sourceDirectory": ".build/linux-compat-focused-final",
+  "scope": "Preserved original diagnostic/focused evidence; no full-platform qualification inferred",
+  "files": {
+    "frozen-source-binding.json": {
+      "sha256": "ddd6c8c052bff033437eb02244889350825401d3f74f5cf4cc2f8da9b0d1f7fc",
+      "bytes": 342
+    },
+    "report.json": {
+      "sha256": "e0d14402d7eb5dec723e44aa3328559d374a97556102f1cc67b2c0c79942e97f",
+      "bytes": 28666
+    },
+    "source-working.diff": {
+      "sha256": "19d7b1e1051811733c45a11743a8a09c74eb10c3b687691011f43a086bd013bb",
+      "bytes": 40471
+    },
+    "swift62.log": {
+      "sha256": "02fb542af64403a74ef401f5879d84c8e11e42e2f3f6c76d52cf5e488e8dd039",
+      "bytes": 24507
+    },
+    "swift62.xml": {
+      "sha256": "da2a647694b6deea65dccd4645338716da17487c04e3fffbd7f97f9b20200b9b",
+      "bytes": 7724
+    },
+    "swift64.log": {
+      "sha256": "d6ff20ba99cd1776d312f1dc20ca54a4642428201d1066a7a2fe57dec23388f4",
+      "bytes": 27432
+    },
+    "swift64.xml": {
+      "sha256": "0d341a7b64c4d85063b96428773861f71d23ee03823ffb00044c9f5216879e3c",
+      "bytes": 7724
+    }
+  },
+  "excluded": [],
+  "exclusionReason": "Executables omitted; duplicate ARM vectors are retained with final matrix input evidence."
+}

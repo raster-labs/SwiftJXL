@@ -37,11 +37,11 @@ struct JPEGBridgeFrameTests {
                            JPEGBridgePolicy(deadline: .now.advanced(by: .seconds(-1)))] {
             #expect(throws: (any Error).self) { try JPEGBridgeFrameReader.read(data, policy: policy) }
         }
-        let calls = Mutex(0)
+        let calls = PackageMutex(0)
         _ = try JPEGBridgeFrameReader.read(data, policy: JPEGBridgePolicy(checkpoint: { calls.withLock { $0 += 1 } }))
         let total = calls.withLock { $0 }
         for stop in [1, total / 2, total] {
-            let counter = Mutex(0)
+            let counter = PackageMutex(0)
             let policy = try JPEGBridgePolicy(checkpoint: {
                 if counter.withLock({ $0 += 1; return $0 }) == stop { throw CancellationError() }
             })
@@ -105,12 +105,12 @@ struct JPEGBridgeFrameTests {
                            JPEGBridgePolicy(deadline: .now.advanced(by: .seconds(-1)))] {
             #expect(throws: (any Error).self) { try JPEGBridgeFrameWriter.write(view, policy: policy) }
         }
-        let calls = Mutex(0)
+        let calls = PackageMutex(0)
         let counting = try JPEGBridgePolicy(checkpoint: { calls.withLock { $0 += 1 } })
         _ = try JPEGBridgeFrameWriter.write(view, policy: counting)
         let total = calls.withLock { $0 }
         for stop in [1, total / 2, total] {
-            let counter = Mutex(0)
+            let counter = PackageMutex(0)
             let policy = try JPEGBridgePolicy(checkpoint: {
                 if counter.withLock({ $0 += 1; return $0 }) == stop { throw CancellationError() }
             })
@@ -176,11 +176,18 @@ struct JPEGBridgeFrameTests {
         let process = Process(); process.executableURL = URL(fileURLWithPath: tools + "/djxl")
         process.arguments = [encoded.path, restored.path, "--quiet"]
         process.standardOutput = handle; process.standardError = handle
+        #if os(Linux)
+        let processStatus = try runLinuxOracle(process)
+        #else
         try process.run()
         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
         while process.isRunning && ContinuousClock.now < deadline { Thread.sleep(forTimeInterval: 0.01) }
         if process.isRunning { process.terminate(); Issue.record("djxl timed out"); throw CancellationError() }
-        try #require(process.terminationStatus == 0, "Oracle failed: \(log.path)")
+        // Release Foundation's process/run-loop ownership after bounded polling.
+        process.waitUntilExit()
+        let processStatus = process.terminationStatus
+        #endif
+        try #require(processStatus == 0, "Oracle failed: \(log.path)")
         #expect(try Data(contentsOf: restored) == source)
 
         // Independently encoded entropy trees, ANS tables, coefficient orders
@@ -190,11 +197,17 @@ struct JPEGBridgeFrameTests {
         encoder.arguments = [directory.appendingPathComponent("source.jpg").path, reference.path,
                              "--lossless_jpeg=1", "--quiet"]
         encoder.standardOutput = handle; encoder.standardError = handle
+        #if os(Linux)
+        let encoderStatus = try runLinuxOracle(encoder)
+        #else
         try encoder.run()
         let encoderDeadline = ContinuousClock.now.advanced(by: .seconds(30))
         while encoder.isRunning && ContinuousClock.now < encoderDeadline { Thread.sleep(forTimeInterval: 0.01) }
         if encoder.isRunning { encoder.terminate(); Issue.record("cjxl timed out"); throw CancellationError() }
-        try #require(encoder.terminationStatus == 0, "Oracle encoder failed: \(log.path)")
+        encoder.waitUntilExit()
+        let encoderStatus = encoder.terminationStatus
+        #endif
+        try #require(encoderStatus == 0, "Oracle encoder failed: \(log.path)")
         let referenceData = try Data(contentsOf: reference)
         guard case .iso(let boxes) = try parseJXLContainer(referenceData) else {
             Issue.record("Independent JPEG transcode needs a reconstruction container"); return

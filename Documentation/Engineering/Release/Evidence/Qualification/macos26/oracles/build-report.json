@@ -1,0 +1,41 @@
+{
+  "status": "built-not-yet-guest-executed",
+  "targetMinimum": "26.0",
+  "architecture": "arm64",
+  "buildScriptSHA256": "71c4cf663c53bbe52ba11ed9b11e6549b02b9613d3c6049ed2e9aa53c3ab9f3f",
+  "buildLogSHA256": "5c56f369b69a1600df6c0947478df38c0a41befedb31f08c815a9924cf560b3d",
+  "sourceRevisions": {
+    "libjxl": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+    "libjpeg-turbo": "7b4993786d856cbccabfc0ed2f923ba000e326cc",
+    "libpng": "cd952f49f95bb27154ae77dbb103032d95f6e580"
+  },
+  "binaries": {
+    "cjxl": {
+      "sha256": "fec976dcea964fccad3f1ca752b8ad019a0a70e3f02798f6a05e4e1e42b95704",
+      "buildVersion": ".build/m5-macos260/oracles/jxl-build/tools/cjxl:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 26.0\n      sdk 27.2\n   ntools 1\n     tool LD\n  version 27106.1\n",
+      "linkage": ".build/m5-macos260/oracles/jxl-build/tools/cjxl:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.40.3)\n\t/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.12)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2200.32.0)\n"
+    },
+    "djxl": {
+      "sha256": "492cbf420c144af8c6d95f223f7c15ad2f1061837e9ece609c20d2b1c2cc3d9e",
+      "buildVersion": ".build/m5-macos260/oracles/jxl-build/tools/djxl:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 26.0\n      sdk 27.2\n   ntools 1\n     tool LD\n  version 27106.1\n",
+      "linkage": ".build/m5-macos260/oracles/jxl-build/tools/djxl:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.40.3)\n\t/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.12)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2200.32.0)\n"
+    },
+    "swiftjxl-modular-profile-oracle": {
+      "sha256": "52cf841c7c4c5b2ec291a09df76f4e3a84f331960046f4be2a31c40412c8f8c7",
+      "buildVersion": ".build/m5-macos260/oracles/jxl-build/swiftjxl-modular-profile-oracle:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 26.0\n      sdk 27.2\n   ntools 1\n     tool LD\n  version 27106.1\n",
+      "linkage": ".build/m5-macos260/oracles/jxl-build/swiftjxl-modular-profile-oracle:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.40.3)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2200.32.0)\n"
+    },
+    "swiftjxl-modular-info-oracle": {
+      "sha256": "778e6c131a3d4d56cfa9fd6e9493565af250d30b4a7fcafabcbe6f7186df4617",
+      "buildVersion": ".build/m5-macos260/oracles/jxl-build/swiftjxl-modular-info-oracle:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 26.0\n      sdk 27.2\n   ntools 1\n     tool LD\n  version 27106.1\n",
+      "linkage": ".build/m5-macos260/oracles/jxl-build/swiftjxl-modular-info-oracle:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.40.3)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2200.32.0)\n"
+    },
+    "swiftjxl-animation-pixel-oracle": {
+      "sha256": "347c91ad5e09c7cbedea1f21877967f6d0febc47b66c34f9bb22f9c7bab353e6",
+      "buildVersion": ".build/m5-macos260/oracles/jxl-build/swiftjxl-animation-pixel-oracle:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 26.0\n      sdk 27.2\n   ntools 1\n     tool LD\n  version 27106.1\n",
+      "linkage": ".build/m5-macos260/oracles/jxl-build/swiftjxl-animation-pixel-oracle:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.40.3)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2200.32.0)\n"
+    }
+  },
+  "compiler": "Apple clang version 21.0.0 (clang-2100.4.1.1)\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n",
+  "submodules": "-73695d303670c90e4d506ea89d9901b081385089 testdata\n 028fb5a23661f123017c060daa546b55cf4bde29 third_party/brotli (028fb5a)\n-6910c9d9165801d8827d628cb72eb7ea9dd538c5 third_party/googletest\n 457c891775a7397bdb0376bb1031e6e027af1c48 third_party/highway (457c891)\n 5176347635785e53ee5cee92328f76fda766ecc6 third_party/lcms (5176347)\n-8ecba3647edb6dd940463fedf38ca33a8e2a73d1 third_party/libjpeg-turbo\n-872555f4ba910252783af1507f9e7fe1653be252 third_party/libpng\n-94e0df6d0f8b44228de5be0ff35efb9f946a13c9 third_party/sjpeg\n-96d9171c94b937a1b5f0293de7309ac16311b722 third_party/skcms\n-51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf third_party/zlib\n"
+}

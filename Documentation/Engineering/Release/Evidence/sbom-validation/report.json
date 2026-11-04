@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "status": "failed",
+  "fullConformanceQualified": false,
+  "startedUTC": "2026-11-04T06:50:54.893060+00:00",
+  "command": [
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-tools/bin/python",
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/validate-release-sbom.py",
+    "--build-report",
+    ".build/milestone5-sbom/report.json",
+    "--schemas",
+    ".build/release-schemas",
+    "--output",
+    ".build/milestone5-sbom-validation-final"
+  ],
+  "runnerSHA256": "4c73e5bdcd220aad41c48e3780b64c842ea5e199d1de8804a4a3ff47f9f571f5",
+  "environment": {
+    "python": "3.15.2",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "jsonschema": "4.25.1",
+    "referencing": "0.37.0"
+  },
+  "scope": "Official offline JSON Schema plus explicitly named semantic checks on unchanged emitted bytes",
+  "unexecuted": [
+    "Full SPDX SHACL/RDF semantic validation",
+    "Complete CycloneDX semantic validation",
+    "Completeness of non-SwiftPM/system/embedded third-party component inventory"
+  ],
+  "artifacts": [
+    {
+      "specification": "spdx",
+      "originalPath": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-sbom/sboms/spdx/spdx3-3.0.1-SwiftJXL-3e00d934bef331cdbc7c4be752857dc9eca8f799-all-2026-11-04T06_45_00Z.json",
+      "preservedPath": "originals/spdx3-3.0.1-SwiftJXL-3e00d934bef331cdbc7c4be752857dc9eca8f799-all-2026-11-04T06_45_00Z.json",
+      "sha256": "ac8c44f988ab9c910d4c911815bae64078826340aed449965c5f30c99d5dd2f2",
+      "schema": "spdx-3.0.1.schema.json",
+      "schemaSHA256": "582c64e809d5b3ef9bd0c4de13a32391b47b0284a3e8d199569fb96f649234b1",
+      "schemaErrors": [
+        {
+          "pointer": "/@graph/8",
+          "schemaPointer": "/then/properties/@graph/items/unevaluatedProperties",
+          "validator": "unevaluatedProperties",
+          "message": "Unevaluated properties are not allowed ('externalUrl', 'software_internalVersion' were unexpected)"
+        },
+        {
+          "pointer": "/@graph/9",
+          "schemaPointer": "/then/properties/@graph/items/unevaluatedProperties",
+          "validator": "unevaluatedProperties",
+          "message": "Unevaluated properties are not allowed ('externalUrl', 'software_internalVersion' were unexpected)"
+        }
+      ],
+      "semanticErrors": [
+        {
+          "rule": "SPDX-CreationInfo-specVersion",
+          "pointer": "/@graph/2/specVersion",
+          "message": "CreationInfo must name SPDX specification 3.0.1, not the compiler version",
+          "observed": "6.4.2"
+        }
+      ],
+      "status": "failed"
+    },
+    {
+      "specification": "cyclonedx",
+      "originalPath": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-sbom/sboms/cyclonedx/cyclonedx1-1.7-SwiftJXL-3e00d934bef331cdbc7c4be752857dc9eca8f799-all-2026-11-04T06_45_01Z.json",
+      "preservedPath": "originals/cyclonedx1-1.7-SwiftJXL-3e00d934bef331cdbc7c4be752857dc9eca8f799-all-2026-11-04T06_45_01Z.json",
+      "sha256": "5c83817f6dc8d4888a34ad57aeec063d11c0366c0f3ec09fb7cc3b061c9361ab",
+      "schema": "bom-1.7.schema.json",
+      "schemaSHA256": "71152f97948eeeca2fd4a1434a9d29aab35d377be11828b504d029dfeeb1925a",
+      "schemaErrors": [],
+      "semanticErrors": [
+        {
+          "rule": "CycloneDX-unique-bom-ref",
+          "pointer": "/metadata/component/bom-ref",
+          "firstPointer": "/components/1/bom-ref",
+          "observed": "swiftjxl-milestone5:SwiftJXL",
+          "message": "A bom-ref definition must be unique throughout the BOM"
+        }
+      ],
+      "status": "failed"
+    }
+  ],
+  "buildReport": {
+    "path": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-sbom/report.json",
+    "sha256": "81c9f3e43b8af555079f09ef8e494489e4325db33a53f6a4ec12756a5ce6010d",
+    "sourceRevision": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+    "manifestSHA256": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+    "compiler": "swift-driver version: 1.168.6 Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+    "buildEngine": "swiftbuild",
+    "generatorOpenGates": [
+      "spdx: installed SwiftPM schema bundle unavailable; SBOM emitted but schema validation skipped",
+      "cyclonedx: installed SwiftPM schema bundle unavailable; SBOM emitted but schema validation skipped"
+    ]
+  },
+  "schemaSourcesManifestSHA256": "b98dc9db192b39cfcd1ecf1d99d938768161d1abf16a04a201aa656d7be26b24",
+  "schemaSources": [
+    {
+      "file": "spdx-3.0.1.schema.json",
+      "url": "https://spdx.org/schema/3.0.1/spdx-json-schema.json",
+      "sha256": "582c64e809d5b3ef9bd0c4de13a32391b47b0284a3e8d199569fb96f649234b1"
+    },
+    {
+      "file": "bom-1.7.schema.json",
+      "url": "https://cyclonedx.org/schema/bom-1.7.schema.json",
+      "sha256": "71152f97948eeeca2fd4a1434a9d29aab35d377be11828b504d029dfeeb1925a"
+    },
+    {
+      "file": "spdx.schema.json",
+      "url": "https://cyclonedx.org/schema/spdx.schema.json",
+      "sha256": "33863a360fc4d348e183d89c1ca7aa0877f481e7eb55be2d4102a30386188a10"
+    },
+    {
+      "file": "jsf-0.82.schema.json",
+      "url": "https://cyclonedx.org/schema/jsf-0.82.schema.json",
+      "sha256": "2faf5eb3651f2ae5f46091a131770d8d847bbd121139d19c85fc7051bfa58c46"
+    },
+    {
+      "file": "cryptography-defs.schema.json",
+      "url": "https://cyclonedx.org/schema/cryptography-defs.schema.json",
+      "sha256": "95897594e42f7229523fd7a03272da284e0591b1c49550a8b62a355df6357249"
+    }
+  ],
+  "finishedUTC": "2026-11-04T06:50:55.227491+00:00",
+  "exitCode": 1
+}

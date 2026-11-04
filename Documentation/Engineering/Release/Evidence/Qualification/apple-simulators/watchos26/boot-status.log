@@ -1,0 +1,80 @@
+Monitoring boot status for SwiftJXL-M5-watchos-8c0c8c1f (E47C23A1-8DDB-4615-8D82-24EBC18523F8).
+[2026-11-04 11:15:18 +0000] Status=2, isTerminal=NO, Elapsed=00:03.
+	Waiting on Data Migration
+		Reason:Preparing to migrate
+		Migration Elapsed:00:00 seconds
+
+[2026-11-04 11:15:18 +0000] Status=2, isTerminal=NO, Elapsed=00:03.
+	Waiting on Data Migration
+		Reason:Gathering plugins
+		Migration Elapsed:00:00 seconds
+
+[2026-11-04 11:15:19 +0000] Status=2, isTerminal=NO, Elapsed=00:03.
+	Waiting on Data Migration
+		Reason:Running plugin com.apple.MobileContainerManager.ContainerMigrator (ContainerMigrator.migrator, user-agnostic)
+		Migration Elapsed:00:00 seconds
+
+[2026-11-04 11:15:20 +0000] Status=2, isTerminal=NO, Elapsed=00:04.
+	Waiting on Data Migration
+		Reason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)
+		Migration Elapsed:00:01 seconds
+
+[2026-11-04 11:15:21 +0000] Status=2, isTerminal=NO, Elapsed=00:05.
+	Waiting on Data Migration
+		Reason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)
+		Migration Elapsed:00:02 seconds
+
+[2026-11-04 11:15:22 +0000] Status=2, isTerminal=NO, Elapsed=00:06.
+	Waiting on Data Migration
+		Reason:Running plugin com.apple.-0LaunchServicesMigrator (00LaunchServicesMigrator.migrator, user-agnostic)
+		Migration Elapsed:00:03 seconds
+
+[2026-11-04 11:15:23 +0000] Status=2, isTerminal=NO, Elapsed=00:07.
+	Waiting on Data Migration
+		Reason:Running plugin com.apple.managedconfiguration.migrator (MCProfile.migrator, user-agnostic)
+		Migration Elapsed:00:04 seconds
+
+[2026-11-04 11:15:24 +0000] Status=2, isTerminal=NO, Elapsed=00:08.
+	Waiting on Data Migration
+		Reason:Running plugin com.apple.message.LegacyAccountsMigrator (LegacyMessageAccountsMigrator.migrator)
+		Migration Elapsed:00:05 seconds
+
+[2026-11-04 11:15:25 +0000] Status=4, isTerminal=NO, Elapsed=00:09.
+	Waiting on System App
+
+[2026-11-04 11:15:26 +0000] Status=4, isTerminal=NO, Elapsed=00:10.
+	Waiting on System App
+
+[2026-11-04 11:15:27 +0000] Status=4, isTerminal=NO, Elapsed=00:11.
+	Waiting on System App
+
+[2026-11-04 11:15:28 +0000] Status=4, isTerminal=NO, Elapsed=00:12.
+	Waiting on System App
+
+[2026-11-04 11:15:29 +0000] Status=4, isTerminal=NO, Elapsed=00:13.
+	Waiting on System App
+
+[2026-11-04 11:15:30 +0000] Status=4, isTerminal=NO, Elapsed=00:14.
+	Waiting on System App
+
+[2026-11-04 11:15:31 +0000] Status=4, isTerminal=NO, Elapsed=00:15.
+	Waiting on System App
+
+[2026-11-04 11:15:32 +0000] Status=4, isTerminal=NO, Elapsed=00:16.
+	Waiting on System App
+
+[2026-11-04 11:15:33 +0000] Status=4, isTerminal=NO, Elapsed=00:17.
+	Waiting on System App
+
+[2026-11-04 11:15:34 +0000] Status=4, isTerminal=NO, Elapsed=00:18.
+	Waiting on System App
+
+[2026-11-04 11:15:35 +0000] Status=4, isTerminal=NO, Elapsed=00:19.
+	Waiting on System App
+
+[2026-11-04 11:15:36 +0000] Status=4, isTerminal=NO, Elapsed=00:20.
+	Waiting on System App
+
+[2026-11-04 11:15:37 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:21.
+	Finished
+

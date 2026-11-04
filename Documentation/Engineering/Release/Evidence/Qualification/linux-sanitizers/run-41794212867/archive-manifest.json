@@ -1,0 +1,621 @@
+{
+  "runID": 41794212867,
+  "sourceDirectory": ".build/linux-sanitizer-run41794212867",
+  "scope": "First attempt failed in every cell. Unchanged raw findings and early sentinel mismatch retained; no qualified passes.",
+  "files": {
+    "linux-aarch64-swift-6.2-address/cjxl-linkage.log": {
+      "sha256": "0efbdc426719a8453c4e09db7dd00f0f4393da498414b5865e7cee9d756b4ad2",
+      "bytes": 597
+    },
+    "linux-aarch64-swift-6.2-address/cjxl-version.log": {
+      "sha256": "fbac287ef52f4a49ffc9f79574b7572081ef19932143c8a4dd97f85336ce0a5e",
+      "bytes": 124
+    },
+    "linux-aarch64-swift-6.2-address/discovered-tests.json": {
+      "sha256": "2ae12c254ace6e23a8cda64a9e190e90d6776a6f6611aba76dbfdc9efe47542e",
+      "bytes": 32987
+    },
+    "linux-aarch64-swift-6.2-address/djxl-linkage.log": {
+      "sha256": "35acb2e52e09cf11cfde57f1b027015d64adb5110f435c192528c8421b0375e7",
+      "bytes": 597
+    },
+    "linux-aarch64-swift-6.2-address/djxl-version.log": {
+      "sha256": "193b7a6fc4d60b9351862066a86b301b302be5bc6f91d801a6116e1e0c068a8b",
+      "bytes": 124
+    },
+    "linux-aarch64-swift-6.2-address/full-tests.log": {
+      "sha256": "13ad8bc9a400e5c2e5f2151e5409c7ea2d91709dbf815b2f8bfd63cac46e6e83",
+      "bytes": 608255
+    },
+    "linux-aarch64-swift-6.2-address/probe-negative-compile.log": {
+      "sha256": "228a71ecd3c3e46eee8dced360c4243f09f12c9d3886268e35b78006953dee2e",
+      "bytes": 887
+    },
+    "linux-aarch64-swift-6.2-address/probe-negative-run.log": {
+      "sha256": "8d99d507f436e8f9ed3edec855f3756418c8bae97733ac47786c1c03ba562634",
+      "bytes": 3931
+    },
+    "linux-aarch64-swift-6.2-address/probe-positive-compile.log": {
+      "sha256": "228a71ecd3c3e46eee8dced360c4243f09f12c9d3886268e35b78006953dee2e",
+      "bytes": 887
+    },
+    "linux-aarch64-swift-6.2-address/probe-positive-run.log": {
+      "sha256": "d94b146088f24ec95c77e459ea5898baed7b394709270b8fef3c16c27c3779a0",
+      "bytes": 24
+    },
+    "linux-aarch64-swift-6.2-address/report.json": {
+      "sha256": "e778fb422b13e2f81191e28c9ae4beecae2ccac8e2475007a7ab6234b48fe56e",
+      "bytes": 177321
+    },
+    "linux-aarch64-swift-6.2-address/runtime-packages.log": {
+      "sha256": "173e78cb59bd064474e850d3c120ef2951938f5a0fd04875899d879051d27f23",
+      "bytes": 178
+    },
+    "linux-aarch64-swift-6.2-address/sanitizer-negative.swift": {
+      "sha256": "65234b979b2f4ac6c027098cfc97613c5b8159a96be8bbac69ae933faab4bcde",
+      "bytes": 222
+    },
+    "linux-aarch64-swift-6.2-address/sanitizer-positive.swift": {
+      "sha256": "e4d6cceb7306a9f1d98a9a66b5c147719d61e8911fc10fcadef905af1360752c",
+      "bytes": 178
+    },
+    "linux-aarch64-swift-6.2-address/source-files.log": {
+      "sha256": "ca03ec58496272244ef097bad9bd504eb210e9d2f6820133297e36f948786aad",
+      "bytes": 77822
+    },
+    "linux-aarch64-swift-6.2-address/source-revision.log": {
+      "sha256": "a272b4e1fa8b76d9e77aa6ec86a97b7c2f74aae6e9f0eb6d22d824aec2685a7b",
+      "bytes": 41
+    },
+    "linux-aarch64-swift-6.2-address/source-status.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-aarch64-swift-6.2-address/swift-target-info.log": {
+      "sha256": "e0b6c8bb0a2c71e3a5193893e0b6f0054fe5ca7ca398e211e695c49d4ccd14cf",
+      "bytes": 727
+    },
+    "linux-aarch64-swift-6.2-address/swift-version.log": {
+      "sha256": "ca93da9335ff69b38a68ad1ba3e8771ff89b65a7745fb0ed0471a7607f4dba6a",
+      "bytes": 76
+    },
+    "linux-aarch64-swift-6.2-address/test-discovery.log": {
+      "sha256": "4180447312f2332d46f05ed857d807478a750dead725990b8ad606a95374c805",
+      "bytes": 35650
+    },
+    "linux-aarch64-swift-6.2-address/tests.xml": {
+      "sha256": "8326b63a6978e46893a300d3042ffadda4a61af049589bfee350cfe3653108eb",
+      "bytes": 51523
+    },
+    "linux-aarch64-swift-6.2-thread/cjxl-linkage.log": {
+      "sha256": "374195ce7701ac0b0433452492bbaee5269d9e0dbd5556ad6cdf95b692313ddb",
+      "bytes": 597
+    },
+    "linux-aarch64-swift-6.2-thread/cjxl-version.log": {
+      "sha256": "fbac287ef52f4a49ffc9f79574b7572081ef19932143c8a4dd97f85336ce0a5e",
+      "bytes": 124
+    },
+    "linux-aarch64-swift-6.2-thread/djxl-linkage.log": {
+      "sha256": "cfb31797fd2e9d2b7d969a356413647aec1efd6592a6328e4cd3edd19cd36805",
+      "bytes": 597
+    },
+    "linux-aarch64-swift-6.2-thread/djxl-version.log": {
+      "sha256": "193b7a6fc4d60b9351862066a86b301b302be5bc6f91d801a6116e1e0c068a8b",
+      "bytes": 124
+    },
+    "linux-aarch64-swift-6.2-thread/probe-negative-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-aarch64-swift-6.2-thread/probe-negative-run.log": {
+      "sha256": "b663719ffc0a82de5c7935df0fc4500221970c4a284da7f4a30b160bbc33479f",
+      "bytes": 1995
+    },
+    "linux-aarch64-swift-6.2-thread/probe-positive-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-aarch64-swift-6.2-thread/probe-positive-run.log": {
+      "sha256": "d94b146088f24ec95c77e459ea5898baed7b394709270b8fef3c16c27c3779a0",
+      "bytes": 24
+    },
+    "linux-aarch64-swift-6.2-thread/report.json": {
+      "sha256": "512d60a862a6a73ca636ff0dc7e85b44afa11dd10c8b0af9e0c0905cf85f795b",
+      "bytes": 175875
+    },
+    "linux-aarch64-swift-6.2-thread/runtime-packages.log": {
+      "sha256": "173e78cb59bd064474e850d3c120ef2951938f5a0fd04875899d879051d27f23",
+      "bytes": 178
+    },
+    "linux-aarch64-swift-6.2-thread/sanitizer-negative.swift": {
+      "sha256": "c7c002bd110fd9ac98c2ade1e6ed202f0eff053c3c2c57289f8edc4a85451dbe",
+      "bytes": 422
+    },
+    "linux-aarch64-swift-6.2-thread/sanitizer-positive.swift": {
+      "sha256": "e4d6cceb7306a9f1d98a9a66b5c147719d61e8911fc10fcadef905af1360752c",
+      "bytes": 178
+    },
+    "linux-aarch64-swift-6.2-thread/source-files.log": {
+      "sha256": "ca03ec58496272244ef097bad9bd504eb210e9d2f6820133297e36f948786aad",
+      "bytes": 77822
+    },
+    "linux-aarch64-swift-6.2-thread/source-revision.log": {
+      "sha256": "a272b4e1fa8b76d9e77aa6ec86a97b7c2f74aae6e9f0eb6d22d824aec2685a7b",
+      "bytes": 41
+    },
+    "linux-aarch64-swift-6.2-thread/source-status.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-aarch64-swift-6.2-thread/swift-target-info.log": {
+      "sha256": "e0b6c8bb0a2c71e3a5193893e0b6f0054fe5ca7ca398e211e695c49d4ccd14cf",
+      "bytes": 727
+    },
+    "linux-aarch64-swift-6.2-thread/swift-version.log": {
+      "sha256": "ca93da9335ff69b38a68ad1ba3e8771ff89b65a7745fb0ed0471a7607f4dba6a",
+      "bytes": 76
+    },
+    "linux-aarch64-swift-6.4-address/cjxl-linkage.log": {
+      "sha256": "8f1a6f892578eb936e5f1ec9abd7f8242c4d3518cc6648ee796e028527ef9894",
+      "bytes": 597
+    },
+    "linux-aarch64-swift-6.4-address/cjxl-version.log": {
+      "sha256": "fbac287ef52f4a49ffc9f79574b7572081ef19932143c8a4dd97f85336ce0a5e",
+      "bytes": 124
+    },
+    "linux-aarch64-swift-6.4-address/discovered-tests.json": {
+      "sha256": "ab4abf38db6cac7888205e2c430c22fdf67e26a60b21e6bc0caf36c5c7969964",
+      "bytes": 33209
+    },
+    "linux-aarch64-swift-6.4-address/djxl-linkage.log": {
+      "sha256": "c820747b0a54d70d30f9fba46eff90fd78303ff487f61d9556fa8f26cd2da57c",
+      "bytes": 597
+    },
+    "linux-aarch64-swift-6.4-address/djxl-version.log": {
+      "sha256": "193b7a6fc4d60b9351862066a86b301b302be5bc6f91d801a6116e1e0c068a8b",
+      "bytes": 124
+    },
+    "linux-aarch64-swift-6.4-address/full-tests.log": {
+      "sha256": "0b2c347f88e9d190c412bdc2be1428d116941134a4d401d4637257c3e35afaf6",
+      "bytes": 580415
+    },
+    "linux-aarch64-swift-6.4-address/probe-negative-compile.log": {
+      "sha256": "228a71ecd3c3e46eee8dced360c4243f09f12c9d3886268e35b78006953dee2e",
+      "bytes": 887
+    },
+    "linux-aarch64-swift-6.4-address/probe-negative-run.log": {
+      "sha256": "d81c22a3e2b64aba838428297efb30b1b13675acb5fc4885b7cecd5effeec358",
+      "bytes": 3931
+    },
+    "linux-aarch64-swift-6.4-address/probe-positive-compile.log": {
+      "sha256": "228a71ecd3c3e46eee8dced360c4243f09f12c9d3886268e35b78006953dee2e",
+      "bytes": 887
+    },
+    "linux-aarch64-swift-6.4-address/probe-positive-run.log": {
+      "sha256": "d94b146088f24ec95c77e459ea5898baed7b394709270b8fef3c16c27c3779a0",
+      "bytes": 24
+    },
+    "linux-aarch64-swift-6.4-address/report.json": {
+      "sha256": "d05f84bf92d545a24053a03aabfc24a71db586a0a7d0733200e5dafd5815be55",
+      "bytes": 177322
+    },
+    "linux-aarch64-swift-6.4-address/runtime-packages.log": {
+      "sha256": "173e78cb59bd064474e850d3c120ef2951938f5a0fd04875899d879051d27f23",
+      "bytes": 178
+    },
+    "linux-aarch64-swift-6.4-address/sanitizer-negative.swift": {
+      "sha256": "65234b979b2f4ac6c027098cfc97613c5b8159a96be8bbac69ae933faab4bcde",
+      "bytes": 222
+    },
+    "linux-aarch64-swift-6.4-address/sanitizer-positive.swift": {
+      "sha256": "e4d6cceb7306a9f1d98a9a66b5c147719d61e8911fc10fcadef905af1360752c",
+      "bytes": 178
+    },
+    "linux-aarch64-swift-6.4-address/source-files.log": {
+      "sha256": "ca03ec58496272244ef097bad9bd504eb210e9d2f6820133297e36f948786aad",
+      "bytes": 77822
+    },
+    "linux-aarch64-swift-6.4-address/source-revision.log": {
+      "sha256": "a272b4e1fa8b76d9e77aa6ec86a97b7c2f74aae6e9f0eb6d22d824aec2685a7b",
+      "bytes": 41
+    },
+    "linux-aarch64-swift-6.4-address/source-status.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-aarch64-swift-6.4-address/swift-target-info.log": {
+      "sha256": "f7b3c0b88f267afa9a01bca4e76c3bc0bb85f723854f5e4beef82b87cab0349d",
+      "bytes": 727
+    },
+    "linux-aarch64-swift-6.4-address/swift-version.log": {
+      "sha256": "98046c4d5b19f5b88577bc9d77ebc8763e79312aa547e96a87d7b3dd6b8db85c",
+      "bytes": 76
+    },
+    "linux-aarch64-swift-6.4-address/test-discovery.log": {
+      "sha256": "0b9628e9229ec0ede0d387579b850e1d5aaefa007852d29fea2ab0be032b200e",
+      "bytes": 36162
+    },
+    "linux-aarch64-swift-6.4-address/tests.xml": {
+      "sha256": "f3ff9b55c57d96b3474b060ea939d4e91189eb6c7e8b6c70b2b11231f59ea8d4",
+      "bytes": 51518
+    },
+    "linux-aarch64-swift-6.4-thread/cjxl-linkage.log": {
+      "sha256": "8ce825dc95922027c3239437d890bc804a28f765a1abf7de8bfa19f8f55d66c9",
+      "bytes": 597
+    },
+    "linux-aarch64-swift-6.4-thread/cjxl-version.log": {
+      "sha256": "fbac287ef52f4a49ffc9f79574b7572081ef19932143c8a4dd97f85336ce0a5e",
+      "bytes": 124
+    },
+    "linux-aarch64-swift-6.4-thread/djxl-linkage.log": {
+      "sha256": "f09eea751c683ebfec6ef93b36e6fd972dfcf5e99ae50fc709508942f584daee",
+      "bytes": 597
+    },
+    "linux-aarch64-swift-6.4-thread/djxl-version.log": {
+      "sha256": "193b7a6fc4d60b9351862066a86b301b302be5bc6f91d801a6116e1e0c068a8b",
+      "bytes": 124
+    },
+    "linux-aarch64-swift-6.4-thread/probe-negative-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-aarch64-swift-6.4-thread/probe-negative-run.log": {
+      "sha256": "24f272fa8ac4478211c1c55063abca47dffafe23707d71e105c3572e5f9cbc42",
+      "bytes": 1995
+    },
+    "linux-aarch64-swift-6.4-thread/probe-positive-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-aarch64-swift-6.4-thread/probe-positive-run.log": {
+      "sha256": "d94b146088f24ec95c77e459ea5898baed7b394709270b8fef3c16c27c3779a0",
+      "bytes": 24
+    },
+    "linux-aarch64-swift-6.4-thread/report.json": {
+      "sha256": "28fc93b469b6ae5bfadaa1be64ea23e8265fc3396cabbc2f5389d56c7cbeb04d",
+      "bytes": 175874
+    },
+    "linux-aarch64-swift-6.4-thread/runtime-packages.log": {
+      "sha256": "173e78cb59bd064474e850d3c120ef2951938f5a0fd04875899d879051d27f23",
+      "bytes": 178
+    },
+    "linux-aarch64-swift-6.4-thread/sanitizer-negative.swift": {
+      "sha256": "c7c002bd110fd9ac98c2ade1e6ed202f0eff053c3c2c57289f8edc4a85451dbe",
+      "bytes": 422
+    },
+    "linux-aarch64-swift-6.4-thread/sanitizer-positive.swift": {
+      "sha256": "e4d6cceb7306a9f1d98a9a66b5c147719d61e8911fc10fcadef905af1360752c",
+      "bytes": 178
+    },
+    "linux-aarch64-swift-6.4-thread/source-files.log": {
+      "sha256": "ca03ec58496272244ef097bad9bd504eb210e9d2f6820133297e36f948786aad",
+      "bytes": 77822
+    },
+    "linux-aarch64-swift-6.4-thread/source-revision.log": {
+      "sha256": "a272b4e1fa8b76d9e77aa6ec86a97b7c2f74aae6e9f0eb6d22d824aec2685a7b",
+      "bytes": 41
+    },
+    "linux-aarch64-swift-6.4-thread/source-status.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-aarch64-swift-6.4-thread/swift-target-info.log": {
+      "sha256": "f7b3c0b88f267afa9a01bca4e76c3bc0bb85f723854f5e4beef82b87cab0349d",
+      "bytes": 727
+    },
+    "linux-aarch64-swift-6.4-thread/swift-version.log": {
+      "sha256": "98046c4d5b19f5b88577bc9d77ebc8763e79312aa547e96a87d7b3dd6b8db85c",
+      "bytes": 76
+    },
+    "linux-x86_64-swift-6.2-address/cjxl-linkage.log": {
+      "sha256": "1d02919fda376d246dd0701aa1926f0d4af3d115201cf52517d5dc8d7d91de23",
+      "bytes": 591
+    },
+    "linux-x86_64-swift-6.2-address/cjxl-version.log": {
+      "sha256": "db8931f87de9927c7a2fec0dda9880343cf7464b28b3e0367db6b1c11254781e",
+      "bytes": 89
+    },
+    "linux-x86_64-swift-6.2-address/discovered-tests.json": {
+      "sha256": "2ae12c254ace6e23a8cda64a9e190e90d6776a6f6611aba76dbfdc9efe47542e",
+      "bytes": 32987
+    },
+    "linux-x86_64-swift-6.2-address/djxl-linkage.log": {
+      "sha256": "4fcbd73335d5f7a0ebc296aa0378957b6f04ce4ed35fa7c15704cd9633b13241",
+      "bytes": 591
+    },
+    "linux-x86_64-swift-6.2-address/djxl-version.log": {
+      "sha256": "9b69343c3b3840b58a76aa65f5c3bbfe25fcece3a364721417b72f880fe4f84e",
+      "bytes": 89
+    },
+    "linux-x86_64-swift-6.2-address/full-tests.log": {
+      "sha256": "0905e53efb3142e1c600f1bb1f67f7faf9c80dbd1ac1d08e95b0c89685875a0c",
+      "bytes": 570062
+    },
+    "linux-x86_64-swift-6.2-address/probe-negative-compile.log": {
+      "sha256": "917932ff285cbb062ee6709d2c1caec2043202e79f592a6ecfd756eb1fb1457d",
+      "bytes": 11878
+    },
+    "linux-x86_64-swift-6.2-address/probe-negative-run.log": {
+      "sha256": "b38e8622750f33c74891a3ad30f600e43e484d5df116bdc7c53e0cbc019c08b7",
+      "bytes": 3925
+    },
+    "linux-x86_64-swift-6.2-address/probe-positive-compile.log": {
+      "sha256": "917932ff285cbb062ee6709d2c1caec2043202e79f592a6ecfd756eb1fb1457d",
+      "bytes": 11878
+    },
+    "linux-x86_64-swift-6.2-address/probe-positive-run.log": {
+      "sha256": "d94b146088f24ec95c77e459ea5898baed7b394709270b8fef3c16c27c3779a0",
+      "bytes": 24
+    },
+    "linux-x86_64-swift-6.2-address/report.json": {
+      "sha256": "97f83baf96ccf103e6d33f59fa1d567b52f645e6b2c71e9529c48a33f6ef4ac9",
+      "bytes": 177242
+    },
+    "linux-x86_64-swift-6.2-address/runtime-packages.log": {
+      "sha256": "74f816a8a4e2c8e1ad44188627dcc014642f8322eaa3bb734163edf74e3800d6",
+      "bytes": 178
+    },
+    "linux-x86_64-swift-6.2-address/sanitizer-negative.swift": {
+      "sha256": "65234b979b2f4ac6c027098cfc97613c5b8159a96be8bbac69ae933faab4bcde",
+      "bytes": 222
+    },
+    "linux-x86_64-swift-6.2-address/sanitizer-positive.swift": {
+      "sha256": "e4d6cceb7306a9f1d98a9a66b5c147719d61e8911fc10fcadef905af1360752c",
+      "bytes": 178
+    },
+    "linux-x86_64-swift-6.2-address/source-files.log": {
+      "sha256": "ca03ec58496272244ef097bad9bd504eb210e9d2f6820133297e36f948786aad",
+      "bytes": 77822
+    },
+    "linux-x86_64-swift-6.2-address/source-revision.log": {
+      "sha256": "a272b4e1fa8b76d9e77aa6ec86a97b7c2f74aae6e9f0eb6d22d824aec2685a7b",
+      "bytes": 41
+    },
+    "linux-x86_64-swift-6.2-address/source-status.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-x86_64-swift-6.2-address/swift-target-info.log": {
+      "sha256": "e87dc0f280e8d3f868c4e5a574736e2f83c8b0c483d8fcfdbcd4c06945f14f50",
+      "bytes": 722
+    },
+    "linux-x86_64-swift-6.2-address/swift-version.log": {
+      "sha256": "c01ffead3c63e0960a3ae3e8a6e737e13fee8812d378e0e7e40a62f20c00f71a",
+      "bytes": 75
+    },
+    "linux-x86_64-swift-6.2-address/test-discovery.log": {
+      "sha256": "aaa84ca2de49b2511bdd5c7cc0cbe2f2d8f144a42bdb3efb524615f63ed1ecb3",
+      "bytes": 35648
+    },
+    "linux-x86_64-swift-6.2-address/tests.xml": {
+      "sha256": "81328778f91f1c1130763a1547fd508b1d476a5c50341e6ae1e9bee24f39066c",
+      "bytes": 51531
+    },
+    "linux-x86_64-swift-6.2-thread/cjxl-linkage.log": {
+      "sha256": "dce332005a139469969364760dfdf99123d2a2a8682e54771155234cb42e456e",
+      "bytes": 591
+    },
+    "linux-x86_64-swift-6.2-thread/cjxl-version.log": {
+      "sha256": "db8931f87de9927c7a2fec0dda9880343cf7464b28b3e0367db6b1c11254781e",
+      "bytes": 89
+    },
+    "linux-x86_64-swift-6.2-thread/djxl-linkage.log": {
+      "sha256": "5ba5e3c0c99c9e1c2e552c1566201f06ec6b4e3ae28864ef31af277e6e48e7aa",
+      "bytes": 591
+    },
+    "linux-x86_64-swift-6.2-thread/djxl-version.log": {
+      "sha256": "9b69343c3b3840b58a76aa65f5c3bbfe25fcece3a364721417b72f880fe4f84e",
+      "bytes": 89
+    },
+    "linux-x86_64-swift-6.2-thread/probe-negative-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-x86_64-swift-6.2-thread/probe-negative-run.log": {
+      "sha256": "5840bb7c5408fe687fbe5f0fa6949005ed838728154aea40eff253213f8a2ceb",
+      "bytes": 1989
+    },
+    "linux-x86_64-swift-6.2-thread/probe-positive-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-x86_64-swift-6.2-thread/probe-positive-run.log": {
+      "sha256": "d94b146088f24ec95c77e459ea5898baed7b394709270b8fef3c16c27c3779a0",
+      "bytes": 24
+    },
+    "linux-x86_64-swift-6.2-thread/report.json": {
+      "sha256": "9f232a08b3086b0d7fe7146fdf5a5cdbb9d3078aca774f923ba211ca56176cae",
+      "bytes": 175792
+    },
+    "linux-x86_64-swift-6.2-thread/runtime-packages.log": {
+      "sha256": "74f816a8a4e2c8e1ad44188627dcc014642f8322eaa3bb734163edf74e3800d6",
+      "bytes": 178
+    },
+    "linux-x86_64-swift-6.2-thread/sanitizer-negative.swift": {
+      "sha256": "c7c002bd110fd9ac98c2ade1e6ed202f0eff053c3c2c57289f8edc4a85451dbe",
+      "bytes": 422
+    },
+    "linux-x86_64-swift-6.2-thread/sanitizer-positive.swift": {
+      "sha256": "e4d6cceb7306a9f1d98a9a66b5c147719d61e8911fc10fcadef905af1360752c",
+      "bytes": 178
+    },
+    "linux-x86_64-swift-6.2-thread/source-files.log": {
+      "sha256": "ca03ec58496272244ef097bad9bd504eb210e9d2f6820133297e36f948786aad",
+      "bytes": 77822
+    },
+    "linux-x86_64-swift-6.2-thread/source-revision.log": {
+      "sha256": "a272b4e1fa8b76d9e77aa6ec86a97b7c2f74aae6e9f0eb6d22d824aec2685a7b",
+      "bytes": 41
+    },
+    "linux-x86_64-swift-6.2-thread/source-status.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-x86_64-swift-6.2-thread/swift-target-info.log": {
+      "sha256": "e87dc0f280e8d3f868c4e5a574736e2f83c8b0c483d8fcfdbcd4c06945f14f50",
+      "bytes": 722
+    },
+    "linux-x86_64-swift-6.2-thread/swift-version.log": {
+      "sha256": "c01ffead3c63e0960a3ae3e8a6e737e13fee8812d378e0e7e40a62f20c00f71a",
+      "bytes": 75
+    },
+    "linux-x86_64-swift-6.4-address/cjxl-linkage.log": {
+      "sha256": "c9ee0e8c29e525b005d89e961ed818a81d552e5e24bb0eb2fd99237709914199",
+      "bytes": 591
+    },
+    "linux-x86_64-swift-6.4-address/cjxl-version.log": {
+      "sha256": "db8931f87de9927c7a2fec0dda9880343cf7464b28b3e0367db6b1c11254781e",
+      "bytes": 89
+    },
+    "linux-x86_64-swift-6.4-address/discovered-tests.json": {
+      "sha256": "ab4abf38db6cac7888205e2c430c22fdf67e26a60b21e6bc0caf36c5c7969964",
+      "bytes": 33209
+    },
+    "linux-x86_64-swift-6.4-address/djxl-linkage.log": {
+      "sha256": "ab2a8435c475f2dd058bae48dd6ea120a9772418d9fe1a6a02f7732883eceaed",
+      "bytes": 591
+    },
+    "linux-x86_64-swift-6.4-address/djxl-version.log": {
+      "sha256": "9b69343c3b3840b58a76aa65f5c3bbfe25fcece3a364721417b72f880fe4f84e",
+      "bytes": 89
+    },
+    "linux-x86_64-swift-6.4-address/full-tests.log": {
+      "sha256": "e4875694e8a32aa9b33b1fc949c0baa85e4c94702e0b9bdb583f1c1683f9d3e9",
+      "bytes": 2290057
+    },
+    "linux-x86_64-swift-6.4-address/probe-negative-compile.log": {
+      "sha256": "917932ff285cbb062ee6709d2c1caec2043202e79f592a6ecfd756eb1fb1457d",
+      "bytes": 11878
+    },
+    "linux-x86_64-swift-6.4-address/probe-negative-run.log": {
+      "sha256": "c0c850154acafefb8515d210be624879fdeda83194d7a70b0eac83cb1b8c859e",
+      "bytes": 3925
+    },
+    "linux-x86_64-swift-6.4-address/probe-positive-compile.log": {
+      "sha256": "917932ff285cbb062ee6709d2c1caec2043202e79f592a6ecfd756eb1fb1457d",
+      "bytes": 11878
+    },
+    "linux-x86_64-swift-6.4-address/probe-positive-run.log": {
+      "sha256": "d94b146088f24ec95c77e459ea5898baed7b394709270b8fef3c16c27c3779a0",
+      "bytes": 24
+    },
+    "linux-x86_64-swift-6.4-address/report.json": {
+      "sha256": "d489cb730a47470c184e719abd4baec149595cf44f70068b2ac8a147279bf644",
+      "bytes": 177241
+    },
+    "linux-x86_64-swift-6.4-address/runtime-packages.log": {
+      "sha256": "74f816a8a4e2c8e1ad44188627dcc014642f8322eaa3bb734163edf74e3800d6",
+      "bytes": 178
+    },
+    "linux-x86_64-swift-6.4-address/sanitizer-negative.swift": {
+      "sha256": "65234b979b2f4ac6c027098cfc97613c5b8159a96be8bbac69ae933faab4bcde",
+      "bytes": 222
+    },
+    "linux-x86_64-swift-6.4-address/sanitizer-positive.swift": {
+      "sha256": "e4d6cceb7306a9f1d98a9a66b5c147719d61e8911fc10fcadef905af1360752c",
+      "bytes": 178
+    },
+    "linux-x86_64-swift-6.4-address/source-files.log": {
+      "sha256": "ca03ec58496272244ef097bad9bd504eb210e9d2f6820133297e36f948786aad",
+      "bytes": 77822
+    },
+    "linux-x86_64-swift-6.4-address/source-revision.log": {
+      "sha256": "a272b4e1fa8b76d9e77aa6ec86a97b7c2f74aae6e9f0eb6d22d824aec2685a7b",
+      "bytes": 41
+    },
+    "linux-x86_64-swift-6.4-address/source-status.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-x86_64-swift-6.4-address/swift-target-info.log": {
+      "sha256": "81f0e9f41be1ca6df7157eec22db6df6ebb6a6674241446ad5b46c2cf7b17778",
+      "bytes": 722
+    },
+    "linux-x86_64-swift-6.4-address/swift-version.log": {
+      "sha256": "7c811e5cb6a9cc03cb630c6ee61c720c37c7b659f4664a7244bd4e7e4b753871",
+      "bytes": 75
+    },
+    "linux-x86_64-swift-6.4-address/test-discovery.log": {
+      "sha256": "28c87511f39cf349d84fa8826bf56c7ad33df5626ba85b0811f77dfa1bb2c39b",
+      "bytes": 36160
+    },
+    "linux-x86_64-swift-6.4-address/tests.xml": {
+      "sha256": "256003f5203a0e3368aa4555d898b5357a4a8146de80a84ca59e6b9c9695d2f7",
+      "bytes": 51518
+    },
+    "linux-x86_64-swift-6.4-thread/cjxl-linkage.log": {
+      "sha256": "d22545799624934e437a9b285a74f7391f48062ef5a4d2fcfda2c2f323ca33e4",
+      "bytes": 591
+    },
+    "linux-x86_64-swift-6.4-thread/cjxl-version.log": {
+      "sha256": "db8931f87de9927c7a2fec0dda9880343cf7464b28b3e0367db6b1c11254781e",
+      "bytes": 89
+    },
+    "linux-x86_64-swift-6.4-thread/djxl-linkage.log": {
+      "sha256": "30dcf7ad81a384cec86bf4b51b21829c882fddbd523070e00032bcd15d057409",
+      "bytes": 591
+    },
+    "linux-x86_64-swift-6.4-thread/djxl-version.log": {
+      "sha256": "9b69343c3b3840b58a76aa65f5c3bbfe25fcece3a364721417b72f880fe4f84e",
+      "bytes": 89
+    },
+    "linux-x86_64-swift-6.4-thread/probe-negative-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-x86_64-swift-6.4-thread/probe-negative-run.log": {
+      "sha256": "bf9e199a52186ded678f805ff46ec3f74212c2522da34b39d645dd98e48ba33e",
+      "bytes": 2003
+    },
+    "linux-x86_64-swift-6.4-thread/probe-positive-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-x86_64-swift-6.4-thread/probe-positive-run.log": {
+      "sha256": "d94b146088f24ec95c77e459ea5898baed7b394709270b8fef3c16c27c3779a0",
+      "bytes": 24
+    },
+    "linux-x86_64-swift-6.4-thread/report.json": {
+      "sha256": "9924a445cd151b0de4f2dc7e7b2a66c74f40f42a09284ff89ff61004a3d6ccf7",
+      "bytes": 175792
+    },
+    "linux-x86_64-swift-6.4-thread/runtime-packages.log": {
+      "sha256": "74f816a8a4e2c8e1ad44188627dcc014642f8322eaa3bb734163edf74e3800d6",
+      "bytes": 178
+    },
+    "linux-x86_64-swift-6.4-thread/sanitizer-negative.swift": {
+      "sha256": "c7c002bd110fd9ac98c2ade1e6ed202f0eff053c3c2c57289f8edc4a85451dbe",
+      "bytes": 422
+    },
+    "linux-x86_64-swift-6.4-thread/sanitizer-positive.swift": {
+      "sha256": "e4d6cceb7306a9f1d98a9a66b5c147719d61e8911fc10fcadef905af1360752c",
+      "bytes": 178
+    },
+    "linux-x86_64-swift-6.4-thread/source-files.log": {
+      "sha256": "ca03ec58496272244ef097bad9bd504eb210e9d2f6820133297e36f948786aad",
+      "bytes": 77822
+    },
+    "linux-x86_64-swift-6.4-thread/source-revision.log": {
+      "sha256": "a272b4e1fa8b76d9e77aa6ec86a97b7c2f74aae6e9f0eb6d22d824aec2685a7b",
+      "bytes": 41
+    },
+    "linux-x86_64-swift-6.4-thread/source-status.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "linux-x86_64-swift-6.4-thread/swift-target-info.log": {
+      "sha256": "81f0e9f41be1ca6df7157eec22db6df6ebb6a6674241446ad5b46c2cf7b17778",
+      "bytes": 722
+    },
+    "linux-x86_64-swift-6.4-thread/swift-version.log": {
+      "sha256": "7c811e5cb6a9cc03cb630c6ee61c720c37c7b659f4664a7244bd4e7e4b753871",
+      "bytes": 75
+    },
+    "summary.json": {
+      "sha256": "88cdf0718d14d8b09db0a425327e8da8fdca0eacbb510b5a4fcf4403db4a1b9c",
+      "bytes": 8061
+    }
+  },
+  "fileCount": 153,
+  "bytes": 6672293
+}

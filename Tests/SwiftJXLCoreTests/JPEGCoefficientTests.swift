@@ -88,7 +88,7 @@ struct JPEGCoefficientTests {
     }
 
     @Test func cancellationDuringCoefficientWorkThrowsBeforePublication() throws {
-        let calls = Mutex(0)
+        let calls = PackageMutex(0)
         let policy = try JPEGCoefficientPolicy(checkpoint: {
             let n = calls.withLock { $0 += 1; return $0 }
             if n == 50 { throw CancellationError() }
@@ -155,7 +155,7 @@ struct JPEGCoefficientTests {
     }
 
     @Test func stuffedEntropyReaderChecksWorkAtOddOffsets() throws {
-        let calls = Mutex(0)
+        let calls = PackageMutex(0)
         let data = Data([7]) + Data((0..<12000).flatMap { _ in [UInt8(0xff), 0] })
         var reader = try JPEGEntropyReader(data: data, range: 1..<data.count, checkpoint: {
             let n = calls.withLock { $0 += 1; return $0 }

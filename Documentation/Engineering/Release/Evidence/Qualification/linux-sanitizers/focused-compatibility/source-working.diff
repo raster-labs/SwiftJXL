@@ -1,0 +1,723 @@
+diff --git a/Package.swift b/Package.swift
+index 82ab4e9..9285336 100644
+--- a/Package.swift
++++ b/Package.swift
+@@ -16,7 +16,7 @@ let package = Package(
+         .testTarget(name: "SwiftJXLCoreTests", dependencies: ["SwiftJXLCore", "SwiftJXL"],
+                     resources: [.copy("Fixtures/JPEG"), .copy("Fixtures/JPEGExtended"), .copy("Fixtures/JBRD"), .copy("Fixtures/Brotli"), .copy("Fixtures/JPEGEvents"), .copy("Fixtures/JPEGBridge"), .copy("Fixtures/Modular"), .copy("Fixtures/VarDCT")]),
+         .executableTarget(name: "SwiftJXLCLI", dependencies: ["SwiftJXL"]),
+-        .testTarget(name: "SwiftJXLTests", dependencies: ["SwiftJXL"])
++        .testTarget(name: "SwiftJXLTests", dependencies: ["SwiftJXL", "SwiftJXLCore"])
+     ],
+     swiftLanguageModes: [.v6]
+ )
+diff --git a/Sources/SwiftJXL/Image.swift b/Sources/SwiftJXL/Image.swift
+index c829dc1..4123104 100644
+--- a/Sources/SwiftJXL/Image.swift
++++ b/Sources/SwiftJXL/Image.swift
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: Apache-2.0
+ import Foundation
++import SwiftJXLCore
+ import Synchronization
+ 
+ public struct ImageMetadata: Sendable, Equatable {
+@@ -86,7 +87,7 @@ public final class ImageDestination: Sendable {
+     public let storage: any WritableImageStorage
+     private let lease: StorageWriteLease
+     private let limits: ResourceLimits
+-    private let started = Mutex(false)
++    private let started = PackageMutex(false)
+ 
+     public init(descriptor: ImageDescriptor, storage: any WritableImageStorage,
+                 limits: ResourceLimits = .default) throws {
+diff --git a/Sources/SwiftJXL/ImageStorage.swift b/Sources/SwiftJXL/ImageStorage.swift
+index c984a63..fd70714 100644
+--- a/Sources/SwiftJXL/ImageStorage.swift
++++ b/Sources/SwiftJXL/ImageStorage.swift
+@@ -50,7 +50,7 @@ public final class OwnedImageStorage: WritableImageStorage, Sendable {
+         var phase: Phase = .available
+         var lease: StorageWriteLease?
+     }
+-    private let state: Mutex<State>
++    private let state: PackageMutex<State>
+     private let accessActive = Atomic(false)
+ 
+     public init(byteCount: Int, limits: ResourceLimits = .default) throws {
+@@ -61,7 +61,7 @@ public final class OwnedImageStorage: WritableImageStorage, Sendable {
+         }
+         self.byteCount = byteCount; self.allocationID = UUID()
+         ScalarStorageAudit.current?.finalPixels(byteCount)
+-        self.state = Mutex(State(bytes: [UInt8](repeating: 0, count: byteCount)))
++        self.state = PackageMutex(State(bytes: [UInt8](repeating: 0, count: byteCount)))
+     }
+ 
+     public func reserveWrite() throws -> StorageWriteLease {
+diff --git a/Sources/SwiftJXLCore/Codec/ModularDecodeBatch.swift b/Sources/SwiftJXLCore/Codec/ModularDecodeBatch.swift
+index 7781038..4f068bf 100644
+--- a/Sources/SwiftJXLCore/Codec/ModularDecodeBatch.swift
++++ b/Sources/SwiftJXLCore/Codec/ModularDecodeBatch.swift
+@@ -14,7 +14,7 @@ func modularDecodeBatch<T: Sendable>(count: Int, budget: ScalarOperationBudget,
+     let slotBytes = try ScalarOperationBudget.sum(MemoryLayout<Result<T, any Error>?>.stride, MemoryLayout<T>.stride)
+     try budget.reserveWorkspace(ScalarOperationBudget.sum(128,
+         ScalarOperationBudget.product(count, ScalarOperationBudget.product(slotBytes, 2))))
+-    let results = Mutex([Result<T, any Error>?](repeating: nil, count: count))
++    let results = PackageMutex([Result<T, any Error>?](repeating: nil, count: count))
+     let audit = ScalarStorageAudit.current
+     DispatchQueue.concurrentPerform(iterations: count) { index in
+         ScalarStorageAudit.$current.withValue(audit) {
+diff --git a/Sources/SwiftJXLCore/Codec/ScalarMap.swift b/Sources/SwiftJXLCore/Codec/ScalarMap.swift
+index 18d048f..48bf6cb 100644
+--- a/Sources/SwiftJXLCore/Codec/ScalarMap.swift
++++ b/Sources/SwiftJXLCore/Codec/ScalarMap.swift
+@@ -27,7 +27,7 @@ func parallelMap<T: Sendable>(_ count: Int, _ work: @Sendable (Int) throws -> T)
+         MemoryLayout<Result<T, any Error>?>.stride, MemoryLayout<T>.stride)
+     try context.budget.reserveWorkspace(ScalarOperationBudget.sum(128,
+         ScalarOperationBudget.product(count, ScalarOperationBudget.product(elementBytes, 2))))
+-    let results = Mutex([Result<T, any Error>?](repeating: nil, count: count))
++    let results = PackageMutex([Result<T, any Error>?](repeating: nil, count: count))
+     let audit = ScalarStorageAudit.current
+     DispatchQueue.concurrentPerform(iterations: workers) { worker in
+         ScalarMapScope.$isWorker.withValue(true) {
+diff --git a/Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift b/Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift
+index 468ebd2..d44093f 100644
+--- a/Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift
++++ b/Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift
+@@ -34,7 +34,7 @@ package final class ScalarOperationCancellation: Sendable {
+ /// reservation bounds, not measurements of allocator/RSS peaks.
+ package final class ScalarOperationBudget: Sendable {
+     private struct State { var workspace = 0; var pixels = 0; var output = 0 }
+-    private let state = Mutex(State())
++    private let state = PackageMutex(State())
+     private let retainedBytes: Int
+     private let maximumWorkspaceBytes: Int
+     private let maximumMemoryBytes: Int
+diff --git a/Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift b/Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift
+index d47f2a2..b712160 100644
+--- a/Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift
++++ b/Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift
+@@ -16,7 +16,7 @@ package final class ScalarStorageAudit: Sendable {
+         package var activeWorkerJobs = 0
+         package var peakActiveWorkerJobs = 0
+     }
+-    private let state = Mutex(Snapshot())
++    private let state = PackageMutex(Snapshot())
+     package init() {}
+     package var snapshot: Snapshot { state.withLock { $0 } }
+     package func finalPixels(_ bytes: Int) {
+diff --git a/Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift b/Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift
+index a65f930..29cbdbd 100644
+--- a/Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift
++++ b/Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift
+@@ -48,9 +48,9 @@ package enum VarDCTHierarchicalAnalysis {
+         }
+     }
+     private final class WorkerState: Sendable {
+-        let scratch: Mutex<WorkerScratch>
++        let scratch: PackageMutex<WorkerScratch>
+         init(budget: ScalarOperationBudget) throws {
+-            scratch = Mutex(try WorkerScratch(budget: budget))
++            scratch = PackageMutex(try WorkerScratch(budget: budget))
+         }
+     }
+     package static func analyse(_ planes: [[Float]], width: Int, height: Int,
+diff --git a/Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift b/Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift
+index 02532d1..b9571cf 100644
+--- a/Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift
++++ b/Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift
+@@ -28,7 +28,7 @@ struct AnimationEncoderTests {
+             let durations: [UInt32] = [10, 300, .max]
+             let frames = try (0..<3).map { try AnimationInputFrame(image: source(bits: bits, channels: channels, frame: $0), durationTicks: durations[$0]) }
+             let encoder = try Encoder(configuration: .init(mode: lossy ? .lossy : .lossless))
+-            let audit = ScalarStorageAudit(), progress = Mutex<[ProgressUpdate]>([])
++            let audit = ScalarStorageAudit(), progress = PackageMutex<[ProgressUpdate]>([])
+             let encoded = try await ScalarStorageAudit.$current.withValue(audit) {
+                 try await encoder.encodeAnimation(frames, animation: .init(loopCount: 3),
+                     options: .init(copyPolicy: .requireSharedStorage, progress: { update in progress.withLock { $0.append(update) } }))
+diff --git a/Tests/SwiftJXLCoreTests/AnimationPublicTests.swift b/Tests/SwiftJXLCoreTests/AnimationPublicTests.swift
+index 68919ce..c6262e8 100644
+--- a/Tests/SwiftJXLCoreTests/AnimationPublicTests.swift
++++ b/Tests/SwiftJXLCoreTests/AnimationPublicTests.swift
+@@ -20,7 +20,7 @@ struct AnimationPublicTests {
+         #expect(info.frames.map(\.durationTicks) == [10, 20, 30])
+         #expect(info.timing?.loopCount == 3 && info.timing?.totalTicks == 60)
+         #expect(info.timing?.ticksPerSecondNumerator == 100 && info.timing?.ticksPerSecondDenominator == 1)
+-        let progress = Mutex<[ProgressUpdate]>([])
++        let progress = PackageMutex<[ProgressUpdate]>([])
+         let audit = ScalarStorageAudit()
+         let result = try await ScalarStorageAudit.$current.withValue(audit) {
+             try await decoder.decodeAll(data, options: .init(copyPolicy: .requireSharedStorage,
+diff --git a/Tests/SwiftJXLCoreTests/BrotliDecoderTests.swift b/Tests/SwiftJXLCoreTests/BrotliDecoderTests.swift
+index 4b95077..52e5461 100644
+--- a/Tests/SwiftJXLCoreTests/BrotliDecoderTests.swift
++++ b/Tests/SwiftJXLCoreTests/BrotliDecoderTests.swift
+@@ -112,7 +112,7 @@ struct BrotliDecoderTests {
+             #expect(throws: CancellationError.self) { try BrotliDecoder.decode(source, expectedOutputSize: 32768, policy: BrotliPolicy()) }
+         }
+         await task.value
+-        let checks = Mutex(0)
++        let checks = PackageMutex(0)
+         let policy = try BrotliPolicy(checkpoint: { try checks.withLock { n in n += 1; if n == 40 { throw CancellationError() } } })
+         #expect(throws: CancellationError.self) { try BrotliDecoder.decode(source, expectedOutputSize: 32768, policy: policy) }
+     }
+diff --git a/Tests/SwiftJXLCoreTests/BrotliFramingTests.swift b/Tests/SwiftJXLCoreTests/BrotliFramingTests.swift
+index ec303bd..0e723c8 100644
+--- a/Tests/SwiftJXLCoreTests/BrotliFramingTests.swift
++++ b/Tests/SwiftJXLCoreTests/BrotliFramingTests.swift
+@@ -137,7 +137,7 @@ struct BrotliFramingTests {
+             }
+         }
+         await task.value
+-        let counter = Mutex(0)
++        let counter = PackageMutex(0)
+         let policy = try BrotliPolicy(checkpoint: {
+             try counter.withLock { value in
+                 value += 1
+@@ -147,7 +147,7 @@ struct BrotliFramingTests {
+         #expect(throws: CancellationError.self) {
+             try BrotliEncoder.encodeUncompressed(Data(repeating: 1, count: 16384), policy: policy)
+         }
+-        let checks = Mutex(0)
++        let checks = PackageMutex(0)
+         var r = try reader(Data(repeating: 0, count: 1024), policy: BrotliPolicy(checkpoint: { checks.withLock { $0 += 1 } }))
+         for _ in 0..<4096 { _ = try r.readBit() }
+         #expect(checks.withLock { $0 } == 5) // admission + four bounded read checkpoints
+diff --git a/Tests/SwiftJXLCoreTests/JBRDTests.swift b/Tests/SwiftJXLCoreTests/JBRDTests.swift
+index d50a5f7..466db45 100644
+--- a/Tests/SwiftJXLCoreTests/JBRDTests.swift
++++ b/Tests/SwiftJXLCoreTests/JBRDTests.swift
+@@ -86,7 +86,7 @@ struct JBRDTests {
+         for policy in policies {
+             #expect(throws: JBRDError.self) { try JBRDBoxReader.read(data, policy: policy) }
+         }
+-        let calls = Mutex(0)
++        let calls = PackageMutex(0)
+         let policy = try JBRDPolicy(checkpoint: {
+             let n = calls.withLock { $0 += 1; return $0 }
+             if n == 10 { throw CancellationError() }
+diff --git a/Tests/SwiftJXLCoreTests/JPEGBridgeCoefficientTests.swift b/Tests/SwiftJXLCoreTests/JPEGBridgeCoefficientTests.swift
+index ca9635e..e4b2e1d 100644
+--- a/Tests/SwiftJXLCoreTests/JPEGBridgeCoefficientTests.swift
++++ b/Tests/SwiftJXLCoreTests/JPEGBridgeCoefficientTests.swift
+@@ -168,7 +168,7 @@ struct JPEGBridgeCoefficientTests {
+     @Test func cancellationBeforePublicationAndDuringBlockWork() throws {
+         let input = try decoded()
+         for threshold in [1, 2, 5] {
+-            let calls = Mutex(0)
++            let calls = PackageMutex(0)
+             let policy = try JPEGBridgePolicy(checkpoint: {
+                 if calls.withLock({ $0 += 1; return $0 }) == threshold { throw CancellationError() }
+             })
+diff --git a/Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift b/Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift
+index ed1ae2e..34518c4 100644
+--- a/Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift
++++ b/Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift
+@@ -37,11 +37,11 @@ struct JPEGBridgeFrameTests {
+                            JPEGBridgePolicy(deadline: .now.advanced(by: .seconds(-1)))] {
+             #expect(throws: (any Error).self) { try JPEGBridgeFrameReader.read(data, policy: policy) }
+         }
+-        let calls = Mutex(0)
++        let calls = PackageMutex(0)
+         _ = try JPEGBridgeFrameReader.read(data, policy: JPEGBridgePolicy(checkpoint: { calls.withLock { $0 += 1 } }))
+         let total = calls.withLock { $0 }
+         for stop in [1, total / 2, total] {
+-            let counter = Mutex(0)
++            let counter = PackageMutex(0)
+             let policy = try JPEGBridgePolicy(checkpoint: {
+                 if counter.withLock({ $0 += 1; return $0 }) == stop { throw CancellationError() }
+             })
+@@ -105,12 +105,12 @@ struct JPEGBridgeFrameTests {
+                            JPEGBridgePolicy(deadline: .now.advanced(by: .seconds(-1)))] {
+             #expect(throws: (any Error).self) { try JPEGBridgeFrameWriter.write(view, policy: policy) }
+         }
+-        let calls = Mutex(0)
++        let calls = PackageMutex(0)
+         let counting = try JPEGBridgePolicy(checkpoint: { calls.withLock { $0 += 1 } })
+         _ = try JPEGBridgeFrameWriter.write(view, policy: counting)
+         let total = calls.withLock { $0 }
+         for stop in [1, total / 2, total] {
+-            let counter = Mutex(0)
++            let counter = PackageMutex(0)
+             let policy = try JPEGBridgePolicy(checkpoint: {
+                 if counter.withLock({ $0 += 1; return $0 }) == stop { throw CancellationError() }
+             })
+@@ -176,13 +176,18 @@ struct JPEGBridgeFrameTests {
+         let process = Process(); process.executableURL = URL(fileURLWithPath: tools + "/djxl")
+         process.arguments = [encoded.path, restored.path, "--quiet"]
+         process.standardOutput = handle; process.standardError = handle
++        #if os(Linux)
++        let processStatus = try runLinuxOracle(process)
++        #else
+         try process.run()
+         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
+         while process.isRunning && ContinuousClock.now < deadline { Thread.sleep(forTimeInterval: 0.01) }
+         if process.isRunning { process.terminate(); Issue.record("djxl timed out"); throw CancellationError() }
+         // Release Foundation's process/run-loop ownership after bounded polling.
+         process.waitUntilExit()
+-        try #require(process.terminationStatus == 0, "Oracle failed: \(log.path)")
++        let processStatus = process.terminationStatus
++        #endif
++        try #require(processStatus == 0, "Oracle failed: \(log.path)")
+         #expect(try Data(contentsOf: restored) == source)
+ 
+         // Independently encoded entropy trees, ANS tables, coefficient orders
+@@ -192,12 +197,17 @@ struct JPEGBridgeFrameTests {
+         encoder.arguments = [directory.appendingPathComponent("source.jpg").path, reference.path,
+                              "--lossless_jpeg=1", "--quiet"]
+         encoder.standardOutput = handle; encoder.standardError = handle
++        #if os(Linux)
++        let encoderStatus = try runLinuxOracle(encoder)
++        #else
+         try encoder.run()
+         let encoderDeadline = ContinuousClock.now.advanced(by: .seconds(30))
+         while encoder.isRunning && ContinuousClock.now < encoderDeadline { Thread.sleep(forTimeInterval: 0.01) }
+         if encoder.isRunning { encoder.terminate(); Issue.record("cjxl timed out"); throw CancellationError() }
+         encoder.waitUntilExit()
+-        try #require(encoder.terminationStatus == 0, "Oracle encoder failed: \(log.path)")
++        let encoderStatus = encoder.terminationStatus
++        #endif
++        try #require(encoderStatus == 0, "Oracle encoder failed: \(log.path)")
+         let referenceData = try Data(contentsOf: reference)
+         guard case .iso(let boxes) = try parseJXLContainer(referenceData) else {
+             Issue.record("Independent JPEG transcode needs a reconstruction container"); return
+diff --git a/Tests/SwiftJXLCoreTests/JPEGCoefficientTests.swift b/Tests/SwiftJXLCoreTests/JPEGCoefficientTests.swift
+index c30c2fc..87da19e 100644
+--- a/Tests/SwiftJXLCoreTests/JPEGCoefficientTests.swift
++++ b/Tests/SwiftJXLCoreTests/JPEGCoefficientTests.swift
+@@ -88,7 +88,7 @@ struct JPEGCoefficientTests {
+     }
+ 
+     @Test func cancellationDuringCoefficientWorkThrowsBeforePublication() throws {
+-        let calls = Mutex(0)
++        let calls = PackageMutex(0)
+         let policy = try JPEGCoefficientPolicy(checkpoint: {
+             let n = calls.withLock { $0 += 1; return $0 }
+             if n == 50 { throw CancellationError() }
+@@ -155,7 +155,7 @@ struct JPEGCoefficientTests {
+     }
+ 
+     @Test func stuffedEntropyReaderChecksWorkAtOddOffsets() throws {
+-        let calls = Mutex(0)
++        let calls = PackageMutex(0)
+         let data = Data([7]) + Data((0..<12000).flatMap { _ in [UInt8(0xff), 0] })
+         var reader = try JPEGEntropyReader(data: data, range: 1..<data.count, checkpoint: {
+             let n = calls.withLock { $0 += 1; return $0 }
+diff --git a/Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift b/Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift
+index 7091713..b108f13 100644
+--- a/Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift
++++ b/Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift
+@@ -115,12 +115,12 @@ struct JPEGReconstructionMetadataTests {
+                 try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata, policy: policy)
+             }
+         }
+-        let count = Mutex(0)
++        let count = PackageMutex(0)
+         _ = try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
+             policy: JPEGReconstructionPolicy(checkpoint: { count.withLock { $0 += 1 } }))
+         let total = count.withLock { $0 }
+         for stop in [1, total / 4, total / 2, total - 1, total] {
+-            let calls = Mutex(0)
++            let calls = PackageMutex(0)
+             #expect(throws: CancellationError.self) {
+                 try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
+                     policy: JPEGReconstructionPolicy(checkpoint: {
+@@ -234,7 +234,7 @@ struct JPEGReconstructionMetadataTests {
+         #expect(throws: JBRDError.self) {
+             try JPEGReconstructionMetadata.encode(payload, policy: JBRDPolicy(maximumPayloadBytes: 1))
+         }
+-        let counted = Mutex(0)
++        let counted = PackageMutex(0)
+         _ = try JPEGReconstructionMetadata.encode(decoded, policy: JBRDPolicy(checkpoint: {
+             counted.withLock { $0 += 1 }
+         }))
+@@ -249,7 +249,7 @@ struct JPEGReconstructionMetadataTests {
+         }
+         let total = counted.withLock { $0 }
+         for stop in [1, 30, total / 2, total - 1, total] {
+-            let calls = Mutex(0)
++            let calls = PackageMutex(0)
+             let policy = try JBRDPolicy(checkpoint: {
+                 if calls.withLock({ $0 += 1; return $0 }) == stop { throw CancellationError() }
+             })
+@@ -358,13 +358,18 @@ struct JPEGReconstructionMetadataTests {
+         defer { try? handle.close() }
+         let process = Process(); process.executableURL = URL(fileURLWithPath: executable)
+         process.arguments = arguments; process.standardOutput = handle; process.standardError = handle
++        #if os(Linux)
++        let processStatus = try runLinuxOracle(process)
++        #else
+         try process.run()
+         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
+         while process.isRunning && ContinuousClock.now < deadline { Thread.sleep(forTimeInterval: 0.01) }
+         if process.isRunning { process.terminate(); Issue.record("Oracle timed out: \(executable)"); throw CancellationError() }
+         // Release Foundation's process/run-loop ownership after bounded polling.
+         process.waitUntilExit()
+-        try #require(process.terminationStatus == 0, "Oracle failed; log: \(log.path)")
++        let processStatus = process.terminationStatus
++        #endif
++        try #require(processStatus == 0, "Oracle failed; log: \(log.path)")
+     }
+     #endif
+ }
+diff --git a/Tests/SwiftJXLCoreTests/JPEGSegmentReaderTests.swift b/Tests/SwiftJXLCoreTests/JPEGSegmentReaderTests.swift
+index 528bc77..2417ab3 100644
+--- a/Tests/SwiftJXLCoreTests/JPEGSegmentReaderTests.swift
++++ b/Tests/SwiftJXLCoreTests/JPEGSegmentReaderTests.swift
+@@ -96,7 +96,7 @@ struct JPEGSegmentReaderTests {
+ 
+     @Test(arguments: [false, true])
+     func longEntropyAndFillRunsHaveBoundedCheckpoints(_ fill: Bool) throws {
+-        let calls = Mutex(0)
++        let calls = PackageMutex(0)
+         let bytes = Data([0xff, 0xd8, 0xff, 0xda, 0, 2])
+             + Data(repeating: fill ? 0xff : 1, count: 20_000) + Data([0xff, 0xd9])
+         var reader = try JPEGSegmentReader(bytes, checkpoint: {
+@@ -109,7 +109,7 @@ struct JPEGSegmentReaderTests {
+     }
+ 
+     @Test func oddOffsetStuffingCannotSkipCheckpoints() throws {
+-        let calls = Mutex(0)
++        let calls = PackageMutex(0)
+         let stuffed = Data((0..<12000).flatMap { _ in [UInt8(0xff), 0] })
+         // Entropy starts at odd offset 7, and every stuffed pair advances by 2.
+         let bytes = Data([0xff, 0xd8, 0xff, 0xda, 0, 3, 0]) + stuffed + Data([0xff, 0xd9])
+diff --git a/Tests/SwiftJXLCoreTests/ModularDecodeParallelTests.swift b/Tests/SwiftJXLCoreTests/ModularDecodeParallelTests.swift
+index 122aa9c..5a095c1 100644
+--- a/Tests/SwiftJXLCoreTests/ModularDecodeParallelTests.swift
++++ b/Tests/SwiftJXLCoreTests/ModularDecodeParallelTests.swift
+@@ -17,7 +17,7 @@ struct ModularDecodeParallelTests {
+     }
+     @Test(arguments: [1, 2, 8, 100])
+     func boundedBatchesPreserveOrderedResultsAndAudit(_ workers: Int) throws {
+-        let b = try budget(workers: workers), audit = ScalarStorageAudit(), counts = Mutex(Counts())
++        let b = try budget(workers: workers), audit = ScalarStorageAudit(), counts = PackageMutex(Counts())
+         let result = try ScalarStorageAudit.$current.withValue(audit) {
+             try modularDecodeBatch(count: b.maximumWorkers, budget: b) { index in
+                 counts.withLock {
+@@ -35,7 +35,7 @@ struct ModularDecodeParallelTests {
+         #expect(a.workerJobsStarted == result.count && a.workerJobsCompleted == result.count && a.activeWorkerJobs == 0)
+     }
+     @Test func orderedErrorsJoinAndAdmissionPrecedesCallbacks() throws {
+-        let completed = Mutex(0), b = try budget(workers: 8)
++        let completed = PackageMutex(0), b = try budget(workers: 8)
+         do {
+             _ = try modularDecodeBatch(count: 8, budget: b) { index -> Int in
+                 defer { completed.withLock { $0 += 1 } }
+@@ -45,7 +45,7 @@ struct ModularDecodeParallelTests {
+             Issue.record("Worker error discarded")
+         } catch ProbeError.index(let index) { #expect(index == 2) }
+         #expect(completed.withLock { $0 } == 8)
+-        let invoked = Mutex(false), denied = try budget(workers: 8, workspace: 1)
++        let invoked = PackageMutex(false), denied = try budget(workers: 8, workspace: 1)
+         #expect(throws: ScalarModularError.self) {
+             try modularDecodeBatch(count: 8, budget: denied) { index in invoked.withLock { $0 = true }; return index }
+         }
+@@ -54,7 +54,7 @@ struct ModularDecodeParallelTests {
+     }
+     @Test func workerCancellationReachesBitReaderAndJoins() throws {
+         let flag = ScalarOperationCancellation(), audit = ScalarStorageAudit()
+-        let b = try budget(workers: 8, cancellation: flag), completed = Mutex(0)
++        let b = try budget(workers: 8, cancellation: flag), completed = PackageMutex(0)
+         #expect(throws: CancellationError.self) {
+             try ScalarStorageAudit.$current.withValue(audit) {
+                 try modularDecodeBatch(count: 8, budget: b) { index -> Int in
+diff --git a/Tests/SwiftJXLCoreTests/ModularEncoderTests.swift b/Tests/SwiftJXLCoreTests/ModularEncoderTests.swift
+index 5c97d5d..b1fc8ad 100644
+--- a/Tests/SwiftJXLCoreTests/ModularEncoderTests.swift
++++ b/Tests/SwiftJXLCoreTests/ModularEncoderTests.swift
+@@ -161,8 +161,13 @@ struct ModularEncoderTests {
+         process.executableURL = URL(fileURLWithPath: binary + "/djxl")
+         process.arguments = [input.path, output.path, "--bits_per_sample=\(bits)", "--num_threads=2", "--quiet"]
+         process.standardOutput = handle; process.standardError = handle
++        #if os(Linux)
++        let oracleStatus = try runLinuxOracle(process)
++        #else
+         try process.run(); process.waitUntilExit()
+-        try #require(process.terminationStatus == 0, "Independent decoder failed; inspect oracle.log")
++        let oracleStatus = process.terminationStatus
++        #endif
++        try #require(oracleStatus == 0, "Independent decoder failed; inspect oracle.log")
+         let pam = try Data(contentsOf: output)
+         var pixels = Data()
+         for i in 0..<(width * height) { for c in expected.indices {
+diff --git a/Tests/SwiftJXLCoreTests/ModularGroupBoundaryTests.swift b/Tests/SwiftJXLCoreTests/ModularGroupBoundaryTests.swift
+index 617fff1..313e041 100644
+--- a/Tests/SwiftJXLCoreTests/ModularGroupBoundaryTests.swift
++++ b/Tests/SwiftJXLCoreTests/ModularGroupBoundaryTests.swift
+@@ -116,8 +116,13 @@ struct ModularGroupBoundaryTests {
+         process.executableURL = URL(fileURLWithPath: binary + "/cjxl")
+         process.arguments = [input.path, output.path, "--distance=0", "--modular=1", "--effort=3", "--num_threads=2"]
+         process.standardOutput = handle; process.standardError = handle
++        #if os(Linux)
++        let oracleStatus = try runLinuxOracle(process)
++        #else
+         try process.run(); process.waitUntilExit()
+-        try #require(process.terminationStatus == 0)
++        let oracleStatus = process.terminationStatus
++        #endif
++        try #require(oracleStatus == 0)
+         let data = try Data(contentsOf: output)
+         let decoded = try ModularFrameDecoder.decode(data, budget: c.budget())
+         #expect(decoded.bitsPerSample == c.bits)
+diff --git a/Tests/SwiftJXLCoreTests/ModularParallelTests.swift b/Tests/SwiftJXLCoreTests/ModularParallelTests.swift
+index 3977abb..ec907ac 100644
+--- a/Tests/SwiftJXLCoreTests/ModularParallelTests.swift
++++ b/Tests/SwiftJXLCoreTests/ModularParallelTests.swift
+@@ -37,7 +37,7 @@ struct ModularParallelTests {
+     @Test(arguments: [1, 2, 8, 100])
+     func boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_ workers: Int) throws {
+         let b = try budget(workers: workers), context = ScalarEncodingWork(budget: b, writerByteLimit: 1024)
+-        let audit = ScalarStorageAudit(), counts = Mutex(Counts())
++        let audit = ScalarStorageAudit(), counts = PackageMutex(Counts())
+         let results = try ScalarStorageAudit.$current.withValue(audit) {
+             try ScalarEncodingWork.$current.withValue(context) {
+                 try parallelMap(20) { index in
+@@ -62,7 +62,7 @@ struct ModularParallelTests {
+     }
+ 
+     @Test func errorsAreOrderedAfterJoiningAndAdmissionPrecedesCallbacks() throws {
+-        let completed = Mutex(0), context = ScalarEncodingWork(budget: try budget(workers: 8), writerByteLimit: 1024)
++        let completed = PackageMutex(0), context = ScalarEncodingWork(budget: try budget(workers: 8), writerByteLimit: 1024)
+         do {
+             _ = try ScalarEncodingWork.$current.withValue(context) {
+                 try parallelMap(20) { index -> Int in
+@@ -75,7 +75,7 @@ struct ModularParallelTests {
+         } catch ProbeError.index(let index) { #expect(index == 3) }
+         #expect(completed.withLock { $0 } == 20)
+         let denied = ScalarEncodingWork(budget: try budget(workers: 8, workspace: 1), writerByteLimit: 1024)
+-        let invoked = Mutex(false)
++        let invoked = PackageMutex(false)
+         #expect(throws: ScalarModularError.self) {
+             try ScalarEncodingWork.$current.withValue(denied) {
+                 try parallelMap(8) { index in invoked.withLock { $0 = true }; return index }
+@@ -107,7 +107,7 @@ struct ModularParallelTests {
+     @Test func cancellationInsideWorkerIsObservedAndAllWorkersJoin() throws {
+         let cancellation = ScalarOperationCancellation()
+         let context = ScalarEncodingWork(budget: try budget(workers: 8, cancellation: cancellation), writerByteLimit: 1024)
+-        let counts = Mutex(Counts())
++        let counts = PackageMutex(Counts())
+         #expect(throws: CancellationError.self) {
+             try ScalarEncodingWork.$current.withValue(context) {
+                 _ = try parallelMap(20) { index -> Int in
+@@ -128,8 +128,8 @@ struct ModularParallelTests {
+ 
+     @Test func publicCancellationAfterWorkersJoinPreventsPublication() async throws {
+         let source = try image(width: 1025, height: 7), audit = ScalarStorageAudit()
+-        let reachedCompletion = Mutex(false)
+-        let completionAudit = Mutex<ScalarStorageAudit.Snapshot?>(nil)
++        let reachedCompletion = PackageMutex(false)
++        let completionAudit = PackageMutex<ScalarStorageAudit.Snapshot?>(nil)
+         let task = Task {
+             try await ScalarStorageAudit.$current.withValue(audit) {
+                 try await Encoder().encode(source, options: .init(
+diff --git a/Tests/SwiftJXLCoreTests/ModularProfileLifetimeTests.swift b/Tests/SwiftJXLCoreTests/ModularProfileLifetimeTests.swift
+index 080e319..368bffc 100644
+--- a/Tests/SwiftJXLCoreTests/ModularProfileLifetimeTests.swift
++++ b/Tests/SwiftJXLCoreTests/ModularProfileLifetimeTests.swift
+@@ -12,9 +12,9 @@ private struct ProfileOwnerState: Sendable {
+     var active = 0, finished = 0, destroyed = 0
+ }
+ /// Shares the actual sealed owner. Its borrow never escapes and all mutable
+-/// instrumentation is protected by Mutex; no unchecked concurrency is needed.
++/// instrumentation is protected by PackageMutex; no unchecked concurrency is needed.
+ private final class ProfileOwnerCounter: Sendable {
+-    let value = Mutex(ProfileOwnerState())
++    let value = PackageMutex(ProfileOwnerState())
+ }
+ 
+ private final class ProfileReadOwner: ReadOnlyImageStorage {
+diff --git a/Tests/SwiftJXLCoreTests/ModularProfileTests.swift b/Tests/SwiftJXLCoreTests/ModularProfileTests.swift
+index 882f14f..234bcc0 100644
+--- a/Tests/SwiftJXLCoreTests/ModularProfileTests.swift
++++ b/Tests/SwiftJXLCoreTests/ModularProfileTests.swift
+@@ -203,8 +203,13 @@ struct ModularProfileTests {
+         process.executableURL = URL(fileURLWithPath: binary + "/djxl")
+         process.arguments = [input.path, output.path, "--bits_per_sample=\(f.bits)", "--num_threads=2", "--quiet"]
+         process.standardOutput = handle; process.standardError = handle
++        #if os(Linux)
++        let oracleStatus = try runLinuxOracle(process)
++        #else
+         try process.run(); process.waitUntilExit()
+-        try #require(process.terminationStatus == 0)
++        let oracleStatus = process.terminationStatus
++        #endif
++        try #require(oracleStatus == 0)
+         let data = try Data(contentsOf: output)
+         let end = try #require(data.range(of: Data("ENDHDR\n".utf8)))
+         let header = String(decoding: data[..<end.lowerBound], as: UTF8.self)
+diff --git a/Tests/SwiftJXLCoreTests/ModularPublicMatrixTests.swift b/Tests/SwiftJXLCoreTests/ModularPublicMatrixTests.swift
+index 59ad6da..a74c25c 100644
+--- a/Tests/SwiftJXLCoreTests/ModularPublicMatrixTests.swift
++++ b/Tests/SwiftJXLCoreTests/ModularPublicMatrixTests.swift
+@@ -153,8 +153,13 @@ struct ModularPublicMatrixTests {
+         process.arguments = [dir.appendingPathComponent("native.jxl").path,
+             dir.appendingPathComponent("expected.u16le").path]
+         process.standardOutput = handle; process.standardError = handle
++        #if os(Linux)
++        let oracleStatus = try runLinuxOracle(process)
++        #else
+         try process.run(); process.waitUntilExit()
+-        try #require(process.terminationStatus == 0)
++        let oracleStatus = process.terminationStatus
++        #endif
++        try #require(oracleStatus == 0)
+         let result = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: log)) as? [String: Int])
+         #expect(result["bits"] == c.bits && result["channels"] == c.channels)
+         #expect(result["width"] == 5 && result["height"] == 3)
+diff --git a/Tests/SwiftJXLCoreTests/NativeTranscoderPublicTests.swift b/Tests/SwiftJXLCoreTests/NativeTranscoderPublicTests.swift
+index f79ecfb..df9891b 100644
+--- a/Tests/SwiftJXLCoreTests/NativeTranscoderPublicTests.swift
++++ b/Tests/SwiftJXLCoreTests/NativeTranscoderPublicTests.swift
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: Apache-2.0
+ import Foundation
++import SwiftJXLCore
+ import Synchronization
+ import Testing
+ import SwiftJXL
+@@ -59,7 +60,7 @@ struct NativeTranscoderPublicTests {
+         let expected = try source("progressive-edge")
+         var owner = Data([0, 0, 0]); owner.append(expected)
+         let sliced = owner[3...]; owner = Data()
+-        let transcoder = try Transcoder(), phases = Mutex<[ProgressUpdate.Phase]>([])
++        let transcoder = try Transcoder(), phases = PackageMutex<[ProgressUpdate.Phase]>([])
+         let encoded = try await transcoder.transcode(sliced, to: .jpegXL, options: .init(progress: { update in
+             phases.withLock { $0.append(update.phase) }
+         }))
+@@ -198,13 +199,18 @@ struct NativeTranscoderPublicTests {
+         defer { try? handle.close() }
+         let process = Process(); process.executableURL = URL(fileURLWithPath: executable)
+         process.arguments = arguments; process.standardOutput = handle; process.standardError = handle
++        #if os(Linux)
++        let processStatus = try runLinuxOracle(process)
++        #else
+         try process.run()
+         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
+         while process.isRunning && ContinuousClock.now < deadline { Thread.sleep(forTimeInterval: 0.01) }
+         if process.isRunning { process.terminate(); Issue.record("Reference tool timed out"); throw CancellationError() }
+         // Release Foundation's process/run-loop ownership after bounded polling.
+         process.waitUntilExit()
+-        try #require(process.terminationStatus == 0, "Reference failed: \(log.path)")
++        let processStatus = process.terminationStatus
++        #endif
++        try #require(processStatus == 0, "Reference failed: \(log.path)")
+     }
+     #endif
+ 
+diff --git a/Tests/SwiftJXLCoreTests/ScalarOracleTests.swift b/Tests/SwiftJXLCoreTests/ScalarOracleTests.swift
+index 48b8254..3b6cc8b 100644
+--- a/Tests/SwiftJXLCoreTests/ScalarOracleTests.swift
++++ b/Tests/SwiftJXLCoreTests/ScalarOracleTests.swift
+@@ -91,8 +91,15 @@ struct ScalarOracleTests {
+         let output = try FileHandle(forWritingTo: log)
+         defer { try? output.close() }
+         process.standardOutput = output; process.standardError = output
++        #if os(Linux)
++        let oracleStatus = try runLinuxOracle(process)
++        #else
+         try process.run(); process.waitUntilExit()
+-        try #require(process.terminationReason == .exit && process.terminationStatus == 0,
++        try #require(process.terminationReason == .exit,
++                     "Independent tool terminated by signal; inspect \(log.path)")
++        let oracleStatus = process.terminationStatus
++        #endif
++        try #require(oracleStatus == 0,
+                      "Independent tool failed; inspect \(log.path)")
+     }
+ }
+diff --git a/Tests/SwiftJXLCoreTests/VarDCTParallelTests.swift b/Tests/SwiftJXLCoreTests/VarDCTParallelTests.swift
+index 3de9f08..552b416 100644
+--- a/Tests/SwiftJXLCoreTests/VarDCTParallelTests.swift
++++ b/Tests/SwiftJXLCoreTests/VarDCTParallelTests.swift
+@@ -122,7 +122,7 @@ struct VarDCTParallelTests {
+     }
+     @Test func cancellationAfterBandJoinPreventsPublication() async throws {
+         let image = try source(width: 17, height: 137, alpha: false), audit = ScalarStorageAudit()
+-        let completed = Mutex<ScalarStorageAudit.Snapshot?>(nil)
++        let completed = PackageMutex<ScalarStorageAudit.Snapshot?>(nil)
+         let task = Task {
+             try await ScalarStorageAudit.$current.withValue(audit) {
+                 try await Encoder(configuration: .init(mode: .lossy, codecOptions: .init(varDCT: .init(distance: 1))))
+diff --git a/Tests/SwiftJXLCoreTests/VarDCTPublicTests.swift b/Tests/SwiftJXLCoreTests/VarDCTPublicTests.swift
+index dbab532..14b4444 100644
+--- a/Tests/SwiftJXLCoreTests/VarDCTPublicTests.swift
++++ b/Tests/SwiftJXLCoreTests/VarDCTPublicTests.swift
+@@ -109,7 +109,7 @@ struct VarDCTPublicTests {
+     @Test func cancellationBeforeSealingInvalidatesDestination() async throws {
+         let decoder = try Decoder(), data = try fixture("pred-17-4-16.independent")
+         let destination = try ImageDestination.allocate(descriptor: decoder.inspect(data).descriptor)
+-        let completed = Mutex(false)
++        let completed = PackageMutex(false)
+         let task = Task {
+             try await decoder.decode(data, into: destination, options: .init(progress: { update in
+                 if update.phase == .completed {
+diff --git a/Tests/SwiftJXLTests/SampleAccessTests.swift b/Tests/SwiftJXLTests/SampleAccessTests.swift
+index eb2edb3..1b31c91 100644
+--- a/Tests/SwiftJXLTests/SampleAccessTests.swift
++++ b/Tests/SwiftJXLTests/SampleAccessTests.swift
+@@ -3,13 +3,14 @@ import Foundation
+ import Synchronization
+ import Testing
+ import SwiftJXL
++import SwiftJXLCore
+ 
+ // Fault injection: construction sees the declared two-byte capacity, but a later
+ // read exposes only one byte. Image access must reject before loading either byte.
+ private final class ShortenedSampleBorrow: ReadOnlyImageStorage, Sendable {
+     let allocationID = UUID()
+     let byteCount = 2
+-    private let calls = Mutex(0)
++    private let calls = PackageMutex(0)
+     private let bytes: [UInt8] = [0x34, 0x12]
+ 
+     func withUnsafeBytes<R>(_ body: (UnsafeRawBufferPointer) throws -> R) throws -> R {
+@@ -32,7 +33,7 @@ private final class UninitialisedSampleStorage: WritableImageStorage, @unchecked
+     let byteCount = 18
+     private let allocation: UnsafeMutableRawPointer
+     private enum Phase: Sendable { case available, writing(StorageWriteLease), sealed, invalid }
+-    private let phase = Mutex(Phase.available)
++    private let phase = PackageMutex(Phase.available)
+ 
+     init() {
+         allocation = .allocate(byteCount: byteCount + 1, alignment: 2)
+diff --git a/Tests/SwiftJXLTests/ScalarPublicAPITests.swift b/Tests/SwiftJXLTests/ScalarPublicAPITests.swift
+index a7af190..4958f92 100644
+--- a/Tests/SwiftJXLTests/ScalarPublicAPITests.swift
++++ b/Tests/SwiftJXLTests/ScalarPublicAPITests.swift
+@@ -3,6 +3,7 @@ import Foundation
+ import Synchronization
+ import Testing
+ import SwiftJXL
++import SwiftJXLCore
+ 
+ struct ScalarPublicAPITests {
+     private func source() throws -> Image {
+@@ -70,7 +71,7 @@ struct ScalarPublicAPITests {
+ 
+     @Test func progressIsSerialOutsideStorageBorrowAndCancellationIsPreserved() async throws {
+         let image = try source()
+-        let phases = Mutex<[ProgressUpdate.Phase]>([])
++        let phases = PackageMutex<[ProgressUpdate.Phase]>([])
+         let encoded = try await Encoder().encode(image, options: .init(progress: { update in
+             // Reentrant access would fail or deadlock if called under the provider lock.
+             #expect((try? image.sampleUInt16(x: 0, y: 0)) == 0)
+diff --git a/Tests/SwiftJXLTests/StorageTests.swift b/Tests/SwiftJXLTests/StorageTests.swift
+index 074fb17..8dd04ff 100644
+--- a/Tests/SwiftJXLTests/StorageTests.swift
++++ b/Tests/SwiftJXLTests/StorageTests.swift
+@@ -3,11 +3,12 @@ import Foundation
+ import Synchronization
+ import Testing
+ import SwiftJXL
++import SwiftJXLCore
+ 
+ private final class TestCounters: Sendable {
+-    let deallocations = Mutex(0)
+-    let active = Mutex(0)
+-    let overlap = Mutex(false)
++    let deallocations = PackageMutex(0)
++    let active = PackageMutex(0)
++    let overlap = PackageMutex(false)
+ }
+ 
+ private final class ReadAdapter: ReadOnlyImageStorage, Sendable {

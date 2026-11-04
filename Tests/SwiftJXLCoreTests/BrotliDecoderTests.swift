@@ -112,7 +112,7 @@ struct BrotliDecoderTests {
             #expect(throws: CancellationError.self) { try BrotliDecoder.decode(source, expectedOutputSize: 32768, policy: BrotliPolicy()) }
         }
         await task.value
-        let checks = Mutex(0)
+        let checks = PackageMutex(0)
         let policy = try BrotliPolicy(checkpoint: { try checks.withLock { n in n += 1; if n == 40 { throw CancellationError() } } })
         #expect(throws: CancellationError.self) { try BrotliDecoder.decode(source, expectedOutputSize: 32768, policy: policy) }
     }

@@ -1,0 +1,19 @@
+{
+  "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "architecture": "aarch64",
+  "submodules": "-73695d303670c90e4d506ea89d9901b081385089 testdata\n 028fb5a23661f123017c060daa546b55cf4bde29 third_party/brotli (028fb5a)\n-6910c9d9165801d8827d628cb72eb7ea9dd538c5 third_party/googletest\n 457c891775a7397bdb0376bb1031e6e027af1c48 third_party/highway (457c891)\n 5176347635785e53ee5cee92328f76fda766ecc6 third_party/lcms (5176347)\n-8ecba3647edb6dd940463fedf38ca33a8e2a73d1 third_party/libjpeg-turbo\n-872555f4ba910252783af1507f9e7fe1653be252 third_party/libpng\n-94e0df6d0f8b44228de5be0ff35efb9f946a13c9 third_party/sjpeg\n-96d9171c94b937a1b5f0293de7309ac16311b722 third_party/skcms\n-51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf third_party/zlib\n",
+  "binaries": {
+    "cjxl": {
+      "sha256": "5d06c7df8ab5907b3d3b08a25dc8042210aabfb56c099a22c5ef3579f44ba78f",
+      "version": "cjxl v0.12.0 a7a9c78 [_SVE2_128_,SVE2,SVE,NEON_BF16,NEON,NEON_WITHOUT_AES] {Clang 21.0.0}\nCopyright (c) the JPEG XL Project\n"
+    },
+    "djxl": {
+      "sha256": "731487c2ec3a86a5c7f16ed48da44087365c28caeada25fc49e716ca1b8ffbec",
+      "version": "djxl v0.12.0 a7a9c78 [_SVE2_128_,SVE2,SVE,NEON_BF16,NEON,NEON_WITHOUT_AES] {Clang 21.0.0}\nCopyright (c) the JPEG XL Project\n"
+    },
+    "swiftjxl-modular-profile-oracle": {
+      "sha256": "88507de50846a5cbccc141bab14fbace12f3a04eb5ae613fbb6eea41507af99d",
+      "sourceSHA256": "b388400d6aefc1ddb1b68efd310528404223ce956d98fe3a73474a02942feee0"
+    }
+  }
+}

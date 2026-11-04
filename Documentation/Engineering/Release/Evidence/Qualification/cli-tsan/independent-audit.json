@@ -1,0 +1,146 @@
+{
+  "status": "passed",
+  "auditedUTC": "2026-11-04T11:23:57.405048+00:00",
+  "scope": "Independent retained-evidence audit of ten source-bound CLI TSan runners; no new execution claimed. Original runner sample assertions remain the semantic oracle evidence.",
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "runtimeDigest": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+  "runtimeFileCount": 122,
+  "runtimeBytesMatchFrozenAndCurrent": true,
+  "host": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "binarySHA256": "09cb91ee243e803744ba1ee7bb196deb1de7262defef59b3e66994d3292c1298",
+  "tsanRuntimeLinked": true,
+  "tsanInstrumentationSymbolCount": 33,
+  "sanitizerOptions": {
+    "TSAN_OPTIONS": "halt_on_error=1:exitcode=66"
+  },
+  "allToolHashesUnchanged": true,
+  "groups": [
+    {
+      "group": "foundation",
+      "checks": 98,
+      "status": "passed",
+      "reportSHA256": "4246e18a3b64cc72d402bf2b57c1135e111161e54db6886824468a971140d3ba",
+      "scriptSHA256": "9a369cd681e8157843711856f6c4e65baccd5e3a88170534c434e5d5732d8676",
+      "rawLogSHA256": "29b692939fb6f2dcc8d712fcb770829921a8eb582580460f3c0b832ebae1b809",
+      "noSanitizerDiagnostics": true
+    },
+    {
+      "group": "payload",
+      "checks": 104,
+      "status": "passed",
+      "reportSHA256": "34162bfbdae537414940d28a2d53a59ef9fd7068f4f837356d1e472ba350fc25",
+      "scriptSHA256": "b7d18fb56e1ab18e173ec85199d0d0910d7f7314624ad253161a30baa7b5c212",
+      "rawLogSHA256": "dab6144c99854b8af05312825bd96b73b82dbf74e320423c8b29382f25c679d4",
+      "noSanitizerDiagnostics": true
+    },
+    {
+      "group": "nrrd",
+      "checks": 119,
+      "status": "passed",
+      "reportSHA256": "eb2ca7166e07933ff2735ca35824000f33a33450095ea1064a79d24d52f3f619",
+      "scriptSHA256": "74014e8343eadb23d310d3d419b6bb5553d9e1ea01b9f297fd988b2f07a9cbed",
+      "rawLogSHA256": "3bc98a66ee6ec959fa315bd5957157904df2741a8340048d328e0287e57d28d3",
+      "noSanitizerDiagnostics": true
+    },
+    {
+      "group": "pnm",
+      "checks": 299,
+      "status": "passed",
+      "reportSHA256": "416e6405844fdcdb50aff5f3a6fc8751dc853f8e0583fe5515fce2be377601e7",
+      "scriptSHA256": "55db46b995e5417dc5ecd0bd39ab3d654288f474a8351e978f3bf2d21d5a60d1",
+      "rawLogSHA256": "5d45b7dd85c28a9d0f1a2f86d86707de98d30c80d7f366a1828313a520ad9b21",
+      "noSanitizerDiagnostics": true
+    },
+    {
+      "group": "low-precision",
+      "checks": 81,
+      "status": "passed",
+      "reportSHA256": "23a4322447d44aa5110761283c60ad493949d48976d42c1d54aaf24121c5c980",
+      "scriptSHA256": "e15986e7836c7a8f1469370bab3f11c0c99f1b27651fa2a19ffa38cb9915de72",
+      "rawLogSHA256": "8a766826cbc5b494d3d5be6981978ecac6881b6096741490259778a06e1a4321",
+      "noSanitizerDiagnostics": true
+    },
+    {
+      "group": "vardct",
+      "checks": 32,
+      "status": "passed",
+      "reportSHA256": "b132f36f6d83fa9d4e4f238017d882b2793b757f1c59cad2c2a9e9d5c10086c3",
+      "scriptSHA256": "d5d6bb87ec66273e27766db6ef6825ffe4bc267a11159bcf1020c3c3efc4b38a",
+      "rawLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "noSanitizerDiagnostics": true
+    },
+    {
+      "group": "vardct-encode",
+      "checks": 72,
+      "status": "passed",
+      "reportSHA256": "02bca247bbc4cd46810ffddc406d21447ef0e08e9cdb12c1ab996d447661f256",
+      "scriptSHA256": "ee975ab8abca38112539ceed06f69ef47768f3b061867fe5f66e7912f60d9261",
+      "rawLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "noSanitizerDiagnostics": true
+    },
+    {
+      "group": "native-jpeg",
+      "checks": 141,
+      "status": "passed",
+      "reportSHA256": "c37b948bc022916da99d4e3ce0e8950ad4c33a3fb16b6f34d1f8ab41fb4c1393",
+      "scriptSHA256": "47175b28df0aa55cd1b0e02be88e4aef65c3c056e0aab2be3120fa38622e2251",
+      "rawLogSHA256": "e682ad4b1116ffc4a21cf6d5b5afd26585f8d46c7d35e46e645ef83646427b6e",
+      "noSanitizerDiagnostics": true
+    },
+    {
+      "group": "completion",
+      "checks": 22,
+      "status": "passed",
+      "reportSHA256": "9f6425066b95a15467cf49e8f349176791c2d3c577c7cdeda2505ff3f5319690",
+      "scriptSHA256": "08d74efe5028f22f9a0f97d5cdc71c309df992d2328d7db281a9a85ed9a38b07",
+      "rawLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "noSanitizerDiagnostics": true
+    },
+    {
+      "group": "jpeg-extended",
+      "checks": 91,
+      "status": "passed",
+      "reportSHA256": "da616edad9b3411018dbb120528159692d21f6c894f0ee4c13d305d9a36b4229",
+      "scriptSHA256": "2e37c6155becc4d335b5e935b8c8fa7b92bbda8c9d5c8896bdf4276c3f5b6dee",
+      "rawLogSHA256": "1fa052bc33ee0136fd0380324a6188dea2cf9e3159f367712d1eeb67ef9f73df",
+      "noSanitizerDiagnostics": true
+    }
+  ],
+  "totalChecks": 1059,
+  "explicitExpectedExitComparisons": 818,
+  "scalarOracle": {
+    "sourceRevision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+    "manifestSHA256": "36a7e54d0ddf18f62ac457f2be039efe29ee48b16e4ca60bc4b7c54d7fa4948c",
+    "compiledScalarAndHighPrecisionFlags": true,
+    "flagsSHA256": {
+      "jxl_dec-obj": "db7fab17b20920415c0b36260646f7aee5b47044c4e695786693dbdb5d815d40",
+      "jxl_enc-obj": "9b73a693421519f63d41393f2862567db682da1acac6cc8314c738c7f1196cbc"
+    },
+    "onlyScalarDispatchSymbols": {
+      "libjxl_cms.0.12.0.dylib": 1,
+      "libjxl.0.12.0.dylib": 1150
+    },
+    "mainLibrarySymbolHashMatches": true,
+    "all72EncodedPayloadHashesMatch": true,
+    "maximumObservedPeakLSB": 1,
+    "maximumObservedRMSLSB": 0.2286647801900118,
+    "peakLimitLSB": 2,
+    "rmsLimitLSB": 0.5
+  },
+  "retainedReferenceDisagreements": [
+    {
+      "jpeg": "bridge-quant16",
+      "djpegMaximumLSB": 255,
+      "djpegRMSLSB": 176.03618956893683,
+      "classification": "adversarial out-of-range IDCT saturation",
+      "directFormulaExact": true,
+      "source": "https://github.com/libjpeg-turbo/libjpeg-turbo/blob/3.2.0/src/jdmaster.c#L362-L400"
+    }
+  ],
+  "matrixReportSHA256": "d97a3ef08cd357650517e1d052d7803d59a6d442cfd60f613da9965a8daa857a",
+  "auditorSHA256": "1c39a2350c7a4bc515d30221f48dc42bdbcb330733dc4627ffc5b0c3bb21647b",
+  "limitations": [
+    "This is native arm64 macOS27.0.1 TSan CLI evidence, not exact26.0 or physical-device evidence.",
+    "Some CLI reports contain semantic case records rather than one record per process; totalChecks is the existing runner check count, not a uniform subprocess count."
+  ]
+}

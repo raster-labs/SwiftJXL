@@ -1,0 +1,70 @@
+Building for production...
+[0/22] Write sources
+[5/22] Copying JPEGExtended
+[6/22] Write swift-version-24593BA9C3E375BF.txt
+[7/22] Copying VarDCT
+[8/22] Copying Modular
+[9/22] Copying JPEGEvents
+[10/22] Copying JPEGBridge
+[11/22] Copying JPEG
+[11/22] Copying JBRD
+[13/22] Copying Brotli
+[15/23] Compiling SwiftJXLCore BitReader.swift
+/__w/SwiftJXL/SwiftJXL/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+/__w/SwiftJXL/SwiftJXL/Sources/SwiftJXLCore/VarDCT/VarDCTPixelDecoder.swift:37:13: warning: variable 'destination' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+35 |         let planes = try VarDCTReconstruction.xyb(coefficients, numericalMode: numericalMode)
+36 |         let maximum = Double((1 << bits) - 1)
+37 |         var destination = layouts.map { BorrowedModularChannel(bytes: bytes, layout: $0) }
+   |             `- warning: variable 'destination' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+38 |         for y in 0..<envelope.height {
+39 |             try budget.checkpoint()
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[16/24] Compiling SwiftJXL AnimationAPI.swift
+[17/26] Compiling SwiftJXLTests APITests.swift
+[18/27] Compiling SwiftJXLCLI AnimationCommand.swift
+[18/27] Write Objects.LinkFileList
+[19/27] Linking swiftjxl-cli
+[21/27] Compiling SwiftJXLCoreTests AnimationEncoderTests.swift
+/__w/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift:173:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused [#NoUsage]
+171 |         try container.write(to: encoded); try source.write(to: directory.appendingPathComponent("source.jpg"))
+172 |         let log = directory.appendingPathComponent("djxl.log")
+173 |         FileManager.default.createFile(atPath: log.path, contents: nil)
+    |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused [#NoUsage]
+174 |         let handle = try FileHandle(forWritingTo: log)
+175 |         defer { try? handle.close() }
+
+/__w/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift:356:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused [#NoUsage]
+354 |     private func run(_ executable: String, _ arguments: [String], directory: URL) throws {
+355 |         let log = directory.appendingPathComponent(URL(fileURLWithPath: executable).lastPathComponent + ".log")
+356 |         FileManager.default.createFile(atPath: log.path, contents: nil)
+    |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused [#NoUsage]
+357 |         let handle = try FileHandle(forWritingTo: log)
+358 |         defer { try? handle.close() }
+
+/__w/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/NativeTranscoderPublicTests.swift:197:29: warning: result of call to 'createFile(atPath:contents:attributes:)' is unused [#NoUsage]
+195 |     private func run(_ executable: String, _ arguments: [String], directory: URL) throws {
+196 |         let log = directory.appendingPathComponent(URL(fileURLWithPath: executable).lastPathComponent + ".log")
+197 |         FileManager.default.createFile(atPath: log.path, contents: nil)
+    |                             `- warning: result of call to 'createFile(atPath:contents:attributes:)' is unused [#NoUsage]
+198 |         let handle = try FileHandle(forWritingTo: log)
+199 |         defer { try? handle.close() }
+
+[#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>
+[21/27] /__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/build/x86_64-unknown-linux-gnu/release/SwiftJXLPackageDiscoveredTests.derived/all-discovered-tests.swift
+[22/27] Write sources
+[24/28] Compiling SwiftJXLPackageDiscoveredTests SwiftJXLCoreTests.swift
+[24/28] /__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/build/x86_64-unknown-linux-gnu/release/SwiftJXLPackageTests.derived/runner.swift
+[25/28] Write sources
+[27/29] Compiling SwiftJXLPackageTests runner.swift
+[27/29] Write Objects.LinkFileList
+[28/29] Linking SwiftJXLPackageTests.xctest
+Build complete! (291.55s)
+warning: '--build-system native' has been deprecated and will be removed in a future release; please report an issue at https://github.com/swiftlang/swift-package-manager/issues if you are unable to adopt the default build system.

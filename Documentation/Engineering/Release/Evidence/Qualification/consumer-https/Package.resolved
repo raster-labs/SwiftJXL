@@ -1,0 +1,14 @@
+{
+  "originHash" : "aa3a46b9e85ac6e21da4e8a4955fae93ebaaca7933fd994c381ccb0a24b4630b",
+  "pins" : [
+    {
+      "identity" : "swiftjxl",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/raster-labs/SwiftJXL.git",
+      "state" : {
+        "revision" : "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae"
+      }
+    }
+  ],
+  "version" : 3
+}

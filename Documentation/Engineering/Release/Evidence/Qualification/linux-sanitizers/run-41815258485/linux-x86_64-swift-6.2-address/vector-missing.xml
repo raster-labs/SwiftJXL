@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.006001606">
+    <testcase classname="SwiftJXLCoreTests.VarDCTARMIntegerTests" name="optionalFullRangeHardwareReciprocalVectors()" time="0.00367936" >
+      <failure message="Caught error: Error Domain=NSCocoaErrorDomain Code=260 &quot;The file doesn&#8217;t exist.&quot;UserInfo={NSURL=file:///__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/absent-vectors.json, NSFilePath=/__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/absent-vectors.json, NSUnderlyingError=Error Domain=NSPOSIXErrorDomain Code=2 &quot;No such file or directory&quot;} (error)" />
+    </testcase>
+  </testsuite>
+</testsuites>

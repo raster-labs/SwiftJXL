@@ -1,0 +1,40 @@
+Building for production...
+[Planning deferred tasks]
+[25 / 40]
+[26 / 41] SwiftJXLCore
+[34 / 76]
+[37 / 76]
+[42 / 76]
+[44 / 76]
+[46 / 76]
+[49 / 76]
+[51 / 76]
+[53 / 76]
+[58 / 76]
+[60 / 76]
+[61 / 76]
+/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-sbom-clean/SwiftJXL/Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift:115:16: warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+113 |             if usedBuckets.contains(bucket) { result[bucket] = orders }
+114 |         }
+115 |         if var stream { try stream.finish() }
+    |                `- warning: variable 'stream' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+116 |         return result
+117 |     }
+
+/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-sbom-clean/SwiftJXL/Sources/SwiftJXLCore/VarDCT/VarDCTPixelDecoder.swift:37:13: warning: variable 'destination' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+35 |         let planes = try VarDCTReconstruction.xyb(coefficients, numericalMode: numericalMode)
+36 |         let maximum = Double((1 << bits) - 1)
+37 |         var destination = layouts.map { BorrowedModularChannel(bytes: bytes, layout: $0) }
+   |             `- warning: variable 'destination' was never mutated; consider changing to 'let' constant [#VariableNeverMutated]
+38 |         for y in 0..<envelope.height {
+39 |             try budget.checkpoint()
+
+[#VariableNeverMutated]: <https://docs.swift.org/compiler/documentation/diagnostics/variable-never-mutated>
+[62 / 76] SwiftJXLCore
+[69 / 77] SwiftJXL
+[71 / 78] SwiftJXL
+Build complete! (49.60 secs)
+warning: Bundle 'SwiftPM_SBOMModel' with schemas not found - skipping SBOM validation
+Creating SBOMs...
+- created spdx3 v3.0.1 SBOM at /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-canonical-origin-sbom/sboms/spdx/spdx3-3.0.1-SwiftJXL-00f03ff288a7c8e0e2b82d2e71ec22622ede71ae-all-2026-11-04T10_42_04Z.json
+SBOMs created  (0.06 secs)

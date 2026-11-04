@@ -1,0 +1,127 @@
+{
+  "@context": "https://spdx.org/rdf/3.0.1/spdx-context.jsonld",
+  "@graph": [
+    {
+      "creationInfo": "urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0:creationInfo",
+      "from": "urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0",
+      "relationshipType": "hasDeclaredLicense",
+      "spdxId": "urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0-hasDeclaredLicense-urn:spdx:Apache-2.0",
+      "to": [
+        "urn:spdx:Apache-2.0"
+      ],
+      "type": "Relationship"
+    },
+    {
+      "creationInfo": "urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0:creationInfo",
+      "simplelicensing_licenseExpression": "Apache-2.0",
+      "spdxId": "urn:spdx:Apache-2.0",
+      "type": "simplelicensing_LicenseExpression"
+    },
+    {
+      "@id": "urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0:creationInfo",
+      "created": "2026-11-04T10:42:03Z",
+      "createdBy": [
+        "urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0"
+      ],
+      "specVersion": "3.0.1",
+      "type": "CreationInfo",
+      "comment": "Original generator value was 6.4.2 (compiler version). Derived by Scripts/derive-release-sbom.py SHA-256 74aecc5ef013327afacf737529aa1501101f0bec4567c18cb75f606d73f79022 from original SHA-256 70251db2ea6d1db943b7fac66d8c13d17f92f0dd9c7f9ac3504a6d81cf254637; see report.json."
+    },
+    {
+      "creationInfo": "urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0:creationInfo",
+      "name": "swift-package-manager",
+      "spdxId": "urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0",
+      "type": "Agent"
+    },
+    {
+      "@id": "_:creationInfo",
+      "created": "2026-11-04T10:42:03Z",
+      "createdBy": [
+        "urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0"
+      ],
+      "specVersion": "3.0.1",
+      "type": "CreationInfo"
+    },
+    {
+      "creationInfo": "_:creationInfo",
+      "profileConformance": [
+        "core",
+        "software"
+      ],
+      "rootElement": [
+        "urn:spdx:swiftjxl:SwiftJXL"
+      ],
+      "spdxId": "urn:uuid:96461b58-c5f8-45dc-80d8-14b44cefd3e0",
+      "type": "software_Sbom"
+    },
+    {
+      "creationInfo": "_:creationInfo",
+      "from": "urn:uuid:96461b58-c5f8-45dc-80d8-14b44cefd3e0",
+      "relationshipType": "describes",
+      "spdxId": "urn:uuid:96461b58-c5f8-45dc-80d8-14b44cefd3e0-describes-urn:spdx:swiftjxl:SwiftJXL",
+      "to": [
+        "urn:spdx:swiftjxl:SwiftJXL"
+      ],
+      "type": "Relationship"
+    },
+    {
+      "creationInfo": "urn:uuid:a22bdc58-3e27-5f70-af52-ac41b953895a",
+      "profileConformance": [
+        "core",
+        "software"
+      ],
+      "rootElement": [
+        "urn:uuid:96461b58-c5f8-45dc-80d8-14b44cefd3e0"
+      ],
+      "spdxId": "urn:uuid:ceb9bdbc-e66a-493f-8ccb-cadcb28fa6fc",
+      "type": "SpdxDocument",
+      "comment": "Derived by Scripts/derive-release-sbom.py SHA-256 74aecc5ef013327afacf737529aa1501101f0bec4567c18cb75f606d73f79022 from original SHA-256 70251db2ea6d1db943b7fac66d8c13d17f92f0dd9c7f9ac3504a6d81cf254637; see report.json. Original document: urn:uuid:f9d8e417-a0bf-470a-871b-6e15a6eef333"
+    },
+    {
+      "creationInfo": "urn:uuid:a22bdc58-3e27-5f70-af52-ac41b953895a",
+      "description": "<ResolvedPackage: swiftjxl>",
+      "name": "swiftjxl",
+      "software_primaryPurpose": "application",
+      "spdxId": "urn:spdx:swiftjxl",
+      "summary": "swift-package",
+      "type": "software_Package",
+      "software_packageUrl": "pkg:swift/github.com/raster-labs/swiftjxl@00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+      "software_packageVersion": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae"
+    },
+    {
+      "creationInfo": "urn:uuid:a22bdc58-3e27-5f70-af52-ac41b953895a",
+      "name": "SwiftJXL",
+      "software_primaryPurpose": "library",
+      "spdxId": "urn:spdx:swiftjxl:SwiftJXL",
+      "summary": "swift-product",
+      "type": "software_Package",
+      "software_packageVersion": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae"
+    },
+    {
+      "creationInfo": "_:creationInfo",
+      "from": "urn:spdx:swiftjxl",
+      "relationshipType": "dependsOn",
+      "spdxId": "urn:spdx:swiftjxl-dependsOn",
+      "to": [
+        "urn:spdx:swiftjxl:SwiftJXL"
+      ],
+      "type": "Relationship"
+    },
+    {
+      "@id": "urn:uuid:a22bdc58-3e27-5f70-af52-ac41b953895a",
+      "type": "CreationInfo",
+      "created": "2026-11-04T10:49:01Z",
+      "createdBy": [
+        "urn:uuid:23af4919-10bb-538e-939c-3d9674b11f3b"
+      ],
+      "specVersion": "3.0.1"
+    },
+    {
+      "spdxId": "urn:uuid:23af4919-10bb-538e-939c-3d9674b11f3b",
+      "type": "SoftwareAgent",
+      "name": "SwiftJXL SBOM derivation",
+      "creationInfo": "urn:uuid:a22bdc58-3e27-5f70-af52-ac41b953895a",
+      "comment": "Scripts/derive-release-sbom.py SHA-256 74aecc5ef013327afacf737529aa1501101f0bec4567c18cb75f606d73f79022"
+    }
+  ]
+}

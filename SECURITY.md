@@ -1,12 +1,25 @@
 # Security policy and implementation requirements
 
-Status: documentation foundation. No successor binary release exists and no vulnerability response time is promised here.
+Status: development migration; release qualification is incomplete. No successor release has been published. This policy does not authorise a release or promise a vulnerability response time.
 
 ## Reporting
 
-Use the repository's private vulnerability reporting option in its Security tab if it is enabled. Otherwise use an established private channel to a Raster-Lab organisation owner to arrange disclosure. Do not post exploitable payloads, credentials or patient information in a public issue. This document does not assert that GitHub private reporting or a dedicated security mailbox has already been configured.
+Report suspected vulnerabilities through [GitHub private vulnerability reporting](https://github.com/raster-labs/SwiftJXL/security/advisories/new). Private reporting was verified enabled for this repository on 4 November 2026. Reports go to repository maintainers; a GitHub account is required. Do not post exploitable payloads, credentials or patient information in a public issue. If the form is unavailable, ask a maintainer through an established private channel to restore access before sending sensitive details.
 
-Include affected version/commit, platform, a minimal safe reproducer, expected/actual behaviour and impact. Use synthetic data where possible. A maintainer must establish the reporting channel and supported-version policy before the first stable release.
+Include affected version/commit, platform, a minimal safe reproducer, expected/actual behaviour and impact. Use synthetic data where possible. Maintainers triage privately, coordinate a fix and disclosure with the reporter, and publish an advisory when appropriate. Do not assume a fixed acknowledgement, fix or disclosure deadline.
+
+## Supported versions
+
+During development, report vulnerabilities against the latest `main` revision or current development version (`2.1.0-dev.2`). Fixes are developed on `main`; older development snapshots and the predecessor JXLSwift releases receive no promised backports. There is currently no stable successor release with security support. Before publishing the first stable release, maintainers must update this table with its version.
+
+Once stable releases begin, security fixes target the latest stable release and `main`. Older stable releases are unsupported unless a published advisory explicitly lists a backport. Consumers should upgrade to the fixed release identified in the advisory. The release task must replace the empty stable entry below with the actual supported version; development qualification alone does not start a stable support period.
+
+| Version | Security maintenance |
+| --- | --- |
+| Latest `main` / current development version | Reports accepted; fixes on `main`; development use only |
+| Older development snapshots | No backport commitment; update to the latest revision |
+| Predecessor JXLSwift releases | Outside this repository's maintenance policy |
+| Stable successor series | None published |
 
 ## Threat model
 

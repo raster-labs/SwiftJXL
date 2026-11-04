@@ -1,0 +1,120 @@
+-- The C compiler identification is Clang 21.0.0
+-- The CXX compiler identification is Clang 21.0.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/clang - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/clang++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- CMake version: 3.28.3
+-- Compiler IDs C:Clang 21.0.0, C++:Clang 21.0.0
+-- Linker IDs C: , C++: 
+-- CMAKE_SYSTEM_PROCESSOR is x86_64
+-- Performing Test CXX_FUZZERS_SUPPORTED
+-- Performing Test CXX_FUZZERS_SUPPORTED - Failed
+-- Performing Test CXX_MACRO_PREFIX_MAP
+-- Performing Test CXX_MACRO_PREFIX_MAP - Success
+-- Performing Test CXX_NO_RTTI_SUPPORTED
+-- Performing Test CXX_NO_RTTI_SUPPORTED - Success
+-- Performing Test CXX_MAVX2_SUPPORTED
+-- Performing Test CXX_MAVX2_SUPPORTED - Success
+-- Performing Test CXX_MF16C_SUPPORTED
+-- Performing Test CXX_MF16C_SUPPORTED - Success
+-- Performing Test CXX_MAVX512F_SUPPORTED
+-- Performing Test CXX_MAVX512F_SUPPORTED - Success
+-- Performing Test CXX_MAVX512DQ_SUPPORTED
+-- Performing Test CXX_MAVX512DQ_SUPPORTED - Success
+-- Performing Test CXX_MAVX512CD_SUPPORTED
+-- Performing Test CXX_MAVX512CD_SUPPORTED - Success
+-- Performing Test CXX_MAVX512BW_SUPPORTED
+-- Performing Test CXX_MAVX512BW_SUPPORTED - Success
+-- Performing Test CXX_MAVX512VL_SUPPORTED
+-- Performing Test CXX_MAVX512VL_SUPPORTED - Success
+-- Performing Test CXX_SVE_SUPPORTED
+-- Performing Test CXX_SVE_SUPPORTED - Failed
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1") 
+-- tcmalloc version  -- tcmalloc 2.8.0 disabled due to https://github.com/gperftools/gperftools/issues/1204
+-- Performing Test JXL_HWY_DISABLED_TARGETS_FORCED
+-- Performing Test JXL_HWY_DISABLED_TARGETS_FORCED - Failed
+-- HWY AVX2 enabled: true
+-- HWY AVX3 enabled: false
+-- HWY AVX3_DL enabled: true
+-- HWY AVX3_SPR enabled: false
+-- HWY AVX3_ZEN4 enabled: false
+-- HWY EMU128 enabled: true
+-- HWY NEON enabled: true
+-- HWY NEON_BF16 enabled: true
+-- HWY NEON_WITHOUT_AES enabled: true
+-- HWY PPC10 enabled: true
+-- HWY PPC8 enabled: true
+-- HWY PPC9 enabled: true
+-- HWY RVV enabled: false
+-- HWY SCALAR enabled: true
+-- HWY SSE2 enabled: true
+-- HWY SSE4 enabled: true
+-- HWY SSSE3 enabled: false
+-- HWY SVE enabled: false
+-- HWY SVE_256 enabled: false
+-- HWY SVE2 enabled: false
+-- HWY SVE2_128 enabled: false
+-- HWY WASM enabled: true
+-- HWY WASM_EMU256 enabled: true
+-- HWY Z14 enabled: true
+-- HWY Z15 enabled: true
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- CXX_STANDARD is 17
+-- Performing Test ATOMICS_LOCK_FREE_INSTRUCTIONS
+-- Performing Test ATOMICS_LOCK_FREE_INSTRUCTIONS - Success
+CMake Deprecation Warning at third_party/highway/CMakeLists.txt:28 (cmake_policy):
+  The OLD behavior for policy CMP0111 will be removed from a future version
+  of CMake.
+
+  The cmake-policies(7) manual explains that the OLD behaviors of all
+  policies are deprecated and that a policy should be set to OLD only under
+  specific short-term circumstances.  Projects should be ported to the NEW
+  behavior and not rely on setting a policy to OLD.
+
+
+-- Performing Test HWY_EMSCRIPTEN
+-- Performing Test HWY_EMSCRIPTEN - Failed
+-- Performing Test HWY_RISCV
+-- Performing Test HWY_RISCV - Failed
+-- Looking for sys/auxv.h
+-- Looking for sys/auxv.h - found
+-- Looking for asm/hwcap.h
+-- Looking for asm/hwcap.h - not found
+-- Build type is 'Release'
+-- Performing Test BROTLI_EMSCRIPTEN
+-- Performing Test BROTLI_EMSCRIPTEN - Failed
+-- Compiler is not EMSCRIPTEN
+-- Looking for log2 in m
+-- Looking for log2 in m - found
+-- Looking for gmtime_r
+-- Looking for gmtime_r - found
+-- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.3")  
+-- Found PNG: /usr/lib/x86_64-linux-gnu/libpng.so (found version "1.6.43") 
+-- Looking for __GLIBCXX__
+-- Looking for __GLIBCXX__ - found
+-- Looking for _LIBCPP_VERSION
+-- Looking for _LIBCPP_VERSION - not found
+-- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY
+-- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY - Success
+-- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY
+-- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY - Success
+-- Performing Test COMPILER_HAS_DEPRECATED_ATTR
+-- Performing Test COMPILER_HAS_DEPRECATED_ATTR - Success
+-- Performing Test LINKER_SUPPORT_EXCLUDE_LIBS
+-- Performing Test LINKER_SUPPORT_EXCLUDE_LIBS - Success
+-- Could NOT find GIF (missing: GIF_LIBRARY GIF_INCLUDE_DIR) (Required is at least version "5.1")
+-- Found JPEG: /usr/lib/x86_64-linux-gnu/libjpeg.so (found version "80") 
+-- Building with JPEGXL_VERSION=a7a9c78 (auto-updated)
+-- Building tools: cjxl;djxl;jxlinfo;jxltran
+-- Configuring done (2.9s)
+-- Generating done (0.1s)
+-- Build files have been written to: /__w/_temp/libjxl/build

@@ -1,0 +1,177 @@
+{
+  "sourceDirectory": ".build/linux-sanitizer-repro",
+  "scope": "Preserved original diagnostic/focused evidence; no full-platform qualification inferred",
+  "files": {
+    "compatibility-experiment-report.json": {
+      "sha256": "1b90020be9d392c5f6211d8ab181239c4d2d89ae196183f20c1382ecd817f0b4",
+      "bytes": 3585
+    },
+    "locked-value-compile-6.2.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "locked-value-compile-6.4.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "locked-value-exit-6.2.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "locked-value-exit-6.4.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "locked-value-run-6.2.log": {
+      "sha256": "38b8523e8c9384c794d20c8b6ca8b6990357568c843d9c3a6e426c7f1e1db810",
+      "bytes": 32
+    },
+    "locked-value-run-6.4.log": {
+      "sha256": "38b8523e8c9384c794d20c8b6ca8b6990357568c843d9c3a6e426c7f1e1db810",
+      "bytes": 32
+    },
+    "locked-value.swift": {
+      "sha256": "611b3ecc30423e8d40acc837bc6efb8d0fe3af2ffc0cf0cea9d0eeef1a67cc0f",
+      "bytes": 1143
+    },
+    "mutex-compile-6.2.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "mutex-compile-6.4.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "mutex-exit-6.2.txt": {
+      "sha256": "8e37bed9dff3949ffd23ae638260dff869f5cc26e551f2a9e5e289a8888949fa",
+      "bytes": 3
+    },
+    "mutex-exit-6.4.txt": {
+      "sha256": "8e37bed9dff3949ffd23ae638260dff869f5cc26e551f2a9e5e289a8888949fa",
+      "bytes": 3
+    },
+    "mutex-run-6.2.log": {
+      "sha256": "8811505d8c2974771003f219e3605ccd9953b7ba8fab19e86ca5e860cd2eea95",
+      "bytes": 3776
+    },
+    "mutex-run-6.4.log": {
+      "sha256": "98856b419dc6d7a76d78266c671d9dc7a6f8463baf4405b5067c16bdf3fe5822",
+      "bytes": 3303
+    },
+    "mutex.swift": {
+      "sha256": "e68874b978d0a2094c55d0afcf5170cccf69c103bd2d906e73aec43c1d78234f",
+      "bytes": 284
+    },
+    "nslock-compile-6.2.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "nslock-compile-6.4.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "nslock-exit-6.2.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "nslock-exit-6.4.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "nslock-run-6.2.log": {
+      "sha256": "c14c81874b7ce408a929947be8d0cf243ad2b65fcd5078e0781782080fb017be",
+      "bytes": 16
+    },
+    "nslock-run-6.4.log": {
+      "sha256": "c14c81874b7ce408a929947be8d0cf243ad2b65fcd5078e0781782080fb017be",
+      "bytes": 16
+    },
+    "nslock.swift": {
+      "sha256": "244987ab893326995e9d0df1bd9d859b072f5f9963c4a36121ecc01c2da61ed1",
+      "bytes": 510
+    },
+    "posix-process-compile-6.2.log": {
+      "sha256": "228a71ecd3c3e46eee8dced360c4243f09f12c9d3886268e35b78006953dee2e",
+      "bytes": 887
+    },
+    "posix-process-compile-6.4.log": {
+      "sha256": "228a71ecd3c3e46eee8dced360c4243f09f12c9d3886268e35b78006953dee2e",
+      "bytes": 887
+    },
+    "posix-process-exit-6.2.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "posix-process-exit-6.4.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "posix-process-run-6.2.log": {
+      "sha256": "5aa119bd861be10dff9b28f6e9197c594585ded6ffc9fa678686d9580923f5b6",
+      "bytes": 24
+    },
+    "posix-process-run-6.4.log": {
+      "sha256": "5aa119bd861be10dff9b28f6e9197c594585ded6ffc9fa678686d9580923f5b6",
+      "bytes": 24
+    },
+    "posix-process.swift": {
+      "sha256": "dbfd0d10dd1bf36457cb6819d3595470f575bc43725bc5f9a4a7dd64d0774b50",
+      "bytes": 1043
+    },
+    "process-compile-6.2.log": {
+      "sha256": "228a71ecd3c3e46eee8dced360c4243f09f12c9d3886268e35b78006953dee2e",
+      "bytes": 887
+    },
+    "process-compile-6.4.log": {
+      "sha256": "228a71ecd3c3e46eee8dced360c4243f09f12c9d3886268e35b78006953dee2e",
+      "bytes": 887
+    },
+    "process-exit-6.2.txt": {
+      "sha256": "8e37bed9dff3949ffd23ae638260dff869f5cc26e551f2a9e5e289a8888949fa",
+      "bytes": 3
+    },
+    "process-exit-6.4.txt": {
+      "sha256": "8e37bed9dff3949ffd23ae638260dff869f5cc26e551f2a9e5e289a8888949fa",
+      "bytes": 3
+    },
+    "process-run-6.2.log": {
+      "sha256": "6aa3e8f8b15705203ac211788f08f2822f335cd38c5d4fda009fce9c2d6df3ee",
+      "bytes": 1353
+    },
+    "process-run-6.4.log": {
+      "sha256": "373cc0f509e9a98f5397a7ba59ef78a2fe9199f8aa371d96f11e05e96af4327e",
+      "bytes": 1353
+    },
+    "process.swift": {
+      "sha256": "7fe87bab3783dd8e71d9f20f584a244e434106bbc9266787e82e3b6c4393b9da",
+      "bytes": 245
+    },
+    "report.json": {
+      "sha256": "84ecd3a374134e65d5bfeedef27d1f4e1b51f9f728bbff53e0d6731f27e9fa7f",
+      "bytes": 5205
+    },
+    "swift-6.2.txt": {
+      "sha256": "ca93da9335ff69b38a68ad1ba3e8771ff89b65a7745fb0ed0471a7607f4dba6a",
+      "bytes": 76
+    },
+    "swift-6.4.txt": {
+      "sha256": "98046c4d5b19f5b88577bc9d77ebc8763e79312aa547e96a87d7b3dd6b8db85c",
+      "bytes": 76
+    }
+  },
+  "excluded": [
+    "locked-value-6.4",
+    "linux-arm-vectors.json",
+    "locked-value-6.2",
+    "nslock-6.4",
+    "nslock-6.2",
+    "process-6.2",
+    "vector-generator",
+    "process-6.4",
+    "mutex-6.4",
+    "posix-process-6.2",
+    "mutex-6.2",
+    "posix-process-6.4"
+  ],
+  "exclusionReason": "Executables omitted; duplicate ARM vectors are retained with final matrix input evidence."
+}

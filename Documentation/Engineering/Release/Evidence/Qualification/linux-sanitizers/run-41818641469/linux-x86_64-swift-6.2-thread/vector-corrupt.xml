@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.650747147">
+    <testcase classname="SwiftJXLCoreTests.VarDCTARMIntegerTests" name="optionalFullRangeHardwareReciprocalVectors()" time="0.648652298" >
+      <failure message="Expectation failed: (VarDCTReferenceNumerics.reciprocalEstimate(value).bitPattern &#8594; 1056931840) == (bits &#8594; 0) (error)" />
+    </testcase>
+  </testsuite>
+</testsuites>

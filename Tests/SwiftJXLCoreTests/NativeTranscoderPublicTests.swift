@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import Foundation
+import SwiftJXLCore
 import Synchronization
 import Testing
 import SwiftJXL
@@ -59,7 +60,7 @@ struct NativeTranscoderPublicTests {
         let expected = try source("progressive-edge")
         var owner = Data([0, 0, 0]); owner.append(expected)
         let sliced = owner[3...]; owner = Data()
-        let transcoder = try Transcoder(), phases = Mutex<[ProgressUpdate.Phase]>([])
+        let transcoder = try Transcoder(), phases = PackageMutex<[ProgressUpdate.Phase]>([])
         let encoded = try await transcoder.transcode(sliced, to: .jpegXL, options: .init(progress: { update in
             phases.withLock { $0.append(update.phase) }
         }))
@@ -198,11 +199,18 @@ struct NativeTranscoderPublicTests {
         defer { try? handle.close() }
         let process = Process(); process.executableURL = URL(fileURLWithPath: executable)
         process.arguments = arguments; process.standardOutput = handle; process.standardError = handle
+        #if os(Linux)
+        let processStatus = try runLinuxOracle(process)
+        #else
         try process.run()
         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
         while process.isRunning && ContinuousClock.now < deadline { Thread.sleep(forTimeInterval: 0.01) }
         if process.isRunning { process.terminate(); Issue.record("Reference tool timed out"); throw CancellationError() }
-        try #require(process.terminationStatus == 0, "Reference failed: \(log.path)")
+        // Release Foundation's process/run-loop ownership after bounded polling.
+        process.waitUntilExit()
+        let processStatus = process.terminationStatus
+        #endif
+        try #require(processStatus == 0, "Reference failed: \(log.path)")
     }
     #endif
 

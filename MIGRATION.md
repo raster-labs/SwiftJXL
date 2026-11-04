@@ -24,13 +24,15 @@ This mapping was checked against [JXLSwift at `760697a54dd253da8e8466c3fd09ecf2c
 
 | Application setting | Earlier dependency | Successor preparation |
 | --- | --- | --- |
-| Repository | `https://github.com/Raster-Lab/JXLSwift.git` | `https://github.com/Raster-Lab/SwiftJXL.git` |
+| Repository | `https://github.com/Raster-Lab/JXLSwift.git` | `https://github.com/raster-labs/SwiftJXL.git` |
 | Package product / module | `JXLSwift` | `SwiftJXL` |
 | Import | `import JXLSwift` | `import SwiftJXL` in the new adapter |
 | SwiftPM target dependency | `.product(name: "JXLSwift", package: "JXLSwift")` | `.product(name: "SwiftJXL", package: "SwiftJXL")` |
 | Compiler | Swift 6.2 manifest | Swift 6.2 minimum, Swift 6.4 qualification, Swift 6 language mode and complete concurrency checking |
 | Apple deployment targets | macOS 13, iOS/tvOS 16, watchOS 9, visionOS 1 | All listed Apple OS minima are 26.0 |
 | Executables | `jxl-tool`, `jxl` | `swiftjxl-cli` provides help/version/capabilities and bounded-profile inspect/validate/NRRD encode/decode |
+
+The executed migration uses predecessor `57e81cb9e2411d1efac435b429a306a031744c1e` (`v1.5.0-rc.1`); the older API mapping above remains its explicitly scoped inspection baseline. See the [release preparation record](Documentation/Engineering/Release/README.md) for clean URL/version resolution and remaining release gates.
 
 Use a local checkout during preparation: add `.package(path: "../SwiftJXL")` to your development manifest and the successor product to the adapter target. Adjust the path for your checkout. For reproducible remote evaluation, use the successor URL with `revision:` set to an actual reviewed full commit SHA; record it and the lockfile. Do not write `from: "2.1.0"` before that release exists. In Xcode, add the local package and link its `SwiftJXL` product to the evaluation target; update deployment settings deliberately.
 
@@ -60,7 +62,7 @@ The old `EncodingOptions()` defaults to `.lossy(quality: 90)` and `JXLConfigurat
 
 ## Compilable preparation example
 
-This standalone program constructs 12-bit samples in padded 16-bit storage and verifies a real scalar JPEG XL round trip.
+This standalone program constructs 12-bit samples in padded 16-bit storage, checks every decoded sample, verifies caller-storage identity and sealed ownership, and checks independent-frame animation timing. The release preparation check keeps this block identical to the compiled example.
 
 ```swift
 // SPDX-License-Identifier: Apache-2.0
@@ -76,29 +78,46 @@ struct ContractConsumer {
         let descriptor = try SwiftJXL.ImageDescriptor.greyscale16(
             width: 3, height: 2, meaningfulBits: 12, rowBytes: 8)
         let destination = try SwiftJXL.ImageDestination.allocate(descriptor: descriptor)
-        let image = try destination.write { bytes in
-            for y in 0..<2 {
-                for x in 0..<3 {
-                    let value = UInt16((y * 3 + x) * 819)
-                    bytes[y * 8 + x * 2] = UInt8(truncatingIfNeeded: value)
-                    bytes[y * 8 + x * 2 + 1] = UInt8(value >> 8)
-                }
-            }
-        }
-        let last = try image.storage.withUnsafeBytes { bytes in
-            UInt16(bytes[12]) | UInt16(bytes[13]) << 8
-        }
-        guard last == 4095, image.descriptor.meaningfulBits == 12 else {
-            throw ConsumerFailure.unexpectedResult
+        let image = try destination.writeUInt16 { x, y in
+            UInt16((y * 3 + x) * 819)
         }
         let encoder = try SwiftJXL.Encoder(configuration: .init())
         let encoded = try await encoder.encode(image)
         let decoder = try SwiftJXL.Decoder(configuration: .init())
         let decoded = try await decoder.decode(encoded.data)
-        guard try decoded.image.sampleUInt16(x: 2, y: 1) == 4095,
-              decoded.image.descriptor.meaningfulBits == 12 else {
+        try checkSamples(decoded.image)
+        // A different padded row stride exercises the public shared-storage path.
+        let outputDescriptor = try SwiftJXL.ImageDescriptor.greyscale16(
+            width: 3, height: 2, meaningfulBits: 12, rowBytes: 10)
+        let output = try SwiftJXL.ImageDestination.allocate(descriptor: outputDescriptor)
+        let identity = output.storage.allocationID
+        let shared = try await decoder.decode(encoded.data, into: output)
+        try checkSamples(shared.image)
+        guard shared.image.storage.allocationID == identity,
+              shared.report.fidelity == .exactSamples,
+              shared.report.copyEvents.isEmpty,
+              encoded.report.copyEvents.isEmpty else {
             throw ConsumerFailure.unexpectedResult
         }
+        // Optional allocation/peak counters are currently unknown. An absent
+        // measurement is not zero; allocation-site proof lives in the codec tests.
+        do {
+            _ = try output.writeUInt16 { _, _ in 0 }
+            throw ConsumerFailure.unexpectedResult
+        } catch let error as SwiftJXL.CodecError {
+            guard error.category == .storageUnavailable else { throw error }
+        }
+        let sequence = try await encoder.encodeAnimation([
+            try .init(image: image, durationTicks: 10),
+            try .init(image: image, durationTicks: 25)
+        ], animation: .init(ticksPerSecondNumerator: 100, loopCount: 3))
+        let frames = try await decoder.decodeAll(sequence.encoded.data)
+        guard frames.frames.count == 2, frames.timing?.totalTicks == 35,
+              frames.timing?.loopCount == 3,
+              frames.frames[0].decoded.image.storage.allocationID != frames.frames[1].decoded.image.storage.allocationID else {
+            throw ConsumerFailure.unexpectedResult
+        }
+        for frame in frames.frames { try checkSamples(frame.decoded.image) }
         let transcoder = try SwiftJXL.Transcoder(configuration: .init())
         do {
             _ = try await transcoder.transcode(Data(), to: .jpegXL, options: .init())
@@ -106,7 +125,21 @@ struct ContractConsumer {
         } catch let error as SwiftJXL.CodecError {
             guard error.category == .malformedInput else { throw error }
         }
-        print("Public consumer passed: owning UInt16 samples and lossless scalar JPEG XL.")
+        print("Public consumer passed: exact UInt16 samples, shared destination, sealed ownership and animation timing.")
+    }
+
+    static func checkSamples(_ image: SwiftJXL.Image) throws {
+        guard image.descriptor.width == 3, image.descriptor.height == 2,
+              image.descriptor.meaningfulBits == 12 else {
+            throw ConsumerFailure.unexpectedResult
+        }
+        for y in 0..<2 {
+            for x in 0..<3 {
+                guard try image.sampleUInt16(x: x, y: y) == UInt16((y * 3 + x) * 819) else {
+                    throw ConsumerFailure.unexpectedResult
+                }
+            }
+        }
     }
 }
 ```

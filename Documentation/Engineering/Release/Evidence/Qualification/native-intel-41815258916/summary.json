@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "reports": [
+    {
+      "path": "host-and-source.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "3ccebed60bd6a67fbc77b61937d9ea968981313b31f8cd92ee7b35c85289ef28"
+    },
+    {
+      "path": "core/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "055aa4c22f78c7aac4cd2d8cb318d81f63f123dd10b7805dc2f39eaea42734ba"
+    },
+    {
+      "path": "cli-foundation/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "bb7e579e8ca3b3b22d583cc2350711ef4300fdc4c2364ef68ee3daa3eafb27f2"
+    },
+    {
+      "path": "cli-payload/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "bbdf90f27471351b23d7f51af86e2e2222664cc66d6ac138afa147f40c8d9de1"
+    },
+    {
+      "path": "cli-vardct/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "5169c20cdad7df140a7d45536204d3298436304a46b1861ad33b21fbaea1c405"
+    },
+    {
+      "path": "cli-vardct-encode/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "1b63fff74d940a3593b2deeafd953804fb13b01147836b9cef8f1ee0cbdec4f9"
+    },
+    {
+      "path": "cli-nrrd/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "3b049f30f2252dc95dfc10968a76de5c66334c65cbc8acdf87cc9aee5494af95"
+    },
+    {
+      "path": "cli-pnm/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "7d597dc277d37338fc0cfb8b74c1d8d43971f65e239e55aa83edc49999a83ef0"
+    },
+    {
+      "path": "cli-low-precision/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "c38f91fbb5146e1ba6f553235f823bbe5441300788834558b4de2d846eb3c5df"
+    },
+    {
+      "path": "cli-native-jpeg/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "5ae762d4eab58fbf40f5eb1e1456ae5bbe8d4debb40f78cdeb999d9e3eeba3a1"
+    },
+    {
+      "path": "cli-completion/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "e1490714fef33805738cb42ab28429dde0d725d64fd35c13a5697d1e55658c80"
+    },
+    {
+      "path": "cli-jpeg-extended/report.json",
+      "exists": true,
+      "passed": true,
+      "sha256": "ccb237a238535bd1872b7cf1a1d2f861143b8f423ae7844ccdef1391e2b60a10"
+    },
+    {
+      "path": "oracle-outputs/public-matrix-*/oracle.json",
+      "passed": true,
+      "observedProfiles": 432,
+      "expectedProfiles": 432
+    },
+    {
+      "path": "arm-vectors/report.json",
+      "passed": true
+    }
+  ],
+  "exactMacOS260Claimed": false
+}

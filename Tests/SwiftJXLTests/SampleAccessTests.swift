@@ -3,13 +3,14 @@ import Foundation
 import Synchronization
 import Testing
 import SwiftJXL
+import SwiftJXLCore
 
 // Fault injection: construction sees the declared two-byte capacity, but a later
 // read exposes only one byte. Image access must reject before loading either byte.
 private final class ShortenedSampleBorrow: ReadOnlyImageStorage, Sendable {
     let allocationID = UUID()
     let byteCount = 2
-    private let calls = Mutex(0)
+    private let calls = PackageMutex(0)
     private let bytes: [UInt8] = [0x34, 0x12]
 
     func withUnsafeBytes<R>(_ body: (UnsafeRawBufferPointer) throws -> R) throws -> R {
@@ -32,7 +33,7 @@ private final class UninitialisedSampleStorage: WritableImageStorage, @unchecked
     let byteCount = 18
     private let allocation: UnsafeMutableRawPointer
     private enum Phase: Sendable { case available, writing(StorageWriteLease), sealed, invalid }
-    private let phase = Mutex(Phase.available)
+    private let phase = PackageMutex(Phase.available)
 
     init() {
         allocation = .allocate(byteCount: byteCount + 1, alignment: 2)

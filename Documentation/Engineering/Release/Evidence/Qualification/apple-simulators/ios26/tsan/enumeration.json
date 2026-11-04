@@ -1,0 +1,1101 @@
+{
+  "errors" : [
+
+  ],
+  "values" : [
+    {
+      "disabledTests" : [
+
+      ],
+      "enabledTests" : [
+        {
+          "identifier" : "SwiftJXLCoreTests/AnimationEncoderTests/limitsSingletonAndCancellation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/AnimationEncoderTests/owningSequenceRoundTrip(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/AnimationFrameIndexTests/independentAnimationIndex(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/AnimationFrameIndexTests/malformedAndUnsupportedHeaders()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/AnimationFrameIndexTests/truncationAndLimits(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/AnimationPublicTests/aggregateLimitsAndCancellation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/AnimationPublicTests/publicFramesMatchAllFrameScalarOracle(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliDecoderTests/allDictionaryTransformsMatchIndependentReference()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliDecoderTests/compressedFeatureCoverage()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliDecoderTests/independentCompressedStreams(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliDecoderTests/independentJPEGReconstructionPayloads(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliDecoderTests/malformedContextAndBlockTablesStayBounded()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliDecoderTests/rejectsTruncationTrailingAndWrongExpansion()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliDecoderTests/resourceLimitsAndCancellation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliDecoderTests/storedAndMetadataBlocks()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliFramingTests/cancellationAndBoundedWork()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliFramingTests/completeVariableLengthCountRange()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliFramingTests/encoderMatchesIndependentBoundaryStreams()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliFramingTests/independentlyAcceptedFramingAndMetadata()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliFramingTests/inputOutputMemoryAndDeadlineAdmission()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/BrotliFramingTests/malformedHeadersAndTruncation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/CompactANSTests/chunkedCostMatchesEmittedRefillBits(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/CompactANSTests/compactOutputMatchesBufferedWriterAndDecoder(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/CompactANSTests/compactWriterEnforcesCancelledAndLatchedOutputLimits()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/CompactANSTests/compactWriterRejectsMismatchedReplayCount()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/CompactANSTests/reciprocalDivisionMatchesHardwareForEveryANSFrequency()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/HybridUintEncodingTests/unfoldedTokensPreserveBitClassesAndRoundTrip(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ICCStreamTests/malformedCommandsAndOutputBoundsDoNotTrap()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ICCStreamTests/nativeProfileRoundTripAndTruncation(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ICCStreamTests/standardCommandFamiliesAndPredictors()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/IntegerBoundaryTests/iccPredictionRetainsUnsigned32BitProfileWords()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/IntegerBoundaryTests/iccRejectsOversizedOutputBeforeAdmission()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/IntegerBoundaryTests/iccTagWordsRetainHighBitsAndRejectDerivedOverflow()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/IntegerBoundaryTests/lz77RejectsOverflowingLength()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/IntegerBoundaryTests/lz77RejectsUnrepresentableAndWrappedZeroDistances()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/IntegerBoundaryTests/oversizedContextMapTokenPreservesErrorValue()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/IntegerBoundaryTests/oversizedOrderEndsRejectBeforeNarrowingOrAddition()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JBRDTests/externalMetadataMustFitExactly()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JBRDTests/headerTruncationsAndMutationsDoNotTrap()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JBRDTests/independentBundlesMatchOriginalJPEGFields(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JBRDTests/invalidWriterShapesAndEventLimitsThrow()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JBRDTests/limitsAndCancellationBeforePublication()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JBRDTests/metadataIdentityLengthAndSurplusAreRejected()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JBRDTests/slicedInputAndConcurrentReads()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeCoefficientTests/admissionMalformedOwnersAndUnsupportedTransforms()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeCoefficientTests/bridgePreservesPaddingForByteExactReconstruction(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeCoefficientTests/cancellationBeforePublicationAndDuringBlockWork()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeCoefficientTests/concurrentOwnersAndTaskCancellation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeCoefficientTests/invalidBlockRequestsAndDCOverflowCannotTrapOrWriteScratch()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeCoefficientTests/noColourTransformUsesExactDCOffsetAndZeroGreyChroma(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeCoefficientTests/retainedBuffersShareStorageAndSurviveSourceMutationAndRelease()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeCoefficientTests/visibleBridgeBlocksMatchIndependentCoefficients(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeFrameTests/frameWriterAdmissionOutputBoundAndCancellation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeFrameTests/groupedACCompressionPreservesCoefficientsAndFlatFallback()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeFrameTests/largerDCGroupProfileIsExplicitlyUnsupported()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeFrameTests/largerEntropyContextCountRequiresBoundedOptIn()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeFrameTests/readerBoundsMutationsAndOwnsConcurrentResults()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGBridgeFrameTests/readerRejectsTruncationTrailingBytesAndEnforcesBudgets()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/allVisibleCoefficientsMatchIndependentLibjpeg(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/cancellationDuringCoefficientWorkThrowsBeforePublication()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/cancelledOperationHasNoResult()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/everyProgressivePrefixFailsWithoutPublishingCoefficients()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/invalidHuffmanTreesAndBitRequestsThrow()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/mutatedInputRemainsBoundedAndCannotTrap()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/nonCanonicalPaddingIsRetained()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/resourceAdmissionAndPaddingLimits()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/slicedLifetimeAndConcurrentOperations()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/stuffedEntropyReaderChecksWorkAtOddOffsets()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGCoefficientTests/wrongRestartSequenceRejects()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGExtendedPixelTests/ancillaryDiscardSummaryPreservesRequiredInterpretation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGExtendedPixelTests/callerAllocationAndProfileAreAdmittedBeforeJPEGParsing()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGExtendedPixelTests/eightBitDCTScratchRemainsByteSized()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGExtendedPixelTests/embeddedColourAndExplicitOrientation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGExtendedPixelTests/extendedSyntheticSamplesAndCallerStorage()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGExtendedPixelTests/malformedExtendedHeadersAndPrecisionReject()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGExtendedPixelTests/malformedMetadataRestartsAndCancelledPublication()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGExtendedPixelTests/parserWorkspacePrecedesICCFragmentCollection()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGFrameLayoutTests/malformedAndUnsupportedFramesRejectBeforeAllocation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGFrameLayoutTests/nonInterleavedIndicesSkipRightAndBottomPadding()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGFrameLayoutTests/pinnedIndependentFixtures(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGPixelPublicTests/boundedMalformedCorpusAndConcurrentOwners()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGPixelPublicTests/layoutsPreserveSamplesOwnerAndPadding(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGPixelPublicTests/metadataLimitsAndCancellationRejectWithoutPublishing()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionEventTests/cumulativeEventLimitAdmitsExactBoundaryAndRejectsBeforePublication()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionEventTests/existingCorpusScansMatchIndependentJBRD(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionEventTests/explicitEntropyVectorsAndIndependentReconstructionAgree(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionEventTests/unrepresentableRefinementZeroRunIsExplicitlyRejected()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/metadataIsSelfContainedAndRetainsSourceRecords(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/nativeWriterAcceptsIndependentMetadata(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/nativeWriterCoefficientMutationsEitherRejectOrRoundtripExactly()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/nativeWriterConcurrentOwnersAndTaskCancellation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/nativeWriterCrossesMaximumProgressiveEOBRun()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/nativeWriterLimitsAndCancellationAtEveryPhase()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/nativeWriterRejectsInconsistentOwnersAndMetadata()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/nativeWriterRestoresOriginalWithoutSourceParameter(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/resourceLimitsAndMidOperationCancellation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/slicedSourceAndConcurrentMetadataOwners()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/supersededFirstQuantisationTableIsUnsupported()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGReconstructionMetadataTests/unrepresentableRestartMetadataIsRejected()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGSegmentReaderTests/everyPrefixBeforeEOIIsRejected()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGSegmentReaderTests/inputCountAndTimeLimitsAreEnforced()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGSegmentReaderTests/longEntropyAndFillRunsHaveBoundedCheckpoints(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGSegmentReaderTests/malformedFramingThrows(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGSegmentReaderTests/multipleScansRetainEachBoundary()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGSegmentReaderTests/oddOffsetStuffingCannotSkipCheckpoints()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGSegmentReaderTests/preservesFillScanAndTailWithoutReparsingTail()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGSegmentReaderTests/slicedInputHasRelativeRangesAndRetainedLifetime()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/JPEGSegmentReaderTests/taskCancellationIsHonoured()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularConstantPerformanceTests/constantCandidateRequiresEverySampleAndChannel(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularConstantPerformanceTests/constantPlanesKeepPrecisionAcrossGroups(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularConstantPerformanceTests/flat2048DoesNotExceedPinnedPredecessorSize()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularDecodeParallelTests/boundedBatchesPreserveOrderedResultsAndAudit(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularDecodeParallelTests/cancellationAfterGroupJoinInvalidatesCallerDestination()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularDecodeParallelTests/concurrentCallsHaveIndependentOwnedResults()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularDecodeParallelTests/orderedErrorsJoinAndAdmissionPrecedesCallbacks()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularDecodeParallelTests/predecessorMissingEmptyGlobalANSStateRejects()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularDecodeParallelTests/readerKeepsItsEarlierDeadlineWithSharedBudget()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularDecodeParallelTests/serialDefaultAndEightWorkersAgreeWithCallerOwnership(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularDecodeParallelTests/workerCancellationReachesBitReaderAndJoins()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortBudgetTests/activitySortPreservesTiesAndStopsDuringBoundedWork()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortBudgetTests/boundedSortMatchesStableReference(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortBudgetTests/checkedComponentBoundsRejectOverflow()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortBudgetTests/cumulativeAdmissionHonoursExactAndAggregateLimits(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortBudgetTests/greedyLeafRangesRetainEveryOriginalSample(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortBudgetTests/policyFailuresEscapeThroughoutLearning(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortBudgetTests/sharedActivityLearningPreservesUnevenPropertyBoundaries()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortBudgetTests/sharedActivityPercentilesHandleSmallAndTiedInputs(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortLimitTests/cancellationDuringCandidateCannotReturnSuccessOrSkip(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortLimitTests/expiredCandidateDoesNotStart()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortLimitTests/groupedCandidateAdmissionFailureMustNotFallBackToBaseline(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortLimitTests/propertyAdmissionHonoursExactBoundaryAndAccumulates(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortLimitTests/propertyDimensionsAndPlaneLengthsRejectWithoutAllocation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortLimitTests/unusableCandidateRemainsOptionalButPolicyErrorsEscape()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortLimitTests/writerFailureDuringCandidateCannotReturnSuccessOrSkip(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortTests/activityOnlyPassPreservesPredictorValues(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortTests/effortStreamsMatchIndependentFixtures(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEffortTests/propertyPassRejectsCancelledOrExpiredWork(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEncoderTests/associatedAlphaAndRenderingIntent(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEncoderTests/groupedBorrowedSource(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularEncoderTests/precisionExtremaAndInvalidHighBits(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularFrameDecoderTests/aShortGroupCannotReadBytesFromTheFollowingGroup()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularFrameDecoderTests/cancelledDecodeRejectsBeforeAllocatingWorkspace()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularFrameDecoderTests/independentLibjxlSamples(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularFrameDecoderTests/malformedSectionAndInsufficientWorkspaceReject()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularGradientTests/ansSingleLeafGradientPreservesSignedWrappingOnTransformedPlanes()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularGradientTests/ansSingleLeafGradientUnitTransformShortcutMatchesReference(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularGradientTests/directStoragePreservesRowsCropsEndiannessAndGuards(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularGradientTests/precisionAndTruncationRejectOnBothPaths(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularGradientTests/specialisedAndBranchingTreesAgreeAtSignedExtremes(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularGradientTests/zeroBitTokensStillObserveCancellationWithin256Writes(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularICCTests/independentSamplesAndProfileArePreserved(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularICCTests/malformedProfileAndTruncatedStreamReject()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularICCTests/profileLimitsAndDestinationMeaningReject()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularLearningSampleTests/exactCountAndUniformCoverage(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularLearningSampleTests/maximumIntegerPopulationDoesNotOverflow()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularLearningSampleTests/nonPositivePopulationRejects(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularLowPrecisionTests/directionSpecificCapabilities()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularLowPrecisionTests/independentSmallPrecisionSamples(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularNameTests/malformedExtraChannelNameCannotBecomeUnnamedAlpha()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularNameTests/malformedFrameNameCannotBecomeUnnamedFrame()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularParallelTests/boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularParallelTests/cancellationInsideWorkerIsObservedAndAllWorkersJoin()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularParallelTests/concurrentEncodesShareTheImmutableSource()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularParallelTests/errorsAreOrderedAfterJoiningAndAdmissionPrecedesCallbacks()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularParallelTests/oneAndEightWorkersProduceIdenticalStreamsAndAllocationEvents(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularParallelTests/publicCancellationAfterWorkersJoinPreventsPublication()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularPredictorSafetyTests/publicTransformedPlaneRejectsOutOfPrecisionSamplesWithoutTrapping(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularPredictorSafetyTests/selectPredictorAcceptsEverySignedDifferenceMagnitude()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularProfileLifetimeTests/sharedSourceSurvivesCallerReleaseAndOneCancelledEncode(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularProfileTests/concurrentBudgetsAndCancellationAreOperationLocal(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularProfileTests/eightWorkerEffortNineCannotHideLowerBudgetRefusal(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularProfileTests/precisionAlphaAndGroupEdges(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularPublicMatrixTests/everyDeclaredIntegerInterpretationAndLayout(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularStorageTests/alphaMismatchRejectsBeforeWritingAndMalformedPixelsInvalidate()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularStorageTests/eightBitAdmissionUsesActualCallerCapacity()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularStorageTests/independentAssociatedAlphaInput(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularStorageTests/mismatchedPrecisionOrCapacityRejectsBeforeTouchingBytes()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularStorageTests/paddedCallerStorage(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularStorageTests/publicOwningColourDestination(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransferTests/independentBT709PreservesSamplesAndRequiredMeaning(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransferTests/invalidTransferAndMetadataLimitsReject()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransformTests/channelExpansionAndUnsupportedPalettesAreBounded()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransformTests/geometryRejectsOverflowAndMetaMixWithoutPixelAllocation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransformTests/implicitSqueezeRetainsOriginalPlanAndRestoresGeometry()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransformTests/malformedResidualsAndMissingPlanesRejectBeforeAllocation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransformTests/metaPaletteAndSqueezeRestoreMetaChannelCountAndShifts()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransformTests/paletteUsesActualPrecisionAndRestoresFirstNormalChannel()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransformTests/rctChainPreservesOtherOwnersAndRejectsCancelledWork()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransformTests/resourceAndDeadlineLimitsApplyBeforePlanesAreAllocated()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularTransformTests/squeezeMatchesPinnedPredecessorWithOddTailsAndExtremes(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularUnsupportedPaletteTests/publicPaletteErrorsDistinguishUnsupportedFromMalformed(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularWireTests/rctCannotMixMetaAndNormalChannelsWithEqualDimensions()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularWireTests/squeezeReadsIndependentWireVectorsAndWritesCanonicalBytes()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ModularWireTests/transformMetadataRejectsAllocationBeyondBudget()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/NativeTranscoderPublicTests/iccFragmentValidationAndLimits()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/NativeTranscoderPublicTests/publicRepeatedRoundTripPreservesEveryByte(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/NativeTranscoderPublicTests/rejectsMissingDuplicateTruncatedAndUnsupportedReconstruction()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/NativeTranscoderPublicTests/slicedOwnersConcurrentCallsAndCancellation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/NativeTranscoderPublicTests/wholeOperationLimitsAndMetadataPolicyAreEnforced()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/PixelContainerTests/explicitContainerPreservesCodestreamAndReportsCompressedCopy(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/PixelContainerTests/wrapsAnimationOnlyOnceAndPreservesExactTiming()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/PixelFrameHeaderTests/aspectDerivedSizeBeyondSigned32BitsRejectsBeforeMetadata()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/PixelFrameHeaderTests/cancellationBetweenHeaderAndProfileRejects(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/PixelFrameHeaderTests/dispatchAndConveniencePreserveAdmission(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/PixelFrameHeaderTests/selectedProfileStillEnforcesICCLimits(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/PixelFrameHeaderTests/sharedPreparationRejectsBoundsAndTruncation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarLimitTests/admissionLimitsRespectExactBoundaries()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarLimitTests/expiredDeadlineRejectsBeforeParsing()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarLimitTests/invalidLimitsRejectAndLargeLimitsCannotExpandProfile()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarLimitTests/largeAlphabetIsRejectedBeforeItsTableIsParsed()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarLimitTests/nestingCeilingRejectsBeforeEnteringExtraLevel()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarLimitTests/preparedFrameRetainsOperationDeadline()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarLimitTests/tableReservationsAccumulateAndCheckOverflow()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMalformedTests/cancelledDecodeThrowsCancellationError()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMalformedTests/containerRejectsOverflowAndAmbiguousCodestreams()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMalformedTests/deterministicSingleBitMutationsDoNotTrap()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMalformedTests/encoderRejectsSamplesOutsideDeclaredPrecision()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMalformedTests/everyTruncatedPrefixAndTrailingBytesAreRejected()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMalformedTests/storageSlicesAndExtremeReaderOffsets()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMemoryTests/aggregateAdmissionIsCheckedAndOverflowCannotWrap()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMemoryTests/boundedWriterStopsGrowthAndThrowsBeforePublication()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMemoryTests/entropyCheckpointsBoundCancellation(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMemoryTests/entropyCheckpointsBoundLatchedFailure(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarMemoryTests/publicSharedStorageUsesOnlyTheRequiredFinalAllocation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarModularTests/exactPrecisionAndSamples(bits:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarModularTests/invalidDimensionsThrow()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarStorageTests/cancellationInvalidatesCallerDestination()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarStorageTests/concurrentEncodersShareOneImmutableSource()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarStorageTests/rejectsShortDestinationBeforeWriting()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/ScalarStorageTests/writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/SpecRCTTests/cancellationIsBoundedAndDeadlineCallbackIsHonoured()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/SpecRCTTests/matchesPinnedPredecessorIncludingWrappingExtremes(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/SpecRCTTests/reusesUniqueWorkingPlanesAndRejectsBeforeWriting()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/U32DistributionBoundaryTests/animationDurationExpectedBytes(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/U32DistributionBoundaryTests/narrowerRangesAndOffsets()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTARMIntegerTests/compatibilityCallerDestination(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTARMIntegerTests/defaultProfileRemainsScalarAndSelectionIsEffective()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTARMIntegerTests/reciprocalMatchesRetainedIndependentHardware()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTARMIntegerTests/retainedHistoricalIntegerOracle(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTColourTests/defaultMatrixRoundTripAndPrimaryAnchors()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTColourTests/highPrecisionDefinitionAnchors()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTColourTests/invalidSamplesRejectWithoutImplicitClamping()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTConformanceTests/ICCLimitsAndInterpretationRemainExplicit()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTConformanceTests/prescribedLinearGreyReference(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEPFTests/constantTinyAndOddPlanes(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEPFTests/disabledSharpnessAndAdmission()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderPreparationTests/adaptiveQuantisationAnchors()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderPreparationTests/borrowedQuantisationMatchesArrayReferenceAndRejectsInvalidSamples()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderPreparationTests/eightBitConversionMatchesUncachedArithmeticExactly()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderPreparationTests/invalidPrefilterAndAdmission()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderPreparationTests/lookupStillRejectsOutOfRangePaddedSixteenBitStorage()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderPreparationTests/pinnedIndependentPrefilter()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderPreparationTests/scopedPrefilterMatchesOriginalScalarBitsAtMirroredEdges()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderTests/cancellationRejectsBeforeSourceRead()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderTests/independentReferenceStreams(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderTests/invalidPoliciesAndCumulativeAdmission()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderTests/largeStrategyReferenceStreams(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderTests/paddedPlanarSourceIsBorrowed(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderTests/preparedReferenceStreams(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTEncoderTests/smallStrategyReferenceStreams(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTFilterTests/customWeightsAndResourceBounds()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTFilterTests/visibleBoundaryIgnoresPadding(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTFrameTests/alphaIsExact(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTFrameTests/customFilterParametersCannotBecomeDefaults()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTFrameTests/independentAndPredecessorEnvelope(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTFrameTests/pinnedScalarNumerics(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTFrameTests/truncatedLimitsAndTrailingInput()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTGroupedDecoderTests/groupedWorkspaceRejectsBeforePublication()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTGroupedDecoderTests/inconsistentDCPrecisionRejects()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTGroupedDecoderTests/independentGroupedPixels(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTGroupedDecoderTests/truncatedGroupedStreamsReject(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTGroupedEncoderTests/groupedPlanarBorrowPreservesPadding()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTGroupedEncoderTests/groupedWorkspaceRejects()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTGroupedEncoderTests/independentGroupedWriter(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTGroupedEncoderTests/rejectsUnqualifiedGeometry(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests/everyLargeWriterStrategyMatchesIndependentScalar(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests/expiredAndCancelledSearchRejectBeforeWorkspaceAdmission()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests/groupBoundariesAndPartialCells(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests/invalidAndExhaustedSearch()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests/nestedLeavesInheritRegionQuantisation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests/normalisedStrategyShapesShareDecoderNaturalScans()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests/packedSelectedCoefficientsMatchSeparateChannelAnalysis()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests/uniformRegionsSelectLargeTransforms(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTLargeAnalysisTests/independentLargeTransformsAndDC()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTLargeAnalysisTests/unsupportedAndExhausted()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTParallelTests/cancellationAfterBandJoinPreventsPublication()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTParallelTests/manyTilesReuseBoundedWorkerScratchAndPreserveEveryCoefficient(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTParallelTests/oneAndEightWorkersKeepExactStreamAcrossTilesAndPartialEdges(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTParallelTests/workerFailureJoinsEveryBandAndAdmissionPrecedesDispatch()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPixelStorageTests/cancellationRejectsBeforeWriting()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPixelStorageTests/paddedOwningDestination(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPixelStorageTests/rejectsInvalidDestinationBeforeWriting()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicEncoderTests/allIntegerPrecisionsPreserveMeaningAndAlpha(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicEncoderTests/defaultsAreExplicitAndInvalidOptionsReject()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicEncoderTests/distanceMetadataLimitsAndCancellation()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicEncoderTests/publicEncodingMatchesIndependentlyAcceptedStreams(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicEncoderTests/publicGroupedEncodingMatchesIndependentStreams(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicGroupedTests/publicGroupedStorageAndReference(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicTests/callerStorageRetainsIdentityRolesStridesAndByteOrder(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicTests/cancellationBeforeSealingInvalidatesDestination()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicTests/publicAllocatingDecodePreservesReferenceAndReportsLossy(_:_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTPublicTests/resourceAndInterpretationRejectionsStayDefined()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTSmallAnalysisTests/invalidAndCumulativeAdmission()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTSmallAnalysisTests/pinnedIndependentForwardBasis(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTSmallTransformTests/independentImpulseBasisAndPattern(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTSmallTransformTests/invalidAndResourceBoundaries()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTStrategyTests/allStrategyGeometries(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTStrategyTests/mixedRasterCoverage()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTStrategyTests/overlapsBoundariesAndCountsReject()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTTransformTests/cancelledOperationRejectsBeforeAdmission()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTTransformTests/independentDefinitionAndRoundTrip(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTTransformTests/matchesPredecessorAccelerateAndScalar(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTTransformTests/rejectionAndExactAdmission()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTTransformTests/sharedPlanAccountsForConcurrentScratch()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTTransformTests/workspaceApplyEnforces4096MultiplyAddCheckpointBound()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTWorkspaceTests/cachedLargeDCFactorsRetainOriginalArithmetic(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTWorkspaceTests/cancellationDoesNotOverwriteAdmittedScratch()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTWorkspaceTests/largeScratchReusesAdmissionAcrossShapes()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTWorkspaceTests/scopedDCTBorrowPreservesScalarArithmetic(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTWorkspaceTests/scopedDCTRejectsCancellationBeforeScratchWrite(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTWorkspaceTests/scratchCannotCrossBudgetsOrAdmitInsufficientCapacity()"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTWorkspaceTests/sharedAxesPreserveEveryShapeAndAdmission(_:)"
+        },
+        {
+          "identifier" : "SwiftJXLCoreTests/VarDCTWorkspaceTests/smallScratchReusesAdmissionAndOverwritesEveryStrategy()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/APITests/admissionBoundariesAndMetadataAreChecked()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/APITests/cancellationRetainsItsStandardErrorAndInvalidatesPartialWrite()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/APITests/capabilitiesAdvertiseQualifiedProfiles()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/APITests/malformedInputRejectsWithoutTouchingDestination()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/APITests/metadataSharesTheCallerAdmissionBudgetWithPixels()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/APITests/rejectsInputLimitRequiredBackendAndDestructiveMetadataPolicy()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/APITests/reportUnknownMeasurementsRemainUnknown()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/APITests/safeWriterRejectsOutOfRangeSamplesAndInvalidatesDestination()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/APITests/validatesConfigurationAndFiniteResourceLimits()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/DescriptorTests/deterministicLayoutMutation()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/DescriptorTests/finalRowNeedsOnlyItsActualSampleBytes()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/DescriptorTests/paddedOddDimensionsAndPrecision()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/DescriptorTests/rejectsArithmeticOverflowBeforeAllocation()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/DescriptorTests/rejectsInvalidGeometryAndPrecision()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/DescriptorTests/rejectsMisalignedOffsetsAndStrides()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/DescriptorTests/rejectsOverlappingPlanesAndIncompleteMapping()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/DescriptorTests/semanticMetadataMustAgreeWithComponents()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/SampleAccessTests/initialisesExternalSampleBytesAtOddAddressWithoutChangingPadding()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/SampleAccessTests/outOfPrecisionWriteInvalidatesDestination()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/SampleAccessTests/readsIndependentGoldenBytesFromOddPhysicalAddress()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/SampleAccessTests/refusesShortProviderBeforeLoadingSample()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/SampleAccessTests/rejectsCoordinatesBeforeOffsetArithmetic()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/SampleAccessTests/stridedRowsKeepAllPaddingAndCallbackOrder(width:bigEndian:)"
+        },
+        {
+          "identifier" : "SwiftJXLTests/SampleAccessTests/throwingSampleStopsInsideLaterRowAndInvalidatesDestination()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/SampleAccessTests/writesGoldenBytesForPackedAndPadded12And16BitSamples()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/ScalarPublicAPITests/metadataMustBePreservedOrExplicitlyDiscarded()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/ScalarPublicAPITests/paddedBigEndianDestinationAndExactEncoderBytes()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/ScalarPublicAPITests/progressIsSerialOutsideStorageBorrowAndCancellationIsPreserved()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/ScalarPublicAPITests/resourceLimitsRejectBeforeDestinationWrite()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/StorageTests/abortMakesStorageUnreadableAndUnwritable()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/StorageTests/concurrentReadersPreserveEveryLogicalSample()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/StorageTests/copiedLeaseCannotOverlapWriters()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/StorageTests/freshAllocationsHaveDistinctIdentitiesAndZeroPadding()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/StorageTests/imageRetainsAdapterAndAllocationUntilLastReader()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/StorageTests/leaseCannotBeForgedReusedOrBorrowedReentrantly()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/StorageTests/rejectsOwnerCapacityShorterThanDescriptor()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/StorageTests/throwingBorrowReleasesAdmissionWithoutReplacingStorage()"
+        },
+        {
+          "identifier" : "SwiftJXLTests/cancellationInProviderFinalisationPreventsPublication(_:)"
+        }
+      ],
+      "testPlan" : "SwiftJXL-Package"
+    }
+  ]
+}

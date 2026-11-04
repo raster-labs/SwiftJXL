@@ -1,0 +1,8 @@
+{
+  "architecture": "aarch64",
+  "count": 45826,
+  "sourceSHA256": "d4d99728cdcdd90217815cc10f8109cc76c2850b87f9b817861bea2ffa1490f6",
+  "binarySHA256": "7d57193c1e62199f086c92fbcce9b970718f6fc0dbc707f87970ebbb9d767530",
+  "vectorsSHA256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+  "compiler": "clang version 21.0.0 (https://github.com/swiftlang/llvm-project.git fb5f84d903a3b4e7aea15cd5666598a46f56c833)\nTarget: aarch64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /usr/bin\n"
+}

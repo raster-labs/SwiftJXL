@@ -1,0 +1,2 @@
+djxl v0.12.0 a7a9c78 [_AVX2_,SSE4,SSE2] {AppleClang 21.0.0.21000101}
+Copyright (c) the JPEG XL Project

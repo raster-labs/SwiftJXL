@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "status": "failed",
+  "startedUTC": "2026-11-04T10:44:54Z",
+  "command": [
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-tools/bin/python",
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/derive-release-sbom.py",
+    "--build-report",
+    ".build/m5-canonical-origin-sbom/report.json",
+    "--schemas",
+    ".build/release-schemas",
+    "--repository-identity",
+    ".build/purl-repository-alias-evidence.json",
+    "--output",
+    ".build/m5-canonical-origin-sbom-derived"
+  ],
+  "runnerSHA256": "247d247ba6b2049b9d7a9a6b3b65088d6db51ab6f8f405aab5b42f8ee0519ed4",
+  "scope": "Explicitly derived, validated SwiftPM package-graph SBOMs; original generator output remains defective",
+  "limitations": [
+    "No complete SDK, runtime or embedded third-party inventory is inferred",
+    "Only recognised malformed or product-only purls are omitted; a verified emitted root purl is preserved without guessing a remote identity"
+  ],
+  "environment": {
+    "python": "3.15.2",
+    "validators": {
+      "jsonschema": "4.25.1",
+      "pyshacl": "0.30.1",
+      "rdflib": "7.1.4",
+      "owlrl": "7.1.4"
+    },
+    "packages": {
+      "html5rdf": "1.2.1",
+      "packaging": "26.3",
+      "jsonschema-specifications": "2025.9.1",
+      "pyshacl": "0.30.1",
+      "wcwidth": "0.9.4",
+      "owlrl": "7.1.4",
+      "numpy": "2.4.0",
+      "jsonschema": "4.25.1",
+      "pip": "26.2.2",
+      "rdflib": "7.1.4",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.9.1",
+      "attrs": "26.1.0",
+      "typing_extensions": "4.16.0",
+      "prettytable": "3.18.0",
+      "pynrrd": "1.1.3",
+      "pyparsing": "3.3.3"
+    }
+  },
+  "artifacts": [
+    {
+      "specification": "spdx",
+      "rawSHA256": "70251db2ea6d1db943b7fac66d8c13d17f92f0dd9c7f9ac3504a6d81cf254637",
+      "derivedPath": "derived/SwiftJXL-spdx-derived.json",
+      "derivedSHA256": "167fb44cca4d4b3d1d3776199f71ec1e0b153e8a276c7cb8cf75f0d9ba8b09e4",
+      "edits": [
+        {
+          "operation": "replace",
+          "pointer": "/@graph/2/specVersion",
+          "before": "6.4.2",
+          "after": "3.0.1",
+          "reason": "SPDX model version, not compiler version"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/2/comment",
+          "before": null,
+          "after": "Original generator value was 6.4.2 (compiler version). Derived by Scripts/derive-release-sbom.py SHA-256 247d247ba6b2049b9d7a9a6b3b65088d6db51ab6f8f405aab5b42f8ee0519ed4 from original SHA-256 70251db2ea6d1db943b7fac66d8c13d17f92f0dd9c7f9ac3504a6d81cf254637; see report.json.",
+          "reason": "Identify the explicit correction without attributing it to SwiftPM"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/@graph/8/externalUrl",
+          "before": "pkg:swift/github.com/raster-labs/swiftjxl@00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+          "reason": "Unknown SPDX property; preserve the verified emitted repository identifier using the standard property"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/8/software_packageUrl",
+          "before": null,
+          "after": "pkg:swift/github.com/raster-labs/swiftjxl@00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+          "reason": "Preserve the exact emitted root purl; origin, commit pedigree and GitHub repository alias were verified"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/@graph/8/software_internalVersion",
+          "before": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+          "reason": "Unknown SPDX property"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/8/software_packageVersion",
+          "before": null,
+          "after": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+          "reason": "Preserve the exact recorded source revision using its standard property"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/@graph/8/creationInfo",
+          "before": "_:creationInfo",
+          "after": "urn:uuid:dbe91eef-15e4-5995-8795-5cd051501355",
+          "reason": "These corrected elements were produced by the derivation tool"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/@graph/9/externalUrl",
+          "before": "pkg:swift/github.com/raster-labs/swiftjxl:SwiftJXL@00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+          "reason": "Unknown SPDX property. Product-colon suffix names a build product, not the verified source repository; optional product purl omitted without inventing a replacement"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/@graph/9/software_internalVersion",
+          "before": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+          "reason": "Unknown SPDX property"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/9/software_packageVersion",
+          "before": null,
+          "after": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+          "reason": "Preserve the exact recorded source revision using its standard property"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/@graph/9/creationInfo",
+          "before": "_:creationInfo",
+          "after": "urn:uuid:dbe91eef-15e4-5995-8795-5cd051501355",
+          "reason": "These corrected elements were produced by the derivation tool"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/@graph/7/spdxId",
+          "before": "urn:uuid:f9d8e417-a0bf-470a-871b-6e15a6eef333",
+          "after": "urn:uuid:2f8e8287-9ec2-4835-b61d-6a55acbe1069",
+          "reason": "New derived document identity"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/@graph/7/creationInfo",
+          "before": "_:creationInfo",
+          "after": "urn:uuid:dbe91eef-15e4-5995-8795-5cd051501355",
+          "reason": "Record actual derivation time and agent"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/7/comment",
+          "before": null,
+          "after": "Derived by Scripts/derive-release-sbom.py SHA-256 247d247ba6b2049b9d7a9a6b3b65088d6db51ab6f8f405aab5b42f8ee0519ed4 from original SHA-256 70251db2ea6d1db943b7fac66d8c13d17f92f0dd9c7f9ac3504a6d81cf254637; see report.json. Original document: urn:uuid:f9d8e417-a0bf-470a-871b-6e15a6eef333",
+          "reason": "The derived document is not unchanged SwiftPM output"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/13",
+          "after": {
+            "@id": "urn:uuid:dbe91eef-15e4-5995-8795-5cd051501355",
+            "type": "CreationInfo",
+            "created": "2026-11-04T10:44:54Z",
+            "createdBy": [
+              "urn:uuid:fe465536-68ea-5a30-8082-bc8f0c0d81c9"
+            ],
+            "specVersion": "3.0.1"
+          },
+          "reason": "Actual derivation provenance, not an inferred package fact"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/14",
+          "after": {
+            "spdxId": "urn:uuid:fe465536-68ea-5a30-8082-bc8f0c0d81c9",
+            "type": "SoftwareAgent",
+            "name": "SwiftJXL SBOM derivation",
+            "creationInfo": "urn:uuid:dbe91eef-15e4-5995-8795-5cd051501355",
+            "comment": "Scripts/derive-release-sbom.py SHA-256 247d247ba6b2049b9d7a9a6b3b65088d6db51ab6f8f405aab5b42f8ee0519ed4"
+          },
+          "reason": "Actual derivation provenance, not an inferred package fact"
+        }
+      ],
+      "schemaErrors": []
+    }
+  ],
+  "rawValidationCommand": {
+    "argv": [
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-tools/bin/python",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/validate-release-sbom.py",
+      "--build-report",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-canonical-origin-sbom/report.json",
+      "--schemas",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-schemas",
+      "--output",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-canonical-origin-sbom-derived/raw-validation"
+    ],
+    "exitCode": 1
+  },
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "buildReportSHA256": "91aa0be1ef8d94b1065db56975257c6d74232c06ad38ab0b2afe2713df594148",
+  "repositoryIdentity": {
+    "origin": "https://github.com/raster-labs/SwiftJXL.git",
+    "head": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+    "upstream": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+    "evidenceSHA256": "f32fc69a5f05e9674516b6f50caffc414409e099658a5dc31005d470f6b233ee",
+    "emittedRootPURL": "pkg:swift/github.com/raster-labs/swiftjxl@00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+    "note": "Observed repository alias only; Swift purl namespace/name case sensitivity is not relaxed."
+  },
+  "semanticSources": [
+    {
+      "file": "spdx-model.ttl",
+      "url": "https://spdx.org/rdf/3.0.1/spdx-model.ttl",
+      "sha256": "30ebb4af2d70a9809044ef46f44cc3dc5125226d70f818a50ed2e1d5f404c593",
+      "retrievedUTC": "2026-11-04T07:12:55.983571+00:00"
+    },
+    {
+      "file": "spdx-context.jsonld",
+      "url": "https://spdx.org/rdf/3.0.1/spdx-context.jsonld",
+      "sha256": "c72b0928f094c83e5c127784edb1ebca2af74a104fcacc007c332b23cbc788bd",
+      "retrievedUTC": "2026-11-04T07:12:57.206151+00:00"
+    }
+  ],
+  "failure": "Missing or duplicate SPDX node identity",
+  "finishedUTC": "2026-11-04T10:44:55.418110+00:00",
+  "exitCode": 1
+}

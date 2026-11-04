@@ -1,0 +1,89 @@
+{
+  "status": "passed",
+  "recordedUTC": "2026-11-04T11:10:15.054660+00:00",
+  "scope": "Observed local tool invocations during final qualification review; counts are unittest declarations, not codec test cases.",
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "Scripts/TestSupport/test-native-runtime-reporting.py"
+      ],
+      "exitCode": 0,
+      "tests": 8,
+      "testScriptSHA256": "c8370adcce2f394cfc2687e44398c5e051ef25c5afbaeb597982630a2406eed5"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/TestSupport/test-linux-sanitizer-gate.py"
+      ],
+      "exitCode": 0,
+      "tests": 10,
+      "testScriptSHA256": "94214f87ba67242b7e932af75a6eb296fb313178ffc8640e86e8abb32fb9d67d"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/TestSupport/test-derived-release-sbom.py"
+      ],
+      "exitCode": 0,
+      "tests": 6,
+      "testScriptSHA256": "dd5ecf60c99556e08732fcd1922de68bdc523b82c4a26e31e667de10022098b3"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/test-release-gates.py"
+      ],
+      "exitCode": 0,
+      "tests": 17,
+      "testScriptSHA256": "a2fcbc0b59bb281a2d8f77f97880c2467e11003f77f5094970944373a78bacb9"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/TestSupport/test-release-consumer.py"
+      ],
+      "exitCode": 0,
+      "tests": 8,
+      "testScriptSHA256": "f20e5e0643ac98936f546f804e0d5e4c7168025ef929cd14eb724bd80c3854a2"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Tests/test_release_provenance.py"
+      ],
+      "exitCode": 0,
+      "tests": 12,
+      "testScriptSHA256": "7a1b2a32eee33982fa83b1fc3e09f5f194757865a28106f5f9f2082fe26ecf7f"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/TestSupport/test-release-sbom.py"
+      ],
+      "exitCode": 0,
+      "tests": 4,
+      "testScriptSHA256": "7970c20822733b6d0ff9a7f11a63c29cb661e2bcd57c97219aa28bf1be7dd9ed"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/TestSupport/test-cli-tsan-gate.py"
+      ],
+      "exitCode": 0,
+      "tests": 1,
+      "testScriptSHA256": "1d06b00a22950fee41fdf721c072a024f00114968f4777e3383ab4c49bb1b214"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/TestSupport/test-apple-simulator-suite.py"
+      ],
+      "exitCode": 0,
+      "tests": 8,
+      "testScriptSHA256": "ba9f640fbb83589afc62828bf1476016ac9507f9c9215afa129d994dbd9cc439"
+    }
+  ],
+  "totalTests": 74
+}

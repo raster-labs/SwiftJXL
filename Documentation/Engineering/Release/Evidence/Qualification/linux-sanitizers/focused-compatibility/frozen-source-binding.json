@@ -1,0 +1,7 @@
+{
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "focusedReportSHA256": "e0d14402d7eb5dec723e44aa3328559d374a97556102f1cc67b2c0c79942e97f",
+  "completeSwiftAndPackageInventoryMatches": true,
+  "scope": "Focused compatibility regression only; not full Linux release qualification",
+  "doesNotQualifyFullLinuxMatrix": true
+}

@@ -1,0 +1,15 @@
+{
+  "originHash" : "ca9a1c3b3c073c8eb073c227d25e0c140f7c8f4b4f7b35cd96449fa5eb060905",
+  "pins" : [
+    {
+      "identity" : "swiftjxl",
+      "kind" : "localSourceControl",
+      "location" : "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-consumer-versioned-ci-safe/work/SwiftJXL.git",
+      "state" : {
+        "revision" : "c449992dc25d601dd8743b872abeddc4df84bfe7",
+        "version" : "2.1.0-dev.2"
+      }
+    }
+  ],
+  "version" : 3
+}

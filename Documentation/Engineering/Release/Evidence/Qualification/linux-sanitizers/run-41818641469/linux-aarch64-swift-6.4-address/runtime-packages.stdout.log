@@ -1,0 +1,5 @@
+libbrotli1:arm64	1.1.0-2ubuntu0.1
+libc6:arm64	2.39-0ubuntu8.9
+libjpeg-turbo8:arm64	2.1.5-2ubuntu2
+libpng16-16t64:arm64	1.6.43-5ubuntu0.7
+libstdc++6:arm64	14.2.0-4ubuntu2~24.04.1

@@ -1,0 +1,3146 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "case": "sof3-p2-predictor1-pt0",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor1-pt1",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor2-pt0",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor2-pt1",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor3-pt0",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor3-pt1",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor4-pt0",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor4-pt1",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor5-pt0",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor5-pt1",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor6-pt0",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor6-pt1",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor7-pt0",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p2-predictor7-pt1",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "sof3-p8-predictor1-pt0",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "035b58fe926cee298ac7bd6b06cfc1271ce9abad973cc06e830088feddf4cae9",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p8-predictor1-pt2",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "d6e73d781b5e2d0d703b773a953780101e3a773811504e1b450f983a86dd8283",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p8-predictor2-pt0",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "3e7bc3190f336b2e707c0910b064c5641a2f269ac4a748f3b388fa32826c8cf3",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p8-predictor2-pt2",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "e8fc360b782d29d2c8d6a65675a57d90928988b72005bad03f4924d25d310dfc",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p8-predictor3-pt0",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "e2ecafb9b4d9f87221ad36b434576823486af343159634d2ce1174520bd85f1a",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p8-predictor3-pt2",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "b29375cf35e52e4fc60eb601df20a297f680c2af11fe99906c473c4e8e19309a",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p8-predictor4-pt0",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "4d7fb7ed49f7f11849c37315aaefdff5562b951d052ca19cf9a50e98111474b8",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p8-predictor4-pt2",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "ac81da9352253f8b53155c4fc525f29b6d41a9ff971bf1eb4de6d3ce87cdcded",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p8-predictor5-pt0",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "246dcd6c3d15b1aeb42ca692971e32732f8a7947664838918cddacee4fd2ccfa",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p8-predictor5-pt2",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "e52261f7961a31b249babfa04bedf4d18ce138ca79d939c06e53238a69e55107",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p8-predictor6-pt0",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "48d205169f3a5fd4954d684e3dc0baa3eb458547e62b2a4636072433fb7547cd",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p8-predictor6-pt2",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "951e22dee27f0a68717552fa482e313410d8e2fe8f0e1c8c152d6379f250eca5",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p8-predictor7-pt0",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "cb22ddd359b0769432c06307444ebd46ac4f9115f52e34f4e55a77dc3df3b990",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p8-predictor7-pt2",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "f38694c15d9e8cf0f3569dc389fdbfaf6a188cd649271706323f843ff8924ccc",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p12-predictor1-pt0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "b7ba69508a2998c35335d04ef99447a7b6869c7252f2c0c5afdd6de05d14f530",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p12-predictor1-pt2",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "33c6d1e95945c65d50047d97a919468c87cb4decc5929dac883e38a125c71f4a",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p12-predictor2-pt0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "10ea5c576700a85938a30129de7463602b1bf2982f9e6cd20b70f8518f81aba2",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p12-predictor2-pt2",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "e4815c8c1604dee9732de46ce2e05aaba546c3902c9da84fb684e4c984892bee",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p12-predictor3-pt0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "f95d7b644dec9bcc3e9d387ef544c82fbd74ca671086ef2b0f28ea75924910dd",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p12-predictor3-pt2",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "7f1f4859d86f30562af31ca214bb02228f18de5fb05c83677f545c7ab6de133c",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p12-predictor4-pt0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "f625a350e862ca42b8087d0930fd51cd49801c4eb3c8955f365d303ff20213cd",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p12-predictor4-pt2",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "3dcd4c22ba78ccb49f0f8e96d2fb2c23d3e1b80a1751234cb128d779e7e3c7c5",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p12-predictor5-pt0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "c451cb50d8bfbef2bd2b396b96ab807832cc8acc301501c4a07bbe881c58002b",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p12-predictor5-pt2",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "f9a893dba736c86a0d65a910d50f401b7cf2869f6a92318c4ebe707788c4bf73",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p12-predictor6-pt0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "a81f1ff1ffb45636275b1efdc68ceab965a83365ab44904af3e3d0e2afb8080c",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p12-predictor6-pt2",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "7dd6f694a8fd85d32eb88c6f03e5ca1fa7fa24339fc620c1c961f7eb8135df7e",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p12-predictor7-pt0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "3b140a57265565bd418b8cfccda9f259ce1fbd4c7953bd8e4cc3dec202e12ca9",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p12-predictor7-pt2",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "e8ae24bbd16ec057b60c4a1085beac1ec191dead2971c2e3205c2f0bad95eb44",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p16-predictor1-pt0",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "19f8eee336d974b763ab92991a191a51c301f3b0a89cb3dca18a544e64522981",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p16-predictor1-pt2",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "fd1d5a9c93e8d4b19deb419bd861fc670de14bf16360c59a99f17cac7bbafb96",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p16-predictor2-pt0",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "8952af032f596c547cf017cd4c086bf5cc8ed78ee7ab379f1f40e5362e606db2",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p16-predictor2-pt2",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "c88ab4ff8d19c0f918cd6be2059bc55acc3d82c4a11331ae6acff4384833ad3d",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p16-predictor3-pt0",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "8bf688b1a54031dce08475bc36281eba28492577f3f1c4a85d9b61c0a56dab15",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p16-predictor3-pt2",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "f8bde48d36f98a566af7017b72230ddfe8b25ea17280d00d3298732a808350ee",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p16-predictor4-pt0",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "24a872eaeca6664dfb1b324d0c083816e371c1c05f6808cb32b16105223018f9",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p16-predictor4-pt2",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "fb4e013e9f6da1c69f927faff4992ff69a52fd06c2bb3501553e5885ca8da848",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p16-predictor5-pt0",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "d0b7336eb7deacc395ee1d6db03ed6767cad7bc49773093335131b30c5a53c51",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p16-predictor5-pt2",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "0e7c3bf71ec06321c579f1855500aafe7446b4d64a07b6d8fa12c7f48b27dd58",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p16-predictor6-pt0",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "cfc361ce6969f7cda111c1c90bc14062bf4546ecc2b58eddc9e8cf486ab98a64",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p16-predictor6-pt2",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "8a48d5b65cbe7796f3cd3c234acd5910de49ba5bd992a8b1fccc4a85b936e0ac",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-p16-predictor7-pt0",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "843e52616a2205cfc7b71edcabb98e3a526342c743c93c1c150005999b613e4d",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-p16-predictor7-pt2",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "f42be07987ee8718cf679f576e1bd2c4c0ebb9ad19bdde0d6b85f18691eff435",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "sof3-predictor4-category9",
+      "exactSamples": true,
+      "bits": 8,
+      "jpegSHA256": "869bdd159398d9e552761c88d9b1ab14a8f5bd8e4eca97d3d9d4d2dfbbd8a172",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-rgb-interleaved",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "00c918f5adf3da7b08eaa050b5c0ea20897037d4412b063ae84f19148e11038a",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "sof3-rgb-split",
+      "exactSamples": true,
+      "bits": 16,
+      "jpegSHA256": "70e72ba79633699219869bc1c435829ed393bf03c3783b6cb6baf0ec305aff39",
+      "fidelity": "exact-samples"
+    },
+    {
+      "case": "dct12-False-0-0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "3ed297747ab02bfd5dd0f85a2f910ea8b7e954ff8deb7f02da64079f3b7966b2",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-False--16384-0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "e07cfe40ac8861a7077296d28fd1e55b992c7c56b1fb74ab820b06a6d5609809",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-False-16376-0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "2249727a6b672276f9c8df52119339370eb147e69eca4a89646891fd908af334",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-False-0-8192",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "e3ac1e369826d7e501bfa426a9a0dfc7d46a2a63e1f9b78ac7556a7aa2b5fcd8",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-False-0--8192",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "02744a43edc7fb8a128ae51a47190d836b141a8d2a7235d23c77be64bcbcd03d",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-False-20-1500",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "8d6671375bfdd780f7c30dac2c81ec99c96fda01e69b0f36bb61c57ba3645c7f",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-True-0-0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "6c75694ede105875e5ca298870c29015fd538d6e644d4e44ef043593ec7bf7f6",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-True--16384-0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "0c48cd50012f1e1d9b6f109b6af306fc8f934d91c29deba4f206fbed94582bee",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-True-16376-0",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "9731a9404532d91b33691b956052f403ab0b1d2ccff3b92dad693c5c449c1a61",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-True-0-8192",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "f6a14dc6e0683d8a5307ac62daf1888d86cf5f7af316ba918d7657943f2705db",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-True-0--8192",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "b1e6871e98dbe058583a872a82692168a237ba5516dfa7d381b6a2666a4c35ff",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-True-20-1500",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "c020a8c3363e262fd9ee1011c0a4d430dac8f1f7c7d3ee7bd947af3668d83fbf",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-refined-21-1501",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "13509d8a76b2b9c7bff72c3b282d443e3bf3d97c3a7e94d81cff80c4bab5fe3a",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-refined--21--1501",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "cbab83f693af042dc90b64298eeaa6043a9f4f81934db30f6e298793f7181829",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "dct12-rgb",
+      "exactSamples": true,
+      "bits": 12,
+      "jpegSHA256": "287da75d20cf03fbaa91e82b846271b694a5210f7e1fa553faec341471eabc49",
+      "fidelity": "lossy"
+    },
+    {
+      "case": "exif-1-False",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-1-True",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-2-False",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-2-True",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-3-False",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-3-True",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-4-False",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-4-True",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-5-False",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-5-True",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-6-False",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-6-True",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-7-False",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-7-True",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-8-False",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "exif-8-True",
+      "rejectedUnrepresentableInterpretation": true
+    },
+    {
+      "case": "icc-gray",
+      "rejectedUnrepresentableInterpretation": true
+    }
+  ],
+  "commands": [
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor1-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor1-pt1.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor2-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor2-pt1.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor3-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor3-pt1.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor4-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor4-pt1.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor5-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor5-pt1.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor6-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor6-pt1.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor7-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p2-predictor7-pt1.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor1-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":91,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor1-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor1-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor1-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":88,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor1-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor1-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor2-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":90,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor2-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor2-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor2-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":87,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor2-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor2-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor3-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":91,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor3-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor3-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor3-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":88,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor3-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor3-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor4-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":90,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor4-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor4-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor4-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":87,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor4-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor4-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor5-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":91,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor5-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor5-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor5-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":88,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor5-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor5-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor6-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":90,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor6-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor6-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor6-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":87,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor6-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor6-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor7-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":91,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor7-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor7-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor7-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":88,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":12,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p8-predictor7-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p8-predictor7-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor1-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":101,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor1-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor1-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor1-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":93,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor1-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor1-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor2-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":98,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor2-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor2-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor2-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":93,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor2-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor2-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor3-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":101,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor3-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor3-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor3-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":93,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor3-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor3-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor4-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":100,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor4-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor4-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor4-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":92,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor4-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor4-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor5-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":102,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor5-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor5-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor5-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":94,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor5-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor5-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor6-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":99,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor6-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor6-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor6-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":93,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor6-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor6-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor7-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":103,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor7-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor7-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor7-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":94,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p12-predictor7-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p12-predictor7-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor1-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":90,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor1-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor1-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor1-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":102,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor1-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor1-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor2-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":91,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor2-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor2-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor2-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":99,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor2-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor2-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor3-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":90,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor3-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor3-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor3-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":102,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor3-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor3-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor4-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":93,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor4-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor4-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor4-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":99,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor4-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor4-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor5-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":95,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor5-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor5-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor5-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":102,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor5-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor5-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor6-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":91,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor6-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor6-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor6-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":99,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor6-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor6-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor7-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":95,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor7-pt0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor7-pt0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor7-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":102,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":3,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":24,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":4}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-p16-predictor7-pt2.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-p16-predictor7-pt2.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-predictor4-category9.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":72,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":2,\"meaningfulBits\":8,\"operation\":\"decode\",\"outputSampleBytes\":4,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":2}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-predictor4-category9.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-predictor4-category9.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-rgb-interleaved.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":3,\"encodedBytes\":109,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":2,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":36,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":3}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-rgb-interleaved.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-rgb-interleaved.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-rgb-split.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":3,\"encodedBytes\":124,\"fidelity\":\"exact-samples\",\"format\":\"pnm-srgb\",\"height\":2,\"meaningfulBits\":16,\"operation\":\"decode\",\"outputSampleBytes\":36,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":3}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/sof3-rgb-split.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/sof3-rgb-split.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-0-0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":153,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-0-0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-False-0-0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False--16384-0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":156,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False--16384-0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-False--16384-0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-16376-0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":156,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-16376-0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-False-16376-0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-0-8192.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":155,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-0-8192.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-False-0-8192.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-0--8192.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":156,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-0--8192.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-False-0--8192.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-20-1500.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":155,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-False-20-1500.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-False-20-1500.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-0-0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":164,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-0-0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-True-0-0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True--16384-0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":168,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True--16384-0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-True--16384-0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-16376-0.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":167,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-16376-0.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-True-16376-0.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-0-8192.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":166,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-0-8192.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-True-0-8192.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-0--8192.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":167,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-0--8192.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-True-0--8192.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-20-1500.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":166,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-True-20-1500.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-True-20-1500.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-refined-21-1501.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":189,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-refined-21-1501.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-refined-21-1501.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-refined--21--1501.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":1,\"encodedBytes\":189,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":128,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-refined--21--1501.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-refined--21--1501.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-rgb.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 0,
+      "stderr": "{\"componentCount\":3,\"encodedBytes\":165,\"fidelity\":\"lossy\",\"format\":\"pnm-srgb\",\"height\":8,\"meaningfulBits\":12,\"operation\":\"decode\",\"outputSampleBytes\":384,\"tool\":\"swiftjxl-cli\",\"version\":\"2.1.0-dev.2\",\"width\":8}\n"
+    },
+    {
+      "arguments": [
+        "encode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/dct12-rgb.jpg",
+        "--input-format",
+        "jpeg-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/_temp/m5-native-intel/cli-jpeg-extended/dct12-rgb.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exitCode": 0,
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-1-False.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-1-True.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-2-False.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-2-True.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-3-False.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-3-True.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-4-False.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-4-True.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-5-False.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-5-True.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-6-False.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-6-True.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-7-False.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-7-True.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-8-False.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/exif-8-True.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    },
+    {
+      "arguments": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/icc-gray.jpg",
+        "--input-format",
+        "jpeg-srgb",
+        "--output-format",
+        "pnm-srgb",
+        "--json"
+      ],
+      "exitCode": 4,
+      "stderr": "swiftjxl-cli: Input is outside the bounded JPEG pixel profile.\n"
+    }
+  ],
+  "binarySHA256": "6d38399a2f895ab68abb560bb5e5b7931a9ca3ec41e3c45ca4528a24b3cb469c"
+}

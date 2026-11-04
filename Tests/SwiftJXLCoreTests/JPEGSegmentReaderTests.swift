@@ -96,7 +96,7 @@ struct JPEGSegmentReaderTests {
 
     @Test(arguments: [false, true])
     func longEntropyAndFillRunsHaveBoundedCheckpoints(_ fill: Bool) throws {
-        let calls = Mutex(0)
+        let calls = PackageMutex(0)
         let bytes = Data([0xff, 0xd8, 0xff, 0xda, 0, 2])
             + Data(repeating: fill ? 0xff : 1, count: 20_000) + Data([0xff, 0xd9])
         var reader = try JPEGSegmentReader(bytes, checkpoint: {
@@ -109,7 +109,7 @@ struct JPEGSegmentReaderTests {
     }
 
     @Test func oddOffsetStuffingCannotSkipCheckpoints() throws {
-        let calls = Mutex(0)
+        let calls = PackageMutex(0)
         let stuffed = Data((0..<12000).flatMap { _ in [UInt8(0xff), 0] })
         // Entropy starts at odd offset 7, and every stuffed pair advances by 2.
         let bytes = Data([0xff, 0xd8, 0xff, 0xda, 0, 3, 0]) + stuffed + Data([0xff, 0xd9])

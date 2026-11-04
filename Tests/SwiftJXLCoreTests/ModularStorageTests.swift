@@ -110,22 +110,56 @@ struct ModularStorageTests {
             colour: f.channels < 3 ? .greyscale : .rgb, alpha: f.channels % 2 == 0 ? .straight : .absent, planes: planes)
         let owner = try OwnedImageStorage(byteCount: capacity)
         let destination = try ImageDestination(descriptor: descriptor, storage: owner)
+        #if os(watchOS)
+        // The default decode/encode pipeline for these fixtures exceeds the
+        // Watch budget. Check rejection before general-profile correctness.
+        let requiresGeneralProfile = ["groups-rgb8", "responsive-wide-rgb8"].contains(name)
+        let correctnessLimits: ResourceLimits = requiresGeneralProfile ? .general : .default
+        if requiresGeneralProfile {
+            let limitedDestination = try ImageDestination.allocate(descriptor: descriptor)
+            do {
+                let limitedResult = try await Decoder().decode(data, into: limitedDestination)
+                let limitedAllocated = try await Decoder().decode(data)
+                _ = try await Encoder().encode(limitedResult.image)
+                _ = try await Encoder().encode(limitedAllocated.image)
+                Issue.record("Large-fixture pipeline unexpectedly fitted the Watch default profile")
+            } catch let error as CodecError {
+                #expect(error.category == .resourceLimitExceeded)
+            }
+        }
+        #endif
         let audit = ScalarStorageAudit()
         let result = try await ScalarStorageAudit.$current.withValue(audit) {
             let info = try Decoder().inspect(data)
             #expect(info.descriptor.components == roles && info.descriptor.meaningfulBits == f.bits)
             #expect(audit.snapshot.workingPlaneAllocations == 0 && audit.snapshot.finalPixelAllocations == 0)
+            #if os(watchOS)
+            return try await Decoder().decode(data, into: destination, options: .init(resourceLimits: correctnessLimits))
+            #else
             return try await Decoder().decode(data, into: destination)
+            #endif
         }
         #expect(result.image.storage.allocationID == owner.allocationID)
         #expect(result.report.copyEvents.isEmpty && result.report.fidelity == .exactSamples)
         #expect(audit.snapshot.finalPixelAllocations == 0)
+        #if os(watchOS)
+        let allocated = try await Decoder().decode(data, options: .init(resourceLimits: correctnessLimits))
+        #else
         let allocated = try await Decoder().decode(data)
+        #endif
         let sourceAudit = ScalarStorageAudit()
         let stridedEncoding = try await ScalarStorageAudit.$current.withValue(sourceAudit) {
+            #if os(watchOS)
+            try await Encoder().encode(result.image, options: .init(resourceLimits: correctnessLimits))
+            #else
             try await Encoder().encode(result.image)
+            #endif
         }
+        #if os(watchOS)
+        let canonicalEncoding = try await Encoder().encode(allocated.image, options: .init(resourceLimits: correctnessLimits))
+        #else
         let canonicalEncoding = try await Encoder().encode(allocated.image)
+        #endif
         #expect(stridedEncoding.data == canonicalEncoding.data)
         #expect(stridedEncoding.report.copyEvents.isEmpty && sourceAudit.snapshot.finalPixelAllocations == 0)
         #expect(result.image.storage.allocationID == owner.allocationID)

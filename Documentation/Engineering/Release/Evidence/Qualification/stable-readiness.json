@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "status": "blocked",
+  "checklistValid": true,
+  "preparationComplete": true,
+  "stableReleaseReady": false,
+  "publicationAuthorised": false,
+  "assignedTaskComplete": true,
+  "excludedFromAssignedTask": [
+    "M4-PHYSICAL-DEVICES"
+  ],
+  "sourceGroupDigests": {
+    "runtime": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+    "preparation": "0d057088757e8f4197f9b7167ef75de7ea702eb89ed9637964c4627033276d94",
+    "qualification": "05f4fc7b23689a2d660ff9e8359ef75c669f52dec3c0b91e6b8655c4d6bd0ba2"
+  },
+  "blockedGates": [
+    "M4-PHYSICAL-DEVICES"
+  ],
+  "gateStatuses": {
+    "M4-LINUX-SANITIZERS": "passed",
+    "M4-MACOS-MINIMUM": "passed",
+    "M4-MACOS-INTEL": "passed",
+    "M4-PHYSICAL-DEVICES": "unavailable",
+    "M4-IOS-SANITIZERS": "passed",
+    "M4-CLI-TSAN": "passed",
+    "M4-OTHER-SIMULATORS": "passed",
+    "M5-URL-CONSUMER": "passed",
+    "M5-VERSIONED-CONSUMER": "passed",
+    "M5-DOCS-EXAMPLES": "passed",
+    "M5-LICENCE-PROVENANCE": "passed",
+    "M5-EVIDENCE-REVIEW": "passed",
+    "RELEASE-SBOM-SCHEMA": "passed",
+    "RELEASE-SECURITY-POLICY": "passed"
+  }
+}

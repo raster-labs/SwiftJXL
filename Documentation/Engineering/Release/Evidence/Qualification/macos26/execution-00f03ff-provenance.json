@@ -1,0 +1,61 @@
+{
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "sourceArchiveSHA256": "6ece82a5ca048965a56dcdbf54229bcd7a5217882426c7d93335adcd748a2a96",
+  "allArchiveFilesVerified": 2839,
+  "commands": [
+    {
+      "command": [
+        "sw_vers"
+      ],
+      "exitCode": 0,
+      "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t26.0\nBuildVersion:\t\t25A354\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "uname",
+        "-a"
+      ],
+      "exitCode": 0,
+      "stdout": "Darwin Manageds-Virtual-Machine.local 25.0.0 Darwin Kernel Version 25.0.0: Mon Aug 25 21:17:21 PDT 2025; root:xnu-12377.1.9~3/RELEASE_ARM64_VMAPPLE arm64\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "swift",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx26.0\n",
+      "stderr": "swift-driver version: 1.168.6 "
+    },
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "sysctl.proc_translated"
+      ],
+      "exitCode": 0,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "exitCode": 0,
+      "stdout": "17179869184\n",
+      "stderr": ""
+    }
+  ],
+  "startedUnix": 1793788371.8703492,
+  "virtualMachine": true,
+  "physicalDeviceEvidence": false,
+  "parentFreezeGroups": {
+    "runtime": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+    "qualification": "955c21c6cfc7b2e1650dad73f77e6de12cd3c7b5ea55e1f06c5624e3a444381d"
+  }
+}

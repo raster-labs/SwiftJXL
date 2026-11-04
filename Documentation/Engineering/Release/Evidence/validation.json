@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "scope": "Milestone 5 preparation evidence review; not stable-release qualification",
+  "recordedUTC": "2026-11-04T07:01:49.638155+00:00",
+  "baselineRevision": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "contractVersion": "0.10.0",
+  "sourceGroupDigests": {
+    "runtime": "55b65dcea0a8b47f0608036b7d7e626106482c723ab025ff38c99625bf393b58",
+    "preparation": "a35393d116fd36b257edeb6cce846499dca141d5c2ea35b1a9ac1f42e6800c2a"
+  },
+  "consumers": {
+    "consumer-versioned": {
+      "status": "passed",
+      "sourceRevision": "c449992dc25d601dd8743b872abeddc4df84bfe7",
+      "commands": 24,
+      "report": "Documentation/Engineering/Release/Evidence/consumer-versioned/report.json",
+      "sha256": "5723fd787e095a1a6d9dc87464d536b29f24f1f8692f763f6d29d0150068a154",
+      "runtimeUnchangedFromSelectedCommit": true
+    },
+    "consumer-https": {
+      "status": "passed",
+      "sourceRevision": "c449992dc25d601dd8743b872abeddc4df84bfe7",
+      "commands": 24,
+      "report": "Documentation/Engineering/Release/Evidence/consumer-https/report.json",
+      "sha256": "955d8061616c194f1327cff6b2d9bfe37d42cbffc1e0f13cfa9cb54dcf23f760",
+      "runtimeUnchangedFromSelectedCommit": true
+    }
+  },
+  "checks": {
+    "docs": "passed",
+    "licenceProvenance": "passed",
+    "evidenceReview": "passed"
+  },
+  "toolingTests": [
+    {
+      "command": "python3 Scripts/TestSupport/test-release-consumer.py",
+      "exitCode": 0,
+      "tests": 8
+    },
+    {
+      "command": "python3 Scripts/test-release-gates.py",
+      "exitCode": 0,
+      "tests": 14
+    },
+    {
+      "command": "python3 Scripts/Tests/test_release_provenance.py",
+      "exitCode": 0,
+      "tests": 12
+    },
+    {
+      "command": "python3 Scripts/TestSupport/test-release-sbom.py",
+      "exitCode": 0,
+      "tests": 4
+    }
+  ],
+  "cli": {
+    "buildCommand": "xcrun swift build --build-system swiftbuild --jobs 2 -c release --product swiftjxl-cli --scratch-path .build/milestone5-cli",
+    "command": "python3 Scripts/test-cli.py --binary .build/milestone5-cli/out/Products/Release/swiftjxl-cli --output .build/milestone5-cli-check-final",
+    "exitCode": 0,
+    "processChecks": 98
+  },
+  "sourceComparison": "Every runtime file in each consumer selected commit compared by SHA-256 with this source group; consumer and runner hashes match. Production source, package manifest and VERSION unchanged from baseline.",
+  "independentReview": "A separate agent reviewed the validators, receipts, example and CI. Fixed missing pinned-blob comparison, Python container prerequisite and scoped Git ownership exception. No outstanding implementation finding reported. This is engineering review, not human release authorisation.",
+  "memoryAndPerformance": {
+    "pixelAllocationCount": null,
+    "peakPixelBytes": null,
+    "peakWorkspaceBytes": null,
+    "copyReport": "consumer requires an empty copyEvents list and matching caller allocation identity",
+    "newBenchmark": "not run; no production hot path changed",
+    "broaderEvidence": "Documentation/Engineering/Migration/MILESTONE4_REMAINING.md"
+  },
+  "sbom": {
+    "generationExitCode": 0,
+    "validationExitCode": 1,
+    "stableGate": "failed",
+    "fullSPDXSHACL": "not_run"
+  },
+  "priorAttempts": [
+    {
+      "scope": "consumer",
+      "archive": "prior-consumer-attempts.zip",
+      "outcome": "SDK lookup, local Git pin classification and incorrect unknown-allocation assertion failed before final passing runs"
+    },
+    {
+      "scope": "CLI",
+      "exitCode": 1,
+      "outcome": "Initial binary path used apple/Products rather than the discovered out/Products location; no payload checks ran"
+    }
+  ],
+  "notRun": [
+    "Full codec test, fuzz and benchmark matrices were not rerun: runtime source is unchanged and historical source-bound results are explicitly reused",
+    "Seven outstanding Milestone 4 platform/sanitizer gates",
+    "Maintainer security-channel/support-policy establishment",
+    "Stable tag, published-version consumption and production cutover"
+  ],
+  "artifactSHA256": {
+    "cli-build.log": "6c2d9f73c9cd2f9a26da8370bcfc08d771a106bced3565f854c9296801a1a788",
+    "cli.json": "6cfc6f31b2faa5979f67e8c5cbd07cb90baf65074a57dc66a3c981491bc43fff",
+    "consumer-https/Consumer.Package.swift": "d1fb80f229dd5661c7b2a3af9676d15b4cce20b0fffe50357dc98759bc78edc6",
+    "consumer-https/Consumer.swift": "59f014ec9128eb870a277f80689f19e04a56a19359ce846f06bfcb72a0e3bbc6",
+    "consumer-https/Package.resolved": "6e76762e2d42a80baf5f31f7cd6260badfafe255452b5f65a03dc914d8d1d32c",
+    "consumer-https/dependency-graph.json": "d612293862727f039a641a900d38680c054dfd8afe9f2ae981100f17185b7bc6",
+    "consumer-https/logs.zip": "9e6ad4618af4411798d13870ef4e6b0251a186f2bba154d51821084bfe53257d",
+    "consumer-https/report.json": "955d8061616c194f1327cff6b2d9bfe37d42cbffc1e0f13cfa9cb54dcf23f760",
+    "consumer-versioned/Consumer.Package.swift": "ca9a1c3b3c073c8eb073c227d25e0c140f7c8f4b4f7b35cd96449fa5eb060905",
+    "consumer-versioned/Consumer.swift": "59f014ec9128eb870a277f80689f19e04a56a19359ce846f06bfcb72a0e3bbc6",
+    "consumer-versioned/Package.resolved": "17b69db324081c0b248c80775d15ea28ff8d6fa2947f1ca8257ad59171eef8c6",
+    "consumer-versioned/dependency-graph.json": "318c47995c77f1068849608d7b5f809b1b4c7003b9914a1d467d26b3b6ca0128",
+    "consumer-versioned/logs.zip": "d957cc98fa2197704a12932777b0c4ed8a9a00f48a06b55f0ac5db2c154c5281",
+    "consumer-versioned/report.json": "5723fd787e095a1a6d9dc87464d536b29f24f1f8692f763f6d29d0150068a154",
+    "docs.json": "0ac76ba8cac15ebf609cfc9bacd6a7e714dbcc8ef4f2a3ce94fd59d6adaad7c3",
+    "prior-consumer-attempts.zip": "2e771b7bc10a763cc776764ca7efefd5353ebae228916a32b9d6eb11430ad90f",
+    "provenance.json": "4a0cd9eedf427638b247be38bd92912d9cff27484451a31e7f26560e658cff9d",
+    "sbom-build/logs.zip": "a3d62258652648283c89f7ea9e4ba51d672e567884000c4d0583e5d46a7be46e",
+    "sbom-build/report.json": "81c9f3e43b8af555079f09ef8e494489e4325db33a53f6a4ec12756a5ce6010d",
+    "sbom-validation/cyclonedx1-1.7-SwiftJXL-3e00d934bef331cdbc7c4be752857dc9eca8f799-all-2026-11-04T06_45_01Z.json": "5c83817f6dc8d4888a34ad57aeec063d11c0366c0f3ec09fb7cc3b061c9361ab",
+    "sbom-validation/report.json": "ba3683508d4534dfd36ec16055aa0a366953d3d02543031bb9d6a17230a78def",
+    "sbom-validation/schema-sources.json": "b98dc9db192b39cfcd1ecf1d99d938768161d1abf16a04a201aa656d7be26b24",
+    "sbom-validation/spdx3-3.0.1-SwiftJXL-3e00d934bef331cdbc7c4be752857dc9eca8f799-all-2026-11-04T06_45_00Z.json": "ac8c44f988ab9c910d4c911815bae64078826340aed449965c5f30c99d5dd2f2",
+    "sbom-validation/validator-packages.txt": "6377ea0a488d08e21a8b959e710553478853d892cd0bb6960142244df032951c"
+  }
+}

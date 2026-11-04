@@ -6,6 +6,8 @@ JPEG XL for the **Swift Image Compression Suite**.
 
 SwiftJXL is the standalone successor to [JXLSwift](https://github.com/Raster-Lab/JXLSwift). The successor is intended to provide a harmonised API, explicit memory ownership, high-precision sample preservation and efficient shared-storage integration. It has no mandatory dependency on another suite library or CompressionFamily. Apache-2.0 licensing applies to these documents and subsequent authorised in-house implementation; third-party material retains its own terms.
 
+Milestone 5 library qualification is tracked in the [qualification record](Documentation/Engineering/Release/QUALIFICATION.md): platform/sanitizer execution, clean versioned consumption, synchronised examples, source/fixture provenance and validated derived SBOMs. Physical-device testing and DICOMKit integration remain excluded from this assignment. The [checklist](Documentation/Engineering/Release/release-gates.json) distinguishes assigned-task completion from stable-release readiness; no release is authorised by this work.
+
 ## Swift 6.4 development candidate
 
 Current development version: **2.1.0-dev.2** ([VERSION](VERSION)); shared contract **0.10.0**. This increments the earlier unreleased 2.0.0 target and creates no release/tag. See the [migration preflight record](Documentation/Engineering/Migration/README.md) for adopted features, exact Xcode/Swift Build evidence and open platform gates. The historical [Milestone 1 evidence](Documentation/MILESTONE1.md) remains unchanged.

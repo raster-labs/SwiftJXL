@@ -122,7 +122,7 @@ struct VarDCTParallelTests {
     }
     @Test func cancellationAfterBandJoinPreventsPublication() async throws {
         let image = try source(width: 17, height: 137, alpha: false), audit = ScalarStorageAudit()
-        let completed = Mutex<ScalarStorageAudit.Snapshot?>(nil)
+        let completed = PackageMutex<ScalarStorageAudit.Snapshot?>(nil)
         let task = Task {
             try await ScalarStorageAudit.$current.withValue(audit) {
                 try await Encoder(configuration: .init(mode: .lossy, codecOptions: .init(varDCT: .init(distance: 1))))

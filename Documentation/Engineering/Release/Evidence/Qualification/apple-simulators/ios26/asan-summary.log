@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "87AD2669-DD8E-45F4-BB74-2BFFCCC0A702",
+        "deviceName" : "SwiftJXL-M5-ios-f6f600a7",
+        "modelName" : "iPhone 17 Pro",
+        "osBuildNumber" : "23A343",
+        "osVersion" : "26.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 1960,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "SwiftJXL-Package · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1793789169.748,
+  "passedTests" : 362,
+  "result" : "Passed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793788588.519,
+  "statistics" : [
+    {
+      "subtitle" : "1716 test runs",
+      "title" : "118 tests ran with dynamic parameters"
+    }
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - SwiftJXL-Package",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "45% of duration",
+      "text" : "40 longest test runs with outlier durations exceeding 3.57s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 362
+}
