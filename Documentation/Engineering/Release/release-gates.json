@@ -191,12 +191,12 @@
         "Scripts/check-release-gates.py": "a419a7d94fc893529c57203f5740e290bdf4df601cbe9d53d8cd9827d8137064",
         "Scripts/install-cli.sh": "2ec55c5025e69e18e92ba76f738bee4fe5c9df4ea6b332ae9ec7140b8b55e693",
         "Scripts/test-cli.py": "9a369cd681e8157843711856f6c4e65baccd5e3a88170534c434e5d5732d8676",
-        "Scripts/test-release-gates.py": "205e61e8ef96dedd52e531e11dbad2e908c0e5432d82cbae78f4ee25a4481bc6",
+        "Scripts/test-release-gates.py": "96208eb9f896e3c59e0ef5390c6306df8201855034293036b406c0cf1ede5dd4",
         "Scripts/validate-release-consumer.py": "e47d239bebfb5787254d635874b33a082c3cc6d4d44c0b958bb7db69582adf34",
         "Scripts/validate-release-sbom.py": "4c73e5bdcd220aad41c48e3780b64c842ea5e199d1de8804a4a3ff47f9f571f5",
         "THIRD_PARTY_NOTICES.md": "6919105dee2ef9807a17dbeb6b6275241ebf0a34858f16fef3a14afe5121cf28"
       },
-      "sha256": "a35393d116fd36b257edeb6cce846499dca141d5c2ea35b1a9ac1f42e6800c2a"
+      "sha256": "d1688387c1b07df0afb370b40aee9c7be044f448aee0d53ca3226491e9826ecf"
     }
   },
   "gates": [
@@ -332,8 +332,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/validation.json",
-          "sha256": "fd83f09400bcc0f1f310a46b4cf0b70e2e705221c9f6bb134a7f6a7d6ad02d5f",
+          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
+          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",
@@ -355,8 +355,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/validation.json",
-          "sha256": "fd83f09400bcc0f1f310a46b4cf0b70e2e705221c9f6bb134a7f6a7d6ad02d5f",
+          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
+          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",
@@ -378,8 +378,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/validation.json",
-          "sha256": "fd83f09400bcc0f1f310a46b4cf0b70e2e705221c9f6bb134a7f6a7d6ad02d5f",
+          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
+          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",
@@ -401,8 +401,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/validation.json",
-          "sha256": "fd83f09400bcc0f1f310a46b4cf0b70e2e705221c9f6bb134a7f6a7d6ad02d5f",
+          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
+          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",
@@ -424,8 +424,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/validation.json",
-          "sha256": "fd83f09400bcc0f1f310a46b4cf0b70e2e705221c9f6bb134a7f6a7d6ad02d5f",
+          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
+          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",

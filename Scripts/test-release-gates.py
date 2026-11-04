@@ -52,7 +52,9 @@ class ReleaseGateTests(unittest.TestCase):
         report = {"status": "passed", "checksPassed": True,
                   "sourceGroupDigests": {name: self.checklist["sourceGroups"][name]["sha256"]
                                          for name in gate["sourceGroups"]}}
-        path = self.repo / "synthetic-test-report.json"
+        # Different gates may bind different source groups. Each fixture needs
+        # its own file; rewriting one shared file invalidates earlier hashes.
+        path = self.repo / ("synthetic-" + gate["id"] + ".json")
         path.write_text(json.dumps(report))
         gate["status"] = "passed"
         gate["evidence"] = [{"path": path.name, "sha256": VALIDATOR.sha256(path),
