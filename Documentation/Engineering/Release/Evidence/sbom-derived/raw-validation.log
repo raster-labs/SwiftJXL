@@ -1,0 +1,3 @@
+spdx: 2 schema errors, 1 selected semantic errors
+cyclonedx: 0 schema errors, 1 selected semantic errors
+failed; report: /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-sbom-derived-final/raw-validation/report.json

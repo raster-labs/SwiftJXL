@@ -155,12 +155,14 @@
         "README.md",
         "SECURITY.md",
         "Scripts/README.md",
+        "Scripts/TestSupport/test-derived-release-sbom.py",
         "Scripts/TestSupport/test-release-consumer.py",
         "Scripts/TestSupport/test-release-sbom.py",
         "Scripts/Tests/test_release_provenance.py",
         "Scripts/audit-release-provenance.py",
         "Scripts/check-release-docs.py",
         "Scripts/check-release-gates.py",
+        "Scripts/derive-release-sbom.py",
         "Scripts/install-cli.sh",
         "Scripts/test-cli.py",
         "Scripts/test-release-gates.py",
@@ -169,10 +171,10 @@
         "THIRD_PARTY_NOTICES.md"
       ],
       "files": {
-        ".github/workflows/release-preparation.yml": "5500eaf9ceebc64f7c548c6cdd1bb39a1f2fa6b4faaa3f1b5e865cf4caaf977f",
-        "CHANGELOG.md": "da1b52ed499d762425999df4f840ee81d2fe394d52a9a5cd66eeb80b0be6a873",
+        ".github/workflows/release-preparation.yml": "b7657069ff3cdf9fc9a67921ad5876d71fea1b50fce3604175bd5aa87e4bbaf7",
+        "CHANGELOG.md": "08a4a98af6144b2de417f4666bfa286e27618f3f8dfadb3969c0a4d1b940e79c",
         "CLI.md": "0296138569d3d50096ccfee62a61b5cb613d314e23e3b60b251c497fcebcdf08",
-        "Documentation/Engineering/Release/README.md": "3a5de0de83ac5f12409053dbc1c5c700f2691446b6bd5787b1b4ae4d8cada330",
+        "Documentation/Engineering/Release/README.md": "1dc2fc7a967e069b8481d93118458379b9694d74cdd0c932fffd1c5005cbe937",
         "Documentation/Engineering/Release/fixture-inventory.json": "5ff9bc80d40bba2157651df3cc7130dc2eb972e4bb06c29d8b64acbf70ebfb98",
         "Examples/ContractConsumer/Package.swift": "4cf70f60bc0eba0a795f567cac7b9f19db92795252cb103b5bd9fe4a53aef3e8",
         "Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift": "59f014ec9128eb870a277f80689f19e04a56a19359ce846f06bfcb72a0e3bbc6",
@@ -180,15 +182,17 @@
         "MIGRATION.md": "f72bfff0742e0fe0de653468ea7b8d3e9bdfade58ff64f9ed3830837e84d16ff",
         "ManPages/swiftjxl-cli.1": "11d37c6ea7a925a1ef034ebe2f91823cd153ef731a3f867389236fb738b9f130",
         "NOTICE": "53100225da5da07776b66f1f2bcf1d4763c06c27b36967c38492d76695a8c90d",
-        "README.md": "066f236a039335257e22c2429ac1a2f939af708fb3eb4075a4d6bf03b7bf22d8",
+        "README.md": "f4f4e07d2f2a3cc3ff9db4c6767837ce8e6498ac8d0316dfd2a28c1a15756a69",
         "SECURITY.md": "2ecd1238402d77162633395c80fc09913f22d218622499440e471b706c8cede6",
-        "Scripts/README.md": "85ef85308b20b16c4baf2c0942b37616564c2ac0db389948c840f30e2e5deaad",
+        "Scripts/README.md": "b13e910fc70e5f31e8742a3827690144e3e4806274de7ffc4fc332bfa0ce86b9",
+        "Scripts/TestSupport/test-derived-release-sbom.py": "723e3e9608f4b92bb75b26c19fb2cd18b783a42d1b70966f79e2d934369e8bcd",
         "Scripts/TestSupport/test-release-consumer.py": "f20e5e0643ac98936f546f804e0d5e4c7168025ef929cd14eb724bd80c3854a2",
         "Scripts/TestSupport/test-release-sbom.py": "7970c20822733b6d0ff9a7f11a63c29cb661e2bcd57c97219aa28bf1be7dd9ed",
         "Scripts/Tests/test_release_provenance.py": "7a1b2a32eee33982fa83b1fc3e09f5f194757865a28106f5f9f2082fe26ecf7f",
         "Scripts/audit-release-provenance.py": "556983a1c64b8ce8c658e9fb480d573242706eac5183ae533bbffc470a51ced2",
         "Scripts/check-release-docs.py": "1f165674e65024c9b4c32d24f3f55ac0ae86a9c621a5d46accd5e8b8f00a403b",
         "Scripts/check-release-gates.py": "a419a7d94fc893529c57203f5740e290bdf4df601cbe9d53d8cd9827d8137064",
+        "Scripts/derive-release-sbom.py": "70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583",
         "Scripts/install-cli.sh": "2ec55c5025e69e18e92ba76f738bee4fe5c9df4ea6b332ae9ec7140b8b55e693",
         "Scripts/test-cli.py": "9a369cd681e8157843711856f6c4e65baccd5e3a88170534c434e5d5732d8676",
         "Scripts/test-release-gates.py": "96208eb9f896e3c59e0ef5390c6306df8201855034293036b406c0cf1ede5dd4",
@@ -196,7 +200,7 @@
         "Scripts/validate-release-sbom.py": "4c73e5bdcd220aad41c48e3780b64c842ea5e199d1de8804a4a3ff47f9f571f5",
         "THIRD_PARTY_NOTICES.md": "6919105dee2ef9807a17dbeb6b6275241ebf0a34858f16fef3a14afe5121cf28"
       },
-      "sha256": "d1688387c1b07df0afb370b40aee9c7be044f448aee0d53ca3226491e9826ecf"
+      "sha256": "a32c0e4cd870e35a4371136721c1cd6de27f7d2ea29b184989ab8c59d955384e"
     }
   },
   "gates": [
@@ -332,8 +336,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
-          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
+          "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",
@@ -355,8 +359,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
-          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
+          "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",
@@ -378,8 +382,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
-          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
+          "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",
@@ -401,8 +405,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
-          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
+          "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",
@@ -424,8 +428,8 @@
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/ci-followup.json",
-          "sha256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6",
+          "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
           "resultPointer": "/status",
           "sourceBindings": {
             "runtime": "/sourceGroupDigests/runtime",
@@ -439,15 +443,21 @@
       "phase": "stable",
       "required": true,
       "title": "Build-associated SBOM generation and schema/semantic validation",
-      "status": "failed",
-      "reason": "Fresh Swift 6.4.2 build emissions fail independent SPDX schema/semantic and CycloneDX unique-reference checks. Original artefacts retained; full SPDX SHACL remains unexecuted.",
+      "status": "passed",
+      "reason": "Explicitly derived, provenance-preserving SwiftPM package-graph artefacts pass both official schemas, reference/identity checks and full SPDX SHACL with negative control. Raw generator emissions remain defective; complete SDK/runtime/embedded inventory is not inferred.",
       "sourceGroups": [
-        "runtime"
+        "runtime",
+        "preparation"
       ],
       "evidence": [
         {
-          "path": "Documentation/Engineering/Release/Evidence/sbom-validation/report.json",
-          "sha256": "ba3683508d4534dfd36ec16055aa0a366953d3d02543031bb9d6a17230a78def"
+          "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
+          "resultPointer": "/status",
+          "sourceBindings": {
+            "runtime": "/sourceGroupDigests/runtime",
+            "preparation": "/sourceGroupDigests/preparation"
+          }
         }
       ]
     },

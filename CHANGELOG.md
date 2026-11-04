@@ -2,7 +2,7 @@
 
 ## Unreleased — Milestone 5 release preparation, 2026-11-04
 
-Add clean URL/exact-version consumer checks, a synchronised owning-storage migration example, fixture/licence inventories and a source-bound release checklist. Retain open platform, SBOM and maintainer-policy gates; no codec behaviour, version or release tag changes. See [release preparation](Documentation/Engineering/Release/README.md).
+Add clean URL/exact-version consumer checks, a synchronised owning-storage migration example, fixture/licence inventories and a source-bound release checklist. Qualify explicitly derived SBOMs with preserved originals and official schema/SPDX semantic validation; retain open platform and maintainer-policy gates; no codec behaviour, version or release tag changes. See [release preparation](Documentation/Engineering/Release/README.md).
 
 ## Unreleased — remaining Milestone 4 follow-up
 

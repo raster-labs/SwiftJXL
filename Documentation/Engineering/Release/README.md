@@ -26,7 +26,7 @@ The example checks all six independently known 12-bit values in padded UInt16 so
 
 ## Executed results
 
-The [validation summary](Evidence/validation.json) binds the receipts and source groups; the full command logs are retained in the evidence archives.
+The [initial validation summary](Evidence/validation.json), [CI harness follow-up](Evidence/ci-followup.json) and [derived-SBOM qualification review](Evidence/sbom-qualified-review.json) bind the receipts and source groups; the full command logs are retained in the evidence archives.
 
 | Executed check | Outcome |
 | --- | --- |
@@ -35,7 +35,8 @@ The [validation summary](Evidence/validation.json) binds the receipts and source
 | Consumer/gate/provenance/SBOM validator regression tests | Exit 0; 8 + 14 + 12 + 4 focused tests. |
 | Documentation and fixture/licence audits | Exit 0; matched compiled example and local links; 119 production source files and 995 fixture/support files. |
 | Build-associated SBOM generation | Exit 0; schema validation was skipped by SwiftPM and independently performed afterwards. |
-| Independent SBOM validation | Exit 1 with retained schema/semantic findings; this is an open release gate, not a passing qualification. |
+| Raw SBOM validation | Exit 1 with retained schema/semantic findings; the original generator output remains defective. |
+| Explicitly derived SBOMs | Exit 0; both official JSON Schemas, reference/identifier checks and full official SPDX SHACL pass. Four derivation regression tests pass; the missing-timestamp SHACL sentinel correctly fails. |
 | Release-readiness enforcement | Audit exit 0 with `preparationComplete: true`, `stableReleaseReady: false`; `--require-ready` exits 2. |
 
 Initial failed consumer attempts are retained: inherited stale SDK lookup, file-URL lockfile classification and an incorrect expectation that an optional public allocation counter was zero. The final example preserves unknown counters. The first CLI test invocation used an incorrect assumed binary path; the corrected invocation used SwiftPM's reported output directory. No production change was needed for these harness mistakes. Independent audit also required baseline Git-blob verification in the provenance checker and explicit Python/checkout-ownership handling in the container workflow.
@@ -76,8 +77,25 @@ python3 -m venv .build/release-tools
 
 Validation exits **1**: SPDX has unsupported `externalUrl`/`software_internalVersion` properties and a CreationInfo specification version containing the compiler version; CycloneDX passes JSON Schema but repeats a `bom-ref`. The validator checks original hashes, disables schema-network retrieval and separately reports these semantic failures. Full SPDX SHACL validation remains unexecuted. Neither a JSON parse nor the distribution inventory closes this gate. Schema URLs are the official [SPDX 3.0.1 schema](https://spdx.org/schema/3.0.1/spdx-json-schema.json) and [CycloneDX 1.7 schema](https://cyclonedx.org/schema/bom-1.7.schema.json), including its referenced `spdx.schema.json`, `jsf-0.82.schema.json` and `cryptography-defs.schema.json`. Do not silently repair generated originals or advertise these documents as conformant.
 
+## Explicitly derived SBOMs — validated follow-up
+
+The [derived artefacts and exact edit record](Evidence/sbom-derived/report.json) close the package-graph conformance gate without changing the original failed emissions. [SPDX](Evidence/sbom-derived/derived/SwiftJXL-spdx-derived.json) and [CycloneDX](Evidence/sbom-derived/derived/SwiftJXL-cyclonedx-derived.json) are explicitly labelled derived documents, not unchanged SwiftPM output.
+
+`Scripts/derive-release-sbom.py` recognises only this clean, source-pinned Swift 6.4.2 graph and its exact known defects. It preserves source-version values using the standard SPDX property, corrects the specification-version field, removes only demonstrably malformed optional package identifiers and records their original values. The [Swift package-URL definition](https://raw.githubusercontent.com/package-url/purl-spec/main/types/swift-definition.json) requires a source-host/organisation namespace; the generator used a local checkout name. No replacement identity is guessed. The structurally identical CycloneDX product duplicate is removed while the unique metadata component and all dependency references remain. The valid SwiftPM tool identifier is retained.
+
+The new SPDX document has a distinct UUID, real derivation agent/time and raw-file hash provenance. CycloneDX keeps its serial number, increments BOM version 1 to 2 and records the derivation tool/time. Every edit is logged; unknown defects fail rather than being repaired speculatively. Both delivered files are reparsed and validated against the pinned official JSON Schemas and checked for identifier/reference integrity. Full official SPDX OWL/SHACL validation passes with 62 data triples and 3,737 model triples, all shapes, no allowed warnings, and no inference. Removing a required creation timestamp is rejected by the same model, demonstrating that the semantic check is active. The final output and original SHA-256 values are rechecked.
+
+```sh
+.build/release-tools/bin/python -m pip install 'pyshacl==0.30.1' 'rdflib==7.1.4' 'owlrl==7.1.4'
+# Add the official SPDX 3.0.1 model/context and semantic-sources.json pins to the offline schema directory.
+.build/release-tools/bin/python Scripts/derive-release-sbom.py --build-report .build/milestone5-sbom/report.json --schemas .build/release-schemas --output .build/release-sbom-derived
+python3 Scripts/TestSupport/test-derived-release-sbom.py
+```
+
+[Model/context URLs and hashes](Evidence/sbom-derived/semantic-sources.json), validator versions, raw validation failures, the initial derivation harness failure, exact edits and the negative semantic result are retained. This is a validated **SwiftPM package graph**. Embedded third-party source uses the separate notice/provenance inventory; complete SDK/runtime or binary-system inventory is not inferred. The upstream generator defects remain documented and should be re-evaluated when the toolchain changes.
+
 ## Remaining release gates
 
 The seven source-bound Milestone 4 gaps remain: Linux ASan/TSan; exact macOS 26.0 runtime; native Intel macOS runtime; representative physical Apple devices; current-source iOS Simulator Debug/ASan/TSan; the complete ten-group CLI TSan matrix; and full applicable tvOS/watchOS/visionOS simulator bundles. SDK builds and historical smoke tests are not runtime substitutes. Existing performance and mutation-campaign acceptance is retained within its measured scope.
 
-SBOM conformance and the maintainer-established private reporting channel/supported-version policy in [SECURITY.md](../../../SECURITY.md) also remain open. No organisation settings, predecessor history or downstream application is changed. JXLSwift remains the production route. Completing this preparation task does not waive those requirements or allow a stable tag.
+The maintainer-established private reporting channel/supported-version policy in [SECURITY.md](../../../SECURITY.md) also remains open. No organisation settings, predecessor history or downstream application is changed. JXLSwift remains the production route. Completing this preparation task does not waive those requirements or allow a stable tag.

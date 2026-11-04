@@ -39,4 +39,4 @@ Active packages and generated consumers require Apple OS 26.0. The owner-approve
 
 ## Release preparation
 
-See [Milestone 5](../Documentation/Engineering/Release/README.md) for the clean URL and exact-version consumer, documentation consistency, fixture/provenance inventory, and fail-closed release checklist. Passing preparation checks does not waive the outstanding runtime, sanitizer, SBOM or maintainer-policy gates.
+See [Milestone 5](../Documentation/Engineering/Release/README.md) for the clean URL and exact-version consumer, documentation consistency, fixture/provenance inventory, and fail-closed release checklist. Passing preparation checks does not waive the outstanding runtime, sanitizer or maintainer-policy gates. Derived SBOM qualification retains its explicit package-graph scope.

@@ -28,6 +28,7 @@ jobs:
           python3 Scripts/test-release-gates.py
           python3 Scripts/Tests/test_release_provenance.py
           python3 Scripts/TestSupport/test-release-sbom.py
+          python3 Scripts/TestSupport/test-derived-release-sbom.py
       - name: Audit current documentation, fixture notices and release gates
         run: |
           python3 Scripts/check-release-docs.py --output .build/release-docs.json

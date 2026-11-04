@@ -1,0 +1,85 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "bom-ref": "swiftjxl-milestone5",
+      "externalReferences": [],
+      "name": "swiftjxl-milestone5",
+      "pedigree": {},
+      "properties": [
+        {
+          "name": "swift-entity",
+          "value": "swift-package"
+        }
+      ],
+      "scope": "required",
+      "type": "application",
+      "version": "3e00d934bef331cdbc7c4be752857dc9eca8f799"
+    }
+  ],
+  "dependencies": [
+    {
+      "dependsOn": [
+        "swiftjxl-milestone5:SwiftJXL"
+      ],
+      "ref": "swiftjxl-milestone5"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "bom-ref": "swiftjxl-milestone5:SwiftJXL",
+      "externalReferences": [],
+      "name": "SwiftJXL",
+      "pedigree": {},
+      "properties": [
+        {
+          "name": "swift-entity",
+          "value": "swift-product"
+        }
+      ],
+      "scope": "required",
+      "type": "library",
+      "version": "3e00d934bef331cdbc7c4be752857dc9eca8f799"
+    },
+    "timestamp": "2026-11-04T07:18:51Z",
+    "tools": {
+      "components": [
+        {
+          "bom-ref": "urn:uuid:1aac02ab-c768-4b41-9eb9-036c6ba814fd",
+          "licenses": [
+            {
+              "license": {
+                "id": "Apache-2.0",
+                "url": "http://swift.org/LICENSE.txt"
+              }
+            }
+          ],
+          "name": "swift-package-manager",
+          "purl": "pkg:swift/github.com/swiftlang/swift-package-manager@6.4.2",
+          "scope": "excluded",
+          "type": "application",
+          "version": "6.4.2"
+        },
+        {
+          "type": "application",
+          "name": "SwiftJXL SBOM derivation",
+          "version": "70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "swiftjxl:derivation:original-sha256",
+        "value": "5c83817f6dc8d4888a34ad57aeec063d11c0366c0f3ec09fb7cc3b061c9361ab"
+      },
+      {
+        "name": "swiftjxl:derivation:scope",
+        "value": "Corrected SwiftPM package graph; see report.json; not a complete system inventory"
+      }
+    ]
+  },
+  "serialNumber": "urn:uuid:c8d910d2-0192-4b33-81f4-db9816105ed1",
+  "specVersion": "1.7",
+  "version": 2
+}

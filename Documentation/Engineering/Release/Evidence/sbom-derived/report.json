@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "startedUTC": "2026-11-04T07:18:51Z",
+  "command": [
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-tools/bin/python",
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/derive-release-sbom.py",
+    "--build-report",
+    ".build/milestone5-sbom/report.json",
+    "--schemas",
+    ".build/release-schemas",
+    "--output",
+    ".build/milestone5-sbom-derived-final"
+  ],
+  "runnerSHA256": "70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583",
+  "scope": "Explicitly derived, validated SwiftPM package-graph SBOMs; original generator output remains defective",
+  "limitations": [
+    "No complete SDK, runtime or embedded third-party inventory is inferred",
+    "Optional malformed purls omitted; no canonical remote package identity is guessed"
+  ],
+  "environment": {
+    "python": "3.15.2",
+    "validators": {
+      "jsonschema": "4.25.1",
+      "pyshacl": "0.30.1",
+      "rdflib": "7.1.4",
+      "owlrl": "7.1.4"
+    },
+    "packages": {
+      "html5rdf": "1.2.1",
+      "packaging": "26.3",
+      "jsonschema-specifications": "2025.9.1",
+      "pyshacl": "0.30.1",
+      "wcwidth": "0.9.4",
+      "owlrl": "7.1.4",
+      "jsonschema": "4.25.1",
+      "pip": "26.2.2",
+      "rdflib": "7.1.4",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.9.1",
+      "attrs": "26.1.0",
+      "prettytable": "3.18.0",
+      "pyparsing": "3.3.3"
+    }
+  },
+  "artifacts": [
+    {
+      "specification": "spdx",
+      "rawSHA256": "ac8c44f988ab9c910d4c911815bae64078826340aed449965c5f30c99d5dd2f2",
+      "derivedPath": "derived/SwiftJXL-spdx-derived.json",
+      "derivedSHA256": "cfe421226133261330c9de93274f358048595b10f1158e8740bd6afe8ceacd7c",
+      "edits": [
+        {
+          "operation": "replace",
+          "pointer": "/@graph/2/specVersion",
+          "before": "6.4.2",
+          "after": "3.0.1",
+          "reason": "SPDX model version, not compiler version"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/2/comment",
+          "before": null,
+          "after": "Original generator value was 6.4.2 (compiler version). Derived by Scripts/derive-release-sbom.py SHA-256 70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583 from original SHA-256 ac8c44f988ab9c910d4c911815bae64078826340aed449965c5f30c99d5dd2f2; see report.json.",
+          "reason": "Identify the explicit correction without attributing it to SwiftPM"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/@graph/8/externalUrl",
+          "before": "pkg:swift/swiftjxl-milestone5@3e00d934bef331cdbc7c4be752857dc9eca8f799",
+          "reason": "Unknown SPDX property containing a malformed Swift purl: required source-host/organisation namespace is absent; optional identifier omitted"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/@graph/8/software_internalVersion",
+          "before": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+          "reason": "Unknown SPDX property"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/8/software_packageVersion",
+          "before": null,
+          "after": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+          "reason": "Preserve the exact recorded source revision using its standard property"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/@graph/8/creationInfo",
+          "before": "_:creationInfo",
+          "after": "urn:uuid:94f76d90-3761-5931-8892-c81581c7aa88",
+          "reason": "These corrected elements were produced by the derivation tool"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/@graph/9/externalUrl",
+          "before": "pkg:swift/swiftjxl-milestone5/swiftjxl-milestone5:SwiftJXL@3e00d934bef331cdbc7c4be752857dc9eca8f799",
+          "reason": "Unknown SPDX property containing a malformed Swift purl: required source-host/organisation namespace is absent; optional identifier omitted"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/@graph/9/software_internalVersion",
+          "before": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+          "reason": "Unknown SPDX property"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/9/software_packageVersion",
+          "before": null,
+          "after": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+          "reason": "Preserve the exact recorded source revision using its standard property"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/@graph/9/creationInfo",
+          "before": "_:creationInfo",
+          "after": "urn:uuid:94f76d90-3761-5931-8892-c81581c7aa88",
+          "reason": "These corrected elements were produced by the derivation tool"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/@graph/7/spdxId",
+          "before": "urn:uuid:0f6e6370-94f8-4080-8375-6f10a86dfc0a",
+          "after": "urn:uuid:a15ab81e-af9c-4d5a-a277-9fab363855be",
+          "reason": "New derived document identity"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/@graph/7/creationInfo",
+          "before": "_:creationInfo",
+          "after": "urn:uuid:94f76d90-3761-5931-8892-c81581c7aa88",
+          "reason": "Record actual derivation time and agent"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/7/comment",
+          "before": null,
+          "after": "Derived by Scripts/derive-release-sbom.py SHA-256 70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583 from original SHA-256 ac8c44f988ab9c910d4c911815bae64078826340aed449965c5f30c99d5dd2f2; see report.json. Original document: urn:uuid:0f6e6370-94f8-4080-8375-6f10a86dfc0a",
+          "reason": "The derived document is not unchanged SwiftPM output"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/11",
+          "after": {
+            "@id": "urn:uuid:94f76d90-3761-5931-8892-c81581c7aa88",
+            "type": "CreationInfo",
+            "created": "2026-11-04T07:18:51Z",
+            "createdBy": [
+              "urn:uuid:066af5f1-04ea-5bef-9e0e-35cb77d6a93f"
+            ],
+            "specVersion": "3.0.1"
+          },
+          "reason": "Actual derivation provenance, not an inferred package fact"
+        },
+        {
+          "operation": "add",
+          "pointer": "/@graph/12",
+          "after": {
+            "spdxId": "urn:uuid:066af5f1-04ea-5bef-9e0e-35cb77d6a93f",
+            "type": "SoftwareAgent",
+            "name": "SwiftJXL SBOM derivation",
+            "creationInfo": "urn:uuid:94f76d90-3761-5931-8892-c81581c7aa88",
+            "comment": "Scripts/derive-release-sbom.py SHA-256 70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583"
+          },
+          "reason": "Actual derivation provenance, not an inferred package fact"
+        }
+      ],
+      "schemaErrors": [],
+      "uniqueAndReferenceChecks": "passed",
+      "shacl": {
+        "conforms": true,
+        "dataTriples": 62,
+        "modelTriples": 3737,
+        "inference": "none",
+        "allShapes": true,
+        "warningsAllowed": false,
+        "missingRequiredTimestampRejected": true
+      },
+      "status": "passed"
+    },
+    {
+      "specification": "cyclonedx",
+      "rawSHA256": "5c83817f6dc8d4888a34ad57aeec063d11c0366c0f3ec09fb7cc3b061c9361ab",
+      "derivedPath": "derived/SwiftJXL-cyclonedx-derived.json",
+      "derivedSHA256": "c5187399d41f92d7426fca9e7b4371dc2f9482bf7dd63d6ba11eec4e086b6f78",
+      "edits": [
+        {
+          "operation": "remove",
+          "pointer": "/components/1",
+          "before": {
+            "bom-ref": "swiftjxl-milestone5:SwiftJXL",
+            "externalReferences": [],
+            "name": "SwiftJXL",
+            "pedigree": {},
+            "properties": [
+              {
+                "name": "swift-entity",
+                "value": "swift-product"
+              }
+            ],
+            "purl": "pkg:swift/swiftjxl-milestone5/swiftjxl-milestone5:SwiftJXL@3e00d934bef331cdbc7c4be752857dc9eca8f799",
+            "scope": "required",
+            "type": "library",
+            "version": "3e00d934bef331cdbc7c4be752857dc9eca8f799"
+          },
+          "reason": "Identical product remains at metadata.component; retain one unique bom-ref definition"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/components/0/purl",
+          "before": "pkg:swift/swiftjxl-milestone5@3e00d934bef331cdbc7c4be752857dc9eca8f799",
+          "reason": "Malformed Swift purl lacks required source-host/organisation namespace; optional identifier omitted, original retained in provenance"
+        },
+        {
+          "operation": "remove",
+          "pointer": "/metadata/component/purl",
+          "before": "pkg:swift/swiftjxl-milestone5/swiftjxl-milestone5:SwiftJXL@3e00d934bef331cdbc7c4be752857dc9eca8f799",
+          "reason": "Malformed Swift purl lacks required source-host/organisation namespace; optional identifier omitted, original retained in provenance"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/version",
+          "before": 1,
+          "after": 2,
+          "reason": "Increment modified BOM version while retaining its original serialNumber"
+        },
+        {
+          "operation": "replace",
+          "pointer": "/metadata/timestamp",
+          "before": "2026-11-04T06:45:01Z",
+          "after": "2026-11-04T07:18:51Z",
+          "reason": "Actual time of derived BOM creation"
+        },
+        {
+          "operation": "add",
+          "pointer": "/metadata/tools/components/1",
+          "after": {
+            "type": "application",
+            "name": "SwiftJXL SBOM derivation",
+            "version": "70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583"
+          },
+          "reason": "Record actual enrichment tool; version is its source SHA-256"
+        },
+        {
+          "operation": "add",
+          "pointer": "/metadata/properties",
+          "before": null,
+          "after": [
+            {
+              "name": "swiftjxl:derivation:original-sha256",
+              "value": "5c83817f6dc8d4888a34ad57aeec063d11c0366c0f3ec09fb7cc3b061c9361ab"
+            },
+            {
+              "name": "swiftjxl:derivation:scope",
+              "value": "Corrected SwiftPM package graph; see report.json; not a complete system inventory"
+            }
+          ],
+          "reason": "Link the derived BOM to its preserved original and scope"
+        }
+      ],
+      "schemaErrors": [],
+      "uniqueAndReferenceChecks": "passed",
+      "status": "passed"
+    }
+  ],
+  "rawValidationCommand": {
+    "argv": [
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-tools/bin/python",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/validate-release-sbom.py",
+      "--build-report",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-sbom/report.json",
+      "--schemas",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-schemas",
+      "--output",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-sbom-derived-final/raw-validation"
+    ],
+    "exitCode": 1
+  },
+  "sourceRevision": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+  "buildReportSHA256": "81c9f3e43b8af555079f09ef8e494489e4325db33a53f6a4ec12756a5ce6010d",
+  "semanticSources": [
+    {
+      "file": "spdx-model.ttl",
+      "url": "https://spdx.org/rdf/3.0.1/spdx-model.ttl",
+      "sha256": "30ebb4af2d70a9809044ef46f44cc3dc5125226d70f818a50ed2e1d5f404c593",
+      "retrievedUTC": "2026-11-04T07:12:55.983571+00:00"
+    },
+    {
+      "file": "spdx-context.jsonld",
+      "url": "https://spdx.org/rdf/3.0.1/spdx-context.jsonld",
+      "sha256": "c72b0928f094c83e5c127784edb1ebca2af74a104fcacc007c332b23cbc788bd",
+      "retrievedUTC": "2026-11-04T07:12:57.206151+00:00"
+    }
+  ],
+  "finishedUTC": "2026-11-04T07:18:52.824885+00:00",
+  "exitCode": 0
+}

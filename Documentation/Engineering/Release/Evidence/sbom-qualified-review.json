@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "scope": "Milestone 5 preparation with explicitly derived package-graph SBOM conformance; no stable publication authority",
+  "recordedUTC": "2026-11-04T07:21:37.611912+00:00",
+  "sourceGroupDigests": {
+    "runtime": "55b65dcea0a8b47f0608036b7d7e626106482c723ab025ff38c99625bf393b58",
+    "preparation": "a32c0e4cd870e35a4371136721c1cd6de27f7d2ea29b184989ab8c59d955384e"
+  },
+  "derivedSBOM": {
+    "report": "Documentation/Engineering/Release/Evidence/sbom-derived/report.json",
+    "sha256": "8b5bebc8a2092000c96ad9ecf98ef52c92402266e3e12d7f69c7e3ff2b9fff02",
+    "sourceRevision": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+    "command": [
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-tools/bin/python",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/derive-release-sbom.py",
+      "--build-report",
+      ".build/milestone5-sbom/report.json",
+      "--schemas",
+      ".build/release-schemas",
+      "--output",
+      ".build/milestone5-sbom-derived-final"
+    ],
+    "exitCode": 0,
+    "rawEmissions": "preserved unchanged; original generator defects remain failed",
+    "schemaResults": "SPDX3.0.1 and CycloneDX1.7 passed",
+    "fullSPDXSHACL": "passed; all shapes,62 data triples,3737 model triples,no warnings; missing-timestamp negative control rejected",
+    "referenceIntegrity": "passed",
+    "independentReview": "Separate reviewer replayed all15 SPDX and7 CycloneDX edits to exact delivered bytes and verified runner/build/raw/derived hashes; no material finding",
+    "scopeLimit": "Package graph only; not a complete SDK/runtime/embedded-component inventory"
+  },
+  "reusedEvidence": {
+    "consumerAndCLIAndProvenance": "Original source-bound receipts unchanged; runtime, consumer source/runner, installer and provenance validator remain identical",
+    "initialValidationSHA256": "fd83f09400bcc0f1f310a46b4cf0b70e2e705221c9f6bb134a7f6a7d6ad02d5f",
+    "ciFollowupSHA256": "dd04cc3220420b2a15d0932b4fba7fad96df631d551c116fe25e38eb632958b6"
+  },
+  "newChecks": [
+    {
+      "command": "python3 Scripts/TestSupport/test-derived-release-sbom.py",
+      "exitCode": 0,
+      "tests": 4
+    },
+    {
+      "command": "python3 Scripts/check-release-docs.py --output .build/milestone5-docs-sbom-final.json",
+      "exitCode": 0
+    }
+  ],
+  "artifactSHA256": {
+    "sbom-derived/derived/SwiftJXL-cyclonedx-derived.json": "c5187399d41f92d7426fca9e7b4371dc2f9482bf7dd63d6ba11eec4e086b6f78",
+    "sbom-derived/derived/SwiftJXL-spdx-derived.json": "cfe421226133261330c9de93274f358048595b10f1158e8740bd6afe8ceacd7c",
+    "sbom-derived/initial-failure.json": "d8b776669bd754662c13a2d0849e077de5b819caab7e2d4b58c51183c8a034c9",
+    "sbom-derived/raw-validation.log": "8ac3ec9675665263a03e37948beb1d465bc5351687d4cfcc7cacb750c66ec8e4",
+    "sbom-derived/report.json": "8b5bebc8a2092000c96ad9ecf98ef52c92402266e3e12d7f69c7e3ff2b9fff02",
+    "sbom-derived/semantic-sources.json": "f17a94c74b226e76a1e824688c91fa36b37ecbe4e7d369b3dd06e7fb26b57e4f",
+    "sbom-derived/spdx-shacl-negative-sentinel.txt": "d3b18fe3e0dbbec8693262fbfe9c185adec526cbbb6866a349998c02a6faf2a5",
+    "sbom-derived/spdx-shacl.ttl": "4a53a3befd9bcdb7273ef3d6e47a83be519927771faee49ef0d2a44ee23be2be",
+    "sbom-derived/spdx-shacl.txt": "77debc800e6c973b66475968bdf71e2e667df8f4108e7f5299fe1651e6606dc9"
+  },
+  "stableReleaseReady": false,
+  "publicationAuthorised": false
+}
