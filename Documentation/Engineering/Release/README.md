@@ -8,9 +8,9 @@ This record covers the owner-assigned release-preparation task on 4 November 202
 - Committed Milestone 4 baseline: `3e00d934bef331cdbc7c4be752857dc9eca8f799`.
 - Selected predecessor: JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e` (`v1.5.0-rc.1`). The older `760697a` API inspection remains historical.
 - Common contract: **0.10.0**, unchanged seven-file distribution and hash manifest. Development identifier remains **2.1.0-dev.2**.
-- The working decoder optimisations on `codex/djxl-decoder-optimisation` were excluded. This task uses a separate worktree. No production codec, package manifest, fixture or existing licence text changes.
+- The working decoder optimisations on `codex/djxl-decoder-optimisation` were excluded. This task uses a separate worktree. The initial preparation changed no production code or package manifest. The subsequent platform qualification adds the Linux locking compatibility and test support described below; fixtures and existing licence texts remain unchanged.
 
-The [gate checklist](release-gates.json) binds the actual runtime files and every passing preparation report. Historical correctness, independent-oracle, sanitizer, security and controlled-performance results remain attributed to their original runs in the [Milestone 4 record](../Migration/MILESTONE4_REMAINING.md). They are not counted as fresh executions here. No hot path changed, so no new latency/RSS improvement is claimed and no replacement benchmark was run.
+The [gate checklist](release-gates.json) binds the actual runtime files and every passing preparation report. Historical correctness, independent-oracle, sanitizer, security and controlled-performance results remain attributed to their original runs in the [Milestone 4 record](../Migration/MILESTONE4_REMAINING.md). They are not counted as fresh executions here. The initial preparation did not change a hot path. The subsequent Linux locking change is being qualified with a controlled before/after latency and RSS comparison; no performance improvement is assumed.
 
 ## Preparation checks
 
@@ -99,3 +99,11 @@ python3 Scripts/TestSupport/test-derived-release-sbom.py
 The seven source-bound Milestone 4 gaps remain: Linux ASan/TSan; exact macOS 26.0 runtime; native Intel macOS runtime; representative physical Apple devices; current-source iOS Simulator Debug/ASan/TSan; the complete ten-group CLI TSan matrix; and full applicable tvOS/watchOS/visionOS simulator bundles. SDK builds and historical smoke tests are not runtime substitutes. Existing performance and mutation-campaign acceptance is retained within its measured scope.
 
 The maintainer-established private reporting channel/supported-version policy in [SECURITY.md](../../../SECURITY.md) also remains open. No organisation settings, predecessor history or downstream application is changed. JXLSwift remains the production route. Completing this preparation task does not waive those requirements or allow a stable tag.
+
+## Library qualification follow-up
+
+The owner subsequently assigned all remaining Milestone 5 library work, excluding physical-device testing and DICOMKit integration. DICOMKit and other downstream application changes remain outside this repository task. The physical-device gate stays required for stable release and is excluded only from this assignment; the checklist reports assigned-task completion separately from release readiness.
+
+Native Linux Swift 6.2.4 and 6.4.2 sanitizer runs exposed behaviour reproduced in standalone standard-library experiments: Synchronization lock operations produced TSan diagnostics, while Foundation.Process retained allocations. The candidate now uses a package-scoped, pthread-backed Foundation lock on every Linux build, with the original Synchronization.Mutex implementation retained on Apple platforms. It preserves sending ownership boundaries, typed throws and synchronous borrows. A written unchecked-Sendable proof and Linux-only concurrent access, try-lock, throw/unlock and noncopyable-owner tests accompany it. The Linux representation adds a heap box and lock object; unchanged allocation counts are not claimed.
+
+Test reference tools use a bounded, shell-free POSIX launcher on Linux, with descriptor/string owners retained through spawn and child termination/reaping on timeout. The executable and library never use this test launcher. Six additional Linux-only declarations cover the compatibility boundaries, while existing ownership/cancellation and codec tests remain required. All affected source-bound qualification and preparation gates are reopened until the final candidate reports have been independently reviewed. Historical passing reports above retain their original revisions.

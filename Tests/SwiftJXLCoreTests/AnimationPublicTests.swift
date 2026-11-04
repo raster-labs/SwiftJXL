@@ -20,7 +20,7 @@ struct AnimationPublicTests {
         #expect(info.frames.map(\.durationTicks) == [10, 20, 30])
         #expect(info.timing?.loopCount == 3 && info.timing?.totalTicks == 60)
         #expect(info.timing?.ticksPerSecondNumerator == 100 && info.timing?.ticksPerSecondDenominator == 1)
-        let progress = Mutex<[ProgressUpdate]>([])
+        let progress = PackageMutex<[ProgressUpdate]>([])
         let audit = ScalarStorageAudit()
         let result = try await ScalarStorageAudit.$current.withValue(audit) {
             try await decoder.decodeAll(data, options: .init(copyPolicy: .requireSharedStorage,

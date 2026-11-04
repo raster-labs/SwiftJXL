@@ -115,12 +115,12 @@ struct JPEGReconstructionMetadataTests {
                 try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata, policy: policy)
             }
         }
-        let count = Mutex(0)
+        let count = PackageMutex(0)
         _ = try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
             policy: JPEGReconstructionPolicy(checkpoint: { count.withLock { $0 += 1 } }))
         let total = count.withLock { $0 }
         for stop in [1, total / 4, total / 2, total - 1, total] {
-            let calls = Mutex(0)
+            let calls = PackageMutex(0)
             #expect(throws: CancellationError.self) {
                 try JPEGReconstructionWriter.write(coefficients: decoded.coefficients, metadata: metadata,
                     policy: JPEGReconstructionPolicy(checkpoint: {
@@ -234,7 +234,7 @@ struct JPEGReconstructionMetadataTests {
         #expect(throws: JBRDError.self) {
             try JPEGReconstructionMetadata.encode(payload, policy: JBRDPolicy(maximumPayloadBytes: 1))
         }
-        let counted = Mutex(0)
+        let counted = PackageMutex(0)
         _ = try JPEGReconstructionMetadata.encode(decoded, policy: JBRDPolicy(checkpoint: {
             counted.withLock { $0 += 1 }
         }))
@@ -249,7 +249,7 @@ struct JPEGReconstructionMetadataTests {
         }
         let total = counted.withLock { $0 }
         for stop in [1, 30, total / 2, total - 1, total] {
-            let calls = Mutex(0)
+            let calls = PackageMutex(0)
             let policy = try JBRDPolicy(checkpoint: {
                 if calls.withLock({ $0 += 1; return $0 }) == stop { throw CancellationError() }
             })
@@ -358,13 +358,18 @@ struct JPEGReconstructionMetadataTests {
         defer { try? handle.close() }
         let process = Process(); process.executableURL = URL(fileURLWithPath: executable)
         process.arguments = arguments; process.standardOutput = handle; process.standardError = handle
+        #if os(Linux)
+        let processStatus = try runLinuxOracle(process)
+        #else
         try process.run()
         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
         while process.isRunning && ContinuousClock.now < deadline { Thread.sleep(forTimeInterval: 0.01) }
         if process.isRunning { process.terminate(); Issue.record("Oracle timed out: \(executable)"); throw CancellationError() }
         // Release Foundation's process/run-loop ownership after bounded polling.
         process.waitUntilExit()
-        try #require(process.terminationStatus == 0, "Oracle failed; log: \(log.path)")
+        let processStatus = process.terminationStatus
+        #endif
+        try #require(processStatus == 0, "Oracle failed; log: \(log.path)")
     }
     #endif
 }

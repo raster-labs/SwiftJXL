@@ -161,8 +161,13 @@ struct ModularEncoderTests {
         process.executableURL = URL(fileURLWithPath: binary + "/djxl")
         process.arguments = [input.path, output.path, "--bits_per_sample=\(bits)", "--num_threads=2", "--quiet"]
         process.standardOutput = handle; process.standardError = handle
+        #if os(Linux)
+        let oracleStatus = try runLinuxOracle(process)
+        #else
         try process.run(); process.waitUntilExit()
-        try #require(process.terminationStatus == 0, "Independent decoder failed; inspect oracle.log")
+        let oracleStatus = process.terminationStatus
+        #endif
+        try #require(oracleStatus == 0, "Independent decoder failed; inspect oracle.log")
         let pam = try Data(contentsOf: output)
         var pixels = Data()
         for i in 0..<(width * height) { for c in expected.indices {

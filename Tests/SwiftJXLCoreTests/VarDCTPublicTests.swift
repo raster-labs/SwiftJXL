@@ -109,7 +109,7 @@ struct VarDCTPublicTests {
     @Test func cancellationBeforeSealingInvalidatesDestination() async throws {
         let decoder = try Decoder(), data = try fixture("pred-17-4-16.independent")
         let destination = try ImageDestination.allocate(descriptor: decoder.inspect(data).descriptor)
-        let completed = Mutex(false)
+        let completed = PackageMutex(false)
         let task = Task {
             try await decoder.decode(data, into: destination, options: .init(progress: { update in
                 if update.phase == .completed {

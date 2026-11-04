@@ -23,7 +23,10 @@ ORACLE_REVISION = "a7a9c787341cf703dede03c2009fa460cae5e5df"
 REQUIRED_TESTS = ["imageRetainsAdapterAndAllocationUntilLastReader", "concurrentReadersPreserveEveryLogicalSample",
                   "sharedSourceSurvivesCallerReleaseAndOneCancelledEncode", "concurrentEncodersShareOneImmutableSource",
                   "cancellationInsideWorkerIsObservedAndAllWorkersJoin", "independentBothDirections",
-                  "optionalFullRangeHardwareReciprocalVectors"]
+                  "optionalFullRangeHardwareReciprocalVectors",
+                  "lockedValueSerialisesWritersAndConcurrentReaders", "lockedValueUnlocksAfterTypedThrow",
+                  "lockedValueRetainsAndReleasesNoncopyableOwner", "oraclePassesLiteralArgumentsAndPreservesNonzeroExit",
+                  "oracleTimeoutKillsAndReapsOwnedChild", "oracleRejectsMissingExecutableAndEmbeddedNUL"]
 
 
 def require(condition, message):

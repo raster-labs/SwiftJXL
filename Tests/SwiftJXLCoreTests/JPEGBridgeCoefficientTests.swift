@@ -168,7 +168,7 @@ struct JPEGBridgeCoefficientTests {
     @Test func cancellationBeforePublicationAndDuringBlockWork() throws {
         let input = try decoded()
         for threshold in [1, 2, 5] {
-            let calls = Mutex(0)
+            let calls = PackageMutex(0)
             let policy = try JPEGBridgePolicy(checkpoint: {
                 if calls.withLock({ $0 += 1; return $0 }) == threshold { throw CancellationError() }
             })

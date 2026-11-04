@@ -94,6 +94,29 @@ class ReleaseGateTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "cannot be waived"):
             VALIDATOR.audit(self.repo, self.checklist)
 
+    def test_physical_task_exclusion_does_not_authorise_release(self):
+        self.checklist['taskScope'] = {
+            'excludedGates': ['M4-PHYSICAL-DEVICES'], 'recordedDate': '2026-11-04',
+            'ownerInstruction': 'complete all the milestone 5 except the physical device testing.'}
+        for gate in self.checklist['gates']:
+            if gate['id'] != 'M4-PHYSICAL-DEVICES':
+                self.passing_evidence(gate)
+        result = VALIDATOR.audit(self.repo, self.checklist)
+        self.assertTrue(result['assignedTaskComplete'])
+        self.assertFalse(result['stableReleaseReady'])
+        self.assertFalse(result['publicationAuthorised'])
+        self.assertEqual(result['blockedGates'], ['M4-PHYSICAL-DEVICES'])
+
+    def test_other_platform_gate_cannot_be_excluded(self):
+        self.checklist['taskScope'] = {'excludedGates': ['M4-MACOS-MINIMUM']}
+        with self.assertRaisesRegex(ValueError, 'Only physical-device'):
+            VALIDATOR.audit(self.repo, self.checklist)
+
+    def test_task_exclusion_requires_recorded_instruction(self):
+        self.checklist['taskScope'] = {'excludedGates': ['M4-PHYSICAL-DEVICES']}
+        with self.assertRaisesRegex(ValueError, 'recorded owner instruction'):
+            VALIDATOR.audit(self.repo, self.checklist)
+
     def test_unknown_status_is_invalid(self):
         self.checklist["gates"][0]["status"] = "accepted-risk"
         with self.assertRaisesRegex(ValueError, "Unknown gate status"):

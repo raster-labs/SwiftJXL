@@ -16,7 +16,7 @@ let package = Package(
         .testTarget(name: "SwiftJXLCoreTests", dependencies: ["SwiftJXLCore", "SwiftJXL"],
                     resources: [.copy("Fixtures/JPEG"), .copy("Fixtures/JPEGExtended"), .copy("Fixtures/JBRD"), .copy("Fixtures/Brotli"), .copy("Fixtures/JPEGEvents"), .copy("Fixtures/JPEGBridge"), .copy("Fixtures/Modular"), .copy("Fixtures/VarDCT")]),
         .executableTarget(name: "SwiftJXLCLI", dependencies: ["SwiftJXL"]),
-        .testTarget(name: "SwiftJXLTests", dependencies: ["SwiftJXL"])
+        .testTarget(name: "SwiftJXLTests", dependencies: ["SwiftJXL", "SwiftJXLCore"])
     ],
     swiftLanguageModes: [.v6]
 )

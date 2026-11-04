@@ -86,7 +86,7 @@ struct JBRDTests {
         for policy in policies {
             #expect(throws: JBRDError.self) { try JBRDBoxReader.read(data, policy: policy) }
         }
-        let calls = Mutex(0)
+        let calls = PackageMutex(0)
         let policy = try JBRDPolicy(checkpoint: {
             let n = calls.withLock { $0 += 1; return $0 }
             if n == 10 { throw CancellationError() }

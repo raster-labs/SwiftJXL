@@ -14,7 +14,7 @@ func modularDecodeBatch<T: Sendable>(count: Int, budget: ScalarOperationBudget,
     let slotBytes = try ScalarOperationBudget.sum(MemoryLayout<Result<T, any Error>?>.stride, MemoryLayout<T>.stride)
     try budget.reserveWorkspace(ScalarOperationBudget.sum(128,
         ScalarOperationBudget.product(count, ScalarOperationBudget.product(slotBytes, 2))))
-    let results = Mutex([Result<T, any Error>?](repeating: nil, count: count))
+    let results = PackageMutex([Result<T, any Error>?](repeating: nil, count: count))
     let audit = ScalarStorageAudit.current
     DispatchQueue.concurrentPerform(iterations: count) { index in
         ScalarStorageAudit.$current.withValue(audit) {

@@ -8,6 +8,7 @@ on:
       - 'Tests/**'
       - 'Package.swift'
       - 'Scripts/TestSupport/qualify-native-runtime.py'
+      - 'Scripts/Qualification/VarDCTARM/reciprocal-vectors.c'
       - '.github/workflows/milestone5-native-macos.yml'
 
 permissions:
@@ -18,8 +19,52 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  arm-reciprocal-vectors:
+    name: Generate native ARM reciprocal reference vectors
+    runs-on: macos-26
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Generate and bind hardware vectors
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = arm64
+          test "$(sysctl -n hw.optional.arm64)" = 1
+          test "$(sysctl -n sysctl.proc_translated 2>/dev/null || true)" != 1
+          mkdir -p "$RUNNER_TEMP/m5-arm-vectors"
+          xcrun clang -O2 Scripts/Qualification/VarDCTARM/reciprocal-vectors.c -o "$RUNNER_TEMP/m5-arm-vectors/generator"
+          "$RUNNER_TEMP/m5-arm-vectors/generator" > "$RUNNER_TEMP/m5-arm-vectors/reciprocal-vectors.json"
+          "$RUNNER_TEMP/m5-arm-vectors/generator" > "$RUNNER_TEMP/m5-arm-vectors/replay.json"
+          cmp "$RUNNER_TEMP/m5-arm-vectors/reciprocal-vectors.json" "$RUNNER_TEMP/m5-arm-vectors/replay.json"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, platform, subprocess
+          out = pathlib.Path(os.environ['RUNNER_TEMP'])/'m5-arm-vectors'
+          vectors = json.loads((out/'reciprocal-vectors.json').read_text())
+          if len(vectors) < 40000: raise SystemExit('Incomplete ARM reciprocal reference vectors.')
+          digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+          source = pathlib.Path('Scripts/Qualification/VarDCTARM/reciprocal-vectors.c')
+          report = {'status': 'passed', 'architecture': platform.machine(),
+              'runtime': subprocess.check_output(['sw_vers'], text=True),
+              'sourceRevision': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'sourceSHA256': digest(source), 'generatorSHA256': digest(out/'generator'),
+              'vectorCount': len(vectors), 'vectorsSHA256': digest(out/'reciprocal-vectors.json'),
+              'replayedByteForByte': True,
+              'compiler': subprocess.check_output(['xcrun', 'clang', '--version'], text=True)}
+          (out/'report.json').write_text(json.dumps(report, indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: milestone5-arm-reciprocal-${{ github.run_id }}
+          path: ${{ runner.temp }}/m5-arm-vectors
+          if-no-files-found: error
+          retention-days: 30
   native-intel:
     name: Native Intel macOS core and CLI
+    needs: arm-reciprocal-vectors
     runs-on: macos-26-intel
     timeout-minutes: 150
     env:
@@ -35,6 +80,8 @@ jobs:
           mkdir -p "$RUNNER_TEMP/m5-native-intel"
           printf 'SWIFTJXL_ORACLE_BIN=%s/libjxl/build/tools\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
           printf 'SWIFTJXL_ORACLE_OUTPUT=%s/m5-native-intel/oracle-outputs\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          printf 'SWIFTJXL_PROFILE_ORACLE=%s/libjxl/build/swiftjxl-modular-profile-oracle\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+          printf 'SWIFTJXL_ARM_RECIPROCAL_VECTORS=%s/m5-native-intel/arm-vectors/reciprocal-vectors.json\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
           python3 - <<'PY'
           import hashlib, json, os, pathlib, platform, subprocess
           root = pathlib.Path.cwd()
@@ -58,6 +105,11 @@ jobs:
           if not native:
               raise SystemExit('Native x86_64 host required; translated or Apple Silicon execution is refused.')
           PY
+      - name: Retain native ARM vector provenance for Intel verification
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: milestone5-arm-reciprocal-${{ github.run_id }}
+          path: ${{ runner.temp }}/m5-native-intel/arm-vectors
       - name: Python for the pinned NRRD oracle
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
@@ -82,11 +134,11 @@ jobs:
             -DJPEGXL_ENABLE_DOXYGEN=OFF -DJPEGXL_ENABLE_JNI=OFF \
             -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_ENABLE_OPENEXR=OFF \
             -DJPEGXL_ENABLE_SKCMS=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_BUNDLE_LIBPNG=OFF
-          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl swiftjxl-modular-info-oracle swiftjxl-animation-pixel-oracle --parallel 2
+          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl swiftjxl-modular-info-oracle swiftjxl-modular-profile-oracle swiftjxl-animation-pixel-oracle --parallel 2
           git -C "$RUNNER_TEMP/libjxl" submodule status > "$RUNNER_TEMP/m5-native-intel/oracle-source-pins.txt"
           "$SWIFTJXL_ORACLE_BIN/cjxl" --version > "$RUNNER_TEMP/m5-native-intel/cjxl-version.txt" 2>&1
           "$SWIFTJXL_ORACLE_BIN/djxl" --version > "$RUNNER_TEMP/m5-native-intel/djxl-version.txt" 2>&1
-          shasum -a 256 "$SWIFTJXL_ORACLE_BIN/cjxl" "$SWIFTJXL_ORACLE_BIN/djxl" > "$RUNNER_TEMP/m5-native-intel/oracle-SHA256SUMS"
+          shasum -a 256 "$SWIFTJXL_ORACLE_BIN/cjxl" "$SWIFTJXL_ORACLE_BIN/djxl" "$SWIFTJXL_PROFILE_ORACLE" > "$RUNNER_TEMP/m5-native-intel/oracle-SHA256SUMS"
           xcrun clang -Wall -Wextra -Werror -I"$(brew --prefix jpeg-turbo)/include" Scripts/TestSupport/jpeg-coefficient-oracle.c -L"$(brew --prefix jpeg-turbo)/lib" -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
           python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" -m pip install --only-binary=:all: -r Scripts/nrrd-oracle-requirements.txt
@@ -131,6 +183,36 @@ jobs:
                   item['passed'] = data.get('nativeIntelConfirmed') is True if name == 'host-and-source.json' else data.get('status') == 'passed'
                   item['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
               records.append(item)
+          expected_profiles = {(bits, channels, associated, transfer, intent)
+              for bits in range(8, 17) for channels in range(1, 5)
+              for associated in ([0, 1] if channels % 2 == 0 else [0])
+              for transfer in [1, 13] for intent in range(4)}
+          profile_paths = list((root/'oracle-outputs').glob('public-matrix-*/oracle.json'))
+          observed_profiles = []
+          for path in profile_paths:
+              data = json.loads(path.read_text())
+              if data.get('width') != 5 or data.get('height') != 3:
+                  raise SystemExit('Unexpected independent profile oracle dimensions.')
+              observed_profiles.append(tuple(data.get(k) for k in
+                  ['bits', 'channels', 'premultiplied', 'transferFunction', 'renderingIntent']))
+          profiles_passed = len(observed_profiles) == len(expected_profiles) and set(observed_profiles) == expected_profiles
+          records.append({'path': 'oracle-outputs/public-matrix-*/oracle.json',
+              'passed': profiles_passed, 'observedProfiles': len(observed_profiles),
+              'expectedProfiles': len(expected_profiles)})
+          arm_report = root/'arm-vectors/report.json'
+          arm_vectors = root/'arm-vectors/reciprocal-vectors.json'
+          arm_passed = False
+          if arm_report.is_file() and arm_vectors.is_file():
+              proof = json.loads(arm_report.read_text())
+              host = json.loads((root/'host-and-source.json').read_text())
+              vector_source = pathlib.Path(os.environ['GITHUB_WORKSPACE'])/'Scripts/Qualification/VarDCTARM/reciprocal-vectors.c'
+              arm_passed = (proof.get('status') == 'passed' and proof.get('architecture') == 'arm64'
+                  and proof.get('replayedByteForByte') is True
+                  and proof.get('sourceRevision') == host['sourceRevision']['stdout'].strip()
+                  and proof.get('sourceSHA256') == hashlib.sha256(vector_source.read_bytes()).hexdigest()
+                  and proof.get('vectorsSHA256') == hashlib.sha256(arm_vectors.read_bytes()).hexdigest()
+                  and proof.get('vectorCount') == len(json.loads(arm_vectors.read_text())))
+          records.append({'path': 'arm-vectors/report.json', 'passed': arm_passed})
           passed = all(x.get('passed') for x in records)
           root.mkdir(parents=True, exist_ok=True)
           (root/'summary.json').write_text(json.dumps({'status':'passed' if passed else 'failed','reports':records,'exactMacOS260Claimed':False},indent=2)+'\n')

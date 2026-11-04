@@ -116,8 +116,13 @@ struct ModularGroupBoundaryTests {
         process.executableURL = URL(fileURLWithPath: binary + "/cjxl")
         process.arguments = [input.path, output.path, "--distance=0", "--modular=1", "--effort=3", "--num_threads=2"]
         process.standardOutput = handle; process.standardError = handle
+        #if os(Linux)
+        let oracleStatus = try runLinuxOracle(process)
+        #else
         try process.run(); process.waitUntilExit()
-        try #require(process.terminationStatus == 0)
+        let oracleStatus = process.terminationStatus
+        #endif
+        try #require(oracleStatus == 0)
         let data = try Data(contentsOf: output)
         let decoded = try ModularFrameDecoder.decode(data, budget: c.budget())
         #expect(decoded.bitsPerSample == c.bits)

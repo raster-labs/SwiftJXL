@@ -48,9 +48,9 @@ package enum VarDCTHierarchicalAnalysis {
         }
     }
     private final class WorkerState: Sendable {
-        let scratch: Mutex<WorkerScratch>
+        let scratch: PackageMutex<WorkerScratch>
         init(budget: ScalarOperationBudget) throws {
-            scratch = Mutex(try WorkerScratch(budget: budget))
+            scratch = PackageMutex(try WorkerScratch(budget: budget))
         }
     }
     package static func analyse(_ planes: [[Float]], width: Int, height: Int,

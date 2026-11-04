@@ -17,7 +17,7 @@ struct ModularDecodeParallelTests {
     }
     @Test(arguments: [1, 2, 8, 100])
     func boundedBatchesPreserveOrderedResultsAndAudit(_ workers: Int) throws {
-        let b = try budget(workers: workers), audit = ScalarStorageAudit(), counts = Mutex(Counts())
+        let b = try budget(workers: workers), audit = ScalarStorageAudit(), counts = PackageMutex(Counts())
         let result = try ScalarStorageAudit.$current.withValue(audit) {
             try modularDecodeBatch(count: b.maximumWorkers, budget: b) { index in
                 counts.withLock {
@@ -35,7 +35,7 @@ struct ModularDecodeParallelTests {
         #expect(a.workerJobsStarted == result.count && a.workerJobsCompleted == result.count && a.activeWorkerJobs == 0)
     }
     @Test func orderedErrorsJoinAndAdmissionPrecedesCallbacks() throws {
-        let completed = Mutex(0), b = try budget(workers: 8)
+        let completed = PackageMutex(0), b = try budget(workers: 8)
         do {
             _ = try modularDecodeBatch(count: 8, budget: b) { index -> Int in
                 defer { completed.withLock { $0 += 1 } }
@@ -45,7 +45,7 @@ struct ModularDecodeParallelTests {
             Issue.record("Worker error discarded")
         } catch ProbeError.index(let index) { #expect(index == 2) }
         #expect(completed.withLock { $0 } == 8)
-        let invoked = Mutex(false), denied = try budget(workers: 8, workspace: 1)
+        let invoked = PackageMutex(false), denied = try budget(workers: 8, workspace: 1)
         #expect(throws: ScalarModularError.self) {
             try modularDecodeBatch(count: 8, budget: denied) { index in invoked.withLock { $0 = true }; return index }
         }
@@ -54,7 +54,7 @@ struct ModularDecodeParallelTests {
     }
     @Test func workerCancellationReachesBitReaderAndJoins() throws {
         let flag = ScalarOperationCancellation(), audit = ScalarStorageAudit()
-        let b = try budget(workers: 8, cancellation: flag), completed = Mutex(0)
+        let b = try budget(workers: 8, cancellation: flag), completed = PackageMutex(0)
         #expect(throws: CancellationError.self) {
             try ScalarStorageAudit.$current.withValue(audit) {
                 try modularDecodeBatch(count: 8, budget: b) { index -> Int in

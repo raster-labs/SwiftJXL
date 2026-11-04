@@ -27,7 +27,7 @@ func parallelMap<T: Sendable>(_ count: Int, _ work: @Sendable (Int) throws -> T)
         MemoryLayout<Result<T, any Error>?>.stride, MemoryLayout<T>.stride)
     try context.budget.reserveWorkspace(ScalarOperationBudget.sum(128,
         ScalarOperationBudget.product(count, ScalarOperationBudget.product(elementBytes, 2))))
-    let results = Mutex([Result<T, any Error>?](repeating: nil, count: count))
+    let results = PackageMutex([Result<T, any Error>?](repeating: nil, count: count))
     let audit = ScalarStorageAudit.current
     DispatchQueue.concurrentPerform(iterations: workers) { worker in
         ScalarMapScope.$isWorker.withValue(true) {

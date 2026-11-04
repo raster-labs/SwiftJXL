@@ -16,7 +16,7 @@ package final class ScalarStorageAudit: Sendable {
         package var activeWorkerJobs = 0
         package var peakActiveWorkerJobs = 0
     }
-    private let state = Mutex(Snapshot())
+    private let state = PackageMutex(Snapshot())
     package init() {}
     package var snapshot: Snapshot { state.withLock { $0 } }
     package func finalPixels(_ bytes: Int) {

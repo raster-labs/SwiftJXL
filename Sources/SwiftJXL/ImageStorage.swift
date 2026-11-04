@@ -50,7 +50,7 @@ public final class OwnedImageStorage: WritableImageStorage, Sendable {
         var phase: Phase = .available
         var lease: StorageWriteLease?
     }
-    private let state: Mutex<State>
+    private let state: PackageMutex<State>
     private let accessActive = Atomic(false)
 
     public init(byteCount: Int, limits: ResourceLimits = .default) throws {
@@ -61,7 +61,7 @@ public final class OwnedImageStorage: WritableImageStorage, Sendable {
         }
         self.byteCount = byteCount; self.allocationID = UUID()
         ScalarStorageAudit.current?.finalPixels(byteCount)
-        self.state = Mutex(State(bytes: [UInt8](repeating: 0, count: byteCount)))
+        self.state = PackageMutex(State(bytes: [UInt8](repeating: 0, count: byteCount)))
     }
 
     public func reserveWrite() throws -> StorageWriteLease {

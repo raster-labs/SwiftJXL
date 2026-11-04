@@ -153,8 +153,13 @@ struct ModularPublicMatrixTests {
         process.arguments = [dir.appendingPathComponent("native.jxl").path,
             dir.appendingPathComponent("expected.u16le").path]
         process.standardOutput = handle; process.standardError = handle
+        #if os(Linux)
+        let oracleStatus = try runLinuxOracle(process)
+        #else
         try process.run(); process.waitUntilExit()
-        try #require(process.terminationStatus == 0)
+        let oracleStatus = process.terminationStatus
+        #endif
+        try #require(oracleStatus == 0)
         let result = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: log)) as? [String: Int])
         #expect(result["bits"] == c.bits && result["channels"] == c.channels)
         #expect(result["width"] == 5 && result["height"] == 3)

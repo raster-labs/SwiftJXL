@@ -40,3 +40,13 @@ Active packages and generated consumers require Apple OS 26.0. The owner-approve
 ## Release preparation
 
 See [Milestone 5](../Documentation/Engineering/Release/README.md) for the clean URL and exact-version consumer, documentation consistency, fixture/provenance inventory, and fail-closed release checklist. Passing preparation checks does not waive the outstanding runtime, sanitizer or maintainer-policy gates. Derived SBOM qualification retains its explicit package-graph scope.
+
+## Milestone 5 runtime qualification
+
+The dedicated Linux sanitizer workflow runs native x86_64 and ARM64 Swift 6.2/6.4 AddressSanitizer and ThreadSanitizer suites, including independent reference tools and negative runtime sentinels. `qualify-linux-sanitizer.py` rejects skipped tests, incomplete discovery/execution, sanitizer diagnostics and missing reference/vector evidence.
+
+`TestSupport/qualify-apple-simulator-suite.py` runs complete applicable simulator bundles and records actual sanitizer hooks/linkage, source lists, build products, hardware-vector delivery and negative sentinels. `audit-apple-simulator-receipt.py` reconciles retained reports against their raw logs and current inputs. `qualify-watch-profile.py` adds the existing Watch memory/ownership probe after a full Watch suite. `qualify-native-runtime.py` selects the build engine explicitly and verifies native architecture or exact minimum runtime when requested.
+
+`TestSupport/qualify-cli-tsan.py` requires one instrumented release CLI, all ten process-test groups, the pinned NRRD virtual environment, independent reference tools and a compiled scalar-only, high-precision libjxl oracle. It retains effective TSan options and checks input hashes. `linux-lock-benchmark.swift` is a Linux public-API latency/RSS probe for the compatibility comparison; its results are scoped measurements, not general throughput or allocation claims.
+
+`check-release-gates.py --require-assigned-complete` applies the owner's physical-device task exclusion while `--require-ready` still requires that gate for stable release. Neither mode authorises publication or downstream integration.

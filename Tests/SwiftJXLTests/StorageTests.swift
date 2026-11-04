@@ -3,11 +3,12 @@ import Foundation
 import Synchronization
 import Testing
 import SwiftJXL
+import SwiftJXLCore
 
 private final class TestCounters: Sendable {
-    let deallocations = Mutex(0)
-    let active = Mutex(0)
-    let overlap = Mutex(false)
+    let deallocations = PackageMutex(0)
+    let active = PackageMutex(0)
+    let overlap = PackageMutex(false)
 }
 
 private final class ReadAdapter: ReadOnlyImageStorage, Sendable {

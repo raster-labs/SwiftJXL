@@ -3,6 +3,7 @@ import Foundation
 import Synchronization
 import Testing
 import SwiftJXL
+import SwiftJXLCore
 
 struct ScalarPublicAPITests {
     private func source() throws -> Image {
@@ -70,7 +71,7 @@ struct ScalarPublicAPITests {
 
     @Test func progressIsSerialOutsideStorageBorrowAndCancellationIsPreserved() async throws {
         let image = try source()
-        let phases = Mutex<[ProgressUpdate.Phase]>([])
+        let phases = PackageMutex<[ProgressUpdate.Phase]>([])
         let encoded = try await Encoder().encode(image, options: .init(progress: { update in
             // Reentrant access would fail or deadlock if called under the provider lock.
             #expect((try? image.sampleUInt16(x: 0, y: 0)) == 0)

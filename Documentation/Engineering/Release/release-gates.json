@@ -15,14 +15,14 @@
         "VERSION"
       ],
       "files": {
-        "Package.swift": "2733007bb6eff3094ab984520bf6add9ebcb328968a1af16bd5ce908c446c834",
+        "Package.swift": "55f41396dd50e9157dc6a4cc1fd5737a799786a51aa39eccfb9fe43d10db205b",
         "Sources/SwiftJXL/AnimationAPI.swift": "2144535c59a13dd263cd51e0c514595abe3b454cf1d64c44b04e0fac1b6369ac",
         "Sources/SwiftJXL/AnimationEncoding.swift": "ed0d03433cbfc8f8c967c6349569f99453b1a72f6edf8f9eee04a227aa3523c4",
         "Sources/SwiftJXL/CodecAPI.swift": "a8fe49c428efb478de8467de08624f2cf53aa481c37aaf0eee7148c32e8a5033",
         "Sources/SwiftJXL/Errors.swift": "f71dd532405f2bca468ef39b29117513c686a89c64dd908ef598d1bca4f4fe6b",
-        "Sources/SwiftJXL/Image.swift": "ad4f87db872592214c1113bad412fc52efd0680078e822007b979c634a53f46f",
+        "Sources/SwiftJXL/Image.swift": "4b1621ee69796341652335646896ce33086fec9787377b441b83b231a76dd4d3",
         "Sources/SwiftJXL/ImageDescriptor.swift": "44cf8b2f796c0c39a17a4ff11ea8e97dc08f1f496cddc0197696a822922a1656",
-        "Sources/SwiftJXL/ImageStorage.swift": "8cb882511ae13ab0347782a6e474bee82013b0812aa6756c4a0dba573d87cb3f",
+        "Sources/SwiftJXL/ImageStorage.swift": "c826a80310482a932f0033a8cd528ebe963f886e9ef680dc2ff3b421f00b5f59",
         "Sources/SwiftJXL/JPEGPixelDecoding.swift": "27b4d075b158ec7ec54c73c557abcdecd125ee57adb4a0e9b2510ee0272189ff",
         "Sources/SwiftJXL/Options.swift": "dd43c63592bf4d74c53626374fb4494b0815315f0f64bc1a2831f9c066b5d787",
         "Sources/SwiftJXL/PixelContainer.swift": "04d077f53cf45953ecfdf243e2cffefc92567b5d3d9c3502be90c5d6cbf4aafe",
@@ -46,17 +46,17 @@
         "Sources/SwiftJXLCore/Brotli/BrotliStaticDictionary.swift": "b671966ebf2defc427dc276e8d19793e1ab09e7a9132bbddf68405c0c58db6c7",
         "Sources/SwiftJXLCore/Codec/AnimationCodestreamBuilder.swift": "15accacc4cbe666db7fc8687ff933e1ac06003c5301e1dc424c612dfd8f261f6",
         "Sources/SwiftJXLCore/Codec/AnimationFrameIndex.swift": "2d4c5d934d598b218f6b95d1317657f9e050802d8ad86dce49333d83168edc67",
-        "Sources/SwiftJXLCore/Codec/ModularDecodeBatch.swift": "cb2d5e53ae8111ca82b058f39c6ca567f073a0b32736c0028ffcbec2436c72e9",
+        "Sources/SwiftJXLCore/Codec/ModularDecodeBatch.swift": "7b145a574cc8e43dc29bee7570a9550aa461391e2b3a5568271cad81d87ec81b",
         "Sources/SwiftJXLCore/Codec/ModularEffortWork.swift": "226e44e931fdc22106d98f1d6151efce9357311ba61223fd94a63718a2aa5c1b",
         "Sources/SwiftJXLCore/Codec/ModularFrameDecoder.swift": "01bb9b1c4cad7ea9e5897c1359d2fed5211caa8f58d8e255cbe3926713df66d9",
         "Sources/SwiftJXLCore/Codec/ModularSampleStorage.swift": "cb91a96c6d9f74ac6b1faad1e0bbc6bb4c3948aebc0cf75f3c7bd9595d96ac7f",
         "Sources/SwiftJXLCore/Codec/PixelFrameHeader.swift": "a680dbd4b9bd18b1b039ef3adc957b68117f3b0398653d0574bca07b6bec9061",
         "Sources/SwiftJXLCore/Codec/ScalarDecodePolicy.swift": "1a9cbd91a40814f87515de3315a880bbc5adb0d196d0bb7ee79adfa6963f9a23",
-        "Sources/SwiftJXLCore/Codec/ScalarMap.swift": "d1fb8b80c0c9ae043701015e39a54e9e8e6bf22ae2c94f4636bf859cb22caded",
+        "Sources/SwiftJXLCore/Codec/ScalarMap.swift": "00214f4a29dbd44ab10464f3a29fb2dac42c234a9d6fdd1da605cd4fa7b4444d",
         "Sources/SwiftJXLCore/Codec/ScalarModularDecoder.swift": "8279571ee84c1bf2c908641a460b4f0abc516a6187570562d29c81bb667a4067",
-        "Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift": "1f9e04b243a7804a4aebb716567bf1a32ce0694a2abdd6d8b0e580224a977649",
+        "Sources/SwiftJXLCore/Codec/ScalarOperationBudget.swift": "c07a444e9d7aeb9db57cd65eea05e6b644658ecc2991e21a8ecf0f3eb02df60e",
         "Sources/SwiftJXLCore/Codec/ScalarSampleStorage.swift": "730b59eb3364a505e837ebd46baf8b32198db539ed14bb5fffc4e56bf066f14e",
-        "Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift": "37666262d7fdf215bbe6522fbbd7b9eb8ca17a9b0cdfe77a08f3e7b656fda309",
+        "Sources/SwiftJXLCore/Codec/ScalarStorageAudit.swift": "7e98b72cb9dc88cc91d508a85a4d9a40a2da89ddd7e865adb8b9f87cb8774434",
         "Sources/SwiftJXLCore/Codec/SpecModularEncoder.swift": "5f664ef767ba7a882ea581a038d59eaa728ec6e813dbfbb43379ee898f70e684",
         "Sources/SwiftJXLCore/Codestream/BitDepth.swift": "e42b5435d9424b67c1b4bc8cc92b15443575f631187e19d8dce1718e3b26b6d6",
         "Sources/SwiftJXLCore/Codestream/ColorEncoding.swift": "dd25291342bbc115704b9cedcb5bd06243bed7b2ead2205cf7a1f1a360bde9f3",
@@ -115,6 +115,7 @@
         "Sources/SwiftJXLCore/Modular/SpecRCT.swift": "a6bb741b07cdec8d5d4153736bac4b499c41fc9753f1bb7d7daa8df3d762949c",
         "Sources/SwiftJXLCore/Modular/SpecSqueeze.swift": "04300d869d668cb59a6d27d2269b0133337eb71dcdc4518a397bb2f36b330768",
         "Sources/SwiftJXLCore/Modular/WeightedPredictor.swift": "536a313efaec31cfd3ac988143d46c10ddd5d67faf8233b25c04eb085a10ac93",
+        "Sources/SwiftJXLCore/PackageMutex.swift": "a1d38943186708b12e3f7dd0668663c17d74b6d43556bc3241f722acf970c112",
         "Sources/SwiftJXLCore/VarDCT/DefaultOpsin.swift": "3874a0e9d236c4fff54dbab9407dc722dfc3bbbe6d2c313f4b454c4e92700f1d",
         "Sources/SwiftJXLCore/VarDCT/EdgePreservingFilter.swift": "615143d86df2bc457274008a7a3cf00686db388c6da74193b12b9251956bd27c",
         "Sources/SwiftJXLCore/VarDCT/Gaborish.swift": "b1828243688d81fe5152ae872536b89a876f19ccd975df3ea024b83e0cf7a31b",
@@ -125,7 +126,7 @@
         "Sources/SwiftJXLCore/VarDCT/VarDCTEntropy.swift": "fc30caa9047765ba80b1c4fce6417a754e621d95fadc15a52d66a8d12a026a20",
         "Sources/SwiftJXLCore/VarDCT/VarDCTFrameEnvelope.swift": "2c992643c0f4fe3593fb9d7e25abe0b1323852309ff221202ab087fbdcd5c9f6",
         "Sources/SwiftJXLCore/VarDCT/VarDCTFrameWriter.swift": "e4abc09045b69bcbf134f4babf485029a818c5f0a87ef99f40e1727241ad1115",
-        "Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift": "12924026b34519bd70b4e1938257b50923ef6c350baffd45e83d77e77a607334",
+        "Sources/SwiftJXLCore/VarDCT/VarDCTHierarchicalAnalysis.swift": "1fdf22e915659771211936ebca6f8b2ed75359c543e022784c0c9bda35fab128",
         "Sources/SwiftJXLCore/VarDCT/VarDCTLargeAnalysis.swift": "55a9a5899e02f884c3f5eb68da1cbe0286b4db8affb2130d13c6b27dedc71290",
         "Sources/SwiftJXLCore/VarDCT/VarDCTNumerics.swift": "0192a79d9858d296679df2ef3afb53229e17383ed7a83a6cce4ef527f7ce00ac",
         "Sources/SwiftJXLCore/VarDCT/VarDCTPixelDecoder.swift": "bbfa27be5c605e45cd5c291655f5a3f039e3d7195eded352c0a34485f2a6f33d",
@@ -137,7 +138,7 @@
         "Sources/SwiftJXLCore/VarDCT/VarDCTStrategyMap.swift": "c9be670d7b1d0b94c37d69a6d5269041990f1a139b63d89d27e2b095d6190aa7",
         "VERSION": "6e23ce0a8e66351a24a82283c2dcfb1c64f35b1c19b1f6bcdc3952d436802193"
       },
-      "sha256": "55b65dcea0a8b47f0608036b7d7e626106482c723ab025ff38c99625bf393b58"
+      "sha256": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753"
     },
     "preparation": {
       "includes": [
@@ -174,7 +175,7 @@
         ".github/workflows/release-preparation.yml": "b7657069ff3cdf9fc9a67921ad5876d71fea1b50fce3604175bd5aa87e4bbaf7",
         "CHANGELOG.md": "08a4a98af6144b2de417f4666bfa286e27618f3f8dfadb3969c0a4d1b940e79c",
         "CLI.md": "0296138569d3d50096ccfee62a61b5cb613d314e23e3b60b251c497fcebcdf08",
-        "Documentation/Engineering/Release/README.md": "1dc2fc7a967e069b8481d93118458379b9694d74cdd0c932fffd1c5005cbe937",
+        "Documentation/Engineering/Release/README.md": "a63820dbc38814766b4dafe20f83102f387d8569ff464bb65ca63a61c355f23f",
         "Documentation/Engineering/Release/fixture-inventory.json": "5ff9bc80d40bba2157651df3cc7130dc2eb972e4bb06c29d8b64acbf70ebfb98",
         "Examples/ContractConsumer/Package.swift": "4cf70f60bc0eba0a795f567cac7b9f19db92795252cb103b5bd9fe4a53aef3e8",
         "Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift": "59f014ec9128eb870a277f80689f19e04a56a19359ce846f06bfcb72a0e3bbc6",
@@ -183,24 +184,141 @@
         "ManPages/swiftjxl-cli.1": "11d37c6ea7a925a1ef034ebe2f91823cd153ef731a3f867389236fb738b9f130",
         "NOTICE": "53100225da5da07776b66f1f2bcf1d4763c06c27b36967c38492d76695a8c90d",
         "README.md": "f4f4e07d2f2a3cc3ff9db4c6767837ce8e6498ac8d0316dfd2a28c1a15756a69",
-        "SECURITY.md": "2ecd1238402d77162633395c80fc09913f22d218622499440e471b706c8cede6",
-        "Scripts/README.md": "b13e910fc70e5f31e8742a3827690144e3e4806274de7ffc4fc332bfa0ce86b9",
+        "SECURITY.md": "da5c5d2d10b7ec7349d4596a6a87b67f4379b0909579efeb1e6661649cd3b87b",
+        "Scripts/README.md": "bc2c6db377e605a4b1e8bdc7ee1a304e59a528e05eae71a3ed1902a0360a9b24",
         "Scripts/TestSupport/test-derived-release-sbom.py": "723e3e9608f4b92bb75b26c19fb2cd18b783a42d1b70966f79e2d934369e8bcd",
         "Scripts/TestSupport/test-release-consumer.py": "f20e5e0643ac98936f546f804e0d5e4c7168025ef929cd14eb724bd80c3854a2",
         "Scripts/TestSupport/test-release-sbom.py": "7970c20822733b6d0ff9a7f11a63c29cb661e2bcd57c97219aa28bf1be7dd9ed",
         "Scripts/Tests/test_release_provenance.py": "7a1b2a32eee33982fa83b1fc3e09f5f194757865a28106f5f9f2082fe26ecf7f",
         "Scripts/audit-release-provenance.py": "556983a1c64b8ce8c658e9fb480d573242706eac5183ae533bbffc470a51ced2",
         "Scripts/check-release-docs.py": "1f165674e65024c9b4c32d24f3f55ac0ae86a9c621a5d46accd5e8b8f00a403b",
-        "Scripts/check-release-gates.py": "a419a7d94fc893529c57203f5740e290bdf4df601cbe9d53d8cd9827d8137064",
+        "Scripts/check-release-gates.py": "b8010d11cdeddc3a3b49ebea4bf1d61eeb1903a5a3b789e5aaad68bb4aad0191",
         "Scripts/derive-release-sbom.py": "70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583",
         "Scripts/install-cli.sh": "2ec55c5025e69e18e92ba76f738bee4fe5c9df4ea6b332ae9ec7140b8b55e693",
         "Scripts/test-cli.py": "9a369cd681e8157843711856f6c4e65baccd5e3a88170534c434e5d5732d8676",
-        "Scripts/test-release-gates.py": "96208eb9f896e3c59e0ef5390c6306df8201855034293036b406c0cf1ede5dd4",
+        "Scripts/test-release-gates.py": "a2fcbc0b59bb281a2d8f77f97880c2467e11003f77f5094970944373a78bacb9",
         "Scripts/validate-release-consumer.py": "e47d239bebfb5787254d635874b33a082c3cc6d4d44c0b958bb7db69582adf34",
         "Scripts/validate-release-sbom.py": "4c73e5bdcd220aad41c48e3780b64c842ea5e199d1de8804a4a3ff47f9f571f5",
         "THIRD_PARTY_NOTICES.md": "6919105dee2ef9807a17dbeb6b6275241ebf0a34858f16fef3a14afe5121cf28"
       },
-      "sha256": "a32c0e4cd870e35a4371136721c1cd6de27f7d2ea29b184989ab8c59d955384e"
+      "sha256": "a424916b664651b6bf1beb6feabe3b869f300b2e2581d11e847ba6e193e73b7b"
+    },
+    "qualification": {
+      "includes": [
+        "Tests/**/*.swift",
+        ".github/workflows/milestone5-linux-sanitizers.yml",
+        ".github/workflows/milestone5-native-macos.yml",
+        "Scripts/qualify-linux-sanitizer.py",
+        "Scripts/TestSupport/test-linux-sanitizer-gate.py",
+        "Scripts/TestSupport/qualify-native-runtime.py",
+        "Scripts/TestSupport/qualify-apple-simulator-suite.py",
+        "Scripts/TestSupport/qualify-ios-simulator.py",
+        "Scripts/TestSupport/audit-apple-simulator-receipt.py",
+        "Scripts/TestSupport/qualify-watch-profile.py",
+        "Scripts/TestSupport/test-apple-simulator-suite.py",
+        "Scripts/TestSupport/qualify-cli-tsan.py",
+        "Scripts/TestSupport/test-cli-tsan-gate.py",
+        "Scripts/TestSupport/linux-lock-benchmark.swift"
+      ],
+      "files": {
+        "Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift": "7c41181d90438f18e7b513fb335d491d8cc18724971d5422acf8e355bd314a1a",
+        "Tests/SwiftJXLCoreTests/AnimationFrameIndexTests.swift": "06c9cb54e36aa9bc6ac395d8f7b5be4e98098751b7dd512c04d05140ee1e9395",
+        "Tests/SwiftJXLCoreTests/AnimationPublicTests.swift": "01d118be67fe36d1f2bce2d13e7e055d97f14e6384e3c0c1333c3a1b7ba891ea",
+        "Tests/SwiftJXLCoreTests/BrotliDecoderTests.swift": "bc69ed107cd67489128b9d9c5b4c1171736508b54b17da7a30c2232492c6071d",
+        "Tests/SwiftJXLCoreTests/BrotliFramingTests.swift": "b1931bfc1f771b4e8deb802fccd38b56c1a1a7919dc200cb916caaae6cc27e9f",
+        "Tests/SwiftJXLCoreTests/CompactANSTests.swift": "8d6ea33d6e9253579f879d2f695c99a885b3875cf00d22bb83c224fa59d5dbee",
+        "Tests/SwiftJXLCoreTests/HybridUintEncodingTests.swift": "ef1374f722185cfd4afa8dabd5a23996b4d9184bdceb77b3b8c2e445c48338a0",
+        "Tests/SwiftJXLCoreTests/ICCStreamTests.swift": "ec0dfa17ff3233339753e221c08d78e7916c99484fd6479956e36bf89f6c2ffd",
+        "Tests/SwiftJXLCoreTests/IntegerBoundaryTests.swift": "2f27d72d33447c5a8bca72a1b82d5331a2f05a6ecffb898328cd0d5c0329315d",
+        "Tests/SwiftJXLCoreTests/JBRDTests.swift": "b91e2453b05fc5e78b09acb6ca0edeb889ed7342f68cbfabd0ebd053514596d0",
+        "Tests/SwiftJXLCoreTests/JPEGBridgeCoefficientTests.swift": "63812f71a8f87582a9b0ac792312be8daf20f95d922a9d98f4a8b3be846bbd14",
+        "Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift": "7e503521281b990a5b817c8b043ce97aa6d967771b2f466324963601ff9f824c",
+        "Tests/SwiftJXLCoreTests/JPEGCoefficientTests.swift": "d75c33a2acc168c16effbb53c6bd045b68fe813e0b0ae16156f2532913d65445",
+        "Tests/SwiftJXLCoreTests/JPEGExtendedPixelTests.swift": "ba58d5f20f25e932bde1160fabfbc83235961fc0c79a9d455c1a86cb3907cfa3",
+        "Tests/SwiftJXLCoreTests/JPEGFrameLayoutTests.swift": "28cff4e72fbdf2b7986f1b28e2fc0667317209197e7129fca4261f84fab5a800",
+        "Tests/SwiftJXLCoreTests/JPEGPixelPublicTests.swift": "fe816917916069beff12f5fb6baa6c648bf41b73c289e4214c9250d800e0dc55",
+        "Tests/SwiftJXLCoreTests/JPEGReconstructionEventTests.swift": "0b0989e832470d7520ba664bfef3e801e9013f135ea237657a6ec4c40d2e9378",
+        "Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift": "6cfdf1e60fa29bca1492f8f9de7216a0e8f79670f255039c9e61489b85bcba86",
+        "Tests/SwiftJXLCoreTests/JPEGSegmentReaderTests.swift": "fd3f5433aad4d137f36b856af7df09ed9720667a3589b1237d2ca2eb04313e14",
+        "Tests/SwiftJXLCoreTests/LinuxOracleProcess.swift": "d40205dd7aa5507b7069959eaa7daf0e4b65c432f8030aa3da97956bfca5d71e",
+        "Tests/SwiftJXLCoreTests/LinuxQualificationSupportTests.swift": "968b2c1c40167a42be672884761369648c3ba0f8e85f64fd5855c7ed02eee417",
+        "Tests/SwiftJXLCoreTests/ModularConstantPerformanceTests.swift": "98dd9383919f9273cd097ddbd5a0f77833426cad6b762b6877c9841343250ed3",
+        "Tests/SwiftJXLCoreTests/ModularDecodeParallelTests.swift": "3849f38d351e3007b995dc32d06baa26a2c2e31ef3263367328b2aef62673565",
+        "Tests/SwiftJXLCoreTests/ModularEffortBudgetTests.swift": "b3c9bbed3acdd29f76a040d902e4af6150cc871799026367687ef2519706c200",
+        "Tests/SwiftJXLCoreTests/ModularEffortLimitTests.swift": "54a2542217d4e29d9ea06e5e91281a5cfcf41c814c07ba95534df16d4798c7ae",
+        "Tests/SwiftJXLCoreTests/ModularEffortTests.swift": "9573c477025fb79656e84fe65b8a0763320e1659570aa3fc4d2d926bc7c1535e",
+        "Tests/SwiftJXLCoreTests/ModularEncoderTests.swift": "963b5d4c226537d64d2def03313f0a4a0d8df57a90b4dca9df0451d5c3db1d61",
+        "Tests/SwiftJXLCoreTests/ModularFrameDecoderTests.swift": "3f2f6da5ce15f2782cacbd2895ccfae35a058e601e426d4b1d93baf6ecbbeaee",
+        "Tests/SwiftJXLCoreTests/ModularGradientTests.swift": "dc50e5adee12b11d01135d614e001977b6995df6e683b1dc723545c2cb6d55c3",
+        "Tests/SwiftJXLCoreTests/ModularGroupBoundaryTests.swift": "d4c701e84f19101503b0a726264e8cbd1e5be91ff7659c87647f001271a3a5b1",
+        "Tests/SwiftJXLCoreTests/ModularICCTests.swift": "4ae9afbd2a49534fe77ce668ffc188c45d475d2b0bc68926b44a811f65f5ff52",
+        "Tests/SwiftJXLCoreTests/ModularLearningSampleTests.swift": "794eb27013a8f2b8b9af6a8be00b87e1a8e3087b4a78c8137a788fff60564474",
+        "Tests/SwiftJXLCoreTests/ModularLowPrecisionTests.swift": "a0f520f373718667b9bae466b7df1ba97389a0620ada506d9d052d84cfeb42bf",
+        "Tests/SwiftJXLCoreTests/ModularNameTests.swift": "cf40595bc9d6585c593b4240cff80a8e4d0c72f6ef99825cbdef51b44e89a896",
+        "Tests/SwiftJXLCoreTests/ModularParallelTests.swift": "d6f108671d97a63ca87bd598bfc190051d67215bc7b02d15850b26891bf6fb71",
+        "Tests/SwiftJXLCoreTests/ModularPredictorSafetyTests.swift": "d167142cd023218d2ace9ce42a9a2b36473c0b0ab28326ff45ec683aee7168f4",
+        "Tests/SwiftJXLCoreTests/ModularProfileLifetimeTests.swift": "d5a37429383c862ca92edcc652dc114a5e0c4cb98e8521ed171e0f6f701a0cbc",
+        "Tests/SwiftJXLCoreTests/ModularProfileTests.swift": "99b65a6307033bfdee221e1d491ad12967a9f8f2010981d6f31905603832800f",
+        "Tests/SwiftJXLCoreTests/ModularPublicMatrixTests.swift": "140d728ea5698b08ba449c74756cf8c242f3d57bd5c16d91bbd32e131078ca7f",
+        "Tests/SwiftJXLCoreTests/ModularStorageTests.swift": "636a959a3f85c7d88f1a06fe9279e062352ac8e9ed45558ddb3354ae102f47fd",
+        "Tests/SwiftJXLCoreTests/ModularTransferTests.swift": "225c3c7b9cf4f735981641d325add4cd0a11cd6b24962a15c50c496add4c72a0",
+        "Tests/SwiftJXLCoreTests/ModularTransformTests.swift": "e8bbe2442653d137e950db87f025d83d98526ee971e5d2493960c775793ecf16",
+        "Tests/SwiftJXLCoreTests/ModularUnsupportedPaletteTests.swift": "9fb63d3c62cd450db0a6d2ba92663b0a8ff76f154a7f2e6fb66aa0a70d044d18",
+        "Tests/SwiftJXLCoreTests/ModularWireTests.swift": "6ddf5350ea531ebeda991a644aa9f9fe11dad38a3c3afb37a20e2910914f4d49",
+        "Tests/SwiftJXLCoreTests/NativeTranscoderPublicTests.swift": "a54414618a0ce04c5c3c09665e095d310d5cd89fe3ff753e2dc21f0a17c153c8",
+        "Tests/SwiftJXLCoreTests/PixelContainerTests.swift": "291374d5dd8217df4b33b2d6ab6f5e7161d9e560e28c37d3e68b2601c1f9db90",
+        "Tests/SwiftJXLCoreTests/PixelFrameHeaderTests.swift": "6b103ad6bb0307ba44b3e712ea6f3b02a79be4203a61d34c8e8e4cd41abe2108",
+        "Tests/SwiftJXLCoreTests/ScalarLimitTests.swift": "9b7622418319af3ba1d7d95f949e3ee5741184f44d3b0357df2327cb03f8e517",
+        "Tests/SwiftJXLCoreTests/ScalarMalformedTests.swift": "224128ae8bfd1ca8c550a3124f0811336887bbb3702e1564e8a2c84e731674cc",
+        "Tests/SwiftJXLCoreTests/ScalarMemoryTests.swift": "edca9cf329803c989567c8c1a1573b3fcccdf34b0ce36716d002edf0291492bf",
+        "Tests/SwiftJXLCoreTests/ScalarModularTests.swift": "59451ebc9e90374dffba59fb65a82bcf3ca8c64c58174ec679b35c30e48d765b",
+        "Tests/SwiftJXLCoreTests/ScalarOracleTests.swift": "e5e65f3d8fae72553294cd28f7bb798c141c85727a92e808bb87c311de581161",
+        "Tests/SwiftJXLCoreTests/ScalarStorageTests.swift": "6688111b4604a434632c6c33634120d670eb456c3cf2efb0db49dbfe060a8ae7",
+        "Tests/SwiftJXLCoreTests/SpecRCTTests.swift": "74bb9eb2dbef2ef49f14ea0cab23fc2cef5ca4ed4e101fb0774b481c64a12929",
+        "Tests/SwiftJXLCoreTests/U32DistributionBoundaryTests.swift": "ca902f9dea775af1579616ddb0ce334995c7ec302187eeb94902dbd93aa1e6d9",
+        "Tests/SwiftJXLCoreTests/VarDCTARMIntegerTests.swift": "35534b47f3105da179b15e5afa004e404d69a906fc9b5986c20e21f619c8d7f0",
+        "Tests/SwiftJXLCoreTests/VarDCTColourTests.swift": "14807bcfdc3c1e3ad20ce89357f5e24eb2c5de561e6e65884a12de8c2b02de6d",
+        "Tests/SwiftJXLCoreTests/VarDCTConformanceTests.swift": "33f458ecef05c4309bca6396de076d9d725d285e844b23c5a2076827006b3727",
+        "Tests/SwiftJXLCoreTests/VarDCTEPFTests.swift": "5a66433b869c1bafa97d2761c56a2c546695b3d57c69b3d40335c932c82d9b5d",
+        "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift": "e06e1c2797bfbb49b094235ef49f38f14fc2683776c255efa0195642293e03c3",
+        "Tests/SwiftJXLCoreTests/VarDCTEncoderTests.swift": "ebf78b04b94e6bc03d7645ea71a0e0bd17c79d8232f575e84839a1562c648860",
+        "Tests/SwiftJXLCoreTests/VarDCTFilterTests.swift": "e5e80e4cfbc3057bd3c827158f32a0e354958069a2d7a5b12e2fa3e069ef10d9",
+        "Tests/SwiftJXLCoreTests/VarDCTFrameTests.swift": "76ae0d1a3e8dab6c8cc54afc2a9799a7740034f7a26120d4b143a5792b3c84cc",
+        "Tests/SwiftJXLCoreTests/VarDCTGroupedDecoderTests.swift": "cbb1339ddcd9f91920d9d05169458f9aadd3793a514558ee9b3396ba34ced56c",
+        "Tests/SwiftJXLCoreTests/VarDCTGroupedEncoderTests.swift": "394774b51c00e390675f0d44641063735a8729995174c0950c91119230e70d96",
+        "Tests/SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests.swift": "ed2a0a457547ec2e66495baa9d0500bb540307e21a153bb951e400de18ad9330",
+        "Tests/SwiftJXLCoreTests/VarDCTLargeAnalysisTests.swift": "6763338c1a1f4bc77e49d00d001fe0f5f01395fc2e208f258e6a05c7e282b501",
+        "Tests/SwiftJXLCoreTests/VarDCTParallelTests.swift": "63efa42c110dfbdd44d47d114896bb2f56c384f4140ecbad250e41ce9e023edd",
+        "Tests/SwiftJXLCoreTests/VarDCTPixelStorageTests.swift": "87b8c74014151fb666b80185ccc72a46b511df59a4ff7ddc5895d4a7358ecd1c",
+        "Tests/SwiftJXLCoreTests/VarDCTPublicEncoderTests.swift": "5d43b97977b0f4d3856ae196270e80361fe689b563d2826374dc1e474c8a9774",
+        "Tests/SwiftJXLCoreTests/VarDCTPublicGroupedTests.swift": "a3c59e051f1b2e95a4baf29b4ddf6fdf52c6572304ecc5f5d4bab54e3b380675",
+        "Tests/SwiftJXLCoreTests/VarDCTPublicTests.swift": "188919091d1b4a20e45eb222266f817b08e517cfd7465d32ac93c94bd2ebe734",
+        "Tests/SwiftJXLCoreTests/VarDCTSmallAnalysisTests.swift": "b96aa6bdc8ad5dde80ea3e9870da8d406b442676f5902d9ae78c85f1b748fa74",
+        "Tests/SwiftJXLCoreTests/VarDCTSmallTransformTests.swift": "cde74e4809fff16bb659fba27f4201cc4eedfa061542e6854c4ed04a8451724a",
+        "Tests/SwiftJXLCoreTests/VarDCTStrategyTests.swift": "7cb5b278662cbee6ea58dab459669f90d42bedc137fc9ab73688868e1f6c5075",
+        "Tests/SwiftJXLCoreTests/VarDCTTransformTests.swift": "19f2716bdc1cc7e73560b44d93975e26107f8b4248696dbf831f74cd510d33f9",
+        "Tests/SwiftJXLCoreTests/VarDCTWorkspaceTests.swift": "9bea8f075a4880cc071a2b1640ad2eec43218e9f0854915c5044a2cd32e06c80",
+        "Tests/SwiftJXLTests/APITests.swift": "a5b7df91ff59dbc945b842da8820783f2c0ae34dc42917de0979442001e28057",
+        "Tests/SwiftJXLTests/CancellationPublicationTests.swift": "96232682ed62980ad659765a9c06ad72764eb7f1a9647f7becdaf8e07a1d3421",
+        "Tests/SwiftJXLTests/DescriptorTests.swift": "5d5ad2c525e35829442b3a1538a7a603b4b3eac5e0638fe64d211e7dc01102ac",
+        "Tests/SwiftJXLTests/SampleAccessTests.swift": "2b797d2386fa275a5819dc4319cbd7c440c57beebb1cc93a200e285b64cda922",
+        "Tests/SwiftJXLTests/ScalarPublicAPITests.swift": "a81cc3ce800f7bdf40887a9042399431293977b651bc317263bac165e0302970",
+        "Tests/SwiftJXLTests/StorageTests.swift": "71e30761e97b0cfb722bedca8db0ae76cc1d833d5818a111d3d00b4cd9d4aeb2",
+        ".github/workflows/milestone5-linux-sanitizers.yml": "ce5f8775c5364a1fbdb27ebb014d34c0be7b62442b114ff0db56a4acb2c5a23d",
+        ".github/workflows/milestone5-native-macos.yml": "4d8b21e4187f06c84575c3b8b4e49b63fff7e252bb1a8fac9d445e9f037f63d2",
+        "Scripts/qualify-linux-sanitizer.py": "2e3d0914f346fd007135ca9e64e75003929990975bddbcfab215b5763fb419ec",
+        "Scripts/TestSupport/test-linux-sanitizer-gate.py": "5a3522380e63b7e48f24dc9c4ec6430f2c4dc10f5d4b2d8e0eef8cfbf5020c54",
+        "Scripts/TestSupport/qualify-native-runtime.py": "5fcdaebecb89b583ab65639c9f8d836bb23f0382b032199973da57ac653f551f",
+        "Scripts/TestSupport/qualify-apple-simulator-suite.py": "067b53387bae841e7b07789df253ca1b722ff4973e9de839523e1480c69d7686",
+        "Scripts/TestSupport/qualify-ios-simulator.py": "72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065",
+        "Scripts/TestSupport/audit-apple-simulator-receipt.py": "d547026c4cd53b310827f2c2e6a58151088449cbd6cc7212630205eaff07a485",
+        "Scripts/TestSupport/qualify-watch-profile.py": "8518e8910a59e6e9bddf42973b013ec8445a9541ab32b3b9866470debabacaef",
+        "Scripts/TestSupport/test-apple-simulator-suite.py": "ba9f640fbb83589afc62828bf1476016ac9507f9c9215afa129d994dbd9cc439",
+        "Scripts/TestSupport/qualify-cli-tsan.py": "84ecdb39f10a37d4ff8356bdfec4b6f18907b9a05a2f93c307bdfb22aee29aef",
+        "Scripts/TestSupport/test-cli-tsan-gate.py": "1d06b00a22950fee41fdf721c072a024f00114968f4777e3383ab4c49bb1b214",
+        "Scripts/TestSupport/linux-lock-benchmark.swift": "ecd55e965a0c6794dadce907c0eb66097ea07c4e76419642b23a900eaec7f945"
+      },
+      "sha256": "955c21c6cfc7b2e1650dad73f77e6de12cd3c7b5ea55e1f06c5624e3a444381d"
     }
   },
   "gates": [
@@ -210,9 +328,10 @@
       "required": true,
       "title": "Linux ARM64 and x86_64 AddressSanitizer and ThreadSanitizer",
       "status": "pending",
-      "reason": "Existing hosted Linux jobs are uninstrumented; both sanitizers and architectures require execution.",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
-        "runtime"
+        "runtime",
+        "qualification"
       ],
       "evidence": [
         {
@@ -226,10 +345,11 @@
       "phase": "stable",
       "required": true,
       "title": "Native macOS 26.0 runtime",
-      "status": "unavailable",
-      "reason": "Existing evidence executes on newer macOS versions; compiling with a 26.0 deployment target is not runtime qualification.",
+      "status": "pending",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
-        "runtime"
+        "runtime",
+        "qualification"
       ],
       "evidence": [
         {
@@ -244,9 +364,10 @@
       "required": true,
       "title": "Native Intel macOS core and CLI execution",
       "status": "pending",
-      "reason": "Existing evidence cross-compiles x86_64; native Intel execution remains unverified.",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
-        "runtime"
+        "runtime",
+        "qualification"
       ],
       "evidence": [
         {
@@ -261,7 +382,7 @@
       "required": true,
       "title": "Representative physical Apple devices",
       "status": "unavailable",
-      "reason": "SDK builds and simulator results do not establish iPhone, iPad, Apple TV, Watch or Vision Pro device qualification.",
+      "reason": "Physical-device execution is excluded from this assignment by the owner; it remains required before stable-release readiness.",
       "sourceGroups": [
         "runtime"
       ],
@@ -278,9 +399,10 @@
       "required": true,
       "title": "Current-source iOS Simulator Debug, AddressSanitizer and ThreadSanitizer",
       "status": "pending",
-      "reason": "The latest accepted source has Release results; historical debug/sanitizer results do not bind to that implementation.",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
-        "runtime"
+        "runtime",
+        "qualification"
       ],
       "evidence": [
         {
@@ -295,9 +417,10 @@
       "required": true,
       "title": "Complete ten-group CLI ThreadSanitizer matrix",
       "status": "pending",
-      "reason": "Current-source hosted TSan covers four groups; six remaining CLI groups require execution.",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
-        "runtime"
+        "runtime",
+        "qualification"
       ],
       "evidence": [
         {
@@ -312,9 +435,10 @@
       "required": true,
       "title": "Full applicable tvOS, watchOS and visionOS simulator suites",
       "status": "pending",
-      "reason": "Library cross-compilation and historical smoke probes do not replace full applicable runtime test bundles.",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
-        "runtime"
+        "runtime",
+        "qualification"
       ],
       "evidence": [
         {
@@ -328,8 +452,8 @@
       "phase": "preparation",
       "required": true,
       "title": "Fresh HTTPS URL consumer pinned to reviewed revision",
-      "status": "passed",
-      "reason": "Completed preparation check with reviewed source-bound receipts; stable-release qualification remains separate.",
+      "status": "pending",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
         "runtime",
         "preparation"
@@ -337,12 +461,7 @@
       "evidence": [
         {
           "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
-          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
-          "resultPointer": "/status",
-          "sourceBindings": {
-            "runtime": "/sourceGroupDigests/runtime",
-            "preparation": "/sourceGroupDigests/preparation"
-          }
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb"
         }
       ]
     },
@@ -351,8 +470,8 @@
       "phase": "preparation",
       "required": true,
       "title": "Clean exact-version package resolution rehearsal",
-      "status": "passed",
-      "reason": "Completed preparation check with reviewed source-bound receipts; stable-release qualification remains separate.",
+      "status": "pending",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
         "runtime",
         "preparation"
@@ -360,12 +479,7 @@
       "evidence": [
         {
           "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
-          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
-          "resultPointer": "/status",
-          "sourceBindings": {
-            "runtime": "/sourceGroupDigests/runtime",
-            "preparation": "/sourceGroupDigests/preparation"
-          }
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb"
         }
       ]
     },
@@ -374,8 +488,8 @@
       "phase": "preparation",
       "required": true,
       "title": "Current documentation and executable public examples",
-      "status": "passed",
-      "reason": "Completed preparation check with reviewed source-bound receipts; stable-release qualification remains separate.",
+      "status": "pending",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
         "runtime",
         "preparation"
@@ -383,12 +497,7 @@
       "evidence": [
         {
           "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
-          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
-          "resultPointer": "/status",
-          "sourceBindings": {
-            "runtime": "/sourceGroupDigests/runtime",
-            "preparation": "/sourceGroupDigests/preparation"
-          }
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb"
         }
       ]
     },
@@ -397,8 +506,8 @@
       "phase": "preparation",
       "required": true,
       "title": "Source and fixture licence/provenance audit",
-      "status": "passed",
-      "reason": "Completed preparation check with reviewed source-bound receipts; stable-release qualification remains separate.",
+      "status": "pending",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
         "runtime",
         "preparation"
@@ -406,12 +515,7 @@
       "evidence": [
         {
           "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
-          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
-          "resultPointer": "/status",
-          "sourceBindings": {
-            "runtime": "/sourceGroupDigests/runtime",
-            "preparation": "/sourceGroupDigests/preparation"
-          }
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb"
         }
       ]
     },
@@ -420,8 +524,8 @@
       "phase": "preparation",
       "required": true,
       "title": "Source-bound release evidence review",
-      "status": "passed",
-      "reason": "Completed preparation check with reviewed source-bound receipts; stable-release qualification remains separate.",
+      "status": "pending",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
         "runtime",
         "preparation"
@@ -429,12 +533,7 @@
       "evidence": [
         {
           "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
-          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
-          "resultPointer": "/status",
-          "sourceBindings": {
-            "runtime": "/sourceGroupDigests/runtime",
-            "preparation": "/sourceGroupDigests/preparation"
-          }
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb"
         }
       ]
     },
@@ -443,8 +542,8 @@
       "phase": "stable",
       "required": true,
       "title": "Build-associated SBOM generation and schema/semantic validation",
-      "status": "passed",
-      "reason": "Explicitly derived, provenance-preserving SwiftPM package-graph artefacts pass both official schemas, reference/identity checks and full SPDX SHACL with negative control. Raw generator emissions remain defective; complete SDK/runtime/embedded inventory is not inferred.",
+      "status": "pending",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
         "runtime",
         "preparation"
@@ -452,12 +551,7 @@
       "evidence": [
         {
           "path": "Documentation/Engineering/Release/Evidence/sbom-qualified-review.json",
-          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb",
-          "resultPointer": "/status",
-          "sourceBindings": {
-            "runtime": "/sourceGroupDigests/runtime",
-            "preparation": "/sourceGroupDigests/preparation"
-          }
+          "sha256": "36fe1139e3acf5905673cb96516c52f4ef6be1f253234a1b0bbcbbdd6a3ffffb"
         }
       ]
     },
@@ -467,9 +561,10 @@
       "required": true,
       "title": "Established private security reporting and supported-version policy",
       "status": "pending",
-      "reason": "A maintainer must establish the reporting channel and supported-version policy before the first stable release.",
+      "reason": "Requalification and independent evidence review are in progress for the Linux compatibility candidate; prior reports retain their historical source bindings.",
       "sourceGroups": [
-        "runtime"
+        "runtime",
+        "preparation"
       ],
       "evidence": [
         {
@@ -478,5 +573,16 @@
         }
       ]
     }
-  ]
+  ],
+  "taskScope": {
+    "excludedGates": [
+      "M4-PHYSICAL-DEVICES"
+    ],
+    "recordedDate": "2026-11-04",
+    "ownerInstruction": "complete all the milestone 5 except the physical device testing.",
+    "deferredIntegrations": [
+      "DICOMKit"
+    ],
+    "latestOwnerInstruction": "complete milestone 5 without DICOMKit integration remain. complete all other tasks in the library milestone 5"
+  }
 }

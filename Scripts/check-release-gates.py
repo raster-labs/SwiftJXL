@@ -189,12 +189,24 @@ def audit(repo, checklist):
                     "Passed gate lacks a passing source-bound report: " + identifier)
     require(set(REQUIRED) <= identifiers,
             "Missing required gates: " + ", ".join(sorted(set(REQUIRED) - identifiers)))
+    # A task exclusion is not a stable-release waiver. The owner's 4 November
+    # instruction excludes only physical-device execution from this assignment.
+    scope = checklist.get("taskScope", {})
+    excluded = scope.get("excludedGates", [])
+    require(isinstance(excluded, list) and excluded in ([], ["M4-PHYSICAL-DEVICES"]),
+            "Only physical-device testing may be excluded from the assigned task")
+    if excluded:
+        require(scope.get("ownerInstruction") == "complete all the milestone 5 except the physical device testing."
+                and scope.get("recordedDate") == "2026-11-04",
+                "Task exclusion needs the recorded owner instruction")
     blocked = [gate["id"] for gate in gates if gate["status"] != "passed"]
     preparation_complete = all(gate["status"] == "passed" for gate in gates
                                if gate["phase"] == "preparation")
     return {"schemaVersion": 1, "status": "blocked" if blocked else "ready",
             "checklistValid": True, "preparationComplete": preparation_complete,
             "stableReleaseReady": not blocked, "publicationAuthorised": False,
+            "assignedTaskComplete": not any(identifier not in excluded for identifier in blocked),
+            "excludedFromAssignedTask": excluded,
             "sourceGroupDigests": digests, "blockedGates": blocked,
             "gateStatuses": {gate["id"]: gate["status"] for gate in gates}}
 
@@ -205,16 +217,22 @@ def main():
     parser.add_argument("--checklist", type=Path,
                         default=Path("Documentation/Engineering/Release/release-gates.json"))
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--require-ready", action="store_true")
+    readiness = parser.add_mutually_exclusive_group()
+    readiness.add_argument("--require-ready", action="store_true")
+    readiness.add_argument("--require-assigned-complete", action="store_true",
+                           help="Require every assigned gate, keeping physical-device exclusion separate from release readiness")
     args = parser.parse_args()
     repo = args.repo.resolve()
     checklist = args.checklist if args.checklist.is_absolute() else repo / args.checklist
     try:
         result = audit(repo, json.loads(checklist.read_text()))
-        code = 2 if args.require_ready and not result["stableReleaseReady"] else 0
+        blocked = ((args.require_ready and not result["stableReleaseReady"]) or
+                   (args.require_assigned_complete and not result["assignedTaskComplete"]))
+        code = 2 if blocked else 0
     except (ValueError, TypeError, KeyError, IndexError, OSError, AttributeError) as error:
         result = {"schemaVersion": 1, "status": "invalid", "checklistValid": False,
                   "preparationComplete": False, "stableReleaseReady": False,
+                  "assignedTaskComplete": False,
                   "publicationAuthorised": False, "error": str(error)}
         code = 1
     output = json.dumps(result, indent=2) + "\n"

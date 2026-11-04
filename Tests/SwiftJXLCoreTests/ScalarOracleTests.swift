@@ -91,8 +91,15 @@ struct ScalarOracleTests {
         let output = try FileHandle(forWritingTo: log)
         defer { try? output.close() }
         process.standardOutput = output; process.standardError = output
+        #if os(Linux)
+        let oracleStatus = try runLinuxOracle(process)
+        #else
         try process.run(); process.waitUntilExit()
-        try #require(process.terminationReason == .exit && process.terminationStatus == 0,
+        try #require(process.terminationReason == .exit,
+                     "Independent tool terminated by signal; inspect \(log.path)")
+        let oracleStatus = process.terminationStatus
+        #endif
+        try #require(oracleStatus == 0,
                      "Independent tool failed; inspect \(log.path)")
     }
 }

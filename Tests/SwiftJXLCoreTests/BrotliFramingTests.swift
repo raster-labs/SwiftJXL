@@ -137,7 +137,7 @@ struct BrotliFramingTests {
             }
         }
         await task.value
-        let counter = Mutex(0)
+        let counter = PackageMutex(0)
         let policy = try BrotliPolicy(checkpoint: {
             try counter.withLock { value in
                 value += 1
@@ -147,7 +147,7 @@ struct BrotliFramingTests {
         #expect(throws: CancellationError.self) {
             try BrotliEncoder.encodeUncompressed(Data(repeating: 1, count: 16384), policy: policy)
         }
-        let checks = Mutex(0)
+        let checks = PackageMutex(0)
         var r = try reader(Data(repeating: 0, count: 1024), policy: BrotliPolicy(checkpoint: { checks.withLock { $0 += 1 } }))
         for _ in 0..<4096 { _ = try r.readBit() }
         #expect(checks.withLock { $0 } == 5) // admission + four bounded read checkpoints
