@@ -105,7 +105,23 @@ struct ModularDecodeParallelTests {
         let parallel = try await ScalarStorageAudit.$current.withValue(parallelAudit) {
             try await decoder.decode(data, options: .init(resourceLimits: .init(maximumWorkers: 8)))
         }
+        #if os(watchOS)
+        // These large fixtures exceed the Watch default budget. Preserve its
+        // rejection contract, then compare samples under an explicit profile.
+        let requiresGeneralProfile = ["responsive-wide-rgb8", "gray2048-gradient-ans"].contains(name)
+        if requiresGeneralProfile {
+            do {
+                _ = try await decoder.decode(data)
+                Issue.record("Oversized fixture unexpectedly fitted the Watch default profile")
+            } catch let error as CodecError {
+                #expect(error.category == .resourceLimitExceeded)
+            }
+        }
+        let defaultResult = try await decoder.decode(data, options: .init(
+            resourceLimits: requiresGeneralProfile ? .general : .default))
+        #else
         let defaultResult = try await decoder.decode(data)
+        #endif
         let expected = try serial.image.storage.withUnsafeBytes { Data($0) }
         #expect(try parallel.image.storage.withUnsafeBytes { Data($0) } == expected)
         #expect(try defaultResult.image.storage.withUnsafeBytes { Data($0) } == expected)
