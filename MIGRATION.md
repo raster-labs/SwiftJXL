@@ -95,11 +95,12 @@ struct ContractConsumer {
         try checkSamples(shared.image)
         guard shared.image.storage.allocationID == identity,
               shared.report.fidelity == .exactSamples,
-              shared.report.pixelAllocationCount == 0,
               shared.report.copyEvents.isEmpty,
               encoded.report.copyEvents.isEmpty else {
             throw ConsumerFailure.unexpectedResult
         }
+        // Optional allocation/peak counters are currently unknown. An absent
+        // measurement is not zero; allocation-site proof lives in the codec tests.
         do {
             _ = try output.writeUInt16 { _, _ in 0 }
             throw ConsumerFailure.unexpectedResult

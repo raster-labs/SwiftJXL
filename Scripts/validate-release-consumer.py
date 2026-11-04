@@ -19,7 +19,7 @@ import shutil
 import subprocess
 import sys
 import time
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 
 
 def require(condition, message):
@@ -32,8 +32,11 @@ def validate_lockfile(document, revision, version, url):
     require(len(pins) == 1, "The consumer must resolve exactly one package")
     pin = pins[0]
     require(pin.get("identity") == "swiftjxl", "Unexpected package identity")
-    require(pin.get("kind") == "remoteSourceControl", "A path dependency is not URL consumption")
-    require(pin.get("location") == url, "Resolved URL differs from the private remote")
+    is_local_git = urlparse(url).scheme == "file"
+    kind = "localSourceControl" if is_local_git else "remoteSourceControl"
+    location = unquote(urlparse(url).path) if is_local_git else url
+    require(pin.get("kind") == kind, "Unexpected dependency kind; a filesystem package is not versioned Git consumption")
+    require(pin.get("location") == location, "Resolved URL differs from the selected Git remote")
     require(pin.get("state", {}).get("revision") == revision, "Resolved revision mismatch")
     require(pin.get("state", {}).get("version") == version, "Resolved semantic version mismatch")
     require(not pin.get("state", {}).get("branch"), "A moving branch is not a pinned dependency")
@@ -69,7 +72,8 @@ def validate_graph(document, url, version):
     dependencies = document.get("dependencies", [])
     require(len(dependencies) == 1, "Consumer graph must contain exactly one direct dependency")
     package = dependencies[0]
-    require(package.get("name") == "SwiftJXL" and package.get("url") == url,
+    location = unquote(urlparse(url).path) if urlparse(url).scheme == "file" else url
+    require(package.get("name") == "SwiftJXL" and package.get("url") in {url, location},
             "Consumer graph resolves an unexpected package")
     require(package.get("version") == (version or "unspecified"), "Consumer graph version mismatch")
     require(package.get("dependencies") == [], "Transitive dependency found")
@@ -171,7 +175,9 @@ def main():
         report["environment"]["git"] = run("git-version", ["git", "--version"]).strip()
         if platform.system() == "Darwin":
             report["environment"]["xcode"] = run("xcode-version", ["xcodebuild", "-version"]).strip()
-            report["environment"]["sdk"] = run("sdk-version", ["xcrun", "--show-sdk-version"]).strip()
+            report["environment"]["sdk"] = run("sdk-version", ["xcrun", "--sdk", "macosx", "--show-sdk-version"]).strip()
+            env["SDKROOT"] = run("sdk-path", ["xcrun", "--sdk", "macosx", "--show-sdk-path"]).strip()
+            report["environment"]["sdkPath"] = env["SDKROOT"]
         revision = run("source-revision", ["git", "rev-parse", "--verify", args.revision + "^{commit}"]).strip()
         require(re.fullmatch(r"[0-9a-f]{40}", revision), "Expected a full Git commit SHA")
         report["sourceRevision"] = revision

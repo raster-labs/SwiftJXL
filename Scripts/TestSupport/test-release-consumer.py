@@ -17,7 +17,7 @@ class ReleaseConsumerGateTests(unittest.TestCase):
         self.revision = "a" * 40
         self.version = "2.1.0-dev.2"
         self.url = "file:///private/rehearsal/SwiftJXL.git"
-        self.pin = {"identity": "swiftjxl", "kind": "remoteSourceControl", "location": self.url,
+        self.pin = {"identity": "swiftjxl", "kind": "localSourceControl", "location": "/private/rehearsal/SwiftJXL.git",
                     "state": {"revision": self.revision, "version": self.version}}
 
     def test_exact_pin_is_accepted(self):
@@ -39,11 +39,20 @@ class ReleaseConsumerGateTests(unittest.TestCase):
                 gate.validate_lockfile({"pins": [pin]}, self.revision, self.version, self.url)
 
     def test_path_dependency_or_unexpected_remote_is_rejected(self):
-        for key, value in [("kind", "localSourceControl"), ("location", "file:///sibling/SwiftJXL.git")]:
+        for key, value in [("kind", "fileSystem"), ("location", "/sibling/SwiftJXL.git")]:
             pin = copy.deepcopy(self.pin)
             pin[key] = value
             with self.subTest(key=key), self.assertRaises(RuntimeError):
                 gate.validate_lockfile({"pins": [pin]}, self.revision, self.version, self.url)
+
+    def test_https_requires_remote_source_control(self):
+        url = "https://github.com/raster-labs/SwiftJXL.git"
+        pin = copy.deepcopy(self.pin)
+        pin.update(kind="remoteSourceControl", location=url)
+        gate.validate_lockfile({"pins": [pin]}, self.revision, self.version, url)
+        pin["kind"] = "localSourceControl"
+        with self.assertRaises(RuntimeError):
+            gate.validate_lockfile({"pins": [pin]}, self.revision, self.version, url)
 
     def test_missing_or_extra_pins_are_rejected(self):
         for pins in [[], [self.pin, self.pin]]:
