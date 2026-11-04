@@ -1,0 +1,49 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -scheme SwiftJXL-Package -configuration Release ENABLE_TESTABILITY=YES -destination "platform=watchOS Simulator,id=E47C23A1-8DDB-4615-8D82-24EBC18523F8" -derivedDataPath /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData -jobs 2 -parallel-testing-enabled NO "-only-testing:SwiftJXLCoreTests/VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()" test-without-building -resultBundlePath /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-24cbd10-final/release/sentinel-missing.xcresult
+
+Build settings from command line:
+    ENABLE_TESTABILITY = YES
+
+Resolve Package Graph
+2026-11-04 16:46:02.390 xcodebuild[50497:8596469] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+
+
+Resolved source packages:
+  SwiftJXL: /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5
+
+Writing result bundle at path:
+	/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-24cbd10-final/release/sentinel-missing.xcresult
+
+objc[50517]: Class _NoAnimationDelegate is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/watchOS_23R353/Library/Developer/CoreSimulator/Profiles/Runtimes/watchOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/SwiftUICore.framework/SwiftUICore (0x11401c130) and /private/var/run/com.apple.security.cryptexd/mnt/watchOS_23R353/Library/Developer/CoreSimulator/Profiles/Runtimes/watchOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/UIKitCore.framework/UIKitCore (0x10e515d30). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+Test Suite 'Selected tests' started at 2026-11-04 16:46:03.299.
+Test Suite 'SwiftJXLCoreTests.xctest' started at 2026-11-04 16:46:03.300.
+Test Suite 'SwiftJXLCoreTests.xctest' passed at 2026-11-04 16:46:03.300.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-04 16:46:03.300.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64-apple-watchos10.0-simulator
+◇ Suite VarDCTARMIntegerTests started.
+◇ Test optionalFullRangeHardwareReciprocalVectors() started.
+✘ Test optionalFullRangeHardwareReciprocalVectors() recorded an issue at VarDCTARMIntegerTests.swift:231:6: Caught error: Error Domain=NSCocoaErrorDomain Code=260 "The file “absent-vectors.json” couldn’t be opened because there is no such file." UserInfo={NSFilePath=/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-24cbd10-final/release/absent-vectors.json, NSURL=file:///Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-24cbd10-final/release/absent-vectors.json, NSUnderlyingError=0x15891a910 {Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory"}}
+✘ Test optionalFullRangeHardwareReciprocalVectors() failed after 0.004 seconds with 1 issue.
+✘ Suite VarDCTARMIntegerTests failed after 0.005 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.006 seconds with 1 issue.
+Resolve Package Graph
+
+2026-11-04 16:46:15.583 xcodebuild[50497:8596469] [MT] IDETestOperationsObserverDebug: 13.068 elapsed -- Testing started completed.
+2026-11-04 16:46:15.583 xcodebuild[50497:8596469] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-04 16:46:15.583 xcodebuild[50497:8596469] [MT] IDETestOperationsObserverDebug: 13.068 sec, +13.068 sec -- end
+Resolve Package Graph
+
+
+Test session results, code coverage, and logs:
+	/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-24cbd10-final/release/sentinel-missing.xcresult
+
+Failing tests:
+	VarDCTARMIntegerTests.optionalFullRangeHardwareReciprocalVectors()
+
+** TEST EXECUTE FAILED **
+
+Testing started

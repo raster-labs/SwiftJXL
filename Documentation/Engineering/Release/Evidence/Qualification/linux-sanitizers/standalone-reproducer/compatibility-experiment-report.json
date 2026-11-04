@@ -1,0 +1,118 @@
+{
+  "status": "experiments-passed",
+  "scope": "Standalone alternatives only; no package compatibility implementation or qualification claim",
+  "images": {
+    "6.2": {
+      "id": "sha256:e508ef1e4be68087f720de622b91cbf1e32799a7aa96134b35e6f1a1d656db7a",
+      "architecture": "arm64",
+      "digests": [
+        "swift@sha256:e508ef1e4be68087f720de622b91cbf1e32799a7aa96134b35e6f1a1d656db7a"
+      ]
+    },
+    "6.4": {
+      "id": "sha256:bca121f6eb59fd80340d1296887b2698ed8f3eb9eca7d80c181f8af769dc7ee0",
+      "architecture": "arm64",
+      "digests": [
+        "swift@sha256:bca121f6eb59fd80340d1296887b2698ed8f3eb9eca7d80c181f8af769dc7ee0"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "name": "locked-value",
+      "swift": "Swift version 6.2.4 (swift-6.2.4-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "thread",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-g",
+        "-O",
+        "-sanitize=thread",
+        "locked-value.swift",
+        "-o",
+        "locked-value-6.2"
+      ],
+      "execute": [
+        "./locked-value-6.2"
+      ],
+      "exitCode": 0,
+      "sourceSHA256": "611b3ecc30423e8d40acc837bc6efb8d0fe3af2ffc0cf0cea9d0eeef1a67cc0f",
+      "logSHA256": "38b8523e8c9384c794d20c8b6ca8b6990357568c843d9c3a6e426c7f1e1db810",
+      "stdout": "locked-value-count-and-throw-ok\n"
+    },
+    {
+      "name": "posix-process",
+      "swift": "Swift version 6.2.4 (swift-6.2.4-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "address",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-g",
+        "-O",
+        "-sanitize=address",
+        "posix-process.swift",
+        "-o",
+        "posix-process-6.2"
+      ],
+      "execute": [
+        "./posix-process-6.2"
+      ],
+      "exitCode": 0,
+      "sourceSHA256": "dbfd0d10dd1bf36457cb6819d3595470f575bc43725bc5f9a4a7dd64d0774b50",
+      "logSHA256": "5aa119bd861be10dff9b28f6e9197c594585ded6ffc9fa678686d9580923f5b6",
+      "stdout": "posix-process-completed\n"
+    },
+    {
+      "name": "locked-value",
+      "swift": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "thread",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-g",
+        "-O",
+        "-sanitize=thread",
+        "locked-value.swift",
+        "-o",
+        "locked-value-6.4"
+      ],
+      "execute": [
+        "./locked-value-6.4"
+      ],
+      "exitCode": 0,
+      "sourceSHA256": "611b3ecc30423e8d40acc837bc6efb8d0fe3af2ffc0cf0cea9d0eeef1a67cc0f",
+      "logSHA256": "38b8523e8c9384c794d20c8b6ca8b6990357568c843d9c3a6e426c7f1e1db810",
+      "stdout": "locked-value-count-and-throw-ok\n"
+    },
+    {
+      "name": "posix-process",
+      "swift": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "address",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-g",
+        "-O",
+        "-sanitize=address",
+        "posix-process.swift",
+        "-o",
+        "posix-process-6.4"
+      ],
+      "execute": [
+        "./posix-process-6.4"
+      ],
+      "exitCode": 0,
+      "sourceSHA256": "dbfd0d10dd1bf36457cb6819d3595470f575bc43725bc5f9a4a7dd64d0774b50",
+      "logSHA256": "5aa119bd861be10dff9b28f6e9197c594585ded6ffc9fa678686d9580923f5b6",
+      "stdout": "posix-process-completed\n"
+    }
+  ]
+}

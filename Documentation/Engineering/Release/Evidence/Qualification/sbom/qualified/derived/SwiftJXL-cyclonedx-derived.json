@@ -1,0 +1,100 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "bom-ref": "swiftjxl",
+      "externalReferences": [],
+      "name": "swiftjxl",
+      "pedigree": {
+        "commits": [
+          {
+            "uid": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+            "url": "https://github.com/raster-labs/SwiftJXL.git"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "swift-entity",
+          "value": "swift-package"
+        }
+      ],
+      "purl": "pkg:swift/github.com/raster-labs/swiftjxl@00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+      "scope": "required",
+      "type": "application",
+      "version": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae"
+    }
+  ],
+  "dependencies": [
+    {
+      "dependsOn": [
+        "swiftjxl:SwiftJXL"
+      ],
+      "ref": "swiftjxl"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "bom-ref": "swiftjxl:SwiftJXL",
+      "externalReferences": [],
+      "name": "SwiftJXL",
+      "pedigree": {
+        "commits": [
+          {
+            "uid": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+            "url": "https://github.com/raster-labs/SwiftJXL.git"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "swift-entity",
+          "value": "swift-product"
+        }
+      ],
+      "scope": "required",
+      "type": "library",
+      "version": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae"
+    },
+    "timestamp": "2026-11-04T10:49:01Z",
+    "tools": {
+      "components": [
+        {
+          "bom-ref": "urn:uuid:f8355cab-24a8-4142-a60e-7add36d6bb21",
+          "licenses": [
+            {
+              "license": {
+                "id": "Apache-2.0",
+                "url": "http://swift.org/LICENSE.txt"
+              }
+            }
+          ],
+          "name": "swift-package-manager",
+          "purl": "pkg:swift/github.com/swiftlang/swift-package-manager@6.4.2",
+          "scope": "excluded",
+          "type": "application",
+          "version": "6.4.2"
+        },
+        {
+          "type": "application",
+          "name": "SwiftJXL SBOM derivation",
+          "version": "74aecc5ef013327afacf737529aa1501101f0bec4567c18cb75f606d73f79022"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "swiftjxl:derivation:original-sha256",
+        "value": "5cad82cd4f69dd588680e7c2d6758243e7cfe7ab534481bcabd4de2d6843f189"
+      },
+      {
+        "name": "swiftjxl:derivation:scope",
+        "value": "Corrected SwiftPM package graph; see report.json; not a complete system inventory"
+      }
+    ]
+  },
+  "serialNumber": "urn:uuid:91caf38d-4c22-4333-b05f-af680115270d",
+  "specVersion": "1.7",
+  "version": 2
+}

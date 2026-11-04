@@ -1,0 +1,29 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--cpuset-cpus",
+    "0-3",
+    "-e",
+    "SWIFT_DETERMINISTIC_HASHING=1",
+    "-v",
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/linux-lock-benchmark:/work",
+    "-w",
+    "/work",
+    "swift@sha256:bca121f6eb59fd80340d1296887b2698ed8f3eb9eca7d80c181f8af769dc7ee0",
+    "/work/baseline-client/.build/release/Probe",
+    "vardct",
+    "decode",
+    "1",
+    "512",
+    "10",
+    "/work/comparison/vardct-decode-w1-r0-3-baseline"
+  ],
+  "exitCode": 0,
+  "stdout": "{\"encodedBytes\":151757,\"family\":\"vardct\",\"iterations\":10,\"milliseconds\":[34.948907,38.641414,36.631744,40.644669,44.264717,33.402987,33.294779,33.414945,33.952821,33.157819],\"operation\":\"decode\",\"processPeakRSSBytes\":37625856,\"scope\":\"Public API latency and whole-process peak RSS; sample validation is outside timing. No copy\\/allocation or general throughput claim.\",\"size\":512,\"warmups\":3,\"workers\":1}\n",
+  "stderr": "",
+  "seconds": 0.850633124995511
+}

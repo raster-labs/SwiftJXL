@@ -1,0 +1,30 @@
+{
+  "status": "archived",
+  "sourceDirectory": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-00f03ff-final",
+  "selectedFilesSHA256": {
+    "boot-simulator.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "boot-status.log": "a5f5dfcfc5e3652abd4a4ce47f106b23483d4c8b82e690d17a4aba686daa7b6e",
+    "create-simulator.log": "4521aaa87e1315ea6fc6fc9e4eb60634b919c136fb6765df381d44876c5683ad",
+    "driver-snapshots/qualify-apple-simulator-suite.py": "067b53387bae841e7b07789df253ca1b722ff4973e9de839523e1480c69d7686",
+    "driver-snapshots/qualify-ios-simulator.py": "72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065",
+    "failed-summary.json": "fb5b2b68587cb203916eafba3a98feaeabed8d50fb49db21922018793b88fba0",
+    "failed-tests.json": "878436998e04c1a30bd67191d0ba1f7255692a6801c074a17c69ad50cb1951d8",
+    "host.log": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+    "release/enumeration.json": "4eff3cfe7926ecd8a98a69afcc857dd14c7ce8f686236470fd34db97a1ce039d",
+    "release-enumeration.log": "4e7acb2df9e7e3f26affa88f2d7940118ec5f4a9c4bdbc024e35864881be29d4",
+    "release-tests.log": "cc64419af2f813c92c8084507ccbc904114503d5e1958158d4bd29c7c590b6a7",
+    "report.json": "6820c75a6273c3a61c94da0a4084c7671a4e22d26135fe73fbfcca5c0bfb7d11",
+    "runtimes.log": "eca711f9d90af34ddbafd49483faa6a7b4482d594a9bf42cdf370f9292a0c1a1",
+    "sdk-path.log": "6d381fe580d3fa00607026e77a521581b6687f61e38c7e747586e4833c00da41",
+    "sdk-version.log": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "source-diff.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source-revision.log": "8cf09340f3b4691bc25f2415a6f60b22fc1f09426bbd53df35c1032828598f1e",
+    "swift-version.log": "448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06",
+    "xcode-version.log": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+  },
+  "selectedFileCount": 19,
+  "selectedBytes": 1990891,
+  "retainedUnarchivedXcresultFiles": 5858,
+  "retainedUnarchivedXcresultBytes": 29141205,
+  "scope": "Exact original receipts, audits, captured source/driver identities, discovery/execution trees, logs and binary instrumentation/link proofs copied. Raw xcresult bundles and original build products remain at the source directory and recorded DerivedData paths; no physical-device qualification."
+}

@@ -1,0 +1,244 @@
+{
+  "status": "passed",
+  "commands": [
+    {
+      "label": "create",
+      "command": [
+        "xcrun",
+        "simctl",
+        "create",
+        "SwiftJXL-M5-watch-focused-e9128762",
+        "com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-11-46mm",
+        "com.apple.CoreSimulator.SimRuntime.watchOS-26-0"
+      ],
+      "exitCode": 0,
+      "logSHA256": "12fb7a264f39c0059ba4661e5b3b1937cd503bc3e74e3b88615282802277aa7f"
+    },
+    {
+      "label": "boot",
+      "command": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "84C9AE39-7780-4E85-8C80-002D9A9530F9"
+      ],
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "bootstatus",
+      "command": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "84C9AE39-7780-4E85-8C80-002D9A9530F9",
+        "-b"
+      ],
+      "exitCode": 0,
+      "logSHA256": "7b0d984cefa8322cba6e0e9776e02ddb5bb6bdeea1cebeb452b845eeb7153e60"
+    },
+    {
+      "label": "tests",
+      "command": [
+        "xcodebuild",
+        "-scheme",
+        "SwiftJXL-Package",
+        "-configuration",
+        "Release",
+        "ENABLE_TESTABILITY=YES",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "-destination",
+        "platform=watchOS Simulator,id=84C9AE39-7780-4E85-8C80-002D9A9530F9",
+        "-derivedDataPath",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-watchos26-suite-prebuild/DerivedData",
+        "-jobs",
+        "2",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:SwiftJXLCoreTests/ModularDecodeParallelTests",
+        "-only-testing:SwiftJXLCoreTests/ModularStorageTests",
+        "test",
+        "-resultBundlePath",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/watch-test-adjustment/focused/tests.xcresult"
+      ],
+      "exitCode": 0,
+      "logSHA256": "cb39c6a50fad3b00eba0121b8c5a339a51ef834ace97cb00512f47d51a64f58c"
+    },
+    {
+      "label": "summary",
+      "command": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/watch-test-adjustment/focused/tests.xcresult",
+        "--format",
+        "json"
+      ],
+      "exitCode": 0,
+      "logSHA256": "896891e636fc5e6dd193b8641a4128b09b751bb74df9e62139056861d8b521cd"
+    },
+    {
+      "label": "shutdown",
+      "command": [
+        "xcrun",
+        "simctl",
+        "shutdown",
+        "84C9AE39-7780-4E85-8C80-002D9A9530F9"
+      ],
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "delete",
+      "command": [
+        "xcrun",
+        "simctl",
+        "delete",
+        "84C9AE39-7780-4E85-8C80-002D9A9530F9"
+      ],
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "startedUTC": "2026-11-04T11:13:03.992134+00:00",
+  "testSourcesSHA256": {
+    "Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift": "7c41181d90438f18e7b513fb335d491d8cc18724971d5422acf8e355bd314a1a",
+    "Tests/SwiftJXLCoreTests/AnimationFrameIndexTests.swift": "06c9cb54e36aa9bc6ac395d8f7b5be4e98098751b7dd512c04d05140ee1e9395",
+    "Tests/SwiftJXLCoreTests/AnimationPublicTests.swift": "01d118be67fe36d1f2bce2d13e7e055d97f14e6384e3c0c1333c3a1b7ba891ea",
+    "Tests/SwiftJXLCoreTests/BrotliDecoderTests.swift": "bc69ed107cd67489128b9d9c5b4c1171736508b54b17da7a30c2232492c6071d",
+    "Tests/SwiftJXLCoreTests/BrotliFramingTests.swift": "b1931bfc1f771b4e8deb802fccd38b56c1a1a7919dc200cb916caaae6cc27e9f",
+    "Tests/SwiftJXLCoreTests/CompactANSTests.swift": "8d6ea33d6e9253579f879d2f695c99a885b3875cf00d22bb83c224fa59d5dbee",
+    "Tests/SwiftJXLCoreTests/HybridUintEncodingTests.swift": "ef1374f722185cfd4afa8dabd5a23996b4d9184bdceb77b3b8c2e445c48338a0",
+    "Tests/SwiftJXLCoreTests/ICCStreamTests.swift": "ec0dfa17ff3233339753e221c08d78e7916c99484fd6479956e36bf89f6c2ffd",
+    "Tests/SwiftJXLCoreTests/IntegerBoundaryTests.swift": "2f27d72d33447c5a8bca72a1b82d5331a2f05a6ecffb898328cd0d5c0329315d",
+    "Tests/SwiftJXLCoreTests/JBRDTests.swift": "b91e2453b05fc5e78b09acb6ca0edeb889ed7342f68cbfabd0ebd053514596d0",
+    "Tests/SwiftJXLCoreTests/JPEGBridgeCoefficientTests.swift": "63812f71a8f87582a9b0ac792312be8daf20f95d922a9d98f4a8b3be846bbd14",
+    "Tests/SwiftJXLCoreTests/JPEGBridgeFrameTests.swift": "7e503521281b990a5b817c8b043ce97aa6d967771b2f466324963601ff9f824c",
+    "Tests/SwiftJXLCoreTests/JPEGCoefficientTests.swift": "d75c33a2acc168c16effbb53c6bd045b68fe813e0b0ae16156f2532913d65445",
+    "Tests/SwiftJXLCoreTests/JPEGExtendedPixelTests.swift": "ba58d5f20f25e932bde1160fabfbc83235961fc0c79a9d455c1a86cb3907cfa3",
+    "Tests/SwiftJXLCoreTests/JPEGFrameLayoutTests.swift": "28cff4e72fbdf2b7986f1b28e2fc0667317209197e7129fca4261f84fab5a800",
+    "Tests/SwiftJXLCoreTests/JPEGPixelPublicTests.swift": "fe816917916069beff12f5fb6baa6c648bf41b73c289e4214c9250d800e0dc55",
+    "Tests/SwiftJXLCoreTests/JPEGReconstructionEventTests.swift": "0b0989e832470d7520ba664bfef3e801e9013f135ea237657a6ec4c40d2e9378",
+    "Tests/SwiftJXLCoreTests/JPEGReconstructionMetadataTests.swift": "6cfdf1e60fa29bca1492f8f9de7216a0e8f79670f255039c9e61489b85bcba86",
+    "Tests/SwiftJXLCoreTests/JPEGSegmentReaderTests.swift": "fd3f5433aad4d137f36b856af7df09ed9720667a3589b1237d2ca2eb04313e14",
+    "Tests/SwiftJXLCoreTests/LinuxOracleProcess.swift": "d40205dd7aa5507b7069959eaa7daf0e4b65c432f8030aa3da97956bfca5d71e",
+    "Tests/SwiftJXLCoreTests/LinuxQualificationSupportTests.swift": "968b2c1c40167a42be672884761369648c3ba0f8e85f64fd5855c7ed02eee417",
+    "Tests/SwiftJXLCoreTests/ModularConstantPerformanceTests.swift": "98dd9383919f9273cd097ddbd5a0f77833426cad6b762b6877c9841343250ed3",
+    "Tests/SwiftJXLCoreTests/ModularDecodeParallelTests.swift": "38ec7705ff526aada85bd6d064b996df59229e25205e7c7f400ba69b65fd74d1",
+    "Tests/SwiftJXLCoreTests/ModularEffortBudgetTests.swift": "b3c9bbed3acdd29f76a040d902e4af6150cc871799026367687ef2519706c200",
+    "Tests/SwiftJXLCoreTests/ModularEffortLimitTests.swift": "54a2542217d4e29d9ea06e5e91281a5cfcf41c814c07ba95534df16d4798c7ae",
+    "Tests/SwiftJXLCoreTests/ModularEffortTests.swift": "9573c477025fb79656e84fe65b8a0763320e1659570aa3fc4d2d926bc7c1535e",
+    "Tests/SwiftJXLCoreTests/ModularEncoderTests.swift": "963b5d4c226537d64d2def03313f0a4a0d8df57a90b4dca9df0451d5c3db1d61",
+    "Tests/SwiftJXLCoreTests/ModularFrameDecoderTests.swift": "3f2f6da5ce15f2782cacbd2895ccfae35a058e601e426d4b1d93baf6ecbbeaee",
+    "Tests/SwiftJXLCoreTests/ModularGradientTests.swift": "dc50e5adee12b11d01135d614e001977b6995df6e683b1dc723545c2cb6d55c3",
+    "Tests/SwiftJXLCoreTests/ModularGroupBoundaryTests.swift": "d4c701e84f19101503b0a726264e8cbd1e5be91ff7659c87647f001271a3a5b1",
+    "Tests/SwiftJXLCoreTests/ModularICCTests.swift": "4ae9afbd2a49534fe77ce668ffc188c45d475d2b0bc68926b44a811f65f5ff52",
+    "Tests/SwiftJXLCoreTests/ModularLearningSampleTests.swift": "794eb27013a8f2b8b9af6a8be00b87e1a8e3087b4a78c8137a788fff60564474",
+    "Tests/SwiftJXLCoreTests/ModularLowPrecisionTests.swift": "a0f520f373718667b9bae466b7df1ba97389a0620ada506d9d052d84cfeb42bf",
+    "Tests/SwiftJXLCoreTests/ModularNameTests.swift": "cf40595bc9d6585c593b4240cff80a8e4d0c72f6ef99825cbdef51b44e89a896",
+    "Tests/SwiftJXLCoreTests/ModularParallelTests.swift": "d6f108671d97a63ca87bd598bfc190051d67215bc7b02d15850b26891bf6fb71",
+    "Tests/SwiftJXLCoreTests/ModularPredictorSafetyTests.swift": "d167142cd023218d2ace9ce42a9a2b36473c0b0ab28326ff45ec683aee7168f4",
+    "Tests/SwiftJXLCoreTests/ModularProfileLifetimeTests.swift": "d5a37429383c862ca92edcc652dc114a5e0c4cb98e8521ed171e0f6f701a0cbc",
+    "Tests/SwiftJXLCoreTests/ModularProfileTests.swift": "99b65a6307033bfdee221e1d491ad12967a9f8f2010981d6f31905603832800f",
+    "Tests/SwiftJXLCoreTests/ModularPublicMatrixTests.swift": "140d728ea5698b08ba449c74756cf8c242f3d57bd5c16d91bbd32e131078ca7f",
+    "Tests/SwiftJXLCoreTests/ModularStorageTests.swift": "a0ef9894fd56d231cdf9964d25441093a374619ad21f3d03b0f104723e440f2d",
+    "Tests/SwiftJXLCoreTests/ModularTransferTests.swift": "225c3c7b9cf4f735981641d325add4cd0a11cd6b24962a15c50c496add4c72a0",
+    "Tests/SwiftJXLCoreTests/ModularTransformTests.swift": "e8bbe2442653d137e950db87f025d83d98526ee971e5d2493960c775793ecf16",
+    "Tests/SwiftJXLCoreTests/ModularUnsupportedPaletteTests.swift": "9fb63d3c62cd450db0a6d2ba92663b0a8ff76f154a7f2e6fb66aa0a70d044d18",
+    "Tests/SwiftJXLCoreTests/ModularWireTests.swift": "6ddf5350ea531ebeda991a644aa9f9fe11dad38a3c3afb37a20e2910914f4d49",
+    "Tests/SwiftJXLCoreTests/NativeTranscoderPublicTests.swift": "a54414618a0ce04c5c3c09665e095d310d5cd89fe3ff753e2dc21f0a17c153c8",
+    "Tests/SwiftJXLCoreTests/PixelContainerTests.swift": "291374d5dd8217df4b33b2d6ab6f5e7161d9e560e28c37d3e68b2601c1f9db90",
+    "Tests/SwiftJXLCoreTests/PixelFrameHeaderTests.swift": "6b103ad6bb0307ba44b3e712ea6f3b02a79be4203a61d34c8e8e4cd41abe2108",
+    "Tests/SwiftJXLCoreTests/ScalarLimitTests.swift": "9b7622418319af3ba1d7d95f949e3ee5741184f44d3b0357df2327cb03f8e517",
+    "Tests/SwiftJXLCoreTests/ScalarMalformedTests.swift": "224128ae8bfd1ca8c550a3124f0811336887bbb3702e1564e8a2c84e731674cc",
+    "Tests/SwiftJXLCoreTests/ScalarMemoryTests.swift": "edca9cf329803c989567c8c1a1573b3fcccdf34b0ce36716d002edf0291492bf",
+    "Tests/SwiftJXLCoreTests/ScalarModularTests.swift": "59451ebc9e90374dffba59fb65a82bcf3ca8c64c58174ec679b35c30e48d765b",
+    "Tests/SwiftJXLCoreTests/ScalarOracleTests.swift": "e5e65f3d8fae72553294cd28f7bb798c141c85727a92e808bb87c311de581161",
+    "Tests/SwiftJXLCoreTests/ScalarStorageTests.swift": "6688111b4604a434632c6c33634120d670eb456c3cf2efb0db49dbfe060a8ae7",
+    "Tests/SwiftJXLCoreTests/SpecRCTTests.swift": "74bb9eb2dbef2ef49f14ea0cab23fc2cef5ca4ed4e101fb0774b481c64a12929",
+    "Tests/SwiftJXLCoreTests/U32DistributionBoundaryTests.swift": "ca902f9dea775af1579616ddb0ce334995c7ec302187eeb94902dbd93aa1e6d9",
+    "Tests/SwiftJXLCoreTests/VarDCTARMIntegerTests.swift": "35534b47f3105da179b15e5afa004e404d69a906fc9b5986c20e21f619c8d7f0",
+    "Tests/SwiftJXLCoreTests/VarDCTColourTests.swift": "14807bcfdc3c1e3ad20ce89357f5e24eb2c5de561e6e65884a12de8c2b02de6d",
+    "Tests/SwiftJXLCoreTests/VarDCTConformanceTests.swift": "33f458ecef05c4309bca6396de076d9d725d285e844b23c5a2076827006b3727",
+    "Tests/SwiftJXLCoreTests/VarDCTEPFTests.swift": "5a66433b869c1bafa97d2761c56a2c546695b3d57c69b3d40335c932c82d9b5d",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderPreparationTests.swift": "e06e1c2797bfbb49b094235ef49f38f14fc2683776c255efa0195642293e03c3",
+    "Tests/SwiftJXLCoreTests/VarDCTEncoderTests.swift": "ebf78b04b94e6bc03d7645ea71a0e0bd17c79d8232f575e84839a1562c648860",
+    "Tests/SwiftJXLCoreTests/VarDCTFilterTests.swift": "e5e80e4cfbc3057bd3c827158f32a0e354958069a2d7a5b12e2fa3e069ef10d9",
+    "Tests/SwiftJXLCoreTests/VarDCTFrameTests.swift": "76ae0d1a3e8dab6c8cc54afc2a9799a7740034f7a26120d4b143a5792b3c84cc",
+    "Tests/SwiftJXLCoreTests/VarDCTGroupedDecoderTests.swift": "cbb1339ddcd9f91920d9d05169458f9aadd3793a514558ee9b3396ba34ced56c",
+    "Tests/SwiftJXLCoreTests/VarDCTGroupedEncoderTests.swift": "394774b51c00e390675f0d44641063735a8729995174c0950c91119230e70d96",
+    "Tests/SwiftJXLCoreTests/VarDCTHierarchicalAnalysisTests.swift": "ed2a0a457547ec2e66495baa9d0500bb540307e21a153bb951e400de18ad9330",
+    "Tests/SwiftJXLCoreTests/VarDCTLargeAnalysisTests.swift": "6763338c1a1f4bc77e49d00d001fe0f5f01395fc2e208f258e6a05c7e282b501",
+    "Tests/SwiftJXLCoreTests/VarDCTParallelTests.swift": "63efa42c110dfbdd44d47d114896bb2f56c384f4140ecbad250e41ce9e023edd",
+    "Tests/SwiftJXLCoreTests/VarDCTPixelStorageTests.swift": "87b8c74014151fb666b80185ccc72a46b511df59a4ff7ddc5895d4a7358ecd1c",
+    "Tests/SwiftJXLCoreTests/VarDCTPublicEncoderTests.swift": "5d43b97977b0f4d3856ae196270e80361fe689b563d2826374dc1e474c8a9774",
+    "Tests/SwiftJXLCoreTests/VarDCTPublicGroupedTests.swift": "a3c59e051f1b2e95a4baf29b4ddf6fdf52c6572304ecc5f5d4bab54e3b380675",
+    "Tests/SwiftJXLCoreTests/VarDCTPublicTests.swift": "188919091d1b4a20e45eb222266f817b08e517cfd7465d32ac93c94bd2ebe734",
+    "Tests/SwiftJXLCoreTests/VarDCTSmallAnalysisTests.swift": "b96aa6bdc8ad5dde80ea3e9870da8d406b442676f5902d9ae78c85f1b748fa74",
+    "Tests/SwiftJXLCoreTests/VarDCTSmallTransformTests.swift": "cde74e4809fff16bb659fba27f4201cc4eedfa061542e6854c4ed04a8451724a",
+    "Tests/SwiftJXLCoreTests/VarDCTStrategyTests.swift": "7cb5b278662cbee6ea58dab459669f90d42bedc137fc9ab73688868e1f6c5075",
+    "Tests/SwiftJXLCoreTests/VarDCTTransformTests.swift": "19f2716bdc1cc7e73560b44d93975e26107f8b4248696dbf831f74cd510d33f9",
+    "Tests/SwiftJXLCoreTests/VarDCTWorkspaceTests.swift": "9bea8f075a4880cc071a2b1640ad2eec43218e9f0854915c5044a2cd32e06c80",
+    "Tests/SwiftJXLTests/APITests.swift": "a5b7df91ff59dbc945b842da8820783f2c0ae34dc42917de0979442001e28057",
+    "Tests/SwiftJXLTests/CancellationPublicationTests.swift": "96232682ed62980ad659765a9c06ad72764eb7f1a9647f7becdaf8e07a1d3421",
+    "Tests/SwiftJXLTests/DescriptorTests.swift": "5d5ad2c525e35829442b3a1538a7a603b4b3eac5e0638fe64d211e7dc01102ac",
+    "Tests/SwiftJXLTests/SampleAccessTests.swift": "2b797d2386fa275a5819dc4319cbd7c440c57beebb1cc93a200e285b64cda922",
+    "Tests/SwiftJXLTests/ScalarPublicAPITests.swift": "a81cc3ce800f7bdf40887a9042399431293977b651bc317263bac165e0302970",
+    "Tests/SwiftJXLTests/StorageTests.swift": "71e30761e97b0cfb722bedca8db0ae76cc1d833d5818a111d3d00b4cd9d4aeb2"
+  },
+  "simulatorUUID": "84C9AE39-7780-4E85-8C80-002D9A9530F9",
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "84C9AE39-7780-4E85-8C80-002D9A9530F9",
+          "deviceName": "SwiftJXL-M5-watch-focused-e9128762",
+          "modelName": "Apple Watch Series 11",
+          "osBuildNumber": "23R353",
+          "osVersion": "26.0",
+          "platform": "watchOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 91,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "SwiftJXL-Package \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1793790894.255,
+    "passedTests": 14,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1793790812.555,
+    "statistics": [
+      {
+        "subtitle": "82 test runs",
+        "title": "5 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - SwiftJXL-Package",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "32% of duration",
+        "text": "3 longest test runs with outlier durations exceeding 0.08s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 14
+  },
+  "testSourcesUnchanged": true,
+  "finishedUTC": "2026-11-04T11:14:58.039628+00:00"
+}

@@ -1,0 +1,3626 @@
+{
+  "status": "passed",
+  "binarySHA256": "09cb91ee243e803744ba1ee7bb196deb1de7262defef59b3e66994d3292c1298",
+  "scriptSHA256": "55db46b995e5417dc5ecd0bd39ab3d654288f474a8351e978f3bf2d21d5a60d1",
+  "checks": [
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-1-8.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 1,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-1-8.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 1,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-1-12.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 1,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-1-12.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 1,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-1-16.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 1,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-1-16.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 1,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-2-8.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 1,
+        "alphaBits": 8,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-2-8.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 1,
+        "alphaBits": 8,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-2-12.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 1,
+        "alphaBits": 12,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-2-12.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 1,
+        "alphaBits": 12,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-2-16.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 1,
+        "alphaBits": 16,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-2-16.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 1,
+        "alphaBits": 16,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-3-8.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 3,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-3-8.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 3,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-3-12.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 3,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-3-12.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 3,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-3-16.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 3,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-3-16.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 3,
+        "alphaBits": 0,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-4-8.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 3,
+        "alphaBits": 8,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-4-8.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 8,
+        "colourChannels": 3,
+        "alphaBits": 8,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-4-12.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 3,
+        "alphaBits": 12,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-4-12.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 12,
+        "colourChannels": 3,
+        "alphaBits": 12,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-4-16.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 3,
+        "alphaBits": 16,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 1
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "oracle": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/pnm-srgb-4-16.jxl",
+      "exit": 0,
+      "exactSamples": true,
+      "metadata": {
+        "width": 513,
+        "height": 3,
+        "bits": 16,
+        "colourChannels": 3,
+        "alphaBits": 16,
+        "premultiplied": 0,
+        "renderingIntent": 1,
+        "transferFunction": 13
+      }
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: PNM dimensions exceed limits.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM requires 8\u201316 meaningful bits with MAXVAL equal to 2^bits-1; no rescaling.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: PNM token exceeds limits.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: PNM header exceeds limits.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: PAM header line limit exceeded.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PAM tuple type and depth must identify grey/RGB and optional straight alpha.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: Unsupported PAM header field.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PAM tuple type and depth must identify grey/RGB and optional straight alpha.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 3,
+      "expected": 3,
+      "stderr": "swiftjxl-cli: Invalid PNM header or raster.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "-",
+        "--input-format",
+        "pnm",
+        "--max-memory",
+        "1"
+      ],
+      "exit": 5,
+      "expected": 5,
+      "stderr": "swiftjxl-cli: Memory limit is too small for command I/O.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm",
+        "-o",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/colour image \u03bb.ppm"
+      ],
+      "exit": 6,
+      "expected": 6,
+      "stderr": "swiftjxl-cli: Output already exists or is not a regular file.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm",
+        "-o",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/colour image \u03bb.ppm",
+        "--overwrite"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb",
+        "-o",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/colour image \u03bb.ppm",
+        "--overwrite"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "encode",
+        "-i",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-cli-tsan-matrix/pnm/source with spaces.ppm",
+        "--input-format",
+        "pnm"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "capabilities",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "-",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: PNM cannot preserve this layout, alpha or colour metadata; select its colour variant explicitly.\n"
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "-",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4,
+      "stderr": "swiftjxl-cli: NRRD output cannot preserve this precision or interpretation metadata.\n"
+    }
+  ]
+}

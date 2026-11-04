@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "auditedUTC": "2026-11-04T11:45:38.966142+00:00",
+  "scope": "Independent final checklist, complete archive, current-source continuity and owner-exclusion audit. Reviews retained execution and independent-audit receipts; does not rerun expensive runtime suites. No publication authority or physical-device claim.",
+  "checks": {
+    "all9267ArtifactBytesAndCompleteInventoryMatch": true,
+    "everySourceGroupInventoryAndDigestMatchesCurrentTree": true,
+    "productionRuntimeExactlyFrozen00f03ff": true,
+    "executedFixturesHelpersOraclesAndReleaseDocumentationCovered": true,
+    "exactThirteenPassedGatesAndRequiredPhysicalGateRetained": true,
+    "allGateReceiptsExistPassAndMatchPinnedHashes": true,
+    "allPassedGateEvidenceAndGroupBindingsExact": true,
+    "ownerExclusionsDoNotWaiveStableReadiness": true,
+    "complete1199SourceFixtureMapReconcilesCurrentTests": true,
+    "exactSixInactiveWatchBranchesPreserveOtherPlatformTestBytes": true,
+    "linuxRuntimeAndQualificationDriversStillCurrent": true,
+    "all120RuntimeAnd995FixtureProvenanceEntriesMatchCurrentBytes": true,
+    "bothConsumersBoundToActualFrozenRuntimeAndAcceptance": true,
+    "docsAndPolicyCurrent": true,
+    "validatorExitZeroForAssignedTaskAndTwoForStableReadiness": true,
+    "savedReadinessReceiptsAgreeWithFreshValidator": true,
+    "aggregateAssemblerHashMatchesReviewedCode": true
+  },
+  "failedChecks": [],
+  "finalReviewSHA256": "ec68816377ba73c1e11a3d85f3a327f30cbdac74149093190ce456774fdf589e",
+  "checklistSHA256": "bdce7ecebe7ef93644d472396c8d2b9a0e205c4abfef9d93462c4cb49128e2c3",
+  "sourceGroupDigests": {
+    "runtime": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+    "preparation": "0d057088757e8f4197f9b7167ef75de7ea702eb89ed9637964c4627033276d94",
+    "qualification": "05f4fc7b23689a2d660ff9e8359ef75c669f52dec3c0b91e6b8655c4d6bd0ba2"
+  },
+  "archiveFileCount": 9267,
+  "passingGateIDs": [
+    "M4-CLI-TSAN",
+    "M4-IOS-SANITIZERS",
+    "M4-LINUX-SANITIZERS",
+    "M4-MACOS-INTEL",
+    "M4-MACOS-MINIMUM",
+    "M4-OTHER-SIMULATORS",
+    "M5-DOCS-EXAMPLES",
+    "M5-EVIDENCE-REVIEW",
+    "M5-LICENCE-PROVENANCE",
+    "M5-URL-CONSUMER",
+    "M5-VERSIONED-CONSUMER",
+    "RELEASE-SBOM-SCHEMA",
+    "RELEASE-SECURITY-POLICY"
+  ],
+  "onlyOpenGate": "M4-PHYSICAL-DEVICES",
+  "deferredIntegration": "DICOMKit",
+  "assignedTaskComplete": true,
+  "stableReleaseReady": false,
+  "publicationAuthorised": false,
+  "commands": {
+    "--require-assigned-complete": {
+      "exitCode": 0,
+      "result": {
+        "schemaVersion": 1,
+        "status": "blocked",
+        "checklistValid": true,
+        "preparationComplete": true,
+        "stableReleaseReady": false,
+        "publicationAuthorised": false,
+        "assignedTaskComplete": true,
+        "excludedFromAssignedTask": [
+          "M4-PHYSICAL-DEVICES"
+        ],
+        "sourceGroupDigests": {
+          "runtime": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+          "preparation": "0d057088757e8f4197f9b7167ef75de7ea702eb89ed9637964c4627033276d94",
+          "qualification": "05f4fc7b23689a2d660ff9e8359ef75c669f52dec3c0b91e6b8655c4d6bd0ba2"
+        },
+        "blockedGates": [
+          "M4-PHYSICAL-DEVICES"
+        ],
+        "gateStatuses": {
+          "M4-LINUX-SANITIZERS": "passed",
+          "M4-MACOS-MINIMUM": "passed",
+          "M4-MACOS-INTEL": "passed",
+          "M4-PHYSICAL-DEVICES": "unavailable",
+          "M4-IOS-SANITIZERS": "passed",
+          "M4-CLI-TSAN": "passed",
+          "M4-OTHER-SIMULATORS": "passed",
+          "M5-URL-CONSUMER": "passed",
+          "M5-VERSIONED-CONSUMER": "passed",
+          "M5-DOCS-EXAMPLES": "passed",
+          "M5-LICENCE-PROVENANCE": "passed",
+          "M5-EVIDENCE-REVIEW": "passed",
+          "RELEASE-SBOM-SCHEMA": "passed",
+          "RELEASE-SECURITY-POLICY": "passed"
+        }
+      }
+    },
+    "--require-ready": {
+      "exitCode": 2,
+      "result": {
+        "schemaVersion": 1,
+        "status": "blocked",
+        "checklistValid": true,
+        "preparationComplete": true,
+        "stableReleaseReady": false,
+        "publicationAuthorised": false,
+        "assignedTaskComplete": true,
+        "excludedFromAssignedTask": [
+          "M4-PHYSICAL-DEVICES"
+        ],
+        "sourceGroupDigests": {
+          "runtime": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+          "preparation": "0d057088757e8f4197f9b7167ef75de7ea702eb89ed9637964c4627033276d94",
+          "qualification": "05f4fc7b23689a2d660ff9e8359ef75c669f52dec3c0b91e6b8655c4d6bd0ba2"
+        },
+        "blockedGates": [
+          "M4-PHYSICAL-DEVICES"
+        ],
+        "gateStatuses": {
+          "M4-LINUX-SANITIZERS": "passed",
+          "M4-MACOS-MINIMUM": "passed",
+          "M4-MACOS-INTEL": "passed",
+          "M4-PHYSICAL-DEVICES": "unavailable",
+          "M4-IOS-SANITIZERS": "passed",
+          "M4-CLI-TSAN": "passed",
+          "M4-OTHER-SIMULATORS": "passed",
+          "M5-URL-CONSUMER": "passed",
+          "M5-VERSIONED-CONSUMER": "passed",
+          "M5-DOCS-EXAMPLES": "passed",
+          "M5-LICENCE-PROVENANCE": "passed",
+          "M5-EVIDENCE-REVIEW": "passed",
+          "RELEASE-SBOM-SCHEMA": "passed",
+          "RELEASE-SECURITY-POLICY": "passed"
+        }
+      }
+    }
+  },
+  "sourceReconciliation": "Production bytes frozen00f03ff; exact non-Watch projections preserve prior Apple/Linux/native test inputs, while Watch executes24cbd10 Tests. Final Watch oracle driver correctione8f976a changes no Swift probe/runtime source.",
+  "auditorSHA256": "7443871bdcec7ac30e7bade8aed69ae8ae5aea4273f655d10c68d49054783a28",
+  "aggregateRecordedCheckCount": 2221
+}

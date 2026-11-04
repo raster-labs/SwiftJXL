@@ -1,0 +1,19 @@
+{
+  "revision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "architecture": "x86_64",
+  "submodules": "-73695d303670c90e4d506ea89d9901b081385089 testdata\n 028fb5a23661f123017c060daa546b55cf4bde29 third_party/brotli (028fb5a)\n-6910c9d9165801d8827d628cb72eb7ea9dd538c5 third_party/googletest\n 457c891775a7397bdb0376bb1031e6e027af1c48 third_party/highway (457c891)\n 5176347635785e53ee5cee92328f76fda766ecc6 third_party/lcms (5176347)\n-8ecba3647edb6dd940463fedf38ca33a8e2a73d1 third_party/libjpeg-turbo\n-872555f4ba910252783af1507f9e7fe1653be252 third_party/libpng\n-94e0df6d0f8b44228de5be0ff35efb9f946a13c9 third_party/sjpeg\n-96d9171c94b937a1b5f0293de7309ac16311b722 third_party/skcms\n-51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf third_party/zlib\n",
+  "binaries": {
+    "cjxl": {
+      "sha256": "406f3d4f403d1e018682c50193021498b10d8bbe2d8f5120e02806cbab44be4c",
+      "version": "cjxl v0.12.0 a7a9c78 [_AVX2_,SSE4,SSE2] {Clang 21.0.0}\nCopyright (c) the JPEG XL Project\n"
+    },
+    "djxl": {
+      "sha256": "28918b60dd63d262de01cd0072fb515f3f164fbc73c2d1304c5503354d48562a",
+      "version": "djxl v0.12.0 a7a9c78 [_AVX2_,SSE4,SSE2] {Clang 21.0.0}\nCopyright (c) the JPEG XL Project\n"
+    },
+    "swiftjxl-modular-profile-oracle": {
+      "sha256": "756334b659e2ea4c4078f0baaf799694ad827d978c3e31f757780ad30b81c64a",
+      "sourceSHA256": "b388400d6aefc1ddb1b68efd310528404223ce956d98fe3a73474a02942feee0"
+    }
+  }
+}

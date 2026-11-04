@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "E2434DB6-4D33-4C82-8380-A1FF76593726",
+        "deviceName" : "SwiftJXL-M5-tvos-2da8ffc6",
+        "modelName" : "Apple TV 4K (3rd generation)",
+        "osBuildNumber" : "23J352",
+        "osVersion" : "26.0",
+        "platform" : "tvOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "SwiftJXL-Package · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1793790545.738,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793790533.34,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Caught error: Error Domain=NSCocoaErrorDomain Code=260 \"The file “absent-vectors.json” couldn’t be opened because there is no such file.\" UserInfo={NSFilePath=/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-tvos26-00f03ff-final/release/absent-vectors.json, NSURL=file:///Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-tvos26-00f03ff-final/release/absent-vectors.json, NSUnderlyingError=0x6000037043c0 {Error Domain=NSPOSIXErrorDomain Code=2 \"No such file or directory\"}}",
+      "targetName" : "SwiftJXLCoreTests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()",
+      "testIdentifierURL" : "test://com.apple.xcode/SwiftJXL/SwiftJXLCoreTests/VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()",
+      "testName" : "optionalFullRangeHardwareReciprocalVectors()"
+    }
+  ],
+  "title" : "Test - SwiftJXL-Package",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

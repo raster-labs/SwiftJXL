@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "87AD2669-DD8E-45F4-BB74-2BFFCCC0A702",
+        "deviceName" : "SwiftJXL-M5-ios-f6f600a7",
+        "modelName" : "iPhone 17 Pro",
+        "osBuildNumber" : "23A343",
+        "osVersion" : "26.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "SwiftJXL-Package · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1793790298.708,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793790286.956,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Expectation failed: vectors.count >= 40_000\nvectors.count → 1\n40_000 → 40000",
+      "targetName" : "SwiftJXLCoreTests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()",
+      "testIdentifierURL" : "test://com.apple.xcode/SwiftJXL/SwiftJXLCoreTests/VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()",
+      "testName" : "optionalFullRangeHardwareReciprocalVectors()"
+    }
+  ],
+  "title" : "Test - SwiftJXL-Package",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "checks": {
+    "compiledExampleMatchesMarkdown": true,
+    "canonicalSuccessorURL": true,
+    "localLinks": 134
+  },
+  "filesSHA256": {
+    "README.md": "07df1ea93b4e30c4e10dc07d0c8164f8db990f97ce6f903037e3f089f4d9e614",
+    "MIGRATION.md": "f72bfff0742e0fe0de653468ea7b8d3e9bdfade58ff64f9ed3830837e84d16ff",
+    "CLI.md": "0296138569d3d50096ccfee62a61b5cb613d314e23e3b60b251c497fcebcdf08",
+    "SECURITY.md": "da5c5d2d10b7ec7349d4596a6a87b67f4379b0909579efeb1e6661649cd3b87b",
+    "NOTICE": "53100225da5da07776b66f1f2bcf1d4763c06c27b36967c38492d76695a8c90d",
+    "THIRD_PARTY_NOTICES.md": "6919105dee2ef9807a17dbeb6b6275241ebf0a34858f16fef3a14afe5121cf28",
+    "Scripts/README.md": "bc2c6db377e605a4b1e8bdc7ee1a304e59a528e05eae71a3ed1902a0360a9b24",
+    "Documentation/Engineering/Release/README.md": "ac158f2091436694144a46ea36c25242de8a864530470a0397d111b497eaa79b",
+    "Documentation/Engineering/Release/QUALIFICATION.md": "b9454cb30244342691080ff1f939b5fa1e72d2d57a2876798038501ca03947a2",
+    "Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift": "59f014ec9128eb870a277f80689f19e04a56a19359ce846f06bfcb72a0e3bbc6"
+  },
+  "limitations": [
+    "Links are checked for local targets, not external reachability or section anchors",
+    "Compilation is established by separate URL-consumer reports"
+  ]
+}

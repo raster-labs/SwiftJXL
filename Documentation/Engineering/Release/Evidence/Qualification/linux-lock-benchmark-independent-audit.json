@@ -1,0 +1,158 @@
+{
+  "status": "audit-passed",
+  "candidateSourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "candidateSourceFiles": 122,
+  "baselineRevision": "c917d6d5596378c5cb451f402de6ee1a62966003",
+  "archiveFilesVerified": 89,
+  "rawTimingRSSAndOutputHashesRecomputed": true,
+  "candidateSourceMatchesFrozenCommit": true,
+  "summaries": [
+    {
+      "directory": "comparison",
+      "status": "investigation-required",
+      "reportSHA256": "1f68441b45813e635e14eb5b0ccfbd87d93857fc224ebbeac964b60153161076",
+      "runs": 64,
+      "timedIterations": 10,
+      "rows": [
+        {
+          "case": "modular-encode-w1",
+          "latencyRatios": [
+            0.9590536903405135,
+            0.967430087808322
+          ],
+          "peakRSSRatios": [
+            0.9999530604581299,
+            0.9961115015226049
+          ]
+        },
+        {
+          "case": "modular-encode-w4",
+          "latencyRatios": [
+            1.0923897665860856,
+            1.0673813619457777
+          ],
+          "peakRSSRatios": [
+            0.998609678432076,
+            1.0012098942462806
+          ]
+        },
+        {
+          "case": "modular-decode-w1",
+          "latencyRatios": [
+            0.991505571934924,
+            0.9854650031364993
+          ],
+          "peakRSSRatios": [
+            1.00339558573854,
+            1.0
+          ]
+        },
+        {
+          "case": "modular-decode-w4",
+          "latencyRatios": [
+            1.0213323992128798,
+            1.1080433091773334
+          ],
+          "peakRSSRatios": [
+            0.9966216216216216,
+            0.9932546374367622
+          ]
+        },
+        {
+          "case": "vardct-encode-w1",
+          "latencyRatios": [
+            0.996944435303518,
+            1.1408596854024622
+          ],
+          "peakRSSRatios": [
+            1.001968617914423,
+            1.0008104196816208
+          ]
+        },
+        {
+          "case": "vardct-encode-w4",
+          "latencyRatios": [
+            1.0075889542328689,
+            1.1284160398543794
+          ],
+          "peakRSSRatios": [
+            1.0044573975655753,
+            0.9981798532506684
+          ]
+        },
+        {
+          "case": "vardct-decode-w1",
+          "latencyRatios": [
+            1.00228448787808,
+            1.0507736170575546
+          ],
+          "peakRSSRatios": [
+            0.9987466623072312,
+            0.9999454476024221
+          ]
+        },
+        {
+          "case": "vardct-decode-w4",
+          "latencyRatios": [
+            1.1365564741524248,
+            0.9205360512199248
+          ],
+          "peakRSSRatios": [
+            0.9844928305894849,
+            0.9862321922177334
+          ]
+        }
+      ],
+      "regressionTriggers": [
+        {
+          "case": "modular-encode-w4",
+          "metric": "latencyMedianMS"
+        }
+      ]
+    },
+    {
+      "directory": "comparison-focused-v2",
+      "status": "passed",
+      "reportSHA256": "ffe24332cf2398aeda3ac5845219e71a99e25fcf5ae1ed8101bd15e661948e5b",
+      "runs": 8,
+      "timedIterations": 30,
+      "rows": [
+        {
+          "case": "modular-encode-w4",
+          "latencyRatios": [
+            1.0104566033233966,
+            0.9808108862626511
+          ],
+          "peakRSSRatios": [
+            1.0002684683878473,
+            0.9973614775725593
+          ]
+        }
+      ],
+      "regressionTriggers": []
+    }
+  ],
+  "failedFirstFocusedAttemptPreserved": {
+    "reportSHA256": "43d169f547c1066c6380f7d44714f0b1001b9d65710b850ba5dd5181f61b5122",
+    "reason": "[Errno 2] No such file or directory: '/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/linux-lock-benchmark/comparison-focused/modular-encode-w4-r0-0-baseline.jxl'"
+  },
+  "conclusion": "Initial 4-worker Modular encode latency exceeded 5% in both orders (+9.24%, +6.74%). A separately retained 30-iteration-per-process repeat measured +1.05% and -1.92%; the repeated trigger was not confirmed. The initial run remains investigation-required. No universal speedup or no-regression claim is made. No repeated >5% peak-RSS trigger was observed.",
+  "limits": [
+    "Local nativeARM Linux, pinnedSwift6.4.2image,512x512RGB16 synthetic cases only",
+    "Whole-process peakRSS; not an allocation count or exact workspace measurement",
+    "ABBA/BAAB ordering andCPUset reduce variation but do not eliminate sharedhost/thermal noise"
+  ],
+  "localBuildSourceTreesVerified": {
+    "baseline": {
+      "revision": "c917d6d5596378c5cb451f402de6ee1a62966003",
+      "verifiedSourceFiles": 121,
+      "benchmarkHarnessMatchesTrackedSource": true
+    },
+    "candidate": {
+      "revision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+      "verifiedSourceFiles": 122,
+      "benchmarkHarnessMatchesTrackedSource": true
+    }
+  },
+  "consumerManifestsDifferOnlyInDependencyDirectory": true
+}

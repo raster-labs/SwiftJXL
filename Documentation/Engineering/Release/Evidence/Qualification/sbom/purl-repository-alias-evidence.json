@@ -1,0 +1,22 @@
+{
+  "recordedUTC": "2026-11-04 10:40:02 UTC",
+  "source": "GitHub get_repo connector; read-only",
+  "swiftPURLDefinition": "https://github.com/package-url/purl-spec/blob/main/types/swift-definition.json",
+  "definitionCaseSensitive": true,
+  "queries": [
+    {
+      "query": "raster-labs/swiftjxl",
+      "repositoryID": "1373980147",
+      "canonicalFullName": "raster-labs/SwiftJXL",
+      "cloneURL": "https://github.com/raster-labs/SwiftJXL.git"
+    },
+    {
+      "query": "raster-labs/SwiftJXL",
+      "repositoryID": "1373980147",
+      "canonicalFullName": "raster-labs/SwiftJXL",
+      "cloneURL": "https://github.com/raster-labs/SwiftJXL.git"
+    }
+  ],
+  "sameRepository": true,
+  "note": "Observed GitHub route alias resolution only; no generic Swift PURL case normalisation is inferred."
+}

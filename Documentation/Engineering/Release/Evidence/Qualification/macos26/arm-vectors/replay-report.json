@@ -1,0 +1,40 @@
+{
+  "scope": "Independent current-source ARM hardware vector replay, equal to vectors used by simulator suites",
+  "startedUTC": "2026-11-04T07:51:24.838570+00:00",
+  "source": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/Qualification/VarDCTARM/reciprocal-vectors.c",
+  "sourceSHA256": "d4d99728cdcdd90217815cc10f8109cc76c2850b87f9b817861bea2ffa1490f6",
+  "architecture": "arm64",
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "clang",
+        "--version"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "xcrun",
+        "clang",
+        "-O2",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/Qualification/VarDCTARM/reciprocal-vectors.c",
+        "-o",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-simulator-vectors/replay-generator"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-simulator-vectors/replay-generator"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "replayBinarySHA256": "c178926fb40107cb5e68eedccb39f15ad00d56be5b9573042eb65bf86a889c7e",
+  "vectorsSHA256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+  "vectorCount": 45826,
+  "matchesSuiteInputExactly": true,
+  "status": "passed",
+  "finishedUTC": "2026-11-04T07:51:25.288242+00:00"
+}

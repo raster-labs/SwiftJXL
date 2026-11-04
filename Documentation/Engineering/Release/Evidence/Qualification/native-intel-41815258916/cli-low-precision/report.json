@@ -1,0 +1,839 @@
+{
+  "status": "passed",
+  "binarySHA256": "6d38399a2f895ab68abb560bb5e5b7931a9ca3ec41e3c45ca4528a24b3cb469c",
+  "scriptSHA256": "e15986e7836c7a8f1469370bab3f11c0c99f1b27651fa2a19ffa38cb9915de72",
+  "checks": [
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-1.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-1-7.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-1.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-2-7.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-1.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-3-7.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-1.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-2.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-3.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-4.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-5.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-6.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "validate",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--output-format",
+        "pnm"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--output-format",
+        "pnm-srgb"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "decode",
+        "-i",
+        "/Users/runner/work/SwiftJXL/SwiftJXL/Tests/SwiftJXLCoreTests/Fixtures/Modular/LowPrecision/low-4-7.jxl",
+        "--output-format",
+        "nrrd"
+      ],
+      "exit": 4,
+      "expected": 4
+    },
+    {
+      "command": [
+        "capabilities",
+        "--json"
+      ],
+      "exit": 0,
+      "expected": 0
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "command": [
+    "xcrun",
+    "swift",
+    "test",
+    "-c",
+    "release",
+    "--disable-sandbox",
+    "--build-system",
+    "native",
+    "--no-parallel",
+    "--enable-swift-testing",
+    "--disable-xctest",
+    "--jobs",
+    "2",
+    "--xunit-output",
+    "/Users/runner/work/_temp/m5-native-intel/core/tests.xml",
+    "--skip-build"
+  ],
+  "exitCode": 0,
+  "stdout": "tests.stdout.log",
+  "stderr": "tests.stderr.log",
+  "seconds": 88.01006032600003,
+  "stdoutBytes": 270169,
+  "stdoutSHA256": "ee84c895fdf78b8ab1b0e075c2e8d9bc79ab17ddba34e41b814acc6654830a67",
+  "stderrBytes": 21,
+  "stderrSHA256": "1fb28a4386f423e9867aa2065ff7483e1b0471037774d0e6284aee92c657353d",
+  "combinedLog": {
+    "path": "tests.log",
+    "ordering": "stdout then stderr; not chronological",
+    "sha256": "cd314e72fecf67fd7081969ef29e9eb8de522ba9ccbcf171db76601bdf61e9df"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "sourceRevision": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+  "scalarOnly": true,
+  "highPrecision": true,
+  "binarySHA256": "ea7d97d32e62e2c891919f38c5b8964fbcc6393024d2a1972f4ad6dc8b957d55",
+  "librarySHA256": {
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-scalar-oracle-build/lib/libjxl_cms.0.12.0.dylib": "ed3a0fdab23c966ad95d2ec8f7d429d904a18e36dc12cd3de0cc2fb20fc43168",
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-scalar-oracle-build/lib/libjxl.0.12.0.dylib": "26318e8dca52c62751e9eb3c25fe4de59cebb078e511214a70b373d57ea6e3fa"
+  },
+  "cmakeCacheSHA256": "ff0fcc84682ffc9f4be0e3ba8217484c3930e3906252bc34d5afb3daf47fffe4",
+  "symbolsSHA256": "0fe686b3d200954337395861d7dea84fb25729943b9e8663c9c4b3bce72f96b6",
+  "sourceSHA256": "51870b430dc9aa635632412ff8dd6dc97bef7571c1b48668fbd29f97f06bd84c",
+  "configureLogSHA256": "306cc01b7de6bfba2b64fe5de5e1dfcd2188ef5271590449980ace58e50171c8",
+  "buildLogSHA256": "2ec438703c06a09085903fad8e5ccf919c59b7b09be588a50b52441aac2086d1",
+  "linkage": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-cli-oracles/pixel-oracle-scalar:\n\t@rpath/libjxl.0.12.dylib (compatibility version 0.12.0, current version 0.12.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.0.0)\n"
+}

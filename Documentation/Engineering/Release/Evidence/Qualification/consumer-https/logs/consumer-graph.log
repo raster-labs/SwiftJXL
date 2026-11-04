@@ -1,0 +1,26 @@
+{
+  "identity": "consumer",
+  "name": "Consumer",
+  "url": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/consumer",
+  "version": "unspecified",
+  "path": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/consumer",
+  "traits": [
+    "default"
+  ],
+  "dependencies": [
+    {
+      "identity": "swiftjxl",
+      "name": "SwiftJXL",
+      "url": "https://github.com/raster-labs/SwiftJXL.git",
+      "version": "unspecified",
+      "path": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/build/checkouts/SwiftJXL",
+      "traits": [
+        "default"
+      ],
+      "dependencies": [
+
+      ]
+    }
+  ]
+}
+

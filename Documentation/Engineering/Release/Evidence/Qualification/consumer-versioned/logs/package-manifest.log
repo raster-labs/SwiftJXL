@@ -1,0 +1,272 @@
+{
+  "cLanguageStandard" : null,
+  "cxxLanguageStandard" : null,
+  "defaultLocalization" : null,
+  "dependencies" : [
+
+  ],
+  "name" : "SwiftJXL",
+  "packageKind" : {
+    "root" : [
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-versioned/work/source"
+    ]
+  },
+  "pkgConfig" : null,
+  "platforms" : [
+    {
+      "options" : [
+
+      ],
+      "platformName" : "macos",
+      "version" : "26.0"
+    },
+    {
+      "options" : [
+
+      ],
+      "platformName" : "ios",
+      "version" : "26.0"
+    },
+    {
+      "options" : [
+
+      ],
+      "platformName" : "tvos",
+      "version" : "26.0"
+    },
+    {
+      "options" : [
+
+      ],
+      "platformName" : "visionos",
+      "version" : "26.0"
+    },
+    {
+      "options" : [
+
+      ],
+      "platformName" : "watchos",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "SwiftJXL",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "SwiftJXL"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "swiftjxl-cli",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "SwiftJXLCLI"
+      ],
+      "type" : {
+        "executable" : null
+      }
+    }
+  ],
+  "providers" : null,
+  "swiftLanguageVersions" : [
+    "6"
+  ],
+  "targets" : [
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "SwiftJXLCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "SwiftJXL",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "SwiftJXLCore",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "SwiftJXLCore",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "SwiftJXL",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "SwiftJXLCoreTests",
+      "packageAccess" : true,
+      "resources" : [
+        {
+          "path" : "Fixtures/JPEG",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Fixtures/JPEGExtended",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Fixtures/JBRD",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Fixtures/Brotli",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Fixtures/JPEGEvents",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Fixtures/JPEGBridge",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Fixtures/Modular",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Fixtures/VarDCT",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "SwiftJXL",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "SwiftJXLCLI",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "executable"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "SwiftJXL",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "SwiftJXLCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "SwiftJXLTests",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    }
+  ],
+  "toolsVersion" : {
+    "_version" : "6.2.0"
+  },
+  "traits" : [
+
+  ]
+}

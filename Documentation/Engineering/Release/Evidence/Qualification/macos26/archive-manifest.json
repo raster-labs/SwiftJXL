@@ -1,0 +1,315 @@
+{
+  "status": "passed",
+  "scope": "Exact macOS 26.0 virtual arm64 runtime, complete release library suite and CLI foundation. No physical-device claim.",
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "records": [
+    {
+      "sourceRelativePath": ".build/m5-macos260/audit-00f03ff.json",
+      "storedPath": "audit-00f03ff.json",
+      "storedBytes": 4547,
+      "storedSHA256": "7f9a140364e924f1b9a0dda195970c8c366389f7e399e5fe071212ffd1138cf1",
+      "originalBytes": 4547,
+      "originalSHA256": "7f9a140364e924f1b9a0dda195970c8c366389f7e399e5fe071212ffd1138cf1",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/runtime-00f03ff/report.json",
+      "storedPath": "runtime-00f03ff/report.json",
+      "storedBytes": 91053,
+      "storedSHA256": "71d556e46feb79dd14a4535be6933c16e5401c9837479923ef36d14559318e58",
+      "originalBytes": 91053,
+      "originalSHA256": "71d556e46feb79dd14a4535be6933c16e5401c9837479923ef36d14559318e58",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/runtime-00f03ff/tests.xml",
+      "storedPath": "runtime-00f03ff/tests.xml",
+      "storedBytes": 51385,
+      "storedSHA256": "0a68e60fa96ecefa62935e6a6c434c6512b57dd78c4d3a4b50f6b831c24d42ff",
+      "originalBytes": 51385,
+      "originalSHA256": "0a68e60fa96ecefa62935e6a6c434c6512b57dd78c4d3a4b50f6b831c24d42ff",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/runtime-00f03ff/discovered-tests.json",
+      "storedPath": "runtime-00f03ff/discovered-tests.json",
+      "storedBytes": 33209,
+      "storedSHA256": "ab4abf38db6cac7888205e2c430c22fdf67e26a60b21e6bc0caf36c5c7969964",
+      "originalBytes": 33209,
+      "originalSHA256": "ab4abf38db6cac7888205e2c430c22fdf67e26a60b21e6bc0caf36c5c7969964",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/cli-foundation-00f03ff/report.json",
+      "storedPath": "cli-foundation-00f03ff/report.json",
+      "storedBytes": 166588,
+      "storedSHA256": "dbc3bf0a2d450c65f540f4a5c44185462697b0cf71efac87d01a0bec4cded20d",
+      "originalBytes": 166588,
+      "originalSHA256": "dbc3bf0a2d450c65f540f4a5c44185462697b0cf71efac87d01a0bec4cded20d",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/source-00f03ff-provenance.json",
+      "storedPath": "source-00f03ff-provenance.json",
+      "storedBytes": 422483,
+      "storedSHA256": "ad7a95055dbaaa00619a22123bffd3331e2ef2685ffac07aaab717852e9e8e7a",
+      "originalBytes": 422483,
+      "originalSHA256": "ad7a95055dbaaa00619a22123bffd3331e2ef2685ffac07aaab717852e9e8e7a",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/execution-00f03ff-provenance.json",
+      "storedPath": "execution-00f03ff-provenance.json",
+      "storedBytes": 1612,
+      "storedSHA256": "be90276b2a29e385d059a3367a470de9aab97bf351b093a345b6af7b290056b5",
+      "originalBytes": 1612,
+      "originalSHA256": "be90276b2a29e385d059a3367a470de9aab97bf351b093a345b6af7b290056b5",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/post-execution-00f03ff-proof.json",
+      "storedPath": "post-execution-00f03ff-proof.json",
+      "storedBytes": 1168,
+      "storedSHA256": "1d13b45e0db3961a444be64a4772133527c1b57de81c508ac0de1aed3b5687d2",
+      "originalBytes": 1168,
+      "originalSHA256": "1d13b45e0db3961a444be64a4772133527c1b57de81c508ac0de1aed3b5687d2",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/vm-boot-provenance.json",
+      "storedPath": "vm-boot-provenance.json",
+      "storedBytes": 1458,
+      "storedSHA256": "ebd88e04f89c67f4a1a2583bcd39429b81b7ea0746c6d0e5bcff9faf7a261d12",
+      "originalBytes": 1458,
+      "originalSHA256": "ebd88e04f89c67f4a1a2583bcd39429b81b7ea0746c6d0e5bcff9faf7a261d12",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/http1/report.json",
+      "storedPath": "http1/report.json",
+      "storedBytes": 38193,
+      "storedSHA256": "09c5f66bf39ca023aec65e6d7b7e1f45c0f704c4a67f1e21388784323e23e45d",
+      "originalBytes": 38193,
+      "originalSHA256": "09c5f66bf39ca023aec65e6d7b7e1f45c0f704c4a67f1e21388784323e23e45d",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/http1/manifest.json",
+      "storedPath": "http1/manifest.json",
+      "storedBytes": 33455,
+      "storedSHA256": "378b3f28e9bafcbb8c91740c25239e458eb6ede8e251da3a63b250ab45614b1e",
+      "originalBytes": 33455,
+      "originalSHA256": "378b3f28e9bafcbb8c91740c25239e458eb6ede8e251da3a63b250ab45614b1e",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/oracles/build-report.json",
+      "storedPath": "oracles/build-report.json",
+      "storedBytes": 4632,
+      "storedSHA256": "7a78e23c4d0b96a00aa8f47628ac104e8375dd52937eebf121a7c28644bfaced",
+      "originalBytes": 4632,
+      "originalSHA256": "7a78e23c4d0b96a00aa8f47628ac104e8375dd52937eebf121a7c28644bfaced",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/clt-provenance.json",
+      "storedPath": "clt-provenance.json",
+      "storedBytes": 3683,
+      "storedSHA256": "c6861868da1e8706bc68e50554364967b930670efaac5172f25e8fb875f154aa",
+      "originalBytes": 3683,
+      "originalSHA256": "c6861868da1e8706bc68e50554364967b930670efaac5172f25e8fb875f154aa",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/tools/tart-download.json",
+      "storedPath": "tools/tart-download.json",
+      "storedBytes": 457,
+      "storedSHA256": "47664c5b033a456589149f77aa86c59fa4c044d01aada52e7ceab24afd701eb3",
+      "originalBytes": 457,
+      "originalSHA256": "47664c5b033a456589149f77aa86c59fa4c044d01aada52e7ceab24afd701eb3",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/vm-shutdown-provenance.json",
+      "storedPath": "vm-shutdown-provenance.json",
+      "storedBytes": 793,
+      "storedSHA256": "34ddc513a11f3d4352462e6b7355e5fc3b63a315dc2020a08c14655979e3628b",
+      "originalBytes": 793,
+      "originalSHA256": "34ddc513a11f3d4352462e6b7355e5fc3b63a315dc2020a08c14655979e3628b",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/guest-execute-00f03ff.sh",
+      "storedPath": "guest-execute-00f03ff.sh",
+      "storedBytes": 1950,
+      "storedSHA256": "1c0c065ee4d3ad6ce5d4c68080e154d314dfcc2c9c783fce1b4756f448ba5072",
+      "originalBytes": 1950,
+      "originalSHA256": "1c0c065ee4d3ad6ce5d4c68080e154d314dfcc2c9c783fce1b4756f448ba5072",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/runtime-00f03ff/tests.log",
+      "storedPath": "runtime-00f03ff/tests.log.gz",
+      "storedBytes": 20299,
+      "storedSHA256": "ba27797c14786d3bd21b81fb71c718eebe164b77bb349445f75a845258bc0692",
+      "originalBytes": 270419,
+      "originalSHA256": "93c77dc1443c91071e5b11a0e132c7b903bbdd06f7d5df2a46a2eed256f604e9",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/runtime-00f03ff/discovery.log",
+      "storedPath": "runtime-00f03ff/discovery.log.gz",
+      "storedBytes": 8249,
+      "storedSHA256": "626d3e43c1de52443343939ee0e0dc1f1ced130a18437bd86f603718cc35f2e2",
+      "originalBytes": 33533,
+      "originalSHA256": "5d7f65246c69af5004bb70836f5b36abe0048da918e3a7fbc64220ffb3e5c8fb",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/guest-toolchain-install.log",
+      "storedPath": "guest-toolchain-install.log.gz",
+      "storedBytes": 501,
+      "storedSHA256": "935e778cb5b0c9e8d5a3f5471f8f54f30c4af6f9274fafb8faae20c9911765a1",
+      "originalBytes": 786,
+      "originalSHA256": "670663560462c01a42e45848cc34c07f0d2cd2bd21f41e75a0b1ff77a1b3aea8",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/guest-qualification-00f03ff.log",
+      "storedPath": "guest-qualification-00f03ff.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/guest-cli-foundation-00f03ff.log",
+      "storedPath": "guest-cli-foundation-00f03ff.log.gz",
+      "storedBytes": 495,
+      "storedSHA256": "c0b8aabb466318c07a3e761a56b8af4c0158d5938c935cda6a10fa7a2d6a4c73",
+      "originalBytes": 1822,
+      "originalSHA256": "a10ca7a419add3b87d22a2c80390ed2255fa59888a28e5a6cd1940d69c07ec58",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-simulator-vectors/replay-report.json",
+      "storedPath": "arm-vectors/replay-report.json",
+      "storedBytes": 1375,
+      "storedSHA256": "c10858d24e8494a873eaedd81c4bc0a1808cd0d16a1c7bc3115a230db3b98bef",
+      "originalBytes": 1375,
+      "originalSHA256": "c10858d24e8494a873eaedd81c4bc0a1808cd0d16a1c7bc3115a230db3b98bef",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-simulator-vectors/reciprocal-vectors.json",
+      "storedPath": "arm-vectors/reciprocal-vectors.json.gz",
+      "storedBytes": 145008,
+      "storedSHA256": "06980f17c9ecee77b125d8bb00a154cf9dd74ba748218a7882977cf3337d6575",
+      "originalBytes": 937935,
+      "originalSHA256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/oracle-output-inventory-00f03ff.json",
+      "storedPath": "oracle-output-inventory-00f03ff.json",
+      "storedBytes": 575200,
+      "storedSHA256": "bd05b58aaac50fdfd854134abfa5e777a920f9a6e6da228af28dc22da73a77f0",
+      "originalBytes": 575200,
+      "originalSHA256": "bd05b58aaac50fdfd854134abfa5e777a920f9a6e6da228af28dc22da73a77f0",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/runtime-00f03ff-oracle-outputs/public-matrix-*",
+      "storedPath": "public-matrix-oracle-outputs.tar.gz",
+      "storedBytes": 41597,
+      "storedSHA256": "75810846d4694e11e52e124c4082021510bf587f7a5c57bcf912c8d483ce0253",
+      "uncompressedTarSHA256": "637f1db6aa7339dd0d94e9c60d2e1ad5345496446769b0819f872c731f2b2884",
+      "fileCount": 1296,
+      "encoding": "deterministic-ustar-gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/runtime-source-coverage-00f03ff.json",
+      "storedPath": "runtime-source-coverage-00f03ff.json",
+      "storedBytes": 550,
+      "storedSHA256": "af75dfe1d1e9c113f968053cafec1f39e0b3a345e96e9bef6ab97357514cd030",
+      "originalBytes": 550,
+      "originalSHA256": "af75dfe1d1e9c113f968053cafec1f39e0b3a345e96e9bef6ab97357514cd030",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/independent-audit-00f03ff.json",
+      "storedPath": "independent-audit-00f03ff.json",
+      "storedBytes": 1606,
+      "storedSHA256": "40233d71912250f9d284e6bff6a1a1370126f442b18b3720569d80d8a71da4fd",
+      "originalBytes": 1606,
+      "originalSHA256": "40233d71912250f9d284e6bff6a1a1370126f442b18b3720569d80d8a71da4fd",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/independent-audit-00f03ff-initial.json",
+      "storedPath": "independent-audit-00f03ff-initial.json",
+      "storedBytes": 1185,
+      "storedSHA256": "d5dbfe6f81e4e47bb250dc78a1b2022f10726f84a674eaa7f9b6e7feb7540bbb",
+      "originalBytes": 1185,
+      "originalSHA256": "d5dbfe6f81e4e47bb250dc78a1b2022f10726f84a674eaa7f9b6e7feb7540bbb",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/discovery-00f03ff-derivation.json",
+      "storedPath": "discovery-00f03ff-derivation.json",
+      "storedBytes": 1482,
+      "storedSHA256": "5bd72469537688d0750a645bf9f43312294929f6bfb46bcff001e8ba98998c0d",
+      "originalBytes": 1482,
+      "originalSHA256": "5bd72469537688d0750a645bf9f43312294929f6bfb46bcff001e8ba98998c0d",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/discovery-00f03ff-derived.txt",
+      "storedPath": "discovery-00f03ff-derived.txt",
+      "storedBytes": 33302,
+      "storedSHA256": "8ad74a63b798a125b7f5cb949d06a2e38278d6585c8c08b84359b6c2224dd088",
+      "originalBytes": 33302,
+      "originalSHA256": "8ad74a63b798a125b7f5cb949d06a2e38278d6585c8c08b84359b6c2224dd088",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-macos260/discovered-tests-00f03ff-derived.json",
+      "storedPath": "discovered-tests-00f03ff-derived.json",
+      "storedBytes": 32987,
+      "storedSHA256": "ded6f31c2d47fad461a09331bf009caa26f7676b767030e412663f5deaf192aa",
+      "originalBytes": 32987,
+      "originalSHA256": "ded6f31c2d47fad461a09331bf009caa26f7676b767030e412663f5deaf192aa",
+      "encoding": "unchanged"
+    }
+  ],
+  "runtimeSourceCoverage": {
+    "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+    "immutableSourceArchiveSHA256": "6ece82a5ca048965a56dcdbf54229bcd7a5217882426c7d93335adcd748a2a96",
+    "allArchiveFilesRecheckedBeforeAndAfter": 2839,
+    "runtimeReportSourceFileHashesMatched": 203,
+    "packageManifestHashMatched": true,
+    "freezeGroups": {
+      "runtime": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+      "qualification": "955c21c6cfc7b2e1650dad73f77e6de12cd3c7b5ea55e1f06c5624e3a444381d"
+    },
+    "allReportSourcesCoveredByFrozenArchive": true
+  },
+  "publicMatrixProfiles": 432,
+  "rawOracleFileCount": 2531,
+  "omittedFromTrackedBundle": [
+    "VM disks and NVRAM",
+    "OS, compiler and oracle executable binaries",
+    "SSH private keys and connection credentials",
+    "Generated non-matrix image payloads, individually hashed in oracle-output-inventory-00f03ff.json and retained locally"
+  ],
+  "originalReportBytesPreserved": true,
+  "note": "Historical command paths inside original reports are preserved; storedPath values identify portable archive members.",
+  "discoveryReconciliation": {
+    "rawMetadataIssue": "One known compiler deprecation diagnostic interleaved one discovered identifier; top-level test naming used a different separator from xUnit.",
+    "derivationReceipt": "discovery-00f03ff-derivation.json",
+    "exactDiscoveredAndExecutedIdentitySetsAgree": true,
+    "initialAuditPreserved": "independent-audit-00f03ff-initial.json",
+    "originalReportsUnchanged": true
+  }
+}

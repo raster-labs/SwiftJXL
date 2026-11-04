@@ -1,0 +1,7 @@
+
+[stderr]
+Fetching https://github.com/raster-labs/SwiftJXL.git
+[1/5496] Fetching swiftjxl
+Fetched https://github.com/raster-labs/SwiftJXL.git (13.93s)
+Creating working copy for https://github.com/raster-labs/SwiftJXL.git
+Working copy of https://github.com/raster-labs/SwiftJXL.git resolved at 00f03ff288a7c8e0e2b82d2e71ec22622ede71ae

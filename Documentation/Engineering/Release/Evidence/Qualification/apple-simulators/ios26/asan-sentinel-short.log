@@ -1,0 +1,45 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -scheme SwiftJXL-Package -configuration Debug -enableAddressSanitizer YES -destination "platform=iOS Simulator,id=87AD2669-DD8E-45F4-BB74-2BFFCCC0A702" -derivedDataPath /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-ios26-current-suite/asan/DerivedData -jobs 2 -parallel-testing-enabled NO "-only-testing:SwiftJXLCoreTests/VarDCTARMIntegerTests/optionalFullRangeHardwareReciprocalVectors()" test-without-building -resultBundlePath /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-ios26-00f03ff-final/asan/sentinel-short.xcresult
+
+Resolve Package Graph
+2026-11-04 16:16:28.637 xcodebuild[37482:8486648] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+
+
+Resolved source packages:
+  SwiftJXL: /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5
+
+Writing result bundle at path:
+	/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-ios26-00f03ff-final/asan/sentinel-short.xcresult
+
+objc[37492]: Class _NoAnimationDelegate is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/iOS_23A343/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/SwiftUICore.framework/SwiftUICore (0x11c894130) and /private/var/run/com.apple.security.cryptexd/mnt/iOS_23A343/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/UIKitCore.framework/UIKitCore (0x1137dd198). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+Test Suite 'Selected tests' started at 2026-11-04 16:16:29.954.
+Test Suite 'SwiftJXLCoreTests.xctest' started at 2026-11-04 16:16:29.955.
+Test Suite 'SwiftJXLCoreTests.xctest' passed at 2026-11-04 16:16:29.955.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-04 16:16:29.955.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.002) seconds
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64-apple-ios17.0-simulator
+◇ Suite VarDCTARMIntegerTests started.
+◇ Test optionalFullRangeHardwareReciprocalVectors() started.
+✘ Test optionalFullRangeHardwareReciprocalVectors() recorded an issue at VarDCTARMIntegerTests.swift:234:9: Expectation failed: vectors.count >= 40_000
+↳ vectors.count >= 40_000 → false
+↳   vectors.count → 1
+↳   40_000 → 40000
+✘ Test optionalFullRangeHardwareReciprocalVectors() failed after 0.005 seconds with 1 issue.
+✘ Suite VarDCTARMIntegerTests failed after 0.006 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.008 seconds with 1 issue.
+2026-11-04 16:16:38.736 xcodebuild[37482:8486648] [MT] IDETestOperationsObserverDebug: 9.964 elapsed -- Testing started completed.
+2026-11-04 16:16:38.736 xcodebuild[37482:8486648] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-04 16:16:38.736 xcodebuild[37482:8486648] [MT] IDETestOperationsObserverDebug: 9.964 sec, +9.964 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-ios26-00f03ff-final/asan/sentinel-short.xcresult
+
+Failing tests:
+	VarDCTARMIntegerTests.optionalFullRangeHardwareReciprocalVectors()
+
+** TEST EXECUTE FAILED **
+
+Testing started

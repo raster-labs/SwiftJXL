@@ -1,0 +1,47 @@
+{
+  "imageDigest": "sha256:378b3f28e9bafcbb8c91740c25239e458eb6ede8e251da3a63b250ab45614b1e",
+  "verifiedLayers": 96,
+  "rawDiskBytes": 50000000000,
+  "configurationCommand": [
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-macos260/tools/tart.app/Contents/MacOS/tart",
+    "set",
+    "swiftjxl-macos260-http1",
+    "--cpu",
+    "4",
+    "--memory",
+    "16384",
+    "--random-mac"
+  ],
+  "runCommand": [
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-macos260/tools/tart.app/Contents/MacOS/tart",
+    "run",
+    "--no-graphics",
+    "--no-audio",
+    "--no-usb-accessories",
+    "--no-clipboard",
+    "--net-host",
+    "swiftjxl-macos260-http1"
+  ],
+  "pid": 25453,
+  "startedUnix": 1793787884.400634,
+  "configuredVM": {
+    "arch": "arm64",
+    "cpuCount": 4,
+    "cpuCountMin": 2,
+    "diskFormat": "raw",
+    "display": {
+      "height": 768,
+      "width": 1024
+    },
+    "ecid": "YnBsaXN0MDDRAQJURUNJRBMM07Utso9RwggLEAAAAAAAAAEBAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAZ",
+    "hardwareModel": "YnBsaXN0MDDTAQIDBAQFXxAZRGF0YVJlcHJlc2VudGF0aW9uVmVyc2lvbl8QD1BsYXRmb3JtVmVyc2lvbl8QEk1pbmltdW1TdXBwb3J0ZWRPUxACowYHBxANEAAIDys9UlRYWgAAAAAAAAEBAAAAAAAAAAgAAAAAAAAAAAAAAAAAAABc",
+    "macAddress": "d6:e7:ac:50:f9:a3",
+    "memorySize": 17179869184,
+    "memorySizeMin": 4294967296,
+    "os": "darwin",
+    "version": 1
+  },
+  "network": "host-only",
+  "hostDirectoryShares": [],
+  "telemetryEnvironmentRemoved": true
+}

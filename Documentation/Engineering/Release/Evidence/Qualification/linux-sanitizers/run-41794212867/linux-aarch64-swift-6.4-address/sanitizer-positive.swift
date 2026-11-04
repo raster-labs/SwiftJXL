@@ -1,0 +1,5 @@
+let owner = UnsafeMutablePointer<Int>.allocate(capacity: 1)
+owner.initialize(to: 42)
+print("sanitizer-runtime-ok", owner.pointee)
+owner.deinitialize(count: 1)
+owner.deallocate()

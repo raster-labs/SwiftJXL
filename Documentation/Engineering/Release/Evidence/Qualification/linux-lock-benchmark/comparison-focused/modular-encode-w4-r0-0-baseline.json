@@ -1,0 +1,29 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--cpuset-cpus",
+    "0-3",
+    "-e",
+    "SWIFT_DETERMINISTIC_HASHING=1",
+    "-v",
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/linux-lock-benchmark:/work",
+    "-w",
+    "/work",
+    "swift@sha256:bca121f6eb59fd80340d1296887b2698ed8f3eb9eca7d80c181f8af769dc7ee0",
+    "/work/baseline-client/.build/release/Probe",
+    "modular",
+    "encode",
+    "4",
+    "512",
+    "30",
+    "/work/comparison/modular-encode-w4-r0-0-baseline"
+  ],
+  "exitCode": 0,
+  "stdout": "{\"encodedBytes\":520889,\"family\":\"modular\",\"iterations\":30,\"milliseconds\":[33.043406,32.785738,32.983614,34.022408,33.406282,32.925447,32.920447,35.198827,35.03791,33.808199,32.785655,33.464656,32.553196,33.964407,33.277448,32.331237,32.526154,32.15832,32.601696,32.156654,33.033114,33.678907,32.911989,33.868616,33.818365,32.923613,32.609238,32.96078,32.494863,32.463155],\"operation\":\"encode\",\"processPeakRSSBytes\":45887488,\"scope\":\"Public API latency and whole-process peak RSS; sample validation is outside timing. No copy\\/allocation or general throughput claim.\",\"size\":512,\"warmups\":3,\"workers\":4}\n",
+  "stderr": "",
+  "seconds": 1.2863024160033092
+}

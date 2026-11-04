@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="53" failures="0" skipped="0" time="11.143896213">
+    <testcase classname="SwiftJXLCoreTests.ModularDecodeParallelTests" name="readerKeepsItsEarlierDeadlineWithSharedBudget()" time="9.6083e-05" />
+    <testcase classname="SwiftJXLCoreTests.ModularDecodeParallelTests" name="orderedErrorsJoinAndAdmissionPrecedesCallbacks()" time="0.001747295" />
+    <testcase classname="SwiftJXLCoreTests.ModularDecodeParallelTests" name="serialDefaultAndEightWorkersAgreeWithCallerOwnership(_:)" time="1.782606487" />
+    <testcase classname="SwiftJXLCoreTests.ModularDecodeParallelTests" name="cancellationAfterGroupJoinInvalidatesCallerDestination()" time="0.036521516" />
+    <testcase classname="SwiftJXLCoreTests.ModularDecodeParallelTests" name="workerCancellationReachesBitReaderAndJoins()" time="0.000378625" />
+    <testcase classname="SwiftJXLCoreTests.ModularDecodeParallelTests" name="predecessorMissingEmptyGlobalANSStateRejects()" time="0.006150134" />
+    <testcase classname="SwiftJXLCoreTests.ModularDecodeParallelTests" name="concurrentCallsHaveIndependentOwnedResults()" time="0.098461906" />
+    <testcase classname="SwiftJXLCoreTests.ModularDecodeParallelTests" name="boundedBatchesPreserveOrderedResultsAndAudit(_:)" time="0.00083946" />
+    <testcase classname="SwiftJXLCoreTests.VarDCTParallelTests" name="manyTilesReuseBoundedWorkerScratchAndPreserveEveryCoefficient(_:_:)" time="2.52282732" />
+    <testcase classname="SwiftJXLCoreTests.VarDCTParallelTests" name="workerFailureJoinsEveryBandAndAdmissionPrecedesDispatch()" time="0.047053367" />
+    <testcase classname="SwiftJXLCoreTests.VarDCTParallelTests" name="oneAndEightWorkersKeepExactStreamAcrossTilesAndPartialEdges(_:_:)" time="0.556435387" />
+    <testcase classname="SwiftJXLCoreTests.VarDCTParallelTests" name="cancellationAfterBandJoinPreventsPublication()" time="0.011238559" />
+    <testcase classname="SwiftJXLCoreTests.VarDCTPixelStorageTests" name="cancellationRejectsBeforeWriting()" time="0.000308793" />
+    <testcase classname="SwiftJXLCoreTests.VarDCTPixelStorageTests" name="paddedOwningDestination(_:_:)" time="0.075438079" />
+    <testcase classname="SwiftJXLCoreTests.VarDCTPixelStorageTests" name="rejectsInvalidDestinationBeforeWriting()" time="0.00049971" />
+    <testcase classname="SwiftJXLCoreTests.LinuxQualificationSupportTests" name="oraclePassesLiteralArgumentsAndPreservesNonzeroExit()" time="0.003497963" />
+    <testcase classname="SwiftJXLCoreTests.LinuxQualificationSupportTests" name="lockedValueUnlocksAfterTypedThrow()" time="0.000757377" />
+    <testcase classname="SwiftJXLCoreTests.LinuxQualificationSupportTests" name="oracleRejectsMissingExecutableAndEmbeddedNUL()" time="0.001413461" />
+    <testcase classname="SwiftJXLCoreTests.LinuxQualificationSupportTests" name="lockedValueRetainsAndReleasesNoncopyableOwner()" time="0.000174334" />
+    <testcase classname="SwiftJXLCoreTests.LinuxQualificationSupportTests" name="oracleTimeoutKillsAndReapsOwnedChild()" time="0.021720076" />
+    <testcase classname="SwiftJXLCoreTests.LinuxQualificationSupportTests" name="lockedValueSerialisesWritersAndConcurrentReaders()" time="0.151965615" />
+    <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="independentAssociatedAlphaInput(_:_:)" time="0.03751181" />
+    <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="mismatchedPrecisionOrCapacityRejectsBeforeTouchingBytes()" time="0.00098696" />
+    <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="eightBitAdmissionUsesActualCallerCapacity()" time="0.001455919" />
+    <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="alphaMismatchRejectsBeforeWritingAndMalformedPixelsInvalidate()" time="0.002957088" />
+    <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="paddedCallerStorage(_:_:)" time="3.218382689" />
+    <testcase classname="SwiftJXLCoreTests.ModularStorageTests" name="publicOwningColourDestination(_:_:)" time="2.449759232" />
+    <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="rejectsShortDestinationBeforeWriting()" time="0.00140171" />
+    <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="concurrentEncodersShareOneImmutableSource()" time="0.018046112" />
+    <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="writesCallerAllocationWithPaddingAndByteOrder(bits:littleEndian:)" time="0.014376398" />
+    <testcase classname="SwiftJXLCoreTests.ScalarStorageTests" name="cancellationInvalidatesCallerDestination()" time="0.001206002" />
+    <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="concurrentEncodesShareTheImmutableSource()" time="0.022569703" />
+    <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="errorsAreOrderedAfterJoiningAndAdmissionPrecedesCallbacks()" time="0.000280668" />
+    <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="boundedNestedWorkersPropagateContextsAndReturnOrderedResults(_:)" time="0.001928711" />
+    <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="cancellationInsideWorkerIsObservedAndAllWorkersJoin()" time="0.000380792" />
+    <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="publicCancellationAfterWorkersJoinPreventsPublication()" time="0.003451797" />
+    <testcase classname="SwiftJXLCoreTests.ModularParallelTests" name="oneAndEightWorkersProduceIdenticalStreamsAndAllocationEvents(_:_:)" time="0.036836892" />
+    <testcase classname="SwiftJXLTests.StorageTests" name="throwingBorrowReleasesAdmissionWithoutReplacingStorage()" time="0.000252751" />
+    <testcase classname="SwiftJXLTests.StorageTests" name="abortMakesStorageUnreadableAndUnwritable()" time="0.000108667" />
+    <testcase classname="SwiftJXLTests.StorageTests" name="freshAllocationsHaveDistinctIdentitiesAndZeroPadding()" time="0.000140042" />
+    <testcase classname="SwiftJXLTests.StorageTests" name="leaseCannotBeForgedReusedOrBorrowedReentrantly()" time="0.000177792" />
+    <testcase classname="SwiftJXLTests.StorageTests" name="imageRetainsAdapterAndAllocationUntilLastReader()" time="0.000140958" />
+    <testcase classname="SwiftJXLTests.StorageTests" name="concurrentReadersPreserveEveryLogicalSample()" time="0.000231583" />
+    <testcase classname="SwiftJXLTests.StorageTests" name="rejectsOwnerCapacityShorterThanDescriptor()" time="0.000100875" />
+    <testcase classname="SwiftJXLTests.StorageTests" name="copiedLeaseCannotOverlapWriters()" time="0.00130821" />
+    <testcase classname="SwiftJXLTests.SampleAccessTests" name="refusesShortProviderBeforeLoadingSample()" time="0.000482584" />
+    <testcase classname="SwiftJXLTests.SampleAccessTests" name="rejectsCoordinatesBeforeOffsetArithmetic()" time="0.000178417" />
+    <testcase classname="SwiftJXLTests.SampleAccessTests" name="readsIndependentGoldenBytesFromOddPhysicalAddress()" time="0.000254417" />
+    <testcase classname="SwiftJXLTests.SampleAccessTests" name="writesGoldenBytesForPackedAndPadded12And16BitSamples()" time="0.000386292" />
+    <testcase classname="SwiftJXLTests.SampleAccessTests" name="throwingSampleStopsInsideLaterRowAndInvalidatesDestination()" time="0.000335043" />
+    <testcase classname="SwiftJXLTests.SampleAccessTests" name="stridedRowsKeepAllPaddingAndCallbackOrder(width:bigEndian:)" time="0.000701167" />
+    <testcase classname="SwiftJXLTests.SampleAccessTests" name="outOfPrecisionWriteInvalidatesDestination()" time="0.000123917" />
+    <testcase classname="SwiftJXLTests.SampleAccessTests" name="initialisesExternalSampleBytesAtOddAddressWithoutChangingPadding()" time="0.000155209" />
+  </testsuite>
+</testsuites>

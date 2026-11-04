@@ -2,7 +2,7 @@
 
 ## Unreleased — Milestone 5 release preparation, 2026-11-04
 
-Add clean URL/exact-version consumer checks, a synchronised owning-storage migration example, fixture/licence inventories and a source-bound release checklist. Qualify explicitly derived SBOMs with preserved originals and official schema/SPDX semantic validation; retain open platform and maintainer-policy gates; no codec behaviour, version or release tag changes. See [release preparation](Documentation/Engineering/Release/README.md).
+Add clean URL/exact-version consumer checks, a synchronised owning-storage migration example, fixture/licence inventories and a source-bound release checklist. Qualify explicitly derived SBOMs with preserved originals and official schema/SPDX semantic validation, and establish the private security reporting/support policy. Add a Linux lock adapter and test-only POSIX oracle launcher for sanitizer qualification, plus Watch-specific resource-profile assertions for large correctness fixtures. Public API, codec fidelity, Watch defaults and VERSION remain unchanged. Physical-device testing and DICOMKit integration are excluded from this assignment; no stable release or cutover is authorised. See [library qualification](Documentation/Engineering/Release/QUALIFICATION.md).
 
 ## Unreleased — remaining Milestone 4 follow-up
 

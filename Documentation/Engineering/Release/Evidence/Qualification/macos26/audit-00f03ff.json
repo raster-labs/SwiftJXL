@@ -1,0 +1,104 @@
+{
+  "status": "passed",
+  "scope": "Exact macOS26.0 virtual runtime, complete release library suite and CLI foundation",
+  "physicalDeviceEvidence": false,
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "contractVersion": "0.10.0",
+  "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
+  "freezeGroups": {
+    "runtime": "30a591977a593e9487429c5289b62a6ed30216d86d029124f31401c67164b753",
+    "qualification": "955c21c6cfc7b2e1650dad73f77e6de12cd3c7b5ea55e1f06c5624e3a444381d"
+  },
+  "runtime": {
+    "version": "26.0",
+    "build": "25A354",
+    "machine": "arm64",
+    "virtualMachine": true,
+    "cpuCount": 4,
+    "memoryBytes": 17179869184
+  },
+  "compiler": "Apple Swift6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1), Command Line Tools",
+  "buildSystem": "native",
+  "testCounts": {
+    "executed": 368,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "discoveredDeclarations": 368,
+  "argumentCaseExecutionsFromLog": 2053,
+  "testPhaseSeconds": 35.185,
+  "buildDiscoveryAndTestsSeconds": 201.675738042,
+  "independentProfiles": {
+    "expected": 432,
+    "observed": 432,
+    "passed": true
+  },
+  "armReciprocalVectors": {
+    "path": "/Users/admin/m5/reciprocal-vectors.json",
+    "sha256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+    "count": 45826
+  },
+  "cliFoundationChecks": 98,
+  "allArchivedFilesUnchanged": 2839,
+  "sourceArchiveSHA256": "6ece82a5ca048965a56dcdbf54229bcd7a5217882426c7d93335adcd748a2a96",
+  "imageDigest": "sha256:378b3f28e9bafcbb8c91740c25239e458eb6ede8e251da3a63b250ab45614b1e",
+  "verifiedImageLayers": 96,
+  "referenceSourceRevisions": {
+    "libjxl": "a7a9c787341cf703dede03c2009fa460cae5e5df",
+    "libjpeg-turbo": "7b4993786d856cbccabfc0ed2f923ba000e326cc",
+    "libpng": "cd952f49f95bb27154ae77dbb103032d95f6e580"
+  },
+  "sourcesAndReferencesUnchanged": true,
+  "command": [
+    "xcrun",
+    "swift",
+    "test",
+    "-c",
+    "release",
+    "--disable-sandbox",
+    "--build-system",
+    "native",
+    "--no-parallel",
+    "--enable-swift-testing",
+    "--disable-xctest",
+    "--jobs",
+    "2",
+    "--xunit-output",
+    "/Users/admin/m5/runtime-00f03ff/tests.xml",
+    "-Xswiftc",
+    "-F",
+    "-Xswiftc",
+    "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+    "-Xlinker",
+    "-F/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+    "-Xlinker",
+    "-rpath",
+    "-Xlinker",
+    "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+    "--skip-build"
+  ],
+  "receiptSHA256": {
+    "runtime-00f03ff/report.json": "71d556e46feb79dd14a4535be6933c16e5401c9837479923ef36d14559318e58",
+    "runtime-00f03ff/tests.xml": "0a68e60fa96ecefa62935e6a6c434c6512b57dd78c4d3a4b50f6b831c24d42ff",
+    "runtime-00f03ff/tests.log": "93c77dc1443c91071e5b11a0e132c7b903bbdd06f7d5df2a46a2eed256f604e9",
+    "runtime-00f03ff/discovery.log": "5d7f65246c69af5004bb70836f5b36abe0048da918e3a7fbc64220ffb3e5c8fb",
+    "runtime-00f03ff/discovered-tests.json": "ab4abf38db6cac7888205e2c430c22fdf67e26a60b21e6bc0caf36c5c7969964",
+    "cli-foundation-00f03ff/report.json": "dbc3bf0a2d450c65f540f4a5c44185462697b0cf71efac87d01a0bec4cded20d",
+    "source-00f03ff-provenance.json": "ad7a95055dbaaa00619a22123bffd3331e2ef2685ffac07aaab717852e9e8e7a",
+    "execution-00f03ff-provenance.json": "be90276b2a29e385d059a3367a470de9aab97bf351b093a345b6af7b290056b5",
+    "post-execution-00f03ff-proof.json": "1d13b45e0db3961a444be64a4772133527c1b57de81c508ac0de1aed3b5687d2",
+    "vm-boot-provenance.json": "ebd88e04f89c67f4a1a2583bcd39429b81b7ea0746c6d0e5bcff9faf7a261d12",
+    "http1/report.json": "09c5f66bf39ca023aec65e6d7b7e1f45c0f704c4a67f1e21388784323e23e45d",
+    "http1/manifest.json": "378b3f28e9bafcbb8c91740c25239e458eb6ede8e251da3a63b250ab45614b1e",
+    "oracles/build-report.json": "7a78e23c4d0b96a00aa8f47628ac104e8375dd52937eebf121a7c28644bfaced",
+    "guest-toolchain-install.log": "670663560462c01a42e45848cc34c07f0d2cd2bd21f41e75a0b1ff77a1b3aea8",
+    "clt-provenance.json": "c6861868da1e8706bc68e50554364967b930670efaac5172f25e8fb875f154aa",
+    "tools/tart-download.json": "47664c5b033a456589149f77aa86c59fa4c044d01aada52e7ceab24afd701eb3"
+  },
+  "limitations": [
+    "This VM receipt is not physical Apple-device evidence.",
+    "The separate native Intel workflow41815258916 remains responsible for frozen-source x86_64 and all10CLI profile qualification.",
+    "Build/provisioning outputs and third-party OS/compiler images are local qualification inputs, not SwiftJXL release payloads."
+  ]
+}

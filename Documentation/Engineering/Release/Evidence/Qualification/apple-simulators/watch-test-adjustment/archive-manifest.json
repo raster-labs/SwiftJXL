@@ -1,0 +1,22 @@
+{
+  "status": "archived",
+  "filesSHA256": {
+    "ModularDecodeParallelTests.swift.after": "38ec7705ff526aada85bd6d064b996df59229e25205e7c7f400ba69b65fd74d1",
+    "ModularDecodeParallelTests.swift.before": "3849f38d351e3007b995dc32d06baa26a2c2e31ef3263367328b2aef62673565",
+    "ModularStorageTests.swift.after": "a0ef9894fd56d231cdf9964d25441093a374619ad21f3d03b0f104723e440f2d",
+    "ModularStorageTests.swift.before": "636a959a3f85c7d88f1a06fe9279e062352ac8e9ed45558ddb3354ae102f47fd",
+    "focused/boot.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "focused/bootstatus.log": "7b0d984cefa8322cba6e0e9776e02ddb5bb6bdeea1cebeb452b845eeb7153e60",
+    "focused/create.log": "12fb7a264f39c0059ba4661e5b3b1937cd503bc3e74e3b88615282802277aa7f",
+    "focused/delete.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "focused/report.json": "34e8e983dd08a909ce6163480b1d5230bf87b13bac3e8736ac19bd23d4f207a0",
+    "focused/shutdown.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "focused/summary.log": "896891e636fc5e6dd193b8641a4128b09b751bb74df9e62139056861d8b521cd",
+    "focused/tests.log": "cb39c6a50fad3b00eba0121b8c5a339a51ef834ace97cb00512f47d51a64f58c",
+    "focused.py": "92acabb2e7022c072a4c25b83eb55c08ce70cee824e56d628fc2a2b37d38553e",
+    "non-watch-proof.json": "b04831fe101b77f47a94cd17e0103bff00bf097e89e958c8e346c84813492400",
+    "prepare-watch-test-adjustment.py": "419aab1f2f59ef48bf9fbcbab73901dd173139b5ed6e089da3d04a813c2991ef",
+    "watch-test-adjustment.patch": "e8bb874c9ffce7d323a4315553f29d8886830ec9e6b2eeb4c0c9695f2638d2ee"
+  },
+  "scope": "Exact focused retry and conditional projection evidence; original xcresult retained locally. No production change."
+}

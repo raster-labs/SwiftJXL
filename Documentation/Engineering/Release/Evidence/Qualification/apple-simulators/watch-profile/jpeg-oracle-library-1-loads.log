@@ -1,0 +1,3 @@
+/opt/homebrew/Cellar/jpeg-turbo/3.2.1/bin/djpeg:
+	@rpath/libjpeg.8.dylib (compatibility version 8.0.0, current version 8.3.2)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1359.0.0)

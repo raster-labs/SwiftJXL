@@ -1,0 +1,11 @@
+◇ Test run started.
+↳ Testing Library Version: 6.2.4 (5ee435b15ad40ec)
+↳ Target Platform: x86_64-unknown-linux-gnu
+◇ Suite VarDCTARMIntegerTests started.
+◇ Test optionalFullRangeHardwareReciprocalVectors() started.
+✘ Test optionalFullRangeHardwareReciprocalVectors() recorded an issue at VarDCTARMIntegerTests.swift:231:6: Caught error: Error Domain=NSCocoaErrorDomain Code=260 "The file doesn’t exist."UserInfo={NSUnderlyingError=Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory", NSFilePath=/__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/absent-vectors.json, NSURL=file:///__w/SwiftJXL/SwiftJXL/.build/linux-sanitizer-evidence/absent-vectors.json}
+✘ Test optionalFullRangeHardwareReciprocalVectors() failed after 0.002 seconds with 1 issue.
+✘ Suite VarDCTARMIntegerTests failed after 0.003 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.004 seconds with 1 issue.
+
+[0/1] Planning build

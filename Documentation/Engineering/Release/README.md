@@ -1,6 +1,6 @@
 # Milestone 5 — release preparation
 
-This record covers the owner-assigned release-preparation task on 4 November 2026. It does not authorise a stable tag or consumer cutover. **Milestone 5 cannot receive full release sign-off while the outstanding qualification gates remain open.** The machine-readable checklist distinguishes completed preparation from stable-release readiness.
+This record covers the owner-assigned release-preparation task on 4 November 2026. The owner subsequently extended it to the remaining library qualification, excluding physical-device testing and DICOMKit integration. The [qualification follow-up](QUALIFICATION.md) records that work against the unchanged contract 0.10.0. The machine-readable checklist distinguishes the assigned scope from stable-release readiness; neither authorises a tag or consumer cutover.
 
 ## Revisions and scope
 
@@ -24,7 +24,7 @@ The [gate checklist](release-gates.json) binds the actual runtime files and ever
 
 The example checks all six independently known 12-bit values in padded UInt16 source storage, an allocating decode, a direct decode into a different row stride, exact caller allocation identity, reported copy events, refusal of a second write and two independently owned animation frames with exact timing. It retains owners across awaits. Public allocation/peak-workspace measurements are `nil` and remain **unknown**, not zero. The existing allocation-site/mutation/sanitizer evidence in Milestone 3/4 supplies the broader no-handoff-copy and lifetime proof; this consumer is a public packaging regression check.
 
-## Executed results
+## Initial preparation results — historical source
 
 The [initial validation summary](Evidence/validation.json), [CI harness follow-up](Evidence/ci-followup.json) and [derived-SBOM qualification review](Evidence/sbom-qualified-review.json) bind the receipts and source groups; the full command logs are retained in the evidence archives.
 
@@ -41,7 +41,7 @@ The [initial validation summary](Evidence/validation.json), [CI harness follow-u
 
 Initial failed consumer attempts are retained: inherited stale SDK lookup, file-URL lockfile classification and an incorrect expectation that an optional public allocation counter was zero. The final example preserves unknown counters. The first CLI test invocation used an incorrect assumed binary path; the corrected invocation used SwiftPM's reported output directory. No production change was needed for these harness mistakes. Independent audit also required baseline Git-blob verification in the provenance checker and explicit Python/checkout-ownership handling in the container workflow.
 
-Hosted checks for the submitted PR are separate from these local receipts. The local host is macOS 27.0.1; these results do not qualify the macOS 26.0 runtime or physical Apple devices.
+Hosted checks for the submitted PR are separate from these initial local receipts. The local host is macOS 27.0.1; these initial results do not qualify the macOS 26.0 runtime or physical Apple devices. The subsequent exact-floor VM execution is recorded separately in the qualification follow-up.
 
 ## Reproduce the checks
 
@@ -64,7 +64,7 @@ python3 Scripts/check-release-gates.py --require-ready
 
 Normal gate audit exits 0 for a structurally valid checklist, even when blocked. `--require-ready` exits **2** while any required gate is open, and malformed/missing/stale evidence exits **1**. `publicationAuthorised` remains false. The eventual published tag must be consumed afresh during the separately authorised release task.
 
-## Build SBOM disposition
+## Initial build SBOM disposition — historical source
 
 `bash Scripts/validate.sh --checks sbom --jobs 2 --output .build/milestone5-sbom` generated fresh build-associated SPDX 3.0.1 and CycloneDX 1.7 documents with Apple Swift 6.4.2; generation exited 0. SwiftPM still reports its schema bundle unavailable. The originals were preserved and validated separately with `jsonschema==4.25.1`, offline versioned official schemas and recorded SHA-256 values:
 
@@ -77,7 +77,7 @@ python3 -m venv .build/release-tools
 
 Validation exits **1**: SPDX has unsupported `externalUrl`/`software_internalVersion` properties and a CreationInfo specification version containing the compiler version; CycloneDX passes JSON Schema but repeats a `bom-ref`. The validator checks original hashes, disables schema-network retrieval and separately reports these semantic failures. Full SPDX SHACL validation remains unexecuted. Neither a JSON parse nor the distribution inventory closes this gate. Schema URLs are the official [SPDX 3.0.1 schema](https://spdx.org/schema/3.0.1/spdx-json-schema.json) and [CycloneDX 1.7 schema](https://cyclonedx.org/schema/bom-1.7.schema.json), including its referenced `spdx.schema.json`, `jsf-0.82.schema.json` and `cryptography-defs.schema.json`. Do not silently repair generated originals or advertise these documents as conformant.
 
-## Explicitly derived SBOMs — validated follow-up
+## Initial explicitly derived SBOMs — historical source
 
 The [derived artefacts and exact edit record](Evidence/sbom-derived/report.json) close the package-graph conformance gate without changing the original failed emissions. [SPDX](Evidence/sbom-derived/derived/SwiftJXL-spdx-derived.json) and [CycloneDX](Evidence/sbom-derived/derived/SwiftJXL-cyclonedx-derived.json) are explicitly labelled derived documents, not unchanged SwiftPM output.
 
@@ -94,7 +94,7 @@ python3 Scripts/TestSupport/test-derived-release-sbom.py
 
 [Model/context URLs and hashes](Evidence/sbom-derived/semantic-sources.json), validator versions, raw validation failures, the initial derivation harness failure, exact edits and the negative semantic result are retained. This is a validated **SwiftPM package graph**. Embedded third-party source uses the separate notice/provenance inventory; complete SDK/runtime or binary-system inventory is not inferred. The upstream generator defects remain documented and should be re-evaluated when the toolchain changes.
 
-## Remaining release gates
+## Gates at the initial preparation checkpoint
 
 The seven source-bound Milestone 4 gaps remain: Linux ASan/TSan; exact macOS 26.0 runtime; native Intel macOS runtime; representative physical Apple devices; current-source iOS Simulator Debug/ASan/TSan; the complete ten-group CLI TSan matrix; and full applicable tvOS/watchOS/visionOS simulator bundles. SDK builds and historical smoke tests are not runtime substitutes. Existing performance and mutation-campaign acceptance is retained within its measured scope.
 
@@ -106,4 +106,4 @@ The owner subsequently assigned all remaining Milestone 5 library work, excludin
 
 Native Linux Swift 6.2.4 and 6.4.2 sanitizer runs exposed behaviour reproduced in standalone standard-library experiments: Synchronization lock operations produced TSan diagnostics, while Foundation.Process retained allocations. The candidate now uses a package-scoped, pthread-backed Foundation lock on every Linux build, with the original Synchronization.Mutex implementation retained on Apple platforms. It preserves sending ownership boundaries, typed throws and synchronous borrows. A written unchecked-Sendable proof and Linux-only concurrent access, try-lock, throw/unlock and noncopyable-owner tests accompany it. The Linux representation adds a heap box and lock object; unchanged allocation counts are not claimed.
 
-Test reference tools use a bounded, shell-free POSIX launcher on Linux, with descriptor/string owners retained through spawn and child termination/reaping on timeout. The executable and library never use this test launcher. Six additional Linux-only declarations cover the compatibility boundaries, while existing ownership/cancellation and codec tests remain required. All affected source-bound qualification and preparation gates are reopened until the final candidate reports have been independently reviewed. Historical passing reports above retain their original revisions.
+Test reference tools use a bounded, shell-free POSIX launcher on Linux, with descriptor/string owners retained through spawn and child termination/reaping on timeout. The executable and library never use this test launcher. Six additional Linux-only declarations cover the compatibility boundaries, while existing ownership/cancellation and codec tests remain required. All affected gates were reopened for the changed runtime and closed only after the final source-bound reports were independently reviewed. Historical passing reports above retain their original revisions; the qualification follow-up records completion of the assigned library scope with physical-device testing and DICOMKit integration deferred.

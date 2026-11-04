@@ -12,7 +12,8 @@ from urllib.parse import unquote, urlsplit
 def check(repo):
     files = ["README.md", "MIGRATION.md", "CLI.md", "SECURITY.md", "NOTICE",
              "THIRD_PARTY_NOTICES.md", "Scripts/README.md",
-             "Documentation/Engineering/Release/README.md"]
+             "Documentation/Engineering/Release/README.md",
+             "Documentation/Engineering/Release/QUALIFICATION.md"]
     migration = (repo / "MIGRATION.md").read_text()
     section = migration.split("## Compilable preparation example", 1)[1]
     example = re.search(r"```swift\n(.*?)\n```", section, re.S)

@@ -1,0 +1,39 @@
+{
+  "sourceDirectory": "/Library/Developer/CommandLineTools",
+  "archive": "CommandLineTools.tar",
+  "archiveSHA256": "882db4d5ae7b273d20322e7ef61e2373c1560a77c3d5a20c82047ac3b9d2386f",
+  "archiveBytes": 3738182144,
+  "compilerVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "selectedBinaries": {
+    "usr/bin/swift-frontend": {
+      "sha256": "cf81104bf554eef05e28a8bb5285c763f1323b4511b944d755d8bdd6cb8db717",
+      "machoBuild": "/Library/Developer/CommandLineTools/usr/bin/swift-frontend:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 14.0\n      sdk 16.0\n   ntools 1\n     tool LD\n  version 1166.2\n"
+    },
+    "usr/bin/swift-package": {
+      "sha256": "f8642b5e3a36f3ba5bdad5ae7dd8080b3533799153f493fdc5719967736e3b9c",
+      "machoBuild": "/Library/Developer/CommandLineTools/usr/bin/swift-package:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 14.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n"
+    },
+    "usr/bin/clang": {
+      "sha256": "1590ac950a3d627817d09ade5cb60b2115f17a72182a3141e010b4bcc482a0c9",
+      "machoBuild": "/Library/Developer/CommandLineTools/usr/bin/clang:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 14.0\n      sdk 16.0\n   ntools 1\n     tool LD\n  version 1166.2\n"
+    },
+    "usr/bin/ld": {
+      "sha256": "374d9f0713bce2c8a9e1e82bde51615d5433516a10d99b63107eb6ee70542e4c",
+      "machoBuild": "/Library/Developer/CommandLineTools/usr/bin/ld:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 14.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n"
+    },
+    "usr/bin/python3": {
+      "sha256": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+      "machoBuild": "/Library/Developer/CommandLineTools/usr/bin/python3:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 14.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n"
+    },
+    "usr/libexec/swift/pm/swiftpm-testing-helper": {
+      "sha256": "72a87c10a3209c69b4e8d1e50bac90edcb4b237282479ae4746573885ac35d3d",
+      "machoBuild": "/Library/Developer/CommandLineTools/usr/libexec/swift/pm/swiftpm-testing-helper:\nLoad command 10\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 14.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n"
+    },
+    "Library/Developer/Frameworks/Testing.framework/Testing": {
+      "sha256": "f0561e512c54f666abdac159ce7176c0ed85cec3ad4669a2f8df74f80c421ab8",
+      "machoBuild": "/Library/Developer/CommandLineTools/Library/Developer/Frameworks/Testing.framework/Testing (architecture arm64):\nLoad command 10\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 14.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACCATALYST\n    minos 17.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n/Library/Developer/CommandLineTools/Library/Developer/Frameworks/Testing.framework/Testing (architecture arm64e):\nLoad command 10\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 14.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACCATALYST\n    minos 17.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n"
+    }
+  },
+  "testingProbe": "clt-probe-frameworks.log",
+  "scope": "Compiler setup probe executed on27.0.1; does not qualify26.0 runtime."
+}

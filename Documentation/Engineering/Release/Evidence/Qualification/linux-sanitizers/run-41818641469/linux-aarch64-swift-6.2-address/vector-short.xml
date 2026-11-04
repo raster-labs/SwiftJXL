@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="1" failures="1" skipped="0" time="0.003807131">
+    <testcase classname="SwiftJXLCoreTests.VarDCTARMIntegerTests" name="optionalFullRangeHardwareReciprocalVectors()" time="0.002185247" >
+      <failure message="Expectation failed: (vectors.count &#8594; 1) &gt;= (40_000 &#8594; 40000) (error)" />
+    </testcase>
+  </testsuite>
+</testsuites>

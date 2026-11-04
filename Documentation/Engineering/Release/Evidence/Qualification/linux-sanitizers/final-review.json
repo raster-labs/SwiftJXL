@@ -1,0 +1,128 @@
+{
+  "status": "passed",
+  "auditedUTC": "2026-11-04T11:33:34.686051+00:00",
+  "scope": "Native Ubuntu 24.04 x86_64 and aarch64 full library correctness/lifetime/race suite, Swift 6.2.4 and 6.4.2, Release with explicit native engine, AddressSanitizer including LeakSanitizer and ThreadSanitizer. This does not replace separate CLI, Apple, Swift Build engine, consumer or publication gates.",
+  "runID": 41818641469,
+  "runURL": "https://github.com/raster-labs/SwiftJXL/actions/runs/41818641469",
+  "qualifiedHeadRevision": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193",
+  "executedMergeRevision": "e8460d788fa0cc8a90e2ff958808fe2efdd60ce9",
+  "qualifiedCells": 8,
+  "allEightQualified": true,
+  "perCell": {
+    "declarations": 374,
+    "argumentCases": 2059,
+    "failures": 0,
+    "skips": 0,
+    "profileOracleCombinations": 432,
+    "requiredNegativeVectorSentinels": 3,
+    "nativeARMReciprocalVectors": 45826
+  },
+  "checks": {
+    "exactDiscoveredAndExecutedIdentitySets": true,
+    "exactRawStdoutStderrHashesAndExitCodes": true,
+    "sanitizerRuntimePositiveAndIntentionalFindingProbes": true,
+    "noUnexpectedSanitizerDiagnostics": true,
+    "leakCheckingEnabledForAllASanCells": true,
+    "sourceAndOracleInputHashesUnchanged": true,
+    "allGitHubArchiveDigestsVerifiedBeforeExtraction": true,
+    "allTenGitHubJobsSuccessful": true
+  },
+  "finalResultAudit": {
+    "path": "run-41818641469/independent-result-audit.json",
+    "sha256": "a04deec7c86e490f9a54c612c9eb40ff1947980e50bf58246ad475c823f8efd5"
+  },
+  "inputAudit": {
+    "path": "run-41818641469/independent-input-audit.json",
+    "sha256": "8c5a05d7c946329c480375541a13914b37afebecf71a7b12b18719450bd8b202"
+  },
+  "currentSourceBinding": {
+    "path": "run-41818641469/current-source-binding.json",
+    "sha256": "dbb67b495d57e01831f4d93f64b1101d111c48e84b07297b9a28344cb1b85648"
+  },
+  "currentSourceScope": "Linux qualification retains the original run and exact source hashes. Current native Linux active code is unchanged: all runtime/manifest/VERSION bytes are identical, and the only two test changes are inactive #if os(watchOS) branches whose exact non-Watch projection matches the executed sources. No new Linux execution at the current revision is claimed. Watch branch execution is separately qualified.",
+  "reviewedCurrentRevision": "e8f976a5765a13f1688576ff7835ee7cadefbabe",
+  "priorAttempts": [
+    {
+      "runID": 41794212867,
+      "status": "failed",
+      "qualifiedCells": 0,
+      "summary": {
+        "path": "run-41794212867/summary.json",
+        "sha256": "88cdf0718d14d8b09db0a425327e8da8fdca0eacbb510b5a4fcf4403db4a1b9c"
+      },
+      "disposition": "Initial intentional TSan sentinel matcher mismatch and real Foundation.Process leak diagnostics; no failed result relabelled."
+    },
+    {
+      "runID": 41795408901,
+      "status": "failed",
+      "qualifiedCells": 0,
+      "summary": {
+        "path": "run-41795408901/summary.json",
+        "sha256": "1a5386e10b87b4ead27e6b9d28952325cc90fb84a45eb5905c72f757162602e7"
+      },
+      "disposition": "Leak and race findings led to standalone reproductions and the unconditional Linux compatibility implementation; no suppressions."
+    },
+    {
+      "runID": 41815258485,
+      "status": "partial-failed",
+      "qualifiedCells": 7,
+      "audit": {
+        "path": "run-41815258485/independent-result-audit.json",
+        "sha256": "e8045d122ab529843b7e982e7c3627993a782192495292453b077c26c0b08b78"
+      },
+      "disposition": "Seven genuine passes retained. x86_64 Swift 6.4 TSan lacked an exit/raw-log receipt after UTF-8 reporter failure and remains unqualified here; final complete rerun supersedes it. Historical merged-stream warning reconstruction remains explicitly limited to that old independent audit."
+    }
+  ],
+  "standaloneReproducer": {
+    "path": "standalone-reproducer/archive-manifest.json",
+    "sha256": "c3d78d463ca39a4c136001bf5f3dd4439f6ee2b334b38c71d4cc03f1d9c06e5c"
+  },
+  "focusedCompatibility": {
+    "path": "focused-compatibility/archive-manifest.json",
+    "sha256": "eb939fcdbe89ee1834fb61cfb7538d6f795f643df50b80e56479eabfb0602f6d"
+  },
+  "performanceAudit": {
+    "path": "../linux-lock-benchmark-independent-audit.json",
+    "sha256": "cc1f1b5273b491b783f14ca0dee9d0f841d84b8d5352ad975bb8035714e81b55",
+    "disposition": "Initial repeated Modular encode/four-worker latency trigger +9.24%/+6.74% was not confirmed by the controlled 30-iteration repeat (+1.05%/-1.92%). Initial and failed repeat attempts remain retained. No universal speedup, absence-of-regression, or allocation-count claim."
+  },
+  "archiveVerification": [
+    {
+      "directory": "focused-compatibility",
+      "files": 7,
+      "sha256": "eb939fcdbe89ee1834fb61cfb7538d6f795f643df50b80e56479eabfb0602f6d",
+      "allBytesAndHashesVerified": true
+    },
+    {
+      "directory": "run-41794212867",
+      "files": 153,
+      "sha256": "e88f5fb6a88305ffaa5d5ad0c74e058259e6f1d2caeb1c8b1d3e0f78a65b38de",
+      "allBytesAndHashesVerified": true
+    },
+    {
+      "directory": "run-41795408901",
+      "files": 169,
+      "sha256": "982d5c427af2a5601daed762e08e782c0b6305ac80e90600fdbcb2bfc6b89996",
+      "allBytesAndHashesVerified": true
+    },
+    {
+      "directory": "run-41815258485",
+      "files": 3690,
+      "sha256": "4ff1537633a2a7bd28a0c94636154aacda0b85778ec2469045d3b22836c09eb8",
+      "allBytesAndHashesVerified": true
+    },
+    {
+      "directory": "run-41818641469",
+      "files": 4021,
+      "sha256": "e85959fdab8c6ffddb50036dcc879fa4bb63c48f7b7f9e3a6de53b9bf3f9c9b0",
+      "allBytesAndHashesVerified": true
+    },
+    {
+      "directory": "standalone-reproducer",
+      "files": 39,
+      "sha256": "c3d78d463ca39a4c136001bf5f3dd4439f6ee2b334b38c71d4cc03f1d9c06e5c",
+      "allBytesAndHashesVerified": true
+    }
+  ],
+  "preservation": "All selected original report, log and xUnit bytes remain unchanged. Sanitizer findings in intentional negative probes are expected; full suites and vector controls have no unexpected sanitizer findings. Executables/build trees are excluded; exact original binary, source, tool and artifact hashes remain in the reports and manifests. No new Linux execution at the later Watch-only test revision is claimed."
+}

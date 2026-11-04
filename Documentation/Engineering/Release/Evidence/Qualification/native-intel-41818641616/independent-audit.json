@@ -1,0 +1,170 @@
+{
+  "status": "passed",
+  "createdUTC": "2026-11-04T11:29:54.209522+00:00",
+  "scope": "Independent retained-evidence audit, no execution rerun; raw files unchanged. Exact discovery/execution identity comparison independently recomputed directly from split stdout and XML; no metadata derivation required. CLI semantic outputs remain qualified by source-bound original runners; expected statuses/counts independently checked here.",
+  "checks": {
+    "all1327ExtractedFilesMatchTransferManifest": true,
+    "allTwelveSummaryReceiptHashesMatch": true,
+    "host1277SourceHashesMatchReporterHead2345c7b": true,
+    "core203SourceHashesMatchFrozen00f03ff": true,
+    "nativeIntelKernelAndCompiler": true,
+    "noExact260OrPhysicalClaim": true,
+    "xml368DeclarationsNoFailureSkip": true,
+    "console2053CasesAndFull368Completion": true,
+    "exactDiscoveryExecutionSetDirectlyFromSplitStreams": true,
+    "splitStreamsProcessReceiptsAndCombinedHashesAgree": true,
+    "bothExecutionStreamsInspectedNoFailureDiagnostics": true,
+    "all432OracleFilesHashesAndSemanticCartesianProfiles": true,
+    "45826ARMVectorsExactNativeGenerationReplayAndConsumedBinding": true,
+    "tenCLIReportsPassedWithExpectedCounts": true,
+    "sourceAndReferenceInputsUnchanged": true
+  },
+  "failedChecks": [],
+  "frozenSourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "executionRevision": "e8460d788fa0cc8a90e2ff958808fe2efdd60ce9",
+  "reporterHeadRevision": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193",
+  "splitStreamReceipts": {
+    "discovery": {
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "-c",
+        "release",
+        "--disable-sandbox",
+        "--build-system",
+        "native",
+        "--no-parallel",
+        "--enable-swift-testing",
+        "--disable-xctest",
+        "--jobs",
+        "2",
+        "list"
+      ],
+      "exitCode": 0,
+      "stdout": "discovery.stdout.log",
+      "stderr": "discovery.stderr.log",
+      "seconds": 367.4760364200001,
+      "stdoutBytes": 31144,
+      "stdoutSHA256": "e5db6cec77b22176c885a72f73b0b8280f2641a5f28c945077fecced7a639556",
+      "stderrBytes": 1971,
+      "stderrSHA256": "07107ec541fa1ad9b5cc471b7575cbf42837b7ee6f4ba151569d858dffec2586",
+      "combinedLog": {
+        "path": "discovery.log",
+        "ordering": "stdout then stderr; not chronological",
+        "sha256": "bf219fbd752154b2f471f16495fe3d1dd438192b23959de5f45182e4ab9e6b7d"
+      }
+    },
+    "tests": {
+      "command": [
+        "xcrun",
+        "swift",
+        "test",
+        "-c",
+        "release",
+        "--disable-sandbox",
+        "--build-system",
+        "native",
+        "--no-parallel",
+        "--enable-swift-testing",
+        "--disable-xctest",
+        "--jobs",
+        "2",
+        "--xunit-output",
+        "/Users/runner/work/_temp/m5-native-intel/core/tests.xml",
+        "--skip-build"
+      ],
+      "exitCode": 0,
+      "stdout": "tests.stdout.log",
+      "stderr": "tests.stderr.log",
+      "seconds": 88.01006032600003,
+      "stdoutBytes": 270169,
+      "stdoutSHA256": "ee84c895fdf78b8ab1b0e075c2e8d9bc79ab17ddba34e41b814acc6654830a67",
+      "stderrBytes": 21,
+      "stderrSHA256": "1fb28a4386f423e9867aa2065ff7483e1b0471037774d0e6284aee92c657353d",
+      "combinedLog": {
+        "path": "tests.log",
+        "ordering": "stdout then stderr; not chronological",
+        "sha256": "cd314e72fecf67fd7081969ef29e9eb8de522ba9ccbcf171db76601bdf61e9df"
+      }
+    }
+  },
+  "host": "native Intel x86_64, macOS 26.6.1 build 25G76",
+  "compiler": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: x86_64-apple-macosx26.0",
+  "declarations": 368,
+  "cases": 2053,
+  "independentProfiles": 432,
+  "armHardwareVectors": 45826,
+  "cli": {
+    "cli-completion": {
+      "status": "passed",
+      "checks": 22,
+      "sha256": "6f3bed4143efa4dbfbf0b3abc54acb5bf870c24c46245de6e931348e111c5730"
+    },
+    "cli-foundation": {
+      "status": "passed",
+      "checks": 98,
+      "sha256": "be70c784b2928db3d217bf210a9dc9f72223aadd67429cbce899080b3b7c6d8f"
+    },
+    "cli-jpeg-extended": {
+      "status": "passed",
+      "checks": 91,
+      "sha256": "bac8bad23f99b5f532daa24bc329d4611e1a62d7fa82287bfa368324eea0419a"
+    },
+    "cli-low-precision": {
+      "status": "passed",
+      "checks": 81,
+      "sha256": "bc976a9cb39a534534069cf231bf12987bfec40a28215a90d29cf026ba294219"
+    },
+    "cli-native-jpeg": {
+      "status": "passed",
+      "checks": 141,
+      "sha256": "717315e742444c48de1e48f1f2aed4e76e9efd235a9c8914ce1165ec10648fd8"
+    },
+    "cli-nrrd": {
+      "status": "passed",
+      "checks": 119,
+      "sha256": "344c4b1066f3c3af1e09fdc531aa5978d0446fb5b199e1dc75211902fcb03c88"
+    },
+    "cli-payload": {
+      "status": "passed",
+      "checks": 104,
+      "sha256": "f67531ad9244d7f839dc4ca5b71c793ad538a73f8fae6b0ec4675c35d217711b"
+    },
+    "cli-pnm": {
+      "status": "passed",
+      "checks": 299,
+      "sha256": "891607a5228cbac5a0697d675b61b01be0a4e3d056d26fbfdf93bbe506e743cd"
+    },
+    "cli-vardct": {
+      "status": "passed",
+      "checks": 32,
+      "sha256": "22f320e465f80868937f4da35a974b2c3144b17341ac4b2482a23a96c2fce11a"
+    },
+    "cli-vardct-encode": {
+      "status": "passed",
+      "checks": 72,
+      "sha256": "c5f2250e1fd5bd66fcd4434a0ae90202f7701885c727db7301e4f0392eb59f42"
+    }
+  },
+  "inputsSHA256": {
+    ".build/m5-macos260/source-00f03ff-provenance.json": "ad7a95055dbaaa00619a22123bffd3331e2ef2685ffac07aaab717852e9e8e7a",
+    ".build/m5-native-intel-41818641616/summary.json": "5067599063fc4df128ab2c41fdfc95016c82c3d86699450a90b880486e8ec1a4",
+    ".build/m5-native-intel-41818641616/host-and-source.json": "cf43263ae09a6cc0331911d8267781edc9ca8663b79344efcea6e25733abf0f4",
+    ".build/m5-native-intel-41818641616/core/report.json": "2b187c2897e07b4e9c297c11adcb09990134db112bdda430e2123b7754d11890",
+    ".build/m5-native-intel-41818641616/core/tests.xml": "fa2a4321610c9214ebeaef3de5bc131b0c3e885163dbd6fddc82475aac123230",
+    ".build/m5-native-intel-41818641616/core/tests.log": "cd314e72fecf67fd7081969ef29e9eb8de522ba9ccbcf171db76601bdf61e9df",
+    ".build/m5-native-intel-41818641616/arm-vectors/report.json": "b3efde167fe950848fee64b45d7a7c6c12ff6928654060b9501d4c84c9d13e4e",
+    ".build/m5-native-intel-41818641616/head-source-provenance.json": "bacb368294770f7256d00516bce6eb27783e8e8f8fb12af9e3190bfd97d6e041",
+    ".build/m5-native-intel-41818641616/core/normalised-test-identities.json": "60ecd3823fb0ddf8f29c36482328f027f617d570ba63d35026aa99450d8375dd",
+    ".build/m5-native-intel-41818641616/core/discovery-process.json": "b701b2d0e4ddc1de87388dcfb67d66952cc6d75f098692e9ecf1c9d19a10ac80",
+    ".build/m5-native-intel-41818641616/core/tests-process.json": "76447739ce6ca789a442224319153846ea07e31014f55915ed8f86cef7d2f050",
+    ".build/m5-native-intel-41818641616/core/discovery.stdout.log": "e5db6cec77b22176c885a72f73b0b8280f2641a5f28c945077fecced7a639556",
+    ".build/m5-native-intel-41818641616/core/discovery.stderr.log": "07107ec541fa1ad9b5cc471b7575cbf42837b7ee6f4ba151569d858dffec2586",
+    ".build/m5-native-intel-41818641616/core/tests.stdout.log": "ee84c895fdf78b8ab1b0e075c2e8d9bc79ab17ddba34e41b814acc6654830a67",
+    ".build/m5-native-intel-41818641616/core/tests.stderr.log": "1fb28a4386f423e9867aa2065ff7483e1b0471037774d0e6284aee92c657353d",
+    ".build/m5-native-intel-41818641616/extracted-files.json": "33a979a7ce4de7594c4dda4d163afc75526f7c5aad2ef16fe6aff90196c3dbc1",
+    ".build/m5-native-intel-41818641616/artifact-metadata.json": "5738e79a1d4fd717446d1ad06d9a45ab1839d8dcc94b48290992e90e2d76fb8d"
+  },
+  "auditorSHA256": "a27398a76d59542a52a8061cb44793dd91a3fc6fb33920ec4211760b6a7be2b8"
+}

@@ -1,0 +1,9 @@
+Validation Report
+Conforms: False
+Results (1):
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:datatype xsd:dateTimeStamp ; sh:maxCount Literal("1", datatype=xsd:integer) ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:nodeKind sh:Literal ; sh:path ns1:created ; sh:pattern Literal("^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ$") ]
+	Focus Node: <urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0:creationInfo>
+	Result Path: ns1:created
+	Message: Less than 1 values on <urn:uuid:9eb8bc69-b64a-458a-91ee-66864b5a2fa0:creationInfo>->ns1:created

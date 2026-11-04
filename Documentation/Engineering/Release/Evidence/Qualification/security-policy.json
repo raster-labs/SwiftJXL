@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "checkedUTC": "2026-11-04T11:07:33.504007+00:00",
+  "sourceRevision": "2345c7b9fb1c329463cf4f3ba5bc3194fea51193",
+  "policySHA256": "da5c5d2d10b7ec7349d4596a6a87b67f4379b0909579efeb1e6661649cd3b87b",
+  "reportURL": "https://github.com/raster-labs/SwiftJXL/security/advisories/new",
+  "checks": [
+    {
+      "command": [
+        "/Users/pushparaj/.local/bin/gh",
+        "api",
+        "repos/raster-labs/SwiftJXL/private-vulnerability-reporting"
+      ],
+      "exitCode": 0,
+      "stdout": {
+        "enabled": true
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/pushparaj/.local/bin/gh",
+        "api",
+        "repos/raster-labs/SwiftJXL/releases"
+      ],
+      "exitCode": 0,
+      "stdout": [],
+      "stderr": ""
+    }
+  ],
+  "scope": "Private reporting enabled and the committed policy explicitly names current development and future stable support; no release or organisation setting changed."
+}

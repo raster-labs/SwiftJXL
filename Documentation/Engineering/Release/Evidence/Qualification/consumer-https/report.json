@@ -1,0 +1,501 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "contractVersion": "0.10.0",
+  "scope": "HTTPS exact-revision consumer; no published semantic version claim",
+  "startedUTC": "2026-11-04T11:04:29.342338+00:00",
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "python": "3.15.2",
+    "DEVELOPER_DIR": null,
+    "buildSystem": "swiftbuild",
+    "jobs": 2,
+    "swift": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+    "git": "git version 2.56.0",
+    "xcode": "Xcode 27.2\nBuild version 27B52",
+    "sdk": "27.2",
+    "sdkPath": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk"
+  },
+  "runnerSHA256": "e47d239bebfb5787254d635874b33a082c3cc6d4d44c0b958bb7db69582adf34",
+  "commands": [
+    {
+      "label": "swift-version",
+      "argv": [
+        "xcrun",
+        "swift",
+        "--version"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/swift-version.log",
+      "exitCode": 0,
+      "seconds": 0.103
+    },
+    {
+      "label": "git-version",
+      "argv": [
+        "git",
+        "--version"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/git-version.log",
+      "exitCode": 0,
+      "seconds": 0.005
+    },
+    {
+      "label": "xcode-version",
+      "argv": [
+        "xcodebuild",
+        "-version"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/xcode-version.log",
+      "exitCode": 0,
+      "seconds": 0.067
+    },
+    {
+      "label": "sdk-version",
+      "argv": [
+        "xcrun",
+        "--sdk",
+        "macosx",
+        "--show-sdk-version"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/sdk-version.log",
+      "exitCode": 0,
+      "seconds": 0.006
+    },
+    {
+      "label": "sdk-path",
+      "argv": [
+        "xcrun",
+        "--sdk",
+        "macosx",
+        "--show-sdk-path"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/sdk-path.log",
+      "exitCode": 0,
+      "seconds": 0.004
+    },
+    {
+      "label": "source-revision",
+      "argv": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae^{commit}"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/source-revision.log",
+      "exitCode": 0,
+      "seconds": 0.006
+    },
+    {
+      "label": "working-tree-status",
+      "argv": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/working-tree-status.log",
+      "exitCode": 0,
+      "seconds": 0.016
+    },
+    {
+      "label": "private-remote-init",
+      "argv": [
+        "git",
+        "init",
+        "--bare",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/SwiftJXL.git"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/private-remote-init.log",
+      "exitCode": 0,
+      "seconds": 0.011
+    },
+    {
+      "label": "private-remote-fetch",
+      "argv": [
+        "git",
+        "--git-dir",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/SwiftJXL.git",
+        "fetch",
+        "--depth",
+        "1",
+        "--no-tags",
+        "file:///Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+        "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/private-remote-fetch.log",
+      "exitCode": 0,
+      "seconds": 0.39
+    },
+    {
+      "label": "private-remote-branch",
+      "argv": [
+        "git",
+        "--git-dir",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/SwiftJXL.git",
+        "update-ref",
+        "refs/heads/candidate",
+        "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/private-remote-branch.log",
+      "exitCode": 0,
+      "seconds": 0.007
+    },
+    {
+      "label": "private-remote-head",
+      "argv": [
+        "git",
+        "--git-dir",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/SwiftJXL.git",
+        "symbolic-ref",
+        "HEAD",
+        "refs/heads/candidate"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/private-remote-head.log",
+      "exitCode": 0,
+      "seconds": 0.007
+    },
+    {
+      "label": "source-checkout",
+      "argv": [
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "--no-tags",
+        "file:///Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/SwiftJXL.git",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/source"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/source-checkout.log",
+      "exitCode": 0,
+      "seconds": 0.542
+    },
+    {
+      "label": "source-clean",
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/source",
+      "log": "logs/source-clean.log",
+      "exitCode": 0,
+      "seconds": 0.171
+    },
+    {
+      "label": "source-commit",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/source",
+      "log": "logs/source-commit.log",
+      "exitCode": 0,
+      "seconds": 0.006
+    },
+    {
+      "label": "private-version-tag",
+      "argv": [
+        "git",
+        "--git-dir",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/SwiftJXL.git",
+        "update-ref",
+        "refs/tags/2.1.0-dev.2",
+        "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/private-version-tag.log",
+      "exitCode": 0,
+      "seconds": 0.006
+    },
+    {
+      "label": "private-remote-refs",
+      "argv": [
+        "git",
+        "--git-dir",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/SwiftJXL.git",
+        "show-ref"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/private-remote-refs.log",
+      "exitCode": 0,
+      "seconds": 0.006
+    },
+    {
+      "label": "package-manifest",
+      "argv": [
+        "xcrun",
+        "swift",
+        "package",
+        "--package-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/source",
+        "--scratch-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/build",
+        "--cache-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/cache",
+        "--config-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/config",
+        "--security-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "dump-package"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/package-manifest.log",
+      "exitCode": 0,
+      "seconds": 1.131
+    },
+    {
+      "label": "resolve-pinned-dependency",
+      "argv": [
+        "xcrun",
+        "swift",
+        "package",
+        "--package-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/consumer",
+        "--scratch-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/build",
+        "--cache-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/cache",
+        "--config-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/config",
+        "--security-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "resolve"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/resolve-pinned-dependency.log",
+      "exitCode": 0,
+      "seconds": 16.506
+    },
+    {
+      "label": "consumer-graph",
+      "argv": [
+        "xcrun",
+        "swift",
+        "package",
+        "--package-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/consumer",
+        "--scratch-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/build",
+        "--cache-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/cache",
+        "--config-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/config",
+        "--security-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "show-dependencies",
+        "--format",
+        "json"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/consumer-graph.log",
+      "exitCode": 0,
+      "seconds": 0.239
+    },
+    {
+      "label": "debug-build",
+      "argv": [
+        "xcrun",
+        "swift",
+        "build",
+        "--package-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/consumer",
+        "--scratch-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/build",
+        "--cache-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/cache",
+        "--config-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/config",
+        "--security-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "-c",
+        "debug",
+        "--product",
+        "Consumer"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/debug-build.log",
+      "exitCode": 0,
+      "seconds": 15.221
+    },
+    {
+      "label": "debug-run",
+      "argv": [
+        "xcrun",
+        "swift",
+        "run",
+        "--package-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/consumer",
+        "--scratch-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/build",
+        "--cache-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/cache",
+        "--config-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/config",
+        "--security-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "-c",
+        "debug",
+        "--skip-build",
+        "Consumer"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/debug-run.log",
+      "exitCode": 0,
+      "seconds": 0.931
+    },
+    {
+      "label": "release-build",
+      "argv": [
+        "xcrun",
+        "swift",
+        "build",
+        "--package-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/consumer",
+        "--scratch-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/build",
+        "--cache-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/cache",
+        "--config-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/config",
+        "--security-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "-c",
+        "release",
+        "--product",
+        "Consumer"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/release-build.log",
+      "exitCode": 0,
+      "seconds": 43.63
+    },
+    {
+      "label": "release-run",
+      "argv": [
+        "xcrun",
+        "swift",
+        "run",
+        "--package-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/consumer",
+        "--scratch-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/build",
+        "--cache-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/cache",
+        "--config-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/config",
+        "--security-path",
+        "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/security",
+        "--build-system",
+        "swiftbuild",
+        "--jobs",
+        "2",
+        "-c",
+        "release",
+        "--skip-build",
+        "Consumer"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5",
+      "log": "logs/release-run.log",
+      "exitCode": 0,
+      "seconds": 0.982
+    },
+    {
+      "label": "source-unchanged",
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/source",
+      "log": "logs/source-unchanged.log",
+      "exitCode": 0,
+      "seconds": 0.027
+    }
+  ],
+  "checks": {
+    "packageManifestAndVersion": "passed",
+    "pinnedResolutionAndGraph": "passed",
+    "debugPublicConsumer": "passed",
+    "releasePublicConsumer": "passed"
+  },
+  "limitations": [
+    "No real repository tag is created or pushed",
+    "No stable release approval",
+    "No platform, security, performance or complete codec qualification is inferred",
+    "Dependency checks cover the package graph, not every system library"
+  ],
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "excludedWorkingChanges": [
+    " M Scripts/TestSupport/qualify-native-runtime.py",
+    " M Scripts/TestSupport/test-derived-release-sbom.py",
+    " M Scripts/TestSupport/test-linux-sanitizer-gate.py",
+    " M Scripts/derive-release-sbom.py",
+    " M Scripts/qualify-linux-sanitizer.py",
+    "?? Documentation/Engineering/Release/Evidence/Qualification/",
+    "?? Scripts/TestSupport/test-native-runtime-reporting.py"
+  ],
+  "version": "2.1.0-dev.2",
+  "privateRemoteURL": "file:///Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-consumer-https/work/SwiftJXL.git",
+  "contractSHA256": {
+    "CLI_CONTRACT.md": "8d13c6e32b9c0378d58b547a12333f0930488bedd2f7ceb2157d5fad56eea1db",
+    "COMMON_API.md": "6866eeaefff9b707350d974af4d22c13d45cbe8f8797295c2b2e4595db24b8b0",
+    "MEMORY_CONTRACT.md": "77cfb4d14d523cfcca340c6cf5a994f07776a4cfe4577ad20181ba43cc8b7fe2",
+    "PERFORMANCE.md": "139e83f4c670b514940bcbae2d69560e0b28f866b266019ff8c112c0f388343b",
+    "PLATFORMS.md": "2542feedf31bba35099e64c946b45c4a90a2c753e8ef49c2918853de8939e54e",
+    "SUITE_POLICY.md": "e463188165bba3bc9f74da077691019f6659200a6cc75b9220a0cbfd55d4c9cd",
+    "TESTING.md": "3d01911ff78d52e593ffdbd0962d19607878abc51fad5862f8cc10a927fca765"
+  },
+  "sourceSHA256": {
+    "Package.swift": "55f41396dd50e9157dc6a4cc1fd5737a799786a51aa39eccfb9fe43d10db205b",
+    "VERSION": "6e23ce0a8e66351a24a82283c2dcfb1c64f35b1c19b1f6bcdc3952d436802193",
+    "NOTICE": "53100225da5da07776b66f1f2bcf1d4763c06c27b36967c38492d76695a8c90d",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "Sources/SwiftJXLCLI/main.swift": "424eb374abeb2c478cebf1602af71b3ad4b206c6952d70a10cc0d10f116492b1",
+    "ManPages/swiftjxl-cli.1": "11d37c6ea7a925a1ef034ebe2f91823cd153ef731a3f867389236fb738b9f130",
+    "Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift": "59f014ec9128eb870a277f80689f19e04a56a19359ce846f06bfcb72a0e3bbc6",
+    "Documentation/COMMON_CONTRACT_SHA256.txt": "20f3236bc0d427c1af162c784e90adc0c89f10916b6f1fb4096c69ccb7b7d544"
+  },
+  "consumerURL": "https://github.com/raster-labs/SwiftJXL.git",
+  "consumerRequirement": {
+    "revision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae"
+  },
+  "finishedUTC": "2026-11-04T11:05:49.396830+00:00",
+  "workRetained": false
+}

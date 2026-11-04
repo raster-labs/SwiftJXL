@@ -1,0 +1,114 @@
+{
+  "status": "passed",
+  "auditedUTC": "2026-11-04T11:38:19.617948+00:00",
+  "indexPath": "Documentation/Engineering/Release/Evidence/Qualification/apple-simulators/qualification-index.json",
+  "indexSHA256": "634c94702bd55f855148bd1f20b291e11cd42564a41d64292489faebdda57c21",
+  "archivedFileCountVerified": 820,
+  "archivedBytesVerified": 32336784,
+  "sourceAndFixtureCountVerified": 1199,
+  "configurations": [
+    {
+      "platform": "ios26",
+      "configuration": "debug",
+      "declarations": 362,
+      "cases": 1960,
+      "failures": 0,
+      "skips": 0,
+      "negativeVectorSentinels": 3
+    },
+    {
+      "platform": "ios26",
+      "configuration": "asan",
+      "declarations": 362,
+      "cases": 1960,
+      "failures": 0,
+      "skips": 0,
+      "negativeVectorSentinels": 3
+    },
+    {
+      "platform": "ios26",
+      "configuration": "tsan",
+      "declarations": 362,
+      "cases": 1960,
+      "failures": 0,
+      "skips": 0,
+      "negativeVectorSentinels": 3,
+      "rawReceiptSHA256": "18abad2449c5b2fb1d1c40b6ad91dcb6a31071e417014133bdd5719a39b00a21",
+      "reconciledAuditCheckCount": 162,
+      "strictCurrentByteDifference": [
+        "sourcesMatchCurrent"
+      ]
+    },
+    {
+      "platform": "tvos26",
+      "configuration": "release",
+      "declarations": 362,
+      "cases": 1960,
+      "failures": 0,
+      "skips": 0,
+      "negativeVectorSentinels": 3,
+      "rawReceiptSHA256": "aa429a7d088507a8e96a45c175cf3818c07dc3b5f6317a97cf682594f8fd968a",
+      "reconciledAuditCheckCount": 72,
+      "strictCurrentByteDifference": [
+        "sourcesMatchCurrent"
+      ]
+    },
+    {
+      "platform": "visionos26",
+      "configuration": "release",
+      "declarations": 362,
+      "cases": 1960,
+      "failures": 0,
+      "skips": 0,
+      "negativeVectorSentinels": 3,
+      "rawReceiptSHA256": "eb0747f326d43594ca721589198d873b9185a8b00bd68ac3d0b9abfabfafc8ac",
+      "reconciledAuditCheckCount": 72,
+      "strictCurrentByteDifference": [
+        "sourcesMatchCurrent"
+      ]
+    },
+    {
+      "platform": "watchos26",
+      "configuration": "release",
+      "declarations": 362,
+      "cases": 1960,
+      "failures": 0,
+      "skips": 0,
+      "negativeVectorSentinels": 3,
+      "rawReceiptSHA256": "c65d3db969b2ff37c6e8dbccf7ef677cf098e0903ecc0ad1de275ac4c50968fe",
+      "reconciledAuditCheckCount": 72,
+      "strictCurrentByteDifference": []
+    }
+  ],
+  "instrumentation": [
+    {
+      "configuration": "asan",
+      "fourRetainedProductHashesVerified": true,
+      "actualHookLinkageAndLinkInputProofReconciled": true,
+      "missingHooksAndChangedBinaryControlsRejected": true
+    },
+    {
+      "configuration": "tsan",
+      "fourRetainedProductHashesVerified": true,
+      "actualHookLinkageAndLinkInputProofReconciled": true,
+      "missingHooksAndChangedBinaryControlsRejected": true
+    }
+  ],
+  "watchSupplement": {
+    "checks": 15,
+    "jpegCases": 91,
+    "configuredMemoryCeilingBytes": 33554432,
+    "measuredRSSBytes": null,
+    "independentJPEGOracleBinaryLibraryAndReplayVerified": true
+  },
+  "preservedFailedReceipts": [
+    "watchos26-initial-failure/report.json",
+    "watch-profile-initial-failure/report.json"
+  ],
+  "inactiveWatchProjectionAudit": {
+    "path": "Documentation/Engineering/Release/Evidence/Qualification/linux-sanitizers/run-41818641469/current-source-binding.json",
+    "sha256": "dbb67b495d57e01831f4d93f64b1101d111c48e84b07297b9a28344cb1b85648"
+  },
+  "scope": "Independent raw archive/hash/source review, re-parsed discovery/results/console and instrumentation acceptance. Three non-Watch strict current-byte re-audits differ only in the two explicitly reviewed inactive Watch test branches; original raw receipts and audits remain unchanged. Actual retained ASan/TSan products and link lists still match recorded hashes. Simulator qualification only; no physical-device or measured-RSS claim.",
+  "auditorSHA256": "5ba861a8d53d2bde9de8b572e52563164e76c8b1925b32f34a1b51a2ef52c168"
+}

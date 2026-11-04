@@ -1,0 +1,19 @@
+{
+  "timeUTC": "2026-11-04T10:48:32.226501+00:00",
+  "sshShutdownExit": 255,
+  "sshShutdownOutput": "Shutdown NOW!\n\nSystem shutdown time has arrived\u0007\u0007\nConnection to 192.168.128.2 closed by remote host.\n",
+  "tartStatusExit": 0,
+  "tartStatusOutput": "[\n  {\n    \"Size\" : 33,\n    \"Disk\" : 50,\n    \"State\" : \"running\",\n    \"Accessed\" : \"2026-11-04T10:48:32Z\",\n    \"Running\" : true,\n    \"Source\" : \"local\",\n    \"Name\" : \"swiftjxl-macos260-http1\"\n  }\n]\n",
+  "stoppedConfirmedUTC": "2026-11-04T10:48:54.585814+00:00",
+  "finalTartStatus": [
+    {
+      "Accessed": "2026-11-04T10:48:32Z",
+      "Source": "local",
+      "Name": "swiftjxl-macos260-http1",
+      "Running": false,
+      "Disk": 50,
+      "State": "stopped",
+      "Size": 33
+    }
+  ]
+}

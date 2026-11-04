@@ -1,0 +1,266 @@
+{
+  "status": "passed",
+  "startedUTC": "2026-11-04T10:34:04.244901+00:00",
+  "image": "swift@sha256:bca121f6eb59fd80340d1296887b2698ed8f3eb9eca7d80c181f8af769dc7ee0",
+  "architecture": "aarch64",
+  "cpuset": "0-3",
+  "warmups": 3,
+  "timedIterations": 30,
+  "rounds": [
+    "ABBA",
+    "BAAB"
+  ],
+  "baselineRevision": "c917d6d5596378c5cb451f402de6ee1a62966003",
+  "candidateRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "binarySHA256": {
+    "baseline": "20bb25336aebfc21baed01fe276e1932744fb494e580920353c81e9d55f83b81",
+    "candidate": "40e1970d678cfd37ceb49176358947b29d5789580e568f4aac50c73986bd9c00"
+  },
+  "benchmarkSourceSHA256": "ecd55e965a0c6794dadce907c0eb66097ea07c4e76419642b23a900eaec7f945",
+  "driverSHA256": "a1444f54872b168581aa239f3c048cf52c10aab73554bccd36ee078a294420f6",
+  "rows": [
+    {
+      "case": "modular-encode-w4",
+      "rounds": [
+        {
+          "order": "ABBA",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w4-r0-0-baseline.json",
+                "rawSHA256": "fecc93891633b511370b5f4494524dc8a2c2f47a305e84cb134461f08fc62a28",
+                "latencyMedianMS": 30.724027,
+                "latencyMinMS": 30.050817,
+                "latencyMaxMS": 34.479619,
+                "peakRSSBytes": 45768704,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w4-r0-3-baseline.json",
+                "rawSHA256": "263471b5c4a237b5c80c2175f24e2dadd227bbc6b0f3ae78bdeb2eec58121c51",
+                "latencyMedianMS": 32.649898500000006,
+                "latencyMinMS": 32.086517,
+                "latencyMaxMS": 35.131258,
+                "peakRSSBytes": 45772800,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w4-r0-1-candidate.json",
+                "rawSHA256": "c4afce5534660f10f1a9332b60642bf56047e1a558969db35406be47337e318a",
+                "latencyMedianMS": 31.810966999999998,
+                "latencyMinMS": 31.139444,
+                "latencyMaxMS": 34.27041,
+                "peakRSSBytes": 45768704,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w4-r0-2-candidate.json",
+                "rawSHA256": "802e8f9e60099411a2fe89761f748637a9748584618ded30ea3575859976ad2c",
+                "latencyMedianMS": 32.2256345,
+                "latencyMinMS": 30.568651,
+                "latencyMaxMS": 34.77761,
+                "peakRSSBytes": 45797376,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 31.686962750000003,
+            "candidate": 32.018300749999995,
+            "ratio": 1.0104566033233966
+          },
+          "peakRSSBytes": {
+            "baseline": 45770752.0,
+            "candidate": 45783040.0,
+            "ratio": 1.0002684683878473
+          }
+        },
+        {
+          "order": "BAAB",
+          "measurements": {
+            "baseline": [
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w4-r1-1-baseline.json",
+                "rawSHA256": "754bf3fba87b6789b589c2d57b4d53e1a6c5257d5e72768a9cf95ec46535f764",
+                "latencyMedianMS": 33.589678,
+                "latencyMinMS": 33.00786,
+                "latencyMaxMS": 37.495533,
+                "peakRSSBytes": 45793280,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "baseline",
+                "raw": "modular-encode-w4-r1-2-baseline.json",
+                "rawSHA256": "93d7d09a52d03e9f0d98786407c5945ba3fbc1b3db894f7b9b0eaaf3ff2158be",
+                "latencyMedianMS": 32.201349,
+                "latencyMinMS": 31.201214,
+                "latencyMaxMS": 35.465219,
+                "peakRSSBytes": 45797376,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ],
+            "candidate": [
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w4-r1-0-candidate.json",
+                "rawSHA256": "5eb60d0ee3f85ea37dcc671ee5e0985a785802e84e6a31a44414b5b85523e821",
+                "latencyMedianMS": 32.1992885,
+                "latencyMinMS": 31.084421,
+                "latencyMaxMS": 35.078258,
+                "peakRSSBytes": 45666304,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              },
+              {
+                "side": "candidate",
+                "raw": "modular-encode-w4-r1-3-candidate.json",
+                "rawSHA256": "153ed058f2c0b3c6ca5fee81b4832d8e6657e742786f1012e2dfc7a4152b0350",
+                "latencyMedianMS": 32.329267,
+                "latencyMinMS": 30.63179,
+                "latencyMaxMS": 33.081608,
+                "peakRSSBytes": 45682688,
+                "encodedBytes": 520889,
+                "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+                "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+              }
+            ]
+          },
+          "latencyMedianMS": {
+            "baseline": 32.8955135,
+            "candidate": 32.264277750000005,
+            "ratio": 0.9808108862626511
+          },
+          "peakRSSBytes": {
+            "baseline": 45795328.0,
+            "candidate": 45674496.0,
+            "ratio": 0.9973614775725593
+          }
+        }
+      ],
+      "identicalCompressedAndDecodedBytes": true,
+      "latencyMedianMSRepeatedRegression": false,
+      "peakRSSBytesRepeatedRegression": false
+    }
+  ],
+  "runs": [
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w4-r0-0-baseline.json",
+      "rawSHA256": "fecc93891633b511370b5f4494524dc8a2c2f47a305e84cb134461f08fc62a28",
+      "latencyMedianMS": 30.724027,
+      "latencyMinMS": 30.050817,
+      "latencyMaxMS": 34.479619,
+      "peakRSSBytes": 45768704,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w4-r0-1-candidate.json",
+      "rawSHA256": "c4afce5534660f10f1a9332b60642bf56047e1a558969db35406be47337e318a",
+      "latencyMedianMS": 31.810966999999998,
+      "latencyMinMS": 31.139444,
+      "latencyMaxMS": 34.27041,
+      "peakRSSBytes": 45768704,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w4-r0-2-candidate.json",
+      "rawSHA256": "802e8f9e60099411a2fe89761f748637a9748584618ded30ea3575859976ad2c",
+      "latencyMedianMS": 32.2256345,
+      "latencyMinMS": 30.568651,
+      "latencyMaxMS": 34.77761,
+      "peakRSSBytes": 45797376,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w4-r0-3-baseline.json",
+      "rawSHA256": "263471b5c4a237b5c80c2175f24e2dadd227bbc6b0f3ae78bdeb2eec58121c51",
+      "latencyMedianMS": 32.649898500000006,
+      "latencyMinMS": 32.086517,
+      "latencyMaxMS": 35.131258,
+      "peakRSSBytes": 45772800,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w4-r1-0-candidate.json",
+      "rawSHA256": "5eb60d0ee3f85ea37dcc671ee5e0985a785802e84e6a31a44414b5b85523e821",
+      "latencyMedianMS": 32.1992885,
+      "latencyMinMS": 31.084421,
+      "latencyMaxMS": 35.078258,
+      "peakRSSBytes": 45666304,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w4-r1-1-baseline.json",
+      "rawSHA256": "754bf3fba87b6789b589c2d57b4d53e1a6c5257d5e72768a9cf95ec46535f764",
+      "latencyMedianMS": 33.589678,
+      "latencyMinMS": 33.00786,
+      "latencyMaxMS": 37.495533,
+      "peakRSSBytes": 45793280,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "baseline",
+      "raw": "modular-encode-w4-r1-2-baseline.json",
+      "rawSHA256": "93d7d09a52d03e9f0d98786407c5945ba3fbc1b3db894f7b9b0eaaf3ff2158be",
+      "latencyMedianMS": 32.201349,
+      "latencyMinMS": 31.201214,
+      "latencyMaxMS": 35.465219,
+      "peakRSSBytes": 45797376,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    },
+    {
+      "side": "candidate",
+      "raw": "modular-encode-w4-r1-3-candidate.json",
+      "rawSHA256": "153ed058f2c0b3c6ca5fee81b4832d8e6657e742786f1012e2dfc7a4152b0350",
+      "latencyMedianMS": 32.329267,
+      "latencyMinMS": 30.63179,
+      "latencyMaxMS": 33.081608,
+      "peakRSSBytes": 45682688,
+      "encodedBytes": 520889,
+      "encodedSHA256": "638a83565ea0eaafdaedf5392ba7babb16fcecf4e4b13fabc036bd7cb104186a",
+      "decodedSHA256": "59a472cbcfdb06ac152b79a2e63d491f080adacb57cc1ec0bac29ca673da1c5c"
+    }
+  ],
+  "regressionTriggers": [],
+  "scope": "Controlled local native Linux ARM64 release comparison of the Linux lock change. Synthetic512x512RGB16; public API encode/decode latency and whole-process peakRSS. No general performance, heap-allocation or exact-workspace claim.",
+  "finishedUTC": "2026-11-04T10:34:14.259198+00:00"
+}

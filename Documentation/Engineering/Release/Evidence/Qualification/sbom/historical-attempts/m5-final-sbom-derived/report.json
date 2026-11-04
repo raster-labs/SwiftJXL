@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "status": "failed",
+  "startedUTC": "2026-11-04T10:31:01Z",
+  "command": [
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-tools/bin/python",
+    "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/derive-release-sbom.py",
+    "--build-report",
+    ".build/m5-final-sbom/report.json",
+    "--schemas",
+    ".build/release-schemas",
+    "--output",
+    ".build/m5-final-sbom-derived"
+  ],
+  "runnerSHA256": "70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583",
+  "scope": "Explicitly derived, validated SwiftPM package-graph SBOMs; original generator output remains defective",
+  "limitations": [
+    "No complete SDK, runtime or embedded third-party inventory is inferred",
+    "Optional malformed purls omitted; no canonical remote package identity is guessed"
+  ],
+  "environment": {
+    "python": "3.15.2",
+    "validators": {
+      "jsonschema": "4.25.1",
+      "pyshacl": "0.30.1",
+      "rdflib": "7.1.4",
+      "owlrl": "7.1.4"
+    },
+    "packages": {
+      "html5rdf": "1.2.1",
+      "packaging": "26.3",
+      "jsonschema-specifications": "2025.9.1",
+      "pyshacl": "0.30.1",
+      "wcwidth": "0.9.4",
+      "owlrl": "7.1.4",
+      "numpy": "2.4.0",
+      "jsonschema": "4.25.1",
+      "pip": "26.2.2",
+      "rdflib": "7.1.4",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.9.1",
+      "attrs": "26.1.0",
+      "typing_extensions": "4.16.0",
+      "prettytable": "3.18.0",
+      "pynrrd": "1.1.3",
+      "pyparsing": "3.3.3"
+    }
+  },
+  "artifacts": [],
+  "rawValidationCommand": {
+    "argv": [
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-tools/bin/python",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/Scripts/validate-release-sbom.py",
+      "--build-report",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-sbom/report.json",
+      "--schemas",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/release-schemas",
+      "--output",
+      "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-final-sbom-derived/raw-validation"
+    ],
+    "exitCode": 1
+  },
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "buildReportSHA256": "9a51a79d98ecc5b17edad8778f01be8ec02cf0292c3c874181c8f978fd0fdd75",
+  "semanticSources": [
+    {
+      "file": "spdx-model.ttl",
+      "url": "https://spdx.org/rdf/3.0.1/spdx-model.ttl",
+      "sha256": "30ebb4af2d70a9809044ef46f44cc3dc5125226d70f818a50ed2e1d5f404c593",
+      "retrievedUTC": "2026-11-04T07:12:55.983571+00:00"
+    },
+    {
+      "file": "spdx-context.jsonld",
+      "url": "https://spdx.org/rdf/3.0.1/spdx-context.jsonld",
+      "sha256": "c72b0928f094c83e5c127784edb1ebca2af74a104fcacc007c332b23cbc788bd",
+      "retrievedUTC": "2026-11-04T07:12:57.206151+00:00"
+    }
+  ],
+  "failure": "Unrecognised package URL; do not remove an unknown or potentially valid identifier",
+  "finishedUTC": "2026-11-04T10:31:01.850738+00:00",
+  "exitCode": 1
+}

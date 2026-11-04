@@ -1,0 +1,335 @@
+{
+  "status": "passed",
+  "scope": "Native Intel x86_64 macOS 26.6.1 with Swift 6.3.3; complete release library and ten CLI groups. No exact macOS26.0, Swift6.4 or physical-device claim.",
+  "runId": 41815258916,
+  "runURL": "https://github.com/raster-labs/SwiftJXL/actions/runs/41815258916",
+  "sourceRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "executionMergeRevision": "071c2232051eb64cb0d8779c0606ccd02c232991",
+  "runtimeSourceCoverage": {
+    "frozenRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+    "hostFilesMatchingFrozenSource": 1276,
+    "coreFilesMatchingFrozenSource": 203,
+    "sourceManifest": "../macos26/source-00f03ff-provenance.json",
+    "sourceManifestSHA256": "ad7a95055dbaaa00619a22123bffd3331e2ef2685ffac07aaab717852e9e8e7a"
+  },
+  "records": [
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/arm-vectors/reciprocal-vectors.json",
+      "storedPath": "arm-vectors/reciprocal-vectors.json.gz",
+      "storedBytes": 145008,
+      "storedSHA256": "06980f17c9ecee77b125d8bb00a154cf9dd74ba748218a7882977cf3337d6575",
+      "originalBytes": 937935,
+      "originalSHA256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/arm-vectors/replay.json",
+      "storedPath": "arm-vectors/replay.json.gz",
+      "storedBytes": 145008,
+      "storedSHA256": "06980f17c9ecee77b125d8bb00a154cf9dd74ba748218a7882977cf3337d6575",
+      "originalBytes": 937935,
+      "originalSHA256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/arm-vectors/report.json",
+      "storedPath": "arm-vectors/report.json",
+      "storedBytes": 753,
+      "storedSHA256": "46f25ddefa2ea4026fca73b01a9b883508051eae9c11b92d24c86e06f56d9673",
+      "originalBytes": 753,
+      "originalSHA256": "46f25ddefa2ea4026fca73b01a9b883508051eae9c11b92d24c86e06f56d9673",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/artifact-metadata.json",
+      "storedPath": "artifact-metadata.json",
+      "storedBytes": 821,
+      "storedSHA256": "1f2ef6584adc042209f68b6f332591e4d6b2fc8b2ea8294efc0caa208e249e15",
+      "originalBytes": 821,
+      "originalSHA256": "1f2ef6584adc042209f68b6f332591e4d6b2fc8b2ea8294efc0caa208e249e15",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/ci-run.json",
+      "storedPath": "ci-run.json",
+      "storedBytes": 6405,
+      "storedSHA256": "6e1768019cdd9351cdb909345758b7626530d4096a544cfc1f7341e1acbacfa2",
+      "originalBytes": 6405,
+      "originalSHA256": "6e1768019cdd9351cdb909345758b7626530d4096a544cfc1f7341e1acbacfa2",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cjxl-version.txt",
+      "storedPath": "cjxl-version.txt",
+      "storedBytes": 103,
+      "storedSHA256": "b69c596a11978a7a8ca839034dfe9f0ed31754d53b622320649126464532b077",
+      "originalBytes": 103,
+      "originalSHA256": "b69c596a11978a7a8ca839034dfe9f0ed31754d53b622320649126464532b077",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-completion/report.json",
+      "storedPath": "cli-completion/report.json",
+      "storedBytes": 64339,
+      "storedSHA256": "e1490714fef33805738cb42ab28429dde0d725d64fd35c13a5697d1e55658c80",
+      "originalBytes": 64339,
+      "originalSHA256": "e1490714fef33805738cb42ab28429dde0d725d64fd35c13a5697d1e55658c80",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-foundation/report.json",
+      "storedPath": "cli-foundation/report.json",
+      "storedBytes": 167642,
+      "storedSHA256": "bb7e579e8ca3b3b22d583cc2350711ef4300fdc4c2364ef68ee3daa3eafb27f2",
+      "originalBytes": 167642,
+      "originalSHA256": "bb7e579e8ca3b3b22d583cc2350711ef4300fdc4c2364ef68ee3daa3eafb27f2",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-jpeg-extended/report.json",
+      "storedPath": "cli-jpeg-extended/report.json",
+      "storedBytes": 97199,
+      "storedSHA256": "ccb237a238535bd1872b7cf1a1d2f861143b8f423ae7844ccdef1391e2b60a10",
+      "originalBytes": 97199,
+      "originalSHA256": "ccb237a238535bd1872b7cf1a1d2f861143b8f423ae7844ccdef1391e2b60a10",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-low-precision/report.json",
+      "storedPath": "cli-low-precision/report.json",
+      "storedBytes": 20322,
+      "storedSHA256": "c38f91fbb5146e1ba6f553235f823bbe5441300788834558b4de2d846eb3c5df",
+      "originalBytes": 20322,
+      "originalSHA256": "c38f91fbb5146e1ba6f553235f823bbe5441300788834558b4de2d846eb3c5df",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-native-jpeg/report.json",
+      "storedPath": "cli-native-jpeg/report.json",
+      "storedBytes": 66235,
+      "storedSHA256": "5ae762d4eab58fbf40f5eb1e1456ae5bbe8d4debb40f78cdeb999d9e3eeba3a1",
+      "originalBytes": 66235,
+      "originalSHA256": "5ae762d4eab58fbf40f5eb1e1456ae5bbe8d4debb40f78cdeb999d9e3eeba3a1",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-nrrd/report.json",
+      "storedPath": "cli-nrrd/report.json",
+      "storedBytes": 29554,
+      "storedSHA256": "3b049f30f2252dc95dfc10968a76de5c66334c65cbc8acdf87cc9aee5494af95",
+      "originalBytes": 29554,
+      "originalSHA256": "3b049f30f2252dc95dfc10968a76de5c66334c65cbc8acdf87cc9aee5494af95",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-payload/report.json",
+      "storedPath": "cli-payload/report.json",
+      "storedBytes": 24813,
+      "storedSHA256": "bbdf90f27471351b23d7f51af86e2e2222664cc66d6ac138afa147f40c8d9de1",
+      "originalBytes": 24813,
+      "originalSHA256": "bbdf90f27471351b23d7f51af86e2e2222664cc66d6ac138afa147f40c8d9de1",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-pnm/report.json",
+      "storedPath": "cli-pnm/report.json",
+      "storedBytes": 69587,
+      "storedSHA256": "7d597dc277d37338fc0cfb8b74c1d8d43971f65e239e55aa83edc49999a83ef0",
+      "originalBytes": 69587,
+      "originalSHA256": "7d597dc277d37338fc0cfb8b74c1d8d43971f65e239e55aa83edc49999a83ef0",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-vardct/report.json",
+      "storedPath": "cli-vardct/report.json",
+      "storedBytes": 13672,
+      "storedSHA256": "5169c20cdad7df140a7d45536204d3298436304a46b1861ad33b21fbaea1c405",
+      "originalBytes": 13672,
+      "originalSHA256": "5169c20cdad7df140a7d45536204d3298436304a46b1861ad33b21fbaea1c405",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/cli-vardct-encode/report.json",
+      "storedPath": "cli-vardct-encode/report.json",
+      "storedBytes": 16148,
+      "storedSHA256": "1b63fff74d940a3593b2deeafd953804fb13b01147836b9cef8f1ee0cbdec4f9",
+      "originalBytes": 16148,
+      "originalSHA256": "1b63fff74d940a3593b2deeafd953804fb13b01147836b9cef8f1ee0cbdec4f9",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/core/discovered-tests.json",
+      "storedPath": "core/discovered-tests.json",
+      "storedBytes": 32987,
+      "storedSHA256": "2ae12c254ace6e23a8cda64a9e190e90d6776a6f6611aba76dbfdc9efe47542e",
+      "originalBytes": 32987,
+      "originalSHA256": "2ae12c254ace6e23a8cda64a9e190e90d6776a6f6611aba76dbfdc9efe47542e",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/core/discovery.log",
+      "storedPath": "core/discovery.log.gz",
+      "storedBytes": 8027,
+      "storedSHA256": "09b80af99ec19f0ee475d9720ed0fa4f7665ba725e7d544a2828ee13651f37f7",
+      "originalBytes": 33115,
+      "originalSHA256": "0bc66fa58fe4e8b52838fb57d3bc2b26d7ce3d3aa383bc03da2e700946e343ba",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/core/report.json",
+      "storedPath": "core/report.json",
+      "storedBytes": 90472,
+      "storedSHA256": "055aa4c22f78c7aac4cd2d8cb318d81f63f123dd10b7805dc2f39eaea42734ba",
+      "originalBytes": 90472,
+      "originalSHA256": "055aa4c22f78c7aac4cd2d8cb318d81f63f123dd10b7805dc2f39eaea42734ba",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/core/tests.log",
+      "storedPath": "core/tests.log.gz",
+      "storedBytes": 20310,
+      "storedSHA256": "21dea9c8c299fb782f49ad61e71c1e6047b8b0edbacc060f4418bda0bf33b826",
+      "originalBytes": 270189,
+      "originalSHA256": "da09e79325667e289e69f17740a6226bcf2a9a617292e1e1e8d424221c53a0d9",
+      "encoding": "gzip"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/core/tests.xml",
+      "storedPath": "core/tests.xml",
+      "storedBytes": 51539,
+      "storedSHA256": "620fb4eb4ccd1d9f0a4524c3835dc7a944e154c8986458f0a92bd67874fa83b3",
+      "originalBytes": 51539,
+      "originalSHA256": "620fb4eb4ccd1d9f0a4524c3835dc7a944e154c8986458f0a92bd67874fa83b3",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/discovery-derived-derivation.json",
+      "storedPath": "discovery-derived-derivation.json",
+      "storedBytes": 1271,
+      "storedSHA256": "4d544ea236395ec03521cdae77d44b6617b4b949f9b1c5cba7d22b11483d0f69",
+      "originalBytes": 1271,
+      "originalSHA256": "4d544ea236395ec03521cdae77d44b6617b4b949f9b1c5cba7d22b11483d0f69",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/discovery-derived-derived.txt",
+      "storedPath": "discovery-derived-derived.txt",
+      "storedBytes": 33115,
+      "storedSHA256": "0bc66fa58fe4e8b52838fb57d3bc2b26d7ce3d3aa383bc03da2e700946e343ba",
+      "originalBytes": 33115,
+      "originalSHA256": "0bc66fa58fe4e8b52838fb57d3bc2b26d7ce3d3aa383bc03da2e700946e343ba",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/discovery-derived-identities.json",
+      "storedPath": "discovery-derived-identities.json",
+      "storedBytes": 32987,
+      "storedSHA256": "ded6f31c2d47fad461a09331bf009caa26f7676b767030e412663f5deaf192aa",
+      "originalBytes": 32987,
+      "originalSHA256": "ded6f31c2d47fad461a09331bf009caa26f7676b767030e412663f5deaf192aa",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/djxl-version.txt",
+      "storedPath": "djxl-version.txt",
+      "storedBytes": 103,
+      "storedSHA256": "2cf9548c48f593a345de7c2f672b3efaad89c7217e73ca6807ffd3a326c08f1d",
+      "originalBytes": 103,
+      "originalSHA256": "2cf9548c48f593a345de7c2f672b3efaad89c7217e73ca6807ffd3a326c08f1d",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/extracted-files.json",
+      "storedPath": "extracted-files.json",
+      "storedBytes": 387599,
+      "storedSHA256": "16e03c336d2b48e049fa3080a71ffa8354b872383093cac77bcb6dd01d28817f",
+      "originalBytes": 387599,
+      "originalSHA256": "16e03c336d2b48e049fa3080a71ffa8354b872383093cac77bcb6dd01d28817f",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/host-and-source.json",
+      "storedPath": "host-and-source.json",
+      "storedBytes": 178370,
+      "storedSHA256": "3ccebed60bd6a67fbc77b61937d9ea968981313b31f8cd92ee7b35c85289ef28",
+      "originalBytes": 178370,
+      "originalSHA256": "3ccebed60bd6a67fbc77b61937d9ea968981313b31f8cd92ee7b35c85289ef28",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/independent-audit.json",
+      "storedPath": "independent-audit.json",
+      "storedBytes": 4478,
+      "storedSHA256": "c3b5cf50c86c056dda1f12d223467d3cec5a8f02d31f3fa500b576b77505cb5b",
+      "originalBytes": 4478,
+      "originalSHA256": "c3b5cf50c86c056dda1f12d223467d3cec5a8f02d31f3fa500b576b77505cb5b",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/oracle-SHA256SUMS",
+      "storedPath": "oracle-SHA256SUMS",
+      "storedBytes": 366,
+      "storedSHA256": "5bd52a16c1e03edf9611e83680578c319937aba298bf54a8be8f76c462c05213",
+      "originalBytes": 366,
+      "originalSHA256": "5bd52a16c1e03edf9611e83680578c319937aba298bf54a8be8f76c462c05213",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/oracle-source-pins.txt",
+      "storedPath": "oracle-source-pins.txt",
+      "storedBytes": 636,
+      "storedSHA256": "75a3fbed2eadce346f73492ec7264baa84bc0a4b0fe2fd34a68c913240a636ba",
+      "originalBytes": 636,
+      "originalSHA256": "75a3fbed2eadce346f73492ec7264baa84bc0a4b0fe2fd34a68c913240a636ba",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/summary.json",
+      "storedPath": "summary.json",
+      "storedBytes": 2490,
+      "storedSHA256": "f85cb6a80833c6f04cc1c7e4d6d2eead87864618c5f785ced6b0a3aeaea748df",
+      "originalBytes": 2490,
+      "originalSHA256": "f85cb6a80833c6f04cc1c7e4d6d2eead87864618c5f785ced6b0a3aeaea748df",
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/m5-native-intel-41815258916/oracle-outputs/public-matrix-*",
+      "storedPath": "public-matrix-oracle-outputs.tar.gz",
+      "storedBytes": 15770,
+      "storedSHA256": "05d1840f5d821926b15365e502e186e9e8c07dc3e6ff3e63bae5a6c4b2459524",
+      "uncompressedTarSHA256": "d5659ead10fc9728eaf7933f6de533a950230169a673e848ada9e76d75ec69f1",
+      "fileCount": 432,
+      "encoding": "deterministic-ustar-gzip"
+    },
+    {
+      "sourceRelativePath": ".build/audit-final-intel.py",
+      "storedPath": "audit-tools/audit-final-intel.py",
+      "storedSHA256": "1823c595ed59939b154b15d245439c0e4814760a94cffbbc9cc702f032bc66a7",
+      "storedBytes": 6259,
+      "originalSHA256": "1823c595ed59939b154b15d245439c0e4814760a94cffbbc9cc702f032bc66a7",
+      "originalBytes": 6259,
+      "encoding": "unchanged"
+    },
+    {
+      "sourceRelativePath": ".build/reconcile-native-discovery.py",
+      "storedPath": "audit-tools/reconcile-native-discovery.py",
+      "storedSHA256": "8130d9ebe2370a552f4bcedba3afa7fe03b5e89e911cb2684b80000280f22f18",
+      "storedBytes": 3171,
+      "originalSHA256": "8130d9ebe2370a552f4bcedba3afa7fe03b5e89e911cb2684b80000280f22f18",
+      "originalBytes": 3171,
+      "encoding": "unchanged"
+    }
+  ],
+  "originalReportBytesPreserved": true,
+  "artifactExtraction": {
+    "mode": "Selected ZIP members fetched with HTTP ranges; ZIP member CRC verified, then receipt SHA256 bindings independently checked.",
+    "wholeRemoteZIPDownloaded": false,
+    "wholeRemoteZIPDigestLocallyVerified": false
+  },
+  "omittedFromTrackedBundle": [
+    "Unselected generated image payloads and executable binaries in the GitHub artifact; all remote member paths retained in extracted-files.json."
+  ],
+  "cliCheckCount": 1059,
+  "publicMatrixProfileCount": 432,
+  "note": "Historical command paths inside original reports are preserved; storedPath values identify portable archive members."
+}

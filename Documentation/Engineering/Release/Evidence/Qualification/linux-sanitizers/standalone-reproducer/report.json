@@ -1,0 +1,182 @@
+{
+  "status": "upstream-behaviour-reproduced",
+  "scope": "Independent native Linux ARM64 Docker diagnostics; not a SwiftJXL qualification pass",
+  "recordedUTC": "2026-11-04T08:10:24.719015+00:00",
+  "containerSecurityOption": "seccomp=unconfined",
+  "network": "none",
+  "cases": [
+    {
+      "name": "mutex",
+      "swift": "Swift version 6.2.4 (swift-6.2.4-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "thread",
+      "options": "halt_on_error=1:exitcode=66",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-g",
+        "-O",
+        "-sanitize=thread",
+        "mutex.swift",
+        "-o",
+        "mutex-6.2"
+      ],
+      "execute": [
+        "./mutex-6.2"
+      ],
+      "exitCode": 66,
+      "log": "mutex-run-6.2.log",
+      "logSHA256": "8811505d8c2974771003f219e3605ccd9953b7ba8fab19e86ca5e860cd2eea95",
+      "diagnostics": [
+        "WARNING: ThreadSanitizer: Swift access race (pid=39)"
+      ]
+    },
+    {
+      "name": "nslock",
+      "swift": "Swift version 6.2.4 (swift-6.2.4-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "thread",
+      "options": "halt_on_error=1:exitcode=66",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-g",
+        "-O",
+        "-sanitize=thread",
+        "nslock.swift",
+        "-o",
+        "nslock-6.2"
+      ],
+      "execute": [
+        "./nslock-6.2"
+      ],
+      "exitCode": 0,
+      "log": "nslock-run-6.2.log",
+      "logSHA256": "c14c81874b7ce408a929947be8d0cf243ad2b65fcd5078e0781782080fb017be",
+      "diagnostics": []
+    },
+    {
+      "name": "process",
+      "swift": "Swift version 6.2.4 (swift-6.2.4-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "address",
+      "options": "halt_on_error=1:exitcode=66:detect_leaks=1",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-g",
+        "-O",
+        "-sanitize=address",
+        "process.swift",
+        "-o",
+        "process-6.2"
+      ],
+      "execute": [
+        "./process-6.2"
+      ],
+      "exitCode": 66,
+      "log": "process-run-6.2.log",
+      "logSHA256": "6aa3e8f8b15705203ac211788f08f2822f335cd38c5d4fda009fce9c2d6df3ee",
+      "diagnostics": [
+        "SUMMARY: AddressSanitizer: 32 byte(s) leaked in 1 allocation(s)."
+      ]
+    },
+    {
+      "name": "mutex",
+      "swift": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "thread",
+      "options": "halt_on_error=1:exitcode=66",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-g",
+        "-O",
+        "-sanitize=thread",
+        "mutex.swift",
+        "-o",
+        "mutex-6.4"
+      ],
+      "execute": [
+        "./mutex-6.4"
+      ],
+      "exitCode": 66,
+      "log": "mutex-run-6.4.log",
+      "logSHA256": "98856b419dc6d7a76d78266c671d9dc7a6f8463baf4405b5067c16bdf3fe5822",
+      "diagnostics": [
+        "WARNING: ThreadSanitizer: Swift access race (pid=40)"
+      ]
+    },
+    {
+      "name": "nslock",
+      "swift": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "thread",
+      "options": "halt_on_error=1:exitcode=66",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-g",
+        "-O",
+        "-sanitize=thread",
+        "nslock.swift",
+        "-o",
+        "nslock-6.4"
+      ],
+      "execute": [
+        "./nslock-6.4"
+      ],
+      "exitCode": 0,
+      "log": "nslock-run-6.4.log",
+      "logSHA256": "c14c81874b7ce408a929947be8d0cf243ad2b65fcd5078e0781782080fb017be",
+      "diagnostics": []
+    },
+    {
+      "name": "process",
+      "swift": "Swift version 6.4.2 (swift-6.4.2-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "sanitizer": "address",
+      "options": "halt_on_error=1:exitcode=66:detect_leaks=1",
+      "compile": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-g",
+        "-O",
+        "-sanitize=address",
+        "process.swift",
+        "-o",
+        "process-6.4"
+      ],
+      "execute": [
+        "./process-6.4"
+      ],
+      "exitCode": 66,
+      "log": "process-run-6.4.log",
+      "logSHA256": "373cc0f509e9a98f5397a7ba59ef78a2fe9199f8aa371d96f11e05e96af4327e",
+      "diagnostics": [
+        "SUMMARY: AddressSanitizer: 32 byte(s) leaked in 1 allocation(s)."
+      ]
+    }
+  ],
+  "images": {
+    "6.2": {
+      "id": "sha256:e508ef1e4be68087f720de622b91cbf1e32799a7aa96134b35e6f1a1d656db7a",
+      "architecture": "arm64",
+      "digests": [
+        "swift@sha256:e508ef1e4be68087f720de622b91cbf1e32799a7aa96134b35e6f1a1d656db7a"
+      ]
+    },
+    "6.4": {
+      "id": "sha256:bca121f6eb59fd80340d1296887b2698ed8f3eb9eca7d80c181f8af769dc7ee0",
+      "architecture": "arm64",
+      "digests": [
+        "swift@sha256:bca121f6eb59fd80340d1296887b2698ed8f3eb9eca7d80c181f8af769dc7ee0"
+      ]
+    }
+  },
+  "sourceSHA256": {
+    "process.swift": "7fe87bab3783dd8e71d9f20f584a244e434106bbc9266787e82e3b6c4393b9da",
+    "mutex.swift": "e68874b978d0a2094c55d0afcf5170cccf69c103bd2d906e73aec43c1d78234f",
+    "nslock.swift": "244987ab893326995e9d0df1bd9d859b072f5f9963c4a36121ecc01c2da61ed1"
+  }
+}

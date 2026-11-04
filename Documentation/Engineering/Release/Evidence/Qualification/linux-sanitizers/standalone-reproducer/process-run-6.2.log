@@ -1,0 +1,16 @@
+
+=================================================================
+==70==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 32 byte(s) in 1 object(s) allocated from:
+    #0 0xb3ac452376bc in posix_memalign /home/build-user/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:142:3
+    #1 0xe84bd4f84418 in swift_slowAlloc (/usr/lib/swift/linux/libswiftCore.so+0x3f4418) (BuildId: 2ac0969a342ebc2a5e967e327bd1ecbf7f550a28)
+    #2 0xe84bd4fc8cac in swift::RefCounts<swift::RefCountBitsT<(swift::RefCountInlinedness)1>>::formWeakReference() crtstuff.c
+    #3 0xe84bd4f86818 in swift_weakAssign (/usr/lib/swift/linux/libswiftCore.so+0x3f6818) (BuildId: 2ac0969a342ebc2a5e967e327bd1ecbf7f550a28)
+    #4 0xe84bd44db3a4 in $s10Foundation7ProcessC3runyyKF (/usr/lib/swift/linux/libFoundation.so+0x33b3a4) (BuildId: ce18a3b87b92a8a21aa0e8a940046159c4cd8f7c)
+    #5 0xb3ac452711d4 in main /probe/process.swift:5:15
+    #6 0xe84bd36d84c0  (/lib/aarch64-linux-gnu/libc.so.6+0x284c0) (BuildId: 27027b96e5b8c475fc327aa445bea1c71d37b4e2)
+    #7 0xe84bd36d8594 in __libc_start_main (/lib/aarch64-linux-gnu/libc.so.6+0x28594) (BuildId: 27027b96e5b8c475fc327aa445bea1c71d37b4e2)
+    #8 0xb3ac451aacac in _start (/probe/process-6.2+0x4acac) (BuildId: 6950650b19c6dfbe403a8ac342e7eb0fa9068b75)
+
+SUMMARY: AddressSanitizer: 32 byte(s) leaked in 1 allocation(s).

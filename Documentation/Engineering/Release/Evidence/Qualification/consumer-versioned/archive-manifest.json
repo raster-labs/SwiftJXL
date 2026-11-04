@@ -1,0 +1,120 @@
+{
+  "files": {
+    "Consumer.Package.swift": {
+      "sha256": "57dac68105c849786eb9c41fc847f582cea8a96bd3d10198342f0298edd3898f",
+      "bytes": 443
+    },
+    "Consumer.swift": {
+      "sha256": "59f014ec9128eb870a277f80689f19e04a56a19359ce846f06bfcb72a0e3bbc6",
+      "bytes": 3772
+    },
+    "Package.resolved": {
+      "sha256": "eac0cae1bc32c3ac4acfb6e30b6cb4a6eb92ad3fdcce475e7f35cdfcf1f3f91d",
+      "bytes": 458
+    },
+    "dependency-graph.json": {
+      "sha256": "3c71a001de1c004e4126d676928238ce41a0c477bfdb33e97d00bce51093beed",
+      "bytes": 801
+    },
+    "logs/consumer-graph.log": {
+      "sha256": "8ddfd656d0d3ea79cd113f9153c0ece51ea7c05b3423eb53bee6c2ffae25a2c0",
+      "bytes": 810
+    },
+    "logs/debug-build.log": {
+      "sha256": "18ae4853d1ace33e58e8bb290f2a14d0b624466d901ce6e71dab9b29c52ea84d",
+      "bytes": 879
+    },
+    "logs/debug-run.log": {
+      "sha256": "c30ef6e830d06ce384e35f5fc19b4f3b83f73e4a4bde168b1085682db6df666e",
+      "bytes": 105
+    },
+    "logs/git-version.log": {
+      "sha256": "c9e40977101870d17ec3a0ac1e444ceb5e268d1c0a37d6edd8a5ed477734a53c",
+      "bytes": 19
+    },
+    "logs/package-manifest.log": {
+      "sha256": "0f486a433e5cc0712e85df869ffea7bfeaf53b74596080c049767c55e68dce31",
+      "bytes": 4172
+    },
+    "logs/private-remote-branch.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "logs/private-remote-fetch.log": {
+      "sha256": "74764c302d78e8e4d6d1d61de9ba447baef3109f597f2b1f415634d2a3b7672f",
+      "bytes": 153
+    },
+    "logs/private-remote-head.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "logs/private-remote-init.log": {
+      "sha256": "8fabe0831d2f03ee34173c596fe73432f65dae03754ce96e502eb24600e42879",
+      "bytes": 741
+    },
+    "logs/private-remote-refs.log": {
+      "sha256": "c4dfedd7a90cee694e14a7bbc87711d17272fb04cf56ef671cf692a622f0114a",
+      "bytes": 125
+    },
+    "logs/private-version-tag.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "logs/release-build.log": {
+      "sha256": "19b1329b538066ade73a07d7c1872e9675bac9d7ad92cd795ae025074290f598",
+      "bytes": 446
+    },
+    "logs/release-run.log": {
+      "sha256": "c30ef6e830d06ce384e35f5fc19b4f3b83f73e4a4bde168b1085682db6df666e",
+      "bytes": 105
+    },
+    "logs/resolve-pinned-dependency.log": {
+      "sha256": "f276d382fff0ba0fe8c98e0c2aa4970751116018b594550c33c991fec2bd2716",
+      "bytes": 830
+    },
+    "logs/sdk-path.log": {
+      "sha256": "65cc3834fc060b76c3d4c52bf08769c606fd42a29b02f205d9b7b791aa56be56",
+      "bytes": 99
+    },
+    "logs/sdk-version.log": {
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    "logs/source-checkout.log": {
+      "sha256": "439e0a801d9083ab5fca578aeb44e8487ceefef2a1380f7e8a85bc408b3c0224",
+      "bytes": 130
+    },
+    "logs/source-clean.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "logs/source-commit.log": {
+      "sha256": "8cf09340f3b4691bc25f2415a6f60b22fc1f09426bbd53df35c1032828598f1e",
+      "bytes": 41
+    },
+    "logs/source-revision.log": {
+      "sha256": "8cf09340f3b4691bc25f2415a6f60b22fc1f09426bbd53df35c1032828598f1e",
+      "bytes": 41
+    },
+    "logs/source-unchanged.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "logs/swift-version.log": {
+      "sha256": "68976d4cefcead2fd30250ab4dbc9cf855827a31f7ea9882ebda2fafb1754ff3",
+      "bytes": 138
+    },
+    "logs/working-tree-status.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "logs/xcode-version.log": {
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    "report.json": {
+      "sha256": "3bbe3816f20e36f3cd37868852f389fad1e50aa761b76051c329fc6f46a70c2e",
+      "bytes": 17507
+    }
+  }
+}

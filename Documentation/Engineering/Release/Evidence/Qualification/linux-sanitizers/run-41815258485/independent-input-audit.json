@@ -1,0 +1,23 @@
+{
+  "oracles": [
+    {
+      "architecture": "x86_64",
+      "manifestSHA256": "8abbfb30a789c745415dca6f68c75169e57146a82a424b8d8386479cdd81233c",
+      "binaryHashesMatch": true,
+      "profileSourceMatches": true
+    },
+    {
+      "architecture": "aarch64",
+      "manifestSHA256": "7301d9ce98de35309d051bc622e240abcd66e5c9d839db65b25cd5bf468da47b",
+      "binaryHashesMatch": true,
+      "profileSourceMatches": true
+    }
+  ],
+  "vectors": {
+    "count": 45826,
+    "manifestSHA256": "cc53d692d3c5e5f64ec535cb09253ce627b151e701a89cbfca9206b6fdc4eaee",
+    "sha256": "25b402b28eb3dc355f00c2d3c1cd1e130f49e45c6ced1c01550a1b82e7d5453b",
+    "matchesIndependentAppleARMGeneration": true
+  },
+  "scope": "Read-only input audit, not sanitizer execution pass"
+}

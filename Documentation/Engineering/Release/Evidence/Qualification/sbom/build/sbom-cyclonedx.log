@@ -1,0 +1,7 @@
+Building for production...
+[1 / 4]
+Build complete! (0.23 secs)
+warning: Bundle 'SwiftPM_SBOMModel' with schemas not found - skipping SBOM validation
+Creating SBOMs...
+- created cyclonedx1 v1.7 SBOM at /Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/m5-canonical-origin-sbom/sboms/cyclonedx/cyclonedx1-1.7-SwiftJXL-00f03ff288a7c8e0e2b82d2e71ec22622ede71ae-all-2026-11-04T10_42_05Z.json
+SBOMs created  (0.05 secs)

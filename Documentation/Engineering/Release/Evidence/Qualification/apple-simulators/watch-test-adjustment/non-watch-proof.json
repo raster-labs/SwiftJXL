@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "baselineRevision": "00f03ff288a7c8e0e2b82d2e71ec22622ede71ae",
+  "createdUTC": "2026-11-04T11:12:34.469823+00:00",
+  "scope": "Only added #if os(watchOS) branches evaluated false; #else content retained; complete non-Watch source bytes equal frozen baseline. No runtime files changed.",
+  "files": {
+    "Tests/SwiftJXLCoreTests/ModularDecodeParallelTests.swift": {
+      "beforeSHA256": "3849f38d351e3007b995dc32d06baa26a2c2e31ef3263367328b2aef62673565",
+      "afterSHA256": "38ec7705ff526aada85bd6d064b996df59229e25205e7c7f400ba69b65fd74d1",
+      "nonWatchDerivedSHA256": "3849f38d351e3007b995dc32d06baa26a2c2e31ef3263367328b2aef62673565",
+      "nonWatchByteForByteUnchanged": true,
+      "addedDeclarations": 0
+    },
+    "Tests/SwiftJXLCoreTests/ModularStorageTests.swift": {
+      "beforeSHA256": "636a959a3f85c7d88f1a06fe9279e062352ac8e9ed45558ddb3354ae102f47fd",
+      "afterSHA256": "a0ef9894fd56d231cdf9964d25441093a374619ad21f3d03b0f104723e440f2d",
+      "nonWatchDerivedSHA256": "636a959a3f85c7d88f1a06fe9279e062352ac8e9ed45558ddb3354ae102f47fd",
+      "nonWatchByteForByteUnchanged": true,
+      "addedDeclarations": 0
+    }
+  }
+}
