@@ -229,12 +229,12 @@
         "Scripts/TestSupport/qualify-apple-simulator-suite.py": "067b53387bae841e7b07789df253ca1b722ff4973e9de839523e1480c69d7686",
         "Scripts/TestSupport/qualify-cli-tsan.py": "84ecdb39f10a37d4ff8356bdfec4b6f18907b9a05a2f93c307bdfb22aee29aef",
         "Scripts/TestSupport/qualify-ios-simulator.py": "72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065",
-        "Scripts/TestSupport/qualify-native-runtime.py": "10da68e04230217e361348ddd5ef972ff33ec0483ee49cafdbfeca33e811e2f8",
+        "Scripts/TestSupport/qualify-native-runtime.py": "ac00e8d223e2b1f0ba137b4a472cb5075843ac020f69fad8bc3538eefc83f7e2",
         "Scripts/TestSupport/qualify-watch-profile.py": "8518e8910a59e6e9bddf42973b013ec8445a9541ab32b3b9866470debabacaef",
         "Scripts/TestSupport/test-apple-simulator-suite.py": "ba9f640fbb83589afc62828bf1476016ac9507f9c9215afa129d994dbd9cc439",
         "Scripts/TestSupport/test-cli-tsan-gate.py": "1d06b00a22950fee41fdf721c072a024f00114968f4777e3383ab4c49bb1b214",
         "Scripts/TestSupport/test-linux-sanitizer-gate.py": "94214f87ba67242b7e932af75a6eb296fb313178ffc8640e86e8abb32fb9d67d",
-        "Scripts/TestSupport/test-native-runtime-reporting.py": "bad7024a11454dbb47ca007417e1a8b2f0e79f3ac72351fa25cc0a09a0ce2e07",
+        "Scripts/TestSupport/test-native-runtime-reporting.py": "c8370adcce2f394cfc2687e44398c5e051ef25c5afbaeb597982630a2406eed5",
         "Scripts/qualify-linux-sanitizer.py": "3cbe21cefb6ec0bd6db89f0c56f1d8098779914278760cb7f891bd15ff83f7da",
         "Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift": "7c41181d90438f18e7b513fb335d491d8cc18724971d5422acf8e355bd314a1a",
         "Tests/SwiftJXLCoreTests/AnimationFrameIndexTests.swift": "06c9cb54e36aa9bc6ac395d8f7b5be4e98098751b7dd512c04d05140ee1e9395",
@@ -320,7 +320,7 @@
         "Tests/SwiftJXLTests/ScalarPublicAPITests.swift": "a81cc3ce800f7bdf40887a9042399431293977b651bc317263bac165e0302970",
         "Tests/SwiftJXLTests/StorageTests.swift": "71e30761e97b0cfb722bedca8db0ae76cc1d833d5818a111d3d00b4cd9d4aeb2"
       },
-      "sha256": "e4dae357cb0db1b1c6916c0650510712b2f36bce4408c1e04f7976e7effb13b5"
+      "sha256": "56828dac271ec7896b56a2897b76677bf1f9917aae526ec14054833e803eafee"
     }
   },
   "gates": [

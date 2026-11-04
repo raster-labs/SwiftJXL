@@ -53,9 +53,9 @@ def console_coverage(stdout, stderr, expected):
     summaries, failures = [], []
     for stream, text in [('stdout', stdout), ('stderr', stderr)]:
         summaries += [{'stream': stream, 'declarations': int(match.group(1))}
-                      for match in re.finditer(r'^✔ Test run with (\d+) tests(?: in \d+ suites)? passed after [0-9.]+ seconds\.$', text, re.M)]
+                      for match in re.finditer(r'^✔ Test run with (\d+) tests?(?: in \d+ suites?)? passed after [0-9.]+ seconds\.$', text, re.M)]
         failures += [{'stream': stream, 'line': line} for line in text.splitlines()
-                     if line.startswith('✘') or re.search(r'(?:ERROR|SUMMARY): (?:AddressSanitizer|ThreadSanitizer)|FATAL: ThreadSanitizer', line)]
+                     if line.startswith('✘') or re.search(r'(?:ERROR|SUMMARY): (?:AddressSanitizer|LeakSanitizer|ThreadSanitizer)|(?:WARNING|FATAL): ThreadSanitizer', line)]
     return {'passed': len(summaries) == 1 and summaries[0]['declarations'] == expected and not failures,
             'passingSummaries': summaries, 'failureDiagnostics': failures,
             'bothStreamsInspected': True}

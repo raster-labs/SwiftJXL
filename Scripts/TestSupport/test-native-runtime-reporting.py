@@ -55,14 +55,16 @@ class NativeRuntimeReportingTests(unittest.TestCase):
                                        ['ExampleTests.Suite/notwork()'], ['work'])['passed'])
 
     def test_execution_progress_may_be_on_either_stream(self):
-        summary = '✔ Test run with 2 tests in 1 suites passed after 0.123 seconds.\n'
+        summary = '✔ Test run with 2 tests in 1 suite passed after 0.123 seconds.\n'
         for stdout, stderr in [(summary, ''), ('', summary)]:
             self.assertTrue(helpers['console_coverage'](stdout, stderr, 2)['passed'])
 
     def test_execution_stderr_failure_and_summary_disagreement_reject(self):
-        summary = '✔ Test run with 2 tests in 1 suites passed after 0.123 seconds.\n'
+        summary = '✔ Test run with 2 tests in 1 suite passed after 0.123 seconds.\n'
         for stdout, stderr, count in [(summary, '✘ Test work() failed.\n', 2),
                                       (summary, 'ERROR: AddressSanitizer: bad access\n', 2),
+                                      (summary, 'ERROR: LeakSanitizer: leak\n', 2),
+                                      (summary, 'WARNING: ThreadSanitizer: data race\n', 2),
                                       (summary, summary, 2), (summary, '', 3), ('', '', 2)]:
             self.assertFalse(helpers['console_coverage'](stdout, stderr, count)['passed'])
 
