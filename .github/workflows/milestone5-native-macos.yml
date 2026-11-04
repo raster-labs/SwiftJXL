@@ -1,0 +1,146 @@
+name: Milestone 5 native Intel macOS qualification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'Sources/**'
+      - 'Tests/**'
+      - 'Package.swift'
+      - 'Scripts/TestSupport/qualify-native-runtime.py'
+      - '.github/workflows/milestone5-native-macos.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: m5-native-intel-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native-intel:
+    name: Native Intel macOS core and CLI
+    runs-on: macos-26-intel
+    timeout-minutes: 150
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: '1'
+      SWIFTJXL_ORACLE_BIN: ${{ runner.temp }}/libjxl/build/tools
+      SWIFTJXL_ORACLE_OUTPUT: ${{ runner.temp }}/m5-native-intel/oracle-outputs
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Record and require native Intel host
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/m5-native-intel"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, platform, subprocess
+          root = pathlib.Path.cwd()
+          def command(argv):
+              result = subprocess.run(argv, capture_output=True, text=True)
+              return {'command': argv, 'exitCode': result.returncode, 'stdout': result.stdout, 'stderr': result.stderr}
+          translated = command(['sysctl', '-n', 'sysctl.proc_translated'])
+          hardware = command(['sysctl', '-n', 'hw.optional.arm64'])
+          sources = [root/'Package.swift', root/'.github/workflows/milestone5-native-macos.yml']
+          sources += [p for folder in ('Sources', 'Tests', 'Scripts') for p in (root/folder).rglob('*') if p.is_file() and '__pycache__' not in str(p)]
+          report = {'machine': platform.machine(), 'translated': translated, 'arm64Hardware': hardware,
+                    'runtime': command(['sw_vers']), 'swift': command(['xcrun', 'swift', '--version']),
+                    'xcode': command(['xcodebuild', '-version']), 'uname': command(['uname', '-a']),
+                    'sourceRevision': command(['git', 'rev-parse', 'HEAD']),
+                    'sourceSHA256': {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(sources)},
+                    'exactMacOS260Claimed': False}
+          native = platform.system() == 'Darwin' and platform.machine() == 'x86_64'
+          native = native and translated['stdout'].strip() != '1' and hardware['stdout'].strip() != '1'
+          report['nativeIntelConfirmed'] = native
+          (pathlib.Path(os.environ['RUNNER_TEMP'])/'m5-native-intel/host-and-source.json').write_text(json.dumps(report, indent=2)+'\n')
+          if not native:
+              raise SystemExit('Native x86_64 host required; translated or Apple Silicon execution is refused.')
+          PY
+      - name: Python for the pinned NRRD oracle
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Build pinned independent reference tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          brew install cmake ninja pkgconf jpeg-turbo libpng brotli
+          git init "$RUNNER_TEMP/libjxl"
+          git -C "$RUNNER_TEMP/libjxl" remote add origin https://github.com/libjxl/libjxl.git
+          git -C "$RUNNER_TEMP/libjxl" fetch --depth 1 origin a7a9c787341cf703dede03c2009fa460cae5e5df
+          git -C "$RUNNER_TEMP/libjxl" checkout --detach FETCH_HEAD
+          test "$(git -C "$RUNNER_TEMP/libjxl" rev-parse HEAD)" = a7a9c787341cf703dede03c2009fa460cae5e5df
+          git -C "$RUNNER_TEMP/libjxl" submodule update --init --depth 1 third_party/brotli third_party/highway third_party/lcms
+          cmake -S "$RUNNER_TEMP/libjxl" -B "$RUNNER_TEMP/libjxl/build" -G Ninja \
+            -DCMAKE_PROJECT_INCLUDE="$GITHUB_WORKSPACE/Scripts/TestSupport/modular-info-oracle.cmake" \
+            -DCMAKE_PREFIX_PATH="$(brew --prefix jpeg-turbo);$(brew --prefix libpng);$(brew --prefix brotli)" \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF \
+            -DJPEGXL_ENABLE_TOOLS=ON -DJPEGXL_ENABLE_BENCHMARK=OFF \
+            -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_MANPAGES=OFF \
+            -DJPEGXL_ENABLE_DOXYGEN=OFF -DJPEGXL_ENABLE_JNI=OFF \
+            -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_ENABLE_OPENEXR=OFF \
+            -DJPEGXL_ENABLE_SKCMS=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_BUNDLE_LIBPNG=OFF
+          cmake --build "$RUNNER_TEMP/libjxl/build" --target cjxl djxl swiftjxl-modular-info-oracle swiftjxl-animation-pixel-oracle --parallel 2
+          git -C "$RUNNER_TEMP/libjxl" submodule status > "$RUNNER_TEMP/m5-native-intel/oracle-source-pins.txt"
+          "$SWIFTJXL_ORACLE_BIN/cjxl" --version > "$RUNNER_TEMP/m5-native-intel/cjxl-version.txt" 2>&1
+          "$SWIFTJXL_ORACLE_BIN/djxl" --version > "$RUNNER_TEMP/m5-native-intel/djxl-version.txt" 2>&1
+          shasum -a 256 "$SWIFTJXL_ORACLE_BIN/cjxl" "$SWIFTJXL_ORACLE_BIN/djxl" > "$RUNNER_TEMP/m5-native-intel/oracle-SHA256SUMS"
+          xcrun clang -Wall -Wextra -Werror -I"$(brew --prefix jpeg-turbo)/include" Scripts/TestSupport/jpeg-coefficient-oracle.c -L"$(brew --prefix jpeg-turbo)/lib" -ljpeg -o "$RUNNER_TEMP/jpeg-coefficient-oracle"
+          python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" -m pip install --only-binary=:all: -r Scripts/nrrd-oracle-requirements.txt
+      - name: Full native release library suite, with no oracle skips
+        run: python3 Scripts/TestSupport/qualify-native-runtime.py --repo "$GITHUB_WORKSPACE" --mode native-intel --output "$RUNNER_TEMP/m5-native-intel/core"
+      - name: Build native CLI and generate public fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcrun swift build -c release --disable-sandbox --build-system swiftbuild --jobs 2 --product swiftjxl-cli
+          xcrun swift run --package-path Examples/CLIValidationFixtures --disable-sandbox --build-system swiftbuild --jobs 2 CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
+      - name: Native CLI profile and installation checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          binary="$(xcrun swift build -c release --disable-sandbox --build-system swiftbuild --show-bin-path)/swiftjxl-cli"
+          python3 Scripts/test-cli.py --binary "$binary" --output "$RUNNER_TEMP/m5-native-intel/cli-foundation"
+          python3 Scripts/test-cli-payload.py --binary "$binary" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/m5-native-intel/cli-payload"
+          python3 Scripts/test-cli-vardct.py --binary "$binary" --output "$RUNNER_TEMP/m5-native-intel/cli-vardct"
+          python3 Scripts/test-cli-vardct-encode.py --binary "$binary" --output "$RUNNER_TEMP/m5-native-intel/cli-vardct-encode"
+          "$RUNNER_TEMP/nrrd-oracle/bin/python" Scripts/test-cli-nrrd.py --binary "$binary" --fixtures "$RUNNER_TEMP/cli-fixtures" --reference-tools "$SWIFTJXL_ORACLE_BIN" --output "$RUNNER_TEMP/m5-native-intel/cli-nrrd"
+          python3 Scripts/test-cli-pnm.py --binary "$binary" --info-oracle "$RUNNER_TEMP/libjxl/build/swiftjxl-modular-info-oracle" --reference-tools "$SWIFTJXL_ORACLE_BIN" --output "$RUNNER_TEMP/m5-native-intel/cli-pnm"
+          python3 Scripts/test-cli-low-precision.py --binary "$binary" --output "$RUNNER_TEMP/m5-native-intel/cli-low-precision"
+          python3 Scripts/test-cli-native-jpeg.py --binary "$binary" --reference-tools "$SWIFTJXL_ORACLE_BIN" --output "$RUNNER_TEMP/m5-native-intel/cli-native-jpeg"
+          python3 Scripts/test-cli-completion.py --binary "$binary" --djpeg "$(brew --prefix jpeg-turbo)/bin/djpeg" --animation-oracle "$RUNNER_TEMP/libjxl/build/swiftjxl-animation-pixel-oracle" --coefficient-oracle "$RUNNER_TEMP/jpeg-coefficient-oracle" --output "$RUNNER_TEMP/m5-native-intel/cli-completion"
+          python3 Scripts/test-cli-jpeg-extended.py --binary "$binary" --fixtures "$GITHUB_WORKSPACE/Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended" --output "$RUNNER_TEMP/m5-native-intel/cli-jpeg-extended"
+      - name: Require core and all ten CLI reports
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib
+          root = pathlib.Path(os.environ['RUNNER_TEMP'])/'m5-native-intel'
+          groups = ['foundation','payload','vardct','vardct-encode','nrrd','pnm','low-precision','native-jpeg','completion','jpeg-extended']
+          paths = ['host-and-source.json', 'core/report.json'] + ['cli-'+g+'/report.json' for g in groups]
+          records = []
+          for name in paths:
+              path = root/name
+              item = {'path':name, 'exists':path.is_file()}
+              if path.is_file():
+                  data = json.loads(path.read_text())
+                  item['passed'] = data.get('nativeIntelConfirmed') is True if name == 'host-and-source.json' else data.get('status') == 'passed'
+                  item['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+              records.append(item)
+          passed = all(x.get('passed') for x in records)
+          root.mkdir(parents=True, exist_ok=True)
+          (root/'summary.json').write_text(json.dumps({'status':'passed' if passed else 'failed','reports':records,'exactMacOS260Claimed':False},indent=2)+'\n')
+          if not passed: raise SystemExit('Native runtime qualification requires every report to pass.')
+          PY
+      - name: Preserve native host, source bindings and all outcomes
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: milestone5-native-intel-${{ github.run_id }}
+          path: ${{ runner.temp }}/m5-native-intel
+          if-no-files-found: error
+          retention-days: 30
