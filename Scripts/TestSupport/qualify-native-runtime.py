@@ -21,6 +21,8 @@ p.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[2])
 p.add_argument('--output', type=Path, required=True)
 p.add_argument('--mode', choices=['native-intel', 'native-macos', 'physical'], required=True)
 p.add_argument('--minimum-runtime', action='store_true', help='Require exactly the 26.0 major/minor runtime')
+p.add_argument('--build-system', choices=['native', 'swiftbuild'], default='swiftbuild',
+               help='Explicit SwiftPM engine; use native for Swift 6.2, never silently fall back')
 p.add_argument('--device-id')
 p.add_argument('--platform', choices=['iOS', 'tvOS', 'watchOS', 'visionOS'])
 p.add_argument('--project', type=Path)
@@ -35,7 +37,7 @@ def sources():
             for f in sorted((a.repo/folder).rglob('*.swift'))}
 report = {'status': 'unexecuted', 'mode': a.mode, 'host': platform.platform(),
           'machine': platform.machine(), 'sourceSHA256': sources(), 'commands': [],
-          'minimumRuntimeRequired': a.minimum_runtime}
+          'minimumRuntimeRequired': a.minimum_runtime, 'buildSystem': a.build_system}
 def save(): (a.output/'report.json').write_text(json.dumps(report, indent=2)+'\n')
 def command(argv, timeout=60):
     started = time.monotonic()
@@ -58,7 +60,7 @@ if a.mode != 'physical':
     report['runtimeVersion'] = version
     if a.minimum_runtime and tuple(version.split('.')[:2]) != ('26', '0'):
         unavailable('macOS 26.0 runtime unavailable: host runs ' + version)
-    argv = ['xcrun', 'swift', 'test', '-c', 'release', '--disable-sandbox', '--build-system', 'swiftbuild',
+    argv = ['xcrun', 'swift', 'test', '-c', 'release', '--disable-sandbox', '--build-system', a.build_system,
             '--no-parallel', '--enable-swift-testing', '--disable-xctest', '--jobs', '2',
             '--xunit-output', str(a.output/'tests.xml')]
 else:

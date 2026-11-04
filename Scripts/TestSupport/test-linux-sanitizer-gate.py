@@ -13,6 +13,15 @@ spec.loader.exec_module(gate)
 
 
 class LinuxSanitizerGateTests(unittest.TestCase):
+    def test_intentional_swift_race_requires_an_actual_finding_and_configured_exit(self):
+        expected = ["WARNING: ThreadSanitizer: data race", "WARNING: ThreadSanitizer: Swift access race"]
+        for diagnostic in expected:
+            self.assertTrue(gate.negative_probe_detected(66, diagnostic + " (pid=123)", expected))
+            self.assertFalse(gate.negative_probe_detected(0, diagnostic, expected))
+        for text in ["", "Simultaneous accesses", "FATAL: ThreadSanitizer: unexpected memory mapping"]:
+            self.assertFalse(gate.negative_probe_detected(66, text, expected))
+        self.assertFalse(gate.negative_probe_detected(-11, expected[0], expected))
+
     def check(self, *, skip=False, failure=False, diagnostic="", omit=False, empty=False):
         names = ["SwiftJXLTests.Lifetime/" + name + "()" for name in gate.REQUIRED_TESTS]
         root = ET.Element("testsuites")
@@ -48,6 +57,7 @@ class LinuxSanitizerGateTests(unittest.TestCase):
 
     def test_sanitizer_findings_cannot_hide_behind_passing_xml(self):
         for diagnostic in ["ERROR: AddressSanitizer: heap-buffer-overflow", "WARNING: ThreadSanitizer: data race",
+                           "WARNING: ThreadSanitizer: Swift access race",
                            "ERROR: LeakSanitizer: detected memory leaks", "FATAL: ThreadSanitizer: unexpected memory mapping"]:
             with self.subTest(diagnostic=diagnostic), self.assertRaises(RuntimeError):
                 self.check(diagnostic=diagnostic)

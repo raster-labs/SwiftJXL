@@ -91,18 +91,18 @@ jobs:
           python3 -m venv "$RUNNER_TEMP/nrrd-oracle"
           "$RUNNER_TEMP/nrrd-oracle/bin/python" -m pip install --only-binary=:all: -r Scripts/nrrd-oracle-requirements.txt
       - name: Full native release library suite, with no oracle skips
-        run: python3 Scripts/TestSupport/qualify-native-runtime.py --repo "$GITHUB_WORKSPACE" --mode native-intel --output "$RUNNER_TEMP/m5-native-intel/core"
+        run: python3 Scripts/TestSupport/qualify-native-runtime.py --repo "$GITHUB_WORKSPACE" --mode native-intel --build-system native --output "$RUNNER_TEMP/m5-native-intel/core"
       - name: Build native CLI and generate public fixtures
         shell: bash
         run: |
           set -euo pipefail
-          xcrun swift build -c release --disable-sandbox --build-system swiftbuild --jobs 2 --product swiftjxl-cli
-          xcrun swift run --package-path Examples/CLIValidationFixtures --disable-sandbox --build-system swiftbuild --jobs 2 CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
+          xcrun swift build -c release --disable-sandbox --build-system native --jobs 2 --product swiftjxl-cli
+          xcrun swift run --package-path Examples/CLIValidationFixtures --disable-sandbox --build-system native --jobs 2 CLIValidationFixtures "$RUNNER_TEMP/cli-fixtures"
       - name: Native CLI profile and installation checks
         shell: bash
         run: |
           set -euo pipefail
-          binary="$(xcrun swift build -c release --disable-sandbox --build-system swiftbuild --show-bin-path)/swiftjxl-cli"
+          binary="$(xcrun swift build -c release --disable-sandbox --build-system native --show-bin-path)/swiftjxl-cli"
           python3 Scripts/test-cli.py --binary "$binary" --output "$RUNNER_TEMP/m5-native-intel/cli-foundation"
           python3 Scripts/test-cli-payload.py --binary "$binary" --fixtures "$RUNNER_TEMP/cli-fixtures" --output "$RUNNER_TEMP/m5-native-intel/cli-payload"
           python3 Scripts/test-cli-vardct.py --binary "$binary" --output "$RUNNER_TEMP/m5-native-intel/cli-vardct"

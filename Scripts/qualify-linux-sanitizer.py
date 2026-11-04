@@ -34,6 +34,13 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def negative_probe_detected(exit_code, log, expected_diagnostics):
+    # Swift access instrumentation reports this deliberate race either as a
+    # Swift access race or as a raw data race. Both are real TSan findings;
+    # crashes, exclusivity traps and unavailable runtimes are not substitutes.
+    return exit_code == 66 and any(diagnostic in log for diagnostic in expected_diagnostics)
+
+
 def test_evidence(xml, discovered, log):
     cases = ET.parse(xml).findall(".//testcase")
     names = [case.get("classname", "") + "/" + case.get("name", "") for case in cases]
@@ -107,8 +114,8 @@ def main():
         (output / entry["log"]).write_text(text)
         save()
         if expected_failure:
-            entry["expectedDiagnostic"] = expected_failure
-            require(entry.get("exitCode") not in [0, None] and expected_failure in text,
+            entry["expectedDiagnostics"] = expected_failure
+            require(negative_probe_detected(entry.get("exitCode"), text, expected_failure),
                     f"{label}: sanitizer did not detect the intentional invalid probe")
         else:
             require(entry.get("exitCode") == 0, f"{label} failed; see {entry['log']}")
@@ -151,7 +158,7 @@ def main():
             negative.write_text('// Deliberate test-only use-after-free; never linked into SwiftJXL.\n'
                                 'let owner = UnsafeMutablePointer<Int>.allocate(capacity: 1)\nowner.initialize(to: 42)\n'
                                 'owner.deinitialize(count: 1)\nowner.deallocate()\nprint(owner.pointee)\n')
-            expected = "ERROR: AddressSanitizer: heap-use-after-free"
+            expected = ["ERROR: AddressSanitizer: heap-use-after-free"]
         else:
             negative.write_text('// Deliberate test-only race; never linked into SwiftJXL.\nimport Glibc\n'
                                 'nonisolated(unsafe) var shared = 0\n'
@@ -160,7 +167,7 @@ def main():
                                 'var first = pthread_t(), second = pthread_t()\n'
                                 'pthread_create(&first, nil, writer, nil)\npthread_create(&second, nil, writer, nil)\n'
                                 'pthread_join(first, nil)\npthread_join(second, nil)\nprint(shared)\n')
-            expected = "WARNING: ThreadSanitizer: data race"
+            expected = ["WARNING: ThreadSanitizer: data race", "WARNING: ThreadSanitizer: Swift access race"]
         for name, source in [("positive", positive), ("negative", negative)]:
             binary = output / ("sanitizer-" + name)
             run("probe-" + name + "-compile", ["swiftc", "-swift-version", "6", "-g", "-Onone", "-sanitize=" + args.sanitizer, source, "-o", binary])
