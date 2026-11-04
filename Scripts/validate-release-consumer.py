@@ -114,6 +114,10 @@ def main():
             "GIT_CONFIG_COUNT", "GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_ALTERNATE_OBJECT_DIRECTORIES"
         }:
             env.pop(key, None)
+    # Container checkouts may be owned by the runner host. Trust only this
+    # explicitly selected input repository, without restoring personal config.
+    env.update({"GIT_CONFIG_COUNT": "1", "GIT_CONFIG_KEY_0": "safe.directory",
+                "GIT_CONFIG_VALUE_0": str(repo)})
     swift = ["xcrun", "swift"] if platform.system() == "Darwin" else ["swift"]
     report = {
         "schemaVersion": 1, "status": "running", "contractVersion": "0.10.0",
