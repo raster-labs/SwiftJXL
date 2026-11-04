@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -37,6 +38,7 @@ def main():
     parser.add_argument("--suite-report", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--jobs", type=int, default=2)
+    parser.add_argument("--jpeg-oracle", type=Path, default=shutil.which("djpeg"))
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[2]
     require(1 <= args.jobs <= 4, "Invalid build jobs")
@@ -57,15 +59,17 @@ def main():
               "startedUTC": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "scope": "Supplemental Watch simulator profile, owner, limits and cancellation checks; no physical Watch claim"}
     env = os.environ.copy()
+    jpeg_oracle = None
 
     def save():
         (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
 
-    def run(label, command, timeout=180):
+    def run(label, command, timeout=180, command_env=None):
         record = {"label": label, "command": list(map(str, command))}
         report["commands"].append(record)
         save()
-        result = subprocess.run(record["command"], cwd=repo, env=env, capture_output=True, text=True, timeout=timeout)
+        result = subprocess.run(record["command"], cwd=repo, env=env if command_env is None else command_env,
+                                capture_output=True, text=True, timeout=timeout)
         log = output / (label + ".log")
         log.write_text(result.stdout + result.stderr)
         record.update(exitCode=result.returncode, log=log.name, logSHA256=sha(log))
@@ -81,11 +85,71 @@ def main():
             "precision-12-1.jxl": "VarDCT/EncoderPrecision/precision-12-1.jxl",
             "precision-12-1.scalar": "VarDCT/EncoderPrecision/precision-12-1.scalar",
             "libjxl-lossless-rgba16.jxl": "VarDCT/Animation/libjxl-lossless-rgba16.jxl",
-            "gray.jpg": "JPEG/gray.jpg", "gray.raw": "JBRD/gray.raw",
+            "gray.jpg": "JPEG/gray.jpg",
         }
         for destination, source in mapping.items():
             shutil.copyfile(fixture_root / source, fixtures / destination)
         shutil.copytree(fixture_root / "JPEGExtended", fixtures / "JPEGExtended")
+        # JBRD/*.raw contains reconstruction metadata, not decoded pixels.
+        # Generate the independent pixel reference on the host; the simulator
+        # only receives the resulting bytes and never invokes an external codec.
+        require(args.jpeg_oracle is not None, "A host djpeg pixel oracle is required")
+        jpeg_oracle = Path(args.jpeg_oracle).resolve(strict=True)
+        oracle_hash = sha(jpeg_oracle)
+        oracle_env = {key: value for key, value in env.items() if not key.startswith("DYLD_")}
+        dependencies = {}
+        pending = [jpeg_oracle]
+        inspected = set()
+        while pending:
+            binary = pending.pop()
+            if binary in inspected:
+                continue
+            require(len(inspected) < 16, "Unexpected JPEG oracle dependency graph")
+            inspected.add(binary)
+            label = "jpeg-oracle-library-" + str(len(inspected))
+            loads = run(label + "-loads", ["otool", "-L", binary])
+            commands = run(label + "-commands", ["otool", "-l", binary])
+            rpaths = re.findall(r"cmd LC_RPATH\s+cmdsize \d+\s+path (.+?) \(offset \d+\)", commands)
+            install_names = re.findall(r"cmd LC_ID_DYLIB\s+cmdsize \d+\s+name (.+?) \(offset \d+\)", commands)
+            def expand(value):
+                return Path(value.replace("@loader_path", str(binary.parent)).replace("@executable_path", str(jpeg_oracle.parent)))
+            for line in loads.splitlines()[1:]:
+                dependency = line.strip().split(" (", 1)[0]
+                if dependency in install_names:
+                    continue  # Dylib identity, not a dependency load command.
+                if dependency.startswith(("/usr/lib/", "/System/Library/")):
+                    continue
+                candidates = [expand(base) / dependency[len("@rpath/"):] for base in rpaths] if dependency.startswith("@rpath/") else [expand(dependency)]
+                resolved = {path.resolve() for path in candidates if path.is_absolute() and path.is_file()}
+                require(len(resolved) == 1, "Unresolved/ambiguous JPEG oracle dependency: " + dependency)
+                library = resolved.pop()
+                if library != jpeg_oracle:
+                    dependencies[str(library)] = sha(library)
+                    pending.append(library)
+        run("jpeg-oracle-version", [jpeg_oracle, "-version"], command_env=oracle_env)
+        pgm = output / "gray-reference.pgm"
+        replay = output / "gray-reference-replay.pgm"
+        for label, destination in (("jpeg-reference", pgm), ("jpeg-reference-replay", replay)):
+            run(label, [jpeg_oracle, "-dct", "int", "-grayscale", "-outfile", destination, fixtures / "gray.jpg"], command_env=oracle_env)
+        require(pgm.read_bytes() == replay.read_bytes(), "JPEG reference replay differs")
+        data = pgm.read_bytes()
+        header = re.match(rb"P5\n([0-9]+) ([0-9]+)\n255\n", data)
+        require(header is not None, "Unexpected djpeg greyscale reference header")
+        width, height = map(int, header.groups())
+        pixels = data[header.end():]
+        require(0 < width <= 256 and 0 < height <= 256 and len(pixels) == width * height,
+                "JPEG reference dimensions/payload disagree")
+        (fixtures / "gray.raw").write_bytes(pixels)
+        report["jpegReference"] = {
+            "oracle": str(jpeg_oracle), "oracleSHA256": oracle_hash,
+            "nonSystemDependencySHA256": dependencies,
+            "removedDynamicLoaderEnvironmentKeys": sorted(set(env) - set(oracle_env)),
+            "version": (output / "jpeg-oracle-version.log").read_text().strip(),
+            "sourceSHA256": sha(fixtures / "gray.jpg"), "pgmSHA256": sha(pgm),
+            "rawSHA256": sha(fixtures / "gray.raw"), "width": width, "height": height,
+            "bytes": len(pixels), "replayedByteForByte": True,
+            "scope": "Independent host libjpeg-turbo integer-IDCT greyscale pixels; no device runtime codec dependency",
+        }
         report["fixtureHashes"] = {str(path.relative_to(fixtures)): sha(path) for path in sorted(fixtures.rglob("*")) if path.is_file() and path.name != ".DS_Store"}
         sdk = run("sdk-path", ["xcrun", "--sdk", "watchsimulator", "--show-sdk-path"]).strip()
         env["SDKROOT"] = sdk
@@ -120,6 +184,11 @@ def main():
         report["sourcesAndDriversUnchanged"] = unchanged
         if not unchanged:
             report.update(status="failed", failure="Source/driver drift")
+        if "jpegReference" in report:
+            report["jpegOracleUnchanged"] = jpeg_oracle is not None and jpeg_oracle.is_file() and sha(jpeg_oracle) == report["jpegReference"]["oracleSHA256"] and all(
+                Path(path).is_file() and sha(Path(path)) == value for path, value in report["jpegReference"]["nonSystemDependencySHA256"].items())
+            if not report["jpegOracleUnchanged"]:
+                report.update(status="failed", failure="JPEG reference oracle drift")
         if device:
             report["cleanup"] = []
             for action in ("shutdown", "delete"):
