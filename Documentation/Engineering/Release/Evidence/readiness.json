@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "status": "blocked",
+  "checklistValid": true,
+  "preparationComplete": true,
+  "stableReleaseReady": false,
+  "publicationAuthorised": false,
+  "sourceGroupDigests": {
+    "runtime": "55b65dcea0a8b47f0608036b7d7e626106482c723ab025ff38c99625bf393b58",
+    "preparation": "a35393d116fd36b257edeb6cce846499dca141d5c2ea35b1a9ac1f42e6800c2a"
+  },
+  "blockedGates": [
+    "M4-LINUX-SANITIZERS",
+    "M4-MACOS-MINIMUM",
+    "M4-MACOS-INTEL",
+    "M4-PHYSICAL-DEVICES",
+    "M4-IOS-SANITIZERS",
+    "M4-CLI-TSAN",
+    "M4-OTHER-SIMULATORS",
+    "RELEASE-SBOM-SCHEMA",
+    "RELEASE-SECURITY-POLICY"
+  ],
+  "gateStatuses": {
+    "M4-LINUX-SANITIZERS": "pending",
+    "M4-MACOS-MINIMUM": "unavailable",
+    "M4-MACOS-INTEL": "pending",
+    "M4-PHYSICAL-DEVICES": "unavailable",
+    "M4-IOS-SANITIZERS": "pending",
+    "M4-CLI-TSAN": "pending",
+    "M4-OTHER-SIMULATORS": "pending",
+    "M5-URL-CONSUMER": "passed",
+    "M5-VERSIONED-CONSUMER": "passed",
+    "M5-DOCS-EXAMPLES": "passed",
+    "M5-LICENCE-PROVENANCE": "passed",
+    "M5-EVIDENCE-REVIEW": "passed",
+    "RELEASE-SBOM-SCHEMA": "failed",
+    "RELEASE-SECURITY-POLICY": "pending"
+  }
+}

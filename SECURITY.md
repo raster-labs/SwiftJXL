@@ -1,6 +1,6 @@
 # Security policy and implementation requirements
 
-Status: documentation foundation. No successor binary release exists and no vulnerability response time is promised here.
+Status: development migration; release qualification is incomplete. No successor binary release exists and no vulnerability response time is promised here.
 
 ## Reporting
 

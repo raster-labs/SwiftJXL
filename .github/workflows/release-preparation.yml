@@ -1,0 +1,84 @@
+name: SwiftJXL release preparation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evidence:
+    name: Release documentation and provenance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          # Baseline-only fixture hashes must be checked against real Git objects.
+          fetch-depth: 0
+      - name: Test rejection of invalid release evidence
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          python3 Scripts/TestSupport/test-release-consumer.py
+          python3 Scripts/test-release-gates.py
+          python3 Scripts/Tests/test_release_provenance.py
+          python3 Scripts/TestSupport/test-release-sbom.py
+      - name: Audit current documentation, fixture notices and release gates
+        run: |
+          python3 Scripts/check-release-docs.py --output .build/release-docs.json
+          python3 Scripts/audit-release-provenance.py --output .build/release-provenance.json
+          python3 Scripts/check-release-gates.py --output .build/release-gates.json
+      - name: Preserve evidence, including a blocked release disposition
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-preparation-evidence
+          path: .build/release-*.json
+          include-hidden-files: true
+          if-no-files-found: error
+
+  versioned-consumer:
+    name: Clean versioned consumer / Swift ${{ matrix.swift }}
+    runs-on: ubuntu-24.04
+    container: swift:${{ matrix.swift }}-noble
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - swift: '6.2'
+            engine: native
+          - swift: '6.4'
+            engine: swiftbuild
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Install the standard-library validation runner
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3
+      - name: Resolve exact prerelease only in a disposable Git remote
+        run: >-
+          python3 Scripts/validate-release-consumer.py
+          --revision HEAD --build-system ${{ matrix.engine }} --jobs 2
+          --output .build/release-consumer
+      - name: Preserve consumer commands, lockfile and outcomes
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-consumer-swift-${{ matrix.swift }}
+          path: |
+            .build/release-consumer/report.json
+            .build/release-consumer/Package.resolved
+            .build/release-consumer/Consumer.Package.swift
+            .build/release-consumer/Consumer.swift
+            .build/release-consumer/dependency-graph.json
+            .build/release-consumer/logs
+          include-hidden-files: true
+          if-no-files-found: error

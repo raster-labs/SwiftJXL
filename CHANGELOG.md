@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased — Milestone 5 release preparation, 2026-11-04
+
+Add clean URL/exact-version consumer checks, a synchronised owning-storage migration example, fixture/licence inventories and a source-bound release checklist. Retain open platform, SBOM and maintainer-policy gates; no codec behaviour, version or release tag changes. See [release preparation](Documentation/Engineering/Release/README.md).
+
 ## Unreleased — remaining Milestone 4 follow-up
 
 Added extended JPEG pixel precision/lossless/metadata handling, explicit ARM reference numerical conventions, reduced Modular/transform overhead, per-entry security/runtime harnesses, and full iOS Simulator test-bundle qualification (`Scripts/TestSupport/qualify-ios-simulator.py`). Local macOS arm64 debug/release/ASan/TSan suites (`365` declarations / `2,048` cases each, including post-fix `release-7` and targeted `debug-2-vardct`/`asan-3-vardct`/`tsan-2-vardct` with byte-identical `SwiftJXL.o` and `SwiftJXLCore.o`), full iOS Simulator library suites (`359` declarations / `1,955` cases each) on **`iOS 26.0` (`23A343`, Release)** and **`iOS 26.5` (`23F77`, Release, Debug, ASan, TSan)**, `123`-case ARM reference checks and `45,826` hardware reciprocal vectors (with negative delivery/evaluation sentinels), standalone consumer, release/ASan/debug/TSan CLI suites, 10 Apple SDK builds, 4 simulator smoke probes (`iOS 26.5`, `tvOS 26.5`, `visionOS 26.5`, `watchOS 26.0`) and the 48-row primary release performance comparison passed (10 one-worker diagnostic latency rows retained; exact `macOS 26.0` runtime execution, 3×3600s JPEG mutation campaigns, out-of-scope Intel/physical-device/non-iOS simulator test bundles, and hosted CI on the updated PR #33 head remain unexecuted/pending). See [the follow-up record](Documentation/Engineering/Migration/MILESTONE4_REMAINING.md); Milestone 4 is not declared complete as a whole while required gates remain open.

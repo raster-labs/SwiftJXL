@@ -1,0 +1,110 @@
+{
+  "@context" : "https://spdx.org/rdf/3.0.1/spdx-context.jsonld",
+  "@graph" : [
+    {
+      "creationInfo" : "urn:uuid:b74b47ed-ffe2-4f0e-b090-4660359203e2:creationInfo",
+      "from" : "urn:uuid:b74b47ed-ffe2-4f0e-b090-4660359203e2",
+      "relationshipType" : "hasDeclaredLicense",
+      "spdxId" : "urn:uuid:b74b47ed-ffe2-4f0e-b090-4660359203e2-hasDeclaredLicense-urn:spdx:Apache-2.0",
+      "to" : [
+        "urn:spdx:Apache-2.0"
+      ],
+      "type" : "Relationship"
+    },
+    {
+      "creationInfo" : "urn:uuid:b74b47ed-ffe2-4f0e-b090-4660359203e2:creationInfo",
+      "simplelicensing_licenseExpression" : "Apache-2.0",
+      "spdxId" : "urn:spdx:Apache-2.0",
+      "type" : "simplelicensing_LicenseExpression"
+    },
+    {
+      "@id" : "urn:uuid:b74b47ed-ffe2-4f0e-b090-4660359203e2:creationInfo",
+      "created" : "2026-11-04T06:45:00Z",
+      "createdBy" : [
+        "urn:uuid:b74b47ed-ffe2-4f0e-b090-4660359203e2"
+      ],
+      "specVersion" : "6.4.2",
+      "type" : "CreationInfo"
+    },
+    {
+      "creationInfo" : "urn:uuid:b74b47ed-ffe2-4f0e-b090-4660359203e2:creationInfo",
+      "name" : "swift-package-manager",
+      "spdxId" : "urn:uuid:b74b47ed-ffe2-4f0e-b090-4660359203e2",
+      "type" : "Agent"
+    },
+    {
+      "@id" : "_:creationInfo",
+      "created" : "2026-11-04T06:45:00Z",
+      "createdBy" : [
+        "urn:uuid:b74b47ed-ffe2-4f0e-b090-4660359203e2"
+      ],
+      "specVersion" : "3.0.1",
+      "type" : "CreationInfo"
+    },
+    {
+      "creationInfo" : "_:creationInfo",
+      "profileConformance" : [
+        "core",
+        "software"
+      ],
+      "rootElement" : [
+        "urn:spdx:swiftjxl-milestone5:SwiftJXL"
+      ],
+      "spdxId" : "urn:uuid:702b0f71-177a-499c-a122-ebef4131c725",
+      "type" : "software_Sbom"
+    },
+    {
+      "creationInfo" : "_:creationInfo",
+      "from" : "urn:uuid:702b0f71-177a-499c-a122-ebef4131c725",
+      "relationshipType" : "describes",
+      "spdxId" : "urn:uuid:702b0f71-177a-499c-a122-ebef4131c725-describes-urn:spdx:swiftjxl-milestone5:SwiftJXL",
+      "to" : [
+        "urn:spdx:swiftjxl-milestone5:SwiftJXL"
+      ],
+      "type" : "Relationship"
+    },
+    {
+      "creationInfo" : "_:creationInfo",
+      "profileConformance" : [
+        "core",
+        "software"
+      ],
+      "rootElement" : [
+        "urn:uuid:702b0f71-177a-499c-a122-ebef4131c725"
+      ],
+      "spdxId" : "urn:uuid:0f6e6370-94f8-4080-8375-6f10a86dfc0a",
+      "type" : "SpdxDocument"
+    },
+    {
+      "creationInfo" : "_:creationInfo",
+      "description" : "<ResolvedPackage: swiftjxl-milestone5>",
+      "externalUrl" : "pkg:swift/swiftjxl-milestone5@3e00d934bef331cdbc7c4be752857dc9eca8f799",
+      "name" : "swiftjxl-milestone5",
+      "software_internalVersion" : "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+      "software_primaryPurpose" : "application",
+      "spdxId" : "urn:spdx:swiftjxl-milestone5",
+      "summary" : "swift-package",
+      "type" : "software_Package"
+    },
+    {
+      "creationInfo" : "_:creationInfo",
+      "externalUrl" : "pkg:swift/swiftjxl-milestone5/swiftjxl-milestone5:SwiftJXL@3e00d934bef331cdbc7c4be752857dc9eca8f799",
+      "name" : "SwiftJXL",
+      "software_internalVersion" : "3e00d934bef331cdbc7c4be752857dc9eca8f799",
+      "software_primaryPurpose" : "library",
+      "spdxId" : "urn:spdx:swiftjxl-milestone5:SwiftJXL",
+      "summary" : "swift-product",
+      "type" : "software_Package"
+    },
+    {
+      "creationInfo" : "_:creationInfo",
+      "from" : "urn:spdx:swiftjxl-milestone5",
+      "relationshipType" : "dependsOn",
+      "spdxId" : "urn:spdx:swiftjxl-milestone5-dependsOn",
+      "to" : [
+        "urn:spdx:swiftjxl-milestone5:SwiftJXL"
+      ],
+      "type" : "Relationship"
+    }
+  ]
+}

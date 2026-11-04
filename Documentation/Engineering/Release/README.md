@@ -1,0 +1,83 @@
+# Milestone 5 — release preparation
+
+This record covers the owner-assigned release-preparation task on 4 November 2026. It does not authorise a stable tag or consumer cutover. **Milestone 5 cannot receive full release sign-off while the outstanding qualification gates remain open.** The machine-readable checklist distinguishes completed preparation from stable-release readiness.
+
+## Revisions and scope
+
+- Target: `raster-labs/SwiftJXL`, branch `codex/milestone5-release-preparation`.
+- Committed Milestone 4 baseline: `3e00d934bef331cdbc7c4be752857dc9eca8f799`.
+- Selected predecessor: JXLSwift `57e81cb9e2411d1efac435b429a306a031744c1e` (`v1.5.0-rc.1`). The older `760697a` API inspection remains historical.
+- Common contract: **0.10.0**, unchanged seven-file distribution and hash manifest. Development identifier remains **2.1.0-dev.2**.
+- The working decoder optimisations on `codex/djxl-decoder-optimisation` were excluded. This task uses a separate worktree. No production codec, package manifest, fixture or existing licence text changes.
+
+The [gate checklist](release-gates.json) binds the actual runtime files and every passing preparation report. Historical correctness, independent-oracle, sanitizer, security and controlled-performance results remain attributed to their original runs in the [Milestone 4 record](../Migration/MILESTONE4_REMAINING.md). They are not counted as fresh executions here. No hot path changed, so no new latency/RSS improvement is claimed and no replacement benchmark was run.
+
+## Preparation checks
+
+| Check | Scope |
+| --- | --- |
+| Clean versioned consumer | A private shallow Git remote contains only the selected commit and a disposable `2.1.0-dev.2` tag. An independent tools-6.2 package resolves it with `.package(url: ..., exact:)`. Debug and Release build/run, lockfile revision/version, package graph, products, deployment floors, language mode and version/manual agreement are checked. No tag is added to the real repository. |
+| Fresh HTTPS consumer | A second clean consumer resolves the published full candidate SHA from the actual GitHub URL using `revision:`. It checks the same public example in Debug and Release. This is distinct from fetching an eventual published semantic version. |
+| Docs and examples | The [migration guide](../../../MIGRATION.md) contains the exact compiled [consumer](../../../Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift). Local document links and the canonical successor URL are checked. |
+| Distribution provenance | The [notice index](../../../THIRD_PARTY_NOTICES.md) and [fixture inventory](fixture-inventory.json) cover 119 production source files and 995 fixture/support files, including retained MIT/BSD, CC0 and Adobe exceptions. The audit verifies existing manifest hashes and pinned Git blobs. |
+| Evidence review | Reports retain commands, actual toolchain/host, exit outcomes, failed attempts, hashes and remaining gates. Negative tests reject incorrect pins, changed fixtures, missing evidence and false readiness. |
+
+The example checks all six independently known 12-bit values in padded UInt16 source storage, an allocating decode, a direct decode into a different row stride, exact caller allocation identity, reported copy events, refusal of a second write and two independently owned animation frames with exact timing. It retains owners across awaits. Public allocation/peak-workspace measurements are `nil` and remain **unknown**, not zero. The existing allocation-site/mutation/sanitizer evidence in Milestone 3/4 supplies the broader no-handoff-copy and lifetime proof; this consumer is a public packaging regression check.
+
+## Executed results
+
+The [validation summary](Evidence/validation.json) binds the receipts and source groups; the full command logs are retained in the evidence archives.
+
+| Executed check | Outcome |
+| --- | --- |
+| Local exact-version and actual HTTPS revision consumers | Debug and Release builds/runs pass on macOS arm64, Apple Swift 6.4.2 / Xcode 27.2, with exact source, lockfile and runner hashes in each report. |
+| Release CLI foundation, staged install/update and manual rendering | Exit 0; 98 process checks. |
+| Consumer/gate/provenance/SBOM validator regression tests | Exit 0; 8 + 14 + 12 + 4 focused tests. |
+| Documentation and fixture/licence audits | Exit 0; matched compiled example and local links; 119 production source files and 995 fixture/support files. |
+| Build-associated SBOM generation | Exit 0; schema validation was skipped by SwiftPM and independently performed afterwards. |
+| Independent SBOM validation | Exit 1 with retained schema/semantic findings; this is an open release gate, not a passing qualification. |
+| Release-readiness enforcement | Audit exit 0 with `preparationComplete: true`, `stableReleaseReady: false`; `--require-ready` exits 2. |
+
+Initial failed consumer attempts are retained: inherited stale SDK lookup, file-URL lockfile classification and an incorrect expectation that an optional public allocation counter was zero. The final example preserves unknown counters. The first CLI test invocation used an incorrect assumed binary path; the corrected invocation used SwiftPM's reported output directory. No production change was needed for these harness mistakes. Independent audit also required baseline Git-blob verification in the provenance checker and explicit Python/checkout-ownership handling in the container workflow.
+
+Hosted checks for the submitted PR are separate from these local receipts. The local host is macOS 27.0.1; these results do not qualify the macOS 26.0 runtime or physical Apple devices.
+
+## Reproduce the checks
+
+Use a committed candidate: uncommitted files never enter the consumer's private source snapshot. Each command records the excluded working changes and exact selected SHA. Choose new evidence directories; prior failures are retained.
+
+```sh
+python3 Scripts/TestSupport/test-release-consumer.py
+python3 Scripts/test-release-gates.py
+python3 Scripts/Tests/test_release_provenance.py
+python3 Scripts/check-release-docs.py --output .build/release-docs.json
+python3 Scripts/audit-release-provenance.py --output .build/release-provenance.json
+python3 Scripts/validate-release-consumer.py --revision HEAD --build-system swiftbuild --jobs 2 --output .build/release-versioned
+# After the selected SHA is published on a review branch:
+python3 Scripts/validate-release-consumer.py --revision HEAD --repository-url https://github.com/raster-labs/SwiftJXL.git --build-system swiftbuild --jobs 2 --output .build/release-https
+python3 Scripts/check-release-gates.py --output .build/release-gates.json
+python3 Scripts/check-release-gates.py --require-ready
+```
+
+`--build-system native` is the explicit Swift 6.2 baseline selection; Swift 6.4 qualification requests `swiftbuild`. No fallback is implicit. On macOS the runner selects the macOS SDK from the chosen Xcode and records it. Linux execution uses the selected Swift container. The [preparation workflow](../../../.github/workflows/release-preparation.yml) runs the evidence checks and exact-version consumer on Swift 6.2/6.4, while the existing [codec workflow](../../../.github/workflows/contract.yml) retains its separate matrix. A green preparation workflow is not stable-release approval. Fixture auditing requires the pinned baseline Git object; CI checks out full history.
+
+Normal gate audit exits 0 for a structurally valid checklist, even when blocked. `--require-ready` exits **2** while any required gate is open, and malformed/missing/stale evidence exits **1**. `publicationAuthorised` remains false. The eventual published tag must be consumed afresh during the separately authorised release task.
+
+## Build SBOM disposition
+
+`bash Scripts/validate.sh --checks sbom --jobs 2 --output .build/milestone5-sbom` generated fresh build-associated SPDX 3.0.1 and CycloneDX 1.7 documents with Apple Swift 6.4.2; generation exited 0. SwiftPM still reports its schema bundle unavailable. The originals were preserved and validated separately with `jsonschema==4.25.1`, offline versioned official schemas and recorded SHA-256 values:
+
+```sh
+python3 -m venv .build/release-tools
+.build/release-tools/bin/python -m pip install 'jsonschema==4.25.1'
+# Supply the official schema files and sources.json with URLs and SHA-256 values.
+.build/release-tools/bin/python Scripts/validate-release-sbom.py --build-report .build/milestone5-sbom/report.json --schemas .build/release-schemas --output .build/release-sbom-validation
+```
+
+Validation exits **1**: SPDX has unsupported `externalUrl`/`software_internalVersion` properties and a CreationInfo specification version containing the compiler version; CycloneDX passes JSON Schema but repeats a `bom-ref`. The validator checks original hashes, disables schema-network retrieval and separately reports these semantic failures. Full SPDX SHACL validation remains unexecuted. Neither a JSON parse nor the distribution inventory closes this gate. Schema URLs are the official [SPDX 3.0.1 schema](https://spdx.org/schema/3.0.1/spdx-json-schema.json) and [CycloneDX 1.7 schema](https://cyclonedx.org/schema/bom-1.7.schema.json), including its referenced `spdx.schema.json`, `jsf-0.82.schema.json` and `cryptography-defs.schema.json`. Do not silently repair generated originals or advertise these documents as conformant.
+
+## Remaining release gates
+
+The seven source-bound Milestone 4 gaps remain: Linux ASan/TSan; exact macOS 26.0 runtime; native Intel macOS runtime; representative physical Apple devices; current-source iOS Simulator Debug/ASan/TSan; the complete ten-group CLI TSan matrix; and full applicable tvOS/watchOS/visionOS simulator bundles. SDK builds and historical smoke tests are not runtime substitutes. Existing performance and mutation-campaign acceptance is retained within its measured scope.
+
+SBOM conformance and the maintainer-established private reporting channel/supported-version policy in [SECURITY.md](../../../SECURITY.md) also remain open. No organisation settings, predecessor history or downstream application is changed. JXLSwift remains the production route. Completing this preparation task does not waive those requirements or allow a stable tag.

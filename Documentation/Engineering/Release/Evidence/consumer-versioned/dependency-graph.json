@@ -1,0 +1,23 @@
+{
+  "identity": "consumer",
+  "name": "Consumer",
+  "url": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-consumer-versioned-ci-safe/work/consumer",
+  "version": "unspecified",
+  "path": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-consumer-versioned-ci-safe/work/consumer",
+  "traits": [
+    "default"
+  ],
+  "dependencies": [
+    {
+      "identity": "swiftjxl",
+      "name": "SwiftJXL",
+      "url": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-consumer-versioned-ci-safe/work/SwiftJXL.git",
+      "version": "2.1.0-dev.2",
+      "path": "/Users/pushparaj/Documents/ChatGPT/SwiftJXL-milestone5/.build/milestone5-consumer-versioned-ci-safe/work/build/checkouts/SwiftJXL",
+      "traits": [
+        "default"
+      ],
+      "dependencies": []
+    }
+  ]
+}
