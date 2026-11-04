@@ -99,6 +99,52 @@ class DerivedSBOMTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             derive.check_references(result, "cyclonedx")
 
+    def test_verified_canonical_root_identifier_is_preserved_in_both_formats(self):
+        root = f"pkg:swift/github.com/raster-labs/swiftjxl@{self.revision}"
+        product = f"pkg:swift/github.com/raster-labs/swiftjxl:SwiftJXL@{self.revision}"
+        spdx, cdx = copy.deepcopy(self.spdx), copy.deepcopy(self.cyclonedx)
+        spdx['@graph'][1].update(name='swiftjxl', externalUrl=root)
+        spdx['@graph'][2]['externalUrl'] = product
+        source_id = 'urn:spdx:' + self.revision
+        spdx['@graph'].extend([
+            {'type': 'ExternalIdentifier', 'externalIdentifierType': 'gitoid', 'identifier': source_id,
+             'identifierLocator': ['https://github.com/raster-labs/SwiftJXL.git']},
+            {'type': 'Relationship', 'creationInfo': '_:ci', 'spdxId': source_id + '-generates',
+             'from': source_id, 'relationshipType': 'generates', 'to': ['urn:package', 'urn:product']}])
+        cdx['components'][0].update(name='swiftjxl', purl=root)
+        cdx['components'][1]['purl'] = product
+        cdx['metadata']['component']['purl'] = product
+        originals = copy.deepcopy((spdx, cdx))
+        s, _ = derive.derive_spdx(spdx, self.revision, 'swiftjxl', self.raw_hash,
+                                 self.runner_hash, self.timestamp, self.identifier, root)
+        c, _ = derive.derive_cyclonedx(cdx, self.revision, 'swiftjxl', self.raw_hash,
+                                      self.runner_hash, self.timestamp, root)
+        self.assertEqual((spdx, cdx), originals)
+        self.assertEqual(s['@graph'][1]['software_packageUrl'], root)
+        self.assertNotIn('software_packageUrl', s['@graph'][2])
+        self.assertEqual(c['components'][0]['purl'], root)
+        self.assertNotIn('purl', c['metadata']['component'])
+        self.assertFalse(any(row.get('type') == 'ExternalIdentifier' for row in s['@graph']))
+        unknown = copy.deepcopy(spdx)
+        unknown['@graph'][-1]['from'] = 'urn:unverified-source'
+        with self.assertRaises(RuntimeError):
+            derive.derive_spdx(unknown, self.revision, 'swiftjxl', self.raw_hash,
+                               self.runner_hash, self.timestamp, self.identifier, root)
+        spdx['@graph'][1]['externalUrl'] = root.replace('raster-labs', 'unverified-owner')
+        with self.assertRaises(RuntimeError):
+            derive.derive_spdx(spdx, self.revision, 'swiftjxl', self.raw_hash,
+                               self.runner_hash, self.timestamp, self.identifier, root)
+
+    def test_alias_evidence_requires_same_repository_and_origin(self):
+        origin = 'https://github.com/raster-labs/SwiftJXL.git'
+        evidence = {'sameRepository': True, 'queries': [
+            {'query': name, 'repositoryID': '123', 'canonicalFullName': 'raster-labs/SwiftJXL', 'cloneURL': origin}
+            for name in ['raster-labs/swiftjxl', 'raster-labs/SwiftJXL']]}
+        derive.verify_repository_alias(evidence, origin)
+        evidence['queries'][1]['repositoryID'] = '456'
+        with self.assertRaises(RuntimeError):
+            derive.verify_repository_alias(evidence, origin)
+
 
 if __name__ == "__main__":
     unittest.main()

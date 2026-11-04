@@ -186,14 +186,14 @@
         "README.md": "f4f4e07d2f2a3cc3ff9db4c6767837ce8e6498ac8d0316dfd2a28c1a15756a69",
         "SECURITY.md": "da5c5d2d10b7ec7349d4596a6a87b67f4379b0909579efeb1e6661649cd3b87b",
         "Scripts/README.md": "bc2c6db377e605a4b1e8bdc7ee1a304e59a528e05eae71a3ed1902a0360a9b24",
-        "Scripts/TestSupport/test-derived-release-sbom.py": "723e3e9608f4b92bb75b26c19fb2cd18b783a42d1b70966f79e2d934369e8bcd",
+        "Scripts/TestSupport/test-derived-release-sbom.py": "dd5ecf60c99556e08732fcd1922de68bdc523b82c4a26e31e667de10022098b3",
         "Scripts/TestSupport/test-release-consumer.py": "f20e5e0643ac98936f546f804e0d5e4c7168025ef929cd14eb724bd80c3854a2",
         "Scripts/TestSupport/test-release-sbom.py": "7970c20822733b6d0ff9a7f11a63c29cb661e2bcd57c97219aa28bf1be7dd9ed",
         "Scripts/Tests/test_release_provenance.py": "7a1b2a32eee33982fa83b1fc3e09f5f194757865a28106f5f9f2082fe26ecf7f",
         "Scripts/audit-release-provenance.py": "556983a1c64b8ce8c658e9fb480d573242706eac5183ae533bbffc470a51ced2",
         "Scripts/check-release-docs.py": "1f165674e65024c9b4c32d24f3f55ac0ae86a9c621a5d46accd5e8b8f00a403b",
         "Scripts/check-release-gates.py": "b8010d11cdeddc3a3b49ebea4bf1d61eeb1903a5a3b789e5aaad68bb4aad0191",
-        "Scripts/derive-release-sbom.py": "70bcf21721ef59b6d9a7adcdc79e46387b12fa11ac6c411ca7ab985148a14583",
+        "Scripts/derive-release-sbom.py": "74aecc5ef013327afacf737529aa1501101f0bec4567c18cb75f606d73f79022",
         "Scripts/install-cli.sh": "2ec55c5025e69e18e92ba76f738bee4fe5c9df4ea6b332ae9ec7140b8b55e693",
         "Scripts/test-cli.py": "9a369cd681e8157843711856f6c4e65baccd5e3a88170534c434e5d5732d8676",
         "Scripts/test-release-gates.py": "a2fcbc0b59bb281a2d8f77f97880c2467e11003f77f5094970944373a78bacb9",
@@ -201,7 +201,7 @@
         "Scripts/validate-release-sbom.py": "4c73e5bdcd220aad41c48e3780b64c842ea5e199d1de8804a4a3ff47f9f571f5",
         "THIRD_PARTY_NOTICES.md": "6919105dee2ef9807a17dbeb6b6275241ebf0a34858f16fef3a14afe5121cf28"
       },
-      "sha256": "a424916b664651b6bf1beb6feabe3b869f300b2e2581d11e847ba6e193e73b7b"
+      "sha256": "fd83261c17e45ce40f9763a722f25125f4f8a6b0818cedc88f055b17aa19d531"
     },
     "qualification": {
       "includes": [
@@ -218,9 +218,24 @@
         "Scripts/TestSupport/test-apple-simulator-suite.py",
         "Scripts/TestSupport/qualify-cli-tsan.py",
         "Scripts/TestSupport/test-cli-tsan-gate.py",
-        "Scripts/TestSupport/linux-lock-benchmark.swift"
+        "Scripts/TestSupport/linux-lock-benchmark.swift",
+        "Scripts/TestSupport/test-native-runtime-reporting.py"
       ],
       "files": {
+        ".github/workflows/milestone5-linux-sanitizers.yml": "ce5f8775c5364a1fbdb27ebb014d34c0be7b62442b114ff0db56a4acb2c5a23d",
+        ".github/workflows/milestone5-native-macos.yml": "4d8b21e4187f06c84575c3b8b4e49b63fff7e252bb1a8fac9d445e9f037f63d2",
+        "Scripts/TestSupport/audit-apple-simulator-receipt.py": "d547026c4cd53b310827f2c2e6a58151088449cbd6cc7212630205eaff07a485",
+        "Scripts/TestSupport/linux-lock-benchmark.swift": "ecd55e965a0c6794dadce907c0eb66097ea07c4e76419642b23a900eaec7f945",
+        "Scripts/TestSupport/qualify-apple-simulator-suite.py": "067b53387bae841e7b07789df253ca1b722ff4973e9de839523e1480c69d7686",
+        "Scripts/TestSupport/qualify-cli-tsan.py": "84ecdb39f10a37d4ff8356bdfec4b6f18907b9a05a2f93c307bdfb22aee29aef",
+        "Scripts/TestSupport/qualify-ios-simulator.py": "72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065",
+        "Scripts/TestSupport/qualify-native-runtime.py": "10da68e04230217e361348ddd5ef972ff33ec0483ee49cafdbfeca33e811e2f8",
+        "Scripts/TestSupport/qualify-watch-profile.py": "8518e8910a59e6e9bddf42973b013ec8445a9541ab32b3b9866470debabacaef",
+        "Scripts/TestSupport/test-apple-simulator-suite.py": "ba9f640fbb83589afc62828bf1476016ac9507f9c9215afa129d994dbd9cc439",
+        "Scripts/TestSupport/test-cli-tsan-gate.py": "1d06b00a22950fee41fdf721c072a024f00114968f4777e3383ab4c49bb1b214",
+        "Scripts/TestSupport/test-linux-sanitizer-gate.py": "94214f87ba67242b7e932af75a6eb296fb313178ffc8640e86e8abb32fb9d67d",
+        "Scripts/TestSupport/test-native-runtime-reporting.py": "bad7024a11454dbb47ca007417e1a8b2f0e79f3ac72351fa25cc0a09a0ce2e07",
+        "Scripts/qualify-linux-sanitizer.py": "3cbe21cefb6ec0bd6db89f0c56f1d8098779914278760cb7f891bd15ff83f7da",
         "Tests/SwiftJXLCoreTests/AnimationEncoderTests.swift": "7c41181d90438f18e7b513fb335d491d8cc18724971d5422acf8e355bd314a1a",
         "Tests/SwiftJXLCoreTests/AnimationFrameIndexTests.swift": "06c9cb54e36aa9bc6ac395d8f7b5be4e98098751b7dd512c04d05140ee1e9395",
         "Tests/SwiftJXLCoreTests/AnimationPublicTests.swift": "01d118be67fe36d1f2bce2d13e7e055d97f14e6384e3c0c1333c3a1b7ba891ea",
@@ -303,22 +318,9 @@
         "Tests/SwiftJXLTests/DescriptorTests.swift": "5d5ad2c525e35829442b3a1538a7a603b4b3eac5e0638fe64d211e7dc01102ac",
         "Tests/SwiftJXLTests/SampleAccessTests.swift": "2b797d2386fa275a5819dc4319cbd7c440c57beebb1cc93a200e285b64cda922",
         "Tests/SwiftJXLTests/ScalarPublicAPITests.swift": "a81cc3ce800f7bdf40887a9042399431293977b651bc317263bac165e0302970",
-        "Tests/SwiftJXLTests/StorageTests.swift": "71e30761e97b0cfb722bedca8db0ae76cc1d833d5818a111d3d00b4cd9d4aeb2",
-        ".github/workflows/milestone5-linux-sanitizers.yml": "ce5f8775c5364a1fbdb27ebb014d34c0be7b62442b114ff0db56a4acb2c5a23d",
-        ".github/workflows/milestone5-native-macos.yml": "4d8b21e4187f06c84575c3b8b4e49b63fff7e252bb1a8fac9d445e9f037f63d2",
-        "Scripts/qualify-linux-sanitizer.py": "2e3d0914f346fd007135ca9e64e75003929990975bddbcfab215b5763fb419ec",
-        "Scripts/TestSupport/test-linux-sanitizer-gate.py": "5a3522380e63b7e48f24dc9c4ec6430f2c4dc10f5d4b2d8e0eef8cfbf5020c54",
-        "Scripts/TestSupport/qualify-native-runtime.py": "5fcdaebecb89b583ab65639c9f8d836bb23f0382b032199973da57ac653f551f",
-        "Scripts/TestSupport/qualify-apple-simulator-suite.py": "067b53387bae841e7b07789df253ca1b722ff4973e9de839523e1480c69d7686",
-        "Scripts/TestSupport/qualify-ios-simulator.py": "72c8117540fa1527514827966705f28ae0835bff029cb15d3bc8a2a5da23c065",
-        "Scripts/TestSupport/audit-apple-simulator-receipt.py": "d547026c4cd53b310827f2c2e6a58151088449cbd6cc7212630205eaff07a485",
-        "Scripts/TestSupport/qualify-watch-profile.py": "8518e8910a59e6e9bddf42973b013ec8445a9541ab32b3b9866470debabacaef",
-        "Scripts/TestSupport/test-apple-simulator-suite.py": "ba9f640fbb83589afc62828bf1476016ac9507f9c9215afa129d994dbd9cc439",
-        "Scripts/TestSupport/qualify-cli-tsan.py": "84ecdb39f10a37d4ff8356bdfec4b6f18907b9a05a2f93c307bdfb22aee29aef",
-        "Scripts/TestSupport/test-cli-tsan-gate.py": "1d06b00a22950fee41fdf721c072a024f00114968f4777e3383ab4c49bb1b214",
-        "Scripts/TestSupport/linux-lock-benchmark.swift": "ecd55e965a0c6794dadce907c0eb66097ea07c4e76419642b23a900eaec7f945"
+        "Tests/SwiftJXLTests/StorageTests.swift": "71e30761e97b0cfb722bedca8db0ae76cc1d833d5818a111d3d00b4cd9d4aeb2"
       },
-      "sha256": "955c21c6cfc7b2e1650dad73f77e6de12cd3c7b5ea55e1f06c5624e3a444381d"
+      "sha256": "e4dae357cb0db1b1c6916c0650510712b2f36bce4408c1e04f7976e7effb13b5"
     }
   },
   "gates": [

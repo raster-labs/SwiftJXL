@@ -47,16 +47,62 @@ def expected_purls(identity, revision):
     return {f"pkg:swift/{identity}@{revision}", f"pkg:swift/{identity}/{identity}:SwiftJXL@{revision}"}
 
 
-def derive_spdx(original, revision, identity, raw_hash, runner_hash, now, identifier):
+def recognised_purls(identity, revision, canonical_root=None):
+    if canonical_root is None:
+        return expected_purls(identity, revision)
+    require(identity == "swiftjxl" and canonical_root == f"pkg:swift/github.com/raster-labs/swiftjxl@{revision}",
+            "Unexpected canonical repository identity")
+    return {canonical_root, f"pkg:swift/github.com/raster-labs/swiftjxl:SwiftJXL@{revision}"}
+
+
+def verify_repository_alias(evidence, origin):
+    rows = evidence.get("queries", [])
+    require(len(rows) == 2 and {row.get("query") for row in rows} == {"raster-labs/swiftjxl", "raster-labs/SwiftJXL"}
+            and len({row.get("repositoryID") for row in rows}) == 1
+            and all(str(row.get("repositoryID", "")).isdigit() and row.get("canonicalFullName") == "raster-labs/SwiftJXL"
+                    and row.get("cloneURL") == origin for row in rows)
+            and evidence.get("sameRepository") is True, "Repository alias evidence does not establish the same source repository")
+
+
+def derive_spdx(original, revision, identity, raw_hash, runner_hash, now, identifier, canonical_root=None):
     document, edits = copy.deepcopy(original), []
     require(document.get("@context") == SEMANTIC_SOURCES["spdx-context.jsonld"], "Unexpected SPDX context")
     graph = document["@graph"]
     packages = [(i, node) for i, node in enumerate(graph) if node.get("type") == "software_Package"]
     require(len(packages) == 2 and {node.get("name") for _, node in packages} == {identity, "SwiftJXL"},
             "Unexpected package graph; derivation is limited to the observed standalone graph")
-    malformed = expected_purls(identity, revision)
-    require({node.get("externalUrl") for _, node in packages} == malformed,
+    recognised = recognised_purls(identity, revision, canonical_root)
+    require({node.get("externalUrl") for _, node in packages} == recognised,
             "Unrecognised package URL; do not remove an unknown or potentially valid identifier")
+    if canonical_root:
+        require(next(node for _, node in packages if node["name"] == identity)["externalUrl"] == canonical_root,
+                "Root repository identifier is attached to the wrong package")
+        # SwiftPM emits an unattached ExternalIdentifier complex value as
+        # though it were an Element, then points a relationship at an Element
+        # identity it never defines. An anonymous complex value alone is valid.
+        # The verified root purl/version already retain the commit and origin.
+        # Preserve these exact defective objects in the edit record; do not
+        # invent an SPDX source Element or a different kind of Git identifier.
+        source_id = "urn:spdx:" + revision
+        infos = {node["creationInfo"] for _, node in packages}
+        require(len(infos) == 1, "Unexpected source creation information")
+        expected_identifier = {"type": "ExternalIdentifier", "externalIdentifierType": "gitoid",
+            "identifier": source_id, "identifierLocator": ["https://github.com/raster-labs/SwiftJXL.git"]}
+        expected_relation = {"type": "Relationship", "creationInfo": next(iter(infos)),
+            "spdxId": source_id + "-generates", "from": source_id, "relationshipType": "generates",
+            "to": [node["spdxId"] for _, node in packages]}
+        removals = [(i, node) for i, node in enumerate(graph) if node in (expected_identifier, expected_relation)]
+        require(len(removals) == 2 and sum(node == expected_identifier for _, node in removals) == 1
+                and sum(node == expected_relation for _, node in removals) == 1
+                and all(i > max(index for index, _ in packages) for i, _ in removals),
+                "Unrecognised orphan source identifier/relationship; do not discard unknown provenance")
+        removed_indices = {index for index, _ in removals}
+        require(not any(value in (source_id, source_id + "-generates")
+                        for index, node in enumerate(graph) if index not in removed_indices
+                        for _, value in gate.walk(node)), "Other references to defective source nodes must be reviewed")
+        for index, node in reversed(removals):
+            edits.append({"operation": "remove", "pointer": f"/@graph/{index}", "before": graph.pop(index),
+                "reason": "Malformed orphan source identifier and dangling generates edge; exact originals retained here, verified source commit/origin retained in the package version/purl and repository evidence"})
     namespace = uuid.UUID(identifier)
     ci_id = "urn:uuid:" + str(uuid.uuid5(namespace, "creationInfo"))
     agent_id = "urn:uuid:" + str(uuid.uuid5(namespace, "agent"))
@@ -75,8 +121,14 @@ def derive_spdx(original, revision, identity, raw_hash, runner_hash, now, identi
         path = f"/@graph/{index}"
         require(node.get("software_internalVersion") == revision and "software_packageVersion" not in node
                 and "software_packageUrl" not in node, "Unexpected package-version fields")
-        remove(node, path, "externalUrl", edits,
-               "Unknown SPDX property containing a malformed Swift purl: required source-host/organisation namespace is absent; optional identifier omitted")
+        purl = node["externalUrl"]
+        if purl == canonical_root:
+            remove(node, path, "externalUrl", edits, "Unknown SPDX property; preserve the verified emitted repository identifier using the standard property")
+            change(node, path, "software_packageUrl", purl, edits, "Preserve the exact emitted root purl; origin, commit pedigree and GitHub repository alias were verified")
+        else:
+            reason = ("Product-colon suffix names a build product, not the verified source repository; optional product purl omitted without inventing a replacement"
+                      if canonical_root else "Malformed Swift purl lacks the required source-host/organisation namespace; optional identifier omitted")
+            remove(node, path, "externalUrl", edits, "Unknown SPDX property. " + reason)
         value = node["software_internalVersion"]
         remove(node, path, "software_internalVersion", edits, "Unknown SPDX property")
         change(node, path, "software_packageVersion", value, edits, "Preserve the exact recorded source revision using its standard property")
@@ -103,7 +155,7 @@ def derive_spdx(original, revision, identity, raw_hash, runner_hash, now, identi
     return document, edits
 
 
-def derive_cyclonedx(original, revision, identity, raw_hash, runner_hash, now):
+def derive_cyclonedx(original, revision, identity, raw_hash, runner_hash, now, canonical_root=None):
     document, edits = copy.deepcopy(original), []
     require(document.get("bomFormat") == "CycloneDX" and document.get("specVersion") == "1.7", "Unexpected CycloneDX format")
     require(document.get("version") == 1, "Expected original BOM version 1")
@@ -113,15 +165,20 @@ def derive_cyclonedx(original, revision, identity, raw_hash, runner_hash, now):
     matches = [i for i, item in enumerate(components) if item == primary]
     require(len(matches) == 1 and len(gate.semantic_errors(document, "cyclonedx")) == 1,
             "Expected exactly one identical duplicate of the metadata component")
-    require({item.get("purl") for item in components} == expected_purls(identity, revision),
+    require({item.get("purl") for item in components} == recognised_purls(identity, revision, canonical_root),
             "Unrecognised package URLs; no identifier may be guessed or silently removed")
+    if canonical_root:
+        require(next(item for item in components if item["name"] == identity)["purl"] == canonical_root,
+                "Root repository identifier is attached to the wrong component")
     index = matches[0]
     edits.append({"operation": "remove", "pointer": f"/components/{index}", "before": components.pop(index),
                   "reason": "Identical product remains at metadata.component; retain one unique bom-ref definition"})
     for path, node in [("/components/0", components[0]), ("/metadata/component", primary)]:
         require(node.get("version") == revision, "Unexpected component source revision")
-        remove(node, path, "purl", edits,
-               "Malformed Swift purl lacks required source-host/organisation namespace; optional identifier omitted, original retained in provenance")
+        if node["purl"] != canonical_root:
+            remove(node, path, "purl", edits,
+                   "Product-colon suffix is not the verified source repository; optional product identifier omitted, original retained in provenance"
+                   if canonical_root else "Malformed Swift purl lacks required source-host/organisation namespace; optional identifier omitted, original retained in provenance")
     change(document, "", "version", 2, edits, "Increment modified BOM version while retaining its original serialNumber")
     change(document["metadata"], "/metadata", "timestamp", now, edits, "Actual time of derived BOM creation")
     tool_container = document["metadata"].get("tools")
@@ -164,6 +221,8 @@ def main():
     parser.add_argument("--build-report", required=True, type=Path)
     parser.add_argument("--schemas", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--repository-identity", type=Path,
+                        help="Read-only GitHub alias evidence for an origin-tracked canonical SwiftJXL checkout; preserve its exact emitted root purl")
     args = parser.parse_args()
     output, schemas, build_path = args.output.resolve(), args.schemas.resolve(), args.build_report.resolve()
     output.mkdir(parents=True, exist_ok=False)
@@ -173,7 +232,7 @@ def main():
               "command": [sys.executable, str(Path(__file__).resolve()), *sys.argv[1:]], "runnerSHA256": runner_hash,
               "scope": "Explicitly derived, validated SwiftPM package-graph SBOMs; original generator output remains defective",
               "limitations": ["No complete SDK, runtime or embedded third-party inventory is inferred",
-                              "Optional malformed purls omitted; no canonical remote package identity is guessed"],
+                              "Only recognised malformed or product-only purls are omitted; a verified emitted root purl is preserved without guessing a remote identity"],
               "environment": {"python": platform.python_version()}, "artifacts": []}
     try:
         from jsonschema import FormatChecker
@@ -212,6 +271,29 @@ def main():
         require(re.fullmatch("[0-9a-f]{40}", revision) and not build["working_tree"], "Require clean committed source build evidence")
         report["sourceRevision"] = revision
         report["buildReportSHA256"] = gate.digest(build_path.read_bytes())
+        canonical_root = None
+        if args.repository_identity:
+            repository = Path(build["repository"])
+            def git(*arguments):
+                return subprocess.check_output(["git", "-C", str(repository), *arguments], text=True).strip()
+            origin = git("remote", "get-url", "origin")
+            require(origin == "https://github.com/raster-labs/SwiftJXL.git" and identity == "swiftjxl"
+                    and git("rev-parse", "HEAD") == revision and not git("status", "--porcelain"),
+                    "Canonical derivation requires the same clean origin-tracked SwiftJXL source checkout")
+            require(git("rev-parse", "@{upstream}") == revision, "Tracked origin revision differs from the build")
+            alias_bytes = args.repository_identity.read_bytes()
+            alias = json.loads(alias_bytes)
+            verify_repository_alias(alias, origin)
+            (output / "repository-identity.json").write_bytes(alias_bytes)
+            canonical_root = f"pkg:swift/github.com/raster-labs/swiftjxl@{revision}"
+            report["repositoryIdentity"] = {"origin": origin, "head": revision, "upstream": revision,
+                "evidenceSHA256": gate.digest(alias_bytes), "emittedRootPURL": canonical_root,
+                "note": "Observed repository alias only; Swift purl namespace/name case sensitivity is not relaxed."}
+            cdx_artifact = next(item for item in raw_validation["artifacts"] if item["specification"] == "cyclonedx")
+            cdx = json.loads(gate.verified_bytes(output / "raw-validation" / cdx_artifact["preservedPath"], cdx_artifact["sha256"]))
+            require(len(cdx["components"]) == 2 and all(item.get("pedigree", {}).get("commits") ==
+                    [{"uid": revision, "url": origin}] for item in cdx["components"]),
+                    "Emitted commit pedigree does not match the verified origin and revision")
         bundle = output / "semantic-inputs"
         bundle.mkdir()
         semantic_sources = json.loads((schemas / "semantic-sources.json").read_text())
@@ -245,9 +327,9 @@ def main():
             original = json.loads(gate.verified_bytes(raw_path, artifact["sha256"]))
             specification = artifact["specification"]
             if specification == "spdx":
-                derived, edits = derive_spdx(original, revision, identity, artifact["sha256"], runner_hash, now, str(uuid.uuid4()))
+                derived, edits = derive_spdx(original, revision, identity, artifact["sha256"], runner_hash, now, str(uuid.uuid4()), canonical_root)
             else:
-                derived, edits = derive_cyclonedx(original, revision, identity, artifact["sha256"], runner_hash, now)
+                derived, edits = derive_cyclonedx(original, revision, identity, artifact["sha256"], runner_hash, now, canonical_root)
             destination = derived_dir / f"SwiftJXL-{specification}-derived.json"
             destination.write_text(json.dumps(derived, indent=2) + "\n")
             result = {"specification": specification, "rawSHA256": artifact["sha256"],

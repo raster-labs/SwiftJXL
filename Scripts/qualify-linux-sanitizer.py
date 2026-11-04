@@ -38,6 +38,38 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def preserve_output(directory, entry, raw):
+    # Concurrent test/sanitizer writes can interleave UTF-8 sequences. Retain
+    # the exact bytes and command exit before decoding only for text checks.
+    (directory / entry["log"]).write_bytes(raw)
+    entry.update(logSHA256=hashlib.sha256(raw).hexdigest(), logBytes=len(raw))
+    try:
+        text = raw.decode("utf-8")
+        entry["validUTF8"] = True
+    except UnicodeDecodeError as error:
+        text = raw.decode("utf-8", errors="replace")
+        entry.update(validUTF8=False, decodeError={"start": error.start, "end": error.end, "reason": error.reason})
+    return text
+
+
+def preserve_streams(directory, entry, stdout, stderr):
+    streams = {}
+    for name, raw in [("stdout", stdout), ("stderr", stderr)]:
+        record = {"log": entry["label"] + "." + name + ".log"}
+        preserve_output(directory, record, raw)
+        streams[name] = record
+    entry["streams"] = streams
+    entry["combinedLogOrdering"] = "stdout then stderr; original streams retained separately; no cross-stream chronology inferred"
+    return preserve_output(directory, entry, stdout + (b"\n" if stdout and stderr else b"") + stderr)
+
+
+def xml_identity(case):
+    classname, name = case.get("classname", ""), case.get("name", "")
+    require(classname and name, "Missing xUnit test identity")
+    # Discovery spells free functions module.function and methods module.Suite/function.
+    return classname + ("/" if "." in classname else ".") + name
+
+
 def negative_probe_detected(exit_code, log, expected_diagnostics):
     # Swift access instrumentation reports this deliberate race either as a
     # Swift access race or as a raw data race. Both are real TSan findings;
@@ -63,19 +95,21 @@ def profile_evidence(directory):
             "sha256": {str(path.relative_to(directory)): sha(path) for path in paths}}
 
 
-def test_evidence(xml, discovered, log):
+def test_evidence(xml, discovered, log, progress_log=None):
     cases = ET.parse(xml).findall(".//testcase")
-    names = [case.get("classname", "") + "/" + case.get("name", "") for case in cases]
+    names = [xml_identity(case) for case in cases]
     record = {"discoveredDeclarations": len(discovered), "executedDeclarations": len(cases),
               "failedDeclarations": sum(case.find("failure") is not None or case.find("error") is not None for case in cases),
               "skippedDeclarations": sum(case.find("skipped") is not None for case in cases)}
     require(len(cases) == len(discovered) and len(cases) > 0, "Zero tests or discovery/execution mismatch")
     require(len(set(names)) == len(names), "Duplicate xUnit declarations")
+    require(len(set(discovered)) == len(discovered) and set(names) == set(discovered),
+            "Discovery/execution test identities disagree")
     require(not record["failedDeclarations"] and not record["skippedDeclarations"], "Failing/skipped tests cannot satisfy this gate")
     for name in REQUIRED_TESTS:
         require(any(name in item for item in names), f"Required lifetime/race/oracle test missing: {name}")
     counts = []
-    for line in log.splitlines():
+    for line in (log if progress_log is None else progress_log).splitlines():
         if re.search(r"\bTest (?!run\b|case\b).+ passed after", line):
             match = re.search(r"with (\d+) test cases passed", line)
             counts.append(int(match.group(1)) if match else 1)
@@ -123,21 +157,19 @@ def main():
         entry = {"label": label, "argv": list(map(str, command)), "cwd": str(repo), "log": label + ".log"}
         report["commands"].append(entry)
         start = time.monotonic()
-        text = ""
+        stdout, stderr = b"", b""
         try:
             result = subprocess.run(entry["argv"], cwd=repo, env=env, stdout=subprocess.PIPE,
-                                    stderr=subprocess.STDOUT, text=True, timeout=args.timeout)
-            text, entry["exitCode"] = result.stdout, result.returncode
+                                    stderr=subprocess.PIPE, timeout=args.timeout)
+            stdout, stderr, entry["exitCode"] = result.stdout, result.stderr, result.returncode
         except subprocess.TimeoutExpired as error:
-            text = error.stdout or ""
-            if isinstance(text, bytes):
-                text = text.decode(errors="replace")
+            stdout, stderr = error.stdout or b"", error.stderr or b""
             entry.update(exitCode=None, timedOut=True)
         except OSError as error:
-            text = str(error)
+            stderr = str(error).encode("utf-8")
             entry.update(exitCode=None, launchError=str(error))
         entry["seconds"] = round(time.monotonic() - start, 3)
-        (output / entry["log"]).write_text(text)
+        text = preserve_streams(output, entry, stdout, stderr)
         save()
         if expected_failure:
             entry["expectedDiagnostics"] = expected_failure
@@ -230,7 +262,8 @@ def main():
         command = ["swift", "test", "--build-system", "native", "--scratch-path", str(output / "build"), "--jobs", "2",
                    "-c", "release", "--sanitize", args.sanitizer, "--enable-swift-testing",
                    "--enable-xctest" if xctest else "--disable-xctest", "--no-parallel"]
-        discovery = run("test-discovery", command + ["list"])
+        run("test-discovery", command + ["list"])
+        discovery = (output / "test-discovery.stdout.log").read_bytes().decode("utf-8", errors="replace")
         names = [line.strip() for line in discovery.splitlines() if line.split(".", 1)[0] in modules]
         require(names, "No tests discovered")
         (output / "discovered-tests.json").write_text(json.dumps(names, indent=2) + "\n")
@@ -249,7 +282,8 @@ def main():
                     # A halt-on-error sanitizer can terminate before XML closes.
                     # Retain that artifact without replacing the failing command.
                     report["xunitOutcome"] = {"complete": False, "parseError": str(error)}
-        report["tests"] = test_evidence(xml, names, log)
+        progress = (output / "full-tests.stdout.log").read_bytes().decode("utf-8", errors="replace")
+        report["tests"] = test_evidence(xml, names, log, progress)
         report["independentProfileCoverage"] = profile_evidence(output / "oracle-fixtures")
         for label, contents, expected_text in [
             ("missing", None, "absent-vectors.json"),

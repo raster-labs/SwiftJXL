@@ -21,6 +21,74 @@ import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+
+def normalise_test_identity(identity, modules):
+    """Reconcile only Swift Testing's top-level function separator with xUnit."""
+    for module in modules:
+        if identity.startswith(module + '/'):
+            return identity
+        if identity.startswith(module + '.'):
+            suffix = identity[len(module) + 1:]
+            return identity if '/' in suffix else module + '/' + suffix
+    raise ValueError('Test identity does not belong to a declared test module: ' + identity)
+
+
+def suite_identity_coverage(discovered, executed, modules, required):
+    discovered = [normalise_test_identity(name, modules) for name in discovered]
+    executed = [normalise_test_identity(name, modules) for name in executed]
+    missing = sorted(set(discovered) - set(executed))
+    unexpected = sorted(set(executed) - set(discovered))
+    unique = len(discovered) == len(set(discovered)) and len(executed) == len(set(executed))
+    required_present = all(any(name.rsplit('/', 1)[-1].split('(', 1)[0] == item for name in executed)
+                           for item in required)
+    return {'passed': bool(discovered) and unique and not missing and not unexpected and required_present,
+            'discoveredDeclarations': len(discovered), 'executedDeclarations': len(executed),
+            'identitiesUnique': unique, 'exactIdentitySetAgreement': not missing and not unexpected,
+            'missing': missing, 'unexpected': unexpected,
+            'requiredLifetimeRaceAndOracleTests': required, 'requiredTestsPresent': required_present,
+            'normalisedDiscovered': sorted(discovered), 'normalisedExecuted': sorted(executed)}
+
+
+def console_coverage(stdout, stderr, expected):
+    summaries, failures = [], []
+    for stream, text in [('stdout', stdout), ('stderr', stderr)]:
+        summaries += [{'stream': stream, 'declarations': int(match.group(1))}
+                      for match in re.finditer(r'^✔ Test run with (\d+) tests(?: in \d+ suites)? passed after [0-9.]+ seconds\.$', text, re.M)]
+        failures += [{'stream': stream, 'line': line} for line in text.splitlines()
+                     if line.startswith('✘') or re.search(r'(?:ERROR|SUMMARY): (?:AddressSanitizer|ThreadSanitizer)|FATAL: ThreadSanitizer', line)]
+    return {'passed': len(summaries) == 1 and summaries[0]['declarations'] == expected and not failures,
+            'passingSummaries': summaries, 'failureDiagnostics': failures,
+            'bothStreamsInspected': True}
+
+
+def run_raw(argv, output, stem, cwd, env, timeout=3600):
+    """Persist exact streams and process outcome before attempting text decoding."""
+    stdout_path, stderr_path = output/(stem + '.stdout.log'), output/(stem + '.stderr.log')
+    record = {'command': argv, 'exitCode': None, 'stdout': stdout_path.name, 'stderr': stderr_path.name}
+    started = time.monotonic()
+    try:
+        with stdout_path.open('wb') as stdout, stderr_path.open('wb') as stderr:
+            result = subprocess.run(argv, cwd=cwd, stdout=stdout, stderr=stderr, timeout=timeout, env=env)
+        record['exitCode'] = result.returncode
+        return result, record
+    except (OSError, subprocess.SubprocessError) as error:
+        record['processFailure'] = str(error)
+        raise
+    finally:
+        record['seconds'] = time.monotonic() - started
+        for stream, path in [('stdout', stdout_path), ('stderr', stderr_path)]:
+            if path.exists():
+                data = path.read_bytes()
+                record[stream + 'Bytes'] = len(data)
+                record[stream + 'SHA256'] = hashlib.sha256(data).hexdigest()
+        if stdout_path.exists() and stderr_path.exists():
+            combined = output/(stem + '.log')
+            combined.write_bytes(stdout_path.read_bytes() + stderr_path.read_bytes())
+            record['combinedLog'] = {'path': combined.name, 'ordering': 'stdout then stderr; not chronological',
+                                     'sha256': hashlib.sha256(combined.read_bytes()).hexdigest()}
+        (output/(stem + '-process.json')).write_text(json.dumps(record, indent=2) + '\n')
+
+
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[2])
 p.add_argument('--output', type=Path, required=True)
@@ -136,23 +204,24 @@ try:
         index = discovery.index('--xunit-output')
         del discovery[index:index+2]
         discovery.append('list')
-        with (a.output/'discovery.log').open('w') as log:
-            discovery_result = subprocess.run(discovery, cwd=a.repo, stdout=log, stderr=subprocess.STDOUT,
-                                              timeout=3600, env=test_env)
-        report.update(discoveryCommand=discovery, discoveryExitCode=discovery_result.returncode)
+        discovery_result, discovery_process = run_raw(discovery, a.output, 'discovery', a.repo, test_env)
+        report.update(discoveryCommand=discovery, discoveryExitCode=discovery_result.returncode,
+                      discoveryProcess=discovery_process)
+        save()
         if discovery_result.returncode != 0:
-            raise RuntimeError('Native test discovery/build failed; inspect discovery.log.')
+            raise RuntimeError('Native test discovery/build failed; inspect discovery stdout/stderr logs.')
         modules = set(re.findall(r'\.testTarget\s*\(\s*name:\s*"([^"]+)"', (a.repo/'Package.swift').read_text()))
-        discovered = [line.strip() for line in (a.output/'discovery.log').read_text().splitlines()
+        discovered = [line.strip() for line in (a.output/'discovery.stdout.log').read_text(encoding='utf-8').splitlines()
                       if line.split('.', 1)[0] in modules]
         (a.output/'discovered-tests.json').write_text(json.dumps(discovered, indent=2)+'\n')
         if not discovered:
             raise RuntimeError('No native test declarations discovered.')
         argv.append('--skip-build')
-    with (a.output/'tests.log').open('w') as log:
-        result = subprocess.run(argv, cwd=a.repo, stdout=log, stderr=subprocess.STDOUT, timeout=3600, env=test_env)
+    result, test_process = run_raw(argv, a.output, 'tests', a.repo, test_env)
     report.update(command=argv, exitCode=result.returncode, elapsedSeconds=time.monotonic()-start,
+                  testProcess=test_process,
                   sourcesUnchanged=sources() == report['sourceSHA256'] and sha(a.repo/'Package.swift') == report['packageManifestSHA256'])
+    save()
     if a.mode == 'physical':
         summary = command(['xcrun', 'xcresulttool', 'get', 'test-results', 'summary', '--path', str(a.output/'runtime.xcresult')])
         try: report['testSummary'] = json.loads(summary.stdout)
@@ -162,6 +231,10 @@ try:
         report['status'] = 'executed-unverified-source' if result.returncode == 0 else 'failed'
         report['sourceVerification'] = 'Required: retain test-host package resolution and linked-object/source manifest before qualification.'
     else:
+        if result.returncode != 0:
+            raise RuntimeError('Native test execution failed; inspect test stdout/stderr logs.')
+        test_stdout = (a.output/'tests.stdout.log').read_text(encoding='utf-8')
+        test_stderr = (a.output/'tests.stderr.log').read_text(encoding='utf-8')
         tests = ET.parse(a.output/'tests.xml').getroot()
         counts = {key: len(list(tests.iter(tag))) for key, tag in
                   [('executed', 'testcase'), ('failed', 'failure'), ('errors', 'error'), ('skipped', 'skipped')]}
@@ -171,10 +244,13 @@ try:
             'sharedSourceSurvivesCallerReleaseAndOneCancelledEncode', 'concurrentEncodersShareOneImmutableSource',
             'cancellationInsideWorkerIsObservedAndAllWorkersJoin', 'independentBothDirections',
             'optionalFullRangeHardwareReciprocalVectors']
-        complete_suite = len(discovered) == counts['executed'] and len(names) == len(set(names)) and all(
-            any(required in name for name in names) for required in required_tests)
-        report['fullSuiteCoverage'] = {'passed': complete_suite, 'discoveredDeclarations': len(discovered),
-            'executedDeclarations': counts['executed'], 'requiredLifetimeRaceAndOracleTests': required_tests}
+        coverage = suite_identity_coverage(discovered, names, modules, required_tests)
+        (a.output/'normalised-test-identities.json').write_text(json.dumps(
+            {key: coverage.pop(key) for key in ['normalisedDiscovered', 'normalisedExecuted']}, indent=2) + '\n')
+        report['fullSuiteCoverage'] = coverage
+        report['fullSuiteCoverage']['identityInventorySHA256'] = sha(a.output/'normalised-test-identities.json')
+        report['executionConsoleCoverage'] = console_coverage(test_stdout, test_stderr, counts['executed'])
+        complete_suite = coverage['passed'] and report['executionConsoleCoverage']['passed']
         expected_profiles = {(bits, channels, associated, transfer, intent)
             for bits in range(8, 17) for channels in range(1, 5)
             for associated in ([0, 1] if channels % 2 == 0 else [0])
