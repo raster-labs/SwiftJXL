@@ -1,6 +1,6 @@
 # swiftjxl-cli: help, diagnostics and installation
 
-Version **2.1.0-dev.2**; Swift 6.2 minimum with Swift 6.4 qualified / Swift 6, Apple OS minimum **26.0**. The CLI targets macOS and Linux; Linux execution remains a qualification requirement. No external parser package or sibling codec is required. Current commands provide help, version, executable capabilities, supported-header inspection and full supported-frame validation. Encode/decode support the explicit UInt16 NRRD and integer colour PNM/PAM profiles below. Native transcode now supports the bounded JPEG reconstruction profile below.
+Version **2.0.0**; Swift 6.2 minimum with Swift 6.4 qualified / Swift 6, Apple OS minimum **26.0**. The CLI targets macOS and Linux; Linux execution remains a qualification requirement. No external parser package or sibling codec is required. Current commands provide help, version, executable capabilities, supported-header inspection and full supported-frame validation. Encode/decode support the explicit UInt16 NRRD and integer colour PNM/PAM profiles below. Native transcode now supports the bounded JPEG reconstruction profile below.
 
 ```sh
 swift run swiftjxl-cli --help

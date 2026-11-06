@@ -1,5 +1,13 @@
 # Change log
 
+## SwiftJXL 2.0.0 — 2026-11-06
+
+First stable release of SwiftJXL (`2.0.0`, tagged `v2.0.0`), the standalone native Swift JPEG XL (`ISO/IEC 18181`) library and `swiftjxl-cli` executable for the Swift Image Compression Suite (promoted from `2.1.0-dev.2` over the `JXLSwift` `1.x` predecessor series; shared contract `0.10.0`, Swift `6.2` tools minimum / Swift `6.4` qualified in Swift `6` language mode, Apple OS `26.0` deployment floors).
+
+- Promote `VERSION`, `swiftjxl-cli` (`Sources/SwiftJXLCLI/main.swift`), and the section 1 manual (`ManPages/swiftjxl-cli.1`) to `2.0.0` (`v2.0.0`), and update the release checklist and documentation to bind the `2.0.0` release candidate.
+- Ship the common owning API (`Encoder`, `Decoder`, `Transcoder`, `ImageDescriptor`, `Image`, `ImageDestination`, `ReadOnlyImageStorage`, `WritableImageStorage`, `StorageWriteLease`) across bounded `1..16`-bit lossless Modular coding (with RCT, palettes, Squeeze, and embedded ICC preservation on decode), `8..16`-bit lossy sRGB VarDCT coding (with hierarchical strategies through `64×64`, Gaborish, EPF, and explicit `.libjxl012ARMInteger` numerical profile), autonomous in-memory reversible JPEG ↔ JPEG XL transcoding (`Fidelity.originalBitstream`), independent-frame animation coding, and bounded native JPEG pixel decoding.
+- Verify release gates on the `2.0.0` candidate: `7/7` shared contract SHA-256 checks, `13/13` assigned Milestone 5 library qualification gates, `98` CLI foundation/manual checks, `74` release-validator regressions, `120` production source and `995` fixture provenance checks, and standalone consumer resolution. Retain explicit disclosures for unexecuted physical Apple device testing (`M4-PHYSICAL-DEVICES`) and deferred downstream `DICOMKit` cutover in [Documentation/RELEASE-v2.0.0.md](Documentation/RELEASE-v2.0.0.md).
+
 ## Unreleased — Milestone 5 release preparation, 2026-11-04
 
 Add clean URL/exact-version consumer checks, a synchronised owning-storage migration example, fixture/licence inventories and a source-bound release checklist. Qualify explicitly derived SBOMs with preserved originals and official schema/SPDX semantic validation, and establish the private security reporting/support policy. Add a Linux lock adapter and test-only POSIX oracle launcher for sanitizer qualification, plus Watch-specific resource-profile assertions for large correctness fixtures. Public API, codec fidelity, Watch defaults and VERSION remain unchanged. Physical-device testing and DICOMKit integration are excluded from this assignment; no stable release or cutover is authorised. See [library qualification](Documentation/Engineering/Release/QUALIFICATION.md).
