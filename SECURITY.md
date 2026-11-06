@@ -1,6 +1,6 @@
 # Security policy and implementation requirements
 
-Status: development migration; release qualification is incomplete. No successor release has been published. This policy does not authorise a release or promise a vulnerability response time.
+Status: stable release `2.0.0` (`v2.0.0`); see [Documentation/RELEASE-v2.0.0.md](Documentation/RELEASE-v2.0.0.md) for executed qualification gates and explicitly disclosed physical-device exclusions. No fixed vulnerability response-time deadline is promised.
 
 ## Reporting
 
@@ -10,16 +10,14 @@ Include affected version/commit, platform, a minimal safe reproducer, expected/a
 
 ## Supported versions
 
-During development, report vulnerabilities against the latest `main` revision or current development version (`2.1.0-dev.2`). Fixes are developed on `main`; older development snapshots and the predecessor JXLSwift releases receive no promised backports. There is currently no stable successor release with security support. Before publishing the first stable release, maintainers must update this table with its version.
-
-Once stable releases begin, security fixes target the latest stable release and `main`. Older stable releases are unsupported unless a published advisory explicitly lists a backport. Consumers should upgrade to the fixed release identified in the advisory. The release task must replace the empty stable entry below with the actual supported version; development qualification alone does not start a stable support period.
+Security fixes target the latest stable `2.0.x` release (`2.0.0`) and `main`. Older snapshots and predecessor `JXLSwift` releases receive no backport commitment under this repository's policy. Consumers should upgrade to the fixed release identified in any published advisory.
 
 | Version | Security maintenance |
 | --- | --- |
-| Latest `main` / current development version | Reports accepted; fixes on `main`; development use only |
-| Older development snapshots | No backport commitment; update to the latest revision |
+| `2.0.x` (latest: `2.0.0`) | Supported for security fixes; upgrade to the latest `2.0.x` release |
+| Latest `main` | Reports accepted; fixes developed on `main` |
+| Older development snapshots | No backport commitment; update to the latest release or revision |
 | Predecessor JXLSwift releases | Outside this repository's maintenance policy |
-| Stable successor series | None published |
 
 ## Threat model
 

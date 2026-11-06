@@ -1,5 +1,9 @@
 # History and provenance — SwiftJXL
 
+## 2026-11-06 — SwiftJXL 2.0.0 release (`v2.0.0`)
+
+Publish the first stable release of SwiftJXL (`2.0.0`, tagged `v2.0.0`) over the merged Milestone 5 library qualification baseline `b9a6f26` (frozen runtime baseline `00f03ff288a7c8e0e2b82d2e71ec22622ede71ae`), promoting `VERSION`, `swiftjxl-cli`, and `ManPages/swiftjxl-cli.1` from `2.1.0-dev.2` to `2.0.0` in the new `2.x` successor series after `JXLSwift` `1.x`. Verify all 7 shared contract SHA-256 digests (`0.10.0`), 13/13 assigned Milestone 5 qualification gates, 98 CLI foundation/manual checks, 74 release-validator regressions, 120 source and 995 fixture provenance hashes, and standalone versioned consumer resolution. Record complete release qualification and explicitly disclosed unexecuted/deferred gates (physical Apple devices and downstream `DICOMKit` cutover) in [Documentation/RELEASE-v2.0.0.md](Documentation/RELEASE-v2.0.0.md).
+
 ## 2026-11-04 — Milestone 5 release preparation
 
 Prepare versioned consumption, public examples, distribution notices and an independently checked release-gate record from committed baseline `3e00d934bef331cdbc7c4be752857dc9eca8f799`, preserving unrelated decoder work. The common contract and selected predecessor remain unchanged. The [release record](Documentation/Engineering/Release/README.md) distinguishes executed packaging checks from outstanding stable-release qualification; no production cutover or stable release occurred.

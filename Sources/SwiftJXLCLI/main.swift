@@ -9,7 +9,7 @@ import Glibc
 #endif
 
 private let tool = "swiftjxl-cli"
-private let version = "2.1.0-dev.2"
+private let version = "2.0.0"
 private let reserved: [String] = []
 private let active = ["inspect", "validate", "encode", "decode", "transcode"]
 private let valueOptions: Set<String> = ["--input", "-i", "--output", "-o", "--input-format", "--output-format",
@@ -114,7 +114,7 @@ private func help(_ command: String?) -> String {
     let common = """
     OPTIONS
       -h, --help                 Show this help; also: help [command].
-      --version                  Show the development version.
+      --version                  Show the version.
       -v, -vv ... -vvvvv         Increase verbosity (maximum 5).
       --verbose LEVEL           Set verbosity to 1..5 or + through +++++.
       --verbose=LEVEL            Equivalent explicit form; -verbose: LEVEL is accepted.
@@ -320,7 +320,7 @@ private func help(_ command: String?) -> String {
       inspect, validate         Inspect headers or validate the supported scalar frame.
       encode, decode            NRRD or integer colour PNM/PAM/JPEG XL file and pipe conversion.
       help [command]             Show global or command-specific help.
-      version                    Show the development version.
+      version                    Show the version.
       transcode                 Reversible native JPEG/JPEG XL coefficient conversion.
 
     Requires Swift 6.2 or later to build; Apple OS baseline 26.0. CLI hosts: macOS/Linux.
@@ -362,7 +362,7 @@ private func write(_ text: String, to handle: FileHandle) throws {
             try write("[\(level)] \(tool): \(message)\n", to: .standardError)
         }
     }
-    try diagnostic(1, "development version \(version)")
+    try diagnostic(1, "version \(version)")
     try diagnostic(2, "reporting \(options.command ?? "help")")
     if let command = options.command, active.contains(command) {
         return try await runPayload(command, options: options, start: start, diagnostic: diagnostic)
