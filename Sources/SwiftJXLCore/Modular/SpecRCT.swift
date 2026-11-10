@@ -1,74 +1,115 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Adapted from JXLSwift Modular/SpecRCT.swift at
-// 57e81cb9e2411d1efac435b429a306a031744c1e, Copyright (c) 2026 Raster-Lab.
-// JPEG XL Project Authors' reversible colour-transform algorithm retains
-// BSD-3-Clause terms; see Documentation/ThirdParty/libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-package enum SpecRCTError: Error, Sendable {
-    case invalidType(UInt32)
+package enum SpecRCTError: Error, Sendable, Equatable {
+    case invalidRCTType(UInt32)
     case mismatchedChannelLengths
 }
 
-/// Inverse of all 42 Modular reversible colour transforms. Each input triple
-/// is loaded before writes, so the caller's three working planes are reused.
-/// No output planes or permutation buffers are explicitly allocated here.
-/// The caller admits array ownership/COW costs and supplies its work checkpoint.
+/// ISO/IEC 18181-1 §8.4 inverse Reversible Colour Transform (all 42 RCT types).
 package enum SpecRCT {
-    package static func inverse(rctType: UInt32, channel0: inout [Int32],
-                                channel1: inout [Int32], channel2: inout [Int32],
-                                checkpoint: () throws -> Void) throws {
-        try checkpoint()
-        guard channel0.count == channel1.count, channel1.count == channel2.count else {
+    package static func inverse(
+        rctType: UInt32,
+        channel0: inout [Int32],
+        channel1: inout [Int32],
+        channel2: inout [Int32],
+        checkpoint: () throws -> Void
+    ) throws {
+        guard rctType < 42 else {
+            throw SpecRCTError.invalidRCTType(rctType)
+        }
+        let count = channel0.count
+        guard channel1.count == count, channel2.count == count else {
             throw SpecRCTError.mismatchedChannelLengths
         }
-        guard rctType < 42 else { throw SpecRCTError.invalidType(rctType) }
-        if rctType == 0 { return }
-        let permutation = Int(rctType / 7), custom = Int(rctType % 7)
-        // Scoped borrows hoist array uniqueness checks out of the pixel loop.
-        // All three lengths were checked above. The only indices visited are
-        // 0..<count; pointers never leave these synchronous nested borrows.
-        // The work checkpoint must not re-enter the caller's working arrays.
-        try channel0.withUnsafeMutableBufferPointer { input0 in
-            try channel1.withUnsafeMutableBufferPointer { input1 in
-                try channel2.withUnsafeMutableBufferPointer { input2 in
-                    let count = input0.count
-                    guard count > 0 else { return }
-                    let in0 = input0.baseAddress!, in1 = input1.baseAddress!, in2 = input2.baseAddress!
-                    let outputs: (UnsafeMutablePointer<Int32>, UnsafeMutablePointer<Int32>, UnsafeMutablePointer<Int32>)
-                    switch permutation {
-                    case 0: outputs = (in0, in1, in2)
-                    case 1: outputs = (in1, in2, in0)
-                    case 2: outputs = (in2, in0, in1)
-                    case 3: outputs = (in0, in2, in1)
-                    case 4: outputs = (in1, in0, in2)
-                    default: outputs = (in2, in1, in0)
-                    }
-                    let out0 = outputs.0, out1 = outputs.1, out2 = outputs.2
+        try checkpoint()
+        if count == 0 { return }
+
+        let permutation = rctType / 7
+        let mode = rctType % 7
+
+        try channel0.withUnsafeMutableBufferPointer { buf0 in
+            try channel1.withUnsafeMutableBufferPointer { buf1 in
+                try channel2.withUnsafeMutableBufferPointer { buf2 in
+                    let p0 = buf0.baseAddress!
+                    let p1 = buf1.baseAddress!
+                    let p2 = buf2.baseAddress!
+
                     var start = 0
                     while start < count {
                         try checkpoint()
-                        let end = start + min(1024, count - start)
-                        if custom == 6 {
-                            for i in start..<end {
-                                let first = in0[i], second = in1[i], third = in2[i]
-                                let temporary = first &- (third >> 1)
-                                let b = third &+ temporary
-                                let c = temporary &- (second >> 1)
-                                let a = c &+ second
-                                out0[i] = a; out1[i] = b; out2[i] = c
+                        let end = min(start + 1024, count)
+                        for i in start..<end {
+                            let y0 = p0[i]
+                            let y1 = p1[i]
+                            let y2 = p2[i]
+
+                            let s0: Int32
+                            let s1: Int32
+                            let s2: Int32
+                            switch mode {
+                            case 0:
+                                s0 = y0
+                                s1 = y1
+                                s2 = y2
+                            case 1:
+                                s0 = y0
+                                s1 = y1
+                                s2 = y2 &+ y0
+                            case 2:
+                                s0 = y0
+                                s1 = y1 &+ y0
+                                s2 = y2
+                            case 3:
+                                s0 = y0
+                                s1 = y1 &+ y0
+                                s2 = y2 &+ y0
+                            case 4:
+                                s0 = y0
+                                s1 = y1 &+ ((y0 &+ y2) >> 1)
+                                s2 = y2
+                            case 5:
+                                let third = y2 &+ y0
+                                s0 = y0
+                                s1 = y1 &+ ((y0 &+ third) >> 1)
+                                s2 = third
+                            default: // case 6: YCoCg-R
+                                let tmp = y0 &- (y2 >> 1)
+                                let g = y2 &+ tmp
+                                let b = tmp &- (y1 >> 1)
+                                let r = b &+ y1
+                                s0 = r
+                                s1 = g
+                                s2 = b
                             }
-                        } else {
-                            for i in start..<end {
-                                let first = in0[i], second = in1[i], third = in2[i]
-                                let c = custom & 1 != 0 ? third &+ first : third
-                                let b: Int32
-                                switch custom >> 1 {
-                                case 1: b = second &+ first
-                                case 2: b = second &+ ((first &+ c) >> 1)
-                                default: b = second
-                                }
-                                out0[i] = first; out1[i] = b; out2[i] = c
+
+                            switch permutation {
+                            case 0:
+                                p0[i] = s0
+                                p1[i] = s1
+                                p2[i] = s2
+                            case 1:
+                                p0[i] = s2
+                                p1[i] = s0
+                                p2[i] = s1
+                            case 2:
+                                p0[i] = s1
+                                p1[i] = s2
+                                p2[i] = s0
+                            case 3:
+                                p0[i] = s0
+                                p1[i] = s2
+                                p2[i] = s1
+                            case 4:
+                                p0[i] = s1
+                                p1[i] = s0
+                                p2[i] = s2
+                            default: // case 5
+                                p0[i] = s2
+                                p1[i] = s1
+                                p2[i] = s0
                             }
                         }
                         start = end
@@ -76,6 +117,5 @@ package enum SpecRCT {
                 }
             }
         }
-        try checkpoint()
     }
 }

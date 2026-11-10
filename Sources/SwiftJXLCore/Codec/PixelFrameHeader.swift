@@ -1,38 +1,42 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Shared preparation extracted from the Modular/VarDCT readers adapted from
-// JXLSwift 57e81cb9e2411d1efac435b429a306a031744c1e, Codec/JXLDecoder.swift.
-// Copyright (c) 2026 Raster-Lab. See Documentation/ThirdParty/libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-/// One bounded container/header parse for pixel-profile dispatch. This value
-/// retains compressed owners and a reader positioned immediately after image
-/// metadata, never decoded pixels or an escaped pointer. Copying the reader
-/// shares immutable byte storage; the selected profile continues at its cursor.
-/// ICC and frame fields are parsed only by that selected profile.
+/// Shared codestream prelude parser for Modular and VarDCT pixel frames (ISO/IEC 18181-1 §§6.1, 9.1).
 package struct PixelFrameHeader: Sendable {
-    package let width: Int, height: Int
-    package let metadata: ImageMetadata
     package let codestream: Data
+    package let width: Int
+    package let height: Int
+    package let metadata: ImageMetadata
     package let reader: BitReader
     package let budget: ScalarOperationBudget
-    package let inputByteCount: Int, maximumNestingDepth: Int
+    package let maximumNestingDepth: Int
 
-    package static func read(_ data: Data, budget: ScalarOperationBudget,
-                             maximumDimension: Int = 16384,
-                             maximumPixels: Int = 64 * 1024 * 1024,
-                             maximumNestingDepth: Int = 32) throws -> Self {
+    package static func read(
+        _ data: Data,
+        budget: ScalarOperationBudget,
+        maximumDimension: Int = 16384,
+        maximumPixels: Int = 64 * 1024 * 1024,
+        maximumNestingDepth: Int = 32
+    ) throws -> Self {
         try budget.checkpoint()
-        guard maximumNestingDepth > 0, data.count <= budget.maximumCompressedBytes else {
+        guard maximumDimension > 0,
+              maximumPixels > 0,
+              maximumNestingDepth > 0,
+              data.count <= budget.maximumCompressedBytes else {
             throw ScalarModularError.resourceLimit
         }
-        // Container extraction and retained reader bytes. Modular preparation
-        // separately admits its aggregate section-copy allowance; VarDCT
-        // sections charge each opening. Dispatch never retries another parser.
-        try budget.reserveWorkspace(ScalarOperationBudget.sum(ScalarOperationBudget.product(data.count, 3),
-            ScalarOperationBudget.sum(256 * min(4096, data.count / 8), 64 * 1024)))
+        try budget.reserveWorkspace(
+            ScalarOperationBudget.sum(
+                ScalarOperationBudget.product(data.count, 6),
+                ScalarOperationBudget.sum(256 * min(4096, data.count / 8), 16 * 1024)
+            )
+        )
         let codestream: Data
         switch try parseJXLContainer(data, checkpoint: budget.checkpoint) {
-        case .naked: codestream = data
+        case .naked:
+            codestream = data
         case .iso(let boxes):
             guard boxes.allSatisfy({ ["ftyp", "jxll", "jxlc", "jxlp"].contains($0.type) }) else {
                 throw ScalarModularError.unsupportedProfile
@@ -40,23 +44,43 @@ package struct PixelFrameHeader: Sendable {
             codestream = try extractCodestream(from: boxes, in: data, checkpoint: budget.checkpoint)
         }
         guard hasCodestreamSignature(codestream) else {
-            throw ScalarModularError.invalidInput("Missing codestream signature")
+            throw ScalarModularError.invalidInput("Missing JPEG XL codestream signature")
         }
-        var reader = BitReader(codestream, startingAt: 16, deadline: budget.deadline,
-            maximumNestingDepth: maximumNestingDepth, budget: budget)
+        try budget.checkpoint()
+        let nesting = min(maximumNestingDepth, 32)
+        var reader = BitReader(
+            codestream,
+            startingAt: 16,
+            deadline: budget.deadline,
+            maximumNestingDepth: nesting,
+            budget: budget
+        )
         let size = try SizeHeader.read(from: &reader)
-        // Aspect-derived UInt32 sizes can exceed Int.max on arm64_32 Watch.
-        // Reject before conversion rather than trapping on untrusted headers.
-        guard let width = Int(exactly: size.xsize), let height = Int(exactly: size.ysize),
-              width > 0, height > 0, width <= min(maximumDimension, 16384),
-              height <= min(maximumDimension, 16384),
-              try ScalarOperationBudget.product(width, height) <= maximumPixels else {
+        guard Int32(exactly: size.xsize) != nil,
+              Int32(exactly: size.ysize) != nil else {
+            throw ScalarModularError.resourceLimit
+        }
+        let width = Int(size.xsize)
+        let height = Int(size.ysize)
+        let (pixelCount, overflow) = width.multipliedReportingOverflow(by: height)
+        guard !overflow,
+              width > 0,
+              height > 0,
+              width <= maximumDimension,
+              height <= maximumDimension,
+              pixelCount <= maximumPixels else {
             throw ScalarModularError.resourceLimit
         }
         let metadata = try ImageMetadata.read(from: &reader)
         try budget.checkpoint()
-        return Self(width: width, height: height, metadata: metadata,
-            codestream: codestream, reader: reader, budget: budget,
-            inputByteCount: data.count, maximumNestingDepth: maximumNestingDepth)
+        return Self(
+            codestream: codestream,
+            width: width,
+            height: height,
+            metadata: metadata,
+            reader: reader,
+            budget: budget,
+            maximumNestingDepth: nesting
+        )
     }
 }

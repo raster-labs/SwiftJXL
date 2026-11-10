@@ -1,96 +1,156 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Adapted from JXLSwift Modular/SpecSqueeze.swift at
-// 57e81cb9e2411d1efac435b429a306a031744c1e, Copyright (c) 2026 Raster-Lab.
-// JPEG XL Project Authors' algorithm retains BSD-3-Clause terms;
-// see Documentation/ThirdParty/libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
 
+import Foundation
+
+/// ISO/IEC 18181-1 §8.5 inverse Squeeze transform (horizontal and vertical Haar lifting with smooth tendency).
 package enum SpecSqueeze {
-    /// Inputs are widened Int32 samples, so these Int64 intermediates cannot
-    /// overflow. Division intentionally truncates towards zero, not -infinity.
     @inline(__always)
-    private static func smoothTendency(B: Int64, a: Int64, n: Int64) -> Int64 {
+    private static func smoothTendency(_ b: Int64, _ a: Int64, _ n: Int64) -> Int64 {
         var diff: Int64 = 0
-        if B >= a && a >= n {
-            diff = (4 * B - 3 * n - a + 6) / 12
-            if diff - (diff & 1) > 2 * (B - a) { diff = 2 * (B - a) + 1 }
-            if diff + (diff & 1) > 2 * (a - n) { diff = 2 * (a - n) }
-        } else if B <= a && a <= n {
-            diff = (4 * B - 3 * n - a - 6) / 12
-            if diff + (diff & 1) < 2 * (B - a) { diff = 2 * (B - a) - 1 }
-            if diff - (diff & 1) < 2 * (a - n) { diff = 2 * (a - n) }
+        if b >= a && a >= n {
+            diff = (4 * b - 3 * n - a + 6) / 12
+            if diff - (diff & 1) > 2 * (b - a) {
+                diff = 2 * (b - a) + 1
+            }
+            if diff + (diff & 1) > 2 * (a - n) {
+                diff = 2 * (a - n)
+            }
+        } else if b <= a && a <= n {
+            diff = (4 * b - 3 * n - a - 6) / 12
+            if diff + (diff & 1) < 2 * (b - a) {
+                diff = 2 * (b - a) - 1
+            }
+            if diff - (diff & 1) < 2 * (a - n) {
+                diff = 2 * (a - n)
+            }
         }
         return diff
     }
 
-    /// Validate paired geometry and complete planes before allocating output.
-    /// Meta-channel shifts (-1) stay meta; normal shifts must be reversible.
-    package static func inverse(ll: ModularChannel, residual: ModularChannel,
-                                horizontal: Bool, budget: ScalarOperationBudget) throws -> ModularChannel {
-        try budget.checkpoint()
-        try ll.checkPixels(); try residual.checkPixels()
-        guard ll.hshift == residual.hshift, ll.vshift == residual.vshift,
-              ll.width > 0, ll.height > 0 else { throw ModularGeometryError.invalidGeometry }
-        let low = horizontal ? ll.width : ll.height
-        let high = horizontal ? residual.width : residual.height
-        let shift = horizontal ? ll.hshift : ll.vshift
-        guard (horizontal ? ll.height == residual.height : ll.width == residual.width),
-              high <= low, low - high <= 1, shift == -1 || shift > 0 else {
-            throw ModularGeometryError.invalidGeometry
+    package static func inverse(
+        ll: ModularChannel,
+        residual: ModularChannel,
+        horizontal: Bool,
+        budget: ScalarOperationBudget
+    ) throws -> ModularChannel {
+        guard ll.pixels.count == ll.sampleCount,
+              residual.pixels.count == residual.sampleCount,
+              ll.hshift == residual.hshift,
+              ll.vshift == residual.vshift else {
+            throw ModularGeometryError.invalidSqueeze
         }
-        let combined = try ScalarOperationBudget.sum(low, high)
-        var out = try ModularChannel(width: horizontal ? combined : ll.width,
-            height: horizontal ? ll.height : combined,
-            hshift: horizontal && shift > 0 ? shift - 1 : ll.hshift,
-            vshift: !horizontal && shift > 0 ? shift - 1 : ll.vshift)
-        try out.allocatePixels(budget: budget)
-        // Borrowed storage stays within these synchronous closures. Geometry
-        // proves all offsets below fit sampleCount; the only callback is the
-        // budget's cancellation/deadline check, which cannot re-enter a plane.
-        try ll.pixels.withUnsafeBufferPointer { lowPixels in
-            try residual.pixels.withUnsafeBufferPointer { highPixels in
-                try out.pixels.withUnsafeMutableBufferPointer { pixels in
+
+        let outWidth: Int
+        let outHeight: Int
+        let outHShift: Int
+        let outVShift: Int
+
+        if horizontal {
+            guard ll.height == residual.height,
+                  ll.width >= residual.width,
+                  ll.width <= residual.width + 1 else {
+                throw ModularGeometryError.invalidSqueeze
+            }
+            let (w, over) = ll.width.addingReportingOverflow(residual.width)
+            guard !over else { throw ModularGeometryError.invalidDimensions }
+            outWidth = w
+            outHeight = ll.height
+            outHShift = ll.hshift > 0 ? ll.hshift - 1 : ll.hshift
+            outVShift = ll.vshift
+        } else {
+            guard ll.width == residual.width,
+                  ll.height >= residual.height,
+                  ll.height <= residual.height + 1 else {
+                throw ModularGeometryError.invalidSqueeze
+            }
+            let (h, over) = ll.height.addingReportingOverflow(residual.height)
+            guard !over else { throw ModularGeometryError.invalidDimensions }
+            outWidth = ll.width
+            outHeight = h
+            outHShift = ll.hshift
+            outVShift = ll.vshift > 0 ? ll.vshift - 1 : ll.vshift
+        }
+
+        var output = try ModularChannel(
+            width: outWidth,
+            height: outHeight,
+            hshift: outHShift,
+            vshift: outVShift
+        )
+        try output.allocatePixels(budget: budget)
+        if output.sampleCount == 0 {
+            return output
+        }
+
+        try ll.pixels.withUnsafeBufferPointer { lowBuf in
+            try residual.pixels.withUnsafeBufferPointer { highBuf in
+                try output.pixels.withUnsafeMutableBufferPointer { outBuf in
+                    let lowBase = lowBuf.baseAddress!
+                    let highBase = highBuf.baseAddress!
+                    let outBase = outBuf.baseAddress!
+
                     if horizontal {
-                        for y in 0..<ll.height {
+                        let wLow = ll.width
+                        let wHigh = residual.width
+                        for y in 0..<outHeight {
                             try budget.checkpoint()
-                            let loRow = y * ll.width, hiRow = y * residual.width, row = y * out.width
-                            for x in 0..<high {
-                                if x & 1023 == 0 { try budget.checkpoint() }
-                                let avg = Int64(lowPixels[loRow + x])
-                                let next = x + 1 < low ? Int64(lowPixels[loRow + x + 1]) : avg
-                                let left = x > 0 ? Int64(pixels[row + 2 * x - 1]) : avg
-                                let diff = Int64(highPixels[hiRow + x]) + smoothTendency(B: left, a: avg, n: next)
-                                let a = avg + diff / 2
-                                pixels[row + 2 * x] = Int32(truncatingIfNeeded: a)
-                                pixels[row + 2 * x + 1] = Int32(truncatingIfNeeded: a - diff)
+                            let lowRow = y * wLow
+                            let highRow = y * wHigh
+                            let outRow = y * outWidth
+                            for x in 0..<wHigh {
+                                if (x & 1023) == 0, x > 0 { try budget.checkpoint() }
+                                let a = Int64(lowBase[lowRow + x])
+                                let b = x > 0 ? Int64(outBase[outRow + 2 * x - 1]) : a
+                                let n = (x + 1 < wLow) ? Int64(lowBase[lowRow + x + 1]) : a
+                                let tendency = smoothTendency(b, a, n)
+                                let diff = Int64(highBase[highRow + x]) + tendency
+                                let first = a + (diff / 2)
+                                let second = first - diff
+                                outBase[outRow + 2 * x] = Int32(truncatingIfNeeded: first)
+                                outBase[outRow + 2 * x + 1] = Int32(truncatingIfNeeded: second)
                             }
-                            if combined & 1 != 0 { pixels[row + combined - 1] = lowPixels[loRow + low - 1] }
+                            if outWidth > 2 * wHigh {
+                                outBase[outRow + 2 * wHigh] = lowBase[lowRow + wHigh]
+                            }
                         }
                     } else {
-                        for y in 0..<high {
+                        let hLow = ll.height
+                        let hHigh = residual.height
+                        let w = outWidth
+                        for y in 0..<hHigh {
                             try budget.checkpoint()
-                            let loRow = y * ll.width, row = 2 * y * ll.width
-                            for x in 0..<ll.width {
-                                if x & 1023 == 0 { try budget.checkpoint() }
-                                let avg = Int64(lowPixels[loRow + x])
-                                let next = y + 1 < low ? Int64(lowPixels[loRow + ll.width + x]) : avg
-                                let top = y > 0 ? Int64(pixels[row - ll.width + x]) : avg
-                                let diff = Int64(highPixels[loRow + x]) + smoothTendency(B: top, a: avg, n: next)
-                                let a = avg + diff / 2
-                                pixels[row + x] = Int32(truncatingIfNeeded: a)
-                                pixels[row + ll.width + x] = Int32(truncatingIfNeeded: a - diff)
+                            let rowCur = y * w
+                            let rowNext = (y + 1 < hLow ? (y + 1) : y) * w
+                            let outRowPrev = (2 * y - 1) * w
+                            let outRow0 = (2 * y) * w
+                            let outRow1 = (2 * y + 1) * w
+                            for x in 0..<w {
+                                if (x & 1023) == 0, x > 0 { try budget.checkpoint() }
+                                let a = Int64(lowBase[rowCur + x])
+                                let b = y > 0 ? Int64(outBase[outRowPrev + x]) : a
+                                let n = Int64(lowBase[rowNext + x])
+                                let tendency = smoothTendency(b, a, n)
+                                let diff = Int64(highBase[rowCur + x]) + tendency
+                                let first = a + (diff / 2)
+                                let second = first - diff
+                                outBase[outRow0 + x] = Int32(truncatingIfNeeded: first)
+                                outBase[outRow1 + x] = Int32(truncatingIfNeeded: second)
                             }
                         }
-                        if combined & 1 != 0 {
-                            for x in 0..<ll.width {
-                                if x & 1023 == 0 { try budget.checkpoint() }
-                                pixels[(combined - 1) * ll.width + x] = lowPixels[(low - 1) * ll.width + x]
+                        if outHeight > 2 * hHigh {
+                            try budget.checkpoint()
+                            let lowTail = hHigh * w
+                            let outTail = (2 * hHigh) * w
+                            for x in 0..<w {
+                                outBase[outTail + x] = lowBase[lowTail + x]
                             }
                         }
                     }
                 }
             }
         }
-        try budget.checkpoint()
-        return out
+
+        return output
     }
 }

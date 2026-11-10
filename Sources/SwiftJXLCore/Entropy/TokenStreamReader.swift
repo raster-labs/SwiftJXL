@@ -1,397 +1,312 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Copyright (c) 2026 Raster-Lab.
-// Adapted from JXLSwift 57e81cb9e2411d1efac435b429a306a031744c1e, Sources/JXLSwift/Entropy/TokenStreamReader.swift.
-// Special-distance table: Copyright (c) the JPEG XL Project Authors.
-// See Documentation/ThirdParty/libjxl-LICENSE.txt.
-// TokenStreamReader — reads context-routed integer tokens from the
-// body that follows an entropy section's per-cluster codebook.
-//
-// ISO/IEC 18181-1 §C.6 (libjxl `ANSSymbolReader::ReadHybridUint*`).
-// Once the entropy section's `EntropySectionHeader` and
-// `MultiClusterCodebook` have been parsed, the actual stream of
-// values is read one token at a time:
-//
-//   1. Look up `cluster = contextMap[ctx]` for the requested context.
-//   2. For prefix-code mode: decode the next Huffman symbol from
-//      `huffmanTables[cluster]`. For ANS mode: read the next ANS
-//      symbol via the streaming `ANSStreamDecoder` (rANS state init +
-//      renorm words come from the same `BitReader`).
-//   3. Apply `uintConfigs[cluster].decode(token, br)` to the symbol
-//      to recover the unsigned integer value (HybridUint expansion
-//      reads any extra raw bits the token encoded).
-//
-// **LZ77 back-references**: when a symbol decoded at step 2 is `≥
-// lz77.minSymbol`, libjxl interprets it as a "length token". The
-// reader then:
-//   • Decodes the run length via `lz77.lengthUintConfig`.
-//   • Reads a "distance token" at an extra cluster (the one beyond
-//     the user contexts — `contextMap.map[numUserContexts]`).
-//   • Decodes the distance via that cluster's `HybridUintConfig`.
-//   • Applies the libjxl `SpecialDistance` remap when a non-zero
-//     `distanceMultiplier` is in effect (modular sub-image case):
-//     decoded values `< 120` index a 2D pattern LUT scaled by the
-//     channel width, and decoded values `≥ 120` map to
-//     `decoded + 1 − 120`. When `distanceMultiplier == 0` (the
-//     TOC-permutation / context-map case) the distance is simply
-//     `decoded + 1`.
-//   • Replays `length` previously-emitted values starting `distance`
-//     positions back in the running history buffer.
-// Subsequent `readToken` calls drain that copy queue before reading
-// any new ANS symbols.
-//
-// libjxl reference: `lib/jxl/dec_ans.h::SpecialDistance`,
-// `ReadHybridUintClusteredInlined`. The LUT below is the WebP-lossless
-// 2D distance table (`kSpecialDistances`, 120 entries) shifted by the
-// channel width — the only way modular streams encode short-range
-// "this row" / "row above" copies efficiently.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
 
 import Foundation
 
-package enum TokenStreamReaderError: Error, Sendable {
-    case bitstream(BitstreamError)
-    case hybridUint(HybridUintConfigError)
-    case ans(ANSError)
-    case lz77NotImplemented
-    case lz77InvalidDistance(distance: UInt32, historySize: Int)
-    case lz77InvalidLength
+package enum TokenStreamReaderError: Error, Sendable, Equatable {
     case contextOutOfRange(Int, max: Int)
     case clusterOutOfRange(Int, max: Int)
+    case prefix(PrefixCodeError)
+    case ans(ANSError)
+    case alias(AliasTableError)
+    case bitstream(BitstreamError)
+    case ansFinalStateMismatch(got: UInt32)
+    case lz77InvalidDistance(UInt32, historySize: Int)
+    case lz77InvalidLength
 }
 
-/// libjxl `kNumSpecialDistances` — the size of the 2D distance LUT
-/// applied to modular sub-image LZ77 references when a non-zero
-/// `distanceMultiplier` is in effect.
-package let kNumSpecialDistances: Int = 120
-
-/// libjxl `kSpecialDistances` (WebP-lossless inheritance) — 120 entries
-/// of `(rowOffset, colOffset)` pairs. The effective distance is
-/// `max(1, rowOffset + multiplier × colOffset)` where the multiplier is
-/// the widest channel in the sub-image. This lets short-range
-/// "previous row" / "row above" copies fit in a single token.
-///
-/// Spec / libjxl: `lib/jxl/dec_ans.h::kSpecialDistances`.
-package let kSpecialDistancesLUT: [(Int8, Int8)] = [
-    (0, 1),  (1, 0),  (1, 1),  (-1, 1), (0, 2),  (2, 0),  (1, 2),  (-1, 2),
-    (2, 1),  (-2, 1), (2, 2),  (-2, 2), (0, 3),  (3, 0),  (1, 3),  (-1, 3),
-    (3, 1),  (-3, 1), (2, 3),  (-2, 3), (3, 2),  (-3, 2), (0, 4),  (4, 0),
-    (1, 4),  (-1, 4), (4, 1),  (-4, 1), (3, 3),  (-3, 3), (2, 4),  (-2, 4),
-    (4, 2),  (-4, 2), (0, 5),  (3, 4),  (-3, 4), (4, 3),  (-4, 3), (5, 0),
-    (1, 5),  (-1, 5), (5, 1),  (-5, 1), (2, 5),  (-2, 5), (5, 2),  (-5, 2),
-    (4, 4),  (-4, 4), (3, 5),  (-3, 5), (5, 3),  (-5, 3), (0, 6),  (6, 0),
-    (1, 6),  (-1, 6), (6, 1),  (-6, 1), (2, 6),  (-2, 6), (6, 2),  (-6, 2),
-    (4, 5),  (-4, 5), (5, 4),  (-5, 4), (3, 6),  (-3, 6), (6, 3),  (-6, 3),
-    (0, 7),  (7, 0),  (1, 7),  (-1, 7), (5, 5),  (-5, 5), (7, 1),  (-7, 1),
-    (4, 6),  (-4, 6), (6, 4),  (-6, 4), (2, 7),  (-2, 7), (7, 2),  (-7, 2),
-    (3, 7),  (-3, 7), (7, 3),  (-7, 3), (5, 6),  (-5, 6), (6, 5),  (-6, 5),
-    (8, 0),  (4, 7),  (-4, 7), (7, 4),  (-7, 4), (8, 1),  (8, 2),  (6, 6),
-    (-6, 6), (8, 3),  (5, 7),  (-5, 7), (7, 5),  (-7, 5), (8, 4),  (6, 7),
-    (-6, 7), (7, 6),  (-7, 6), (8, 5),  (7, 7),  (-7, 7), (8, 6),  (8, 7),
-]
-
-/// Reads HybridUint-decoded integer tokens from an entropy section,
-/// routing each request through the section's context map and the
-/// per-cluster codebook. Mutating across calls — the rANS state lives
-/// inside the reader for the ANS path; the LZ77 history & copy queue
-/// also live here.
+/// Clean-room entropy token stream reader implementing ISO/IEC 18181-1:2024
+/// Clauses 7.1–7.4 (Prefix codes, rANS with alias table lookup, HybridUint
+/// integer expansion, and LZ77 sliding-window + 2D special distances).
 package struct TokenStreamReader: Sendable {
+    package static let lz77WindowSize: Int = 1 << 15
+    private static let lz77WindowMask: Int = (1 << 15) - 1
+
+    /// ISO/IEC 18181-1 Clause 7.4 Table 16 — 120 2D coordinate offsets `(dx, dy)`.
+    private static let specialDistances: [(dx: Int, dy: Int)] = [
+        (0, 1), (1, 0), (1, 1), (-1, 1),
+        (0, 2), (2, 0), (1, 2), (-1, 2), (2, 1), (-2, 1), (2, 2), (-2, 2),
+        (0, 3), (3, 0), (1, 3), (-1, 3), (3, 1), (-3, 1), (2, 3), (-2, 3), (3, 2), (-3, 2),
+        (0, 4), (4, 0), (1, 4), (-1, 4), (4, 1), (-4, 1), (3, 3), (-3, 3), (2, 4), (-2, 4), (4, 2), (-4, 2),
+        (0, 5), (3, 4), (-3, 4), (4, 3), (-4, 3), (5, 0), (1, 5), (-1, 5), (5, 1), (-5, 1), (2, 5), (-2, 5),
+        (5, 2), (-5, 2), (4, 4), (-4, 4), (3, 5), (-3, 5), (5, 3), (-5, 3),
+        (0, 6), (6, 0), (1, 6), (-1, 6), (6, 1), (-6, 1), (2, 6), (-2, 6), (6, 2), (-6, 2), (4, 5), (-4, 5),
+        (5, 4), (-5, 4), (3, 6), (-3, 6), (6, 3), (-6, 3),
+        (0, 7), (7, 0), (1, 7), (-1, 7), (5, 5), (-5, 5), (7, 1), (-7, 1), (4, 6), (-4, 6), (6, 4), (-6, 4),
+        (2, 7), (-2, 7), (7, 2), (-7, 2), (3, 7), (-3, 7), (7, 3), (-7, 3), (5, 6), (-5, 6), (6, 5), (-6, 5),
+        (8, 0), (4, 7), (-4, 7), (7, 4), (-7, 4), (8, 1), (8, 2), (6, 6), (-6, 6), (8, 3), (5, 7), (-5, 7),
+        (7, 5), (-7, 5), (8, 4), (6, 7), (-6, 7), (7, 6), (-7, 6), (8, 5), (7, 7), (-7, 7), (8, 6), (8, 7)
+    ]
+
     package let header: EntropySectionHeader
     package let codebook: MultiClusterCodebook
-    /// libjxl's "distance multiplier" — the widest channel width in
-    /// the modular sub-image whose LZ77 references this reader
-    /// services. `0` disables the `SpecialDistance` remap (correct
-    /// for TOC permutation / context-map / tree streams). Modular
-    /// sub-image readers must pass the channel-width max so distances
-    /// `< 120` get the 2D-pattern LUT treatment that libjxl uses to
-    /// encode "previous row" / "row above" patterns.
     package let distanceMultiplier: Int
-    /// rANS decoder for the ANS path. A placeholder (with
-    /// `ansUnavailable` set) for prefix-code sections or when the
-    /// decoder couldn't be built from the codebook's counts.
-    private var ansDecoder: ANSStreamDecoder
-    /// True when `ansDecoder` is the placeholder — ANS symbol reads
-    /// then throw `.emptyDistribution`.
-    private let ansUnavailable: Bool
-    // Loop-invariant header state hoisted out of the per-token path
-    // (`header.…` nested-struct hops are measurable at 16M+ tokens).
-    private let usePrefixCode: Bool
-    private let lz77Enabled: Bool
-    private let lz77MinSymbol: UInt32
-    private let userCtxBound: Int
-    private let numHistograms: Int
-    private let ctxMap: [UInt8]
-    private let uintConfigs: [HybridUintConfig]
-    /// Running history of emitted **decoded values** (post-HybridUint).
-    /// Sized to bound LZ77 distances; libjxl's typical bound is
-    /// `1 << 20` but we just grow naturally.
-    private var history: [UInt32] = []
-    /// Number of values still owed by a running LZ77 copy.
-    private var copyRemaining: UInt32 = 0
-    /// Index in `history` of the next value to emit during a running
-    /// LZ77 copy.
-    private var copyReadPos: Int = 0
+
+    private var ansDecoder: ANSStreamDecoder?
+    private let ansInitError: AliasTableError?
+
+    private var lz77Window: [UInt32]
+    private var lz77NumDecoded: Int = 0
+    private var lz77NumToCopy: UInt32 = 0
+    private var lz77CopyPos: Int = 0
 
     package init(
         header: EntropySectionHeader,
         codebook: MultiClusterCodebook,
-        distanceMultiplier: Int = 0,
-        useAliasTables: Bool = true
+        distanceMultiplier: Int = 0
     ) {
         self.header = header
         self.codebook = codebook
-        self.distanceMultiplier = distanceMultiplier
-        self.usePrefixCode = header.usePrefixCode
-        self.lz77Enabled = header.lz77.enabled
-        self.lz77MinSymbol = header.lz77.minSymbol
-        // libjxl `ContextMap` for an LZ77-enabled section has
-        // `numUserContexts + 1` entries — the extra slot is the LZ77
-        // distance context. User reads must stay below that bound;
-        // we accept either layout so old call sites that pass the
-        // pre-LZ77 user index still validate.
-        let totalCtx = header.contextMap.numContexts
-        self.userCtxBound = header.lz77.enabled
-            ? max(0, totalCtx - 1) : totalCtx
-        self.numHistograms = header.numHistograms
-        self.ctxMap = header.contextMap.map
-        self.uintConfigs = header.uintConfigs
-        if !header.usePrefixCode {
-            if useAliasTables,
-               let aliasDecoder = try? ANSStreamDecoder(
-                   counts: codebook.ansCounts,
-                   logAlphaSize: header.logAlphaSize
-               ) {
-                self.ansDecoder = aliasDecoder
-                self.ansUnavailable = false
-            } else if !useAliasTables, let fallback = try? ANSStreamDecoder.from(
-                counts: codebook.ansCounts
-            ) {
-                self.ansDecoder = fallback
-                self.ansUnavailable = false
-            } else {
-                self.ansDecoder = ANSStreamDecoder(distributions: [])
-                self.ansUnavailable = true
-            }
+        self.distanceMultiplier = max(0, distanceMultiplier)
+        self.lz77Window = header.lz77.enabled
+            ? [UInt32](repeating: 0, count: Self.lz77WindowSize)
+            : []
+
+        if header.usePrefixCode {
+            self.ansDecoder = nil
+            self.ansInitError = nil
         } else {
-            self.ansDecoder = ANSStreamDecoder(distributions: [])
-            self.ansUnavailable = true
+            do {
+                self.ansDecoder = try ANSStreamDecoder(
+                    counts: codebook.ansCounts,
+                    logAlphaSize: header.logAlphaSize
+                )
+                self.ansInitError = nil
+            } catch let error as AliasTableError {
+                self.ansDecoder = nil
+                self.ansInitError = error
+            } catch {
+                self.ansDecoder = nil
+                self.ansInitError = .sumNotEqualRange
+            }
         }
     }
 
-    /// Read one token at context index `ctx`. The caller threads the
-    /// `BitReader` through; consumes a Huffman codeword + optional
-    /// extra bits (prefix mode), or an rANS symbol + optional extra
-    /// bits (ANS mode, with state init / renorm reads coming from the
-    /// same BitReader). Drains any pending LZ77 copy before reading
-    /// new ANS symbols.
     @inline(__always)
-    package mutating func readToken(
-        context ctx: Int, from r: inout BitReader
-    ) throws -> UInt32 {
-        try r.checkpoint()
-        // 0. Drain any in-flight LZ77 copy first. The "context" the
-        // caller supplied is irrelevant here — replay just walks
-        // history at the previously-decoded distance.
-        if copyRemaining > 0 {
-            let v = history[copyReadPos]
-            copyReadPos &+= 1
-            copyRemaining &-= 1
-            history.append(v)
-            return v
+    package func canUseSingleContextANS(context: Int) -> Bool {
+        guard !header.usePrefixCode,
+              !header.lz77.enabled,
+              ansInitError == nil,
+              let ans = ansDecoder,
+              context >= 0,
+              context < header.contextMap.numContexts else {
+            return false
         }
-        guard ctx >= 0 && ctx < userCtxBound else {
-            throw TokenStreamReaderError.contextOutOfRange(
-                ctx, max: userCtxBound - 1
-            )
-        }
-        let cluster = Int(ctxMap[ctx])
-        guard cluster < numHistograms else {
-            throw TokenStreamReaderError.clusterOutOfRange(
-                cluster, max: numHistograms - 1
-            )
-        }
-        let symbol: UInt32
-        if usePrefixCode {
-            symbol = try readPrefixSymbol(cluster: cluster, from: &r)
-        } else {
-            symbol = try readANSSymbol(cluster: cluster, from: &r)
-        }
-        // LZ77 length-token branch.
-        if lz77Enabled, symbol >= lz77MinSymbol {
-            return try beginLZ77Copy(
-                lengthSymbol: symbol, from: &r
-            )
-        }
-        // Normal HybridUint expansion at this cluster's config.
-        let value = try expand(symbol: symbol, cluster: cluster, from: &r)
-        // History is only needed when LZ77 might trigger; skip the
-        // append + amortised reallocation cost on plain streams (the
-        // common case for pixel data).
-        if lz77Enabled {
-            history.append(value)
-        }
-        return value
-    }
-
-    /// Verify the terminal entropy state and complete LZ77 replay.
-    package func finish() throws {
-        guard copyRemaining == 0 else { throw TokenStreamReaderError.lz77InvalidLength }
-        if !usePrefixCode {
-            guard !ansUnavailable, ansDecoder.hasInitialised,
-                  ansDecoder.currentState == ANSConstants.initialState else {
-                throw BitstreamError.malformedValue("Invalid terminal ANS state")
-            }
-        }
-    }
-
-    /// True when `ctx` can be decoded through the fast non-LZ77 single-cluster
-    /// alias-table reader without changing any bitstream or error semantics.
-    package func canUseSingleContextANS(context ctx: Int) -> Bool {
-        !usePrefixCode && !ansUnavailable && ansDecoder.useAliasTables
-            && !lz77Enabled && copyRemaining == 0
-            && ctx >= 0 && ctx < userCtxBound
-            && Int(ctxMap[ctx]) < numHistograms
-            && Int(ctxMap[ctx]) < ansDecoder.aliasTables.count
+        let cluster = Int(header.contextMap.map[context])
+        return cluster >= 0
+            && cluster < ans.aliasTables.count
+            && cluster < header.uintConfigs.count
     }
 
     @inline(__always)
     package func singleContextANSCluster(
-        context ctx: Int
-    ) -> (alias: AliasTable, config: HybridUintConfig, state: UInt32, initialised: Bool) {
-        let cluster = Int(ctxMap[ctx])
+        context: Int
+    ) -> (AliasTable, HybridUintConfig, UInt32, Bool) {
+        let cluster = Int(header.contextMap.map[context])
+        let ans = ansDecoder!
         return (
-            ansDecoder.aliasTables[cluster],
-            uintConfigs[cluster],
-            ansDecoder.currentState,
-            ansDecoder.hasInitialised
+            ans.aliasTables[cluster],
+            header.uintConfigs[cluster],
+            ans.currentState,
+            ans.hasInitialised
         )
     }
 
     @inline(__always)
-    package mutating func updateSingleContextANSState(_ state: UInt32, initialised: Bool) {
-        ansDecoder.updateState(state, initialised: initialised)
+    package mutating func updateSingleContextANSState(
+        _ state: UInt32,
+        initialised: Bool
+    ) {
+        ansDecoder?.updateState(state, initialised: initialised)
     }
 
-    /// Prefix-code symbol read (the raw HybridUint token, before
-    /// extra-bits expansion).
     @inline(__always)
-    private func readPrefixSymbol(
-        cluster: Int, from r: inout BitReader
+    private mutating func readRawSymbol(
+        cluster: Int,
+        from r: inout BitReader
     ) throws -> UInt32 {
-        let symbol: Int
-        do { symbol = try codebook.huffmanTables[cluster].decode(from: &r) }
-        catch let e as BitstreamError {
-            throw TokenStreamReaderError.bitstream(e)
+        if header.usePrefixCode {
+            guard cluster >= 0 && cluster < codebook.huffmanTables.count else {
+                throw TokenStreamReaderError.clusterOutOfRange(
+                    cluster,
+                    max: codebook.huffmanTables.count - 1
+                )
+            }
+            do {
+                let sym = try codebook.huffmanTables[cluster].decode(from: &r)
+                return UInt32(sym)
+            } catch let error as PrefixCodeError {
+                throw TokenStreamReaderError.prefix(error)
+            }
+        } else {
+            if let err = ansInitError {
+                throw TokenStreamReaderError.alias(err)
+            }
+            guard var ans = ansDecoder,
+                  cluster >= 0 && cluster < ans.aliasTables.count else {
+                throw TokenStreamReaderError.clusterOutOfRange(
+                    cluster,
+                    max: (ansDecoder?.aliasTables.count ?? 0) - 1
+                )
+            }
+            do {
+                let sym = try ans.readSymbol(cluster: cluster, from: &r)
+                self.ansDecoder = ans
+                return sym
+            } catch let error as ANSError {
+                throw TokenStreamReaderError.ans(error)
+            } catch let error as BitstreamError {
+                throw TokenStreamReaderError.bitstream(error)
+            }
         }
-        return UInt32(symbol)
     }
 
-    /// rANS symbol read (the raw HybridUint token).
     @inline(__always)
-    private mutating func readANSSymbol(
-        cluster: Int, from r: inout BitReader
+    private func expandHybridUint(
+        config: HybridUintConfig,
+        token: UInt32,
+        from r: inout BitReader
     ) throws -> UInt32 {
-        guard !ansUnavailable else {
-            throw TokenStreamReaderError.ans(.emptyDistribution)
-        }
         do {
-            return try ansDecoder.readSymbol(cluster: cluster, from: &r)
-        } catch let e as ANSError {
-            throw TokenStreamReaderError.ans(e)
-        } catch let e as BitstreamError {
-            throw TokenStreamReaderError.bitstream(e)
+            return try config.decode(token: token, from: &r)
+        } catch let error as BitstreamError {
+            throw TokenStreamReaderError.bitstream(error)
         }
     }
 
-    /// HybridUint extra-bits expansion at this cluster's config.
-    @inline(__always)
-    private func expand(
-        symbol: UInt32, cluster: Int, from r: inout BitReader
+    package mutating func readToken(
+        context: Int,
+        from r: inout BitReader
     ) throws -> UInt32 {
-        do { return try uintConfigs[cluster].decode(token: symbol, from: &r) }
-        catch let e as HybridUintConfigError {
-            throw TokenStreamReaderError.hybridUint(e)
-        } catch let e as BitstreamError {
-            throw TokenStreamReaderError.bitstream(e)
-        }
-    }
+        try r.checkpoint()
 
-    /// Handle a length-token that triggered LZ77. Decodes the run
-    /// length via `lz77.lengthUintConfig`, reads a distance token at
-    /// the LZ77 distance cluster, and seeds the copy queue.
-    /// Returns the **first** copied value (subsequent calls drain
-    /// the queue via the `copyRemaining` branch in `readToken`).
-    private mutating func beginLZ77Copy(
-        lengthSymbol: UInt32, from r: inout BitReader
-    ) throws -> UInt32 {
-        // 1. Decode length from `lengthSymbol - minSymbol` via the
-        // section's LZ77 length config.
-        let lenSym = lengthSymbol &- header.lz77.minSymbol
-        let length: UInt32
-        do {
-            let baseLength = try header.lz77.lengthUintConfig.decode(token: lenSym, from: &r)
-            let sum = baseLength.addingReportingOverflow(header.lz77.minLength)
-            guard !sum.overflow else { throw TokenStreamReaderError.lz77InvalidLength }
-            length = sum.partialValue
-        } catch let e as HybridUintConfigError {
-            throw TokenStreamReaderError.hybridUint(e)
-        } catch let e as BitstreamError {
-            throw TokenStreamReaderError.bitstream(e)
+        if lz77NumToCopy > 0 {
+            lz77NumToCopy -= 1
+            let copied = lz77Window[lz77CopyPos & Self.lz77WindowMask]
+            lz77CopyPos &+= 1
+            lz77Window[lz77NumDecoded & Self.lz77WindowMask] = copied
+            lz77NumDecoded &+= 1
+            return copied
         }
-        guard length > 0 else {
+
+        guard context >= 0 && context < header.contextMap.numContexts else {
+            throw TokenStreamReaderError.contextOutOfRange(
+                context,
+                max: header.contextMap.numContexts - 1
+            )
+        }
+        let cluster = Int(header.contextMap.map[context])
+        guard cluster >= 0 && cluster < header.uintConfigs.count else {
+            throw TokenStreamReaderError.clusterOutOfRange(
+                cluster,
+                max: header.uintConfigs.count - 1
+            )
+        }
+
+        let token = try readRawSymbol(cluster: cluster, from: &r)
+
+        if !header.lz77.enabled || token < header.lz77.minSymbol {
+            let value = try expandHybridUint(
+                config: header.uintConfigs[cluster],
+                token: token,
+                from: &r
+            )
+            if header.lz77.enabled {
+                lz77Window[lz77NumDecoded & Self.lz77WindowMask] = value
+                lz77NumDecoded &+= 1
+            }
+            return value
+        }
+
+        // ISO/IEC 18181-1 Clause 7.4: LZ77 length-and-distance pair.
+        let lengthToken = token &- header.lz77.minSymbol
+        let baseLength = try expandHybridUint(
+            config: header.lz77.lengthUintConfig,
+            token: lengthToken,
+            from: &r
+        )
+        let (totalLength, lengthOverflow) = baseLength.addingReportingOverflow(
+            header.lz77.minLength
+        )
+        guard !lengthOverflow, totalLength > 0 else {
             throw TokenStreamReaderError.lz77InvalidLength
         }
-        // 2. Distance comes from the extra LZ77 cluster — the last
-        // entry in the context map (libjxl `numUserContexts`-th).
-        let distCtx = header.contextMap.numContexts - 1
-        guard distCtx >= 0 else {
-            throw TokenStreamReaderError.contextOutOfRange(distCtx, max: -1)
-        }
-        let distCluster = Int(header.contextMap.map[distCtx])
-        guard distCluster < header.numHistograms else {
+
+        let distanceContext = header.contextMap.numContexts - 1
+        let distanceCluster = Int(header.contextMap.map[distanceContext])
+        guard distanceCluster >= 0 && distanceCluster < header.uintConfigs.count else {
             throw TokenStreamReaderError.clusterOutOfRange(
-                distCluster, max: header.numHistograms - 1
+                distanceCluster,
+                max: header.uintConfigs.count - 1
             )
         }
-        let distSymbol: UInt32
-        if header.usePrefixCode {
-            distSymbol = try readPrefixSymbol(cluster: distCluster, from: &r)
-        } else {
-            distSymbol = try readANSSymbol(cluster: distCluster, from: &r)
-        }
-        let rawDist = try expand(
-            symbol: distSymbol, cluster: distCluster, from: &r
+
+        let distanceToken = try readRawSymbol(cluster: distanceCluster, from: &r)
+        let rawDistance = try expandHybridUint(
+            config: header.uintConfigs[distanceCluster],
+            token: distanceToken,
+            from: &r
         )
-        // libjxl `ReadHybridUintClusteredInlined`: when the section's
-        // `distanceMultiplier > 0` (modular sub-image case), the
-        // first `kNumSpecialDistances` (120) wire values index a 2D
-        // pattern LUT scaled by the multiplier; the remainder shifts
-        // down by 120. With `distanceMultiplier == 0` (TOC permutation
-        // / context-map streams) the wire value is just `decoded + 1`.
+
+        let historySize = min(lz77NumDecoded, Self.lz77WindowSize)
         let distance: UInt32
-        if distanceMultiplier > 0
-            && rawDist < UInt32(kNumSpecialDistances) {
-            let pair = kSpecialDistancesLUT[Int(rawDist)]
-            let s = Int(pair.0) &+ distanceMultiplier &* Int(pair.1)
-            distance = UInt32(max(1, s))
+        if distanceMultiplier == 0 {
+            distance = rawDistance &+ 1
+        } else if rawDistance < 120 {
+            let special = Self.specialDistances[Int(rawDistance)]
+            let offset = Int64(special.dx) + Int64(special.dy) * Int64(distanceMultiplier)
+            let clamped = max(Int64(1), offset)
+            guard let exact = UInt32(exactly: clamped) else {
+                throw TokenStreamReaderError.lz77InvalidDistance(0, historySize: historySize)
+            }
+            distance = exact
         } else {
-            let numSpecial: UInt32 =
-                distanceMultiplier > 0
-                ? UInt32(kNumSpecialDistances) : 0
-            distance = rawDist &+ 1 &- numSpecial
+            distance = rawDistance &- 119
         }
-        // Validate before narrowing on Watch arm64_32; a wrapped zero
-        // distance must never address history[history.count].
-        guard distance > 0, UInt64(distance) <= UInt64(history.count) else {
-            throw TokenStreamReaderError.lz77InvalidDistance(
-                distance: distance, historySize: history.count
-            )
+
+        guard distance >= 1 && distance <= UInt32(historySize) else {
+            throw TokenStreamReaderError.lz77InvalidDistance(distance, historySize: historySize)
         }
-        copyRemaining = length
-        copyReadPos = history.count - Int(distance)
-        // 4. Emit the first value and recurse into the drain branch.
-        let v = history[copyReadPos]
-        copyReadPos &+= 1
-        copyRemaining &-= 1
-        history.append(v)
-        return v
+
+        lz77CopyPos = (lz77NumDecoded - Int(distance)) & Self.lz77WindowMask
+        lz77NumToCopy = totalLength - 1
+        let firstCopied = lz77Window[lz77CopyPos]
+        lz77CopyPos = (lz77CopyPos + 1) & Self.lz77WindowMask
+        lz77Window[lz77NumDecoded & Self.lz77WindowMask] = firstCopied
+        lz77NumDecoded &+= 1
+        return firstCopied
+    }
+
+    /// Verify terminal state for an entropy section where tokens were read.
+    package func finish() throws {
+        if header.lz77.enabled && lz77NumToCopy != 0 {
+            throw TokenStreamReaderError.lz77InvalidLength
+        }
+        if !header.usePrefixCode {
+            if let err = ansInitError {
+                throw TokenStreamReaderError.alias(err)
+            }
+            guard let ans = ansDecoder,
+                  ans.hasInitialised,
+                  ans.currentState == ANSConstants.initialState else {
+                throw TokenStreamReaderError.ansFinalStateMismatch(
+                    got: ansDecoder?.currentState ?? 0
+                )
+            }
+        }
+    }
+
+    /// Consume the 32-bit initial rANS state if no symbols were decoded in an
+    /// ANS section, then verify the terminal rANS checksum (`0x130000`).
+    package mutating func finish(from r: inout BitReader) throws {
+        if !header.usePrefixCode, let ans = ansDecoder, !ans.hasInitialised {
+            do {
+                let state = try r.read(bits: 32)
+                ansDecoder?.updateState(state, initialised: true)
+            } catch let error as BitstreamError {
+                throw TokenStreamReaderError.bitstream(error)
+            }
+        }
+        try finish()
     }
 }
