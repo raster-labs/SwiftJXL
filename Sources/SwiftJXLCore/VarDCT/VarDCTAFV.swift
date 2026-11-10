@@ -235,7 +235,7 @@ package enum VarDCTAFV {
         for i in 0..<16 {
             dcSum += Double(corner[i])
         }
-        output[0] = Float(dcSum * 0.25)
+        output[0] = Float(dcSum * 0.0625)
 
         for k in 1..<16 {
             let basis = cornerBasis[k]

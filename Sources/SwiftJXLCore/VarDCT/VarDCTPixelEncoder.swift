@@ -1,243 +1,406 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Adapted from JXLSwift Codec/VarDCTEncoder.swift at
-// 57e81cb9e2411d1efac435b429a306a031744c1e. Copyright (c) 2026 Raster-Lab.
-// JPEG XL Project Authors retain BSD-3-Clause; see libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-/// Bounded transform search through 64×64, with explicit predecessor prefilter
-/// and adaptive quantisation. Optional search preserves earlier fixture bytes.
+/// Top-level clean-room VarDCT lossy pixel encoder.
 package enum VarDCTPixelEncoder {
-    struct Coefficients {
-        let width: Int, height: Int, blocksX: Int, blocksY: Int
-        let bits: Int, grayscale: Bool, hasAlpha: Bool
-        let globalScale: UInt32
-        let quantDC: UInt32 = 17
-        let quantAC: [Int32], strategies: [Int32]
-        let gaborish: Bool, dcSmoothing: Bool
-        let dc: [[Int32]], ac: [[Int32]]
-        var transforms: [VarDCTStrategyMap.Transform]? = nil
+    package struct Coefficients: Sendable {
+        package let width: Int
+        package let height: Int
+        package let blocksX: Int
+        package let blocksY: Int
+        package let bits: Int
+        package let grayscale: Bool
+        package let hasAlpha: Bool
+        package let globalScale: Int
+        package let quantAC: [Int32]
+        package let strategies: [Int32]
+        package let gaborish: Bool
+        package let dcSmoothing: Bool
+        package let dc: [[Int32]]
+        package let ac: [[Int32]]
+        package let transforms: [VarDCTStrategyMap.Transform]
+
+        package init(
+            width: Int,
+            height: Int,
+            blocksX: Int,
+            blocksY: Int,
+            bits: Int,
+            grayscale: Bool,
+            hasAlpha: Bool,
+            globalScale: Int,
+            quantAC: [Int32],
+            strategies: [Int32],
+            gaborish: Bool,
+            dcSmoothing: Bool,
+            dc: [[Int32]],
+            ac: [[Int32]],
+            transforms: [VarDCTStrategyMap.Transform]
+        ) {
+            self.width = width
+            self.height = height
+            self.blocksX = blocksX
+            self.blocksY = blocksY
+            self.bits = bits
+            self.grayscale = grayscale
+            self.hasAlpha = hasAlpha
+            self.globalScale = globalScale
+            self.quantAC = quantAC
+            self.strategies = strategies
+            self.gaborish = gaborish
+            self.dcSmoothing = dcSmoothing
+            self.dc = dc
+            self.ac = ac
+            self.transforms = transforms
+        }
     }
 
-    /// The caller keeps the source owner and its synchronous read borrow alive
-    /// until return. Neither the raw pointer nor any derived pointer escapes.
-    /// Only admitted algorithm and writer workspace is allocated.
-    package static func encode(_ bytes: UnsafeRawBufferPointer,
-                               layouts: [ModularChannelLayout], bitsPerSample: Int,
-                               grayscale: Bool, alphaAssociated: Bool?, distance: Float,
-                               gaborish: Bool = false, adaptiveQuantisation: Bool = false, dcSmoothing: Bool = false,
-                               smallStrategySearch: Bool = false, largeStrategySearch: Bool = false,
-                               budget: ScalarOperationBudget) throws -> Data {
+    package static func encode(
+        _ bytes: UnsafeRawBufferPointer,
+        layouts: [ModularChannelLayout],
+        bitsPerSample: Int,
+        grayscale: Bool,
+        alphaAssociated: Bool?,
+        distance: Float,
+        gaborish: Bool = false,
+        adaptiveQuantisation: Bool = false,
+        dcSmoothing: Bool = false,
+        smallStrategySearch: Bool = false,
+        largeStrategySearch: Bool = false,
+        budget: ScalarOperationBudget
+    ) throws -> Data {
         try budget.checkpoint()
-        guard let first = layouts.first, (8...16).contains(bitsPerSample),
-              distance.isFinite, distance > 0,
-              layouts.count == (grayscale ? 1 : 3) + (alphaAssociated == nil ? 0 : 1),
-              layouts.allSatisfy({ $0.width == first.width && $0.height == first.height &&
-                  $0.storageBits >= bitsPerSample && $0.requiredBytes <= bytes.count }) else {
-            throw ScalarModularError.invalidInput("Incompatible VarDCT source or distance")
+        guard distance.isFinite, distance > 0 else {
+            throw ScalarModularError.invalidInput("VarDCT distance must be positive and finite")
         }
-        guard first.width <= 4096, first.height <= 4096,
-              try ScalarOperationBudget.product(first.width, first.height) <= 4 * 1024 * 1024,
-              alphaAssociated != true else {
+        guard (8...16).contains(bitsPerSample), alphaAssociated != true else {
             throw ScalarModularError.unsupportedProfile
         }
-        let bx = (first.width + 7) / 8, by = (first.height + 7) / 8
-        let blocks = try ScalarOperationBudget.product(bx, by), padded = try ScalarOperationBudget.product(blocks, 64)
-        let limit = min(budget.maximumCompressedBytes,
-            try ScalarOperationBudget.sum(ScalarOperationBudget.product(padded, 12), 65536))
-        // Coefficient owners, COW/capacity headroom, constant histogram/codebook
-        // inventory, and section/combined BitWriter growth overlap. Per-DCT
-        // application scratch is separately charged by the transform plan.
-        try budget.reserveOutput(limit)
-        try budget.reserveWorkspace(ScalarOperationBudget.sum(ScalarOperationBudget.product(padded, 32),
-            ScalarOperationBudget.sum(ScalarOperationBudget.product(limit, 6), 4 * 1024 * 1024)))
-        let source = VarDCTBorrowedSource(bytes: bytes, layouts: layouts, maximum: (Int32(1) << bitsPerSample) - 1)
-        let scale = UInt32(max(1, min(65535, (5111 / max(0.05, distance)).rounded())))
-        var prepared: [[Float]]? = nil
-        if gaborish || adaptiveQuantisation || largeStrategySearch {
-            let visible = try ScalarOperationBudget.product(first.width, first.height)
-            try budget.reserveWorkspace(ScalarOperationBudget.product(visible, 3 * MemoryLayout<Float>.stride))
-            let conversion = try bitsPerSample == 8
-                ? VarDCTEncoderPreparation.EightBitConversion(grayscale: grayscale, budget: budget) : nil
-            // Separate local owners permit simultaneous exclusive plane borrows.
-            var planes = try { () throws -> [[Float]] in
-                var firstPlane = [Float](repeating: 0, count: visible)
-                var secondPlane = [Float](repeating: 0, count: visible)
-                var thirdPlane = [Float](repeating: 0, count: visible)
-                try firstPlane.withUnsafeMutableBufferPointer { xPlane in
-                    try secondPlane.withUnsafeMutableBufferPointer { yPlane in
-                        try thirdPlane.withUnsafeMutableBufferPointer { bPlane in
-                            for y in 0..<first.height { for x in 0..<first.width {
-                                if x & 255 == 0 { try budget.checkpoint() }
-                                let i = y * first.width + x
-                                if grayscale, let conversion {
-                                    let sample = try source.sample(channel: 0, x: x, y: y)
-                                    let p = conversion.grayscale[Int(sample)]
-                                    xPlane[i] = p.0; yPlane[i] = p.1; bPlane[i] = p.2
-                                } else {
-                                    func linear(_ c: Int) throws -> Double {
-                                        let sample = try source.sample(channel: c, x: x, y: y)
-                                        if let conversion { return conversion.linear[Int(sample)] }
-                                        let v = Double(sample) / Double(source.maximum)
-                                        return v <= 0.04045 ? v / 12.92 : pow((v + 0.055) / 1.055, 2.4)
-                                    }
-                                    let r = try linear(0), g = try grayscale ? r : linear(1), b = try grayscale ? r : linear(2)
-                                    let p = try DefaultOpsin.forward((r,g,b))
-                                    xPlane[i] = Float(p.X); yPlane[i] = Float(p.Y); bPlane[i] = Float(p.B)
-                                }
-                            } }
+        let hasAlpha = (alphaAssociated != nil)
+        let expectedChannels = (grayscale ? 1 : 3) + (hasAlpha ? 1 : 0)
+        guard let first = layouts.first, layouts.count == expectedChannels else {
+            throw ScalarModularError.invalidInput("Invalid VarDCT channel layout count")
+        }
+        let width = first.width
+        let height = first.height
+        let pixelCount = try ScalarOperationBudget.product(width, height)
+        guard width > 0, height > 0, width <= 4096, height <= 4096, pixelCount <= 4 * 1024 * 1024 else {
+            throw ScalarModularError.unsupportedProfile
+        }
+        for layout in layouts {
+            guard layout.width == width,
+                  layout.height == height,
+                  (8...16).contains(layout.storageBits),
+                  bitsPerSample <= layout.storageBits else {
+                throw ScalarModularError.invalidInput("Inconsistent VarDCT channel layout")
+            }
+            guard bytes.count >= layout.requiredBytes else {
+                throw ScalarModularError.invalidInput("Source buffer shorter than layout requirement")
+            }
+        }
+
+        let blocksX = (width + 7) / 8
+        let blocksY = (height + 7) / 8
+        let totalBlocks = try ScalarOperationBudget.product(blocksX, blocksY)
+        let baseAdmission = 4 * 1024 * 1024
+        let planeAdmission = try ScalarOperationBudget.product(pixelCount, 3 * MemoryLayout<Float>.stride)
+        let blockAdmission = try ScalarOperationBudget.product(totalBlocks, 64 * 3 * MemoryLayout<Int32>.stride)
+        try budget.reserveWorkspace(
+            ScalarOperationBudget.sum(baseAdmission, ScalarOperationBudget.sum(planeAdmission, blockAdmission))
+        )
+
+        let maximum = (Int32(1) << bitsPerSample) - 1
+        let source = VarDCTBorrowedSource(bytes: bytes, layouts: layouts, maximum: maximum)
+        let eightBitTable = try bitsPerSample == 8
+            ? VarDCTEncoderPreparation.EightBitConversion(grayscale: grayscale, budget: budget)
+            : nil
+
+        var planes = [
+            [Float](repeating: 0, count: pixelCount),
+            [Float](repeating: 0, count: pixelCount),
+            [Float](repeating: 0, count: pixelCount)
+        ]
+
+        let invMax = 1.0 / Double(maximum)
+        @inline(__always)
+        func srgbToLinear(_ s: Int32) -> Double {
+            let v = Double(s) * invMax
+            return v <= 0.04045 ? (v / 12.92) : pow((v + 0.055) / 1.055, 2.4)
+        }
+
+        for y in 0..<height {
+            if (y & 15) == 0 { try budget.checkpoint() }
+            let rowOffset = y * width
+            if grayscale {
+                for x in 0..<width {
+                    let sample = try source.sample(channel: 0, x: x, y: y)
+                    let idx = rowOffset + x
+                    if let table = eightBitTable {
+                        let xyb = table.grayscale[Int(sample)]
+                        planes[0][idx] = xyb.0
+                        planes[1][idx] = xyb.1
+                        planes[2][idx] = xyb.2
+                    } else {
+                        let lin = srgbToLinear(sample)
+                        let xyb = try DefaultOpsin.forward((lin, lin, lin))
+                        planes[0][idx] = Float(xyb.X)
+                        planes[1][idx] = Float(xyb.Y)
+                        planes[2][idx] = Float(xyb.B)
+                    }
+                }
+            } else {
+                for x in 0..<width {
+                    let sr = try source.sample(channel: 0, x: x, y: y)
+                    let sg = try source.sample(channel: 1, x: x, y: y)
+                    let sb = try source.sample(channel: 2, x: x, y: y)
+                    let r: Double
+                    let g: Double
+                    let b: Double
+                    if let table = eightBitTable {
+                        r = table.linear[Int(sr)]
+                        g = table.linear[Int(sg)]
+                        b = table.linear[Int(sb)]
+                    } else {
+                        r = srgbToLinear(sr)
+                        g = srgbToLinear(sg)
+                        b = srgbToLinear(sb)
+                    }
+                    let xyb = try DefaultOpsin.forward((r, g, b))
+                    let idx = rowOffset + x
+                    planes[0][idx] = Float(xyb.X)
+                    planes[1][idx] = Float(xyb.Y)
+                    planes[2][idx] = Float(xyb.B)
+                }
+            }
+        }
+
+        if gaborish {
+            for c in 0..<3 {
+                planes[c] = try VarDCTEncoderPreparation.inverseGaborish(
+                    planes[c],
+                    width: width,
+                    height: height,
+                    budget: budget
+                )
+            }
+        }
+
+        let globalScale = max(1, min(65535, Int((5111.0 / Double(distance)).rounded())))
+        let writerLimit = budget.maximumCompressedBytes
+
+        if largeStrategySearch {
+            let result = try VarDCTHierarchicalAnalysis.analyse(
+                planes,
+                width: width,
+                height: height,
+                scale: globalScale,
+                distance: distance,
+                adaptiveQuantisation: adaptiveQuantisation,
+                budget: budget
+            )
+            let coefficients = Coefficients(
+                width: width,
+                height: height,
+                blocksX: blocksX,
+                blocksY: blocksY,
+                bits: bitsPerSample,
+                grayscale: grayscale,
+                hasAlpha: hasAlpha,
+                globalScale: globalScale,
+                quantAC: result.quantisation,
+                strategies: result.strategies,
+                gaborish: gaborish,
+                dcSmoothing: dcSmoothing,
+                dc: result.dc,
+                ac: result.ac,
+                transforms: result.transforms
+            )
+            return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: writerLimit)) {
+                try VarDCTFrameWriter(
+                    coefficients: coefficients,
+                    source: source,
+                    budget: budget,
+                    limit: writerLimit
+                ).write()
+            }
+        }
+
+        // Single-cell (8x8) analysis path
+        let smallPlan = try VarDCTSmallAnalysis(budget: budget)
+        var smallWorkspace = try VarDCTSmallAnalysis.Workspace(budget: budget)
+        let candidateIDs = smallStrategySearch ? VarDCTSmallAnalysis.supportedIdentifiers : [0]
+        var weightTables: [Int: [Float]] = [:]
+        for id in candidateIDs {
+            weightTables[id] = try VarDCTQuantWeights.make(identifier: id, rows: 8, columns: 8, budget: budget)
+        }
+        let order = VarDCTFrameWriter.order
+        let dcScales = [4096.0, 512.0, 256.0].map { Double(globalScale) * 17.0 * $0 / 65536.0 }
+        let acScaleBase = Double(globalScale) / 65536.0
+
+        var strategies = [Int32](repeating: 0, count: totalBlocks)
+        var quantAC = [Int32](repeating: 5, count: totalBlocks)
+        var transforms: [VarDCTStrategyMap.Transform] = []
+        transforms.reserveCapacity(totalBlocks)
+        var dc = [
+            [Int32](repeating: 0, count: totalBlocks),
+            [Int32](repeating: 0, count: totalBlocks),
+            [Int32](repeating: 0, count: totalBlocks)
+        ]
+        var ac = [
+            [Int32](repeating: 0, count: totalBlocks * 64),
+            [Int32](repeating: 0, count: totalBlocks * 64),
+            [Int32](repeating: 0, count: totalBlocks * 64)
+        ]
+
+        var patch = [[Float]](repeating: [Float](repeating: 0, count: 64), count: 3)
+        var cflPatch = [[Float]](repeating: [Float](repeating: 0, count: 64), count: 3)
+
+        for by in 0..<blocksY {
+            try budget.checkpoint()
+            for bx in 0..<blocksX {
+                let block = by * blocksX + bx
+                for c in 0..<3 {
+                    let plane = planes[c]
+                    for y in 0..<8 {
+                        let sy = min(height - 1, by * 8 + y) * width
+                        for x in 0..<8 {
+                            let sx = min(width - 1, bx * 8 + x)
+                            let v = plane[sy + sx]
+                            patch[c][y * 8 + x] = v
                         }
                     }
                 }
-                return [firstPlane, secondPlane, thirdPlane]
-            }()
-            if gaborish {
-                for c in 0..<3 { planes[c] = try VarDCTEncoderPreparation.inverseGaborish(planes[c],
-                    width: first.width, height: first.height, budget: budget) }
-            }
-            prepared = planes
-        }
-        if largeStrategySearch {
-            let result: VarDCTHierarchicalAnalysis.Result
-            if let planes = prepared {
-                result = try VarDCTHierarchicalAnalysis.analyse(planes, width: first.width,
-                    height: first.height, scale: scale, distance: distance,
-                    adaptiveQuantisation: adaptiveQuantisation, budget: budget)
-            } else { throw VarDCTError.invalidTransform }
-            // Strategy selection has consumed the prepared working planes.
-            // Release their owners before entropy tokens/sections are built;
-            // coefficients and the original borrowed source remain sufficient.
-            prepared = nil
-            let coefficients = Coefficients(width: first.width, height: first.height, blocksX: bx, blocksY: by,
-                bits: bitsPerSample, grayscale: grayscale, hasAlpha: alphaAssociated != nil,
-                globalScale: scale, quantAC: result.quantisation, strategies: result.strategies,
-                gaborish: gaborish, dcSmoothing: dcSmoothing, dc: result.dc, ac: result.ac,
-                transforms: result.transforms)
-            return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: limit)) {
-                let data = try VarDCTFrameWriter(coefficients: coefficients, source: source, budget: budget, limit: limit).write()
-                try ScalarEncodingWork.checkpoint()
-                return data
-            }
-        }
-        let transform = try ScaledDCT(rows: 8, columns: 8, direction: .forward, budget: budget)
-        let weights = try VarDCTQuantWeights.make(identifier: 0, rows: 8, columns: 8, budget: budget)
-        var dc = (0..<3).map { _ in [Int32](repeating: 0, count: blocks) }
-        var ac = (0..<3).map { _ in [Int32](repeating: 0, count: padded) }
-        var patch = (0..<3).map { _ in [Float](repeating: 0, count: 64) }
-        var quantAC = [Int32](repeating: 5, count: blocks)
-        var strategies = [Int32](repeating: 0, count: blocks)
-        let smallPlan = try smallStrategySearch ? VarDCTSmallAnalysis(budget: budget) : nil
-        var smallWeights: [Int: [Float]] = [:]
-        if smallStrategySearch {
-            for id in [0,1,2,3,12,13,14,15,16,17] {
-                smallWeights[id] = try VarDCTQuantWeights.make(identifier: id, rows: 8, columns: 8, budget: budget)
-            }
-        }
-        let dcScale: [Double] = [4096, 512, 256].map { Double(scale) * 17 * $0 / 65536 }
-        for y in 0..<by { for x in 0..<bx {
-            try budget.checkpoint()
-            for py in 0..<8 { for px in 0..<8 {
-                let sx = min(first.width - 1, x * 8 + px), sy = min(first.height - 1, y * 8 + py)
-                if let prepared {
-                    let sourceIndex = sy * first.width + sx, target = py * 8 + px
-                    for c in 0..<3 { patch[c][target] = prepared[c][sourceIndex] }
-                    continue
+                cflPatch[0] = patch[0]
+                cflPatch[1] = patch[1]
+                for i in 0..<64 {
+                    cflPatch[2][i] = patch[2][i] - patch[1][i]
                 }
-                func linear(_ channel: Int) throws -> Double {
-                    let encoded = Double(try source.sample(channel: channel, x: sx, y: sy)) / Double(source.maximum)
-                    return encoded <= 0.04045 ? encoded / 12.92 : pow((encoded + 0.055) / 1.055, 2.4)
-                }
-                let r = try linear(0), g = try grayscale ? r : linear(1), b = try grayscale ? r : linear(2)
-                let p = try DefaultOpsin.forward((r, g, b)), i = py * 8 + px
-                patch[0][i] = Float(p.X); patch[1][i] = Float(p.Y); patch[2][i] = Float(p.B - p.Y)
-            } }
-            let block = y * bx + x
-            if adaptiveQuantisation { quantAC[block] = try VarDCTEncoderPreparation.quantisation(patch, distance: distance) }
-            if prepared != nil { for k in 0..<64 { patch[2][k] -= patch[1][k] } }
-            if let smallPlan {
-                func trial(_ id: Int) throws -> (dc: [Int32], ac: [[Int32]], cost: Int) {
-                    try budget.checkpoint()
-                    try budget.reserveWorkspace(256 * MemoryLayout<Int32>.stride)
-                    guard let weights = smallWeights[id] else { throw VarDCTError.invalidTransform }
-                    var dc = [Int32](repeating: 0, count: 3)
-                    var ac = (0..<3).map { _ in [Int32](repeating: 0, count: 64) }
-                    var cost = 0
+
+                let qf: Int32 = adaptiveQuantisation
+                    ? try VarDCTEncoderPreparation.quantisation(patch, distance: distance)
+                    : 5
+                quantAC[block] = qf
+                let qScale = acScaleBase * Double(qf)
+
+                var bestID = 0
+                var bestCost = Double.infinity
+                var bestDC = (Int32(0), Int32(0), Int32(0))
+                var bestAC = [[Int32]](repeating: [Int32](repeating: 0, count: 64), count: 3)
+
+                for id in candidateIDs {
+                    let weights = weightTables[id]!
+                    var candDC = (Int32(0), Int32(0), Int32(0))
+                    var candAC = [[Int32]](repeating: [Int32](repeating: 0, count: 64), count: 3)
+                    var nonZeros = 0
+                    var acEnergy = 0.0
+
                     for c in 0..<3 {
-                        let values = try smallPlan.apply(patch[c], identifier: id)
-                        dc[c] = try quantise(Double(values[0]) * dcScale[c])
-                        for k in 1..<64 { ac[c][k] = try quantise(Double(values[k]) * Double(weights[c * 64 + k]) * Double(scale) / 65536 * Double(quantAC[block])) }
-                        cost += tokenCost(ac[c])
+                        try cflPatch[c].withUnsafeBufferPointer { buf in
+                            try smallPlan.apply(buf, identifier: id, workspace: &smallWorkspace)
+                        }
+                        let dcVal = Int32((Double(smallWorkspace.value(at: 0)) * dcScales[c]).rounded())
+                        switch c {
+                        case 0: candDC.0 = dcVal
+                        case 1: candDC.1 = dcVal
+                        default: candDC.2 = dcVal
+                        }
+                        let wBase = c * 64
+                        for k in 1..<64 {
+                            let pos = order[k]
+                            let q = Int32((Double(smallWorkspace.value(at: pos)) * Double(weights[wBase + pos]) * qScale).rounded())
+                            candAC[c][pos] = q
+                            if q != 0 {
+                                nonZeros += 1
+                                acEnergy += abs(Double(q))
+                            }
+                        }
                     }
-                    return (dc,ac,cost)
-                }
-                var best = try trial(0), chosen = 0
-                let initialCost = best.cost
-                if initialCost > 54 {
-                    // Later equal-cost choices reproduce the predecessor's
-                    // explicit tie priority, including the four AFV orientations.
-                    for id in [13,12,3,2,1,17,16,15,14] where id < 14 || initialCost > 120 {
-                        let candidate = try trial(id)
-                        if candidate.cost <= best.cost { best = candidate; chosen = id }
+
+                    let penalty = (id == 0) ? 0.0 : 1.5
+                    let cost = Double(nonZeros) * 3.5 + acEnergy * 0.25 + penalty
+                    if cost + (id == 0 ? 0.0 : 0.5) < bestCost {
+                        bestCost = cost
+                        bestID = id
+                        bestDC = candDC
+                        bestAC = candAC
                     }
                 }
-                strategies[block] = Int32(chosen)
+
+                strategies[block] = Int32(bestID)
+                dc[0][block] = bestDC.0
+                dc[1][block] = bestDC.1
+                dc[2][block] = bestDC.2
+                let acOffset = block * 64
                 for c in 0..<3 {
-                    dc[c][block] = best.dc[c]
-                    for k in 1..<64 { ac[c][block * 64 + k] = best.ac[c][k] }
+                    for i in 0..<64 {
+                        ac[c][acOffset + i] = bestAC[c][i]
+                    }
                 }
-                continue
+                transforms.append(
+                    VarDCTStrategyMap.Transform(
+                        identifier: bestID,
+                        x: bx,
+                        y: by,
+                        cellsX: 1,
+                        cellsY: 1,
+                        quantisation: UInt32(qf),
+                        coefficientOffset: acOffset
+                    )
+                )
             }
-            for c in 0..<3 {
-                let result = try transform.apply(patch[c])
-                dc[c][block] = try quantise(Double(result[0]) * dcScale[c])
-                for k in 1..<64 {
-                    // The codestream's square-DCT coefficient layout transposes
-                    // the ordinary row-major analysis transform.
-                    let value = result[(k % 8) * 8 + k / 8]
-                    ac[c][block * 64 + k] = try quantise(Double(value) * Double(weights[c * 64 + k]) * Double(scale) / 65536 * Double(quantAC[block]))
-                }
-            }
-        } }
-        let coefficients = Coefficients(width: first.width, height: first.height, blocksX: bx, blocksY: by,
-            bits: bitsPerSample, grayscale: grayscale, hasAlpha: alphaAssociated != nil, globalScale: scale, quantAC: quantAC, strategies: strategies, gaborish: gaborish, dcSmoothing: dcSmoothing, dc: dc, ac: ac)
-        return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: limit)) {
-            let data = try VarDCTFrameWriter(coefficients: coefficients, source: source, budget: budget, limit: limit).write()
-            try ScalarEncodingWork.checkpoint()
-            return data
         }
-    }
 
-    private static func tokenCost(_ coefficients: [Int32]) -> Int {
-        let order = VarDCTFrameWriter.order
-        var last = 0, magnitudeBits = 0
-        for k in 1..<64 {
-            let value = coefficients[order[k]]
-            if value != 0 { last = k; magnitudeBits += 32 - value.magnitude.leadingZeroBitCount }
+        let coefficients = Coefficients(
+            width: width,
+            height: height,
+            blocksX: blocksX,
+            blocksY: blocksY,
+            bits: bitsPerSample,
+            grayscale: grayscale,
+            hasAlpha: hasAlpha,
+            globalScale: globalScale,
+            quantAC: quantAC,
+            strategies: strategies,
+            gaborish: gaborish,
+            dcSmoothing: dcSmoothing,
+            dc: dc,
+            ac: ac,
+            transforms: transforms
+        )
+        return try ScalarEncodingWork.$current.withValue(.init(budget: budget, writerByteLimit: writerLimit)) {
+            try VarDCTFrameWriter(
+                coefficients: coefficients,
+                source: source,
+                budget: budget,
+                limit: writerLimit
+            ).write()
         }
-        return 4 + 2 * last + magnitudeBits
-    }
-
-    private static func quantise(_ value: Double) throws -> Int32 {
-        let rounded = value.rounded()
-        guard rounded.isFinite, rounded >= Double(Int32.min), rounded <= Double(Int32.max) else {
-            throw ScalarModularError.invalidInput("VarDCT coefficient exceeds integer precision")
-        }
-        return Int32(rounded)
     }
 }
 
-/// Operation-local synchronous borrow; intentionally not Sendable. The encoder
-/// validates every layout before construction and retains no instance on return.
+/// Borrowed pixel buffer accessor that validates sample precision without copying source planes.
 struct VarDCTBorrowedSource {
     let bytes: UnsafeRawBufferPointer
     let layouts: [ModularChannelLayout]
     let maximum: Int32
+
+    @inline(__always)
     func sample(channel: Int, x: Int, y: Int) throws -> Int32 {
-        let layout = layouts[channel], p = layout.offset + y * layout.rowBytes + x * layout.pixelStride
-        let value: Int32
-        if layout.storageBits == 8 { value = Int32(bytes[p]) }
-        else if layout.littleEndian { value = Int32(bytes[p]) | Int32(bytes[p + 1]) << 8 }
-        else { value = Int32(bytes[p]) << 8 | Int32(bytes[p + 1]) }
-        guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
-        return value
+        let layout = layouts[channel]
+        let offset = layout.offset + y * layout.rowBytes + x * layout.pixelStride
+        let raw: Int32
+        if layout.storageBits == 8 {
+            raw = Int32(bytes[offset])
+        } else if layout.littleEndian {
+            raw = Int32(bytes[offset]) | (Int32(bytes[offset + 1]) << 8)
+        } else {
+            raw = (Int32(bytes[offset]) << 8) | Int32(bytes[offset + 1])
+        }
+        guard raw >= 0, raw <= maximum else {
+            throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision")
+        }
+        return raw
     }
 }
