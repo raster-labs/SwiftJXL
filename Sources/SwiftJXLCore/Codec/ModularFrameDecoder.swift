@@ -700,7 +700,7 @@ package enum ModularFrameDecoder {
                         try budget.reserveWorkspace(
                             ScalarOperationBudget.product(entropy.codebook.ansCounts.count, 64 * 1024)
                         )
-                        let groupId = Int32(1 + numDcGroups + groupIndex)
+                        let groupId = Int32(1 + 3 * numDcGroups + 17 + groupIndex)
 
                         if groupHeader.transforms.isEmpty {
                             let maxW = slices.map(\.width).max() ?? 0
@@ -772,7 +772,7 @@ package enum ModularFrameDecoder {
                             )
                             let planes = try decodeGroupSubstreamToPlanes(
                                 sectionIndex: firstACSection + groupIndex,
-                                groupId: Int32(1 + numDcGroups + groupIndex),
+                                groupId: Int32(1 + 3 * numDcGroups + 17 + groupIndex),
                                 slices: slices,
                                 sampleMaximum: sampleMax
                             )
@@ -866,7 +866,7 @@ package enum ModularFrameDecoder {
                 )
                 let planes = try decodeGroupSubstreamToPlanes(
                     sectionIndex: 1 + dcIndex,
-                    groupId: Int32(1 + dcIndex),
+                    groupId: Int32(1 + numDcGroups + dcIndex),
                     slices: slices,
                     sampleMaximum: nil
                 )
@@ -908,7 +908,7 @@ package enum ModularFrameDecoder {
                         )
                         let planes = try decodeGroupSubstreamToPlanes(
                             sectionIndex: firstACSection + passIndex * numGroups + groupIndex,
-                            groupId: Int32(1 + numDcGroups + passIndex * numGroups + groupIndex),
+                            groupId: Int32(1 + 3 * numDcGroups + 17 + passIndex * numGroups + groupIndex),
                             slices: slices,
                             sampleMaximum: checkMax
                         )
@@ -935,7 +935,7 @@ package enum ModularFrameDecoder {
                             )
                             let planes = try decodeGroupSubstreamToPlanes(
                                 sectionIndex: firstACSection + passIndex * numGroups + groupIndex,
-                                groupId: Int32(1 + numDcGroups + passIndex * numGroups + groupIndex),
+                                groupId: Int32(1 + 3 * numDcGroups + 17 + passIndex * numGroups + groupIndex),
                                 slices: slices,
                                 sampleMaximum: checkMax
                             )
