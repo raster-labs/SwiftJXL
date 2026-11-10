@@ -91,7 +91,7 @@ class ReleaseProvenanceTests(unittest.TestCase):
             path.write_bytes(saved)
 
     def test_upstream_notice_change_rejected(self):
-        path = self.root / "Documentation/ThirdParty/libjxl-LICENSE.txt"
+        path = self.root / "Documentation/ThirdParty/brotli-LICENSE.txt"
         saved = path.read_bytes()
         try:
             path.write_bytes(b"Apache-2.0")
@@ -102,7 +102,7 @@ class ReleaseProvenanceTests(unittest.TestCase):
 
     def test_removed_notice_requirement_rejected(self):
         changed = copy.deepcopy(self.inventory)
-        del changed["preservedNotices"]["Documentation/ThirdParty/libjxl-LICENSE.txt"]
+        del changed["preservedNotices"]["Documentation/ThirdParty/brotli-LICENSE.txt"]
         self.inventory_path.write_text(json.dumps(changed))
         with self.assertRaisesRegex(AUDIT.AuditFailure, "notice set differs"):
             AUDIT.audit(self.root, self.inventory_path)

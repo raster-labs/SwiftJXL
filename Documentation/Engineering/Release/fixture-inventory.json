@@ -92,7 +92,6 @@
   },
   "preservedNotices": {
     "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
-    "Documentation/ThirdParty/libjxl-LICENSE.txt": "8405932022a556380c2d8c272eff154a923feb197233f348ce5f7334fb0a5ede",
     "Documentation/ThirdParty/brotli-LICENSE.txt": "3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94",
     "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Conformance/LICENSE.txt": "8405932022a556380c2d8c272eff154a923feb197233f348ce5f7334fb0a5ede",
     "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Conformance/SOURCE-LICENCES.md": "8f67502fc127cf6ca049f65c27f4c70035b4b602d23a2f68a3ff9bdf92abeebe"

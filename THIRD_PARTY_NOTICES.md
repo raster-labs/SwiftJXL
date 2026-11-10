@@ -8,11 +8,9 @@ The release-preparation baseline is SwiftJXL `3e00d93`, contract **0.10.0**. The
 
 | Material | Retained terms | Provenance and distribution obligation |
 | --- | --- | --- |
-| Owner-authored SwiftJXL and relocated in-house JXLSwift implementation | Apache-2.0 | Preserve [LICENSE](LICENSE), [NOTICE](NOTICE) and original authorship. The owner-authorised relocation is recorded in [suite policy POL-07](Documentation/SUITE_POLICY.md). |
-| JPEG XL algorithm adaptations and tables | BSD-3-Clause alongside the stated Apache-2.0 portions | Preserve [JPEG XL Project Authors' licence](Documentation/ThirdParty/libjxl-LICENSE.txt). Source SPDX headers identify the affected files, including JPEG reconstruction, ICC, Modular and VarDCT code and numerical tables. The reference revision used by migration is `a7a9c787341cf703dede03c2009fa460cae5e5df` (libjxl 0.12.0). |
-| Brotli dictionary, transforms, context tables and decoding adaptations | MIT alongside the stated Apache-2.0 portions | Preserve [Brotli Authors' licence](Documentation/ThirdParty/brotli-LICENSE.txt). See [native JPEG provenance](Documentation/Engineering/Migration/NATIVE_JPEG.md), including the context-table pin `028fb5a23661f123017c060daa546b55cf4bde29`. |
+| Owner-authored SwiftJXL, relocated in-house JXLSwift implementation, and clean-room ISO/IEC 18181-1/2, ITU-T Rec. T.81 & IETF RFC 7932 implementations | Apache-2.0 | Preserve [LICENSE](LICENSE), [NOTICE](NOTICE) and original authorship. The owner-authorised relocation is recorded in [suite policy POL-07](Documentation/SUITE_POLICY.md). All production sources in `Sources/` are licensed exclusively under `Apache-2.0`. |
 
-These are included source adaptations, not external codec runtime dependencies. Independent libjxl, libjpeg-turbo, Brotli and LittleCMS executables/libraries are development oracles or generators; their use does not make those tools part of the shipped package. A binary distribution must also carry the applicable notice texts. Platform SDKs and compiler runtime components require the separate build-artifact inventory.
+Independent libjxl, libjpeg-turbo, Brotli and LittleCMS executables/libraries are development oracles or generators; their use does not make those tools part of the shipped package. A binary distribution must also carry the applicable notice texts. Platform SDKs and compiler runtime components require the separate build-artifact inventory.
 
 ## Test-resource collections
 
