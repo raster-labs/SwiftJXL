@@ -1,127 +1,447 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Copyright (c) 2026 Raster-Lab.
-// Adapted from JXLSwift VarDCT/{ACContext,ACDecoder,CoeffOrders}.swift at
-// 57e81cb9e2411d1efac435b429a306a031744c1e. JPEG XL Project Authors
-// retain BSD-3-Clause terms; see Documentation/ThirdParty/libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-package struct JPEGBridgeBlockContext {
-    let dc: [[Int32]]
-    let qf: [UInt32]
-    let map: [UInt8]
-    let dcContexts: Int
-    let classes: Int
-    var contexts: Int { classes * (37 + 458) }
+/// Entropy coding utilities for the reversible JPEG-to-VarDCT coefficient bridge (ISO/IEC 18181-1 §§7, 8, 9.3).
+package enum JPEGBridgeEntropy {
+    /// Builds a `PrefixCodeTable` from symbol frequencies with canonical code lengths bounded to 15 bits.
+    package static func buildPrefixTable(
+        frequencies: [Int],
+        alphabetSize: Int
+    ) throws -> PrefixCodeTable {
+        guard alphabetSize > 1 else {
+            return try PrefixCodeTable(lengths: [0])
+        }
+        let lengths = buildBoundedCodeLengths(frequencies: frequencies, alphabetSize: alphabetSize, maxBits: 15)
+        return try PrefixCodeTable(lengths: lengths.map { UInt8($0) })
+    }
 
-    static func read(from r: inout BitReader) throws -> Self {
-        if try r.readBit() { return Self(dc: [[], [], []], qf: [], map: kDefaultBlockCtxMap, dcContexts: 1, classes: 15) }
-        var dc: [[Int32]] = [], qf: [UInt32] = [], dcContexts = 1
-        for _ in 0..<3 {
-            let count = Int(try r.read(bits: 4)); dcContexts *= count + 1
-            var thresholds: [Int32] = []
-            for _ in 0..<count {
-                let raw = try r.readU32((.bits(4), .offset(constant: 16, extraBits: 8),
-                    .offset(constant: 272, extraBits: 16), .offset(constant: 65808, extraBits: 32)))
-                thresholds.append(ZigZag.unpack(raw))
+    /// Encodes a single-cluster prefix-coded entropy section and its token stream.
+    package static func writeSingleClusterStream(
+        values: [UInt32],
+        numContexts: Int,
+        config: HybridUintConfig,
+        to writer: inout BitWriter,
+        policy: JPEGBridgePolicy
+    ) throws {
+        try policy.checkpoint()
+        var maxToken = 0
+        var counts: [Int] = [0]
+        for (idx, val) in values.enumerated() {
+            if (idx & 1023) == 0 { try policy.checkpoint() }
+            let encoded = config.encode(val)
+            let tok = Int(encoded.token)
+            if tok >= counts.count {
+                counts.append(contentsOf: repeatElement(0, count: tok - counts.count + 1))
             }
-            dc.append(thresholds)
+            counts[tok] += 1
+            if tok > maxToken { maxToken = tok }
         }
-        let count = Int(try r.read(bits: 4))
-        guard dcContexts * (count + 1) <= 64 else { throw JPEGEntropyError.malformed }
-        for _ in 0..<count {
-            qf.append(try r.readU32((.bits(2), .offset(constant: 4, extraBits: 3),
-                .offset(constant: 12, extraBits: 5), .offset(constant: 44, extraBits: 8))) + 1)
+        if values.isEmpty {
+            counts[0] = 1
         }
-        let map = try ContextMap.read(numContexts: 39 * dcContexts * (count + 1), from: &r)
-        guard (1...16).contains(map.numClusters) else { throw JPEGEntropyError.malformed }
-        return Self(dc: dc, qf: qf, map: map.map, dcContexts: dcContexts, classes: map.numClusters)
+        let alphabetSize = maxToken + 1
+        let table = try buildPrefixTable(frequencies: counts, alphabetSize: alphabetSize)
+        let header = EntropySectionHeader(
+            lz77: .disabled,
+            contextMap: .trivial(numContexts: max(1, numContexts)),
+            usePrefixCode: true,
+            logAlphaSize: 15,
+            uintConfigs: [config]
+        )
+        let codebook = MultiClusterCodebook(
+            huffmanTables: [table],
+            ansCounts: [],
+            alphabetSizes: [alphabetSize]
+        )
+        try header.write(to: &writer, numContexts: max(1, numContexts))
+        try codebook.write(to: &writer, header: header)
+        let tokenWriter = TokenStreamWriter(header: header, codebook: codebook)
+        for (idx, val) in values.enumerated() {
+            if (idx & 1023) == 0 { try policy.checkpoint() }
+            try tokenWriter.writeToken(context: 0, value: val, to: &writer)
+        }
     }
 
-    func blockContext(dcValues: [Int32], quantisation: UInt32, channel: Int) throws -> Int {
-        guard dcValues.count == 3, (0..<3).contains(channel) else { throw JPEGEntropyError.malformed }
-        let a = dc[0].reduce(0) { $0 + (dcValues[0] > $1 ? 1 : 0) }
-        let b = dc[1].reduce(0) { $0 + (dcValues[1] > $1 ? 1 : 0) }
-        let c = dc[2].reduce(0) { $0 + (dcValues[2] > $1 ? 1 : 0) }
-        let bucket = (a * (dc[2].count + 1) + c) * (dc[1].count + 1) + b
-        let quantBucket = qf.reduce(0) { $0 + (quantisation > $1 ? 1 : 0) }
-        let mappedChannel = channel < 2 ? channel ^ 1 : 2
-        let index = (mappedChannel * 13 * (qf.count + 1) + quantBucket) * dcContexts + bucket
-        guard map.indices.contains(index), Int(map[index]) < classes else { throw JPEGEntropyError.malformed }
-        return Int(map[index])
-    }
-
-    func readBlock(prediction: UInt32, blockContext: Int, offset: Int, order: [Int],
-                   stream: inout TokenStreamReader, from r: inout BitReader, into block: inout [Int32]) throws -> Int {
-        guard block.count == 64, order.count == 64, (0..<classes).contains(blockContext), prediction <= 64 else {
+    /// Writes a self-contained 1-leaf Modular tree (`predictor`, `offset = 0`, `multiplier = 1`) and single-cluster codebook.
+    package static func writeFlatModularSubstream(
+        channels: [[Int32]],
+        dimensions: [(width: Int, height: Int)],
+        predictor: UInt32 = 0,
+        config: HybridUintConfig = HybridUintConfig(splitExponent: 4, msbInToken: 1, lsbInToken: 0),
+        to writer: inout BitWriter,
+        policy: JPEGBridgePolicy
+    ) throws {
+        try policy.checkpoint()
+        guard channels.count == dimensions.count else {
             throw JPEGEntropyError.malformed
         }
-        for i in 0..<64 { block[i] = 0 }
-        let bucket = prediction < 8 ? Int(prediction) : 4 + Int(prediction) / 2
-        let nonzeros = try stream.readToken(context: offset + bucket * classes + blockContext, from: &r)
-        guard nonzeros <= 63 else { throw JPEGEntropyError.malformed }
-        var remaining = Int(nonzeros), previous = nonzeros > 4 ? 0 : 1
-        let base = offset + classes * 37 + 458 * blockContext
-        for k in 1..<64 {
-            if remaining == 0 { break }
-            let context = base + (Int(kCoeffNumNonzeroContext[remaining]) + Int(kCoeffFreqContext[k])) * 2 + previous
-            let value = try stream.readToken(context: context, from: &r)
-            guard (1..<64).contains(order[k]) else { throw JPEGEntropyError.malformed }
-            block[order[k]] = ZigZag.unpack(value)
-            previous = value == 0 ? 0 : 1
-            remaining -= previous
+
+        // 1. GroupHeader: use_global_tree = false, wp_header.all_default = true, num_transforms = 0
+        writer.writeBit(false)
+        writer.writeBit(true)
+        writer.write(bits: 2, value: 0)
+
+        // 2. 1-leaf Modular MA tree (ISO/IEC 18181-1 §8.1.3):
+        //    5 tokens for a single leaf node:
+        //    - kPropertyContext (1) = 0 (leaf marker, property = -1)
+        //    - kPredictorContext (2) = predictor
+        //    - kOffsetContext (3) = 0
+        //    - kMultiplierLogContext (4) = 0
+        //    - kMultiplierBitsContext (5) = 0
+        let treeConfig = HybridUintConfig(splitExponent: 4, msbInToken: 0, lsbInToken: 0)
+        let treeTokens: [(ctx: Int, val: UInt32)] = [
+            (1, 0),
+            (2, predictor),
+            (3, 0),
+            (4, 0),
+            (5, 0)
+        ]
+        var treeFreqs = [Int](repeating: 0, count: Int(predictor) + 1)
+        for t in treeTokens {
+            treeFreqs[Int(t.val)] += 1
         }
-        guard remaining == 0 else { throw JPEGEntropyError.malformed }
-        return Int(nonzeros)
+        let treeAlpha = Int(predictor) + 1
+        let treeTable = try buildPrefixTable(frequencies: treeFreqs, alphabetSize: treeAlpha)
+        let treeHeader = EntropySectionHeader(
+            lz77: .disabled,
+            contextMap: .trivial(numContexts: 6),
+            usePrefixCode: true,
+            logAlphaSize: 15,
+            uintConfigs: [treeConfig]
+        )
+        let treeCodebook = MultiClusterCodebook(
+            huffmanTables: [treeTable],
+            ansCounts: [],
+            alphabetSizes: [treeAlpha]
+        )
+        try treeHeader.write(to: &writer, numContexts: 6)
+        try treeCodebook.write(to: &writer, header: treeHeader)
+        let treeStreamWriter = TokenStreamWriter(header: treeHeader, codebook: treeCodebook)
+        for t in treeTokens {
+            try treeStreamWriter.writeToken(context: t.ctx, value: t.val, to: &writer)
+        }
+
+        // 3. Collect residual tokens for all channels
+        var packedResiduals: [UInt32] = []
+        let totalSamples = dimensions.reduce(0) { $0 + $1.width * $1.height }
+        packedResiduals.reserveCapacity(totalSamples)
+
+        for (cIdx, plane) in channels.enumerated() {
+            let (w, h) = dimensions[cIdx]
+            guard plane.count == w * h else {
+                throw JPEGEntropyError.malformed
+            }
+            for y in 0..<h {
+                if (y & 63) == 0 { try policy.checkpoint() }
+                let rowBase = y * w
+                for x in 0..<w {
+                    let sample = plane[rowBase + x]
+                    let pred: Int32
+                    switch predictor {
+                    case 1: // West (Left)
+                        pred = x > 0 ? plane[rowBase + x - 1] : (y > 0 ? plane[(y - 1) * w] : 0)
+                    case 2: // North (Top)
+                        pred = y > 0 ? plane[(y - 1) * w + x] : (x > 0 ? plane[rowBase + x - 1] : 0)
+                    case 5: // Gradient (Clamped West + North - NorthWest)
+                        if x == 0 && y == 0 {
+                            pred = 0
+                        } else if y == 0 {
+                            pred = plane[rowBase + x - 1]
+                        } else if x == 0 {
+                            pred = plane[(y - 1) * w]
+                        } else {
+                            let wVal = Int64(plane[rowBase + x - 1])
+                            let nVal = Int64(plane[(y - 1) * w + x])
+                            let nwVal = Int64(plane[(y - 1) * w + x - 1])
+                            let lo = min(wVal, nVal)
+                            let hi = max(wVal, nVal)
+                            pred = Int32(clamping: min(hi, max(lo, wVal + nVal - nwVal)))
+                        }
+                    default: // Zero
+                        pred = 0
+                    }
+                    let residual = sample &- pred
+                    packedResiduals.append(ZigZag.pack(residual))
+                }
+            }
+        }
+
+        // 4. Write single-cluster Modular token stream
+        try writeSingleClusterStream(
+            values: packedResiduals,
+            numContexts: 1,
+            config: config,
+            to: &writer,
+            policy: policy
+        )
+    }
+
+    /// Clusters VarDCT HF contexts by token statistics and writes the `HfGlobal` codebook and `HfPass` group streams.
+    package static func writeClusteredACStreams(
+        groupTokens: [[(context: Int, value: UInt32)]],
+        numContexts: Int,
+        to hfGlobalWriter: inout BitWriter,
+        policy: JPEGBridgePolicy
+    ) throws -> [BitWriter] {
+        try policy.checkpoint()
+        let nzLimit = VarDCTEntropy.defaultNumBlockClusters * VarDCTEntropy.nonZeroBuckets
+
+        // Partition active contexts into up to 12 semantic/statistical clusters:
+        // - Cluster 0: unused contexts + NZ contexts with low mean
+        // - Cluster 1: NZ contexts with medium/high mean
+        // - Clusters 2..11: AC zero-density contexts bucketed by zero-probability P(val == 0)
+        var ctxTotal = [Int](repeating: 0, count: numContexts)
+        var ctxZeros = [Int](repeating: 0, count: numContexts)
+        var ctxSum = [UInt64](repeating: 0, count: numContexts)
+
+        for group in groupTokens {
+            try policy.checkpoint()
+            for tok in group {
+                let c = tok.context
+                ctxTotal[c] &+= 1
+                if tok.value == 0 {
+                    ctxZeros[c] &+= 1
+                } else {
+                    ctxSum[c] &+= UInt64(tok.value)
+                }
+            }
+        }
+
+        // Thresholds for P(val == 0) in parts per 1024 for AC coefficient contexts
+        let zeroRatioThresholds = [256, 448, 576, 680, 760, 824, 880, 928, 964]
+        var rawClusterForCtx = [Int](repeating: 0, count: numContexts)
+        var clusterUsed = [Bool](repeating: false, count: 2 + zeroRatioThresholds.count + 1)
+        clusterUsed[0] = true
+
+        for ctx in 0..<numContexts {
+            let total = ctxTotal[ctx]
+            guard total > 0 else {
+                rawClusterForCtx[ctx] = 0
+                continue
+            }
+            if ctx < nzLimit {
+                let meanX16 = (ctxSum[ctx] << 4) / UInt64(total)
+                let cl = meanX16 >= 64 ? 1 : 0
+                rawClusterForCtx[ctx] = cl
+                clusterUsed[cl] = true
+            } else {
+                let zeroPermille = (ctxZeros[ctx] << 10) / total
+                var bucket = 0
+                for t in zeroRatioThresholds where zeroPermille >= t {
+                    bucket += 1
+                }
+                let cl = 2 + bucket
+                rawClusterForCtx[ctx] = cl
+                clusterUsed[cl] = true
+            }
+        }
+
+        // Compact active clusters to contiguous IDs 0..<numClusters
+        var compactID = [Int](repeating: 0, count: clusterUsed.count)
+        var numClusters = 0
+        for i in 0..<clusterUsed.count where clusterUsed[i] {
+            compactID[i] = numClusters
+            numClusters += 1
+        }
+        numClusters = max(1, numClusters)
+
+        var cmapBytes = [UInt8](repeating: 0, count: numContexts)
+        for ctx in 0..<numContexts {
+            cmapBytes[ctx] = UInt8(compactID[rawClusterForCtx[ctx]])
+        }
+
+        var uintConfigs = [HybridUintConfig](repeating: HybridUintConfig(splitExponent: 4, msbInToken: 1, lsbInToken: 0), count: numClusters)
+        for rawCl in 0..<2 where clusterUsed[rawCl] {
+            uintConfigs[compactID[rawCl]] = HybridUintConfig(splitExponent: 3, msbInToken: 1, lsbInToken: 0)
+        }
+
+        var clusterFreqs = [[Int]](repeating: [0], count: numClusters)
+        var clusterMaxTok = [Int](repeating: 0, count: numClusters)
+
+        for group in groupTokens {
+            try policy.checkpoint()
+            for tok in group {
+                let cl = Int(cmapBytes[tok.context])
+                let cfg = uintConfigs[cl]
+                let exp = cfg.encode(tok.value)
+                let sym = Int(exp.token)
+                if sym >= clusterFreqs[cl].count {
+                    clusterFreqs[cl].append(contentsOf: repeatElement(0, count: sym - clusterFreqs[cl].count + 1))
+                }
+                clusterFreqs[cl][sym] &+= 1
+                if sym > clusterMaxTok[cl] {
+                    clusterMaxTok[cl] = sym
+                }
+            }
+        }
+
+        var tables: [PrefixCodeTable] = []
+        var alphaSizes: [Int] = []
+        tables.reserveCapacity(numClusters)
+        alphaSizes.reserveCapacity(numClusters)
+
+        for cl in 0..<numClusters {
+            if clusterFreqs[cl].allSatisfy({ $0 == 0 }) {
+                clusterFreqs[cl][0] = 1
+            }
+            let alpha = clusterMaxTok[cl] + 1
+            alphaSizes.append(alpha)
+            tables.append(try buildPrefixTable(frequencies: clusterFreqs[cl], alphabetSize: alpha))
+        }
+
+        let contextMap = try ContextMap(numClusters: numClusters, map: cmapBytes)
+        let header = EntropySectionHeader(
+            lz77: .disabled,
+            contextMap: contextMap,
+            usePrefixCode: true,
+            logAlphaSize: 15,
+            uintConfigs: uintConfigs
+        )
+        let codebook = MultiClusterCodebook(
+            huffmanTables: tables,
+            ansCounts: [],
+            alphabetSizes: alphaSizes
+        )
+
+        try header.write(to: &hfGlobalWriter, numContexts: numContexts)
+        try codebook.write(to: &hfGlobalWriter, header: header)
+
+        let tokenWriter = TokenStreamWriter(header: header, codebook: codebook)
+        if groupTokens.count == 1 {
+            for (idx, tok) in groupTokens[0].enumerated() {
+                if (idx & 1023) == 0 { try policy.checkpoint() }
+                try tokenWriter.writeToken(context: tok.context, value: tok.value, to: &hfGlobalWriter)
+            }
+            return []
+        }
+
+        var groupWriters: [BitWriter] = []
+        groupWriters.reserveCapacity(groupTokens.count)
+
+        for group in groupTokens {
+            try policy.checkpoint()
+            var gw = BitWriter()
+            for (idx, tok) in group.enumerated() {
+                if (idx & 1023) == 0 { try policy.checkpoint() }
+                try tokenWriter.writeToken(context: tok.context, value: tok.value, to: &gw)
+            }
+            groupWriters.append(gw)
+        }
+
+        return groupWriters
+    }
+
+    // MARK: - Depth-Limited Canonical Code Length Builder
+
+    private static func buildBoundedCodeLengths(
+        frequencies: [Int],
+        alphabetSize: Int,
+        maxBits: Int
+    ) -> [Int] {
+        var active: [(sym: Int, freq: Int)] = []
+        for s in 0..<alphabetSize {
+            let f = s < frequencies.count ? frequencies[s] : 0
+            if f > 0 {
+                active.append((s, f))
+            }
+        }
+        var lengths = [Int](repeating: 0, count: alphabetSize)
+        if active.isEmpty {
+            lengths[0] = 0
+            return lengths
+        }
+        if active.count == 1 {
+            if alphabetSize == 1 {
+                lengths[0] = 0
+                return lengths
+            }
+            let s = active[0].sym
+            let pad = (s == 0) ? 1 : 0
+            lengths[s] = 1
+            lengths[pad] = 1
+            return lengths
+        }
+        if active.count == 2 {
+            lengths[active[0].sym] = 1
+            lengths[active[1].sym] = 1
+            return lengths
+        }
+
+        // Standard Huffman tree construction followed by Kraft-sum enforcement at `maxBits`
+        struct Node {
+            var weight: Int
+            var left: Int
+            var right: Int
+            var symbol: Int
+        }
+
+        var nodes: [Node] = active.map { Node(weight: $0.freq, left: -1, right: -1, symbol: $0.sym) }
+        var available = Array(0..<nodes.count)
+
+        while available.count > 1 {
+            available.sort { a, b in
+                if nodes[a].weight != nodes[b].weight {
+                    return nodes[a].weight > nodes[b].weight
+                }
+                return a > b
+            }
+            let n1 = available.removeLast()
+            let n2 = available.removeLast()
+            let parentIdx = nodes.count
+            nodes.append(Node(weight: nodes[n1].weight + nodes[n2].weight, left: n1, right: n2, symbol: -1))
+            available.append(parentIdx)
+        }
+
+        var symbolDepths: [(sym: Int, freq: Int, len: Int)] = []
+        symbolDepths.reserveCapacity(active.count)
+
+        func traverse(_ idx: Int, depth: Int) {
+            let node = nodes[idx]
+            if node.symbol >= 0 {
+                symbolDepths.append((node.symbol, node.weight, min(maxBits, max(1, depth))))
+            } else {
+                traverse(node.left, depth: depth + 1)
+                traverse(node.right, depth: depth + 1)
+            }
+        }
+        traverse(available[0], depth: 0)
+
+        // Sort by frequency ascending (then symbol descending) to adjust Kraft sum to 1 << maxBits
+        symbolDepths.sort { a, b in
+            if a.freq != b.freq { return a.freq < b.freq }
+            return a.sym > b.sym
+        }
+
+        let targetKraft = 1 << maxBits
+        var kraftSum = symbolDepths.reduce(0) { $0 + (1 << (maxBits - $1.len)) }
+
+        while kraftSum > targetKraft {
+            for i in 0..<symbolDepths.count where symbolDepths[i].len < maxBits {
+                let oldContrib = 1 << (maxBits - symbolDepths[i].len)
+                symbolDepths[i].len += 1
+                let newContrib = 1 << (maxBits - symbolDepths[i].len)
+                kraftSum -= (oldContrib - newContrib)
+                if kraftSum <= targetKraft { break }
+            }
+        }
+
+        while kraftSum < targetKraft {
+            let deficit = targetKraft - kraftSum
+            for i in (0..<symbolDepths.count).reversed() where symbolDepths[i].len > 1 {
+                let delta = 1 << (maxBits - symbolDepths[i].len)
+                if delta <= deficit {
+                    symbolDepths[i].len -= 1
+                    kraftSum += delta
+                    break
+                }
+            }
+        }
+
+        for item in symbolDepths {
+            lengths[item.sym] = item.len
+        }
+        return lengths
     }
 }
-
-package func readJPEGBridgeOrders(from r: inout BitReader) throws -> [[Int]] {
-    let used = try r.readU32((.literal(0x5f), .literal(0x13), .literal(0), .bits(13)))
-    guard used <= 1 else { throw JPEGEntropyError.unsupported }
-    if used == 0 { return [jpegBridgeNaturalOrder, jpegBridgeNaturalOrder, jpegBridgeNaturalOrder] }
-    let header = try EntropySectionHeader.read(from: &r, numContexts: 8)
-    let codebook = try MultiClusterCodebook.read(from: &r, header: header)
-    var stream = TokenStreamReader(header: header, codebook: codebook)
-    func context(_ v: UInt32) -> Int { v == 0 ? 0 : min(32 - v.leadingZeroBitCount, 7) }
-    var orders: [[Int]] = []
-    for _ in 0..<3 {
-        let end = Int(try stream.readToken(context: context(64), from: &r)) + 1
-        guard end <= 64 else { throw JPEGEntropyError.malformed }
-        var lehmer = [Int](repeating: 0, count: 64), last: UInt32 = 0
-        for i in 1..<end {
-            last = try stream.readToken(context: context(last), from: &r)
-            guard last < UInt32(64 - i) else { throw JPEGEntropyError.malformed }
-            lehmer[i] = Int(last)
-        }
-        var remaining = Array(0..<64), order: [Int] = []
-        for i in 0..<64 { order.append(jpegBridgeNaturalOrder[remaining.remove(at: lehmer[i])]) }
-        orders.append(order)
-    }
-    try stream.finish()
-    return orders
-}
-
-private let kCoeffFreqContext: [UInt16] = [
-    0xBAD, 0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12, 13, 14,
-    15,    15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22,
-    23,    23, 23, 23, 24, 24, 24, 24, 25, 25, 25, 25, 26, 26, 26, 26,
-    27,    27, 27, 27, 28, 28, 28, 28, 29, 29, 29, 29, 30, 30, 30, 30,
-]
-private let kCoeffNumNonzeroContext: [UInt16] = [
-    0xBAD, 0,   31,  62,  62,  93,  93,  93,  93,  123, 123, 123, 123,
-    152,   152, 152, 152, 152, 152, 152, 152, 180, 180, 180, 180, 180,
-    180,   180, 180, 180, 180, 180, 180, 206, 206, 206, 206, 206, 206,
-    206,   206, 206, 206, 206, 206, 206, 206, 206, 206, 206, 206, 206,
-    206,   206, 206, 206, 206, 206, 206, 206, 206, 206, 206, 206,
-]
-private let kDefaultBlockCtxMap: [UInt8] = [
-    0, 1, 2, 2, 3,  3,  4,  5,  6,  6,  6,  6,  6,
-    7, 8, 9, 9, 10, 11, 12, 13, 14, 14, 14, 14, 14,
-    7, 8, 9, 9, 10, 11, 12, 13, 14, 14, 14, 14, 14,
-]
-package let jpegBridgeNaturalOrder: [Int] = [
-    0,  1,  8, 16,  9,  2,  3, 10, 17, 24, 32, 25, 18, 11,  4,  5,
-   12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13,  6,  7, 14, 21, 28,
-   35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51,
-   58, 59, 52, 45, 38, 31, 39, 46, 53, 60, 61, 54, 47, 55, 62, 63
-]

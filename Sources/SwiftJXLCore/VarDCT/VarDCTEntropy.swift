@@ -244,11 +244,11 @@ package enum VarDCTEntropy {
     /// Default 39-entry block context map (`c_idx in 0..<3`, `orderID in 0..<13`) where `c_idx` is `[Y=0, X=1, B=2]`.
     package static let defaultBlockCtxMap: [Int] = [
         // c_idx = 0 (Y, channel 1)
-        0, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 6, 6,
-        // c_idx = 1 (X, channel 0)
-        0, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6, 6, 6,
-        // c_idx = 2 (B, channel 2)
-        7, 8, 9, 9, 10, 10, 11, 12, 12, 13, 13, 13, 13,
+        0, 1, 2, 2, 3, 3, 4, 5, 6, 6, 6, 6, 6,
+        // c_idx = 1 (X / Cb, channel 0)
+        7, 8, 9, 9, 10, 11, 12, 13, 14, 14, 14, 14, 14,
+        // c_idx = 2 (B / Cr, channel 2)
+        7, 8, 9, 9, 10, 11, 12, 13, 14, 14, 14, 14, 14,
     ]
 
     private static let coeffFreqContext: [Int] = [
