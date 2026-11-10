@@ -1,290 +1,456 @@
-// SPDX-License-Identifier: Apache-2.0 AND MIT
-// Adapted from the Brotli decoder/insert-copy/distance algorithms in JXLSwift
-// 57e81cb9e2411d1efac435b429a306a031744c1e, including libbrotli-derived tables.
-// See Documentation/ThirdParty/brotli-LICENSE.txt. Format: RFC 7932 sections 4–10.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-struct BrotliDecodeStatistics: Sendable {
-    var compressedMetaBlocks = 0
-    var metadataMetaBlocks = 0
-    var maximumLiteralBlockTypes = 0
-    var maximumCommandBlockTypes = 0
-    var maximumDistanceBlockTypes = 0
-    var maximumLiteralTrees = 0
-    var maximumDistanceTrees = 0
-    var contextModeMask = 0
-    var distancePostfixMask = 0
-    var dictionaryReferences = 0
-    var shortDistanceMask = 0
-    var blockSwitches = 0
+/// Diagnostics and feature coverage counters recorded during Brotli decompression.
+package struct BrotliDecodeStatistics: Sendable, Equatable {
+    package var contextModeMask: Int = 0
+    package var distancePostfixMask: Int = 0
+    package var shortDistanceMask: Int = 0
+    package var dictionaryReferences: Int = 0
+    package var blockSwitches: Int = 0
+    package var maximumLiteralBlockTypes: Int = 0
+    package var maximumCommandBlockTypes: Int = 0
+    package var maximumDistanceBlockTypes: Int = 0
+    package var maximumLiteralTrees: Int = 0
+    package var maximumDistanceTrees: Int = 0
+    package var metadataMetaBlocks: Int = 0
+    package var compressedMetaBlocks: Int = 0
+
+    package init() {}
 }
 
-struct BrotliDecodedPayload: Sendable {
-    let data: Data
-    let reservedBytes: Int
-    let statistics: BrotliDecodeStatistics
+/// Decompressed Brotli payload with admitted workspace budget and coverage statistics.
+package struct BrotliDecodeResult: Sendable {
+    package let data: Data
+    package let reservedBytes: Int
+    package let statistics: BrotliDecodeStatistics
 }
 
+/// Clean-room Brotli decompressor implementing IETF RFC 7932.
 package enum BrotliDecoder {
-    /// Decode exactly the enclosing reconstruction header's admitted payload size.
-    /// No partial output, trailing stream data, or external codec fallback.
-    package static func decode(_ data: Data, expectedOutputSize: Int,
-                               policy: BrotliPolicy) throws -> Data {
+    /// Insert length extra bits for codes `0...23` (RFC 7932 Section 5).
+    private static let insertExtraBits: [Int] = [
+        0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3,
+        4, 4, 5, 5, 6, 7, 8, 9, 10, 12, 14, 24
+    ]
+
+    /// Insert length base values for codes `0...23` (RFC 7932 Section 5).
+    private static let insertBaseLengths: [Int] = [
+        0, 1, 2, 3, 4, 5, 6, 8, 10, 14, 18, 26,
+        34, 50, 66, 98, 130, 194, 322, 578, 1090, 2114, 6210, 22594
+    ]
+
+    /// Copy length extra bits for codes `0...23` (RFC 7932 Section 5).
+    private static let copyExtraBits: [Int] = [
+        0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2,
+        3, 3, 4, 4, 5, 5, 6, 7, 8, 9, 10, 24
+    ]
+
+    /// Copy length base values for codes `0...23` (RFC 7932 Section 5).
+    private static let copyBaseLengths: [Int] = [
+        2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 18,
+        22, 30, 38, 54, 70, 102, 134, 198, 326, 582, 1094, 2118
+    ]
+
+    /// Insert code range base for the 11 cells (`0...10`) of the insert-and-copy table (RFC 7932 Section 5).
+    private static let cellInsertBase: [Int] = [
+        0, 0, 0, 0, 8, 8, 0, 16, 8, 16, 16
+    ]
+
+    /// Copy code range base for the 11 cells (`0...10`) of the insert-and-copy table (RFC 7932 Section 5).
+    private static let cellCopyBase: [Int] = [
+        0, 8, 0, 8, 0, 8, 16, 0, 16, 8, 16
+    ]
+
+    /// Block count extra bits for codes `0...25` (RFC 7932 Section 6).
+    private static let blockCountExtraBits: [Int] = [
+        2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5,
+        5, 5, 5, 6, 6, 7, 8, 9, 10, 11, 12, 13, 24
+    ]
+
+    /// Block count base lengths for codes `0...25` (RFC 7932 Section 6).
+    private static let blockCountBaseLengths: [Int] = [
+        1, 5, 9, 13, 17, 25, 33, 41, 49, 65, 81, 97, 113,
+        145, 177, 209, 241, 305, 369, 497, 753, 1265, 2289, 4337, 8433, 16625
+    ]
+
+    /// Block-type state machine for one block category (literal, insert-and-copy, or distance) per RFC 7932 Section 6.
+    private struct BlockCategoryState {
+        let numBlockTypes: Int
+        let typeTree: BrotliPrefixCode?
+        let countTree: BrotliPrefixCode?
+        var currentType: Int
+        var previousType: Int
+        var remainingCount: Int
+
+        static func read(
+            from reader: inout BrotliReader,
+            budget: inout BrotliBudget
+        ) throws -> BlockCategoryState {
+            let numTypes = try reader.readVarLenU8()
+            guard (1...256).contains(numTypes) else {
+                throw BrotliError.malformed("Invalid block type count")
+            }
+            if numTypes >= 2 {
+                let typeTree = try BrotliPrefixCode.read(
+                    alphabetSize: numTypes + 2,
+                    from: &reader,
+                    budget: &budget
+                )
+                let countTree = try BrotliPrefixCode.read(
+                    alphabetSize: 26,
+                    from: &reader,
+                    budget: &budget
+                )
+                let initialCount = try decodeBlockCount(tree: countTree, from: &reader)
+                return BlockCategoryState(
+                    numBlockTypes: numTypes,
+                    typeTree: typeTree,
+                    countTree: countTree,
+                    currentType: 0,
+                    previousType: 1,
+                    remainingCount: initialCount
+                )
+            } else {
+                return BlockCategoryState(
+                    numBlockTypes: 1,
+                    typeTree: nil,
+                    countTree: nil,
+                    currentType: 0,
+                    previousType: 1,
+                    remainingCount: 16_777_216
+                )
+            }
+        }
+
+        private static func decodeBlockCount(
+            tree: BrotliPrefixCode,
+            from reader: inout BrotliReader
+        ) throws -> Int {
+            let code = try tree.decodeSymbol(from: &reader)
+            guard (0..<26).contains(code) else {
+                throw BrotliError.malformed("Block count code out of range")
+            }
+            let extra = Int(try reader.read(bits: BrotliDecoder.blockCountExtraBits[code]))
+            return BrotliDecoder.blockCountBaseLengths[code] + extra
+        }
+
+        mutating func step(
+            from reader: inout BrotliReader,
+            statistics: inout BrotliDecodeStatistics
+        ) throws {
+            if numBlockTypes >= 2 && remainingCount == 0 {
+                guard let typeTree, let countTree else {
+                    throw BrotliError.malformed("Missing block switch prefix trees")
+                }
+                let typeCode = try typeTree.decodeSymbol(from: &reader)
+                let nextType: Int
+                if typeCode == 0 {
+                    nextType = previousType
+                } else if typeCode == 1 {
+                    nextType = (currentType + 1) % numBlockTypes
+                } else {
+                    nextType = typeCode - 2
+                }
+                guard (0..<numBlockTypes).contains(nextType) else {
+                    throw BrotliError.malformed("Decoded block type out of range")
+                }
+                previousType = currentType
+                currentType = nextType
+                remainingCount = try Self.decodeBlockCount(tree: countTree, from: &reader)
+                statistics.blockSwitches += 1
+            }
+            remainingCount -= 1
+        }
+    }
+
+    /// Decompresses a Brotli stream and verifies `expectedOutputSize`.
+    package static func decode(
+        _ data: Data,
+        expectedOutputSize: Int,
+        policy: BrotliPolicy
+    ) throws -> Data {
         try decodeWithStatistics(data, expectedOutputSize: expectedOutputSize, policy: policy).data
     }
 
-    static func decodeWithStatistics(_ data: Data, expectedOutputSize: Int,
-                                     policy: BrotliPolicy) throws -> BrotliDecodedPayload {
-        var statistics = BrotliDecodeStatistics()
+    /// Decompresses a Brotli stream, returning the output `Data`, reserved workspace bytes, and coverage statistics.
+    package static func decodeWithStatistics(
+        _ data: Data,
+        expectedOutputSize: Int,
+        policy: BrotliPolicy
+    ) throws -> BrotliDecodeResult {
+        try policy.checkpoint()
         guard expectedOutputSize >= 0, expectedOutputSize <= policy.maximumOutputBytes else {
             throw BrotliError.resourceLimit
         }
+
         var budget = BrotliBudget(policy: policy)
         var reader = try BrotliReader(data, budget: &budget)
-        try budget.reserve(expectedOutputSize, stride: 3)
-        // Dictionary base64 decoding, retained word/transform/context tables,
-        // small command/block tables and temporary transformed words.
+        // Reserve resident static dictionary/context allowance and output capacity.
         try budget.reserve(1024 * 1024)
+        try budget.reserve(expectedOutputSize, stride: 2)
+
+        let windowBits = try BrotliMetaBlockReader.readWindowBits(from: &reader)
+        let maxBackwardWindow = (1 << windowBits) - 16
+
         var output = [UInt8]()
         output.reserveCapacity(expectedOutputSize)
-        let windowBits = try BrotliMetaBlockReader.readWindowBits(from: &reader)
-        var recentDistances = [4, 11, 15, 16] // survives meta-block boundaries
-        var commands = 0
-        for _ in 0..<policy.maximumMetaBlocks {
+
+        // Ring buffer of last 4 distances initialized to [4, 11, 15, 16] per RFC 7932 Section 4.
+        var distRing0 = 4
+        var distRing1 = 11
+        var distRing2 = 15
+        var distRing3 = 16
+
+        var statistics = BrotliDecodeStatistics()
+        var metaBlocksSeen = 0
+        var commandsExecuted = 0
+
+        while true {
             try policy.checkpoint()
+            metaBlocksSeen += 1
+            guard metaBlocksSeen <= policy.maximumMetaBlocks else {
+                throw BrotliError.resourceLimit
+            }
+
             let header = try BrotliMetaBlockReader.read(from: &reader)
             switch header.kind {
-            case .empty: break
+            case .empty:
+                break
+
             case .metadata:
                 statistics.metadataMetaBlocks += 1
                 try reader.skipAlignedBytes(header.length)
-            case .uncompressed, .compressed:
+
+            case .uncompressed:
                 guard header.length <= expectedOutputSize - output.count else {
-                    throw BrotliError.malformed("Declared output overrun")
+                    throw BrotliError.malformed("Uncompressed meta-block exceeds expected output size")
                 }
-                if header.kind == .uncompressed {
-                    for _ in 0..<header.length { output.append(UInt8(try reader.read(bits: 8))) }
-                } else {
-                    try compressed(length: header.length, windowBits: windowBits,
-                                   reader: &reader, output: &output, recent: &recentDistances,
-                                   commands: &commands, budget: &budget, statistics: &statistics)
+                for i in 0..<header.length {
+                    if (i & 4095) == 0 {
+                        try policy.checkpoint()
+                    }
+                    let byte = UInt8(truncatingIfNeeded: try reader.read(bits: 8))
+                    output.append(byte)
+                }
+
+            case .compressed:
+                statistics.compressedMetaBlocks += 1
+                let mlen = header.length
+                guard mlen <= expectedOutputSize - output.count else {
+                    throw BrotliError.malformed("Compressed meta-block exceeds expected output size")
+                }
+
+                var literalBlockState = try BlockCategoryState.read(from: &reader, budget: &budget)
+                var commandBlockState = try BlockCategoryState.read(from: &reader, budget: &budget)
+                var distanceBlockState = try BlockCategoryState.read(from: &reader, budget: &budget)
+
+                statistics.maximumLiteralBlockTypes = max(statistics.maximumLiteralBlockTypes, literalBlockState.numBlockTypes)
+                statistics.maximumCommandBlockTypes = max(statistics.maximumCommandBlockTypes, commandBlockState.numBlockTypes)
+                statistics.maximumDistanceBlockTypes = max(statistics.maximumDistanceBlockTypes, distanceBlockState.numBlockTypes)
+
+                let npostfix = Int(try reader.read(bits: 2))
+                let ndirectHigh = Int(try reader.read(bits: 4))
+                let ndirect = ndirectHigh << npostfix
+                let postfixMask = (1 << npostfix) - 1
+                statistics.distancePostfixMask |= (1 << npostfix)
+
+                var contextModes = [BrotliContextMode]()
+                contextModes.reserveCapacity(literalBlockState.numBlockTypes)
+                for _ in 0..<literalBlockState.numBlockTypes {
+                    let rawMode = UInt8(try reader.read(bits: 2))
+                    guard let mode = BrotliContextMode(rawValue: rawMode) else {
+                        throw BrotliError.malformed("Invalid literal context mode")
+                    }
+                    contextModes.append(mode)
+                    statistics.contextModeMask |= (1 << Int(rawMode))
+                }
+
+                let numLiteralTrees = try reader.readVarLenU8()
+                statistics.maximumLiteralTrees = max(statistics.maximumLiteralTrees, numLiteralTrees)
+                let (literalContextMap, _) = try BrotliContext.readContextMap(
+                    count: 64 * literalBlockState.numBlockTypes,
+                    treeCount: numLiteralTrees,
+                    from: &reader,
+                    budget: &budget
+                )
+
+                let numDistanceTrees = try reader.readVarLenU8()
+                statistics.maximumDistanceTrees = max(statistics.maximumDistanceTrees, numDistanceTrees)
+                let (distanceContextMap, _) = try BrotliContext.readContextMap(
+                    count: 4 * distanceBlockState.numBlockTypes,
+                    treeCount: numDistanceTrees,
+                    from: &reader,
+                    budget: &budget
+                )
+
+                var literalTrees = [BrotliPrefixCode]()
+                literalTrees.reserveCapacity(numLiteralTrees)
+                for _ in 0..<numLiteralTrees {
+                    literalTrees.append(try BrotliPrefixCode.read(alphabetSize: 256, from: &reader, budget: &budget))
+                }
+
+                var commandTrees = [BrotliPrefixCode]()
+                commandTrees.reserveCapacity(commandBlockState.numBlockTypes)
+                for _ in 0..<commandBlockState.numBlockTypes {
+                    commandTrees.append(try BrotliPrefixCode.read(alphabetSize: 704, from: &reader, budget: &budget))
+                }
+
+                let distanceAlphabetSize = 16 + ndirect + (48 << npostfix)
+                var distanceTrees = [BrotliPrefixCode]()
+                distanceTrees.reserveCapacity(numDistanceTrees)
+                for _ in 0..<numDistanceTrees {
+                    distanceTrees.append(try BrotliPrefixCode.read(alphabetSize: distanceAlphabetSize, from: &reader, budget: &budget))
+                }
+
+                var producedInMetaBlock = 0
+                while producedInMetaBlock < mlen {
+                    commandsExecuted += 1
+                    guard commandsExecuted <= policy.maximumCommands else {
+                        throw BrotliError.resourceLimit
+                    }
+                    if (commandsExecuted & 63) == 1 {
+                        try policy.checkpoint()
+                    }
+
+                    try commandBlockState.step(from: &reader, statistics: &statistics)
+                    let iacCode = try commandTrees[commandBlockState.currentType].decodeSymbol(from: &reader)
+                    guard (0..<704).contains(iacCode) else {
+                        throw BrotliError.malformed("Insert-and-copy code out of range")
+                    }
+
+                    let cell = iacCode >> 6
+                    let insertCode = cellInsertBase[cell] + ((iacCode >> 3) & 7)
+                    let copyCode = cellCopyBase[cell] + (iacCode & 7)
+                    let insertExtra = Int(try reader.read(bits: insertExtraBits[insertCode]))
+                    let copyExtra = Int(try reader.read(bits: copyExtraBits[copyCode]))
+                    let insertLength = insertBaseLengths[insertCode] + insertExtra
+                    let copyLength = copyBaseLengths[copyCode] + copyExtra
+                    let implicitDistanceZero = (iacCode < 128)
+
+                    guard insertLength <= mlen - producedInMetaBlock else {
+                        throw BrotliError.malformed("Insert length exceeds meta-block length")
+                    }
+
+                    for litIdx in 0..<insertLength {
+                        if (litIdx & 1023) == 1023 {
+                            try policy.checkpoint()
+                        }
+                        try literalBlockState.step(from: &reader, statistics: &statistics)
+                        let p1: UInt8 = output.isEmpty ? 0 : output[output.count - 1]
+                        let p2: UInt8 = output.count < 2 ? 0 : output[output.count - 2]
+                        let mode = contextModes[literalBlockState.currentType]
+                        let cidl = BrotliContext.literalContextID(mode: mode, p1: p1, p2: p2)
+                        let treeIndex = Int(literalContextMap[(literalBlockState.currentType << 6) + cidl])
+                        let literalByte = try literalTrees[treeIndex].decodeSymbol(from: &reader)
+                        output.append(UInt8(truncatingIfNeeded: literalByte))
+                    }
+                    producedInMetaBlock += insertLength
+
+                    if producedInMetaBlock == mlen {
+                        break
+                    }
+
+                    let distance: Int
+                    let distanceCode: Int
+                    if implicitDistanceZero {
+                        distanceCode = 0
+                        distance = distRing0
+                        statistics.shortDistanceMask |= 1
+                    } else {
+                        try distanceBlockState.step(from: &reader, statistics: &statistics)
+                        let cidd = BrotliContext.distanceContextID(copyLength: copyLength)
+                        let treeIndex = Int(distanceContextMap[(distanceBlockState.currentType << 2) + cidd])
+                        distanceCode = try distanceTrees[treeIndex].decodeSymbol(from: &reader)
+                        if distanceCode < 16 {
+                            statistics.shortDistanceMask |= (1 << distanceCode)
+                            switch distanceCode {
+                            case 0: distance = distRing0
+                            case 1: distance = distRing1
+                            case 2: distance = distRing2
+                            case 3: distance = distRing3
+                            case 4: distance = distRing0 - 1
+                            case 5: distance = distRing0 + 1
+                            case 6: distance = distRing0 - 2
+                            case 7: distance = distRing0 + 2
+                            case 8: distance = distRing0 - 3
+                            case 9: distance = distRing0 + 3
+                            case 10: distance = distRing1 - 1
+                            case 11: distance = distRing1 + 1
+                            case 12: distance = distRing1 - 2
+                            case 13: distance = distRing1 + 2
+                            case 14: distance = distRing1 - 3
+                            case 15: distance = distRing1 + 3
+                            default: distance = 0
+                            }
+                        } else if distanceCode < 16 + ndirect {
+                            distance = distanceCode - 15
+                        } else {
+                            let d = distanceCode - ndirect - 16
+                            let ndistbits = 1 + (d >> (npostfix + 1))
+                            guard (1...24).contains(ndistbits) else {
+                                throw BrotliError.malformed("Distance extra bit count out of range")
+                            }
+                            let dextra = Int(try reader.read(bits: ndistbits))
+                            let hcode = d >> npostfix
+                            let lcode = d & postfixMask
+                            let offset = ((2 + (hcode & 1)) << ndistbits) - 4
+                            distance = ((offset + dextra) << npostfix) + lcode + ndirect + 1
+                        }
+                    }
+
+                    guard distance > 0 else {
+                        throw BrotliError.malformed("Resolved distance must be positive")
+                    }
+
+                    let maxAllowedDistance = min(maxBackwardWindow, output.count)
+                    if distance <= maxAllowedDistance {
+                        if distanceCode != 0 {
+                            distRing3 = distRing2
+                            distRing2 = distRing1
+                            distRing1 = distRing0
+                            distRing0 = distance
+                        }
+                        guard copyLength <= mlen - producedInMetaBlock else {
+                            throw BrotliError.malformed("Copy length exceeds meta-block length")
+                        }
+                        let startIdx = output.count - distance
+                        for copyIdx in 0..<copyLength {
+                            if (copyIdx & 511) == 0 {
+                                try policy.checkpoint()
+                            }
+                            output.append(output[startIdx + copyIdx])
+                        }
+                        producedInMetaBlock += copyLength
+                    } else {
+                        let wordID = distance - (maxAllowedDistance + 1)
+                        let wordBytes = try BrotliStaticDictionary.resolveWord(length: copyLength, wordID: wordID)
+                        guard wordBytes.count <= mlen - producedInMetaBlock else {
+                            throw BrotliError.malformed("Dictionary word exceeds meta-block length")
+                        }
+                        output.append(contentsOf: wordBytes)
+                        producedInMetaBlock += wordBytes.count
+                        statistics.dictionaryReferences += 1
+                    }
                 }
             }
+
             if header.isLast {
-                try reader.requireEnd()
-                guard output.count == expectedOutputSize else { throw BrotliError.malformed("Output size mismatch") }
-                try policy.checkpoint()
-                return BrotliDecodedPayload(data: Data(output), reservedBytes: budget.reservedBytes, statistics: statistics)
-            }
-        }
-        throw BrotliError.resourceLimit
-    }
-
-    private struct Blocks {
-        let count: Int
-        let typeCode: BrotliPrefixCode?
-        let lengthCode: BrotliPrefixCode?
-        var switches = 0
-        var current = 0
-        var previous = 1
-        var remaining: Int
-
-        init(reader: inout BrotliReader, budget: inout BrotliBudget) throws {
-            count = try reader.readVarLenU8()
-            if count == 1 {
-                typeCode = nil; lengthCode = nil; remaining = Int.max
-            } else {
-                typeCode = try BrotliPrefixCode.read(from: &reader, alphabet: count + 2, budget: &budget)
-                let code = try BrotliPrefixCode.read(from: &reader, alphabet: 26, budget: &budget)
-                lengthCode = code
-                remaining = try Self.length(code: code, reader: &reader)
+                break
             }
         }
 
-        static func length(code: BrotliPrefixCode, reader: inout BrotliReader) throws -> Int {
-            let bases = [1,5,9,13,17,25,33,41,49,65,81,97,113,145,177,209,241,305,369,497,753,1265,2289,4337,8433,16625]
-            let extras = [2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,7,8,9,10,11,12,13,24]
-            let symbol = try code.decode(from: &reader)
-            guard symbol < bases.count else { throw BrotliError.malformed("Block length symbol") }
-            return bases[symbol] + Int(try reader.read(bits: extras[symbol]))
+        try reader.requireEnd()
+        guard output.count == expectedOutputSize else {
+            throw BrotliError.malformed("Brotli output size does not match expected size")
         }
 
-        mutating func next(reader: inout BrotliReader) throws -> Int {
-            if count == 1 { return 0 }
-            if remaining == 0 {
-                switches += 1
-                guard let typeCode, let lengthCode else { throw BrotliError.malformed("Missing block code") }
-                let symbol = try typeCode.decode(from: &reader)
-                let next: Int
-                switch symbol {
-                case 0: next = previous
-                case 1: next = (current + 1) % count
-                default: next = symbol - 2
-                }
-                guard next < count else { throw BrotliError.malformed("Block type") }
-                previous = current; current = next
-                remaining = try Self.length(code: lengthCode, reader: &reader)
-            }
-            remaining -= 1
-            return current
-        }
-    }
-
-    private static func contextMap(size: Int, reader: inout BrotliReader,
-                                   budget: inout BrotliBudget) throws -> (count: Int, map: [UInt8]) {
-        let trees = try reader.readVarLenU8()
-        try budget.reserve(size, stride: 3)
-        var map = [UInt8](repeating: 0, count: size)
-        if trees == 1 { return (trees, map) }
-        let runBits = try reader.readBit() ? Int(try reader.read(bits: 4)) + 1 : 0
-        let code = try BrotliPrefixCode.read(from: &reader, alphabet: trees + runBits, budget: &budget)
-        var index = 0
-        while index < size {
-            let symbol = try code.decode(from: &reader)
-            if symbol == 0 { index += 1 }
-            else if symbol <= runBits {
-                let count = (1 << symbol) + Int(try reader.read(bits: symbol))
-                guard count <= size - index else { throw BrotliError.malformed("Context repeat overrun") }
-                index += count
-            } else {
-                map[index] = UInt8(symbol - runBits); index += 1
-            }
-        }
-        if try reader.readBit() {
-            var mtf = Array(UInt8.min...UInt8.max)
-            for index in 0..<size {
-                if index & 255 == 0 { try budget.policy.checkpoint() }
-                let rank = Int(map[index])
-                let value = mtf[rank]
-                if rank > 0 { for slot in stride(from: rank, through: 1, by: -1) { mtf[slot] = mtf[slot - 1] } }
-                mtf[0] = value; map[index] = value
-            }
-        }
-        guard map.allSatisfy({ Int($0) < trees }) else { throw BrotliError.malformed("Context tree index") }
-        return (trees, map)
-    }
-
-    private static let insertExtras = [0,0,0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,7,8,9,10,12,14,24]
-    private static let copyExtras = [0,0,0,0,0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,7,8,9,10,24]
-    private static let cells = [0,1,0,1,8,9,2,16,10,17,18]
-    private static let insertBases = bases(extras: insertExtras, initial: 0)
-    private static let copyBases = bases(extras: copyExtras, initial: 2)
-    private static func bases(extras: [Int], initial: Int) -> [Int] {
-        var result = [initial]
-        for index in 0..<23 { result.append(result[index] + (1 << extras[index])) }
-        return result
-    }
-
-    private static func compressed(length: Int, windowBits: Int,
-                                   reader: inout BrotliReader, output: inout [UInt8],
-                                   recent: inout [Int], commands: inout Int,
-                                   budget: inout BrotliBudget, statistics: inout BrotliDecodeStatistics) throws {
-        statistics.compressedMetaBlocks += 1
-        let target = output.count + length // admitted against expectedOutputSize
-        var literalBlocks = try Blocks(reader: &reader, budget: &budget)
-        var commandBlocks = try Blocks(reader: &reader, budget: &budget)
-        var distanceBlocks = try Blocks(reader: &reader, budget: &budget)
-        let postfix = Int(try reader.read(bits: 2))
-        let direct = Int(try reader.read(bits: 4)) << postfix
-        let distanceAlphabet = 16 + direct + (48 << postfix)
-        try budget.reserve(literalBlocks.count, stride: 8)
-        var modes = [Int]()
-        for _ in 0..<literalBlocks.count { modes.append(Int(try reader.read(bits: 2))) }
-        let literals = try contextMap(size: literalBlocks.count * 64, reader: &reader, budget: &budget)
-        let distances = try contextMap(size: distanceBlocks.count * 4, reader: &reader, budget: &budget)
-        func codes(_ count: Int, _ alphabet: Int, _ r: inout BrotliReader,
-                   _ b: inout BrotliBudget) throws -> [BrotliPrefixCode] {
-            try b.reserve(count, stride: 512)
-            var result = [BrotliPrefixCode]()
-            result.reserveCapacity(count)
-            for _ in 0..<count { result.append(try BrotliPrefixCode.read(from: &r, alphabet: alphabet, budget: &b)) }
-            return result
-        }
-        statistics.maximumLiteralBlockTypes = max(statistics.maximumLiteralBlockTypes, literalBlocks.count)
-        statistics.maximumCommandBlockTypes = max(statistics.maximumCommandBlockTypes, commandBlocks.count)
-        statistics.maximumDistanceBlockTypes = max(statistics.maximumDistanceBlockTypes, distanceBlocks.count)
-        statistics.maximumLiteralTrees = max(statistics.maximumLiteralTrees, literals.count)
-        statistics.maximumDistanceTrees = max(statistics.maximumDistanceTrees, distances.count)
-        for mode in modes { statistics.contextModeMask |= 1 << mode }
-        statistics.distancePostfixMask |= 1 << postfix
-        defer { statistics.blockSwitches += literalBlocks.switches + commandBlocks.switches + distanceBlocks.switches }
-        let literalCodes = try codes(literals.count, 256, &reader, &budget)
-        let commandCodes = try codes(commandBlocks.count, 704, &reader, &budget)
-        let distanceCodes = try codes(distances.count, distanceAlphabet, &reader, &budget)
-        while output.count < target {
-            if commands & 1023 == 0 { try budget.policy.checkpoint() }
-            guard commands < budget.policy.maximumCommands else { throw BrotliError.resourceLimit }
-            commands += 1
-            let startBit = reader.position
-            let startOutput = output.count
-            let commandType = try commandBlocks.next(reader: &reader)
-            let symbol = try commandCodes[commandType].decode(from: &reader)
-            let cell = cells[symbol >> 6]
-            let insertCode = (cell & 24) | ((symbol >> 3) & 7)
-            let copyCode = ((cell << 3) & 24) | (symbol & 7)
-            let insert = insertBases[insertCode] + Int(try reader.read(bits: insertExtras[insertCode]))
-            let copy = copyBases[copyCode] + Int(try reader.read(bits: copyExtras[copyCode]))
-            guard insert <= target - output.count else { throw BrotliError.malformed("Literal overrun") }
-            for _ in 0..<insert {
-                let type = try literalBlocks.next(reader: &reader)
-                let last = output.last ?? 0
-                let before = output.count >= 2 ? output[output.count - 2] : 0
-                let base = modes[type] << 9
-                let context = Int(BrotliContext.table[base + Int(last)] | BrotliContext.table[base + 256 + Int(before)])
-                let tree = Int(literals.map[type * 64 + context])
-                output.append(UInt8(try literalCodes[tree].decode(from: &reader)))
-            }
-            if output.count == target { break } // copy and distance omitted for final insertion
-            let distanceCode: Int
-            if symbol < 128 { distanceCode = 0 }
-            else {
-                let type = try distanceBlocks.next(reader: &reader)
-                let tree = Int(distances.map[type * 4 + min(copy - 2, 3)])
-                distanceCode = try distanceCodes[tree].decode(from: &reader)
-            }
-            if distanceCode < 16 { statistics.shortDistanceMask |= 1 << distanceCode }
-            let distance: Int
-            if distanceCode < 4 { distance = recent[distanceCode] }
-            else if distanceCode < 16 {
-                let index = distanceCode < 10 ? 0 : 1
-                let variant = (distanceCode - 4) % 6
-                let delta = (variant / 2 + 1) * (variant & 1 == 0 ? -1 : 1)
-                distance = recent[index] + delta
-            } else if distanceCode < 16 + direct { distance = distanceCode - 15 }
-            else {
-                let high = (distanceCode - direct - 16) >> postfix
-                let low = (distanceCode - direct - 16) & ((1 << postfix) - 1)
-                let bits = (high >> 1) + 1
-                let extra = Int(try reader.read(bits: bits))
-                let offset = ((2 + (high & 1)) << bits) - 4
-                distance = ((offset + extra) << postfix) + low + direct + 1
-            }
-            guard distance > 0 else { throw BrotliError.malformed("Nonpositive distance") }
-            let maximumDistance = min(output.count, (1 << windowBits) - 16)
-            if distance > maximumDistance {
-                statistics.dictionaryReferences += 1
-                guard (4...24).contains(copy) else { throw BrotliError.malformed("Dictionary word length") }
-                let address = distance - maximumDistance - 1
-                let bits = Int(BrotliStaticDictionary.sizeBitsByLength[copy])
-                let word = address & ((1 << bits) - 1)
-                let transform = address >> bits
-                let offset = Int(BrotliStaticDictionary.offsetsByLength[copy]) + word * copy
-                let bytes = try BrotliStaticDictionary.transformWord(wordOffset: offset, length: copy, transformIdx: transform)
-                guard bytes.count <= target - output.count else { throw BrotliError.malformed("Dictionary output overrun") }
-                output.append(contentsOf: bytes)
-            } else {
-                guard copy <= target - output.count else { throw BrotliError.malformed("Copy overrun") }
-                if distanceCode != 0 {
-                    recent[3] = recent[2]; recent[2] = recent[1]; recent[1] = recent[0]; recent[0] = distance
-                }
-                for index in 0..<copy {
-                    if index & 4095 == 0 { try budget.policy.checkpoint() }
-                    output.append(output[output.count - distance])
-                }
-            }
-            guard reader.position != startBit || output.count != startOutput else {
-                throw BrotliError.malformed("Command makes no progress")
-            }
-        }
+        return BrotliDecodeResult(
+            data: Data(output),
+            reservedBytes: budget.reservedBytes,
+            statistics: statistics
+        )
     }
 }
