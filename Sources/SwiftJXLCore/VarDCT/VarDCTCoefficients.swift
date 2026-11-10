@@ -242,22 +242,20 @@ private struct CoefficientReader {
                 let transform = strategies.transforms[strategies.indices[index]]
                 guard transform.x == x0 + x, transform.y == y0 + y else { continue }
                 guard let order = orders[transform.orderBucket], order.count == 3 else { throw VarDCTError.invalidTransform }
-                let dcValues = dc.map { $0[index] }
+                let dcValues = (dc[0][index], dc[1][index], dc[2][index])
                 for c in [1, 0, 2] {
                     let prediction: UInt32 = y == 0 ? (x == 0 ? 32 : UInt32(nonzero[c][x - 1]))
                         : (x == 0 ? UInt32(nonzero[c][(y - 1) * w])
                            : UInt32((nonzero[c][(y - 1) * w + x] + nonzero[c][y * w + x - 1] + 1) / 2))
                     let context = try contexts.varDCTContext(dcValues: dcValues, quantisation: qf[index], channel: c, order: transform.orderBucket)
-                    let decoded = try contexts.readVarDCTBlock(prediction: prediction, blockContext: context,
+                    let nonzeros = try contexts.readVarDCTBlock(prediction: prediction, blockContext: context,
                         offset: histogram * contexts.contexts, order: order[c], coveredCells: transform.coveredCells,
+                        into: &ac[c], coefficientOffset: transform.coefficientOffset,
                         stream: &stream, from: &r, budget: budget)
-                    let density = Int32((decoded.nonzeros + transform.coveredCells - 1) / transform.coveredCells)
+                    let density = Int32((nonzeros + transform.coveredCells - 1) / transform.coveredCells)
                     for yy in y..<(y + transform.cellsY) { for xx in x..<(x + transform.cellsX) {
                         nonzero[c][yy * w + xx] = density
                     } }
-                    for k in decoded.coefficients.indices {
-                        ac[c][transform.coefficientOffset + k] = decoded.coefficients[k]
-                    }
                 }
             } }
             try stream.finish()

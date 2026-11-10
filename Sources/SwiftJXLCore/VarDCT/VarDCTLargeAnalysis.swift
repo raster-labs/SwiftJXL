@@ -91,8 +91,37 @@ package struct VarDCTLargeAnalysis: Sendable {
         try budget.checkpoint()
         guard pixels.count == rows * columns, workspace.capacity >= pixels.count,
               workspace.budget === budget else { throw VarDCTError.invalidTransform }
-        let cellsY = rows / 8, cellsX = columns / 8, cellCount = cellsY &* cellsX
         try plan.apply(pixels, workspace: &workspace.dct)
+        try extractDC(workspace: &workspace)
+    }
+    package func applySavingHorizontal(_ pixels: UnsafeBufferPointer<Float>,
+                                       horizontalOut: UnsafeMutablePointer<Float>,
+                                       workspace: inout Workspace) throws {
+        try budget.checkpoint()
+        guard pixels.count == rows * columns, workspace.capacity >= pixels.count,
+              workspace.budget === budget else { throw VarDCTError.invalidTransform }
+        try plan.applySavingHorizontal(pixels, horizontalOut: horizontalOut, workspace: &workspace.dct)
+        try extractDC(workspace: &workspace)
+    }
+    package func saveHorizontalOnly(_ pixels: UnsafeBufferPointer<Float>,
+                                    horizontalOut: UnsafeMutablePointer<Float>,
+                                    workspace: inout Workspace) throws {
+        try budget.checkpoint()
+        guard pixels.count == rows * columns, workspace.capacity >= pixels.count,
+              workspace.budget === budget else { throw VarDCTError.invalidTransform }
+        try plan.applyHorizontalOnly(pixels, horizontalOut: horizontalOut)
+    }
+    package func applyFromHorizontal(_ horizontalIn: UnsafePointer<Float>,
+                                     workspace: inout Workspace) throws {
+        try budget.checkpoint()
+        guard workspace.capacity >= rows * columns,
+              workspace.budget === budget else { throw VarDCTError.invalidTransform }
+        try plan.applyFromHorizontal(horizontalIn, workspace: &workspace.dct)
+        try extractDC(workspace: &workspace)
+    }
+    @inline(__always)
+    private func extractDC(workspace: inout Workspace) throws {
+        let cellsY = rows / 8, cellsX = columns / 8, cellCount = cellsY &* cellsX
         try workspace.dct.withValues { values in
             try workspace.dc.withUnsafeMutableBufferPointer { dc in
                 try dcScaleProducts.withUnsafeBufferPointer { scales in

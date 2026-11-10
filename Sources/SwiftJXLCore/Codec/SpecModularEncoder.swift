@@ -2920,45 +2920,63 @@ package enum SpecModularEncoder {
         var tokBucket = [Int](repeating: 0, count: includeTreeProperties ? n : 0)
         var maxTok = 0
         var pi = 0
-        for pix in channels {
-            var wp = WeightedPredictor(header: .default, xsize: max(1, width))
-            for y in 0..<height {
-                try ScalarEncodingWork.checkpoint()
-                let rowBase = y * width
-                let prevRow = (y - 1) * width
-                let prev2Row = (y - 2) * width
-                for x in 0..<width {
-                    if x & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
-                    let left: Int32 = x > 0 ? pix[rowBase + x - 1]
-                        : (y > 0 ? pix[prevRow + x] : 0)
-                    let top: Int32 = y > 0 ? pix[prevRow + x] : left
-                    let topLeft: Int32 = (x > 0 && y > 0) ? pix[prevRow + x - 1] : left
-                    let topRight: Int32 = (x + 1 < width && y > 0)
-                        ? pix[prevRow + x + 1] : top
-                    let topTop: Int32 = y > 1 ? pix[prev2Row + x] : top
-                    let wpProp = wp.propertyValue(x: x, y: y, xsize: width)
-                    let b = pi * propCount
-                    if includeTreeProperties {
-                        propsFlat[b + 0] = top < 0 ? (0 &- top) : top  // 4 |top|
-                        propsFlat[b + 1] = left < 0 ? (0 &- left) : left // 5 |left|
-                        propsFlat[b + 2] = left &+ top &- topLeft       // 9
-                        propsFlat[b + 3] = left &- topLeft             // 10
-                        propsFlat[b + 4] = top &- topRight             // 12
+        try propsFlat.withUnsafeMutableBufferPointer { propsBuf in
+            try tokens.withUnsafeMutableBufferPointer { tokensBuf in
+                try tokBucket.withUnsafeMutableBufferPointer { bucketBuf in
+                    guard let propsBase = propsBuf.baseAddress,
+                          let tokensBase = tokensBuf.baseAddress else { return }
+                    let bucketBase = bucketBuf.baseAddress
+                    for pix in channels {
+                        var wp = WeightedPredictor(header: .default, xsize: max(1, width))
+                        try pix.withUnsafeBufferPointer { pixBuf in
+                            guard let pixBase = pixBuf.baseAddress else { return }
+                            try wp.withBuffers { wpBuf in
+                                for y in 0..<height {
+                                    try ScalarEncodingWork.checkpoint()
+                                    let rowBase = y &* width
+                                    let prevRow = (y &- 1) &* width
+                                    let prev2Row = (y &- 2) &* width
+                                    for x in 0..<width {
+                                        if x & 1023 == 0 { try ScalarEncodingWork.checkpoint() }
+                                        let left: Int32 = x > 0 ? pixBase[rowBase &+ x &- 1]
+                                            : (y > 0 ? pixBase[prevRow &+ x] : 0)
+                                        let top: Int32 = y > 0 ? pixBase[prevRow &+ x] : left
+                                        let topLeft: Int32 = (x > 0 && y > 0) ? pixBase[prevRow &+ x &- 1] : left
+                                        let topRight: Int32 = (x &+ 1 < width && y > 0)
+                                            ? pixBase[prevRow &+ x &+ 1] : top
+                                        let topTop: Int32 = y > 1 ? pixBase[prev2Row &+ x] : top
+                                        let (pred, wpProp) = wpBuf.predictWithProperty(
+                                            x: x, y: y, xsize: width,
+                                            n: top, w: left, ne: topRight, nw: topLeft, nn: topTop)
+                                        let b = pi &* propCount
+                                        if includeTreeProperties {
+                                            propsBase[b &+ 0] = top < 0 ? (0 &- top) : top  // 4 |top|
+                                            propsBase[b &+ 1] = left < 0 ? (0 &- left) : left // 5 |left|
+                                            propsBase[b &+ 2] = left &+ top &- topLeft       // 9
+                                            propsBase[b &+ 3] = left &- topLeft             // 10
+                                            propsBase[b &+ 4] = top &- topRight             // 12
+                                        }
+                                        propsBase[b &+ propCount &- 1] = wpProp              // 15
+                                        let actual = pixBase[rowBase &+ x]
+                                        let tok = ZigZag.pack(actual &- pred)
+                                        tokensBase[pi] = tok
+                                        if includeTreeProperties, let bucketBase {
+                                            let tk: Int
+                                            if tok < 16 {
+                                                tk = Int(tok)
+                                            } else {
+                                                tk = 12 &+ (31 &- tok.leadingZeroBitCount)
+                                            }
+                                            bucketBase[pi] = tk
+                                            if tk > maxTok { maxTok = tk }
+                                        }
+                                        wpBuf.update(actual: actual, x: x, y: y, xsize: width)
+                                        pi &+= 1
+                                    }
+                                }
+                            }
+                        }
                     }
-                    propsFlat[b + propCount - 1] = wpProp              // 15
-                    let pred = wp.predict(
-                        x: x, y: y, xsize: width,
-                        n: top, w: left, ne: topRight, nw: topLeft, nn: topTop)
-                    let actual = pix[rowBase + x]
-                    let tok = ZigZag.pack(actual &- pred)
-                    tokens[pi] = tok
-                    if includeTreeProperties {
-                        let tk = Int(postCfg.encode(tok).token)
-                        tokBucket[pi] = tk
-                        if tk > maxTok { maxTok = tk }
-                    }
-                    wp.update(actual: actual, x: x, y: y, xsize: width)
-                    pi += 1
                 }
             }
         }
@@ -3193,78 +3211,161 @@ package enum SpecModularEncoder {
                 try symbols.withUnsafeMutableBufferPointer { symbolValues in
                     try fullHisto.withUnsafeMutableBufferPointer { histogram in
                         try pix32.withUnsafeBufferPointer { plane in
+                            guard width > 0, height > 0,
+                                  let packedBase = packedValues.baseAddress,
+                                  let symbolBase = symbolValues.baseAddress,
+                                  let histoBase = histogram.baseAddress,
+                                  let planeBase = plane.baseAddress else { return }
                             let encodingWork = ScalarEncodingWork.current
                             if useWP {
                                 var wp = WeightedPredictor(
                                     header: .default, xsize: max(1, width))
                                 try wp.withBuffers { wpB in
-                                    for y in 0..<height {
-                                        if let encodingWork { try encodingWork.checkpoint() }
-                                        else { try Task.checkCancellation() }
-                                        let rowOff = y * width
-                                        for x in 0..<width {
-                                            let nbh = predictionNeighbours(plane, x: x, y: y, origin: 0, stride: width, width: width)
-                                            let pred = wpB.predict(
-                                                x: x, y: y, xsize: width,
-                                                n: nbh.n, w: nbh.w, ne: nbh.ne, nw: nbh.nw, nn: nbh.nn)
-                                            let actual = plane[rowOff + x]
-                                            let p = ZigZag.pack(actual &- pred)
-                                            let exp = postCfg.encode(p)
-                                            let t = Int(exp.token)
-                                            histogram[t] += 1
-                                            if t > maxUsedToken { maxUsedToken = t }
-                                            packedValues[rowOff + x] = p
-                                            symbolValues[rowOff + x] = UInt16(truncatingIfNeeded: exp.token)
-                                            totalExtraNBits += exp.extraNBits
-                                            wpB.update(actual: actual, x: x, y: y, xsize: width)
+                                    if let encodingWork { try encodingWork.checkpoint() }
+                                    else { try Task.checkCancellation() }
+                                    var w0: Int32 = 0
+                                    for x in 0..<width {
+                                        let actual = planeBase[x]
+                                        let pred = wpB.predictAndUpdate(
+                                            actual: actual,
+                                            x: x, y: 0, xsize: width,
+                                            n: w0, w: w0, ne: w0, nw: w0, nn: w0)
+                                        w0 = actual
+                                        let p = ZigZag.pack(actual &- pred)
+                                        let t: Int
+                                        if p < 16 {
+                                            t = Int(p)
+                                        } else {
+                                            let n = 31 &- p.leadingZeroBitCount
+                                            t = 12 &+ n
+                                            totalExtraNBits &+= n
+                                        }
+                                        histoBase[t] &+= 1
+                                        packedBase[x] = p
+                                        symbolBase[x] = UInt16(truncatingIfNeeded: t)
+                                    }
+                                    if height > 1 {
+                                        for y in 1..<height {
+                                            if let encodingWork { try encodingWork.checkpoint() }
+                                            else { try Task.checkCancellation() }
+                                            let rowOff = y &* width
+                                            let prevRow = rowOff &- width
+                                            let prev2Row = y > 1 ? rowOff &- 2 &* width : prevRow
+                                            let n0 = planeBase[prevRow]
+                                            let ne0 = width > 1 ? planeBase[prevRow &+ 1] : n0
+                                            let nn0 = planeBase[prev2Row]
+                                            let actual0 = planeBase[rowOff]
+                                            let pred0 = wpB.predictAndUpdate(
+                                                actual: actual0,
+                                                x: 0, y: y, xsize: width,
+                                                n: n0, w: n0, ne: ne0, nw: n0, nn: nn0)
+                                            let p0 = ZigZag.pack(actual0 &- pred0)
+                                            let t0: Int
+                                            if p0 < 16 {
+                                                t0 = Int(p0)
+                                            } else {
+                                                let nBits = 31 &- p0.leadingZeroBitCount
+                                                t0 = 12 &+ nBits
+                                                totalExtraNBits &+= nBits
+                                            }
+                                            histoBase[t0] &+= 1
+                                            packedBase[rowOff] = p0
+                                            symbolBase[rowOff] = UInt16(truncatingIfNeeded: t0)
+                                            var w = actual0
+                                            var nw = n0
+                                            var n = ne0
+                                            if width > 1 {
+                                                for x in 1..<width {
+                                                    let ne = x &+ 1 < width ? planeBase[prevRow &+ x &+ 1] : n
+                                                    let nn = planeBase[prev2Row &+ x]
+                                                    let actual = planeBase[rowOff &+ x]
+                                                    let pred = wpB.predictAndUpdate(
+                                                        actual: actual,
+                                                        x: x, y: y, xsize: width,
+                                                        n: n, w: w, ne: ne, nw: nw, nn: nn)
+                                                    w = actual; nw = n; n = ne
+                                                    let p = ZigZag.pack(actual &- pred)
+                                                    let t: Int
+                                                    if p < 16 {
+                                                        t = Int(p)
+                                                    } else {
+                                                        let nBits = 31 &- p.leadingZeroBitCount
+                                                        t = 12 &+ nBits
+                                                        totalExtraNBits &+= nBits
+                                                    }
+                                                    histoBase[t] &+= 1
+                                                    packedBase[rowOff &+ x] = p
+                                                    symbolBase[rowOff &+ x] = UInt16(truncatingIfNeeded: t)
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             } else {
-                                for y in 0..<height {
-                                    if let encodingWork { try encodingWork.checkpoint() }
-                                    else { try Task.checkCancellation() }
-                                    let rowOff = y * width
-                                    if y == 0 {
-                                        var left: Int32 = 0
-                                        for x in 0..<width {
-                                            let actual = plane[x]
-                                            let pred: Int32 = x > 0 ? left : 0
-                                            let p = ZigZag.pack(actual &- pred)
-                                            let exp = postCfg.encode(p)
-                                            let t = Int(exp.token)
-                                            histogram[t] += 1
-                                            if t > maxUsedToken { maxUsedToken = t }
-                                            packedValues[x] = p
-                                            symbolValues[x] = UInt16(truncatingIfNeeded: exp.token)
-                                            totalExtraNBits += exp.extraNBits
-                                            left = actual
-                                        }
+                                if let encodingWork { try encodingWork.checkpoint() }
+                                else { try Task.checkCancellation() }
+                                var w0: Int32 = 0
+                                for x in 0..<width {
+                                    let actual = planeBase[x]
+                                    let p = ZigZag.pack(actual &- w0)
+                                    w0 = actual
+                                    let t: Int
+                                    if p < 16 {
+                                        t = Int(p)
                                     } else {
-                                        let prevRow = rowOff - width
-                                        var left: Int32 = 0
-                                        var topLeft: Int32 = 0
-                                        for x in 0..<width {
-                                            let top = plane[prevRow + x]
-                                            let w = x > 0 ? left : top
-                                            let nw = x > 0 ? topLeft : w
-                                            let w64 = Int64(w)
-                                            let n64 = Int64(top)
-                                            let nw64 = Int64(nw)
-                                            let lo = min(w64, n64)
-                                            let hi = max(w64, n64)
-                                            let pred = Int32(truncatingIfNeeded: min(max(w64 + n64 - nw64, lo), hi))
-                                            let actual = plane[rowOff + x]
-                                            let p = ZigZag.pack(actual &- pred)
-                                            let exp = postCfg.encode(p)
-                                            let t = Int(exp.token)
-                                            histogram[t] += 1
-                                            if t > maxUsedToken { maxUsedToken = t }
-                                            packedValues[rowOff + x] = p
-                                            symbolValues[rowOff + x] = UInt16(truncatingIfNeeded: exp.token)
-                                            totalExtraNBits += exp.extraNBits
-                                            left = actual
-                                            topLeft = top
+                                        let n = 31 &- p.leadingZeroBitCount
+                                        t = 12 &+ n
+                                        totalExtraNBits &+= n
+                                    }
+                                    histoBase[t] &+= 1
+                                    packedBase[x] = p
+                                    symbolBase[x] = UInt16(truncatingIfNeeded: t)
+                                }
+                                if height > 1 {
+                                    for y in 1..<height {
+                                        if let encodingWork { try encodingWork.checkpoint() }
+                                        else { try Task.checkCancellation() }
+                                        let rowOff = y &* width
+                                        let prevRow = rowOff &- width
+                                        let n0 = planeBase[prevRow]
+                                        let actual0 = planeBase[rowOff]
+                                        let p0 = ZigZag.pack(actual0 &- n0)
+                                        let t0: Int
+                                        if p0 < 16 {
+                                            t0 = Int(p0)
+                                        } else {
+                                            let nBits = 31 &- p0.leadingZeroBitCount
+                                            t0 = 12 &+ nBits
+                                            totalExtraNBits &+= nBits
+                                        }
+                                        histoBase[t0] &+= 1
+                                        packedBase[rowOff] = p0
+                                        symbolBase[rowOff] = UInt16(truncatingIfNeeded: t0)
+                                        var w = actual0
+                                        var nw = n0
+                                        if width > 1 {
+                                            for x in 1..<width {
+                                                let n = planeBase[prevRow &+ x]
+                                                let g = w &+ n &- nw
+                                                let lo = min(w, n)
+                                                let hi = max(w, n)
+                                                let pred = min(max(g, lo), hi)
+                                                let actual = planeBase[rowOff &+ x]
+                                                w = actual
+                                                nw = n
+                                                let p = ZigZag.pack(actual &- pred)
+                                                let t: Int
+                                                if p < 16 {
+                                                    t = Int(p)
+                                                } else {
+                                                    let nBits = 31 &- p.leadingZeroBitCount
+                                                    t = 12 &+ nBits
+                                                    totalExtraNBits &+= nBits
+                                                }
+                                                histoBase[t] &+= 1
+                                                packedBase[rowOff &+ x] = p
+                                                symbolBase[rowOff &+ x] = UInt16(truncatingIfNeeded: t)
+                                            }
                                         }
                                     }
                                 }
@@ -3275,6 +3376,9 @@ package enum SpecModularEncoder {
             }
             packedPerChannel.append(packed)
             symbolsPerChannel.append(symbols)
+        }
+        for t in 0..<fullHisto.count where fullHisto[t] > 0 {
+            maxUsedToken = t
         }
         return (packedPerChannel, Array(fullHisto[0..<(maxUsedToken + 1)]),
                 maxUsedToken + 1, symbolsPerChannel, totalExtraNBits)

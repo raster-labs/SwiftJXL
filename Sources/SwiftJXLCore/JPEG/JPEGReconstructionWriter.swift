@@ -43,7 +43,8 @@ package enum JPEGReconstructionWriter {
 }
 
 private struct JPEGOutput {
-    var data = Data()
+    var bytesBuffer: [UInt8] = []
+    var data: Data { Data(bytesBuffer) }
     private var accumulator: UInt64 = 0
     private var pending = 0
     let limit: Int
@@ -52,27 +53,29 @@ private struct JPEGOutput {
         self.limit = limit
         self.policy = policy
     }
+    @inline(__always)
     mutating func byte(_ byte: UInt8) throws {
-        guard data.count < limit else { throw JPEGEntropyError.resourceLimit }
-        if data.count & 1023 == 0 { try policy.checkpoint() }
-        data.append(byte)
+        guard bytesBuffer.count < limit else { throw JPEGEntropyError.resourceLimit }
+        if bytesBuffer.count & 1023 == 0 { try policy.checkpoint() }
+        bytesBuffer.append(byte)
     }
     mutating func bytes(_ bytes: Data) throws {
-        guard pending == 0, bytes.count <= limit - data.count else { throw JPEGEntropyError.resourceLimit }
+        guard pending == 0, bytes.count <= limit - bytesBuffer.count else { throw JPEGEntropyError.resourceLimit }
         var offset = 0
         while offset < bytes.count {
             try policy.checkpoint()
             let end = offset + min(4096, bytes.count - offset)
-            data.append(bytes[(bytes.startIndex + offset)..<(bytes.startIndex + end)]); offset = end
+            bytesBuffer.append(contentsOf: bytes[(bytes.startIndex + offset)..<(bytes.startIndex + end)]); offset = end
         }
     }
+    @inline(__always)
     mutating func bits(_ value: UInt64, _ count: Int) throws {
         guard (0...24).contains(count) else { throw JPEGEntropyError.malformed }
         if count == 0 { return }
-        accumulator = (accumulator << count) | (value & ((1 << count) - 1)); pending += count
+        accumulator = (accumulator &<< count) | (value & ((UInt64(1) &<< count) &- 1)); pending &+= count
         while pending >= 8 {
-            pending -= 8
-            let b = UInt8(truncatingIfNeeded: accumulator >> pending)
+            pending &-= 8
+            let b = UInt8(truncatingIfNeeded: accumulator &>> pending)
             try byte(b); if b == 0xff { try byte(0) }
         }
     }
@@ -99,8 +102,7 @@ private struct JPEGOutput {
 }
 
 private struct JPEGEncodeTable {
-    var code = [UInt32](repeating: 0, count: 256)
-    var length = [Int](repeating: 0, count: 256)
+    var packed = [UInt64](repeating: 0, count: 256)
     init(_ table: JBRDHuffmanCode) throws {
         guard table.counts.count == 17, table.values.last == 256 else { throw JPEGEntropyError.malformed }
         var value = 0, cursor = 0
@@ -109,10 +111,10 @@ private struct JPEGEncodeTable {
                 guard cursor < table.values.count, value < 1 << n else { throw JPEGEntropyError.malformed }
                 let symbol = Int(table.values[cursor]); cursor += 1
                 if symbol != 256 {
-                    guard (0...255).contains(symbol), length[symbol] == 0, value != (1 << n) - 1 else {
+                    guard (0...255).contains(symbol), packed[symbol] == 0, value != (1 << n) - 1 else {
                         throw JPEGEntropyError.malformed
                     }
-                    code[symbol] = UInt32(value); length[symbol] = n
+                    packed[symbol] = (UInt64(n) << 32) | UInt64(UInt32(value))
                 }
                 value += 1
             }
@@ -266,43 +268,78 @@ private struct ReconstructionWriter {
         var inverse = [Int](repeating: 0, count: 64)
         for k in 0..<64 { inverse[JPEGZigZag.order[k]] = k }
         for ci in coefficients.indices {
-            for index in coefficients[ci].indices {
-                if index & 1023 == 0 { try policy.checkpoint() }
-                let shift = history[ci][inverse[index & 63]]
-                let value = Int64(coefficients[ci][index])
-                guard shift >= 0 ? value & ((1 << shift) - 1) == 0 : value == 0 else { throw JPEGEntropyError.malformed }
+            let hist = history[ci]
+            let allZeroShift = hist.allSatisfy { $0 == 0 }
+            let count = coefficients[ci].count
+            if allZeroShift {
+                var idx = 0
+                while idx < count {
+                    try policy.checkpoint()
+                    idx &+= 1024
+                }
+            } else {
+                var shifts = [Int](repeating: 0, count: 64)
+                for pos in 0..<64 { shifts[pos] = hist[inverse[pos]] }
+                try coefficients[ci].withUnsafeBufferPointer { cBuf in
+                    try shifts.withUnsafeBufferPointer { sBuf in
+                        let cPtr = cBuf.baseAddress!
+                        let sPtr = sBuf.baseAddress!
+                        for index in 0..<count {
+                            if index & 1023 == 0 { try policy.checkpoint() }
+                            let shift = sPtr[index & 63]
+                            let value = Int64(cPtr[index])
+                            guard shift >= 0 ? value & ((1 << shift) - 1) == 0 : value == 0 else { throw JPEGEntropyError.malformed }
+                        }
+                    }
+                }
             }
         }
         try output.bytes(box.tailData); try policy.checkpoint()
         return output.data
     }
 
+    @inline(__always)
     mutating func symbol(_ symbol: Int, table: Int) throws {
-        guard (0..<8).contains(table), (0..<256).contains(symbol), let h = tables[table], h.length[symbol] > 0 else {
+        guard (0..<8).contains(table), (0..<256).contains(symbol), let h = tables[table] else {
             throw JPEGEntropyError.malformed
         }
-        try output.bits(UInt64(h.code[symbol]), h.length[symbol])
+        let entry = h.packed[symbol]
+        let len = Int(entry &>> 32)
+        guard len > 0 else { throw JPEGEntropyError.malformed }
+        try output.bits(entry & 0xFFFF_FFFF, len)
     }
-    func size(_ value: Int64) -> Int { value == 0 ? 0 : 64 - UInt64(abs(value)).leadingZeroBitCount }
+    @inline(__always)
+    mutating func symbolFast(_ symbol: Int, tablePtr: UnsafePointer<UInt64>) throws {
+        guard (0..<256).contains(symbol) else { throw JPEGEntropyError.malformed }
+        let entry = tablePtr[symbol]
+        let len = Int(entry &>> 32)
+        guard len > 0 else { throw JPEGEntropyError.malformed }
+        try output.bits(entry & 0xFFFF_FFFF, len)
+    }
+    @inline(__always)
+    func size(_ value: Int64) -> Int { value == 0 ? 0 : 64 &- UInt64(abs(value)).leadingZeroBitCount }
+    @inline(__always)
     mutating func magnitude(_ value: Int64, count: Int) throws {
-        try output.bits(UInt64(truncatingIfNeeded: value < 0 ? value - 1 : value), count)
+        try output.bits(UInt64(truncatingIfNeeded: value < 0 ? value &- 1 : value), count)
     }
     mutating func flushEOB() throws {
         if eobRun > 0 {
-            let n = size(Int64(eobRun)) - 1
-            try symbol(n << 4, table: eobTable); try output.bits(UInt64(eobRun), n); eobRun = 0
+            let n = size(Int64(eobRun)) &- 1
+            try symbol(n &<< 4, table: eobTable); try output.bits(UInt64(eobRun), n); eobRun = 0
         }
-        for (i, bit) in refinement.enumerated() {
-            if i & 1023 == 0 { try policy.checkpoint() }
-            try output.bits(UInt64(bit), 1)
+        if !refinement.isEmpty {
+            for (i, bit) in refinement.enumerated() {
+                if i & 1023 == 0 { try policy.checkpoint() }
+                try output.bits(UInt64(bit), 1)
+            }
+            refinement.removeAll(keepingCapacity: true)
         }
-        refinement.removeAll(keepingCapacity: true)
     }
     mutating func endOfBand(table: Int, bits: [UInt8] = []) throws {
         guard bits.count <= policy.maximumBufferedRefinementBits - refinement.count else { throw JPEGEntropyError.resourceLimit }
         if eobRun == 0 { eobTable = table }
         guard eobTable == table else { throw JPEGEntropyError.malformed }
-        eobRun += 1; refinement.append(contentsOf: bits)
+        eobRun &+= 1; if !bits.isEmpty { refinement.append(contentsOf: bits) }
         if eobRun == 32767 { try flushEOB() }
     }
 
@@ -331,64 +368,100 @@ private struct ReconstructionWriter {
         let wide = interleaved ? frame.mcusWide : first.visibleBlocksWide
         let high = interleaved ? frame.mcusHigh : first.visibleBlocksHigh
         var blockOrdinal = 0, reset = 0, extra = 0, restart = 0
-        for mcu in 0..<(wide * high) {
-            try policy.checkpoint()
-            if mcu > 0 && interval > 0 && mcu % interval == 0 {
-                try flushEOB(); try output.align(box.paddingBits, exact: box.hasZeroPaddingBit, cursor: &paddingCursor)
-                try output.marker(UInt8(0xd0 + restart)); restart = (restart + 1) & 7; predictors = [0, 0, 0]
-            }
-            for c in scan.components {
-                let ci = Int(c.compIdx), layout = frame.components[ci]
-                let h = interleaved ? layout.horizontalSampling : 1, v = interleaved ? layout.verticalSampling : 1
-                for y in 0..<v { for x in 0..<h {
-                    try policy.checkpoint()
-                    if reset < scan.resetPoints.count && Int(scan.resetPoints[reset]) == blockOrdinal { try flushEOB(); reset += 1 }
-                    var zeroRuns = 0
-                    if extra < scan.extraZeroRuns.count && Int(scan.extraZeroRuns[extra].blockIdx) == blockOrdinal {
-                        zeroRuns = Int(scan.extraZeroRuns[extra].numExtraZeroRuns); extra += 1
-                    }
-                    let index = ((mcu / wide * v + y) * layout.paddedBlocksWide + mcu % wide * h + x) * 64
-                    if progressive && ah > 0 {
-                        guard zeroRuns == 0 else { throw JPEGEntropyError.unsupported }
-                        try refine(ci: ci, base: index, ss: ss, se: se, al: al, ac: Int(c.acTblIdx) + 4)
-                    } else {
-                        try initial(ci: ci, base: index, ss: ss, se: se, al: al, dc: Int(c.dcTblIdx), ac: Int(c.acTblIdx) + 4,
-                                    extraZeros: zeroRuns, groupEOB: progressive && ss > 0)
-                    }
-                    blockOrdinal += 1
-                } }
+        try JPEGZigZag.order.withUnsafeBufferPointer { zzBuf in
+            let zzPtr = zzBuf.baseAddress!
+            for mcu in 0..<(wide * high) {
+                try policy.checkpoint()
+                if mcu > 0 && interval > 0 && mcu % interval == 0 {
+                    try flushEOB(); try output.align(box.paddingBits, exact: box.hasZeroPaddingBit, cursor: &paddingCursor)
+                    try output.marker(UInt8(0xd0 + restart)); restart = (restart + 1) & 7; predictors = [0, 0, 0]
+                }
+                for c in scan.components {
+                    let ci = Int(c.compIdx), layout = frame.components[ci]
+                    let dcSlot = Int(c.dcTblIdx), acSlot = Int(c.acTblIdx) + 4
+                    let dcTbl = (0..<8).contains(dcSlot) ? tables[dcSlot] : nil
+                    let acTbl = (0..<8).contains(acSlot) ? tables[acSlot] : nil
+                    let h = interleaved ? layout.horizontalSampling : 1, v = interleaved ? layout.verticalSampling : 1
+                    for y in 0..<v { for x in 0..<h {
+                        if reset < scan.resetPoints.count && Int(scan.resetPoints[reset]) == blockOrdinal { try flushEOB(); reset += 1 }
+                        var zeroRuns = 0
+                        if extra < scan.extraZeroRuns.count && Int(scan.extraZeroRuns[extra].blockIdx) == blockOrdinal {
+                            zeroRuns = Int(scan.extraZeroRuns[extra].numExtraZeroRuns); extra += 1
+                        }
+                        let index = ((mcu / wide * v + y) * layout.paddedBlocksWide + mcu % wide * h + x) * 64
+                        if progressive && ah > 0 {
+                            guard zeroRuns == 0 else { throw JPEGEntropyError.unsupported }
+                            try refine(ci: ci, base: index, ss: ss, se: se, al: al, ac: acSlot)
+                        } else {
+                            try initial(ci: ci, base: index, zzPtr: zzPtr, ss: ss, se: se, al: al,
+                                        dc: dcSlot, ac: acSlot, dcTable: dcTbl, acTable: acTbl,
+                                        extraZeros: zeroRuns, groupEOB: progressive && ss > 0)
+                        }
+                        blockOrdinal += 1
+                    } }
+                }
             }
         }
         guard reset == scan.resetPoints.count, extra == scan.extraZeroRuns.count else { throw JPEGEntropyError.malformed }
         try flushEOB(); try output.align(box.paddingBits, exact: box.hasZeroPaddingBit, cursor: &paddingCursor)
     }
 
-    mutating func initial(ci: Int, base: Int, ss: Int, se: Int, al: Int, dc: Int, ac: Int,
+    @inline(__always)
+    mutating func initial(ci: Int, base: Int, zzPtr: UnsafePointer<Int>, ss: Int, se: Int, al: Int,
+                          dc: Int, ac: Int, dcTable: JPEGEncodeTable?, acTable: JPEGEncodeTable?,
                           extraZeros: Int, groupEOB: Bool) throws {
-        var start = ss
-        if start == 0 {
-            let value = Int64(coefficients[ci][base]) >> al, difference = value - predictors[ci]
-            predictors[ci] = value; let n = size(difference)
-            guard n <= 11 else { throw JPEGEntropyError.malformed }
-            try symbol(n, table: dc); try magnitude(difference, count: n); start = 1
+        let plane = coefficients[ci]
+        try plane.withUnsafeBufferPointer { pBuf in
+            let blockPtr = pBuf.baseAddress! + base
+            var start = ss
+            if start == 0 {
+                let value = Int64(blockPtr[0]) >> al, difference = value &- predictors[ci]
+                predictors[ci] = value; let n = size(difference)
+                guard n <= 11, let dcTable else { throw JPEGEntropyError.malformed }
+                try dcTable.packed.withUnsafeBufferPointer { dcBuf in
+                    try symbolFast(n, tablePtr: dcBuf.baseAddress!)
+                }
+                try magnitude(difference, count: n); start = 1
+            }
+            if start > se { guard extraZeros == 0 else { throw JPEGEntropyError.malformed }; return }
+            guard let acTable else { throw JPEGEntropyError.malformed }
+            try acTable.packed.withUnsafeBufferPointer { acBuf in
+                let acPtr = acBuf.baseAddress!
+                var zeros = 0
+                if al == 0 {
+                    for k in start...se {
+                        let value = Int64(blockPtr[zzPtr[k]])
+                        if value == 0 { zeros &+= 1; continue }
+                        if eobRun > 0 || !refinement.isEmpty { try flushEOB() }
+                        while zeros >= 16 { try symbolFast(0xf0, tablePtr: acPtr); zeros &-= 16 }
+                        let n = size(value); guard n <= 10 else { throw JPEGEntropyError.malformed }
+                        try symbolFast(zeros &* 16 &+ n, tablePtr: acPtr); try magnitude(value, count: n); zeros = 0
+                    }
+                } else {
+                    for k in start...se {
+                        let raw = Int64(blockPtr[zzPtr[k]])
+                        let value = (raw < 0 ? -1 : 1) * (abs(raw) >> al)
+                        if value == 0 { zeros &+= 1; continue }
+                        if eobRun > 0 || !refinement.isEmpty { try flushEOB() }
+                        while zeros >= 16 { try symbolFast(0xf0, tablePtr: acPtr); zeros &-= 16 }
+                        let n = size(value); guard n <= 10 else { throw JPEGEntropyError.malformed }
+                        try symbolFast(zeros &* 16 &+ n, tablePtr: acPtr); try magnitude(value, count: n); zeros = 0
+                    }
+                }
+                if extraZeros > 0 {
+                    guard extraZeros <= zeros / 16 else { throw JPEGEntropyError.malformed }
+                    if eobRun > 0 || !refinement.isEmpty { try flushEOB() }
+                    for _ in 0..<extraZeros { try symbolFast(0xf0, tablePtr: acPtr); zeros &-= 16 }
+                }
+                if zeros > 0 {
+                    if !groupEOB && eobRun == 0 && refinement.isEmpty {
+                        try symbolFast(0, tablePtr: acPtr)
+                    } else {
+                        try endOfBand(table: ac); if !groupEOB { try flushEOB() }
+                    }
+                }
+            }
         }
-        if start > se { guard extraZeros == 0 else { throw JPEGEntropyError.malformed }; return }
-        var zeros = 0
-        for k in start...se {
-            let raw = Int64(coefficients[ci][base + JPEGZigZag.order[k]])
-            let value = (raw < 0 ? -1 : 1) * (abs(raw) >> al)
-            if value == 0 { zeros += 1; continue }
-            try flushEOB()
-            while zeros >= 16 { try symbol(0xf0, table: ac); zeros -= 16 }
-            let n = size(value); guard n <= 10 else { throw JPEGEntropyError.malformed }
-            try symbol(zeros * 16 + n, table: ac); try magnitude(value, count: n); zeros = 0
-        }
-        if extraZeros > 0 {
-            guard extraZeros <= zeros / 16 else { throw JPEGEntropyError.malformed }
-            try flushEOB()
-            for _ in 0..<extraZeros { try symbol(0xf0, table: ac); zeros -= 16 }
-        }
-        if zeros > 0 { try endOfBand(table: ac); if !groupEOB { try flushEOB() } }
     }
 
     mutating func refine(ci: Int, base: Int, ss: Int, se: Int, al: Int, ac: Int) throws {

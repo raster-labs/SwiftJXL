@@ -38,16 +38,60 @@ package struct JPEGBridgeBlockContext {
     }
 
     func blockContext(dcValues: [Int32], quantisation: UInt32, channel: Int) throws -> Int {
-        guard dcValues.count == 3, (0..<3).contains(channel) else { throw JPEGEntropyError.malformed }
-        let a = dc[0].reduce(0) { $0 + (dcValues[0] > $1 ? 1 : 0) }
-        let b = dc[1].reduce(0) { $0 + (dcValues[1] > $1 ? 1 : 0) }
-        let c = dc[2].reduce(0) { $0 + (dcValues[2] > $1 ? 1 : 0) }
+        guard dcValues.count == 3 else { throw JPEGEntropyError.malformed }
+        return try blockContext(dcValues: (dcValues[0], dcValues[1], dcValues[2]), quantisation: quantisation, channel: channel)
+    }
+
+    @inline(__always)
+    func blockContext(dcValues: (Int32, Int32, Int32), quantisation: UInt32, channel: Int) throws -> Int {
+        guard (0..<3).contains(channel) else { throw JPEGEntropyError.malformed }
+        var a = 0
+        for t in dc[0] where dcValues.0 > t { a &+= 1 }
+        var b = 0
+        for t in dc[1] where dcValues.1 > t { b &+= 1 }
+        var c = 0
+        for t in dc[2] where dcValues.2 > t { c &+= 1 }
         let bucket = (a * (dc[2].count + 1) + c) * (dc[1].count + 1) + b
-        let quantBucket = qf.reduce(0) { $0 + (quantisation > $1 ? 1 : 0) }
+        var quantBucket = 0
+        for q in qf where quantisation > q { quantBucket &+= 1 }
         let mappedChannel = channel < 2 ? channel ^ 1 : 2
         let index = (mappedChannel * 13 * (qf.count + 1) + quantBucket) * dcContexts + bucket
         guard map.indices.contains(index), Int(map[index]) < classes else { throw JPEGEntropyError.malformed }
         return Int(map[index])
+    }
+
+    @inline(__always)
+    func readBlockDirect(prediction: UInt32, blockContext: Int, offset: Int, transposedOrder: [Int],
+                         stream: inout TokenStreamReader, from r: inout BitReader,
+                         into plane: inout [Int32], destination: Int, skipWrite: Bool) throws -> Int {
+        guard transposedOrder.count == 64, (0..<classes).contains(blockContext), prediction <= 64 else {
+            throw JPEGEntropyError.malformed
+        }
+        let bucket = prediction < 8 ? Int(prediction) : 4 + Int(prediction) / 2
+        let nonzeros = try stream.readToken(context: offset + bucket * classes + blockContext, from: &r)
+        guard nonzeros <= 63 else { throw JPEGEntropyError.malformed }
+        if skipWrite {
+            guard nonzeros == 0 else { throw JPEGEntropyError.malformed }
+            return 0
+        }
+        var remaining = Int(nonzeros), previous = nonzeros > 4 ? 0 : 1
+        let base = offset + classes * 37 + 458 * blockContext
+        for k in 1..<64 {
+            if remaining == 0 { break }
+            let context = base + (Int(kCoeffNumNonzeroContext[remaining]) + Int(kCoeffFreqContext[k])) * 2 + previous
+            let value = try stream.readToken(context: context, from: &r)
+            let tPos = transposedOrder[k]
+            guard (1..<64).contains(tPos) else { throw JPEGEntropyError.malformed }
+            if value != 0 {
+                plane[destination &+ tPos] = ZigZag.unpack(value)
+                previous = 1
+                remaining &-= 1
+            } else {
+                previous = 0
+            }
+        }
+        guard remaining == 0 else { throw JPEGEntropyError.malformed }
+        return Int(nonzeros)
     }
 
     func readBlock(prediction: UInt32, blockContext: Int, offset: Int, order: [Int],

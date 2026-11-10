@@ -165,7 +165,17 @@ package struct BitReader: Sendable {
     }
 
     /// Top up the accumulator from `bytes` (to ≥ 57 bits, or to EOF).
-    private mutating func refill() {
+    @inline(__always)
+    package mutating func refill() {
+        if bitCount <= 32 && nextByte &+ 4 <= bytes.count {
+            let b0 = UInt64(bytes[nextByte])
+            let b1 = UInt64(bytes[nextByte &+ 1]) &<< 8
+            let b2 = UInt64(bytes[nextByte &+ 2]) &<< 16
+            let b3 = UInt64(bytes[nextByte &+ 3]) &<< 24
+            bitBuf |= (b0 | b1 | b2 | b3) &<< UInt64(bitCount)
+            nextByte &+= 4
+            bitCount &+= 32
+        }
         while bitCount <= 56 && nextByte < bytes.count {
             bitBuf |= UInt64(bytes[nextByte]) &<< UInt64(bitCount)
             nextByte &+= 1

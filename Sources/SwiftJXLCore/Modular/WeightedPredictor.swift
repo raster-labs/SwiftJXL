@@ -101,11 +101,12 @@ package struct WeightedPredictor: Sendable {
         _ x: UInt64, maxWeight: UInt32, divLut: UnsafePointer<UInt32>
     ) -> UInt32 {
         let xp1 = x &+ 1
-        let log2: Int = xp1 == 0 ? 0 : Int(63 &- xp1.leadingZeroBitCount)
+        let log2 = 63 &- xp1.leadingZeroBitCount
         let shift = max(0, log2 &- 5)
-        let lookupIdx = Int((x &>> shift) & 0x3F)
+        let uShift = UInt64(truncatingIfNeeded: shift)
+        let lookupIdx = Int(truncatingIfNeeded: (x &>> uShift) & 0x3F)
         let div = divLut[lookupIdx]
-        return 4 &+ ((maxWeight &* div) &>> shift)
+        return 4 &+ ((maxWeight &* div) &>> UInt32(truncatingIfNeeded: shift))
     }
 
     /// Combine four sub-predictions via per-predictor weights using
@@ -236,6 +237,85 @@ package struct WeightedPredictor: Sendable {
             let shifted = (pred &+ WeightedPredictor.kPredictionRound)
                               &>> Int64(WeightedPredictor.kPredExtraBits)
             return Int32(truncatingIfNeeded: shifted)
+        }
+
+        /// Fused computation of `predict` and `propertyValue` (property 15),
+        /// loading the neighbour error slots only once per pixel.
+        @inline(__always)
+        package mutating func predictWithProperty(
+            x: Int, y: Int, xsize: Int,
+            n: Int32, w: Int32, ne: Int32, nw: Int32, nn: Int32
+        ) -> (pred: Int32, prop: Int32) {
+            let curRowOff  = (y & 1 == 1) ? 0 : stride
+            let prevRowOff = (y & 1 == 1) ? stride : 0
+            let posN  = prevRowOff &+ x
+            let posNE = (x < xsize &- 1) ? posN &+ 1 : posN
+            let posNW = (x > 0) ? posN &- 1 : posN
+
+            let teW: Int64 = (x == 0) ? 0 : error[curRowOff &+ x &- 1]
+            let teN: Int64 = error[posN]
+            let teNW: Int64 = error[posNW]
+            let teNE: Int64 = error[posNE]
+
+            var prop64: Int64 = teW
+            if abs(teN)  > abs(prop64) { prop64 = teN }
+            if abs(teNW) > abs(prop64) { prop64 = teNW }
+            if abs(teNE) > abs(prop64) { prop64 = teNE }
+
+            let peN = predErrors[posN]
+            let peNE = predErrors[posNE]
+            let peNW = predErrors[posNW]
+            let weights: (UInt32, UInt32, UInt32, UInt32) = (
+                WeightedPredictor.errorWeight(
+                    UInt64(peN[0]) &+ UInt64(peNE[0]) &+ UInt64(peNW[0]),
+                    maxWeight: header.weights.0,
+                    divLut: divLut
+                ),
+                WeightedPredictor.errorWeight(
+                    UInt64(peN[1]) &+ UInt64(peNE[1]) &+ UInt64(peNW[1]),
+                    maxWeight: header.weights.1,
+                    divLut: divLut
+                ),
+                WeightedPredictor.errorWeight(
+                    UInt64(peN[2]) &+ UInt64(peNE[2]) &+ UInt64(peNW[2]),
+                    maxWeight: header.weights.2,
+                    divLut: divLut
+                ),
+                WeightedPredictor.errorWeight(
+                    UInt64(peN[3]) &+ UInt64(peNE[3]) &+ UInt64(peNW[3]),
+                    maxWeight: header.weights.3,
+                    divLut: divLut
+                )
+            )
+
+            let nB = WeightedPredictor.addBits(Int64(n))
+            let wB = WeightedPredictor.addBits(Int64(w))
+            let neB = WeightedPredictor.addBits(Int64(ne))
+            let nwB = WeightedPredictor.addBits(Int64(nw))
+            let nnB = WeightedPredictor.addBits(Int64(nn))
+
+            let sumWN: Int64 = teN &+ teW
+            p0 = wB &+ neB &- nB
+            p1 = nB &- (((sumWN &+ teNE) &* Int64(header.p1C)) &>> 5)
+            p2 = wB &- (((sumWN &+ teNW) &* Int64(header.p2C)) &>> 5)
+            p3 = nB &- ((teNW &* Int64(header.p3Ca)
+                       &+ teN  &* Int64(header.p3Cb)
+                       &+ teNE &* Int64(header.p3Cc)
+                       &+ (nnB &- nB) &* Int64(header.p3Cd)
+                       &+ (nwB &- wB) &* Int64(header.p3Ce)) &>> 5)
+
+            pred = WeightedPredictor.weightedAverage(p0, p1, p2, p3, weights, divLut: divLut)
+
+            let mixed = (teN ^ teW) | (teN ^ teNW)
+            if mixed <= 0 {
+                let mx = max(wB, max(neB, nB))
+                let mn = min(wB, min(neB, nB))
+                if pred > mx { pred = mx }
+                if pred < mn { pred = mn }
+            }
+            let shifted = (pred &+ WeightedPredictor.kPredictionRound)
+                              &>> Int64(WeightedPredictor.kPredExtraBits)
+            return (Int32(truncatingIfNeeded: shifted), Int32(truncatingIfNeeded: prop64))
         }
 
         @inline(__always)

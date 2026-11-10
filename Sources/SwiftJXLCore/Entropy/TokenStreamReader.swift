@@ -266,6 +266,61 @@ package struct TokenStreamReader: Sendable {
     }
 
     @inline(__always)
+    package func singleContextANSFlatCluster(
+        context ctx: Int
+    ) -> (flatSlots: [UInt64], clusterOffset: Int, config: HybridUintConfig, state: UInt32, initialised: Bool) {
+        let cluster = Int(ctxMap[ctx])
+        return (
+            ansDecoder.flatSlots,
+            cluster &<< ANSConstants.logTabSize,
+            uintConfigs[cluster],
+            ansDecoder.currentState,
+            ansDecoder.hasInitialised
+        )
+    }
+
+    package func canUseSingleContextPrefix(context ctx: Int) -> Bool {
+        usePrefixCode && !lz77Enabled && copyRemaining == 0
+            && ctx >= 0 && ctx < userCtxBound
+            && Int(ctxMap[ctx]) < numHistograms
+            && Int(ctxMap[ctx]) < codebook.huffmanTables.count
+    }
+
+    @inline(__always)
+    package func singleContextPrefixCluster(
+        context ctx: Int
+    ) -> (table: PrefixCodeTable, config: HybridUintConfig) {
+        let cluster = Int(ctxMap[ctx])
+        return (codebook.huffmanTables[cluster], uintConfigs[cluster])
+    }
+
+    package func canUseMultiContextANS() -> Bool {
+        !usePrefixCode && !ansUnavailable && ansDecoder.useAliasTables
+            && !lz77Enabled && copyRemaining == 0
+    }
+
+    @inline(__always)
+    package func multiContextANSState() -> (
+        flatSlots: [UInt64],
+        ctxMap: [UInt8],
+        uintConfigs: [HybridUintConfig],
+        userCtxBound: Int,
+        numHistograms: Int,
+        state: UInt32,
+        initialised: Bool
+    ) {
+        (
+            ansDecoder.flatSlots,
+            ctxMap,
+            uintConfigs,
+            userCtxBound,
+            numHistograms,
+            ansDecoder.currentState,
+            ansDecoder.hasInitialised
+        )
+    }
+
+    @inline(__always)
     package mutating func updateSingleContextANSState(_ state: UInt32, initialised: Bool) {
         ansDecoder.updateState(state, initialised: initialised)
     }

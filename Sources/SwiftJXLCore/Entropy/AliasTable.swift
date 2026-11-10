@@ -176,6 +176,40 @@ package struct AliasTable: Sendable {
         return LookupResult(value: value, offset: offsetVal, freq: freq)
     }
 
+    /// Fill a pre-allocated `range`-entry buffer (`dst`) indexed by `slot = state & (range - 1)`.
+    /// Each `UInt64` packs `offsetPlusP` in bits `0..<16`, `symbol` in bits `16..<32`,
+    /// and `freq` in bits `32..<48` (with bits `48..<64` zero).
+    @inline(__always)
+    package func fillFlatSlots(into dst: UnsafeMutablePointer<UInt64>) {
+        let entrySize = entrySizeMinusOne + 1
+        let tableSize = entries.count
+        entries.withUnsafeBufferPointer { srcBuf in
+            guard let src = srcBuf.baseAddress else { return }
+            var outIdx = 0
+            for i in 0..<tableSize {
+                let entry = src[i]
+                let cut = Int(entry.cutoff)
+                let sym0 = UInt64(truncatingIfNeeded: i) & 0xFFFF
+                let freq0 = UInt64(entry.freq0)
+                let base0 = (sym0 &<< 16) | (freq0 &<< 32)
+                var p = 0
+                while p < cut {
+                    dst[outIdx &+ p] = UInt64(truncatingIfNeeded: p) | base0
+                    p &+= 1
+                }
+                let sym1 = UInt64(entry.rightValue)
+                let freq1 = UInt64(entry.freq1)
+                let off1 = Int(entry.offsets1)
+                let base1 = (sym1 &<< 16) | (freq1 &<< 32)
+                while p < entrySize {
+                    dst[outIdx &+ p] = UInt64(truncatingIfNeeded: (off1 &+ p) & 0xFFFF) | base1
+                    p &+= 1
+                }
+                outIdx &+= entrySize
+            }
+        }
+    }
+
     /// Build a flat `range`-entry table indexed directly by `slot = state & (range - 1)`.
     /// Each `UInt64` packs `offsetPlusP` in bits `0..<16`, `symbol` in bits `16..<32`,
     /// and `freq` in bits `32..<48` (with bits `48..<64` zero).
@@ -188,31 +222,7 @@ package struct AliasTable: Sendable {
                 initializedCount = 0
                 return
             }
-            entries.withUnsafeBufferPointer { srcBuf in
-                guard let src = srcBuf.baseAddress else { return }
-                var outIdx = 0
-                for i in 0..<tableSize {
-                    let entry = src[i]
-                    let cut = Int(entry.cutoff)
-                    let sym0 = UInt64(truncatingIfNeeded: i) & 0xFFFF
-                    let freq0 = UInt64(entry.freq0)
-                    let base0 = (sym0 &<< 16) | (freq0 &<< 32)
-                    var p = 0
-                    while p < cut {
-                        dst[outIdx &+ p] = UInt64(truncatingIfNeeded: p) | base0
-                        p &+= 1
-                    }
-                    let sym1 = UInt64(entry.rightValue)
-                    let freq1 = UInt64(entry.freq1)
-                    let off1 = Int(entry.offsets1)
-                    let base1 = (sym1 &<< 16) | (freq1 &<< 32)
-                    while p < entrySize {
-                        dst[outIdx &+ p] = UInt64(truncatingIfNeeded: (off1 &+ p) & 0xFFFF) | base1
-                        p &+= 1
-                    }
-                    outIdx &+= entrySize
-                }
-            }
+            fillFlatSlots(into: dst)
             initializedCount = range
         }
     }

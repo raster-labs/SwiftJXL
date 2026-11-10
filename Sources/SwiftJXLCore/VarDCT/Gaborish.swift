@@ -26,17 +26,26 @@ package enum Gaborish {
         let count = try ScalarOperationBudget.product(width, height)
         try budget.reserveWorkspace(ScalarOperationBudget.product(count, MemoryLayout<Float>.stride))
         var output = [Float](repeating: 0, count: count)
-        for y in 0..<height {
-            let top = max(0, y - 1) * stride, middle = y * stride, bottom = min(height - 1, y + 1) * stride
-            for x in 0..<width {
-                if x & 255 == 0 { try budget.checkpoint() }
-                let left = max(0, x - 1), right = min(width - 1, x + 1)
-                let centre = input[middle + x]
-                let sides = (input[middle + left] + input[middle + right]) + (input[top + x] + input[bottom + x])
-                let corners = (input[top + left] + input[top + right]) + (input[bottom + left] + input[bottom + right])
-                let value = corners * w2 + (sides * w1 + centre * w0)
-                guard value.isFinite else { throw VarDCTError.nonFiniteSample }
-                output[y * width + x] = value
+        try input.withUnsafeBufferPointer { inBuf in
+            try output.withUnsafeMutableBufferPointer { outBuf in
+                guard let inBase = inBuf.baseAddress, let outBase = outBuf.baseAddress else { return }
+                for y in 0..<height {
+                    let top = max(0, y &- 1) &* stride
+                    let middle = y &* stride
+                    let bottom = min(height &- 1, y &+ 1) &* stride
+                    let outRow = y &* width
+                    for x in 0..<width {
+                        if x & 255 == 0 { try budget.checkpoint() }
+                        let left = max(0, x &- 1)
+                        let right = min(width &- 1, x &+ 1)
+                        let centre = inBase[middle &+ x]
+                        let sides = (inBase[middle &+ left] + inBase[middle &+ right]) + (inBase[top &+ x] + inBase[bottom &+ x])
+                        let corners = (inBase[top &+ left] + inBase[top &+ right]) + (inBase[bottom &+ left] + inBase[bottom &+ right])
+                        let value = corners * w2 + (sides * w1 + centre * w0)
+                        guard value.isFinite else { throw VarDCTError.nonFiniteSample }
+                        outBase[outRow &+ x] = value
+                    }
+                }
             }
         }
         try budget.checkpoint()

@@ -45,6 +45,7 @@ package enum JPEGBridgeFrameWriter {
 private struct BridgePrefix {
     let header: EntropySectionHeader
     let codebook: MultiClusterCodebook
+    let table: PrefixCodeTable?
     init(histogram: [Int], contexts: Int) throws {
         let size = max(2, (histogram.lastIndex(where: { $0 != 0 }) ?? 0) + 1)
         var counts = Array(histogram.prefix(size))
@@ -52,7 +53,9 @@ private struct BridgePrefix {
             counts[counts[0] == 0 ? 0 : 1] = 1
         }
         let lengths = lengthLimitedCanonicalHuffman(counts: counts, maxLength: 15, alphabetSize: size)
-        codebook = MultiClusterCodebook(huffmanTables: [try PrefixCodeTable(lengths: lengths)],
+        let huffTable = try PrefixCodeTable(lengths: lengths)
+        table = huffTable
+        codebook = MultiClusterCodebook(huffmanTables: [huffTable],
             ansCounts: [], alphabetSizes: [size])
         header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: contexts),
             usePrefixCode: true, logAlphaSize: 15, uintConfigs: [.raw4])
@@ -65,6 +68,7 @@ private struct BridgePrefix {
         let wire = try SpecANSDistribution.writeHistogram(
             distribution.frequencies.map { Int32($0) }, to: &scratch)
         let logAlpha = max(5, Int(ceilLog2(UInt32(wire.count))))
+        table = nil
         codebook = MultiClusterCodebook(huffmanTables: [], ansCounts: [wire], alphabetSizes: [wire.count])
         header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: contexts),
             usePrefixCode: false, logAlphaSize: logAlpha, uintConfigs: [.raw4])
@@ -73,8 +77,30 @@ private struct BridgePrefix {
         try header.write(to: &writer, numContexts: contexts)
         try codebook.write(to: &writer, header: header)
     }
+    @inline(__always)
     func write(_ value: UInt32, to writer: inout BitWriter) throws {
-        try TokenStreamWriter(header: header, codebook: codebook).writeToken(context: 0, value: value, to: &writer)
+        guard let table else {
+            try TokenStreamWriter(header: header, codebook: codebook).writeToken(context: 0, value: value, to: &writer)
+            return
+        }
+        try writer.checkpointToken()
+        let token: Int
+        let extraBitsCount: Int
+        let extraBitsValue: UInt32
+        if value < 16 {
+            token = Int(value)
+            extraBitsCount = 0
+            extraBitsValue = 0
+        } else {
+            let n = 31 &- value.leadingZeroBitCount
+            token = 12 &+ n
+            extraBitsCount = n
+            extraBitsValue = value &- (UInt32(1) &<< n)
+        }
+        try table.encode(token, to: &writer)
+        if extraBitsCount > 0 {
+            writer.write(bits: extraBitsCount, value: extraBitsValue)
+        }
     }
 }
 
@@ -92,6 +118,7 @@ private struct BridgeFrameWriter {
         12,19,26,33,40,48,41,34,27,20,13,6,7,14,21,28,35,42,49,56,
         57,50,43,36,29,22,15,23,30,37,44,51,58,59,52,45,38,31,39,46,
         53,60,61,54,47,55,62,63]
+    private static let transposedOrder: [Int] = order.map { ($0 % 8) * 8 + ($0 / 8) }
 
     func write() throws -> Data {
         var dcHistogram = [Int](repeating: 0, count: HybridUintConfig.raw4.maxToken + 1)
@@ -153,17 +180,39 @@ private struct BridgeFrameWriter {
             let shape = view.channels[channel], width = shape.blocksWide
             var previous = [Int32](repeating: 0, count: width)
             var current = previous
-            for y in 0..<shape.blocksHigh {
-                try policy.checkpoint()
-                for x in 0..<width {
-                    let value = try view.dc(channel: channel, block: y * width + x)
-                    let west = x > 0 ? current[x - 1] : (y > 0 ? previous[x] : 0)
-                    let north = y > 0 ? previous[x] : west
-                    let northwest = x > 0 && y > 0 ? previous[x - 1] : (x > 0 ? west : north)
-                    let prediction = min(max(west &+ north &- northwest, min(west, north)), max(west, north))
-                    try emit(ZigZag.pack(value &- prediction)); current[x] = value
+            let ci = shape.jpegComponent
+            let dcOffset = shape.dcOffset
+            if let ci {
+                let plane = view.sourceCoefficients[ci]
+                try plane.withUnsafeBufferPointer { pBuf in
+                    let pPtr = pBuf.baseAddress!
+                    for y in 0..<shape.blocksHigh {
+                        try policy.checkpoint()
+                        let rowBase = y &* width
+                        for x in 0..<width {
+                            let (value, overflow) = pPtr[(rowBase &+ x) &* 64].addingReportingOverflow(dcOffset)
+                            guard !overflow else { throw JPEGEntropyError.malformed }
+                            let west = x > 0 ? current[x &- 1] : (y > 0 ? previous[x] : 0)
+                            let north = y > 0 ? previous[x] : west
+                            let northwest = x > 0 && y > 0 ? previous[x &- 1] : (x > 0 ? west : north)
+                            let prediction = min(max(west &+ north &- northwest, min(west, north)), max(west, north))
+                            try emit(ZigZag.pack(value &- prediction)); current[x] = value
+                        }
+                        swap(&current, &previous)
+                    }
                 }
-                swap(&current, &previous)
+            } else {
+                for y in 0..<shape.blocksHigh {
+                    try policy.checkpoint()
+                    for x in 0..<width {
+                        let west = x > 0 ? current[x &- 1] : (y > 0 ? previous[x] : 0)
+                        let north = y > 0 ? previous[x] : west
+                        let northwest = x > 0 && y > 0 ? previous[x &- 1] : (x > 0 ? west : north)
+                        let prediction = min(max(west &+ north &- northwest, min(west, north)), max(west, north))
+                        try emit(ZigZag.pack(0 &- prediction)); current[x] = 0
+                    }
+                    swap(&current, &previous)
+                }
             }
         }
     }
@@ -180,15 +229,18 @@ private struct BridgeFrameWriter {
         try prefix.writeHeader(to: &prefixHeader, contexts: 15 * (37 + 458))
         try ans.writeHeader(to: &ansHeader, contexts: 15 * (37 + 458))
         var prefixBits = prefixHeader.bitCount, ansBits = ansHeader.bitCount
+        let lengths = prefix.codebook.huffmanTables[0].lengths
+        for s in 0..<min(histogram.count, lengths.count) {
+            prefixBits &+= histogram[s] &* Int(lengths[s])
+        }
         let stream = try ANSTokenStreamWriter(header: ans.header, codebook: ans.codebook)
+        var symbols: [UInt16] = []
+        symbols.reserveCapacity(3 * 32 * 32 * 64)
         for group in 0..<(groupsX * groupsY) {
             // Costing retains only UInt16 symbols for one group (<= 384 KiB).
-            var symbols: [UInt16] = []
-            symbols.reserveCapacity(3 * 32 * 32 * 64)
+            symbols.removeAll(keepingCapacity: true)
             try acTokens(group: group) { value in
-                let symbol = Int(HybridUintConfig.raw4.tokenOnly(value))
-                symbols.append(UInt16(symbol))
-                prefixBits += Int(prefix.codebook.huffmanTables[0].lengths[symbol])
+                symbols.append(UInt16(HybridUintConfig.raw4.tokenOnly(value)))
             }
             ansBits += 32 + 16 * (try stream.refillWordCount(symbols: symbols))
             try policy.checkpoint()
@@ -217,23 +269,56 @@ private struct BridgeFrameWriter {
     private func acTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
         let x0 = (group % groupsX) * 32, y0 = (group / groupsX) * 32
         let width = min(32, blocksX - x0), height = min(32, blocksY - y0)
-        var block = [Int32](repeating: 0, count: 64)
-        for y in 0..<height {
-            try policy.checkpoint()
-            for x in 0..<width {
-                for channel in [1, 0, 2] {
-                    let hs = view.chromaSubsampling.hShift(channel), vs = view.chromaSubsampling.vShift(channel)
-                    if x % (1 << hs) != 0 || y % (1 << vs) != 0 { continue }
-                    let index = ((y0 + y) >> vs) * view.channels[channel].blocksWide + ((x0 + x) >> hs)
-                    try view.readBlock(channel: channel, block: index, into: &block)
-                    var nonzeros = 0
-                    for k in 1..<64 where block[Self.order[k]] != 0 { nonzeros += 1 }
-                    try emit(UInt32(nonzeros))
+        let hs0 = view.chromaSubsampling.hShift(0), vs0 = view.chromaSubsampling.vShift(0)
+        let hs1 = view.chromaSubsampling.hShift(1), vs1 = view.chromaSubsampling.vShift(1)
+        let hs2 = view.chromaSubsampling.hShift(2), vs2 = view.chromaSubsampling.vShift(2)
+        let hMask0 = (1 &<< hs0) &- 1, vMask0 = (1 &<< vs0) &- 1
+        let hMask1 = (1 &<< hs1) &- 1, vMask1 = (1 &<< vs1) &- 1
+        let hMask2 = (1 &<< hs2) &- 1, vMask2 = (1 &<< vs2) &- 1
+        let bw0 = view.channels[0].blocksWide, ci0 = view.channels[0].jpegComponent
+        let bw1 = view.channels[1].blocksWide, ci1 = view.channels[1].jpegComponent
+        let bw2 = view.channels[2].blocksWide, ci2 = view.channels[2].jpegComponent
+        let src = view.sourceCoefficients
+        try Self.transposedOrder.withUnsafeBufferPointer { tBuf in
+            let tPtr = tBuf.baseAddress!
+            @inline(__always)
+            func emitBlock(_ blockPtr: UnsafePointer<Int32>) throws {
+                var nonzeros = 0
+                for i in 1..<64 {
+                    if blockPtr[i] != 0 { nonzeros &+= 1 }
+                }
+                try emit(UInt32(nonzeros))
+                if nonzeros > 0 {
                     for k in 1..<64 {
-                        if nonzeros == 0 { break }
-                        let value = block[Self.order[k]]
+                        let value = blockPtr[tPtr[k]]
                         try emit(ZigZag.pack(value))
-                        if value != 0 { nonzeros -= 1 }
+                        if value != 0 {
+                            nonzeros &-= 1
+                            if nonzeros == 0 { break }
+                        }
+                    }
+                }
+            }
+            for y in 0..<height {
+                try policy.checkpoint()
+                for x in 0..<width {
+                    if (x & hMask1) == 0 && (y & vMask1) == 0 {
+                        if let ci1 {
+                            let idx = (((y0 &+ y) &>> vs1) &* bw1 &+ ((x0 &+ x) &>> hs1)) &* 64
+                            try src[ci1].withUnsafeBufferPointer { try emitBlock($0.baseAddress! + idx) }
+                        } else { try emit(0) }
+                    }
+                    if (x & hMask0) == 0 && (y & vMask0) == 0 {
+                        if let ci0 {
+                            let idx = (((y0 &+ y) &>> vs0) &* bw0 &+ ((x0 &+ x) &>> hs0)) &* 64
+                            try src[ci0].withUnsafeBufferPointer { try emitBlock($0.baseAddress! + idx) }
+                        } else { try emit(0) }
+                    }
+                    if (x & hMask2) == 0 && (y & vMask2) == 0 {
+                        if let ci2 {
+                            let idx = (((y0 &+ y) &>> vs2) &* bw2 &+ ((x0 &+ x) &>> hs2)) &* 64
+                            try src[ci2].withUnsafeBufferPointer { try emitBlock($0.baseAddress! + idx) }
+                        } else { try emit(0) }
                     }
                 }
             }

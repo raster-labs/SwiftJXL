@@ -229,7 +229,13 @@ private struct BridgeFrameReader {
             }
         }
         let blocksPerGroup = groupSize / 8
-        var block = [Int32](repeating: 0, count: 64)
+        let transposedOrders = orders.map { order in
+            order.map { (1..<64).contains($0) ? ($0 % 8) * 8 + ($0 / 8) : -1 }
+        }
+        let hs0 = css.hShift(0), vs0 = css.vShift(0)
+        let hs1 = css.hShift(1), vs1 = css.vShift(1)
+        let hs2 = css.hShift(2), vs2 = css.vShift(2)
+        let w0 = widths[0], w1 = widths[1], w2 = widths[2]
         for group in 0..<groups {
             try begin(3 + group)
             let histogram = Int(try r.read(bits: Int(ceilLog2(UInt32(histograms)))))
@@ -239,32 +245,36 @@ private struct BridgeFrameReader {
             let w = min(blocksPerGroup, bx - x0), h = min(blocksPerGroup, by - y0)
             let groupWidths = (0..<3).map { (w + (1 << css.hShift($0)) - 1) >> css.hShift($0) }
             var nonzero = (0..<3).map { [Int32](repeating: 0, count: groupWidths[$0] * ((h + (1 << css.vShift($0)) - 1) >> css.vShift($0))) }
+            let histOffset = histogram * contexts.contexts
             for y in 0..<h {
                 try policy.checkpoint()
+                let gy = y0 + y
+                let dcRow0 = (gy >> vs0) * w0
+                let dcRow1 = (gy >> vs1) * w1
+                let dcRow2 = (gy >> vs2) * w2
                 for x in 0..<w {
-                    let dcValues = (0..<3).map { dc[$0][((y0 + y) >> css.vShift($0)) * widths[$0] + ((x0 + x) >> css.hShift($0))] }
+                    let gx = x0 + x
+                    let dcValues = (
+                        dc[0][dcRow0 + (gx >> hs0)],
+                        dc[1][dcRow1 + (gx >> hs1)],
+                        dc[2][dcRow2 + (gx >> hs2)]
+                    )
+                    let qfVal = UInt32(quantFields[gy * bx + gx])
                     for c in [1, 0, 2] {
                         let hs = css.hShift(c), vs = css.vShift(c)
-                        if x % (1 << hs) != 0 || y % (1 << vs) != 0 { continue }
+                        if x & ((1 << hs) - 1) != 0 || y & ((1 << vs) - 1) != 0 { continue }
                         let cx = x >> hs, cy = y >> vs, stride = groupWidths[c]
                         let prediction: UInt32 = cy == 0 ? (cx == 0 ? 32 : UInt32(nonzero[c][cx - 1]))
                             : (cx == 0 ? UInt32(nonzero[c][(cy - 1) * stride])
                                : UInt32((nonzero[c][(cy - 1) * stride + cx] + nonzero[c][cy * stride + cx - 1] + 1) / 2))
                         let context = try contexts.blockContext(dcValues: dcValues,
-                            quantisation: UInt32(quantFields[(y0 + y) * bx + x0 + x]), channel: c)
-                        let nnz = try contexts.readBlock(prediction: prediction, blockContext: context,
-                            offset: histogram * contexts.contexts, order: orders[c], stream: &stream, from: &r, into: &block)
+                            quantisation: qfVal, channel: c)
+                        let skipWrite = gray && c != 1
+                        let destination = skipWrite ? 0 : ((gy >> vs) * widths[c] + (gx >> hs)) * 64
+                        let nnz = try contexts.readBlockDirect(prediction: prediction, blockContext: context,
+                            offset: histOffset, transposedOrder: transposedOrders[c], stream: &stream, from: &r,
+                            into: &planes[c], destination: destination, skipWrite: skipWrite)
                         nonzero[c][cy * stride + cx] = Int32(nnz)
-                        if gray && c != 1 {
-                            guard nnz == 0 else { throw JPEGEntropyError.malformed }
-                            continue
-                        }
-                        let destination = (((y0 + y) >> vs) * widths[c] + ((x0 + x) >> hs)) * 64
-                        for row in 0..<8 {
-                            for column in 0..<8 where row != 0 || column != 0 {
-                                planes[c][destination + row * 8 + column] = block[column * 8 + row]
-                            }
-                        }
                     }
                 }
             }

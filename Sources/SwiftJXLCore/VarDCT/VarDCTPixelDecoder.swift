@@ -34,23 +34,40 @@ package enum VarDCTPixelDecoder {
         let coefficients = try VarDCTCoefficients.read(envelope)
         let planes = try VarDCTReconstruction.xyb(coefficients, numericalMode: numericalMode)
         let maximum = Double((1 << bits) - 1)
-        var destination = layouts.map { BorrowedModularChannel(bytes: bytes, layout: $0) }
-        for y in 0..<envelope.height {
-            try budget.checkpoint()
-            for x in 0..<envelope.width {
-                if x & 255 == 0 { try budget.checkpoint() }
-                let i = y * envelope.width + x
-                let rgb = try DefaultOpsin.inverse((X: Double(planes[0][i]),
-                    Y: Double(planes[1][i]), B: Double(planes[2][i])))
-                destination[0][i] = encodeSRGB(rgb.R, maximum: maximum, bits: bits, x: x, y: y,
-                    channel: 0, numericalMode: numericalMode)
-                if !grayscale {
-                    destination[1][i] = encodeSRGB(rgb.G, maximum: maximum, bits: bits, x: x, y: y,
-                    channel: 1, numericalMode: numericalMode)
-                    destination[2][i] = encodeSRGB(rgb.B, maximum: maximum, bits: bits, x: x, y: y,
-                    channel: 2, numericalMode: numericalMode)
+        let destination = layouts.map { BorrowedModularChannel(bytes: bytes, layout: $0) }
+        let width = envelope.width, height = envelope.height
+        let dst0 = destination[0]
+        let dst1 = grayscale ? dst0 : destination[1]
+        let dst2 = grayscale ? dst0 : destination[2]
+        let dstAlpha = coefficients.alpha != nil ? destination[colours] : dst0
+        try planes[0].withUnsafeBufferPointer { b0 in
+            try planes[1].withUnsafeBufferPointer { b1 in
+                try planes[2].withUnsafeBufferPointer { b2 in
+                    let p0 = b0.baseAddress!, p1 = b1.baseAddress!, p2 = b2.baseAddress!
+                    for y in 0..<height {
+                        try budget.checkpoint()
+                        let rowOffset = y &* width
+                        let r0 = dst0.rowAddress(y, width: width)
+                        let r1 = grayscale ? 0 : dst1.rowAddress(y, width: width)
+                        let r2 = grayscale ? 0 : dst2.rowAddress(y, width: width)
+                        let rAlpha = coefficients.alpha != nil ? dstAlpha.rowAddress(y, width: width) : 0
+                        for x in 0..<width {
+                            if x & 255 == 0 { try budget.checkpoint() }
+                            let i = rowOffset &+ x
+                            let rgb = try DefaultOpsin.inverse((X: Double(p0[i]),
+                                Y: Double(p1[i]), B: Double(p2[i])))
+                            dst0[row: r0, column: x] = encodeSRGB(rgb.R, maximum: maximum, bits: bits, x: x, y: y,
+                                channel: 0, numericalMode: numericalMode)
+                            if !grayscale {
+                                dst1[row: r1, column: x] = encodeSRGB(rgb.G, maximum: maximum, bits: bits, x: x, y: y,
+                                    channel: 1, numericalMode: numericalMode)
+                                dst2[row: r2, column: x] = encodeSRGB(rgb.B, maximum: maximum, bits: bits, x: x, y: y,
+                                    channel: 2, numericalMode: numericalMode)
+                            }
+                            if let values = coefficients.alpha { dstAlpha[row: rAlpha, column: x] = values[i] }
+                        }
+                    }
                 }
-                if let values = coefficients.alpha { destination[colours][i] = values[i] }
             }
         }
         try budget.checkpoint()

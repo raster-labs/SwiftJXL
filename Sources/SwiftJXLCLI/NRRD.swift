@@ -112,9 +112,14 @@ struct NRRD {
         // Borrow the owning decoded image directly. No full-image serialisation
         // array, byte-order conversion, async pointer or intermediate file.
         try image.storage.withUnsafeBytes { bytes in
-            for y in 0..<d.height {
-                let start = p.offset + y * p.rowBytes
-                try io.writeRaw(UnsafeRawBufferPointer(rebasing: bytes[start..<(start + d.width * 2)]), fd: fd)
+            if p.rowBytes == d.width * 2 {
+                let total = d.height * p.rowBytes
+                try io.writeRaw(UnsafeRawBufferPointer(rebasing: bytes[p.offset..<(p.offset + total)]), fd: fd)
+            } else {
+                for y in 0..<d.height {
+                    let start = p.offset + y * p.rowBytes
+                    try io.writeRaw(UnsafeRawBufferPointer(rebasing: bytes[start..<(start + d.width * 2)]), fd: fd)
+                }
             }
         }
     }

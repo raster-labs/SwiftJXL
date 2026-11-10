@@ -177,7 +177,13 @@ package struct JPEGCoefficientDecoder {
         padding.append(value)
     }
 
-    private struct ScanComponent { let index: Int; let dc: Int; let ac: Int }
+    private struct ScanComponent {
+        let index: Int
+        let dc: Int
+        let ac: Int
+        let dcTable: JPEGHuffmanTable?
+        let acTable: JPEGHuffmanTable?
+    }
     private struct BlockEvents { var reset = false; var extraZeroRuns = 0 }
 
     private mutating func decodeScan(_ segment: JPEGSegment, frame: JPEGFrameLayout, restartInterval: Int) throws {
@@ -194,7 +200,9 @@ package struct JPEGCoefficientDecoder {
                   !components.contains(where: { $0.index == ci }), tables >> 4 < 4, tables & 15 < 4 else {
                 throw JPEGEntropyError.malformed
             }
-            components.append(ScanComponent(index: ci, dc: Int(tables >> 4), ac: Int(tables & 15)))
+            let dcIdx = Int(tables >> 4), acIdx = Int(tables & 15)
+            components.append(ScanComponent(index: ci, dc: dcIdx, ac: acIdx,
+                                            dcTable: huffman[dcIdx], acTable: huffman[4 + acIdx]))
             if componentQuantisation[ci].isEmpty {
                 guard let table = quantisation[Int(frame.components[ci].quantisationTable)] else {
                     throw JPEGEntropyError.malformed
@@ -234,39 +242,44 @@ package struct JPEGCoefficientDecoder {
             })
         var blockScanIndex: UInt32 = 0
         let total = count == 1 ? frame.components[components[0].index].singleComponentBlockCount : frame.mcusWide * frame.mcusHigh
-        for mcu in 0..<total {
-            try policy.checkpoint()
-            if mcu > 0 && restartInterval > 0 && mcu % restartInterval == 0 {
-                guard eobRun <= 0 else { throw JPEGEntropyError.malformed }
-                try appendPadding(bits.restart(0xd0 + restartNumber))
-                restartNumber = (restartNumber + 1) & 7
-                predictors = Array(repeating: 0, count: predictors.count)
-                eobRun = -1
-            }
-            for component in components {
-                let ci = component.index, geometry = frame.components[ci]
-                let blockCount = count == 1 ? 1 : geometry.horizontalSampling * geometry.verticalSampling
-                for ordinal in 0..<blockCount {
-                    let block: Int
-                    if count == 1 { block = try geometry.storageIndex(forSingleComponentBlock: mcu) }
-                    else {
-                        let row = (mcu / frame.mcusWide) * geometry.verticalSampling + ordinal / geometry.horizontalSampling
-                        let column = (mcu % frame.mcusWide) * geometry.horizontalSampling + ordinal % geometry.horizontalSampling
-                        block = row * geometry.paddedBlocksWide + column
+        try JPEGZigZag.order.withUnsafeBufferPointer { zzBuf in
+            let zzPtr = zzBuf.baseAddress!
+            for mcu in 0..<total {
+                try policy.checkpoint()
+                if mcu > 0 && restartInterval > 0 && mcu % restartInterval == 0 {
+                    guard eobRun <= 0 else { throw JPEGEntropyError.malformed }
+                    try appendPadding(bits.restart(0xd0 + restartNumber))
+                    restartNumber = (restartNumber + 1) & 7
+                    for pIdx in 0..<predictors.count { predictors[pIdx] = 0 }
+                    eobRun = -1
+                }
+                for component in components {
+                    let ci = component.index, geometry = frame.components[ci]
+                    let blockCount = count == 1 ? 1 : geometry.horizontalSampling * geometry.verticalSampling
+                    for ordinal in 0..<blockCount {
+                        let block: Int
+                        if count == 1 { block = try geometry.storageIndex(forSingleComponentBlock: mcu) }
+                        else {
+                            let row = (mcu / frame.mcusWide) * geometry.verticalSampling + ordinal / geometry.horizontalSampling
+                            let column = (mcu % frame.mcusWide) * geometry.horizontalSampling + ordinal % geometry.horizontalSampling
+                            block = row * geometry.paddedBlocksWide + column
+                        }
+                        var events = BlockEvents()
+                        try coefficients[ci].withUnsafeMutableBufferPointer { coeffBuf in
+                            try Self.decodeBlock(blockPtr: coeffBuf.baseAddress! + (block &* 64), zzPtr: zzPtr, bits: &bits,
+                                dc: component.dcTable, ac: component.acTable, predictor: &predictors[ci],
+                                ss: ss, se: se, ah: ah, al: al, progressive: progressive, eobRun: &eobRun, precision: frame.precision, events: &events)
+                        }
+                        let added = (events.reset ? 1 : 0) + (events.extraZeroRuns > 0 ? 1 : 0)
+                        guard added <= policy.maximumScanEvents - reconstructionEvents else { throw JPEGEntropyError.resourceLimit }
+                        reconstructionEvents += added
+                        if events.reset { scan.resetPoints.append(blockScanIndex) }
+                        if events.extraZeroRuns > 0 {
+                            scan.extraZeroRuns.append(.init(blockIdx: blockScanIndex, numExtraZeroRuns: UInt32(events.extraZeroRuns)))
+                        }
+                        guard blockScanIndex < UInt32.max else { throw JPEGEntropyError.resourceLimit }
+                        blockScanIndex += 1
                     }
-                    var events = BlockEvents()
-                    try Self.decodeBlock(values: &coefficients[ci], base: block * 64, bits: &bits,
-                        dc: huffman[component.dc], ac: huffman[4 + component.ac], predictor: &predictors[ci],
-                        ss: ss, se: se, ah: ah, al: al, progressive: progressive, eobRun: &eobRun, precision: frame.precision, events: &events)
-                    let added = (events.reset ? 1 : 0) + (events.extraZeroRuns > 0 ? 1 : 0)
-                    guard added <= policy.maximumScanEvents - reconstructionEvents else { throw JPEGEntropyError.resourceLimit }
-                    reconstructionEvents += added
-                    if events.reset { scan.resetPoints.append(blockScanIndex) }
-                    if events.extraZeroRuns > 0 {
-                        scan.extraZeroRuns.append(.init(blockIdx: blockScanIndex, numExtraZeroRuns: UInt32(events.extraZeroRuns)))
-                    }
-                    guard blockScanIndex < UInt32.max else { throw JPEGEntropyError.resourceLimit }
-                    blockScanIndex += 1
                 }
             }
         }
@@ -276,7 +289,8 @@ package struct JPEGCoefficientDecoder {
         scans.append(scan)
     }
 
-    private static func decodeBlock(values: inout [Int32], base: Int, bits: inout JPEGEntropyReader,
+    @inline(__always)
+    private static func decodeBlock(blockPtr: UnsafeMutablePointer<Int32>, zzPtr: UnsafePointer<Int>, bits: inout JPEGEntropyReader,
                                     dc: JPEGHuffmanTable?, ac: JPEGHuffmanTable?, predictor: inout Int32,
                                     ss: Int, se: Int, ah: Int, al: Int, progressive: Bool, eobRun: inout Int,
                                     precision: Int, events: inout BlockEvents) throws {
@@ -289,10 +303,10 @@ package struct JPEGCoefficientDecoder {
                 let (next, overflow) = predictor.addingReportingOverflow(delta)
                 guard !overflow, next >= -32768, next <= 32767 else { throw JPEGEntropyError.malformed }
                 predictor = next
-                let shifted = Int64(next) * (1 << al)
+                let shifted = Int64(next) &<< al
                 guard shifted >= Int64(Int32.min), shifted <= Int64(Int32.max) else { throw JPEGEntropyError.malformed }
-                values[base] = Int32(shifted)
-            } else if try bits.bit() != 0 { values[base] |= Int32(1 << al) }
+                blockPtr[0] = Int32(shifted)
+            } else if try bits.bit() != 0 { blockPtr[0] |= Int32(1 &<< al) }
             if progressive { return }
         }
         guard let ac else { throw JPEGEntropyError.malformed }
@@ -301,30 +315,32 @@ package struct JPEGCoefficientDecoder {
             if eobRun > 0 { eobRun -= 1; return }
             let endedPreviousRun = eobRun == 0
             eobRun = -1
+            let maxSize = precision == 12 ? 14 : 10
+            let scale = Int32(1 &<< al)
             while k <= se {
                 let token = try ac.symbol(&bits), run = Int(token >> 4), size = Int(token & 15)
                 if size == 0 {
                     if run == 15 {
-                        guard k + 16 <= se + 1 else { throw JPEGEntropyError.malformed }
-                        events.extraZeroRuns += 1
-                        k += 16; continue
+                        guard k &+ 16 <= se &+ 1 else { throw JPEGEntropyError.malformed }
+                        events.extraZeroRuns &+= 1
+                        k &+= 16; continue
                     }
                     if progressive {
                         events.reset = ss > 0 && k == ss && endedPreviousRun
-                        eobRun = (1 << run) + (try bits.bits(run)) - 1
+                        eobRun = (1 &<< run) &+ (try bits.bits(run)) &- 1
                     }
                     else if run != 0 { throw JPEGEntropyError.malformed }
                     break
                 }
-                k += run
-                guard k <= se, size <= (precision == 12 ? 14 : 10) else { throw JPEGEntropyError.malformed }
-                values[base + JPEGZigZag.order[k]] = try bits.magnitude(size) * Int32(1 << al)
+                k &+= run
+                guard k <= se, size <= maxSize else { throw JPEGEntropyError.malformed }
+                blockPtr[zzPtr[k]] = try bits.magnitude(size) &* scale
                 events.extraZeroRuns = 0
-                k += 1
+                k &+= 1
             }
             return
         }
-        let step = Int32(1 << al)
+        let step = Int32(1 &<< al)
         var trailingRefinementZeroRun = false
         if eobRun <= 0 {
             let endedPreviousRun = eobRun == 0
@@ -341,19 +357,19 @@ package struct JPEGCoefficientDecoder {
                 }
                 else if run != 15 {
                     events.reset = ss > 0 && k == ss && endedPreviousRun
-                    eobRun = (1 << run) + (try bits.bits(run)); break
+                    eobRun = (1 &<< run) &+ (try bits.bits(run)); break
                 }
                 else { trailingRefinementZeroRun = true }
                 var landed = false
                 while k <= se {
-                    let index = base + JPEGZigZag.order[k]
-                    if values[index] != 0 { try refine(&values[index], step: step, bits: &bits) }
+                    let zIdx = zzPtr[k]
+                    if blockPtr[zIdx] != 0 { try refine(&blockPtr[zIdx], step: step, bits: &bits) }
                     else { run -= 1; if run < 0 { landed = true; break } }
-                    k += 1
+                    k &+= 1
                 }
                 guard landed else { throw JPEGEntropyError.malformed }
-                if newValue != 0 { values[base + JPEGZigZag.order[k]] = newValue }
-                k += 1
+                if newValue != 0 { blockPtr[zzPtr[k]] = newValue }
+                k &+= 1
             }
         }
         // Standard JBRD restoration does not consume extra-zero-run events in
@@ -361,7 +377,7 @@ package struct JPEGCoefficientDecoder {
         // discarding its codewords; libjxl rejects the same reconstruction case.
         guard !trailingRefinementZeroRun else { throw JPEGEntropyError.unsupported }
         if eobRun > 0 {
-            while k <= se { try refine(&values[base + JPEGZigZag.order[k]], step: step, bits: &bits); k += 1 }
+            while k <= se { try refine(&blockPtr[zzPtr[k]], step: step, bits: &bits); k &+= 1 }
             eobRun -= 1
         }
     }

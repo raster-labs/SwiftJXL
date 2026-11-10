@@ -6,50 +6,69 @@ import Foundation
 
 extension JPEGBridgeBlockContext {
     /// Generic VarDCT context; JPEG bridge continues to use its DCT8-only path.
-    func varDCTContext(dcValues: [Int32], quantisation: UInt32, channel: Int, order: Int) throws -> Int {
-        guard dcValues.count == 3, (0..<3).contains(channel), (0..<13).contains(order) else {
+    @inline(__always)
+    func varDCTContext(dcValues: (Int32, Int32, Int32), quantisation: UInt32, channel: Int, order: Int) throws -> Int {
+        guard (0..<3).contains(channel), (0..<13).contains(order) else {
             throw VarDCTError.invalidTransform
         }
-        let a = dc[0].reduce(0) { $0 + (dcValues[0] > $1 ? 1 : 0) }
-        let b = dc[1].reduce(0) { $0 + (dcValues[1] > $1 ? 1 : 0) }
-        let c = dc[2].reduce(0) { $0 + (dcValues[2] > $1 ? 1 : 0) }
-        let bucket = (a * (dc[2].count + 1) + c) * (dc[1].count + 1) + b
-        let quantBucket = qf.reduce(0) { $0 + (quantisation > $1 ? 1 : 0) }
+        var a = 0
+        for t in dc[0] where dcValues.0 > t { a &+= 1 }
+        var b = 0
+        for t in dc[1] where dcValues.1 > t { b &+= 1 }
+        var c = 0
+        for t in dc[2] where dcValues.2 > t { c &+= 1 }
+        let bucket = (a &* (dc[2].count &+ 1) &+ c) &* (dc[1].count &+ 1) &+ b
+        var quantBucket = 0
+        for t in qf where quantisation > t { quantBucket &+= 1 }
         let mapped = channel < 2 ? channel ^ 1 : 2
-        let index = ((mapped * 13 + order) * (qf.count + 1) + quantBucket) * dcContexts + bucket
+        let index = ((mapped &* 13 &+ order) &* (qf.count &+ 1) &+ quantBucket) &* dcContexts &+ bucket
         guard map.indices.contains(index), Int(map[index]) < classes else { throw VarDCTError.invalidTransform }
         return Int(map[index])
     }
 
     func readVarDCTBlock(prediction: UInt32, blockContext: Int, offset: Int, order: [Int],
-                         coveredCells: Int, stream: inout TokenStreamReader, from r: inout BitReader,
-                         budget: ScalarOperationBudget) throws -> (coefficients: [Int32], nonzeros: Int) {
+                         coveredCells: Int, into destination: inout [Int32], coefficientOffset: Int,
+                         stream: inout TokenStreamReader, from r: inout BitReader,
+                         budget: ScalarOperationBudget) throws -> Int {
         try budget.checkpoint()
         guard (1...1024).contains(coveredCells), coveredCells & (coveredCells - 1) == 0,
               order.count == coveredCells * 64, (0..<classes).contains(blockContext), prediction <= 64,
-              offset >= 0, offset <= 64 * 16 * 495 else { throw VarDCTError.invalidTransform }
+              offset >= 0, offset <= 64 * 16 * 495,
+              coefficientOffset >= 0, coefficientOffset <= destination.count - order.count else {
+            throw VarDCTError.invalidTransform
+        }
         let size = order.count, shift = coveredCells.trailingZeroBitCount
         try budget.reserveWorkspace(size * MemoryLayout<Int32>.stride)
-        var block = [Int32](repeating: 0, count: size)
         let bucket = prediction < 8 ? Int(prediction) : 4 + Int(prediction) / 2
-        let count = try stream.readToken(context: offset + bucket * classes + blockContext, from: &r)
+        let count = try stream.readToken(context: offset &+ bucket &* classes &+ blockContext, from: &r)
         guard count <= size - coveredCells else { throw VarDCTError.invalidTransform }
         var remaining = Int(count), previous = Int(count) > size / 16 ? 0 : 1
-        let base = offset + classes * 37 + 458 * blockContext
-        for k in coveredCells..<size {
-            if remaining == 0 { break }
-            if k & 255 == 0 { try budget.checkpoint() }
-            let nz = (remaining + coveredCells - 1) >> shift, position = k >> shift
-            guard (1..<64).contains(nz), (1..<64).contains(position), (0..<size).contains(order[k]) else {
-                throw VarDCTError.invalidTransform
+        let base = offset &+ classes &* 37 &+ 458 &* blockContext
+        if remaining > 0 {
+            try order.withUnsafeBufferPointer { ordBuf in
+                let ordPtr = ordBuf.baseAddress!
+                for k in coveredCells..<size {
+                    if remaining == 0 { break }
+                    if k & 255 == 0 { try budget.checkpoint() }
+                    let nz = (remaining &+ coveredCells &- 1) &>> shift, position = k &>> shift
+                    let ordK = ordPtr[k]
+                    guard (1..<64).contains(nz), (1..<64).contains(position), (0..<size).contains(ordK) else {
+                        throw VarDCTError.invalidTransform
+                    }
+                    let context = base &+ (Int(kCoeffNumNonzeroContext[nz]) &+ Int(kCoeffFreqContext[position])) &* 2 &+ previous
+                    let value = try stream.readToken(context: context, from: &r)
+                    if value != 0 {
+                        destination[coefficientOffset &+ ordK] = ZigZag.unpack(value)
+                        previous = 1
+                        remaining &-= 1
+                    } else {
+                        previous = 0
+                    }
+                }
             }
-            let context = base + (Int(kCoeffNumNonzeroContext[nz]) + Int(kCoeffFreqContext[position])) * 2 + previous
-            let value = try stream.readToken(context: context, from: &r)
-            block[order[k]] = ZigZag.unpack(value)
-            previous = value == 0 ? 0 : 1; remaining -= previous
         }
         guard remaining == 0 else { throw VarDCTError.invalidTransform }
-        return (block, Int(count))
+        return Int(count)
     }
 }
 
@@ -112,7 +131,7 @@ package enum VarDCTOrders {
             }
             if usedBuckets.contains(bucket) { result[bucket] = orders }
         }
-        if var stream { try stream.finish() }
+        if let stream { try stream.finish() }
         return result
     }
 

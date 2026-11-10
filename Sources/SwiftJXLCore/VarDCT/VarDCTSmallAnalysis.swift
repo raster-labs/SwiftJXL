@@ -60,7 +60,9 @@ package struct VarDCTSmallAnalysis: Sendable {
     /// each output can be read by value and is overwritten by the next call.
     package func apply(_ pixels: UnsafeBufferPointer<Float>, identifier: Int,
                        workspace: inout Workspace,
-                       channelSlot: Int = 0, reuseSubtransforms: Bool = false) throws {
+                       channelSlot: Int = 0, reuseSubtransforms: Bool = false,
+                       horizontal8Out: UnsafeMutablePointer<Float>? = nil,
+                       horizontal8In: UnsafePointer<Float>? = nil) throws {
         try validate(pixels.count, identifier: identifier)
         guard workspace.budget === budget, let pBase = pixels.baseAddress else { throw VarDCTError.invalidTransform }
         for i in 0..<64 {
@@ -71,13 +73,16 @@ package struct VarDCTSmallAnalysis: Sendable {
         // no pointer escapes or enters a worker, and DCT scratch is separate.
         try workspace.storage.withUnsafeMutableBufferPointer { (buffer: inout UnsafeMutableBufferPointer<Float>) throws -> Void in
             try apply(pixels, identifier: identifier, buffer: buffer, dct: &workspace.dct,
-                      channelSlot: channelSlot, reuseSubtransforms: reuseSubtransforms)
+                      channelSlot: channelSlot, reuseSubtransforms: reuseSubtransforms,
+                      horizontal8Out: horizontal8Out, horizontal8In: horizontal8In)
         }
     }
     private func apply(_ pixels: UnsafeBufferPointer<Float>, identifier: Int,
                        buffer: UnsafeMutableBufferPointer<Float>,
                        dct: inout ScaledDCT.Workspace,
-                       channelSlot: Int, reuseSubtransforms: Bool) throws {
+                       channelSlot: Int, reuseSubtransforms: Bool,
+                       horizontal8Out: UnsafeMutablePointer<Float>?,
+                       horizontal8In: UnsafePointer<Float>?) throws {
         try budget.checkpoint()
         let basePtr = buffer.baseAddress!
         let output = UnsafeMutableBufferPointer(start: basePtr, count: 64)
@@ -96,7 +101,11 @@ package struct VarDCTSmallAnalysis: Sendable {
             for i in 0..<64 { output[i] = 0 }
         }
         if identifier == 0 {
-            try square8.apply(pixels, workspace: &dct)
+            if let horizontal8Out {
+                try square8.applySavingHorizontal(pixels, horizontalOut: horizontal8Out, workspace: &dct)
+            } else {
+                try square8.apply(pixels, workspace: &dct)
+            }
             dct.withValues { dctOut in
                 let dPtr = dctOut.baseAddress!
                 for y in 0..<8 {
@@ -152,12 +161,16 @@ package struct VarDCTSmallAnalysis: Sendable {
         } else if identifier == 12 || identifier == 13 {
             let vertical = identifier == 12, rows = vertical ? 4 : 8, columns = vertical ? 8 : 4
             for half in 0..<2 {
-                let rowOffset: Int = vertical ? half &* 4 : 0
-                let columnOffset: Int = vertical ? 0 : half &* 4
-                for y in 0..<rows { for x in 0..<columns {
-                    patch32[y &* columns &+ x] = pixels[(y &+ rowOffset) &* 8 &+ x &+ columnOffset]
-                } }
-                try (vertical ? wide : tall).apply(UnsafeBufferPointer(patch32), workspace: &dct)
+                if vertical, let horizontal8In {
+                    try wide.applyFromHorizontal(horizontal8In + (half &* 32), workspace: &dct)
+                } else {
+                    let rowOffset: Int = vertical ? half &* 4 : 0
+                    let columnOffset: Int = vertical ? 0 : half &* 4
+                    for y in 0..<rows { for x in 0..<columns {
+                        patch32[y &* columns &+ x] = pixels[(y &+ rowOffset) &* 8 &+ x &+ columnOffset]
+                    } }
+                    try (vertical ? wide : tall).apply(UnsafeBufferPointer(patch32), workspace: &dct)
+                }
                 dct.withValues { dctOut in
                     let dPtr = dctOut.baseAddress!
                     dc[half] = dPtr[0]

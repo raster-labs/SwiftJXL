@@ -45,6 +45,9 @@ package struct ANSStreamDecoder: Sendable {
     /// One alias table per cluster (libjxl-compatible layout). Empty
     /// when `useAliasTables` is false.
     package let aliasTables: [AliasTable]
+    /// Contiguous flat slot lookup table across all clusters (`cluster * tabSize + slot`).
+    /// Empty when `useAliasTables` is false.
+    package let flatSlots: [UInt64]
     /// Which lookup the decoder uses.
     package let useAliasTables: Bool
     /// Number of clusters the active lookup serves.
@@ -55,6 +58,7 @@ package struct ANSStreamDecoder: Sendable {
     package init(distributions: [ANSDistribution]) {
         self.distributions = distributions
         self.aliasTables = []
+        self.flatSlots = []
         self.useAliasTables = false
         self.clusterCount = distributions.count
     }
@@ -73,8 +77,21 @@ package struct ANSStreamDecoder: Sendable {
                 logAlphaSize: logAlphaSize
             ))
         }
+        let tabSize = Int(ANSConstants.tabSize)
+        let totalSlots = aliases.count &* tabSize
+        let flat = [UInt64](unsafeUninitializedCapacity: totalSlots) { buffer, initializedCount in
+            guard let dst = buffer.baseAddress else {
+                initializedCount = 0
+                return
+            }
+            for i in 0..<aliases.count {
+                aliases[i].fillFlatSlots(into: dst.advanced(by: i &* tabSize))
+            }
+            initializedCount = totalSlots
+        }
         self.distributions = []
         self.aliasTables = aliases
+        self.flatSlots = flat
         self.useAliasTables = true
         self.clusterCount = aliases.count
     }
@@ -112,21 +129,19 @@ package struct ANSStreamDecoder: Sendable {
         let slot = state & mask
 
         let symbol: UInt32
-        let offset: UInt32
-        let freq: UInt32
         if useAliasTables {
-            let lr = aliasTables[cluster].lookup(slot: slot)
-            symbol = UInt32(lr.value)
-            offset = lr.offset
-            freq = lr.freq
+            let packed = flatSlots[(cluster &<< ANSConstants.logTabSize) | Int(slot)]
+            let offsetPlusP = UInt32(truncatingIfNeeded: packed & 0xFFFF)
+            symbol = UInt32(truncatingIfNeeded: (packed &>> 16) & 0xFFFF)
+            let freq = UInt32(truncatingIfNeeded: packed &>> 32)
+            state = freq &* (state >> logTab) &+ offsetPlusP
         } else {
             let dist = distributions[cluster]
             symbol = dist.symbol(forSlot: slot)
-            freq = dist.frequencies[Int(symbol)]
-            offset = slot &- dist.cumulative[Int(symbol)]
+            let freq = dist.frequencies[Int(symbol)]
+            let offset = slot &- dist.cumulative[Int(symbol)]
+            state = freq &* (state >> logTab) &+ offset
         }
-        // rANS decode step.
-        state = freq &* (state >> logTab) &+ offset
         // Renormalise: if state < 2^16, shift up and read 16 bits.
         if state < ANSConstants.stateLowerBound {
             let w = try r.read(bits: 16)

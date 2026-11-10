@@ -45,6 +45,67 @@ package enum VarDCTAFV {
         try budget.checkpoint()
         return pixels
     }
+
+    package static func inverse(_ coefficients: UnsafeBufferPointer<Float>, kind: Int,
+                                into pixels: UnsafeMutableBufferPointer<Float>,
+                                dct4x4: ScaledDCT, dct4x8: ScaledDCT,
+                                scratch: inout ScaledDCT.Workspace,
+                                budget: ScalarOperationBudget) throws {
+        try budget.checkpoint()
+        guard (0..<4).contains(kind), coefficients.count == 64, pixels.count >= 64,
+              let cPtr = coefficients.baseAddress, let pPtr = pixels.baseAddress else {
+            throw VarDCTError.invalidTransform
+        }
+        for i in 0..<64 {
+            if !cPtr[i].isFinite { throw VarDCTError.nonFiniteSample }
+        }
+        try budget.reserveWorkspace(192 * 4)
+        let ax = kind & 1, ay = kind &>> 1
+        let dc0 = (cPtr[0] + cPtr[8] + cPtr[1]) * 4
+        let dc1 = cPtr[0] + cPtr[8] - cPtr[1]
+        let dc2 = cPtr[0] - cPtr[8]
+        try withUnsafeTemporaryAllocation(of: Float.self, capacity: 64) { tempBuf in
+            let afv = tempBuf.baseAddress!
+            let square = UnsafeMutableBufferPointer(start: afv + 16, count: 16)
+            let rectangle = UnsafeMutableBufferPointer(start: afv + 32, count: 32)
+            for i in 0..<64 { tempBuf[i] = 0; pPtr[i] = 0 }
+            afv[0] = dc0; square[0] = dc1; rectangle[0] = dc2
+            for y in 0..<4 { for x in 0..<4 where x != 0 || y != 0 {
+                afv[y &* 4 &+ x] = cPtr[y &* 16 &+ x &* 2]
+                square[x &* 4 &+ y] = cPtr[y &* 16 &+ x &* 2 &+ 1]
+            } }
+            for y in 0..<4 { for x in 0..<8 where x != 0 || y != 0 {
+                rectangle[y &* 8 &+ x] = cPtr[(y &* 2 &+ 1) &* 8 &+ x]
+            } }
+            for i in 0..<16 {
+                try budget.checkpoint()
+                var sum: Double = 0
+                for j in 0..<16 { sum += Double(afv[j]) * Double(basis[j][i]) }
+                let value = Float(sum)
+                guard value.isFinite else { throw VarDCTError.nonFiniteSample }
+                let y = ay == 1 ? 3 &- (i &>> 2) : (i &>> 2)
+                let x = ax == 1 ? 3 &- (i & 3) : (i & 3)
+                pPtr[(y &+ ay &* 4) &* 8 &+ x &+ ax &* 4] = value
+            }
+            try budget.reserveWorkspace(384)
+            try dct4x4.apply(UnsafeBufferPointer(square), workspace: &scratch)
+            scratch.withValues { small in
+                let sPtr = small.baseAddress!
+                for y in 0..<4 { for x in 0..<4 {
+                    pPtr[(y &+ ay &* 4) &* 8 &+ (1 &- ax) &* 4 &+ x] = sPtr[y &* 4 &+ x]
+                } }
+            }
+            try budget.reserveWorkspace(896)
+            try dct4x8.apply(UnsafeBufferPointer(rectangle), workspace: &scratch)
+            scratch.withValues { wide in
+                let wPtr = wide.baseAddress!
+                for y in 0..<4 { for x in 0..<8 {
+                    pPtr[(y &+ (1 &- ay) &* 4) &* 8 &+ x] = wPtr[y &* 8 &+ x]
+                } }
+            }
+        }
+        try budget.checkpoint()
+    }
     /// Forward orthonormal 4×4 AFV corner; the frame packing is handled by
     /// VarDCTSmallAnalysis. Reuses the same specification basis as synthesis.
     static func forwardBasis(_ pixels: [Float], budget: ScalarOperationBudget) throws -> [Float] {
