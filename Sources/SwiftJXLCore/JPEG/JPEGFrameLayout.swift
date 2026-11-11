@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster-Lab.
 // JPEG DCT frame/component geometry: ITU-T T.81 A.1.1, A.2 and B.2.2.
 import Foundation

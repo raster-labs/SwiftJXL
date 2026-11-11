@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Run all ten CLI qualification groups against one TSan-instrumented binary.
 
 Build the release binary separately with --sanitize thread. Reference tools are

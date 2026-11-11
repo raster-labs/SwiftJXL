@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Run mandatory independent-codec tests; missing tools/skipped tests fail the gate."""
 import argparse
 import hashlib

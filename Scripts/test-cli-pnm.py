@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Bounded PNM CLI, independent libjxl sample and colour interpretation checks."""
 import argparse, hashlib, json, subprocess
 from pathlib import Path

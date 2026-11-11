@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Test-only whole public-operation probe. Compile -O without sanitizers.
 // PREDECESSOR selects the pinned JXLSwift public API; source pixels are identical.
 import Foundation

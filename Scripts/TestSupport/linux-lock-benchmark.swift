@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Controlled before/after probe for the Linux locking compatibility change.
 import Foundation
 import Glibc

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Fail-closed mutation checks for the release evidence validator; no Swift build."""
 import copy
 import importlib.util

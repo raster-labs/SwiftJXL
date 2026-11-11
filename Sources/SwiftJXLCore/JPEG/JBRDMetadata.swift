@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster-Lab.
 // Adapted from JXLSwift JBRDBox.distributeBrotliPayload at
 // 57e81cb9e2411d1efac435b429a306a031744c1e; exact lengths replace partial fills.

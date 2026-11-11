@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Bounded deterministic mutation campaign; retain failures and exact seed hashes.
 
 One invocation exercises one entry point for its own requested wall time.

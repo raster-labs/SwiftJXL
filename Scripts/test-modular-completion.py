@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Run the bounded Modular group/layout matrix with required independent oracles.
 
 Sanitizers use optimised code: unoptimised instrumentation of the 4097-square

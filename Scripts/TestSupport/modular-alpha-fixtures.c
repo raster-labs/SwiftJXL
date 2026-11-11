@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0
+/* SPDX-License-Identifier: MIT
  * Independent libjxl associated-alpha fixture generator, test-only.
  * cc -I<include> modular-alpha-fixtures.c -L<lib> -ljxl -o modular-alpha-fixtures
  * Usage: modular-alpha-fixtures OUTPUT CHANNELS BITS

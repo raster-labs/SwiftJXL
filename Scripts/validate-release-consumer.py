@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Rehearse exact-version SwiftPM consumption without publishing a tag.
 
 Only committed Git objects enter a new, shallow private remote. The prerelease

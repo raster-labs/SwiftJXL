@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Require independent JPEG reconstruction for authored scan-event vectors."""
 import argparse
 import hashlib

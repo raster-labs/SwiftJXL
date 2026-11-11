@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0
+/* SPDX-License-Identifier: MIT
  * Independent libjxl low-precision sRGB fixture generator, test-only.
  * cc -I<include> modular-low-precision-fixtures.c -L<lib> -ljxl -o modular-low-precision-fixtures
  * Usage: modular-low-precision-fixtures OUTPUT CHANNELS BITS

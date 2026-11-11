@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster-Lab.
 // Adapted from JXLSwift 57e81cb9e2411d1efac435b429a306a031744c1e, Sources/JXLSwift/Codestream/Signature.swift.
 // JPEG XL codestream signature (ISO/IEC 18181-1 §C.3.1).

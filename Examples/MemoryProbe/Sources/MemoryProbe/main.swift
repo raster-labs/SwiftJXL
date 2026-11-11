@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Run without sanitizers. Global heap snapshots are observations, not peak metrics.
 import Foundation
 import SwiftJXL

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster-Lab.
 // Adapted from JXLSwift JPEGBitReader/JPEGHuffmanTable/JPEGBlockDecoder at
 // 57e81cb9e2411d1efac435b429a306a031744c1e. T.81 C.2, F.1.2 and F.2.2.

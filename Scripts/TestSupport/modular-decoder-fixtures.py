@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 # Synthetic fixtures for the internal decoder. Run from the repository root.
 import json,subprocess,hashlib,os,sys
 from pathlib import Path

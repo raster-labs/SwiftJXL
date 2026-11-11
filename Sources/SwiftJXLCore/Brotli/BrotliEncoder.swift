@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Adapted from JXLSwift 57e81cb9e2411d1efac435b429a306a031744c1e,
 // Sources/JXLSwift/Brotli/BrotliEncoder.swift. RFC 7932 §9.2 stored blocks.
 import Foundation

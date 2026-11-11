@@ -4,7 +4,7 @@ JPEG XL for the **Swift Image Compression Suite**.
 
 **Status: stable release `2.0.0` (`v2.0.0`).** The public Modular decoder supports bounded 1–16-bit greyscale/RGB and optional alpha, grouped/progressive integer streams, RCT, simple palettes and Squeeze. It writes directly to owning planar/interleaved UInt8/UInt16 destinations with explicit offsets and strides; allocating decode uses UInt16. Decode also preserves embedded grey/RGB ICC profiles exactly; encoding accepts the integer colour/alpha layouts without ICC at fixed effort 3. See [MIGRATION.md](MIGRATION.md) and [Documentation/RELEASE-v2.0.0.md](Documentation/RELEASE-v2.0.0.md) for precise bounds and disclosed gates. CLI UInt16 NRRD and integer colour PGM/PPM/PAM encode/decode and bounded native JPEG reconstruction are available. Bounded single-frame sRGB VarDCT decoding and explicit lossy encoding support 8–16 meaningful bits with optional straight alpha, through the public storage API and CLI. Hierarchical transform search through 64×64, grouped encoding/decoding and bounded independent-frame animation encoding/decoding are implemented.
 
-SwiftJXL is the standalone successor to [JXLSwift](https://github.com/Raster-Lab/JXLSwift). The successor is intended to provide a harmonised API, explicit memory ownership, high-precision sample preservation and efficient shared-storage integration. It has no mandatory dependency on another suite library or CompressionFamily. Apache-2.0 licensing applies to these documents and subsequent authorised in-house implementation; third-party material retains its own terms.
+SwiftJXL is the standalone successor to [JXLSwift](https://github.com/Raster-Lab/JXLSwift). The successor is intended to provide a harmonised API, explicit memory ownership, high-precision sample preservation and efficient shared-storage integration. It has no mandatory dependency on another suite library or CompressionFamily. MIT licensing applies to these documents and subsequent authorised in-house implementation; third-party material retains its own terms.
 
 Milestone 5 library qualification is tracked in the [qualification record](Documentation/Engineering/Release/QUALIFICATION.md): platform/sanitizer execution, clean versioned consumption, synchronised examples, source/fixture provenance and validated derived SBOMs. Physical-device testing and DICOMKit integration remain excluded from the library qualification assignment and are disclosed in [Documentation/RELEASE-v2.0.0.md](Documentation/RELEASE-v2.0.0.md). The [checklist](Documentation/Engineering/Release/release-gates.json) distinguishes assigned-task completion from physical-device readiness.
 
@@ -27,7 +27,7 @@ The first coding task is **Milestone 1: API and memory-contract feasibility**, u
 - [Memory ownership and no-copy hand-off](Documentation/MEMORY_CONTRACT.md).
 - [Unit, regression and security testing](Documentation/TESTING.md).
 - [Performance gates](Documentation/PERFORMANCE.md), [platforms](Documentation/PLATFORMS.md) and [CLI](Documentation/CLI_CONTRACT.md).
-- [History and source provenance](HISTORY.md), [change log](CHANGELOG.md), [security](SECURITY.md), [contributing](CONTRIBUTING.md) and [Apache-2.0 licence](LICENSE).
+- [History and source provenance](HISTORY.md), [change log](CHANGELOG.md), [security](SECURITY.md), [contributing](CONTRIBUTING.md) and [MIT licence](LICENSE).
 
 ## Native in-memory transcoding
 

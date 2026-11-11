@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0
+/* SPDX-License-Identifier: MIT
  * Test-only libjpeg-turbo coefficient oracle. Never linked into SwiftJXL.
  */
 #include <stdio.h>

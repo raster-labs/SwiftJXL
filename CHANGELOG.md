@@ -1,5 +1,10 @@
 # Change log
 
+## Unreleased — 2026-11-11
+
+- Relicense SwiftJXL in-house source, tests, examples, tooling scripts and documentation from `Apache-2.0` to `MIT` (`Copyright (c) 2026 Raster Images Private Limited`) by explicit owner decision under `Documentation/SUITE_POLICY.md` Document Precedence Rule 1, while keeping the seven shared contract documents in `Documentation/` byte-identical at `0.10.0`.
+- Update `LICENSE`, `NOTICE`, `THIRD_PARTY_NOTICES.md`, `README.md`, `CONTRIBUTING.md`, `MIGRATION.md`, `Documentation/Engineering/Release/fixture-inventory.json`, `Documentation/Engineering/Release/release-gates.json`, and `SPDX-License-Identifier` headers across `Package.swift`, `Sources/`, `Tests/`, `Examples/`, and `Scripts/` to `MIT`, and enforce `SOURCE_LICENCES = {"MIT"}` in `Scripts/audit-release-provenance.py`. Third-party test fixtures and historical engineering evidence archives remain unchanged under their original terms.
+
 ## SwiftJXL 2.0.0 — 2026-11-06
 
 First stable release of SwiftJXL (`2.0.0`, tagged `v2.0.0`), the standalone native Swift JPEG XL (`ISO/IEC 18181`) library and `swiftjxl-cli` executable for the Swift Image Compression Suite (promoted from `2.1.0-dev.2` over the `JXLSwift` `1.x` predecessor series; shared contract `0.10.0`, Swift `6.2` tools minimum / Swift `6.4` qualified in Swift `6` language mode, Apple OS `26.0` deployment floors).

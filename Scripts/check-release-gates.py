@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Audit source-bound release gates without treating unavailable work as a pass.
 
 Exit 0: valid checklist (which may be blocked); 1: invalid evidence/checklist;

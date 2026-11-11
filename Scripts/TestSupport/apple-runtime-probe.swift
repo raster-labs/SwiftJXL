@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Owning public API simulator smoke probe; no testable imports or runtime oracle.
 import Foundation
 import Darwin

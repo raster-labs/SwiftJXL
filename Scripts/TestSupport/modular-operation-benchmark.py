@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Run separate optimised probes in ABBA order; preserve raw timings and invalid baselines."""
 import argparse,hashlib,json,math,os,statistics,subprocess
 from pathlib import Path

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Required independent JPEG pixels, container and animation CLI qualification.
 
 JPEG uses libjpeg floating IDCT with nearest chroma (-nosmooth), with declared

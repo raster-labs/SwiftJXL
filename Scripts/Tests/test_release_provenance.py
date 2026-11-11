@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Negative controls for the release fixture/notice audit; no codec execution."""
 import copy
 import importlib.util

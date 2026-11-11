@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Acceptance parser must reject missing tests, skips and sanitizer findings."""
 import importlib.util
 import hashlib

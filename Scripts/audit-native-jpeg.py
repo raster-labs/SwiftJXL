@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 # Test-only predecessor/independent JPEG preservation audit; never a runtime backend.
 from pathlib import Path
 import argparse,subprocess,json,hashlib,time

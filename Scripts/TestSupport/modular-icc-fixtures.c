@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0
+/* SPDX-License-Identifier: MIT
  * Independent libjxl embedded-ICC fixture generator, test-only.
  * cc -I<include> modular-icc-fixtures.c -L<lib> -ljxl -o modular-icc-fixtures
  * Usage: modular-icc-fixtures OUTPUT CHANNELS BITS PROFILE

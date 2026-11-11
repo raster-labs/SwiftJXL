@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster Images Private Limited
 //
 // ISO/IEC 18181-1 Clause 8.3 / Table 36 (Modular predictors 0..13).

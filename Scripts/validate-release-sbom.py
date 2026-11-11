@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Validate unchanged build-associated SBOMs with an offline schema bundle.
 
 Requires jsonschema 4.25.1 and its dependencies. The schema directory contains

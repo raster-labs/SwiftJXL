@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0
+/* SPDX-License-Identifier: MIT
  * Independent hardware evidence. Compile/run only on ARM in validation phase.
  * Covers every significand estimate bin at every integer exponent, sign, and
  * neighbours at bin boundaries, including Float32 rounding above 2^24.

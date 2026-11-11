@@ -65,7 +65,7 @@ The old `EncodingOptions()` defaults to `.lossy(quality: 90)` and `JXLConfigurat
 This standalone program constructs 12-bit samples in padded 16-bit storage, checks every decoded sample, verifies caller-storage identity and sealed ownership, and checks independent-frame animation timing. The release preparation check keeps this block identical to the compiled example.
 
 ```swift
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 import Foundation
 import SwiftJXL
 

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Predictor formulae adapted from JXLSwift JPEGLosslessDecoder.swift at
 // 57e81cb9e2411d1efac435b429a306a031744c1e; bounded framing and validation
 // are new. ITU-T T.81 Annex H (non-differential Huffman lossless JPEG).

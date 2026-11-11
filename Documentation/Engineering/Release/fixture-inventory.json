@@ -5,7 +5,7 @@
   "scope": "All tracked fixture payloads, reference samples, generators and provenance/notice files in Tests/SwiftJXLCoreTests/Fixtures. Baseline hashes attest retained bytes, not independent codec correctness. Historical engineering archives are not redistributed test-resource qualification.",
   "noticeGroups": {
     "jpeg": {
-      "licence": "Apache-2.0",
+      "licence": "MIT",
       "evidence": [
         "Tests/SwiftJXLCoreTests/Fixtures/JPEG/manifest.json",
         "Documentation/Engineering/Migration/NATIVE_JPEG.md"
@@ -13,7 +13,7 @@
       "scope": "Authored synthetic JPEG images and derived coefficient/JBRD vectors; independent tools do not license their encoded output."
     },
     "jpeg-bridge": {
-      "licence": "Apache-2.0",
+      "licence": "MIT",
       "evidence": [
         "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/manifest.json",
         "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/rgb-edge-manifest.json"
@@ -26,10 +26,10 @@
         "Tests/SwiftJXLCoreTests/Fixtures/JPEGBridge/icc-manifest.json",
         "Scripts/generate-icc-fixtures.py"
       ],
-      "scope": "Generated profiles retain embedded text: No copyright, use freely. Generator and authored manifest use Apache-2.0."
+      "scope": "Generated profiles retain embedded text: No copyright, use freely. Generator and authored manifest use MIT."
     },
     "jpeg-extended": {
-      "licence": "Apache-2.0",
+      "licence": "MIT",
       "evidence": [
         "Tests/SwiftJXLCoreTests/Fixtures/JPEGExtended/manifest.json",
         "Scripts/TestSupport/jpeg-extended-fixtures.py"
@@ -37,7 +37,7 @@
       "scope": "Authored synthetic JPEG/expected-sample cases; per-case generator provenance is retained."
     },
     "jpeg-events": {
-      "licence": "Apache-2.0",
+      "licence": "MIT",
       "evidence": [
         "Tests/SwiftJXLCoreTests/Fixtures/JPEGEvents/manifest.json",
         "Documentation/Engineering/Migration/NATIVE_JPEG.md"
@@ -52,17 +52,17 @@
       "scope": "Authored constant-image JPEG/JBRD fixture has its own CC0 declaration; it is not relicensed."
     },
     "brotli": {
-      "licence": "Apache-2.0 AND MIT",
+      "licence": "MIT",
       "evidence": [
         "Tests/SwiftJXLCoreTests/Fixtures/Brotli/decoder.json",
         "Tests/SwiftJXLCoreTests/Fixtures/Brotli/transforms.json",
         "Documentation/Engineering/Migration/NATIVE_JPEG.md",
         "Documentation/ThirdParty/brotli-LICENSE.txt"
       ],
-      "scope": "Authored framing/compression vectors use Apache-2.0; dictionary-derived vectors retain Brotli MIT terms. Retaining both notices for the collection does not relicense its parts."
+      "scope": "Authored framing/compression vectors use MIT; dictionary-derived vectors retain Brotli MIT terms. Retaining both notices for the collection does not relicense its parts."
     },
     "modular": {
-      "licence": "Apache-2.0",
+      "licence": "MIT",
       "evidence": [
         "Tests/SwiftJXLCoreTests/Fixtures/Modular/rct-manifest.json",
         "Tests/SwiftJXLCoreTests/Fixtures/Modular/squeeze-manifest.json",
@@ -72,7 +72,7 @@
       "scope": "Synthetic predecessor numeric comparisons and independently generated Modular images. Subdirectory manifests record generators, samples, precision and hashes; no external media."
     },
     "vardct": {
-      "licence": "Apache-2.0",
+      "licence": "MIT",
       "evidence": [
         "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/manifest.json",
         "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Encoder/manifest.json",
@@ -87,11 +87,11 @@
         "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Conformance/SOURCE-LICENCES.md",
         "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Conformance/LICENSE.txt"
       ],
-      "scope": "Official grayscale source images are CC0; upstream allows test reproduction and retains BSD notice. Embedded ICC has its Adobe notice. Original terms remain; not Apache-2.0."
+      "scope": "Official grayscale source images are CC0; upstream allows test reproduction and retains BSD notice. Embedded ICC has its Adobe notice. Original terms remain; not MIT."
     }
   },
   "preservedNotices": {
-    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "LICENSE": "9a6740d5798b34f0e390df81825748674ef4f00678a12b35cb23061684103363",
     "Documentation/ThirdParty/brotli-LICENSE.txt": "3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94",
     "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Conformance/LICENSE.txt": "8405932022a556380c2d8c272eff154a923feb197233f348ce5f7334fb0a5ede",
     "Tests/SwiftJXLCoreTests/Fixtures/VarDCT/Conformance/SOURCE-LICENCES.md": "8f67502fc127cf6ca049f65c27f4c70035b4b602d23a2f68a3ff9bdf92abeebe"

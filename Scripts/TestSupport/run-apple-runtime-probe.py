@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Qualify precompiled owning API probes against installed Apple simulators.
 
 Uses the recorded runtime inventory and a new disposable device set. This bounded

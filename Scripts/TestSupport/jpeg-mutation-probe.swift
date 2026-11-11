@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Test-only public JPEG entry points. Link ASan-instrumented module objects.
 import Foundation
 import SwiftJXL

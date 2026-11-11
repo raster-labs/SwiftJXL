@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Independently reconcile retained simulator logs, source lists and receipts."""
 import argparse
 import hashlib

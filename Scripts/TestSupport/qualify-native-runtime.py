@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Execute native macOS or explicitly selected physical Apple-device gates.
 
 A missing host/device/runtime is UNEXECUTED and exits 2. Cross-compilation and

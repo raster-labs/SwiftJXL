@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Supplement full Watch simulator suites with owning API limits/cancellation.
 
 Build current-source library products in a fresh directory after their full
