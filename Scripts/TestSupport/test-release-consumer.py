@@ -15,7 +15,7 @@ spec.loader.exec_module(gate)
 class ReleaseConsumerGateTests(unittest.TestCase):
     def setUp(self):
         self.revision = "a" * 40
-        self.version = "2.0.0"
+        self.version = "2.0.1"
         self.url = "file:///private/rehearsal/SwiftJXL.git"
         self.pin = {"identity": "swiftjxl", "kind": "localSourceControl", "location": "/private/rehearsal/SwiftJXL.git",
                     "state": {"revision": self.revision, "version": self.version}}

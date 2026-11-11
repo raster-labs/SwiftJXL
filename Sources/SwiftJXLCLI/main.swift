@@ -9,7 +9,7 @@ import Glibc
 #endif
 
 private let tool = "swiftjxl-cli"
-private let version = "2.0.0"
+private let version = "2.0.1"
 private let reserved: [String] = []
 private let active = ["inspect", "validate", "encode", "decode", "transcode"]
 private let valueOptions: Set<String> = ["--input", "-i", "--output", "-o", "--input-format", "--output-format",

@@ -1,7 +1,12 @@
 # Change log
 
-## Unreleased — 2026-11-11
+## SwiftJXL 2.0.1 — 2026-11-11
 
+Patch release of SwiftJXL (`2.0.1`, tagged `v2.0.1`), publishing the 100% clean-room `ISO/IEC 18181` & `RFC 7932` Swift codec implementation, hot-path optimisations, and **MIT** relicensing on preserved release branch `codex/release-2.0.1` while keeping published tag `v2.0.0` immutable (shared contract `0.10.0`, Swift `6.2` tools minimum / Swift `6.4` qualified in Swift `6` language mode, Apple OS `26.0` deployment floors):
+
+- Promote `VERSION`, `swiftjxl-cli` (`Sources/SwiftJXLCLI/main.swift`), and the section 1 manual (`ManPages/swiftjxl-cli.1`) to `2.0.1` (`v2.0.1`), and record release qualification in [Documentation/RELEASE-v2.0.1.md](Documentation/RELEASE-v2.0.1.md).
+- Replace all 37 third-party-adapted source files in `Sources/SwiftJXLCore/` with 100% clean-room, first-principles Swift implementations derived directly from `IETF RFC 7932` (Brotli decompressor and static dictionary), `ISO/IEC 18181-1:2024` & `ISO/IEC 18181-2:2024` (token stream reader, compressed ICC, Modular pipeline, VarDCT decode/reconstruction, and in-house spatial VarDCT encoder analysis), and `ITU-T Rec. T.81` (lossless JPEG reconstruction and native `jbrd` transcoder bridge), making 100% of `Sources/` (`120/120` files) single-licence Raster Images owned.
+- Optimise Modular, VarDCT, native JPEG transcoding, and CLI hot paths (4-byte `BitReader` refill / `BitWriter` flush, `O(1)` LSB-first `PrefixCodeTable` LUT, flat multi-cluster `AliasTable` slots, fast multi-context ANS readers/writers, specialised WP/no-WP Modular ANS decode cores, precomputed EPF mirror tables and stage-2 shared patches, specialised 4/8/16/32/64-point `ScaledDCT` 1D passes, branch-and-bound pruning in `VarDCTHierarchicalAnalysis`, 8-bit `JPEGHuffmanTable` LUT, and 64 KiB batched NRRD/PNM row writes).
 - Relicense SwiftJXL in-house source, tests, examples, tooling scripts and documentation from `Apache-2.0` to `MIT` (`Copyright (c) 2026 Raster Images Private Limited`) by explicit owner decision under `Documentation/SUITE_POLICY.md` Document Precedence Rule 1, while keeping the seven shared contract documents in `Documentation/` byte-identical at `0.10.0`.
 - Update `LICENSE`, `NOTICE`, `THIRD_PARTY_NOTICES.md`, `README.md`, `CONTRIBUTING.md`, `MIGRATION.md`, `Documentation/Engineering/Release/fixture-inventory.json`, `Documentation/Engineering/Release/release-gates.json`, and `SPDX-License-Identifier` headers across `Package.swift`, `Sources/`, `Tests/`, `Examples/`, and `Scripts/` to `MIT`, and enforce `SOURCE_LICENCES = {"MIT"}` in `Scripts/audit-release-provenance.py`. Third-party test fixtures and historical engineering evidence archives remain unchanged under their original terms.
 
