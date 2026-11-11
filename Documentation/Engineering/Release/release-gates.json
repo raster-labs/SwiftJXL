@@ -4,7 +4,7 @@
   "contractManifestSHA256": "20f3236bc0d427c1af162c784e90adc0c89f10916b6f1fb4096c69ccb7b7d544",
   "baselineRevision": "3e00d934bef331cdbc7c4be752857dc9eca8f799",
   "predecessorRevision": "57e81cb9e2411d1efac435b429a306a031744c1e",
-  "developmentVersion": "2.0.0",
+  "developmentVersion": "2.0.1",
   "scope": "Milestone 5 release preparation; no stable tag, publication or production cutover is authorised.",
   "publishedVersionVerification": "Fetching the eventual published version is a separate release-task verification. A disposable local tag is only a packaging rehearsal.",
   "sourceGroups": {
@@ -31,7 +31,7 @@
         "Sources/SwiftJXLCLI/CommandIO.swift": "844c38d811b4efd02776f8e46a98b9ecb2f818b33bd005d21e5b82fe37c4e1b1",
         "Sources/SwiftJXLCLI/NRRD.swift": "32eeeee305cf5d34065a61a92c2798a366449e2a58f922f49840d5c6f9a312e3",
         "Sources/SwiftJXLCLI/PNM.swift": "2a756d2e3d5feda5d5d595761d0f60b7728b36ba868fa7cd95850a09d6086d5f",
-        "Sources/SwiftJXLCLI/main.swift": "cec341a68af074b7a457f424ec6a89500f1bd0f73671103a0d755784ef6bf624",
+        "Sources/SwiftJXLCLI/main.swift": "ac564d46e53e96f3316f2915447d60b46c27efeddeb1448c12ca7eb7f4384f22",
         "Sources/SwiftJXLCore/Bitstream/BitReader.swift": "f856da1b9ae060dda4f04ca2d013c240d6a00c0e37fce47a228602b53549658e",
         "Sources/SwiftJXLCore/Bitstream/BitWriter.swift": "48d5d71c7351482ac24f73cef6c6ec73d03369535d6dcb01ffe2ed57c3374d15",
         "Sources/SwiftJXLCore/Bitstream/SpecIntegers.swift": "9bbd8401a36b7e326715cd45296614a00ab787949494c0109294e07f2f0adfe3",
@@ -136,9 +136,9 @@
         "Sources/SwiftJXLCore/VarDCT/VarDCTSmallAnalysis.swift": "8514e4b361031ca528bb2e533b874743176df55b2aa044fea80af7408fe18e80",
         "Sources/SwiftJXLCore/VarDCT/VarDCTSmallTransforms.swift": "bef5458e2eedca173d00e7226bd0dd9af39a93f2bb5228ed36f56c3c324acf83",
         "Sources/SwiftJXLCore/VarDCT/VarDCTStrategyMap.swift": "a88681800baf41372fcb7411f77fd2acd49ca12016bfbb2a07ac2ffe566d71a2",
-        "VERSION": "c28fcca53637bc88e124af1725df13cb98c69dedefd62fb3cdbe1cdb6b760624"
+        "VERSION": "fe840f52fb5578d3f77eb497115eb02c6036601c3a53e60df7995c7276baa77a"
       },
-      "sha256": "c2ab660ac7ef6f0bcc3beac83a062a6b924a82941f1f9cfa20f249c5d327bca5"
+      "sha256": "ef5d14c279520ab52d062456e32d68e1558d3642c7e5a238ce4a2e33ebe050c9"
     },
     "preparation": {
       "includes": [
@@ -176,23 +176,23 @@
       ],
       "files": {
         ".github/workflows/release-preparation.yml": "a22552e613d08b3ec35db386020b5e0935941c346b5303c1f46ab7d80049f6fb",
-        "CHANGELOG.md": "9a1738d3a775ec54708231634225252ec4f59e5c3adb01a4b4bf09acafd308c2",
-        "CLI.md": "67863f921fd3e60195fd4862132e90d2340ad7cd96d7af13fdd9b6b0388bb21c",
+        "CHANGELOG.md": "2a42bb7a7e4d2e7ece86ec5778a43a8f241658ef1364ee3b6d61a5c543dcb3fa",
+        "CLI.md": "ecb125309d6dfbcfc670b710e355408c7f6f2ca32e0da6c69ec45455e88d0ef8",
         "Documentation/Engineering/Release/QUALIFICATION.md": "b9454cb30244342691080ff1f939b5fa1e72d2d57a2876798038501ca03947a2",
         "Documentation/Engineering/Release/README.md": "ac158f2091436694144a46ea36c25242de8a864530470a0397d111b497eaa79b",
         "Documentation/Engineering/Release/fixture-inventory.json": "d651b00381973237da350ac7931577c7892e0241d15aa202abb86dd579ca1754",
         "Examples/ContractConsumer/Package.swift": "606754d55999b4459e2b00bec5e5445e92a46cb2800d6c54b3a03b308f114e36",
         "Examples/ContractConsumer/Sources/ContractConsumer/Consumer.swift": "bdd9dc64971eba63e1138b1622d894d6101bfe72d8bc674ac70a84a8f2f66d4b",
-        "HISTORY.md": "0e9e87eaab226ab4d9db56975c1c423d4523f302ec4e1c14017df57bf92e5b77",
+        "HISTORY.md": "ee019a700a0a217ec0ee0afc6942ee416578792e8318eb0602162c4c1b0c852c",
         "LICENSE": "9a6740d5798b34f0e390df81825748674ef4f00678a12b35cb23061684103363",
-        "MIGRATION.md": "8e3ed5e0e22bea7cde2fced4e98fd84245e034c600be4fbdf1f1a6f6d69e1832",
-        "ManPages/swiftjxl-cli.1": "064d535f97d16091e3e1fb5feb32f2d4a823b1712f7e93eb24ca79b9102a9152",
+        "MIGRATION.md": "466a3799a9b77fa6b59ca5171f9521d6b0e97e9940f75d126ddffa24db9fc660",
+        "ManPages/swiftjxl-cli.1": "fb30146b932a3f99e8b00ea5b7ba05a22ab2dd94d1b7103f3d08470a032769c5",
         "NOTICE": "e7191929a71ec031d5b1c2bd7158fb424f89e643f153013e450b45cb6011a63c",
-        "README.md": "45d933aeb0e5635d82fc7225906700c407798216b958560345ed6f4ecdad1583",
-        "SECURITY.md": "012778e2be00f6a872c4c7c0bbde32aa224b4afed2082ae3335007a5b1c93c5b",
+        "README.md": "e929aecfbc969ac78b4534c6fa54fee107a5b29a7e060740d0b93081caba8efc",
+        "SECURITY.md": "0d083142d6c12721a5129bab5843e97372a773af1b2792fa8c8567c3dd602421",
         "Scripts/README.md": "bc2c6db377e605a4b1e8bdc7ee1a304e59a528e05eae71a3ed1902a0360a9b24",
         "Scripts/TestSupport/test-derived-release-sbom.py": "249ea3f9a3ad3c4ec5056b0096a5e2f61d725f1a4235193e08f52c7487c38ec2",
-        "Scripts/TestSupport/test-release-consumer.py": "fc9b92dfa4385e32fde989c2a20ca6f091eed16ef22669ac6d154a091d2b24db",
+        "Scripts/TestSupport/test-release-consumer.py": "74221f404ef9ef7e073303a5ca118a9a3408f4a62c3d94be01cbd353d6c9e899",
         "Scripts/TestSupport/test-release-sbom.py": "9d6fb5220c59104e5ea3a15ff5354697350fda4a016338c63f57169a4a79dfc6",
         "Scripts/Tests/test_release_provenance.py": "a6fea45c261e76e578b69ae6f984793abb7eef775383749c3145d1b46b9f50b6",
         "Scripts/audit-release-provenance.py": "8efde86ff8afe78228399032c383fef0cd50cea52b9acb830990b68fc0808553",
@@ -207,7 +207,7 @@
         "Scripts/validate.sh": "5fde61d2ab79718a455979ffd6909cdbc9592445c09a02f1fce45a7c316a0365",
         "THIRD_PARTY_NOTICES.md": "bb98a2c41ee83cb161e9b9f99fb359fa949ebbda708c2a7634098763ee775dc1"
       },
-      "sha256": "7b01b564207504b41d6e3a5269bb12c00eb98f9462cfcbfceba95bcf01b9e835"
+      "sha256": "6f83510785b240feb5cf40bd5572495dce336aa8cb6dcb8e05d6d6d1a1c6e735"
     },
     "qualification": {
       "includes": [
@@ -247,7 +247,7 @@
         "Documentation/Engineering/Migration/Evidence/VarDCT/PublicEncoder/pixel-oracle-float-precision.c": "51870b430dc9aa635632412ff8dd6dc97bef7571c1b48668fbd29f97f06bd84c",
         "Examples/CLIValidationFixtures/Package.swift": "d234fd12b3806dae21ecee571636d6a2edae7f355ecd3df13b5127c3c5081fb7",
         "Examples/CLIValidationFixtures/Sources/CLIValidationFixtures/main.swift": "4343f91ea35e636e79bee73fa394df4e3129170a69c5042976f64278dd0e07d8",
-        "ManPages/swiftjxl-cli.1": "064d535f97d16091e3e1fb5feb32f2d4a823b1712f7e93eb24ca79b9102a9152",
+        "ManPages/swiftjxl-cli.1": "fb30146b932a3f99e8b00ea5b7ba05a22ab2dd94d1b7103f3d08470a032769c5",
         "Scripts/Qualification/VarDCTARM/reciprocal-vectors.c": "3bae28101899776e693fb153588e0062b90cdc60ff477e88fb9ddadf2ca3e4bd",
         "Scripts/TestSupport/animation-pixel-oracle.c": "aaa18cba8b248eca005e1871b7f83b7af3d274dd2f1c013cb4828f28af0bdb9a",
         "Scripts/TestSupport/apple-runtime-probe.swift": "3e65fdbe0908c1a174e4e1fadf1ccce7c7997a65d29be80f71f93338f38304b3",
@@ -1358,7 +1358,7 @@
         "Tests/SwiftJXLTests/ScalarPublicAPITests.swift": "8cace9538acec88d3e09ff63a50815aaee77a7197f0637626ffccaa659a2eae4",
         "Tests/SwiftJXLTests/StorageTests.swift": "c03785e1b0add27434938f02625162ae7b661bd6f27f8081d143f6afb79335f8"
       },
-      "sha256": "b914861794eeaa20e85873a72335b9fd2aa28eb6c12920474f02fff39ba7b18a"
+      "sha256": "30e3cbf4869815cc25775b424ee1e625096fd6fb967a562cec90cd3153fb75f2"
     }
   },
   "gates": [

@@ -1,6 +1,6 @@
 # Security policy and implementation requirements
 
-Status: stable release `2.0.0` (`v2.0.0`); see [Documentation/RELEASE-v2.0.0.md](Documentation/RELEASE-v2.0.0.md) for executed qualification gates and explicitly disclosed physical-device exclusions. No fixed vulnerability response-time deadline is promised.
+Status: stable release `2.0.1` (`v2.0.1`); see [Documentation/RELEASE-v2.0.1.md](Documentation/RELEASE-v2.0.1.md) and [Documentation/RELEASE-v2.0.0.md](Documentation/RELEASE-v2.0.0.md) for executed qualification gates and explicitly disclosed physical-device exclusions. No fixed vulnerability response-time deadline is promised.
 
 ## Reporting
 
@@ -10,11 +10,11 @@ Include affected version/commit, platform, a minimal safe reproducer, expected/a
 
 ## Supported versions
 
-Security fixes target the latest stable `2.0.x` release (`2.0.0`) and `main`. Older snapshots and predecessor `JXLSwift` releases receive no backport commitment under this repository's policy. Consumers should upgrade to the fixed release identified in any published advisory.
+Security fixes target the latest stable `2.0.x` release (`2.0.1`) and `main`. Older snapshots and predecessor `JXLSwift` releases receive no backport commitment under this repository's policy. Consumers should upgrade to the fixed release identified in any published advisory.
 
 | Version | Security maintenance |
 | --- | --- |
-| `2.0.x` (latest: `2.0.0`) | Supported for security fixes; upgrade to the latest `2.0.x` release |
+| `2.0.x` (latest: `2.0.1`) | Supported for security fixes; upgrade to the latest `2.0.x` release |
 | Latest `main` | Reports accepted; fixes developed on `main` |
 | Older development snapshots | No backport commitment; update to the latest release or revision |
 | Predecessor JXLSwift releases | Outside this repository's maintenance policy |

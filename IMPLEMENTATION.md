@@ -4,7 +4,7 @@ Read AGENTS.md and every common contract document first. Milestone 1 now impleme
 
 ## Source and destination
 
-Predecessor: [Raster-Lab/JXLSwift](https://github.com/Raster-Lab/JXLSwift) at inspected SHA `760697a54dd253da8e8466c3fd09ecf2c2d89aec`. Highest stable-shaped tag observed: `v1.4.0` (resolve independently before choosing it as a baseline). Target module/product: `SwiftJXL`. Target CLI: `swiftjxl-cli`. First stable library release: `2.0.0` (`v2.0.0`, promoted from `2.1.0-dev.2`; see [Documentation/RELEASE-v2.0.0.md](Documentation/RELEASE-v2.0.0.md)).
+Predecessor: [Raster-Lab/JXLSwift](https://github.com/Raster-Lab/JXLSwift) at inspected SHA `760697a54dd253da8e8466c3fd09ecf2c2d89aec`. Highest stable-shaped tag observed: `v1.4.0` (resolve independently before choosing it as a baseline). Target module/product: `SwiftJXL`. Target CLI: `swiftjxl-cli`. First stable library release: `2.0.0` (`v2.0.0`, promoted from `2.1.0-dev.2`; see [Documentation/RELEASE-v2.0.0.md](Documentation/RELEASE-v2.0.0.md)); current stable release: `2.0.1` (`v2.0.1`; see [Documentation/RELEASE-v2.0.1.md](Documentation/RELEASE-v2.0.1.md)).
 
 Do not migrate code from moving main without recording the selected revision. Reproduce relevant source tests and inspect source-level capabilities. Existing test totals and benchmark claims are historical, not successor acceptance evidence.
 
