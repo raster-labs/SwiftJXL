@@ -57,10 +57,12 @@ package enum ANSReciprocalDivision {
                                                 reciprocal: UInt64) -> (quotient: UInt32, remainder: UInt32) {
         // For frequency >= 1 the first product is at most (2^32-1)*2^32,
         // and the estimated quotient times frequency is at most value+frequency.
-        let estimate = (UInt64(value) &* reciprocal) >> 32
+        let estimate = (UInt64(value) &* reciprocal) &>> 32
         let product = estimate &* UInt64(frequency)
-        let quotient = UInt32(estimate) &- (product > UInt64(value) ? 1 : 0)
-        return (quotient, value &- quotient &* frequency)
+        let over = product > UInt64(value)
+        let quotient = UInt32(truncatingIfNeeded: estimate) &- (over ? 1 : 0)
+        let rem = UInt32(truncatingIfNeeded: UInt64(value) &- product) &+ (over ? frequency : 0)
+        return (quotient, rem)
     }
 }
 

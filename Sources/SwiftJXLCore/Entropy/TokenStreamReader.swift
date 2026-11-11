@@ -113,6 +113,78 @@ package struct TokenStreamReader: Sendable {
     }
 
     @inline(__always)
+    package func singleContextANSFlatCluster(
+        context: Int
+    ) -> (flatSlots: [UInt64], clusterOffset: Int, config: HybridUintConfig, state: UInt32, initialised: Bool) {
+        let cluster = Int(header.contextMap.map[context])
+        let ans = ansDecoder!
+        return (
+            ans.flatSlots,
+            cluster &<< ANSConstants.logTabSize,
+            header.uintConfigs[cluster],
+            ans.currentState,
+            ans.hasInitialised
+        )
+    }
+
+    @inline(__always)
+    package func canUseSingleContextPrefix(context: Int) -> Bool {
+        guard header.usePrefixCode,
+              !header.lz77.enabled,
+              lz77NumToCopy == 0,
+              context >= 0,
+              context < header.contextMap.numContexts else {
+            return false
+        }
+        let cluster = Int(header.contextMap.map[context])
+        return cluster >= 0
+            && cluster < header.uintConfigs.count
+            && cluster < codebook.huffmanTables.count
+    }
+
+    @inline(__always)
+    package func singleContextPrefixCluster(
+        context: Int
+    ) -> (table: PrefixCodeTable, config: HybridUintConfig) {
+        let cluster = Int(header.contextMap.map[context])
+        return (codebook.huffmanTables[cluster], header.uintConfigs[cluster])
+    }
+
+    @inline(__always)
+    package func canUseMultiContextANS() -> Bool {
+        guard !header.usePrefixCode,
+              !header.lz77.enabled,
+              lz77NumToCopy == 0,
+              ansInitError == nil,
+              let ans = ansDecoder else {
+            return false
+        }
+        return ans.useAliasTables
+    }
+
+    @inline(__always)
+    package func multiContextANSState() -> (
+        flatSlots: [UInt64],
+        ctxMap: [UInt8],
+        uintConfigs: [HybridUintConfig],
+        userCtxBound: Int,
+        numHistograms: Int,
+        state: UInt32,
+        initialised: Bool
+    ) {
+        let ans = ansDecoder!
+        return (
+            ans.flatSlots,
+            header.contextMap.map,
+            header.uintConfigs,
+            header.contextMap.numContexts,
+            header.uintConfigs.count,
+            ans.currentState,
+            ans.hasInitialised
+        )
+    }
+
+    @inline(__always)
     package mutating func updateSingleContextANSState(
         _ state: UInt32,
         initialised: Bool

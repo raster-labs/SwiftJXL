@@ -147,21 +147,42 @@ struct PNM {
             header = "P7\nWIDTH \(d.width)\nHEIGHT \(d.height)\nDEPTH \(channels)\nMAXVAL \(maximum)\nTUPLTYPE \(channels == 2 ? "GRAYSCALE_ALPHA" : "RGB_ALPHA")\nENDHDR\n"
         } else { header = "\(channels == 1 ? "P5" : "P6")\n\(d.width) \(d.height)\n\(maximum)\n" }
         try io.writeBytes(Data(header.utf8), fd: fd)
-        // One bounded serialisation row (at most 8192 bytes), covered by the
+        // One bounded serialisation buffer (at most 8192 bytes), covered by the
         // command overhead reservation. No second full image or file staging.
-        var row = [UInt8](repeating: 0, count: d.width * channels * sampleBytes)
+        let rowBytes = d.width * channels * sampleBytes
+        let capacity = max(rowBytes, (8192 / max(1, rowBytes)) * rowBytes)
+        var buffer = [UInt8](repeating: 0, count: capacity)
         try image.storage.withUnsafeBytes { bytes in
+            if (d.storageBits == 8 && sampleBytes == 1) || (d.storageBits == 16 && sampleBytes == 2 && d.byteOrder == .bigEndian) {
+                if p.rowBytes == rowBytes {
+                    let total = d.height * rowBytes
+                    try io.writeRaw(UnsafeRawBufferPointer(rebasing: bytes[p.offset..<(p.offset + total)]), fd: fd)
+                    return
+                }
+            }
+            var buffered = 0
             for y in 0..<d.height {
                 try io.checkpoint()
+                if buffered + rowBytes > capacity {
+                    try buffer.withUnsafeBytes { raw in
+                        try io.writeRaw(UnsafeRawBufferPointer(rebasing: raw[0..<buffered]), fd: fd)
+                    }
+                    buffered = 0
+                }
                 for i in 0..<(d.width * channels) {
                     let source = p.offset + y * p.rowBytes + i * p.sampleStride
                     let first = Int(bytes[source])
                     let value = d.storageBits == 8 ? first : (d.byteOrder == .littleEndian
                         ? first | (Int(bytes[source + 1]) << 8) : (first << 8) | Int(bytes[source + 1]))
-                    row[i * sampleBytes] = UInt8(truncatingIfNeeded: sampleBytes == 1 ? value : value >> 8)
-                    if sampleBytes == 2 { row[i * sampleBytes + 1] = UInt8(truncatingIfNeeded: value) }
+                    buffer[buffered + i * sampleBytes] = UInt8(truncatingIfNeeded: sampleBytes == 1 ? value : value >> 8)
+                    if sampleBytes == 2 { buffer[buffered + i * sampleBytes + 1] = UInt8(truncatingIfNeeded: value) }
                 }
-                try row.withUnsafeBytes { try io.writeRaw($0, fd: fd) }
+                buffered += rowBytes
+            }
+            if buffered > 0 {
+                try buffer.withUnsafeBytes { raw in
+                    try io.writeRaw(UnsafeRawBufferPointer(rebasing: raw[0..<buffered]), fd: fd)
+                }
             }
         }
     }

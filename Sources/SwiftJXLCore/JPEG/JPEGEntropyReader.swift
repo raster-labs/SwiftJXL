@@ -33,8 +33,10 @@ package struct JPEGEntropyReader {
         self.checkpoint = checkpoint
     }
 
+    @inline(__always)
     private func byte(_ n: Int) -> UInt8 { data[data.startIndex + n] }
 
+    @inline(__always)
     private mutating func checkWork() throws {
         if position >= nextCheckpoint {
             try checkpoint()
@@ -42,33 +44,97 @@ package struct JPEGEntropyReader {
         }
     }
 
+    @inline(__always)
+    fileprivate mutating func refillByte() throws {
+        guard position < end else { throw JPEGEntropyError.malformed }
+        try checkWork()
+        current = byte(position); position += 1
+        if current == 0xff {
+            guard position < end, byte(position) == 0 else { throw JPEGEntropyError.malformed }
+            position += 1
+        }
+        remaining = 8
+    }
+
+    @inline(__always)
     package mutating func bit() throws -> Int {
         if remaining == 0 {
-            guard position < end else { throw JPEGEntropyError.malformed }
-            try checkWork()
-            current = byte(position); position += 1
-            if current == 0xff {
-                guard position < end, byte(position) == 0 else { throw JPEGEntropyError.malformed }
-                position += 1
-            }
-            remaining = 8
+            try refillByte()
         }
         remaining -= 1
         return Int((current >> remaining) & 1)
     }
 
+    @inline(__always)
     package mutating func bits(_ count: Int) throws -> Int {
         guard (0...16).contains(count) else { throw JPEGEntropyError.malformed }
+        var need = count
         var value = 0
-        for _ in 0..<count { value = value * 2 + (try bit()) }
+        while need > 0 {
+            if remaining == 0 {
+                try refillByte()
+            }
+            let take = min(need, remaining)
+            remaining -= take
+            let mask = (1 << take) - 1
+            value = (value << take) | ((Int(current) >> remaining) & mask)
+            need -= take
+        }
         return value
     }
 
+    @inline(__always)
     package mutating func magnitude(_ count: Int) throws -> Int32 {
         if count == 0 { return 0 }
         guard (1...15).contains(count) else { throw JPEGEntropyError.malformed }
         let value = try bits(count)
         return Int32(value >= 1 << (count - 1) ? value : value - ((1 << count) - 1))
+    }
+
+    @inline(__always)
+    fileprivate mutating func decodeSymbol(
+        fastLUT: [UInt16],
+        firstCode: [Int],
+        counts: [Int],
+        firstSymbol: [Int],
+        symbols: [UInt8]
+    ) throws -> UInt8 {
+        if remaining == 0 {
+            try refillByte()
+        }
+        let hiLen = remaining
+        let hiMask = (1 << hiLen) - 1
+        let hiBits = Int(current) & hiMask
+        let idx = hiBits << (8 - hiLen)
+        let entry = fastLUT[idx]
+        let len = Int(entry >> 8)
+        if len > 0 && len <= hiLen {
+            remaining = hiLen - len
+            return UInt8(truncatingIfNeeded: entry)
+        }
+        var code: Int
+        if hiLen == 8 {
+            code = hiBits
+            remaining = 0
+        } else {
+            remaining = 0
+            try refillByte()
+            let code8 = idx | Int(current >> hiLen)
+            let entry2 = fastLUT[code8]
+            let len2 = Int(entry2 >> 8)
+            if len2 > 0 {
+                remaining = 8 - (len2 - hiLen)
+                return UInt8(truncatingIfNeeded: entry2)
+            }
+            code = code8
+            remaining = hiLen
+        }
+        for i in 8..<16 {
+            code = code * 2 + (try bit())
+            let offset = code - firstCode[i]
+            if offset >= 0 && offset < counts[i] { return symbols[firstSymbol[i] + offset] }
+        }
+        throw JPEGEntropyError.malformed
     }
 
     private mutating func padding() -> JPEGEntropyPadding {
@@ -103,6 +169,7 @@ package struct JPEGHuffmanTable: Sendable {
     private let counts: [Int]
     private let firstSymbol: [Int]
     private let symbols: [UInt8]
+    private let fastLUT: [UInt16]
 
     package init(counts: [Int], symbols: [UInt8]) throws {
         guard counts.count == 16, counts.allSatisfy({ (0...255).contains($0) }),
@@ -110,25 +177,40 @@ package struct JPEGHuffmanTable: Sendable {
             throw JPEGEntropyError.malformed
         }
         var code = 0, index = 0, first: [Int] = [], offsets: [Int] = []
+        var lut = [UInt16](repeating: 0, count: 256)
         for length in 1...16 {
             let n = counts[length - 1]
             // JPEG reserves the all-ones code so padding cannot be a symbol.
             guard code + n < (1 << length) else { throw JPEGEntropyError.malformed }
             first.append(code); offsets.append(index)
+            if length <= 8 {
+                let shift = 8 - length
+                let span = 1 << shift
+                for j in 0..<n {
+                    let sym = UInt16(symbols[index + j])
+                    let packed = (UInt16(length) << 8) | sym
+                    let base = (code + j) << shift
+                    for k in 0..<span {
+                        lut[base + k] = packed
+                    }
+                }
+            }
             index += n; code = (code + n) * 2
         }
         self.firstCode = first; self.firstSymbol = offsets
         self.counts = counts; self.symbols = symbols
+        self.fastLUT = lut
     }
 
+    @inline(__always)
     package func symbol(_ reader: inout JPEGEntropyReader) throws -> UInt8 {
-        var code = 0
-        for i in 0..<16 {
-            code = code * 2 + (try reader.bit())
-            let offset = code - firstCode[i]
-            if offset >= 0 && offset < counts[i] { return symbols[firstSymbol[i] + offset] }
-        }
-        throw JPEGEntropyError.malformed
+        try reader.decodeSymbol(
+            fastLUT: fastLUT,
+            firstCode: firstCode,
+            counts: counts,
+            firstSymbol: firstSymbol,
+            symbols: symbols
+        )
     }
 }
 

@@ -29,10 +29,11 @@ package struct BitWriter: Sendable {
     package private(set) var bytes: [UInt8] = []
     /// Pending bits: the low `accBits` bits of `acc`, LSB-first.
     private var acc: UInt64 = 0
-    /// Number of valid pending bits in `acc` (kept in 0..<8 after each call).
+    /// Number of valid pending bits in `acc` (kept in 0..<32 after each call).
     private var accBits: Int = 0
 
-    private let work = ScalarEncodingWork.current
+    private let work: ScalarEncodingWork?
+    private let writerByteLimit: Int
     private var tokensUntilCheckpoint = 0
 
     /// Prefix symbols can emit zero bits, so count tokens rather than bytes.
@@ -46,24 +47,31 @@ package struct BitWriter: Sendable {
     }
 
     private func admit(_ count: Int) -> Bool {
-        guard let work else { return true }
-        guard count >= 0, count <= work.writerByteLimit - bytes.count else {
-            work.rejectGrowth(); return false
+        guard count >= 0, count <= writerByteLimit &- bytes.count else {
+            work?.rejectGrowth(); return false
         }
         return true
     }
-    package init() {}
+    package init() {
+        let w = ScalarEncodingWork.current
+        self.work = w
+        self.writerByteLimit = w?.writerByteLimit ?? Int.max
+    }
 
     /// Pre-reserve the backing byte buffer. Pure optimisation — semantically
     /// identical to `init()`, it only avoids geometric-growth reallocations
     /// when the eventual size is roughly known. Over-estimating is harmless;
     /// reserving never changes the emitted bytes.
     package init(reservingBytes n: Int) {
-        if n > 0 { bytes.reserveCapacity(min(n, work?.writerByteLimit ?? n)) }
+        let w = ScalarEncodingWork.current
+        self.work = w
+        let limit = w?.writerByteLimit ?? Int.max
+        self.writerByteLimit = limit
+        if n > 0 { bytes.reserveCapacity(min(n, limit)) }
     }
 
     /// Bits already written *into* the current incomplete byte (0..<8).
-    package var partial: Int { accBits }
+    package var partial: Int { accBits & 7 }
 
     /// Total bits emitted so far.
     package var bitCount: Int { bytes.count * 8 + accBits }
@@ -73,18 +81,26 @@ package struct BitWriter: Sendable {
     package mutating func write(bits count: Int, value: UInt32) {
         precondition(count >= 0 && count <= 32, "bit count must be 0...32")
         if count == 0 { return }
-        guard admit((accBits &+ count &+ 7) >> 3) else { return }
+        let newAccBits = accBits &+ count
+        guard ((newAccBits &+ 7) >> 3) <= writerByteLimit &- bytes.count else {
+            work?.rejectGrowth()
+            return
+        }
         // Mask `value` to its low `count` bits, then shift into place above the
-        // existing `accBits` pending bits. `accBits` ≤ 7 and `count` ≤ 32, so
-        // the result occupies < 40 bits — well within `UInt64`.
+        // existing `accBits` pending bits. `accBits` ≤ 31 and `count` ≤ 32, so
+        // the result occupies ≤ 63 bits — well within `UInt64`.
+        let uCount = UInt64(truncatingIfNeeded: count)
         let mask: UInt64 = count == 32 ? 0xFFFF_FFFF
-            : (UInt64(1) &<< UInt64(count)) &- 1
-        acc |= (UInt64(value) & mask) &<< UInt64(accBits)
-        accBits &+= count
-        while accBits >= 8 {
+            : (UInt64(1) &<< uCount) &- 1
+        acc |= (UInt64(value) & mask) &<< UInt64(truncatingIfNeeded: accBits)
+        accBits = newAccBits
+        if accBits >= 32 {
             bytes.append(UInt8(truncatingIfNeeded: acc))
-            acc &>>= 8
-            accBits &-= 8
+            bytes.append(UInt8(truncatingIfNeeded: acc &>> 8))
+            bytes.append(UInt8(truncatingIfNeeded: acc &>> 16))
+            bytes.append(UInt8(truncatingIfNeeded: acc &>> 24))
+            acc &>>= 32
+            accBits &-= 32
         }
     }
 
@@ -104,12 +120,27 @@ package struct BitWriter: Sendable {
         write(bits: count - 32, value: UInt32(truncatingIfNeeded: value &>> 32))
     }
 
+    @inline(__always)
+    private mutating func flushWholeBytes() {
+        while accBits >= 8 {
+            guard 1 <= writerByteLimit &- bytes.count else {
+                work?.rejectGrowth(); acc = 0; accBits = 0; return
+            }
+            bytes.append(UInt8(truncatingIfNeeded: acc))
+            acc &>>= 8
+            accBits &-= 8
+        }
+    }
+
     /// Pad the current byte with zero bits up to the next byte boundary.
     package mutating func alignToByte() {
+        flushWholeBytes()
         if accBits > 0 {
             // Flush the partial byte; unused high bits are already 0.
-            guard admit(1) else { acc = 0; accBits = 0; return }
-            bytes.append(UInt8(acc & 0xFF))
+            guard 1 <= writerByteLimit &- bytes.count else {
+                work?.rejectGrowth(); acc = 0; accBits = 0; return
+            }
+            bytes.append(UInt8(truncatingIfNeeded: acc))
             acc = 0
             accBits = 0
         }
@@ -117,12 +148,14 @@ package struct BitWriter: Sendable {
 
     /// Append raw bytes — only valid when the writer is byte-aligned.
     package mutating func appendBytes(_ data: Data) {
+        flushWholeBytes()
         precondition(accBits == 0, "appendBytes requires byte alignment")
         guard admit(data.count) else { return }
         bytes.append(contentsOf: data)
     }
 
     package mutating func appendBytes(_ data: [UInt8]) {
+        flushWholeBytes()
         precondition(accBits == 0, "appendBytes requires byte alignment")
         guard admit(data.count) else { return }
         bytes.append(contentsOf: data)

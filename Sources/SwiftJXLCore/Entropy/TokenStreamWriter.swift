@@ -46,45 +46,60 @@ package enum TokenStreamWriterError: Error, Sendable {
 package struct TokenStreamWriter: Sendable {
     package let header: EntropySectionHeader
     package let codebook: MultiClusterCodebook
+    private let lz77Enabled: Bool
+    private let numContexts: Int
+    private let numHistograms: Int
+    private let usePrefixCode: Bool
+    private let ctxMap: [UInt8]
+    private let uintConfigs: [HybridUintConfig]
+    private let huffmanTables: [PrefixCodeTable]
 
     package init(header: EntropySectionHeader, codebook: MultiClusterCodebook) {
         self.header = header
         self.codebook = codebook
+        self.lz77Enabled = header.lz77.enabled
+        self.numContexts = header.contextMap.numContexts
+        self.numHistograms = header.numHistograms
+        self.usePrefixCode = header.usePrefixCode
+        self.ctxMap = header.contextMap.map
+        self.uintConfigs = header.uintConfigs
+        self.huffmanTables = codebook.huffmanTables
     }
 
     /// Emit one (context, value) token.
+    @inline(__always)
     package func writeToken(
         context ctx: Int, value: UInt32, to w: inout BitWriter
     ) throws {
         try w.checkpointToken()
-        if header.lz77.enabled {
+        if lz77Enabled {
             // The encoder side needs a back-reference search to
             // exploit LZ77; without one we'd fail to maintain the
             // invariant that emitted symbols < lz77.minSymbol.
             throw TokenStreamWriterError.lz77NotImplemented
         }
-        guard ctx >= 0 && ctx < header.contextMap.numContexts else {
+        guard ctx >= 0 && ctx < numContexts else {
             throw TokenStreamWriterError.contextOutOfRange(
-                ctx, max: header.contextMap.numContexts - 1
+                ctx, max: numContexts - 1
             )
         }
-        let cluster = Int(header.contextMap.map[ctx])
-        guard cluster < header.numHistograms else {
+        let cluster = Int(ctxMap[ctx])
+        guard cluster < numHistograms else {
             throw TokenStreamWriterError.clusterOutOfRange(
-                cluster, max: header.numHistograms - 1
+                cluster, max: numHistograms - 1
             )
         }
         // HybridUint expansion to (token, extra_bits).
-        let cfg = header.uintConfigs[cluster]
+        let cfg = uintConfigs[cluster]
         let exp = cfg.encode(value)
-        if header.usePrefixCode {
+        if usePrefixCode {
             // Look up Huffman table.
-            guard cluster < codebook.huffmanTables.count else {
+            guard cluster < huffmanTables.count else {
                 throw TokenStreamWriterError.clusterOutOfRange(
-                    cluster, max: codebook.huffmanTables.count - 1
+                    cluster, max: huffmanTables.count - 1
                 )
             }
-            let table = codebook.huffmanTables[cluster]
+            let table = huffmanTables[cluster]
             do {
                 try table.encode(Int(exp.token), to: &w)
             } catch let e as PrefixCodeError {
