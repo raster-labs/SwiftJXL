@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        swift: ['6.2', '6.4']
+        swift: ['6.4']
         runner: [ubuntu-24.04, ubuntu-24.04-arm]
     runs-on: ${{ matrix.runner }}
     container: swift:${{ matrix.swift }}-noble
@@ -78,7 +78,7 @@ jobs:
           if-no-files-found: warn
 
   macos-debug:
-    name: macOS 26 debug / Swift 6.2
+    name: macOS 26 debug / Swift 6.4
     runs-on: macos-26
     # Keep per-operation deadlines meaningful: CPU-heavy cases run serially,
     # while task-group and worker concurrency inside each case remains tested.
@@ -118,7 +118,7 @@ jobs:
           if-no-files-found: warn
 
   macos-sanitizers:
-    name: macOS 26 ${{ matrix.sanitizer }} sanitizer / Swift 6.2
+    name: macOS 26 ${{ matrix.sanitizer }} sanitizer / Swift 6.4
     strategy:
       fail-fast: false
       matrix:
@@ -179,7 +179,7 @@ jobs:
 
   macos:
     # Preserve the existing check name as an explicit gate over all three jobs.
-    name: macOS 26 / Swift 6.2
+    name: macOS 26 / Swift 6.4
     needs: [macos-debug, macos-sanitizers]
     if: always()
     runs-on: ubuntu-24.04
@@ -194,7 +194,7 @@ jobs:
           test "$SANITIZER_RESULT" = success
 
   apple-sdk-builds:
-    name: Apple OS 26 library SDK builds / Swift 6.2
+    name: Apple OS 26 library SDK builds / Swift 6.4
     runs-on: macos-26
     timeout-minutes: 30
     steps:
@@ -216,9 +216,9 @@ jobs:
           if-no-files-found: warn
 
   independent-consumer:
-    name: Independent consumer resolves at tools 6.2
+    name: Independent consumer resolves at tools 6.4
     runs-on: ubuntu-24.04
-    container: swift:6.2-noble
+    container: swift:6.4-noble
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -235,7 +235,7 @@ jobs:
           mkdir -p /tmp/consumer/Sources/Consumer
           cd /tmp/consumer
           {
-            echo '// swift-tools-version: 6.2'
+            echo '// swift-tools-version: 6.4'
             echo 'import PackageDescription'
             echo 'let package = Package('
             echo '    name: "Consumer",'

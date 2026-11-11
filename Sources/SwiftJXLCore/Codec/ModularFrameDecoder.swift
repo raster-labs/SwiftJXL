@@ -759,7 +759,10 @@ package enum ModularFrameDecoder {
                     while baseGroup < numGroups {
                         let batchCount = min(budget.maximumWorkers, numGroups - baseGroup)
                         let currentBase = baseGroup
-                        let batchResults = try modularDecodeBatch(count: batchCount, budget: budget) { offset in
+                        let batchResults: [([GroupChannelSlice], [ModularChannel])] = try modularDecodeBatch(
+                            count: batchCount,
+                            budget: budget
+                        ) { (offset: Int) -> ([GroupChannelSlice], [ModularChannel]) in
                             let groupIndex = currentBase + offset
                             let gx = groupIndex % groupsX
                             let gy = groupIndex / groupsX
@@ -770,9 +773,11 @@ package enum ModularFrameDecoder {
                                 baseDim: groupDim,
                                 filter: isACGroupChannel
                             )
+                            let secIndex = firstACSection + groupIndex
+                            let gId = Int32(1 + 3 * numDcGroups + 17 + groupIndex)
                             let planes = try decodeGroupSubstreamToPlanes(
-                                sectionIndex: firstACSection + groupIndex,
-                                groupId: Int32(1 + 3 * numDcGroups + 17 + groupIndex),
+                                sectionIndex: secIndex,
+                                groupId: gId,
                                 slices: slices,
                                 sampleMaximum: sampleMax
                             )
@@ -922,7 +927,10 @@ package enum ModularFrameDecoder {
                     while baseGroup < numGroups {
                         let batchCount = min(budget.maximumWorkers, numGroups - baseGroup)
                         let currentBase = baseGroup
-                        let batchResults = try modularDecodeBatch(count: batchCount, budget: budget) { offset in
+                        let batchResults: [([GroupChannelSlice], [ModularChannel])] = try modularDecodeBatch(
+                            count: batchCount,
+                            budget: budget
+                        ) { (offset: Int) -> ([GroupChannelSlice], [ModularChannel]) in
                             let groupIndex = currentBase + offset
                             let gx = groupIndex % groupsX
                             let gy = groupIndex / groupsX
@@ -933,9 +941,11 @@ package enum ModularFrameDecoder {
                                 baseDim: groupDim,
                                 filter: passFilter
                             )
+                            let secIndex = firstACSection + passIndex * numGroups + groupIndex
+                            let gId = Int32(1 + 3 * numDcGroups + 17 + passIndex * numGroups + groupIndex)
                             let planes = try decodeGroupSubstreamToPlanes(
-                                sectionIndex: firstACSection + passIndex * numGroups + groupIndex,
-                                groupId: Int32(1 + 3 * numDcGroups + 17 + passIndex * numGroups + groupIndex),
+                                sectionIndex: secIndex,
+                                groupId: gId,
                                 slices: slices,
                                 sampleMaximum: checkMax
                             )
