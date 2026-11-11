@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Run current-source full library test bundles on disposable Apple simulators.
 
 Xcode enumerates each instrumented test build before execution. Every discovered

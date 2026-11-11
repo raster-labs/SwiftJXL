@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Fail-closed checks for unchanged SBOM validation and semantic constraints."""
 
 import importlib.util

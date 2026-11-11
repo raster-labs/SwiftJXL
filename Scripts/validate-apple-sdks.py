@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Cross-build the public library at the OS 26 floor. This is not runtime evidence."""
 import argparse
 import hashlib

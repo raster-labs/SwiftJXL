@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 import Synchronization
 
 /// Package-only allocation instrumentation, scoped to one operation/test task.

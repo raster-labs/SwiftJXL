@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Generate twelve synthetic standard BT.709 PNM/PAM mutation seeds."""
 import argparse
 from pathlib import Path

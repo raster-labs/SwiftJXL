@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Verify extended JPEG CLI precision against deterministic T.81 sample vectors.
 
 Use an independent libjpeg build separately for interoperability. These vectors

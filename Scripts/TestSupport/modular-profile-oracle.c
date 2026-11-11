@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0
+/* SPDX-License-Identifier: MIT
  * Test-only exact sample and original colour/alpha metadata oracle.
  * Uses pinned libjxl; never linked into the production package. */
 #include <jxl/decode.h>

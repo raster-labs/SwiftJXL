@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0
+/* SPDX-License-Identifier: MIT
  * Independent libjxl BT.709 colour fixture generator, test-only.
  * cc -I<include> modular-transfer-fixtures.c -L<lib> -ljxl -o modular-transfer-fixtures
  * Usage: modular-transfer-fixtures OUTPUT CHANNELS BITS

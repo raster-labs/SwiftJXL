@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Regenerate synthetic ICC test fixtures using local LittleCMS (not a runtime dependency)."""
 from pathlib import Path
 import ctypes as C,hashlib,json,struct

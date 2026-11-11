@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Exercise public VarDCT CLI decoding and faithful reports against pinned scalar references."""
 import argparse
 import hashlib

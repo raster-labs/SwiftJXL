@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // New bounded adapter replacing JXLSwift 57e81cb Sources/JXLTool/PNM.swift.
 // Format definitions: https://netpbm.sourceforge.net/doc/{ppm,pgm,pam}.html
 import Foundation

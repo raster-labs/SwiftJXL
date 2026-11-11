@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Focused receipt and identity checks without starting a native qualification."""
 import ast
 import hashlib

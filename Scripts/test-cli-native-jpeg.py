@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Byte-exact native JPEG CLI, independent interoperability and publication checks."""
 import argparse,hashlib,json,subprocess
 from pathlib import Path

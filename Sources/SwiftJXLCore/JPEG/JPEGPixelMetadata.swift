@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // JPEG ICC APP2 framing and Exif TIFF interpretation. Profiles are retained,
 // never display-converted. All offsets are relative to the owning payload.
 import Foundation

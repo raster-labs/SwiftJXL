@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Execute and audit the full SwiftJXL library test suite on an iOS Simulator.
 
 Uses official Xcode test bundle execution (`xcodebuild test -scheme SwiftJXL-Package`)

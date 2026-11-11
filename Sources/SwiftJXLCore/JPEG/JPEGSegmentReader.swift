@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster-Lab.
 // Adapted from JXLSwift JPEGSegmentReader.swift at 57e81cb9e2411d1efac435b429a306a031744c1e.
 // JPEG marker/entropy framing: ITU-T T.81 B.1.1.2 and F.1.2.3.

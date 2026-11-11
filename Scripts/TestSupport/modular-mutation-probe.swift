@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Test-only public-entry probe. Link the current ASan-instrumented module objects.
 import Foundation
 import SwiftJXL

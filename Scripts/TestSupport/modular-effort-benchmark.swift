@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Qualification-only core probe; public encoding still uses effort 3.
 import Foundation
 import Darwin

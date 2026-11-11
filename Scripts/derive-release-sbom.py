@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Derive explicitly corrected SBOMs; preserve and validate every original.
 
 This narrowly handles the observed Swift 6.4.2 generator defects. It does not

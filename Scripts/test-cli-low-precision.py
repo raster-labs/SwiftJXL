@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Inspect/validate low-precision fixtures without silently widening file output."""
 import argparse
 import hashlib

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Fail-closed tests for current-source simulator discovery and acceptance."""
 import copy
 import hashlib

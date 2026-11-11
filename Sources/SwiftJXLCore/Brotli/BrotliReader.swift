@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Variable-length count algorithm adapted from JXLSwift
 // 57e81cb9e2411d1efac435b429a306a031744c1e, Brotli/BrotliBitReader.swift.
 import Foundation

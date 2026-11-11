@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Test-only owning animation API probe; link ASan-instrumented module objects.
 import Foundation
 import SwiftJXL

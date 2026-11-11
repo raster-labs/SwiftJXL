@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Synthetic LSB wire vectors specified independently of Swift readers/writers.
 
 Field distributions: libjxl a7a9c787341cf703dede03c2009fa460cae5e5df,

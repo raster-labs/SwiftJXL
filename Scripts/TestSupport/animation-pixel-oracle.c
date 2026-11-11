@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0. Test-only libjxl all-frame oracle. */
+/* SPDX-License-Identifier: MIT. Test-only libjxl all-frame oracle. */
 #include <jxl/decode.h>
 #include <jxl/encode.h>
 #include <jxl/color_encoding.h>

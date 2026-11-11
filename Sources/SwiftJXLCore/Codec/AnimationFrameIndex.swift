@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster-Lab.
 // Frame traversal adapted from JXLSwift Codec/JXLDecoder.swift at
 // 57e81cb9e2411d1efac435b429a306a031744c1e; rewritten with bounded admission.

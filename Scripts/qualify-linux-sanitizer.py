@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Require native Linux sanitizer runtime detection and the entire test suite.
 
 No suppressed findings, missing oracles, skipped tests or failed commands count

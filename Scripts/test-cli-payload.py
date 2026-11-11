@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Black-box inspection/validation, stream, cancellation and report transactions."""
 import argparse
 import hashlib

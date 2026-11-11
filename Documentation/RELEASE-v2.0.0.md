@@ -9,7 +9,7 @@
 **Linux Baseline (`PLAT-01`):** `Ubuntu 24.04` (`x86_64` and `aarch64`)  
 **Migration Predecessor Baseline:** `raster-labs/JXLSwift` at `57e81cb9e2411d1efac435b429a306a031744c1e` (`v1.5.0-rc.1`; API inspection baseline `760697a54dd253da8e8466c3fd09ecf2c2d89aec`)  
 **Pre-release Engineering Baseline:** `b9a6f26` (Merge pull request #37 over `065b17d` / frozen runtime `00f03ff288a7c8e0e2b82d2e71ec22622ede71ae`, promoting `2.1.0-dev.2` to `2.0.0`)  
-**Licence (`POL-07`):** `Apache-2.0` (`LICENSE`, `NOTICE`, and `THIRD_PARTY_NOTICES.md`)  
+**Licence (`POL-07` / Owner Decision):** `MIT` (`LICENSE`, `NOTICE`, and `THIRD_PARTY_NOTICES.md`)  
 
 ---
 

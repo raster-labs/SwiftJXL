@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Verify the release fixture inventory and retained source/fixture notices.
 
 This is a distribution inventory, not a generated-build SBOM or a legal opinion.
@@ -16,7 +16,7 @@ import subprocess
 import sys
 
 INVENTORY = "Documentation/Engineering/Release/fixture-inventory.json"
-SOURCE_LICENCES = {"Apache-2.0"}
+SOURCE_LICENCES = {"MIT"}
 SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 REVISION = re.compile(r"[0-9a-f]{40}\Z")
 

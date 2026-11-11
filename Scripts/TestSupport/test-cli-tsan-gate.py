@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 """Exercise the interpreter boundary that previously lost the NRRD environment."""
 import argparse
 import importlib.util

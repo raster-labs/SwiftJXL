@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
 # Test-only CMAKE_PROJECT_INCLUDE hook. Build with the pinned libjxl tree's
 # own target so static-library dependencies and compiler settings are retained.
 # Does not modify the fetched reference source or link it into SwiftJXL.

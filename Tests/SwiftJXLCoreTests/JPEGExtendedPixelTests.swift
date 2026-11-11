@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 // Expected samples come from deterministic synthetic T.81 source construction,
 // not this decoder. See Scripts/TestSupport/jpeg-extended-fixtures.py.
 import Foundation

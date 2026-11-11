@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0
+/* SPDX-License-Identifier: MIT
  * Test-only independent libjxl header oracle; never linked into SwiftJXL.
  * Build: cc -I<include> modular-info-oracle.c -L<lib> -ljxl -o modular-info-oracle
  */
