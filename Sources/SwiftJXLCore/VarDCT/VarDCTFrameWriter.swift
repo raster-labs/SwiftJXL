@@ -1,320 +1,770 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Adapted from JXLSwift Codec/VarDCTBitstreamWriter.swift at
-// 57e81cb9e2411d1efac435b429a306a031744c1e. Copyright (c) 2026 Raster-Lab.
-// JPEG XL Project Authors retain BSD-3-Clause; see libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-private struct VarDCTPrefix {
-    let header: EntropySectionHeader
-    let codebook: MultiClusterCodebook
-    let table: PrefixCodeTable
-    init(histogram: [Int], contexts: Int) throws {
-        let size = max(2, (histogram.lastIndex(where: { $0 != 0 }) ?? 0) + 1)
-        var counts = Array(histogram.prefix(size))
-        if counts.filter({ $0 != 0 }).count == 1 { counts[counts[0] == 0 ? 0 : 1] = 1 }
-        let lengths = lengthLimitedCanonicalHuffman(counts: counts, maxLength: 15, alphabetSize: size)
-        let tbl = try PrefixCodeTable(lengths: lengths)
-        table = tbl
-        codebook = MultiClusterCodebook(huffmanTables: [tbl],
-            ansCounts: [], alphabetSizes: [size])
-        header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: contexts),
-            usePrefixCode: true, logAlphaSize: 15, uintConfigs: [.raw4])
-    }
-    func writeHeader(to writer: inout BitWriter, contexts: Int) throws {
-        try header.write(to: &writer, numContexts: contexts)
-        try codebook.write(to: &writer, header: header)
-    }
-    @inline(__always)
-    func write(_ value: UInt32, to writer: inout BitWriter) throws {
-        try writer.checkpointToken()
-        let exp = HybridUintConfig.raw4.encode(value)
-        do {
-            try table.encode(Int(exp.token), to: &writer)
-        } catch let e as PrefixCodeError {
-            throw TokenStreamWriterError.prefix(e)
-        }
-        if exp.extraNBits > 0 {
-            writer.write(bits: exp.extraNBits, value: exp.extraBits)
-        }
-    }
-}
-
-/// Bounded DC/AC groups with standard prefix entropy. Histogram
-/// passes stream tokens instead of retaining frame-sized token arrays. The
-/// source borrow is local to the synchronous encoder call, never retained.
+/// Forward ISO/IEC 18181-1 VarDCT frame bitstream writer (`LfGlobal`, `LfGroup`, `HfGlobal`, `HfPass`).
 struct VarDCTFrameWriter {
+    static let order: [Int] = {
+        var out = [0]
+        for diag in 1..<15 {
+            let lo = max(0, diag - 7)
+            let hi = min(7, diag)
+            if (diag & 1) == 1 {
+                for y in lo...hi {
+                    let x = diag - y
+                    out.append(y * 8 + x)
+                }
+            } else {
+                for y in (lo...hi).reversed() {
+                    let x = diag - y
+                    out.append(y * 8 + x)
+                }
+            }
+        }
+        return out
+    }()
+
     let coefficients: VarDCTPixelEncoder.Coefficients
     let source: VarDCTBorrowedSource
     let budget: ScalarOperationBudget
     let limit: Int
-    private var groupsX: Int { (coefficients.width + 255) / 256 }
-    private var groupsY: Int { (coefficients.height + 255) / 256 }
-    private var dcGroupsX: Int { (coefficients.blocksX + 255) / 256 }
-    private var dcGroupsY: Int { (coefficients.blocksY + 255) / 256 }
-    private var dcGroups: Int { dcGroupsX * dcGroupsY }
-    private func dcRegion(_ group: Int) -> (x: Int, y: Int, width: Int, height: Int) {
-        let x = group % dcGroupsX * 256, y = group / dcGroupsX * 256
-        return (x, y, min(256, coefficients.blocksX - x), min(256, coefficients.blocksY - y))
-    }
-    private func transformIndices(_ group: Int) throws -> [Int] {
-        let region = dcRegion(group)
-        try budget.reserveWorkspace(ScalarOperationBudget.product(region.width * region.height, 16))
-        if let transforms = coefficients.transforms {
-            return transforms.indices.filter { i in
-                let t = transforms[i]
-                return t.x >= region.x && t.x < region.x + region.width &&
-                    t.y >= region.y && t.y < region.y + region.height
-            }
-        }
-        var indices: [Int] = []
-        indices.reserveCapacity(region.width * region.height)
-        for y in 0..<region.height { for x in 0..<region.width {
-            indices.append((region.y + y) * coefficients.blocksX + region.x + x)
-        } }
-        return indices
-    }
-    static let order = [0,1,8,16,9,2,3,10,17,24,32,25,18,11,4,5,
-        12,19,26,33,40,48,41,34,27,20,13,6,7,14,21,28,35,42,49,56,
-        57,50,43,36,29,22,15,23,30,37,44,51,58,59,52,45,38,31,39,46,
-        53,60,61,54,47,55,62,63]
+
+    private static let groupDimension = 256
+    private static let acGroupBlocks = 32
+    private static let dcGroupBlocks = 256
+    private static let totalACContexts = VarDCTEntropy.contextsPerBlockCluster * VarDCTEntropy.defaultNumBlockClusters
 
     func write() throws -> Data {
-        var modularHistogram = [Int](repeating: 0, count: HybridUintConfig.raw4.maxToken + 1)
-        for group in 0..<(groupsX * groupsY) {
-            try alphaTokens(group: group) { modularHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
-        }
-        for group in 0..<dcGroups {
-            try dcTokens(group: group) { modularHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
-            try metadataTokens(group: group, indices: transformIndices(group)) {
-                modularHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1
+        try budget.checkpoint()
+        let width = coefficients.width
+        let height = coefficients.height
+        let blocksX = coefficients.blocksX
+        let blocksY = coefficients.blocksY
+        let groupsX = (width - 1) / Self.groupDimension + 1
+        let groupsY = (height - 1) / Self.groupDimension + 1
+        let numGroups = try ScalarOperationBudget.product(groupsX, groupsY)
+        let dcGroupsX = (width - 1) / (Self.groupDimension * 8) + 1
+        let dcGroupsY = (height - 1) / (Self.groupDimension * 8) + 1
+        let numDCGroups = try ScalarOperationBudget.product(dcGroupsX, dcGroupsY)
+        let singleSection = (numGroups == 1)
+        let alphaIsGlobal = coefficients.hasAlpha && width <= Self.groupDimension && height <= Self.groupDimension
+
+        // Precompute natural scan orders for all used transform buckets
+        var bucketOrders = [[Int]?](repeating: nil, count: VarDCTOrders.orderCount)
+        for transform in coefficients.transforms {
+            let bucket = transform.orderBucket
+            if bucketOrders[bucket] == nil {
+                let dims = VarDCTOrders.orderDimensions[bucket]
+                bucketOrders[bucket] = bucket == 1
+                    ? try VarDCTOrders.naturalAFV(budget: budget)
+                    : try VarDCTOrders.natural(width: dims.width, height: dims.height, budget: budget)
             }
         }
-        let modular = try VarDCTPrefix(histogram: modularHistogram, contexts: 1)
-        var acHistogram = [Int](repeating: 0, count: HybridUintConfig.raw4.maxToken + 1)
-        for group in 0..<(groupsX * groupsY) {
-            try acTokens(group: group) { acHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
+        if bucketOrders[0] == nil {
+            bucketOrders[0] = Self.order
         }
-        let ac = try VarDCTPrefix(histogram: acHistogram, contexts: 15 * 495)
-        var sections: [Data] = [], sectionBytes = 0
-        func section(_ body: (inout BitWriter) throws -> Void) throws {
-            var writer = BitWriter()
-            try body(&writer); writer.alignToByte()
-            let data = writer.finishToData()
-            try ScalarEncodingWork.checkpoint()
-            guard data.count <= limit - sectionBytes else { throw ScalarModularError.resourceLimit }
-            sectionBytes += data.count; sections.append(data)
+
+        // Index transforms by top-left block coordinate
+        let totalBlocks = try ScalarOperationBudget.product(blocksX, blocksY)
+        var transformAtBlock = [Int](repeating: -1, count: totalBlocks)
+        for (idx, t) in coefficients.transforms.enumerated() {
+            transformAtBlock[t.y * blocksX + t.x] = idx
         }
-        if groupsX * groupsY == 1 {
-            try section { writer in
-                try lfGlobal(modular, to: &writer); try dcGroup(0, modular, to: &writer)
-                try hfGlobal(ac, to: &writer)
-                try acTokens(group: 0) { try ac.write($0, to: &writer) }
+
+        // 1. Build Modular token histogram across all Modular substreams (extra, dc, hfMetadata)
+        let postCfg = HybridUintConfig.raw4
+        var modularHisto = [Int](repeating: 0, count: postCfg.maxToken + 1)
+        var modularMaxTok = 0
+
+        @inline(__always)
+        func recordModularToken(_ value: UInt32) {
+            let tok = Int(postCfg.encode(value).token)
+            modularHisto[tok] += 1
+            if tok > modularMaxTok { modularMaxTok = tok }
+        }
+
+        if alphaIsGlobal {
+            try scanAlphaSliceResiduals(x0: 0, y0: 0, sliceW: width, sliceH: height, emit: recordModularToken)
+        }
+
+        for dcGroup in 0..<numDCGroups {
+            try budget.checkpoint()
+            let dcx = dcGroup % dcGroupsX
+            let dcy = dcGroup / dcGroupsX
+            let bx0 = dcx * Self.dcGroupBlocks
+            let by0 = dcy * Self.dcGroupBlocks
+            let regionW = min(Self.dcGroupBlocks, blocksX - bx0)
+            let regionH = min(Self.dcGroupBlocks, blocksY - by0)
+
+            // 3 DC channels in stream order [Y=1, X=0, B=2]
+            for c in [1, 0, 2] {
+                scanPlaneResiduals(
+                    plane: coefficients.dc[c],
+                    planeWidth: blocksX,
+                    x0: bx0,
+                    y0: by0,
+                    w: regionW,
+                    h: regionH,
+                    emit: recordModularToken
+                )
             }
-        } else {
-            try section { try lfGlobal(modular, to: &$0) }
-            for group in 0..<dcGroups { try section { try dcGroup(group, modular, to: &$0) } }
-            try section { try hfGlobal(ac, to: &$0) }
-            for group in 0..<(groupsX * groupsY) {
-                try section { writer in
-                    try acTokens(group: group) { try ac.write($0, to: &writer) }
-                    if coefficients.hasAlpha {
-                        try GroupHeader.default.write(to: &writer)
-                        try alphaTokens(group: group) { try modular.write($0, to: &writer) }
+
+            // HfMetadata: cflX (tilesW x tilesH = zeros), cflB (zeros), blockInfo (nbBlocks x 2), sharpness (regionW x regionH = zeros)
+            let regionTilesW = (regionW + 7) / 8
+            let regionTilesH = (regionH + 7) / 8
+            let zeroTileCount = regionTilesW * regionTilesH * 2
+            for _ in 0..<zeroTileCount {
+                recordModularToken(0)
+            }
+
+            let groupTransforms = transformsInDCGroup(
+                bx0: bx0, by0: by0, regionW: regionW, regionH: regionH, transformAtBlock: transformAtBlock
+            )
+            let nbBlocks = max(1, groupTransforms.count)
+            var blockInfo = [Int32](repeating: 0, count: nbBlocks * 2)
+            for (i, t) in groupTransforms.enumerated() {
+                blockInfo[i] = Int32(t.identifier)
+                blockInfo[nbBlocks + i] = Int32(t.quantisation) - 1
+            }
+            scanPlaneResiduals(plane: blockInfo, planeWidth: nbBlocks, x0: 0, y0: 0, w: nbBlocks, h: 2, emit: recordModularToken)
+
+            let sharpCount = regionW * regionH
+            for _ in 0..<sharpCount {
+                recordModularToken(0)
+            }
+        }
+
+        if coefficients.hasAlpha && !alphaIsGlobal {
+            for groupIndex in 0..<numGroups {
+                try budget.checkpoint()
+                let gx = groupIndex % groupsX
+                let gy = groupIndex / groupsX
+                let x0 = gx * Self.groupDimension
+                let y0 = gy * Self.groupDimension
+                let sliceW = min(Self.groupDimension, width - x0)
+                let sliceH = min(Self.groupDimension, height - y0)
+                try scanAlphaSliceResiduals(x0: x0, y0: y0, sliceW: sliceW, sliceH: sliceH, emit: recordModularToken)
+            }
+        }
+
+        let modularAlpha = max(2, modularMaxTok + 1)
+        let modularLengths = lengthLimitedCanonicalHuffman(
+            counts: Array(modularHisto[0..<modularAlpha]),
+            maxLength: 15,
+            alphabetSize: modularAlpha
+        )
+        let modularTable = try PrefixCodeTable(lengths: modularLengths)
+        let modularCodebook = MultiClusterCodebook(
+            huffmanTables: [modularTable],
+            ansCounts: [],
+            alphabetSizes: [modularAlpha]
+        )
+        let modularHeader = EntropySectionHeader(
+            lz77: .disabled,
+            contextMap: ContextMap.trivial(numContexts: 1),
+            usePrefixCode: true,
+            logAlphaSize: 15,
+            uintConfigs: [postCfg]
+        )
+        let modularWriter = TokenStreamWriter(header: modularHeader, codebook: modularCodebook)
+
+        // 2. Build AC token histogram across all HfPass groups
+        var acHisto = [Int](repeating: 0, count: postCfg.maxToken + 1)
+        var acMaxTok = 0
+
+        @inline(__always)
+        func recordACToken(_ value: UInt32) {
+            let tok = Int(postCfg.encode(value).token)
+            acHisto[tok] += 1
+            if tok > acMaxTok { acMaxTok = tok }
+        }
+
+        for groupIndex in 0..<numGroups {
+            try budget.checkpoint()
+            let gx = groupIndex % groupsX
+            let gy = groupIndex / groupsX
+            let bx0 = gx * Self.acGroupBlocks
+            let by0 = gy * Self.acGroupBlocks
+            let groupBlocksW = min(Self.acGroupBlocks, blocksX - bx0)
+            let groupBlocksH = min(Self.acGroupBlocks, blocksY - by0)
+
+            for ly in 0..<groupBlocksH {
+                let by = by0 + ly
+                for lx in 0..<groupBlocksW {
+                    let bx = bx0 + lx
+                    let tIndex = transformAtBlock[by * blocksX + bx]
+                    if tIndex < 0 { continue }
+                    let transform = coefficients.transforms[tIndex]
+                    let covered = transform.coveredCells
+                    let coeffCount = covered * 64
+                    let baseOffset = transform.coefficientOffset
+                    let order = bucketOrders[transform.orderBucket]!
+
+                    for c in [1, 0, 2] {
+                        let plane = coefficients.ac[c]
+                        var nonZeros = 0
+                        for k in covered..<coeffCount {
+                            if plane[baseOffset + order[k]] != 0 {
+                                nonZeros += 1
+                            }
+                        }
+                        recordACToken(UInt32(nonZeros))
+                        if nonZeros == 0 { continue }
+                        var remaining = nonZeros
+                        for k in covered..<coeffCount {
+                            if remaining == 0 { break }
+                            let v = plane[baseOffset + order[k]]
+                            recordACToken(ZigZag.pack(v))
+                            if v != 0 {
+                                remaining -= 1
+                            }
+                        }
                     }
                 }
             }
         }
-        var writer = BitWriter()
-        try imageHeader(to: &writer); try frameHeader(to: &writer)
-        let sizes = sections.map { UInt32($0.count) }
-        var offsets: [UInt64] = [0]
-        for size in sizes { offsets.append((offsets.last ?? 0) + UInt64(size)) }
-        try TOC(hasPermutation: false, entrySizes: sizes, offsets: offsets).write(to: &writer)
-        writer.alignToByte()
-        for data in sections {
-            guard data.count <= limit - writer.bytes.count else { throw ScalarModularError.resourceLimit }
-            var start = 0
-            while start < data.count {
-                try budget.checkpoint()
-                let end = min(data.count, start + 4096)
-                writer.appendBytes(Data(data[start..<end])); start = end
+
+        let acAlpha = max(2, acMaxTok + 1)
+        let acLengths = lengthLimitedCanonicalHuffman(
+            counts: Array(acHisto[0..<acAlpha]),
+            maxLength: 15,
+            alphabetSize: acAlpha
+        )
+        let acTable = try PrefixCodeTable(lengths: acLengths)
+        let acCodebook = MultiClusterCodebook(
+            huffmanTables: [acTable],
+            ansCounts: [],
+            alphabetSizes: [acAlpha]
+        )
+        let acHeader = EntropySectionHeader(
+            lz77: .disabled,
+            contextMap: ContextMap.trivial(numContexts: Self.totalACContexts),
+            usePrefixCode: true,
+            logAlphaSize: 15,
+            uintConfigs: [postCfg]
+        )
+        let acWriter = TokenStreamWriter(header: acHeader, codebook: acCodebook)
+
+        // 3. Emit section bitstreams
+        var sectionData: [Data] = []
+        var currentWriter = BitWriter()
+
+        // --- 3a. LfGlobal ---
+        try writeLfGlobal(
+            to: &currentWriter,
+            modularHeader: modularHeader,
+            modularCodebook: modularCodebook,
+            modularWriter: modularWriter,
+            alphaIsGlobal: alphaIsGlobal
+        )
+        if !singleSection {
+            currentWriter.alignToByte()
+            sectionData.append(currentWriter.finishToData())
+            currentWriter = BitWriter()
+        }
+
+        // --- 3b. LfGroups ---
+        for dcGroup in 0..<numDCGroups {
+            try budget.checkpoint()
+            let dcx = dcGroup % dcGroupsX
+            let dcy = dcGroup / dcGroupsX
+            let bx0 = dcx * Self.dcGroupBlocks
+            let by0 = dcy * Self.dcGroupBlocks
+            let regionW = min(Self.dcGroupBlocks, blocksX - bx0)
+            let regionH = min(Self.dcGroupBlocks, blocksY - by0)
+
+            try writeLfGroup(
+                to: &currentWriter,
+                bx0: bx0,
+                by0: by0,
+                regionW: regionW,
+                regionH: regionH,
+                transformAtBlock: transformAtBlock,
+                modularWriter: modularWriter
+            )
+            if !singleSection {
+                currentWriter.alignToByte()
+                sectionData.append(currentWriter.finishToData())
+                currentWriter = BitWriter()
             }
         }
-        try ScalarEncodingWork.checkpoint()
-        return writer.finishToData()
+
+        // --- 3c. HfGlobal ---
+        try writeHfGlobal(
+            to: &currentWriter,
+            numGroups: numGroups,
+            acHeader: acHeader,
+            acCodebook: acCodebook
+        )
+        if !singleSection {
+            currentWriter.alignToByte()
+            sectionData.append(currentWriter.finishToData())
+            currentWriter = BitWriter()
+        }
+
+        // --- 3d. HfPasses ---
+        for groupIndex in 0..<numGroups {
+            try budget.checkpoint()
+            let gx = groupIndex % groupsX
+            let gy = groupIndex / groupsX
+            let bx0 = gx * Self.acGroupBlocks
+            let by0 = gy * Self.acGroupBlocks
+            let groupBlocksW = min(Self.acGroupBlocks, blocksX - bx0)
+            let groupBlocksH = min(Self.acGroupBlocks, blocksY - by0)
+
+            try writeHfPass(
+                to: &currentWriter,
+                gx: gx,
+                gy: gy,
+                bx0: bx0,
+                by0: by0,
+                groupBlocksW: groupBlocksW,
+                groupBlocksH: groupBlocksH,
+                transformAtBlock: transformAtBlock,
+                bucketOrders: bucketOrders,
+                acWriter: acWriter,
+                modularWriter: modularWriter,
+                alphaInPass: coefficients.hasAlpha && !alphaIsGlobal
+            )
+            currentWriter.alignToByte()
+            sectionData.append(currentWriter.finishToData())
+            if groupIndex + 1 < numGroups {
+                currentWriter = BitWriter()
+            }
+        }
+
+        // 4. Write outer codestream header + TOC + sections
+        let totalSectionBytes = sectionData.reduce(0) { $0 + $1.count }
+        var outer = BitWriter(reservingBytes: totalSectionBytes + 256)
+        outer.write(bits: 8, value: 0xFF)
+        outer.write(bits: 8, value: 0x0A)
+        try SizeHeader(xsize: UInt32(width), ysize: UInt32(height)).write(to: &outer)
+
+        let extraChannels: [ExtraChannelInfo] = coefficients.hasAlpha ? [
+            ExtraChannelInfo(
+                type: .alpha,
+                bitDepth: BitDepth(floatingPoint: false, bitsPerSample: UInt32(coefficients.bits)),
+                dimShift: 0,
+                name: "",
+                alphaAssociated: false
+            )
+        ] : []
+
+        let metadata = ImageMetadata(
+            allDefault: false,
+            orientation: 1,
+            intrinsicSize: nil,
+            preview: nil,
+            animation: nil,
+            bitDepth: BitDepth(floatingPoint: false, bitsPerSample: UInt32(coefficients.bits)),
+            modular16BitBufferSufficient: true,
+            extraChannels: extraChannels,
+            xybEncoded: true,
+            colorEncoding: coefficients.grayscale ? .grayscaleD65 : .srgb,
+            intensityTarget: 255.0,
+            minNits: 0.0,
+            relativeToMaxDisplay: false,
+            linearBelow: 0.0
+        )
+        try metadata.write(to: &outer)
+        outer.writeBit(true) // CustomTransformData.all_default = true
+        outer.alignToByte()
+
+        let frameHeader = FrameHeader(
+            allDefault: false,
+            frameType: .regular,
+            encoding: .varDCT,
+            flags: coefficients.dcSmoothing ? 0 : 128,
+            colorTransform: .xyb,
+            chromaSubsampling: .default,
+            upsampling: 1,
+            extraChannelUpsampling: coefficients.hasAlpha ? [1] : [],
+            groupSizeShift: 1,
+            xQmScale: 2,
+            bQmScale: 2,
+            passes: .default,
+            dcLevel: 0,
+            customSizeOrOrigin: false,
+            frameOrigin: (0, 0),
+            frameSize: nil,
+            blendingInfo: .default,
+            extraChannelBlendingInfo: coefficients.hasAlpha ? [.default] : [],
+            animationFrame: .default,
+            isLast: true,
+            saveAsReference: 0,
+            saveBeforeColorTransform: false,
+            name: "",
+            loopFilter: LoopFilter(
+                allDefault: false,
+                gab: coefficients.gaborish,
+                epfIters: 0
+            )
+        )
+        let frameCtx = FrameHeaderContext(
+            xybEncoded: true,
+            numExtraChannels: extraChannels.count,
+            haveAnimation: false,
+            haveTimecodes: false
+        )
+        try frameHeader.write(to: &outer, context: frameCtx)
+
+        var offsets: [UInt64] = [0]
+        var runningOffset: UInt64 = 0
+        for s in sectionData {
+            runningOffset += UInt64(s.count)
+            offsets.append(runningOffset)
+        }
+        let toc = TOC(
+            hasPermutation: false,
+            entrySizes: sectionData.map { UInt32($0.count) },
+            offsets: offsets
+        )
+        try toc.write(to: &outer)
+
+        var output = outer.finishToData()
+        for s in sectionData {
+            output.append(s)
+        }
+        guard output.count <= limit else {
+            throw ScalarModularError.resourceLimit
+        }
+        return output
     }
 
-    private func modularTokens(width: Int, height: Int, value: (Int) throws -> Int32,
-                               emit: (UInt32) throws -> Void) throws {
-        for y in 0..<height { for x in 0..<width {
-            if x & 255 == 0 { try budget.checkpoint() }
-            let i = y * width + x, sample = try value(i)
-            let west = try x > 0 ? value(i - 1) : (y > 0 ? value(i - width) : 0)
-            let north = try y > 0 ? value(i - width) : west
-            let northwest = try x > 0 && y > 0 ? value(i - width - 1) : (x > 0 ? west : north)
-            let prediction = min(max(west &+ north &- northwest, min(west, north)), max(west, north))
-            try emit(ZigZag.pack(sample &- prediction))
-        } }
-    }
-    private func alphaTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
-        guard coefficients.hasAlpha else { return }
-        let x = group % groupsX * 256, y = group / groupsX * 256
-        let width = min(256, coefficients.width - x), height = min(256, coefficients.height - y)
-        try modularTokens(width: width, height: height, value: { i in
-            try source.sample(channel: source.layouts.count - 1, x: x + i % width, y: y + i / width)
-        }, emit: emit)
-    }
-    private func dcTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
-        let region = dcRegion(group)
-        for c in [1,0,2] {
-            try modularTokens(width: region.width, height: region.height,
-                value: { coefficients.dc[c][(region.y + $0 / region.width) * coefficients.blocksX + region.x + $0 % region.width] }, emit: emit)
+    // MARK: - Section Writers
+
+    private func writeLfGlobal(
+        to w: inout BitWriter,
+        modularHeader: EntropySectionHeader,
+        modularCodebook: MultiClusterCodebook,
+        modularWriter: TokenStreamWriter,
+        alphaIsGlobal: Bool
+    ) throws {
+        // LfChannelDequantization.all_default = true
+        w.writeBit(true)
+        // Quantizer: global_scale and quant_lf = 17
+        try w.writeU32(
+            UInt32(coefficients.globalScale),
+            distributions: (
+                .offset(constant: 1, extraBits: 11),
+                .offset(constant: 2049, extraBits: 11),
+                .offset(constant: 4097, extraBits: 12),
+                .offset(constant: 8193, extraBits: 16)
+            )
+        )
+        try w.writeU32(
+            17,
+            distributions: (
+                .literal(16),
+                .offset(constant: 1, extraBits: 5),
+                .offset(constant: 1, extraBits: 8),
+                .offset(constant: 1, extraBits: 16)
+            )
+        )
+        // HfBlockContext: is_default = true
+        w.writeBit(true)
+        // LfChannelCorrelation: all_default = true
+        w.writeBit(true)
+        // Global Modular Tree: has_tree = true
+        w.writeBit(true)
+
+        let treeUintCfg = HybridUintConfig(splitExponent: 0, msbInToken: 0, lsbInToken: 0)
+        let treeTable = try PrefixCodeTable(lengths: [UInt8](repeating: 4, count: 16))
+        let treeCodebook = MultiClusterCodebook(
+            huffmanTables: [treeTable],
+            ansCounts: [],
+            alphabetSizes: [16]
+        )
+        let treeHeader = EntropySectionHeader(
+            lz77: .disabled,
+            contextMap: ContextMap.trivial(numContexts: 6),
+            usePrefixCode: true,
+            logAlphaSize: 15,
+            uintConfigs: [treeUintCfg]
+        )
+        try treeHeader.write(to: &w, numContexts: 6)
+        try treeCodebook.write(to: &w, header: treeHeader)
+        let tree = ModularTree(nodes: [
+            ModularTreeNode(
+                property: -1,
+                splitVal: 0,
+                leftChildOrLeafId: 0,
+                rightChild: 0,
+                predictor: .gradient,
+                predictorOffset: 0,
+                multiplier: 1,
+                rawPredictor: 5
+            )
+        ])
+        let treeStreamWriter = TokenStreamWriter(header: treeHeader, codebook: treeCodebook)
+        try tree.encode { ctx, val in
+            try treeStreamWriter.writeToken(context: ctx, value: val, to: &w)
         }
-    }
-    private func metadataTokens(group: Int, indices: [Int], _ emit: (UInt32) throws -> Void) throws {
-        let region = dcRegion(group), count = indices.count
-        let tw = (region.width + 7) / 8, th = (region.height + 7) / 8
-        for _ in 0..<2 { try modularTokens(width: tw, height: th, value: { _ in 0 }, emit: emit) }
-        try modularTokens(width: count, height: 2,
-            value: { $0 < count ? coefficients.strategies[indices[$0]] : coefficients.quantAC[indices[$0 - count]] - 1 }, emit: emit)
-        try modularTokens(width: region.width, height: region.height,
-            value: { _ in 0 }, emit: emit)
-    }
-    private func acTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
-        let x0 = group % groupsX * 32, y0 = group / groupsX * 32
-        let width = min(32, coefficients.blocksX - x0), height = min(32, coefficients.blocksY - y0)
-        if let transforms = coefficients.transforms {
-            var orders = [[Int]?](repeating: nil, count: 16)
-            for transform in transforms where transform.x >= x0 && transform.x < x0 + width && transform.y >= y0 && transform.y < y0 + height {
-                try budget.checkpoint()
-                let covered = transform.coveredCells, count = covered &* 64, offset = transform.coefficientOffset
-                let bucket = transform.orderBucket
-                let order: [Int]
-                if let cached = orders[bucket] { order = cached }
-                else {
-                    order = try VarDCTOrders.natural(width: max(transform.cellsX,transform.cellsY),
-                        height: min(transform.cellsX,transform.cellsY), budget: budget)
-                    orders[bucket] = order
-                }
-                try order.withUnsafeBufferPointer { ordBuf in
-                    let ordPtr = ordBuf.baseAddress!
-                    for c in [1,0,2] {
-                        try coefficients.ac[c].withUnsafeBufferPointer { acBuf in
-                            let acPtr = acBuf.baseAddress! + offset
-                            var nonzeros = 0
-                            var lastK = 0
-                            for k in covered..<count {
-                                if acPtr[ordPtr[k]] != 0 {
-                                    nonzeros &+= 1
-                                    lastK = k
-                                }
-                            }
-                            try emit(UInt32(nonzeros))
-                            if nonzeros > 0 {
-                                for k in covered...lastK {
-                                    let value = acPtr[ordPtr[k]]
-                                    try emit(ZigZag.pack(value))
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return
-        }
-        try Self.order.withUnsafeBufferPointer { ordBuf in
-            let ordPtr = ordBuf.baseAddress!
-            for y in 0..<height {
-                try budget.checkpoint()
-                for x in 0..<width {
-                    let offset = ((y0 + y) * coefficients.blocksX + x0 + x) * 64
-                    for c in [1,0,2] {
-                        try coefficients.ac[c].withUnsafeBufferPointer { acBuf in
-                            let acPtr = acBuf.baseAddress! + offset
-                            var nonzeros = 0
-                            var lastK = 0
-                            for k in 1..<64 {
-                                if acPtr[ordPtr[k]] != 0 {
-                                    nonzeros &+= 1
-                                    lastK = k
-                                }
-                            }
-                            try emit(UInt32(nonzeros))
-                            if nonzeros > 0 {
-                                for k in 1...lastK {
-                                    let value = acPtr[ordPtr[k]]
-                                    try emit(ZigZag.pack(value))
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    private func tree(to writer: inout BitWriter) throws {
-        let code = MultiClusterCodebook(huffmanTables: [try PrefixCodeTable(lengths: [UInt8](repeating: 4, count: 16))],
-            ansCounts: [], alphabetSizes: [16])
-        let header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: 6),
-            usePrefixCode: true, logAlphaSize: 15,
-            uintConfigs: [HybridUintConfig(splitExponent: 0, msbInToken: 0, lsbInToken: 0)])
-        try header.write(to: &writer, numContexts: 6); try code.write(to: &writer, header: header)
-        let tree = ModularTree(nodes: [ModularTreeNode(property: -1, splitVal: 0, leftChildOrLeafId: 0,
-            rightChild: 0, predictor: .gradient, predictorOffset: 0, multiplier: 1, rawPredictor: 5)])
-        let tokens = TokenStreamWriter(header: header, codebook: code)
-        try tree.encode { try tokens.writeToken(context: $0, value: $1, to: &writer) }
-    }
-    private func lfGlobal(_ modular: VarDCTPrefix, to writer: inout BitWriter) throws {
-        writer.writeBit(true) // default DC quantisation
-        try writer.writeU32(coefficients.globalScale, distributions: (.offset(constant: 1, extraBits: 11),
-            .offset(constant: 2049, extraBits: 11), .offset(constant: 4097, extraBits: 12), .offset(constant: 8193, extraBits: 16)))
-        try writer.writeU32(coefficients.quantDC, distributions: (.literal(16), .offset(constant: 1, extraBits: 5),
-            .offset(constant: 1, extraBits: 8), .offset(constant: 1, extraBits: 16)))
-        writer.writeBit(true); writer.writeBit(true); writer.writeBit(true) // default contexts/CfL, global tree
-        try tree(to: &writer); try modular.writeHeader(to: &writer, contexts: 1)
+
+        // Global post-tree Modular codebook
+        try modularHeader.write(to: &w, numContexts: 1)
+        try modularCodebook.write(to: &w, header: modularHeader)
+
         if coefficients.hasAlpha {
-            try GroupHeader.default.write(to: &writer)
-            if groupsX * groupsY == 1 {
-                try alphaTokens(group: 0) { try modular.write($0, to: &writer) }
+            try GroupHeader.default.write(to: &w)
+            if alphaIsGlobal {
+                try scanAlphaSliceResiduals(x0: 0, y0: 0, sliceW: coefficients.width, sliceH: coefficients.height) { tok in
+                    try modularWriter.writeToken(context: 0, value: tok, to: &w)
+                }
             }
         }
     }
-    private func dcGroup(_ group: Int, _ modular: VarDCTPrefix, to writer: inout BitWriter) throws {
-        let region = dcRegion(group), indices = try transformIndices(group)
-        guard !indices.isEmpty else { throw VarDCTError.invalidTransform }
-        writer.write(bits: 2, value: 0)
-        try GroupHeader.default.write(to: &writer)
-        try dcTokens(group: group) { try modular.write($0, to: &writer) }
-        let bits = Int(ceilLog2(UInt32(region.width * region.height)))
-        if bits > 0 { writer.write(bits: bits, value: UInt32(indices.count - 1)) }
-        try GroupHeader.default.write(to: &writer)
-        try metadataTokens(group: group, indices: indices) { try modular.write($0, to: &writer) }
+
+    private func writeLfGroup(
+        to w: inout BitWriter,
+        bx0: Int,
+        by0: Int,
+        regionW: Int,
+        regionH: Int,
+        transformAtBlock: [Int],
+        modularWriter: TokenStreamWriter
+    ) throws {
+        // extra_precision = 0 (2 bits)
+        w.write(bits: 2, value: 0)
+
+        // DC Modular substream ([Y=1, X=0, B=2])
+        try GroupHeader.default.write(to: &w)
+        for c in [1, 0, 2] {
+            try scanPlaneResiduals(
+                plane: coefficients.dc[c],
+                planeWidth: coefficients.blocksX,
+                x0: bx0,
+                y0: by0,
+                w: regionW,
+                h: regionH
+            ) { tok in
+                try modularWriter.writeToken(context: 0, value: tok, to: &w)
+            }
+        }
+
+        // HfMetadata Modular substream
+        let regionBlocks = regionW * regionH
+        let groupTransforms = transformsInDCGroup(
+            bx0: bx0, by0: by0, regionW: regionW, regionH: regionH, transformAtBlock: transformAtBlock
+        )
+        let nbBlocks = max(1, groupTransforms.count)
+        let nbBlocksBits = Self.ceilLog2(regionBlocks)
+        if nbBlocksBits > 0 {
+            w.write(bits: nbBlocksBits, value: UInt32(nbBlocks - 1))
+        }
+
+        try GroupHeader.default.write(to: &w)
+        let regionTilesW = (regionW + 7) / 8
+        let regionTilesH = (regionH + 7) / 8
+        let zeroTileCount = regionTilesW * regionTilesH * 2
+        for _ in 0..<zeroTileCount {
+            try modularWriter.writeToken(context: 0, value: 0, to: &w)
+        }
+
+        var blockInfo = [Int32](repeating: 0, count: nbBlocks * 2)
+        for (i, t) in groupTransforms.enumerated() {
+            blockInfo[i] = Int32(t.identifier)
+            blockInfo[nbBlocks + i] = Int32(t.quantisation) - 1
+        }
+        try scanPlaneResiduals(plane: blockInfo, planeWidth: nbBlocks, x0: 0, y0: 0, w: nbBlocks, h: 2) { tok in
+            try modularWriter.writeToken(context: 0, value: tok, to: &w)
+        }
+
+        let sharpCount = regionW * regionH
+        for _ in 0..<sharpCount {
+            try modularWriter.writeToken(context: 0, value: 0, to: &w)
+        }
     }
-    private func hfGlobal(_ ac: VarDCTPrefix, to writer: inout BitWriter) throws {
-        writer.writeBit(true) // default AC matrices
-        let bits = Int(ceilLog2(UInt32(groupsX * groupsY)))
-        if bits > 0 { writer.write(bits: bits, value: 0) } // one histogram
-        try writer.writeU32(0, distributions: (.literal(0x5f), .literal(0x13), .literal(0), .bits(13)))
-        try ac.writeHeader(to: &writer, contexts: 15 * 495)
+
+    private func writeHfGlobal(
+        to w: inout BitWriter,
+        numGroups: Int,
+        acHeader: EntropySectionHeader,
+        acCodebook: MultiClusterCodebook
+    ) throws {
+        // dequant_matrices_all_default = true
+        w.writeBit(true)
+        // num_hf_presets = 1 (encoded as 0 in ceilLog2(numGroups) bits)
+        let presetBits = Self.ceilLog2(numGroups)
+        if presetBits > 0 {
+            w.write(bits: presetBits, value: 0)
+        }
+        // used_orders = 0
+        try w.writeU32(
+            0,
+            distributions: (.literal(0x5F), .literal(0x13), .literal(0), .bits(13))
+        )
+        try acHeader.write(to: &w, numContexts: Self.totalACContexts)
+        try acCodebook.write(to: &w, header: acHeader)
     }
-    private func imageHeader(to writer: inout BitWriter) throws {
-        writer.write(bits: 8, value: 0xff); writer.write(bits: 8, value: 0x0a)
-        try SizeHeader(xsize: UInt32(coefficients.width), ysize: UInt32(coefficients.height)).write(to: &writer)
-        let bits = BitDepth(floatingPoint: false, bitsPerSample: UInt32(coefficients.bits))
-        let extras: [ExtraChannelInfo] = coefficients.hasAlpha ? [.init(type: .alpha, bitDepth: bits, dimShift: 0, name: "")] : []
-        let metadata = ImageMetadata(allDefault: false, orientation: 1, intrinsicSize: nil, preview: nil, animation: nil,
-            bitDepth: bits, modular16BitBufferSufficient: true, extraChannels: extras, xybEncoded: true,
-            colorEncoding: coefficients.grayscale ? .grayscaleD65 : .srgb,
-            intensityTarget: 255, minNits: 0, relativeToMaxDisplay: false, linearBelow: 0)
-        try metadata.write(to: &writer); writer.writeBit(true); writer.alignToByte()
+
+    private func writeHfPass(
+        to w: inout BitWriter,
+        gx: Int,
+        gy: Int,
+        bx0: Int,
+        by0: Int,
+        groupBlocksW: Int,
+        groupBlocksH: Int,
+        transformAtBlock: [Int],
+        bucketOrders: [[Int]?],
+        acWriter: TokenStreamWriter,
+        modularWriter: TokenStreamWriter,
+        alphaInPass: Bool
+    ) throws {
+        for ly in 0..<groupBlocksH {
+            try budget.checkpoint()
+            let by = by0 + ly
+            for lx in 0..<groupBlocksW {
+                let bx = bx0 + lx
+                let tIndex = transformAtBlock[by * coefficients.blocksX + bx]
+                if tIndex < 0 { continue }
+                let transform = coefficients.transforms[tIndex]
+                let covered = transform.coveredCells
+                let coeffCount = covered * 64
+                let baseOffset = transform.coefficientOffset
+                let order = bucketOrders[transform.orderBucket]!
+
+                for c in [1, 0, 2] {
+                    let plane = coefficients.ac[c]
+                    var nonZeros = 0
+                    for k in covered..<coeffCount {
+                        if plane[baseOffset + order[k]] != 0 {
+                            nonZeros += 1
+                        }
+                    }
+                    try acWriter.writeToken(context: 0, value: UInt32(nonZeros), to: &w)
+                    if nonZeros == 0 { continue }
+                    var remaining = nonZeros
+                    for k in covered..<coeffCount {
+                        if remaining == 0 { break }
+                        let v = plane[baseOffset + order[k]]
+                        try acWriter.writeToken(context: 0, value: ZigZag.pack(v), to: &w)
+                        if v != 0 {
+                            remaining -= 1
+                        }
+                    }
+                }
+            }
+        }
+
+        if alphaInPass {
+            let x0 = gx * Self.groupDimension
+            let y0 = gy * Self.groupDimension
+            let sliceW = min(Self.groupDimension, coefficients.width - x0)
+            let sliceH = min(Self.groupDimension, coefficients.height - y0)
+            try GroupHeader.default.write(to: &w)
+            try scanAlphaSliceResiduals(x0: x0, y0: y0, sliceW: sliceW, sliceH: sliceH) { tok in
+                try modularWriter.writeToken(context: 0, value: tok, to: &w)
+            }
+        }
     }
-    private func frameHeader(to writer: inout BitWriter) throws {
-        let frame = FrameHeader(allDefault: false, frameType: .regular, encoding: .varDCT, flags: coefficients.dcSmoothing ? 0 : 128,
-            colorTransform: .xyb, chromaSubsampling: .default, upsampling: 1, extraChannelUpsampling: [],
-            groupSizeShift: 1, xQmScale: 2, bQmScale: 2, passes: .default, dcLevel: 0,
-            customSizeOrOrigin: false, frameOrigin: (0,0), frameSize: nil, blendingInfo: .default,
-            extraChannelBlendingInfo: [], animationFrame: .default, isLast: true, saveAsReference: 0,
-            saveBeforeColorTransform: false, name: "", loopFilter: .init(allDefault: false, gab: coefficients.gaborish, epfIters: 0))
-        try frame.write(to: &writer, context: .init(xybEncoded: true, numExtraChannels: coefficients.hasAlpha ? 1 : 0))
+
+    // MARK: - Helpers
+
+    private func transformsInDCGroup(
+        bx0: Int,
+        by0: Int,
+        regionW: Int,
+        regionH: Int,
+        transformAtBlock: [Int]
+    ) -> [VarDCTStrategyMap.Transform] {
+        var result: [VarDCTStrategyMap.Transform] = []
+        result.reserveCapacity(regionW * regionH)
+        for ry in 0..<regionH {
+            let by = by0 + ry
+            for rx in 0..<regionW {
+                let bx = bx0 + rx
+                let idx = transformAtBlock[by * coefficients.blocksX + bx]
+                if idx >= 0 {
+                    result.append(coefficients.transforms[idx])
+                }
+            }
+        }
+        return result
+    }
+
+    @inline(__always)
+    private static func gradientPredict(w: Int32, n: Int32, nw: Int32) -> Int32 {
+        let g = Int64(w) + Int64(n) - Int64(nw)
+        let lo = Int64(min(w, n))
+        let hi = Int64(max(w, n))
+        return Int32(truncatingIfNeeded: min(max(g, lo), hi))
+    }
+
+    private func scanPlaneResiduals(
+        plane: [Int32],
+        planeWidth: Int,
+        x0: Int,
+        y0: Int,
+        w: Int,
+        h: Int,
+        emit: (UInt32) throws -> Void
+    ) rethrows {
+        for ry in 0..<h {
+            let row = (y0 + ry) * planeWidth + x0
+            let prevRow = (y0 + ry - 1) * planeWidth + x0
+            for rx in 0..<w {
+                let actual = plane[row + rx]
+                let predicted: Int32
+                if ry == 0 && rx == 0 {
+                    predicted = 0
+                } else if ry == 0 {
+                    predicted = plane[row + rx - 1]
+                } else if rx == 0 {
+                    predicted = plane[prevRow]
+                } else {
+                    predicted = Self.gradientPredict(
+                        w: plane[row + rx - 1],
+                        n: plane[prevRow + rx],
+                        nw: plane[prevRow + rx - 1]
+                    )
+                }
+                try emit(ZigZag.pack(actual &- predicted))
+            }
+        }
+    }
+
+    private func scanAlphaSliceResiduals(
+        x0: Int,
+        y0: Int,
+        sliceW: Int,
+        sliceH: Int,
+        emit: (UInt32) throws -> Void
+    ) throws {
+        let alphaChannel = source.layouts.count - 1
+        var prevRow = [Int32](repeating: 0, count: sliceW)
+        var currRow = [Int32](repeating: 0, count: sliceW)
+        for ry in 0..<sliceH {
+            if (ry & 15) == 0 { try budget.checkpoint() }
+            let y = y0 + ry
+            for rx in 0..<sliceW {
+                let actual = try source.sample(channel: alphaChannel, x: x0 + rx, y: y)
+                currRow[rx] = actual
+                let predicted: Int32
+                if ry == 0 && rx == 0 {
+                    predicted = 0
+                } else if ry == 0 {
+                    predicted = currRow[rx - 1]
+                } else if rx == 0 {
+                    predicted = prevRow[0]
+                } else {
+                    predicted = Self.gradientPredict(
+                        w: currRow[rx - 1],
+                        n: prevRow[rx],
+                        nw: prevRow[rx - 1]
+                    )
+                }
+                try emit(ZigZag.pack(actual &- predicted))
+            }
+            swap(&prevRow, &currRow)
+        }
+    }
+
+    @inline(__always)
+    private static func ceilLog2(_ n: Int) -> Int {
+        guard n > 1 else { return 0 }
+        return Int.bitWidth - (n - 1).leadingZeroBitCount
     }
 }

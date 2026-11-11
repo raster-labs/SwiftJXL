@@ -52,8 +52,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - swift: '6.2'
-            engine: native
           - swift: '6.4'
             engine: swiftbuild
     steps:

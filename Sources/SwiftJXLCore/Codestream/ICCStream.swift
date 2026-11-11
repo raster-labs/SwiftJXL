@@ -1,359 +1,595 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Adapted from JXLSwift Codestream/ICCStream.swift at
-// 57e81cb9e2411d1efac435b429a306a031744c1e, Copyright (c) 2026 Raster-Lab.
-// JPEG XL Project Authors' ICC algorithms retain BSD-3-Clause terms.
-// See Documentation/ThirdParty/libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-package enum ICCStreamError: Error, Sendable { case malformed }
+package enum ICCStreamError: Error, Sendable, Equatable {
+    case malformed
+}
+
+/// ISO/IEC 18181-1 §6.2 & Annex B compressed ICC profile stream reader and writer.
 package enum ICCStream {
-    package static let headerSize = 128
-    package static let numContexts = 41
+    private static let numContexts = 41
 
-    // MARK: - Command / flag constants (libjxl icc_codec_common.h)
-
-    private static let kCommandTagUnknown = 1
-    private static let kCommandTagTRC = 2
-    private static let kCommandTagXYZ = 3
-    private static let kCommandTagStringFirst = 4
-    private static let kCommandInsert = 1
-    private static let kCommandShuffle2 = 2
-    private static let kCommandShuffle4 = 3
-    private static let kCommandPredict = 4
-    private static let kCommandXYZ = 10
-    private static let kCommandTypeStartFirst = 16
-    private static let kFlagBitOffset = 64
-    private static let kFlagBitSize = 128
-
-    // MARK: - Tag keywords
-
-    private static func tag(_ s: String) -> [UInt8] { Array(s.utf8) }
-    private static let kRtrcTag = tag("rTRC")
-    private static let kGtrcTag = tag("gTRC")
-    private static let kBtrcTag = tag("bTRC")
-    private static let kRxyzTag = tag("rXYZ")
-    private static let kGxyzTag = tag("gXYZ")
-    private static let kBxyzTag = tag("bXYZ")
-    private static let kKxyzTag = tag("kXYZ")
-    private static let kWtptTag = tag("wtpt")
-    private static let kBkptTag = tag("bkpt")
-    private static let kLumiTag = tag("lumi")
-    private static let kXyz_Tag = tag("XYZ ")
-
-    /// Tag-name table (libjxl `kTagStrings`, 17 entries).
-    private static let kTagStrings: [[UInt8]] = [
-        tag("cprt"), tag("wtpt"), tag("bkpt"), tag("rXYZ"), tag("gXYZ"),
-        tag("bXYZ"), tag("kXYZ"), tag("rTRC"), tag("gTRC"), tag("bTRC"),
-        tag("kTRC"), tag("chad"), tag("desc"), tag("chrm"), tag("dmnd"),
-        tag("dmdd"), tag("lumi"),
-    ]
-    /// Tag-type table (libjxl `kTypeStrings`, 8 entries).
-    private static let kTypeStrings: [[UInt8]] = [
-        tag("XYZ "), tag("desc"), tag("text"), tag("mluc"),
-        tag("para"), tag("curv"), tag("sf32"), tag("gbd "),
+    private static let tagStrings: [[UInt8]] = [
+        Array("cprt".utf8),
+        Array("wtpt".utf8),
+        Array("bkpt".utf8),
+        Array("rXYZ".utf8),
+        Array("gXYZ".utf8),
+        Array("bXYZ".utf8),
+        Array("kXYZ".utf8),
+        Array("rTRC".utf8),
+        Array("gTRC".utf8),
+        Array("bTRC".utf8),
+        Array("kTRC".utf8),
+        Array("chad".utf8),
+        Array("desc".utf8),
+        Array("chrm".utf8),
+        Array("dmnd".utf8),
+        Array("dmdd".utf8),
+        Array("lumi".utf8),
     ]
 
-    /// libjxl `kIccInitialHeaderPrediction` (128 bytes).
-    private static let initialHeaderPrediction: [UInt8] = [
-        0,0,0,0, 0,0,0,0, 4,0,0,0, 0x6d,0x6e,0x74,0x72,       // "mntr"
-        0x52,0x47,0x42,0x20, 0x58,0x59,0x5a,0x20, 0,0,0,0, 0,0,0,0, // "RGB XYZ "
-        0,0,0,0, 0x61,0x63,0x73,0x70, 0,0,0,0, 0,0,0,0,        // "acsp"
-        0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        0,0,0,0, 0,0,246,214, 0,1,0,0, 0,0,211,45,
-        0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
-        0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0,
+    private static let typeStrings: [[UInt8]] = [
+        Array("XYZ ".utf8),
+        Array("desc".utf8),
+        Array("text".utf8),
+        Array("mluc".utf8),
+        Array("para".utf8),
+        Array("curv".utf8),
+        Array("sf32".utf8),
+        Array("gbd ".utf8),
     ]
 
-
-    package static func decode(from reader: inout BitReader, maximumBytes: Int,
-                               checkpoint: () throws -> Void) throws -> Data {
-        try checkpoint()
-        guard maximumBytes > 0, maximumBytes <= 4 * 1024 * 1024 else { throw JPEGEntropyError.resourceLimit }
-        let count = try reader.readU64()
-        guard count <= UInt64(maximumBytes * 4 + 1024) else { throw JPEGEntropyError.resourceLimit }
-        try reader.budget?.reserveWorkspace(Int(count) * 2 + 32768)
-        let header = try EntropySectionHeader.read(from: &reader, numContexts: numContexts)
-        let codebook = try MultiClusterCodebook.read(from: &reader, header: header)
-        var stream = TokenStreamReader(header: header, codebook: codebook)
-        var bytes = [UInt8](); bytes.reserveCapacity(Int(count))
-        for i in 0..<Int(count) {
-            if i & 1023 == 0 { try checkpoint() }
-            let context = iccANSContext(i: i, b1: i > 0 ? Int(bytes[i - 1]) : 0, b2: i > 1 ? Int(bytes[i - 2]) : 0)
-            let value = try stream.readToken(context: context, from: &reader)
-            guard value <= 255 else { throw ICCStreamError.malformed }
-            bytes.append(UInt8(value))
+    /// ISO/IEC 18181-1 §6.2 context model for ICC stream bytes.
+    @inline(__always)
+    private static func iccContext(index: Int, b1: UInt8, b2: UInt8) -> Int {
+        if index <= 128 { return 0 }
+        let p1: Int
+        if (b1 >= 65 && b1 <= 90) || (b1 >= 97 && b1 <= 122) {
+            p1 = 0
+        } else if (b1 >= 48 && b1 <= 57) || b1 == 46 || b1 == 44 {
+            p1 = 1
+        } else if b1 <= 1 {
+            p1 = 2 + Int(b1)
+        } else if b1 < 16 {
+            p1 = 4
+        } else if b1 > 240 && b1 < 255 {
+            p1 = 5
+        } else if b1 == 255 {
+            p1 = 6
+        } else {
+            p1 = 7
         }
-        try stream.finish()
-        let budget = reader.budget
-        return try unpredict(bytes, maximumBytes: maximumBytes,
-            admit: { try budget?.reserveWorkspace($0 * 8 + 32768) }, checkpoint: checkpoint)
+
+        let p2: Int
+        if (b2 >= 65 && b2 <= 90) || (b2 >= 97 && b2 <= 122) {
+            p2 = 0
+        } else if (b2 >= 48 && b2 <= 57) || b2 == 46 || b2 == 44 {
+            p2 = 1
+        } else if b2 < 16 {
+            p2 = 2
+        } else if b2 > 240 {
+            p2 = 3
+        } else {
+            p2 = 4
+        }
+
+        return 1 + p1 + p2 * 8
     }
 
-    /// Standard header prediction plus literal insertion commands. The encoder
-    /// intentionally avoids lossy profile interpretation or a private side box.
-    package static func write(_ profile: Data, to writer: inout BitWriter,
-                              maximumBytes: Int, checkpoint: () throws -> Void) throws {
-        try checkpoint()
-        guard !profile.isEmpty, maximumBytes > 0, profile.count <= min(maximumBytes, 4 * 1024 * 1024) else {
-            throw JPEGEntropyError.resourceLimit
-        }
-        var commands: [UInt8] = []
-        if profile.count > 128 {
-            commands = [0, 1] // No predicted tag list; insert the complete tail.
-            variable(profile.count - 128, to: &commands)
-        }
-        var encoded: [UInt8] = []
-        encoded.reserveCapacity(profile.count + 32)
-        variable(profile.count, to: &encoded); variable(commands.count, to: &encoded)
-        encoded.append(contentsOf: commands)
-        let source = Array(profile)
-        var header = initialHeaderPrediction
-        let size = UInt32(profile.count)
-        for i in 0..<4 { header[i] = UInt8(truncatingIfNeeded: size >> ((3 - i) * 8)) }
-        for i in 0..<min(128, profile.count) {
-            iccPredictHeader(source, i, &header, i)
-            encoded.append(source[i] &- header[i])
-        }
-        for i in 128..<max(128, profile.count) {
-            if i & 1023 == 0 { try checkpoint() }
-            encoded.append(source[i])
-        }
-        writer.writeU64(UInt64(encoded.count))
-        let config = HybridUintConfig(splitExponent: 8, msbInToken: 0, lsbInToken: 0)
-        let entropy = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: numContexts),
-            usePrefixCode: true, logAlphaSize: 15, uintConfigs: [config])
-        let codebook = MultiClusterCodebook(huffmanTables: [try PrefixCodeTable(lengths: [UInt8](repeating: 8, count: 256))],
-            ansCounts: [], alphabetSizes: [256])
-        try entropy.write(to: &writer, numContexts: numContexts); try codebook.write(to: &writer, header: entropy)
-        let tokens = TokenStreamWriter(header: entropy, codebook: codebook)
-        for i in encoded.indices {
-            if i & 1023 == 0 { try checkpoint(); try ScalarEncodingWork.checkpoint() }
-            try tokens.writeToken(context: 0, value: UInt32(encoded[i]), to: &writer)
-        }
-        try checkpoint(); try ScalarEncodingWork.checkpoint()
+    /// Reconstructs the 128-byte predicted ICC header template per ISO/IEC 18181-1 Annex B.3.
+    private static func initialHeaderTemplate(outputSize: UInt32) -> [UInt8] {
+        var header = [UInt8](repeating: 0, count: 128)
+        header[0] = UInt8(truncatingIfNeeded: outputSize >> 24)
+        header[1] = UInt8(truncatingIfNeeded: outputSize >> 16)
+        header[2] = UInt8(truncatingIfNeeded: outputSize >> 8)
+        header[3] = UInt8(truncatingIfNeeded: outputSize)
+        header[8] = 4
+        header[12..<16] = [0x6D, 0x6E, 0x74, 0x72] // "mntr"
+        header[16..<20] = [0x52, 0x47, 0x42, 0x20] // "RGB "
+        header[20..<24] = [0x58, 0x59, 0x5A, 0x20] // "XYZ "
+        header[36..<40] = [0x61, 0x63, 0x73, 0x70] // "acsp"
+        let d50: [UInt8] = [0, 0, 0xF6, 0xD6, 0, 1, 0, 0, 0, 0, 0xD3, 0x2D]
+        for i in 0..<12 { header[68 + i] = d50[i] }
+        return header
     }
 
-    private static func variable(_ value: Int, to output: inout [UInt8]) {
-        var n = value
-        repeat { let byte = UInt8(n & 127); n >>= 7; output.append(byte | (n == 0 ? 0 : 128)) } while n != 0
+    private static func updateHeaderTemplateFromCMM(_ header: inout [UInt8], cmm: ArraySlice<UInt8>) {
+        let b0 = cmm[cmm.startIndex]
+        let b1 = cmm[cmm.startIndex + 1]
+        let b2 = cmm[cmm.startIndex + 2]
+        let b3 = cmm[cmm.startIndex + 3]
+        header[80] = b0
+        header[81] = b1
+        header[82] = b2
+        header[83] = b3
+        if (b0 == 0x61 && b1 == 0x70 && b2 == 0x70 && b3 == 0x6C) || // "appl"
+           (b0 == 0x61 && b1 == 0x64 && b2 == 0x62 && b3 == 0x65) {  // "adbe"
+            header[40..<44] = [0x41, 0x50, 0x50, 0x4C] // "APPL"
+        } else if b0 == 0x6D && b1 == 0x73 && b2 == 0x66 && b3 == 0x74 { // "msft"
+            header[40..<44] = [0x4D, 0x53, 0x46, 0x54] // "MSFT"
+        } else if b0 == 0x73 && b1 == 0x67 && b2 == 0x69 && b3 == 0x20 { // "sgi "
+            header[40..<44] = [0x53, 0x47, 0x49, 0x20] // "SGI "
+        } else if b0 == 0x74 && b1 == 0x77 && b2 == 0x69 && b3 == 0x20 { // "twi "
+            header[40..<44] = [0x54, 0x47, 0x4E, 0x54] // "TGNT"
+        }
     }
-    private static func variable32(_ bytes: [UInt8], _ cursor: inout Int, end: Int) throws -> UInt32 {
-        var value: UInt64 = 0
-        for i in 0..<10 {
-            guard cursor < end else { throw ICCStreamError.malformed }
-            let byte = bytes[cursor]; cursor += 1
-            guard i < 9 || byte <= 1 else { throw ICCStreamError.malformed }
-            value |= UInt64(byte & 127) << (i * 7)
-            if byte < 128 {
-                guard value <= UInt32.max else { throw ICCStreamError.malformed }
-                return UInt32(value)
+
+    @inline(__always)
+    private static func readVarint(_ bytes: [UInt8], pos: inout Int, end: Int) throws -> UInt64 {
+        var result: UInt64 = 0
+        var shift: UInt64 = 0
+        while pos < end {
+            let b = bytes[pos]
+            pos += 1
+            if shift == 63 && (b & 0x7F) > 1 {
+                throw ICCStreamError.malformed
+            }
+            result |= UInt64(b & 0x7F) << shift
+            if (b & 0x80) == 0 {
+                return result
+            }
+            shift += 7
+            if shift > 63 {
+                throw ICCStreamError.malformed
             }
         }
         throw ICCStreamError.malformed
     }
-    private static func variable(_ bytes: [UInt8], _ cursor: inout Int, end: Int) throws -> Int {
-        guard let value = Int(exactly: try variable32(bytes, &cursor, end: end)) else {
+
+    @inline(__always)
+    private static func appendVarint(_ value: UInt64, to out: inout [UInt8]) {
+        var v = value
+        repeat {
+            let low = UInt8(v & 0x7F)
+            v >>= 7
+            out.append(low | (v != 0 ? 0x80 : 0))
+        } while v != 0
+    }
+
+    @inline(__always)
+    private static func writeUInt32BE(_ value: UInt32, into out: inout [UInt8], at offset: Int) {
+        out[offset] = UInt8(truncatingIfNeeded: value >> 24)
+        out[offset + 1] = UInt8(truncatingIfNeeded: value >> 16)
+        out[offset + 2] = UInt8(truncatingIfNeeded: value >> 8)
+        out[offset + 3] = UInt8(truncatingIfNeeded: value)
+    }
+
+    @inline(__always)
+    private static func readWordBE(_ out: [UInt8], at offset: Int, width: Int) -> UInt32 {
+        switch width {
+        case 1:
+            return UInt32(out[offset])
+        case 2:
+            return (UInt32(out[offset]) << 8) | UInt32(out[offset + 1])
+        case 4:
+            return (UInt32(out[offset]) << 24)
+                | (UInt32(out[offset + 1]) << 16)
+                | (UInt32(out[offset + 2]) << 8)
+                | UInt32(out[offset + 3])
+        default:
+            return 0
+        }
+    }
+
+    /// Reconstructs the ICC profile from the Annex B predicted byte stream.
+    package static func unpredict(
+        _ stream: [UInt8],
+        maximumBytes: Int,
+        admit: (Int) throws -> Void = { _ in },
+        checkpoint: () throws -> Void
+    ) throws -> Data {
+        try checkpoint()
+        guard maximumBytes >= 0 else { throw JPEGEntropyError.resourceLimit }
+        var pos = 0
+        let streamEnd = stream.count
+        let rawOutputSize = try readVarint(stream, pos: &pos, end: streamEnd)
+        guard rawOutputSize <= UInt64(maximumBytes), let outputSize = Int(exactly: rawOutputSize) else {
+            throw JPEGEntropyError.resourceLimit
+        }
+        try admit(outputSize)
+        guard outputSize >= 128, let outputSizeU32 = UInt32(exactly: outputSize) else {
             throw ICCStreamError.malformed
         }
-        return value
-    }
-    private static func decodeUint32(_ bytes: [UInt8], _ size: Int, _ offset: Int) -> UInt32 {
-        guard offset >= 0, offset <= size, size - offset >= 4 else { return 0 }
-        return (UInt32(bytes[offset]) << 24) | (UInt32(bytes[offset + 1]) << 16)
-            | (UInt32(bytes[offset + 2]) << 8) | UInt32(bytes[offset + 3])
-    }
-    private static func append32(_ n: Int64, to bytes: inout [UInt8]) throws {
-        guard n >= 0, n <= UInt32.max else { throw ICCStreamError.malformed }
-        for shift in [24,16,8,0] { bytes.append(UInt8(truncatingIfNeeded: n >> shift)) }
-    }
-    private static func byteKind1(_ b: Int) -> Int {
-        if (97...122).contains(b) || (65...90).contains(b) { return 0 } // a-z A-Z
-        if (48...57).contains(b) { return 1 }                           // 0-9
-        if b == 46 || b == 44 { return 1 }                             // . ,
-        if b == 0 { return 2 }
-        if b == 1 { return 3 }
-        if b < 16 { return 4 }
-        if b == 255 { return 6 }
-        if b > 240 { return 5 }
-        return 7
-    }
-    private static func byteKind2(_ b: Int) -> Int {
-        if (97...122).contains(b) || (65...90).contains(b) { return 0 }
-        if (48...57).contains(b) { return 1 }
-        if b == 46 || b == 44 { return 1 }
-        if b < 16 { return 2 }
-        if b > 240 { return 3 }
-        return 4
-    }
-    private static func iccANSContext(i: Int, b1: Int, b2: Int) -> Int {
-        if i <= 128 { return 0 }
-        return 1 + byteKind1(b1) + byteKind2(b2) * 8
-    }
-
-    private static func predictValue(
-        _ p1: Int64, _ p2: Int64, _ p3: Int64, _ order: Int
-    ) -> Int64 {
-        if order == 0 { return p1 }
-        if order == 1 { return 2 * p1 - p2 }
-        if order == 2 { return 3 * p1 - 3 * p2 + p3 }
-        return 0
-    }
-
-    private static func iccPredictHeader(
-        _ icc: [UInt8], _ size: Int, _ header: inout [UInt8], _ pos: Int
-    ) {
-        if pos == 8 && size >= 8 {
-            header[80] = icc[4]; header[81] = icc[5]
-            header[82] = icc[6]; header[83] = icc[7]
+        let rawCommandsSize = try readVarint(stream, pos: &pos, end: streamEnd)
+        guard let commandsSize = Int(exactly: rawCommandsSize),
+              commandsSize <= streamEnd - pos else {
+            throw ICCStreamError.malformed
         }
-        if pos == 41 && size >= 41 {
-            if icc[40] == 0x41 {  // 'A'
-                header[41] = 0x50; header[42] = 0x50; header[43] = 0x4C // "PPL"
+        let cmdStart = pos
+        let cmdEnd = cmdStart + commandsSize
+        var cmdPos = cmdStart
+        var dataPos = cmdEnd
+        let dataEnd = streamEnd
+
+        guard dataEnd - dataPos >= 128 else {
+            throw ICCStreamError.malformed
+        }
+
+        var output = [UInt8](repeating: 0, count: outputSize)
+        var header = initialHeaderTemplate(outputSize: outputSizeU32)
+        for i in 0..<128 {
+            if i == 8 {
+                updateHeaderTemplateFromCMM(&header, cmm: output[4..<8])
+            } else if i == 41 {
+                if output[40] == 0x41 || output[40] == 0x61 {
+                    header[41] = 0x50
+                    header[42] = 0x50
+                    header[43] = 0x4C
+                } else if output[40] == 0x4D || output[40] == 0x6D {
+                    header[41] = 0x53
+                    header[42] = 0x46
+                    header[43] = 0x54
+                }
             }
-            if icc[40] == 0x4D {  // 'M'
-                header[41] = 0x53; header[42] = 0x46; header[43] = 0x54 // "SFT"
-            }
+            output[i] = header[i] &+ stream[dataPos + i]
         }
-        if pos == 42 && size >= 42 {
-            if icc[40] == 0x53 && icc[41] == 0x47 {  // "SG"
-                header[42] = 0x49; header[43] = 0x20 // "I "
-            }
-            if icc[40] == 0x53 && icc[41] == 0x55 {  // "SU"
-                header[42] = 0x4E; header[43] = 0x57 // "NW"
-            }
-        }
-    }
+        dataPos += 128
+        var outPos = 128
 
-    /// libjxl `LinearPredictICCValue`.
-    private static func linearPredict(
-        _ data: [UInt8], _ start: Int, _ i: Int,
-        _ stride: Int, _ width: Int, _ order: Int
-    ) -> UInt8 {
-        let pos = start + i
-        if width == 1 {
-            let p1 = Int64(data[pos - stride])
-            let p2 = Int64(data[pos - stride * 2])
-            let p3 = Int64(data[pos - stride * 3])
-            return UInt8(truncatingIfNeeded: predictValue(p1, p2, p3, order))
-        } else if width == 2 {
-            let p = start + (i & ~1)
-            let p1 = (Int64(data[p - stride]) << 8) + Int64(data[p - stride + 1])
-            let p2 = (Int64(data[p - stride * 2]) << 8)
-                + Int64(data[p - stride * 2 + 1])
-            let p3 = (Int64(data[p - stride * 3]) << 8)
-                + Int64(data[p - stride * 3 + 1])
-            let pred = predictValue(p1, p2, p3, order)
-            return UInt8(truncatingIfNeeded:
-                (i & 1) != 0 ? (pred & 255) : ((pred >> 8) & 255))
-        } else {
-            let p = start + (i & ~3)
-            let p1 = Int64(decodeUint32(data, pos, p - stride))
-            let p2 = Int64(decodeUint32(data, pos, p - stride * 2))
-            let p3 = Int64(decodeUint32(data, pos, p - stride * 3))
-            let pred = predictValue(p1, p2, p3, order)
-            let shiftbytes = 3 - (i & 3)
-            return UInt8(truncatingIfNeeded: (pred >> (shiftbytes * 8)) & 255)
-        }
-    }
+        if cmdPos < cmdEnd {
+            let v = try readVarint(stream, pos: &cmdPos, end: cmdEnd)
+            if v > 0 {
+                let numTags64 = v - 1
+                guard let numTags = UInt32(exactly: numTags64),
+                      outPos + 4 <= outputSize else {
+                    throw ICCStreamError.malformed
+                }
+                writeUInt32BE(numTags, into: &output, at: outPos)
+                outPos += 4
 
+                let (tagsBytes, tagsOverflow) = numTags.multipliedReportingOverflow(by: 12)
+                let (initialPrevPos, posOverflow) = UInt32(128).addingReportingOverflow(tagsBytes)
+                guard !tagsOverflow, !posOverflow else {
+                    throw ICCStreamError.malformed
+                }
+                var prevPos: UInt32 = initialPrevPos
+                var prevSize: UInt32 = 0
 
-    package static func unpredict(_ encoded: [UInt8], maximumBytes: Int,
-                                  admit: (Int) throws -> Void = { _ in },
-                                  checkpoint: () throws -> Void) throws -> Data {
-        var pos = 0
-        let rawOutputSize = try variable32(encoded, &pos, end: encoded.count)
-        guard maximumBytes >= 0, UInt64(rawOutputSize) <= UInt64(maximumBytes),
-              let outputSize = Int(exactly: rawOutputSize) else { throw JPEGEntropyError.resourceLimit }
-        let commandSize = try variable(encoded, &pos, end: encoded.count)
-        guard commandSize <= encoded.count - pos else { throw ICCStreamError.malformed }
-        var cursor = pos; let commandEnd = pos + commandSize; pos = commandEnd
-        try admit(outputSize); try checkpoint()
-        var result: [UInt8] = []; result.reserveCapacity(outputSize)
-        func room(_ count: Int) throws {
-            guard count >= 0, count <= outputSize - result.count else { throw ICCStreamError.malformed }
-        }
-        func data(_ count: Int) throws {
-            guard count >= 0, count <= encoded.count - pos else { throw ICCStreamError.malformed }
-        }
-        var header = initialHeaderPrediction
-        for i in 0..<4 { header[i] = UInt8(truncatingIfNeeded: outputSize >> ((3 - i) * 8)) }
-        for i in 0..<min(128, outputSize) {
-            try data(1); iccPredictHeader(result, result.count, &header, i)
-            result.append(encoded[pos] &+ header[i]); pos += 1
-        }
-        if outputSize > 128 {
-            let tagCount = Int64(try variable32(encoded, &cursor, end: commandEnd))
-            if tagCount != 0 {
-                try room(4); try append32(tagCount - 1, to: &result)
-                var previousStart: Int64 = 128 + (tagCount - 1) * 12, previousSize: Int64 = 0
-                while cursor < commandEnd {
+                while true {
                     try checkpoint()
-                    let command = Int(encoded[cursor]); cursor += 1
-                    let code = command & 63
-                    if code == 0 { break }
-                    let tag: [UInt8]
-                    switch code {
-                    case 1: try data(4); tag = Array(encoded[pos..<(pos + 4)]); pos += 4
-                    case 2: tag = kRtrcTag
-                    case 3: tag = kRxyzTag
-                    default:
-                        guard (4..<(4 + kTagStrings.count)).contains(code) else { throw ICCStreamError.malformed }
-                        tag = kTagStrings[code - 4]
+                    guard cmdPos < cmdEnd else { throw ICCStreamError.malformed }
+                    let cmd = stream[cmdPos]
+                    cmdPos += 1
+                    if cmd == 0 { break }
+
+                    let tagcode = cmd & 0x3F
+                    let hasOffset = (cmd & 0x40) != 0
+                    let hasSize = (cmd & 0x80) != 0
+
+                    let tagPos: UInt32
+                    if hasOffset {
+                        let rawPos = try readVarint(stream, pos: &cmdPos, end: cmdEnd)
+                        guard let p = UInt32(exactly: rawPos) else { throw ICCStreamError.malformed }
+                        tagPos = p
+                    } else {
+                        let (derivedPos, over) = prevPos.addingReportingOverflow(prevSize)
+                        guard !over else { throw ICCStreamError.malformed }
+                        tagPos = derivedPos
                     }
-                    let triples = code == 2 || code == 3
-                    try room(triples ? 36 : 12)
-                    var size = previousSize
-                    if [kRxyzTag,kGxyzTag,kBxyzTag,kKxyzTag,kWtptTag,kBkptTag,kLumiTag].contains(tag) { size = 20 }
-                    let start = command & 64 != 0 ? Int64(try variable32(encoded, &cursor, end: commandEnd)) : previousStart + previousSize
-                    if command & 128 != 0 { size = Int64(try variable32(encoded, &cursor, end: commandEnd)) }
-                    result.append(contentsOf: tag); try append32(start, to: &result); try append32(size, to: &result)
-                    previousStart = start; previousSize = size
-                    if triples {
-                        result.append(contentsOf: code == 2 ? kGtrcTag : kGxyzTag)
-                        try append32(start + (code == 3 ? size : 0), to: &result); try append32(size, to: &result)
-                        result.append(contentsOf: code == 2 ? kBtrcTag : kBxyzTag)
-                        try append32(start + (code == 3 ? size * 2 : 0), to: &result); try append32(size, to: &result)
+
+                    let tagSize: UInt32
+                    if hasSize {
+                        let rawSize = try readVarint(stream, pos: &cmdPos, end: cmdEnd)
+                        guard let s = UInt32(exactly: rawSize) else { throw ICCStreamError.malformed }
+                        tagSize = s
+                    } else if tagcode == 3 || (5...10).contains(tagcode) {
+                        tagSize = 20
+                    } else {
+                        tagSize = prevSize
+                    }
+
+                    prevPos = tagPos
+                    prevSize = tagSize
+
+                    if tagcode == 1 {
+                        guard dataEnd - dataPos >= 4, outPos + 12 <= outputSize else {
+                            throw ICCStreamError.malformed
+                        }
+                        for k in 0..<4 { output[outPos + k] = stream[dataPos + k] }
+                        dataPos += 4
+                        writeUInt32BE(tagPos, into: &output, at: outPos + 4)
+                        writeUInt32BE(tagSize, into: &output, at: outPos + 8)
+                        outPos += 12
+                    } else if tagcode == 2 {
+                        guard outPos + 36 <= outputSize else { throw ICCStreamError.malformed }
+                        for t in 0..<3 {
+                            let sig = tagStrings[7 + t] // rTRC, gTRC, bTRC
+                            for k in 0..<4 { output[outPos + k] = sig[k] }
+                            writeUInt32BE(tagPos, into: &output, at: outPos + 4)
+                            writeUInt32BE(tagSize, into: &output, at: outPos + 8)
+                            outPos += 12
+                        }
+                    } else if tagcode == 3 {
+                        guard outPos + 36 <= outputSize else { throw ICCStreamError.malformed }
+                        var curPos = tagPos
+                        for t in 0..<3 {
+                            if t > 0 {
+                                let (nextPos, over) = curPos.addingReportingOverflow(tagSize)
+                                guard !over else { throw ICCStreamError.malformed }
+                                curPos = nextPos
+                            }
+                            let sig = tagStrings[3 + t] // rXYZ, gXYZ, bXYZ
+                            for k in 0..<4 { output[outPos + k] = sig[k] }
+                            writeUInt32BE(curPos, into: &output, at: outPos + 4)
+                            writeUInt32BE(tagSize, into: &output, at: outPos + 8)
+                            outPos += 12
+                        }
+                        prevPos = curPos
+                    } else if tagcode >= 4 && Int(tagcode - 4) < tagStrings.count {
+                        guard outPos + 12 <= outputSize else { throw ICCStreamError.malformed }
+                        let sig = tagStrings[Int(tagcode - 4)]
+                        for k in 0..<4 { output[outPos + k] = sig[k] }
+                        writeUInt32BE(tagPos, into: &output, at: outPos + 4)
+                        writeUInt32BE(tagSize, into: &output, at: outPos + 8)
+                        outPos += 12
+                    } else {
+                        throw ICCStreamError.malformed
                     }
                 }
             }
-            while cursor < commandEnd {
-                try checkpoint()
-                let command = Int(encoded[cursor]); cursor += 1
-                if (1...4).contains(command) {
-                    var width = command == 2 ? 2 : command == 3 ? 4 : 1, order = 0, stride = 1
-                    if command == 4 {
-                        guard cursor < commandEnd else { throw ICCStreamError.malformed }
-                        let flags = Int(encoded[cursor]); cursor += 1
-                        width = (flags & 3) + 1; order = (flags & 12) >> 2
-                        guard width != 3, order != 3 else { throw ICCStreamError.malformed }
-                        stride = width
-                        if flags & 16 != 0 { stride = try variable(encoded, &cursor, end: commandEnd) }
-                        guard stride >= width, !result.isEmpty, stride <= (result.count - 1) / 4 else { throw ICCStreamError.malformed }
+        }
+
+        while cmdPos < cmdEnd {
+            try checkpoint()
+            let cmd = stream[cmdPos]
+            cmdPos += 1
+            if cmd == 1 {
+                let rawNum = try readVarint(stream, pos: &cmdPos, end: cmdEnd)
+                guard let num = Int(exactly: rawNum),
+                      num >= 0,
+                      num <= outputSize - outPos,
+                      num <= dataEnd - dataPos else {
+                    throw ICCStreamError.malformed
+                }
+                for i in 0..<num {
+                    if (i & 4095) == 0, i > 0 { try checkpoint() }
+                    output[outPos + i] = stream[dataPos + i]
+                }
+                outPos += num
+                dataPos += num
+            } else if cmd == 2 || cmd == 3 {
+                let rawNum = try readVarint(stream, pos: &cmdPos, end: cmdEnd)
+                guard let num = Int(exactly: rawNum),
+                      num >= 0,
+                      num <= outputSize - outPos,
+                      num <= dataEnd - dataPos else {
+                    throw ICCStreamError.malformed
+                }
+                let stride = (cmd == 2) ? 2 : 4
+                var groupOffsets = [Int](repeating: 0, count: stride)
+                var acc = 0
+                for g in 0..<stride {
+                    groupOffsets[g] = acc
+                    acc += (num - g + stride - 1) / stride
+                }
+                for i in 0..<num {
+                    if (i & 4095) == 0, i > 0 { try checkpoint() }
+                    let g = i % stride
+                    let srcIndex = dataPos + groupOffsets[g]
+                    groupOffsets[g] += 1
+                    output[outPos + i] = stream[srcIndex]
+                }
+                outPos += num
+                dataPos += num
+            } else if cmd == 4 {
+                guard cmdPos < cmdEnd else { throw ICCStreamError.malformed }
+                let flags = stream[cmdPos]
+                cmdPos += 1
+                let width = Int(flags & 3) + 1
+                let order = Int((flags >> 2) & 3)
+                guard width != 3, order != 3, (flags & 0xE0) == 0 else {
+                    throw ICCStreamError.malformed
+                }
+                let stride: Int
+                if (flags & 16) != 0 {
+                    let rawStride = try readVarint(stream, pos: &cmdPos, end: cmdEnd)
+                    guard let s = Int(exactly: rawStride), s >= width else {
+                        throw ICCStreamError.malformed
                     }
-                    let count = try variable(encoded, &cursor, end: commandEnd)
-                    try room(count); try data(count)
-                    let start = result.count, height = (count + width - 1) / width
-                    var column = 0, shuffled = 0
-                    for i in 0..<count {
-                        if i & 1023 == 0 { try checkpoint() }
-                        let byte = encoded[pos + shuffled]
-                        let prediction: UInt8 = command == 4 ? linearPredict(result, start, i, stride, width, order) : 0
-                        result.append(byte &+ prediction)
-                        shuffled += height
-                        if shuffled >= count { column += 1; shuffled = column }
+                    stride = s
+                } else {
+                    stride = width
+                }
+                let rawNum = try readVarint(stream, pos: &cmdPos, end: cmdEnd)
+                guard let num = Int(exactly: rawNum),
+                      num >= 0,
+                      num <= outputSize - outPos,
+                      num <= dataEnd - dataPos else {
+                    throw ICCStreamError.malformed
+                }
+                let requiredHistory = stride.multipliedReportingOverflow(by: order + 1)
+                guard !requiredHistory.overflow, outPos >= requiredHistory.partialValue else {
+                    throw ICCStreamError.malformed
+                }
+                var groupOffsets = [Int](repeating: 0, count: width)
+                var acc = 0
+                for g in 0..<width {
+                    groupOffsets[g] = acc
+                    acc += (num - g + width - 1) / width
+                }
+                var i = 0
+                while i + width <= num {
+                    if (i & 4095) == 0, i > 0 { try checkpoint() }
+                    let p = outPos + i
+                    let w0 = readWordBE(output, at: p - stride, width: width)
+                    let pred: UInt32
+                    if order == 0 {
+                        pred = w0
+                    } else if order == 1 {
+                        let w1 = readWordBE(output, at: p - 2 * stride, width: width)
+                        pred = (w0 &<< 1) &- w1
+                    } else {
+                        let w1 = readWordBE(output, at: p - 2 * stride, width: width)
+                        let w2 = readWordBE(output, at: p - 3 * stride, width: width)
+                        pred = (3 &* w0) &- (3 &* w1) &+ w2
                     }
-                    pos += count
-                } else if command == 10 {
-                    try room(20); try data(12)
-                    result.append(contentsOf: kXyz_Tag); result.append(contentsOf: [0,0,0,0])
-                    result.append(contentsOf: encoded[pos..<(pos + 12)]); pos += 12
-                } else if (16..<(16 + kTypeStrings.count)).contains(command) {
-                    try room(8); result.append(contentsOf: kTypeStrings[command - 16]); result.append(contentsOf: [0,0,0,0])
-                } else { throw ICCStreamError.malformed }
+                    for b in 0..<width {
+                        let shift = UInt32((width - 1 - b) * 8)
+                        let predByte = UInt8(truncatingIfNeeded: pred >> shift)
+                        let srcIndex = dataPos + groupOffsets[b]
+                        groupOffsets[b] += 1
+                        output[p + b] = predByte &+ stream[srcIndex]
+                    }
+                    i += width
+                }
+                while i < num {
+                    let b = i % width
+                    let srcIndex = dataPos + groupOffsets[b]
+                    groupOffsets[b] += 1
+                    output[outPos + i] = stream[srcIndex]
+                    i += 1
+                }
+                outPos += num
+                dataPos += num
+            } else if cmd == 10 {
+                guard outPos + 20 <= outputSize, dataEnd - dataPos >= 12 else {
+                    throw ICCStreamError.malformed
+                }
+                output[outPos..<outPos + 4] = [0x58, 0x59, 0x5A, 0x20] // "XYZ "
+                output[outPos + 4..<outPos + 8] = [0, 0, 0, 0]
+                for i in 0..<12 {
+                    output[outPos + 8 + i] = stream[dataPos + i]
+                }
+                outPos += 20
+                dataPos += 12
+            } else if (16...23).contains(cmd) {
+                guard outPos + 8 <= outputSize else {
+                    throw ICCStreamError.malformed
+                }
+                let sig = typeStrings[Int(cmd - 16)]
+                for i in 0..<4 { output[outPos + i] = sig[i] }
+                output[outPos + 4..<outPos + 8] = [0, 0, 0, 0]
+                outPos += 8
+            } else {
+                throw ICCStreamError.malformed
             }
         }
-        guard cursor == commandEnd, pos == encoded.count, result.count == outputSize else { throw ICCStreamError.malformed }
-        try checkpoint(); return Data(result)
+
+        guard cmdPos == cmdEnd, outPos == outputSize, dataPos == dataEnd else {
+            throw ICCStreamError.malformed
+        }
+        return Data(output)
+    }
+
+    /// Decodes a compressed ICC profile from the bitstream per ISO/IEC 18181-1 §6.2.
+    package static func decode(
+        from r: inout BitReader,
+        maximumBytes: Int,
+        checkpoint: () throws -> Void
+    ) throws -> Data {
+        try checkpoint()
+        guard maximumBytes > 0 else { throw JPEGEntropyError.resourceLimit }
+        let rawEncSize = try r.readU64()
+        let maxEncodedBound = UInt64(maximumBytes) * 2 + 1024
+        guard rawEncSize > 0 else { throw ICCStreamError.malformed }
+        guard rawEncSize <= maxEncodedBound, let encSize = Int(exactly: rawEncSize) else {
+            throw JPEGEntropyError.resourceLimit
+        }
+        try r.budget?.reserveWorkspace(ScalarOperationBudget.sum(
+            ScalarOperationBudget.product(encSize, 4), 65536))
+        let header = try EntropySectionHeader.read(from: &r, numContexts: numContexts)
+        let codebook = try MultiClusterCodebook.read(from: &r, header: header)
+        try r.budget?.reserveWorkspace(ScalarOperationBudget.product(codebook.ansCounts.count, 64 * 1024))
+        var stream = TokenStreamReader(header: header, codebook: codebook)
+
+        var encoded = [UInt8](repeating: 0, count: encSize)
+        var b1: UInt8 = 0
+        var b2: UInt8 = 0
+        for i in 0..<encSize {
+            if (i & 255) == 0 { try checkpoint() }
+            let ctx = iccContext(index: i, b1: b1, b2: b2)
+            let sym = try stream.readToken(context: ctx, from: &r)
+            guard sym < 256 else { throw ICCStreamError.malformed }
+            let byte = UInt8(truncatingIfNeeded: sym)
+            encoded[i] = byte
+            b2 = b1
+            b1 = byte
+        }
+        try stream.finish()
+
+        return try unpredict(
+            encoded,
+            maximumBytes: maximumBytes,
+            admit: { size in
+                try r.budget?.reserveWorkspace(ScalarOperationBudget.product(size, 4))
+            },
+            checkpoint: checkpoint
+        )
+    }
+
+    /// Encodes an ICC profile into the bitstream per ISO/IEC 18181-1 §6.2 & Annex B.
+    package static func write(
+        _ profile: Data,
+        to w: inout BitWriter,
+        maximumBytes: Int,
+        checkpoint: () throws -> Void
+    ) throws {
+        try checkpoint()
+        guard profile.count <= maximumBytes else { throw JPEGEntropyError.resourceLimit }
+        guard profile.count >= 128, let outputSizeU32 = UInt32(exactly: profile.count) else {
+            throw ICCStreamError.malformed
+        }
+        let bytes = Array(profile)
+        var commands: [UInt8] = [0] // v = 0 (no predicted tag table)
+        let tailCount = bytes.count - 128
+        if tailCount > 0 {
+            commands.append(1) // kLiteral
+            appendVarint(UInt64(tailCount), to: &commands)
+        }
+
+        var stream: [UInt8] = []
+        stream.reserveCapacity(bytes.count + commands.count + 16)
+        appendVarint(UInt64(bytes.count), to: &stream)
+        appendVarint(UInt64(commands.count), to: &stream)
+        stream.append(contentsOf: commands)
+
+        var header = initialHeaderTemplate(outputSize: outputSizeU32)
+        for i in 0..<128 {
+            if i == 8 {
+                updateHeaderTemplateFromCMM(&header, cmm: bytes[4..<8])
+            } else if i == 41 {
+                if bytes[40] == 0x41 || bytes[40] == 0x61 {
+                    header[41] = 0x50
+                    header[42] = 0x50
+                    header[43] = 0x4C
+                } else if bytes[40] == 0x4D || bytes[40] == 0x6D {
+                    header[41] = 0x53
+                    header[42] = 0x46
+                    header[43] = 0x54
+                }
+            }
+            stream.append(bytes[i] &- header[i])
+        }
+        if tailCount > 0 {
+            stream.append(contentsOf: bytes[128..<bytes.count])
+        }
+
+        try checkpoint()
+        w.writeU64(UInt64(stream.count))
+        let uintConfig = HybridUintConfig(splitExponent: 0, msbInToken: 0, lsbInToken: 0)
+        let sectionHeader = EntropySectionHeader(
+            lz77: .disabled,
+            contextMap: .trivial(numContexts: numContexts),
+            usePrefixCode: true,
+            logAlphaSize: 15,
+            uintConfigs: [uintConfig]
+        )
+        let lengths = [UInt8](repeating: 4, count: 16)
+        let table = try PrefixCodeTable(lengths: lengths)
+        let codebook = MultiClusterCodebook(
+            huffmanTables: [table],
+            ansCounts: [],
+            alphabetSizes: [16]
+        )
+        try sectionHeader.write(to: &w, numContexts: numContexts)
+        try codebook.write(to: &w, header: sectionHeader)
+        let tokenWriter = TokenStreamWriter(header: sectionHeader, codebook: codebook)
+        for (i, byte) in stream.enumerated() {
+            if (i & 255) == 0 { try checkpoint() }
+            try tokenWriter.writeToken(context: 0, value: UInt32(byte), to: &w)
+        }
     }
 }

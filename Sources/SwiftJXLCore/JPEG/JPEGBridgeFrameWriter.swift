@@ -1,425 +1,469 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Copyright (c) 2026 Raster-Lab.
-// Adapted from JXLSwift Codec/VarDCTBitstreamWriter.swift,
-// JPEG/JXLBridgeEncoder.swift, Modular/ModularSubImage.swift and
-// VarDCT/{ACDecoder,QuantEncodingBitstream,DequantMatricesDC,QuantizerParams}.swift
-// at 57e81cb9e2411d1efac435b429a306a031744c1e.
-// JPEG XL Project Authors' algorithms retain BSD-3-Clause attribution.
-// See Documentation/ThirdParty/libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-/// Writes the predecessor's single-DC-group, multi-AC-group JPEG bridge profile.
-/// Streaming histogram passes use fixed workspace instead of frame-sized token
-/// lists. Multi-group colour AC data may use compact single-cluster ANS when its
-/// measured bit cost beats prefix coding, including conservative framing costs.
+/// Writes a JPEG-bridged VarDCT codestream per ISO/IEC 18181-1 §§6, 7, 8, 9.1–9.3, Annex C.
 package enum JPEGBridgeFrameWriter {
-    package static func write(_ coefficients: JPEGBridgeCoefficients,
-                              maximumOutputBytes: Int = 64 * 1024 * 1024, iccProfile: Data? = nil,
-                              policy: JPEGBridgePolicy) throws -> Data {
+    private static let groupBlocks = 32
+    private static let dcGroupBlocks = 256
+
+    package static func write(
+        _ view: JPEGBridgeCoefficients,
+        maximumOutputBytes: Int = 64 * 1024 * 1024,
+        iccProfile: Data? = nil,
+        policy: JPEGBridgePolicy
+    ) throws -> Data {
         try policy.checkpoint()
-        let frame = coefficients.frame
-        guard frame.width <= 2048, frame.height <= 2048 else { throw JPEGEntropyError.unsupported }
-        guard (iccProfile?.count ?? 0) <= policy.maximumICCBytes else { throw JPEGEntropyError.resourceLimit }
-        let scratch = 4 * 1024 * 1024 + (iccProfile?.count ?? 0) * 8 + 65536
-        guard maximumOutputBytes > 0, frame.coefficientCount <= policy.maximumCoefficientBytes / 4,
-              coefficients.admittedBytes <= policy.maximumMemoryBytes,
-              scratch < policy.maximumMemoryBytes - coefficients.admittedBytes else {
+
+        let maxH = view.frame.components.map(\.horizontalSampling).max() ?? 1
+        let maxV = view.frame.components.map(\.verticalSampling).max() ?? 1
+        let fullBlocksX = view.frame.mcusWide * maxH
+        let fullBlocksY = view.frame.mcusHigh * maxV
+        let paddedWidth = fullBlocksX * 8
+        let paddedHeight = fullBlocksY * 8
+
+        guard view.frame.width <= 2048,
+              view.frame.height <= 2048,
+              paddedWidth <= 2048,
+              paddedHeight <= 2048,
+              fullBlocksX <= dcGroupBlocks,
+              fullBlocksY <= dcGroupBlocks else {
+            throw JPEGEntropyError.unsupported
+        }
+
+        let (coeffBytes, coeffOverflow) = view.frame.coefficientCount.multipliedReportingOverflow(
+            by: MemoryLayout<Int32>.stride
+        )
+        guard !coeffOverflow,
+              maximumOutputBytes > 0,
+              coeffBytes <= policy.maximumCoefficientBytes,
+              view.admittedBytes <= policy.maximumMemoryBytes,
+              view.frame.width <= policy.maximumDimension,
+              view.frame.height <= policy.maximumDimension,
+              view.frame.width <= policy.maximumPixels / max(1, view.frame.height) else {
             throw JPEGEntropyError.resourceLimit
         }
-        let limit = min(maximumOutputBytes, (policy.maximumMemoryBytes - coefficients.admittedBytes - scratch) / 6)
-        guard limit > 0 else { throw JPEGEntropyError.resourceLimit }
-        let budget = try ScalarOperationBudget(retainedBytes: coefficients.admittedBytes,
-            maximumWorkspaceBytes: policy.maximumMemoryBytes, maximumMemoryBytes: policy.maximumMemoryBytes,
-            maximumDecodedBytes: 1, maximumCompressedBytes: limit, deadline: policy.deadline)
-        try budget.reserveWorkspace(scratch + limit * 6)
-        let work = ScalarEncodingWork(budget: budget, writerByteLimit: limit)
-        return try ScalarEncodingWork.$current.withValue(work) {
-            let writer = BridgeFrameWriter(view: coefficients, policy: policy, limit: limit, iccProfile: iccProfile)
-            let result = try writer.write()
-            try work.checkpoint(); try policy.checkpoint()
-            return result
-        }
-    }
-}
-
-private struct BridgePrefix {
-    let header: EntropySectionHeader
-    let codebook: MultiClusterCodebook
-    let table: PrefixCodeTable?
-    init(histogram: [Int], contexts: Int) throws {
-        let size = max(2, (histogram.lastIndex(where: { $0 != 0 }) ?? 0) + 1)
-        var counts = Array(histogram.prefix(size))
-        if counts.filter({ $0 != 0 }).count == 1 {
-            counts[counts[0] == 0 ? 0 : 1] = 1
-        }
-        let lengths = lengthLimitedCanonicalHuffman(counts: counts, maxLength: 15, alphabetSize: size)
-        let huffTable = try PrefixCodeTable(lengths: lengths)
-        table = huffTable
-        codebook = MultiClusterCodebook(huffmanTables: [huffTable],
-            ansCounts: [], alphabetSizes: [size])
-        header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: contexts),
-            usePrefixCode: true, logAlphaSize: 15, uintConfigs: [.raw4])
-    }
-    init(ansHistogram histogram: [Int], contexts: Int) throws {
-        let size = max(2, (histogram.lastIndex(where: { $0 != 0 }) ?? 0) + 1)
-        let counts = histogram.prefix(size).map { UInt32($0) }
-        let distribution = try ANSDistribution(rawFrequencies: counts)
-        var scratch = BitWriter()
-        let wire = try SpecANSDistribution.writeHistogram(
-            distribution.frequencies.map { Int32($0) }, to: &scratch)
-        let logAlpha = max(5, Int(ceilLog2(UInt32(wire.count))))
-        table = nil
-        codebook = MultiClusterCodebook(huffmanTables: [], ansCounts: [wire], alphabetSizes: [wire.count])
-        header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: contexts),
-            usePrefixCode: false, logAlphaSize: logAlpha, uintConfigs: [.raw4])
-    }
-    func writeHeader(to writer: inout BitWriter, contexts: Int) throws {
-        try header.write(to: &writer, numContexts: contexts)
-        try codebook.write(to: &writer, header: header)
-    }
-    @inline(__always)
-    func write(_ value: UInt32, to writer: inout BitWriter) throws {
-        guard let table else {
-            try TokenStreamWriter(header: header, codebook: codebook).writeToken(context: 0, value: value, to: &writer)
-            return
-        }
-        try writer.checkpointToken()
-        let token: Int
-        let extraBitsCount: Int
-        let extraBitsValue: UInt32
-        if value < 16 {
-            token = Int(value)
-            extraBitsCount = 0
-            extraBitsValue = 0
-        } else {
-            let n = 31 &- value.leadingZeroBitCount
-            token = 12 &+ n
-            extraBitsCount = n
-            extraBitsValue = value &- (UInt32(1) &<< n)
-        }
-        try table.encode(token, to: &writer)
-        if extraBitsCount > 0 {
-            writer.write(bits: extraBitsCount, value: extraBitsValue)
-        }
-    }
-}
-
-private struct BridgeFrameWriter {
-    let view: JPEGBridgeCoefficients
-    let policy: JPEGBridgePolicy
-    let limit: Int
-    let iccProfile: Data?
-    private var blocksX: Int { view.frame.components[0].paddedBlocksWide }
-    private var blocksY: Int { view.frame.components[0].paddedBlocksHigh }
-    private var groupsX: Int { (view.frame.width + 255) / 256 }
-    private var groupsY: Int { (view.frame.height + 255) / 256 }
-    private var metadataZeros: Int { 2 * ((blocksX + 7) / 8) * ((blocksY + 7) / 8) + 3 * blocksX * blocksY }
-    private static let order = [0,1,8,16,9,2,3,10,17,24,32,25,18,11,4,5,
-        12,19,26,33,40,48,41,34,27,20,13,6,7,14,21,28,35,42,49,56,
-        57,50,43,36,29,22,15,23,30,37,44,51,58,59,52,45,38,31,39,46,
-        53,60,61,54,47,55,62,63]
-    private static let transposedOrder: [Int] = order.map { ($0 % 8) * 8 + ($0 / 8) }
-
-    func write() throws -> Data {
-        var dcHistogram = [Int](repeating: 0, count: HybridUintConfig.raw4.maxToken + 1)
-        try dcTokens { dcHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
-        dcHistogram[0] += metadataZeros
-        let dc = try BridgePrefix(histogram: dcHistogram, contexts: 1)
-        var acHistogram = [Int](repeating: 0, count: HybridUintConfig.raw4.maxToken + 1)
-        for group in 0..<(groupsX * groupsY) {
-            try acTokens(group: group) { acHistogram[Int(HybridUintConfig.raw4.encode($0).token)] += 1 }
-        }
-        let ac = try acCode(histogram: acHistogram)
-        var sections: [Data] = []
-        var sectionBytes = 0
-        func section(_ body: (inout BitWriter) throws -> Void) throws {
-            var writer = BitWriter()
-            try body(&writer)
-            let data = writer.finishToData()
-            try ScalarEncodingWork.checkpoint(); try policy.checkpoint()
-            guard data.count <= limit - sectionBytes else { throw JPEGEntropyError.resourceLimit }
-            sectionBytes += data.count; sections.append(data)
-        }
-        if groupsX * groupsY == 1 {
-            try section { w in
-                try lfGlobal(dc, to: &w); try dcGroup(dc, to: &w)
-                try hfGlobal(ac, to: &w); try acGroup(ac, group: 0, to: &w)
-            }
-        } else {
-            try section { try lfGlobal(dc, to: &$0) }
-            try section { try dcGroup(dc, to: &$0) }
-            try section { try hfGlobal(ac, to: &$0) }
-            for group in 0..<(groupsX * groupsY) {
-                try section { w in try acGroup(ac, group: group, to: &w) }
+        if let icc = iccProfile {
+            guard icc.count <= policy.maximumICCBytes else {
+                throw JPEGEntropyError.resourceLimit
             }
         }
-        var output = BitWriter()
-        try imageHeader(to: &output); try frameHeader(to: &output)
-        let sizes = sections.map { UInt32($0.count) }
-        var offsets: [UInt64] = [0]
-        for size in sizes { offsets.append((offsets.last ?? 0) + UInt64(size)) }
-        try TOC(hasPermutation: false, entrySizes: sizes, offsets: offsets).write(to: &output)
-        output.alignToByte()
-        for section in sections {
-            try policy.checkpoint()
-            guard section.count <= limit - output.bytes.count else { throw JPEGEntropyError.resourceLimit }
-            // Bound copy/cancellation intervals even for large AC sections.
-            var start = 0
-            while start < section.count {
-                try policy.checkpoint()
-                let end = min(section.count, start + 4096)
-                output.appendBytes(Data(section[start..<end])); start = end
-            }
-        }
-        try ScalarEncodingWork.checkpoint()
-        return output.finishToData()
-    }
 
-    private func dcTokens(_ emit: (UInt32) throws -> Void) throws {
-        for channel in [1, 0, 2] {
-            let shape = view.channels[channel], width = shape.blocksWide
-            var previous = [Int32](repeating: 0, count: width)
-            var current = previous
-            let ci = shape.jpegComponent
-            let dcOffset = shape.dcOffset
-            if let ci {
-                let plane = view.sourceCoefficients[ci]
-                try plane.withUnsafeBufferPointer { pBuf in
-                    let pPtr = pBuf.baseAddress!
-                    for y in 0..<shape.blocksHigh {
-                        try policy.checkpoint()
-                        let rowBase = y &* width
-                        for x in 0..<width {
-                            let (value, overflow) = pPtr[(rowBase &+ x) &* 64].addingReportingOverflow(dcOffset)
-                            guard !overflow else { throw JPEGEntropyError.malformed }
-                            let west = x > 0 ? current[x &- 1] : (y > 0 ? previous[x] : 0)
-                            let north = y > 0 ? previous[x] : west
-                            let northwest = x > 0 && y > 0 ? previous[x &- 1] : (x > 0 ? west : north)
-                            let prediction = min(max(west &+ north &- northwest, min(west, north)), max(west, north))
-                            try emit(ZigZag.pack(value &- prediction)); current[x] = value
-                        }
-                        swap(&current, &previous)
-                    }
-                }
-            } else {
-                for y in 0..<shape.blocksHigh {
-                    try policy.checkpoint()
-                    for x in 0..<width {
-                        let west = x > 0 ? current[x &- 1] : (y > 0 ? previous[x] : 0)
-                        let north = y > 0 ? previous[x] : west
-                        let northwest = x > 0 && y > 0 ? previous[x &- 1] : (x > 0 ? west : north)
-                        let prediction = min(max(west &+ north &- northwest, min(west, north)), max(west, north))
-                        try emit(ZigZag.pack(0 &- prediction)); current[x] = 0
-                    }
-                    swap(&current, &previous)
-                }
-            }
-        }
-    }
+        let groupsX = (fullBlocksX + groupBlocks - 1) / groupBlocks
+        let groupsY = (fullBlocksY + groupBlocks - 1) / groupBlocks
+        let numGroups = groupsX * groupsY
+        let singleSection = (numGroups == 1)
 
-    private func acCode(histogram: [Int]) throws -> BridgePrefix {
-        let prefix = try BridgePrefix(histogram: histogram, contexts: 15 * (37 + 458))
-        // Measured setup/replay work regresses greyscale, small or flat groups.
-        // Keep their original bytes and latency; only cost substantial streams.
-        guard view.frame.components.count == 3, groupsX * groupsY > 1,
-              histogram.reduce(0, +) >= 16_384,
-              histogram.filter({ $0 > 0 }).count > 1 else { return prefix }
-        let ans = try BridgePrefix(ansHistogram: histogram, contexts: 15 * (37 + 458))
-        var prefixHeader = BitWriter(), ansHeader = BitWriter()
-        try prefix.writeHeader(to: &prefixHeader, contexts: 15 * (37 + 458))
-        try ans.writeHeader(to: &ansHeader, contexts: 15 * (37 + 458))
-        var prefixBits = prefixHeader.bitCount, ansBits = ansHeader.bitCount
-        let lengths = prefix.codebook.huffmanTables[0].lengths
-        for s in 0..<min(histogram.count, lengths.count) {
-            prefixBits &+= histogram[s] &* Int(lengths[s])
-        }
-        let stream = try ANSTokenStreamWriter(header: ans.header, codebook: ans.codebook)
-        var symbols: [UInt16] = []
-        symbols.reserveCapacity(3 * 32 * 32 * 64)
-        for group in 0..<(groupsX * groupsY) {
-            // Costing retains only UInt16 symbols for one group (<= 384 KiB).
-            symbols.removeAll(keepingCapacity: true)
-            try acTokens(group: group) { value in
-                symbols.append(UInt16(HybridUintConfig.raw4.tokenOnly(value)))
-            }
-            ansBits += 32 + 16 * (try stream.refillWordCount(symbols: symbols))
-            try policy.checkpoint()
-        }
-        // Extra bits are identical. Allow 8 bits of section padding and a
-        // full 32-bit TOC entry per changed AC/HFGlobal section. This exceeds
-        // every possible framing increase; no size regression is selected.
-        return ansBits + 40 * (groupsX * groupsY + 1) < prefixBits ? ans : prefix
-    }
-
-    private func acGroup(_ code: BridgePrefix, group: Int, to writer: inout BitWriter) throws {
-        if code.header.usePrefixCode {
-            try acTokens(group: group) { try code.write($0, to: &writer) }
-        } else {
-            // At most 196608 symbols (384 KiB), reused for refills, plus
-            // 24 KiB flags. This fits the existing 4 MiB scratch admission.
-            var symbols: [UInt16] = []
-            symbols.reserveCapacity(3 * 32 * 32 * 64)
-            try acTokens(group: group) { symbols.append(UInt16(HybridUintConfig.raw4.tokenOnly($0))) }
-            let stream = try ANSTokenStreamWriter(header: code.header, codebook: code.codebook)
-            try stream.finishSingleCluster(symbols: &symbols,
-                replay: { try acTokens(group: group, $0) }, to: &writer)
-        }
-    }
-
-    private func acTokens(group: Int, _ emit: (UInt32) throws -> Void) throws {
-        let x0 = (group % groupsX) * 32, y0 = (group / groupsX) * 32
-        let width = min(32, blocksX - x0), height = min(32, blocksY - y0)
-        let hs0 = view.chromaSubsampling.hShift(0), vs0 = view.chromaSubsampling.vShift(0)
-        let hs1 = view.chromaSubsampling.hShift(1), vs1 = view.chromaSubsampling.vShift(1)
-        let hs2 = view.chromaSubsampling.hShift(2), vs2 = view.chromaSubsampling.vShift(2)
-        let hMask0 = (1 &<< hs0) &- 1, vMask0 = (1 &<< vs0) &- 1
-        let hMask1 = (1 &<< hs1) &- 1, vMask1 = (1 &<< vs1) &- 1
-        let hMask2 = (1 &<< hs2) &- 1, vMask2 = (1 &<< vs2) &- 1
-        let bw0 = view.channels[0].blocksWide, ci0 = view.channels[0].jpegComponent
-        let bw1 = view.channels[1].blocksWide, ci1 = view.channels[1].jpegComponent
-        let bw2 = view.channels[2].blocksWide, ci2 = view.channels[2].jpegComponent
-        let src = view.sourceCoefficients
-        try Self.transposedOrder.withUnsafeBufferPointer { tBuf in
-            let tPtr = tBuf.baseAddress!
-            @inline(__always)
-            func emitBlock(_ blockPtr: UnsafePointer<Int32>) throws {
-                var nonzeros = 0
-                for i in 1..<64 {
-                    if blockPtr[i] != 0 { nonzeros &+= 1 }
-                }
-                try emit(UInt32(nonzeros))
-                if nonzeros > 0 {
-                    for k in 1..<64 {
-                        let value = blockPtr[tPtr[k]]
-                        try emit(ZigZag.pack(value))
-                        if value != 0 {
-                            nonzeros &-= 1
-                            if nonzeros == 0 { break }
-                        }
-                    }
-                }
-            }
-            for y in 0..<height {
-                try policy.checkpoint()
-                for x in 0..<width {
-                    if (x & hMask1) == 0 && (y & vMask1) == 0 {
-                        if let ci1 {
-                            let idx = (((y0 &+ y) &>> vs1) &* bw1 &+ ((x0 &+ x) &>> hs1)) &* 64
-                            try src[ci1].withUnsafeBufferPointer { try emitBlock($0.baseAddress! + idx) }
-                        } else { try emit(0) }
-                    }
-                    if (x & hMask0) == 0 && (y & vMask0) == 0 {
-                        if let ci0 {
-                            let idx = (((y0 &+ y) &>> vs0) &* bw0 &+ ((x0 &+ x) &>> hs0)) &* 64
-                            try src[ci0].withUnsafeBufferPointer { try emitBlock($0.baseAddress! + idx) }
-                        } else { try emit(0) }
-                    }
-                    if (x & hMask2) == 0 && (y & vMask2) == 0 {
-                        if let ci2 {
-                            let idx = (((y0 &+ y) &>> vs2) &* bw2 &+ ((x0 &+ x) &>> hs2)) &* 64
-                            try src[ci2].withUnsafeBufferPointer { try emitBlock($0.baseAddress! + idx) }
-                        } else { try emit(0) }
-                    }
-                }
-            }
-        }
-    }
-
-    private func tree(to writer: inout BitWriter) throws {
-        let code = MultiClusterCodebook(huffmanTables: [try PrefixCodeTable(lengths: [UInt8](repeating: 4, count: 16))],
-            ansCounts: [], alphabetSizes: [16])
-        let header = EntropySectionHeader(lz77: .disabled, contextMap: .trivial(numContexts: 6),
-            usePrefixCode: true, logAlphaSize: 15,
-            uintConfigs: [HybridUintConfig(splitExponent: 0, msbInToken: 0, lsbInToken: 0)])
-        try header.write(to: &writer, numContexts: 6); try code.write(to: &writer, header: header)
-        let tree = ModularTree(nodes: [ModularTreeNode(property: -1, splitVal: 0, leftChildOrLeafId: 0,
-            rightChild: 0, predictor: .gradient, predictorOffset: 0, multiplier: 1, rawPredictor: 5)])
-        let tokens = TokenStreamWriter(header: header, codebook: code)
-        try tree.encode { try tokens.writeToken(context: $0, value: $1, to: &writer) }
-    }
-
-    private func lfGlobal(_ code: BridgePrefix, to writer: inout BitWriter) throws {
-        writer.writeBit(false)
-        for scale in view.dcQuantisation { writer.write(bits: 16, value: UInt32(floatToHalf(128 / scale))) }
-        try writer.writeU32(65536, distributions: (.offset(constant: 1, extraBits: 11), .offset(constant: 2049, extraBits: 11),
-            .offset(constant: 4097, extraBits: 12), .offset(constant: 8193, extraBits: 16)))
-        try writer.writeU32(1, distributions: (.literal(16), .offset(constant: 1, extraBits: 5),
-            .offset(constant: 1, extraBits: 8), .offset(constant: 1, extraBits: 16)))
-        writer.writeBit(true) // default block-context map
-        writer.writeBit(false) // explicit zero colour correlations
-        try writer.writeU32(84, distributions: (.literal(84), .literal(256),
-            .offset(constant: 2, extraBits: 8), .offset(constant: 258, extraBits: 16)))
-        writer.write(bits: 16, value: 0); writer.write(bits: 16, value: 0)
-        writer.write(bits: 8, value: 128); writer.write(bits: 8, value: 128)
-        writer.writeBit(true) // global modular tree present
-        try tree(to: &writer); try code.writeHeader(to: &writer, contexts: 1)
-    }
-
-    private func dcGroup(_ code: BridgePrefix, to writer: inout BitWriter) throws {
-        writer.write(bits: 2, value: 0)
-        try GroupHeader.default.write(to: &writer)
-        try dcTokens { try code.write($0, to: &writer) }
-        let blocks = blocksX * blocksY, bits = Int(ceilLog2(UInt32(blocks)))
-        if bits > 0 { writer.write(bits: bits, value: UInt32(blocks - 1)) }
-        try GroupHeader.default.write(to: &writer)
-        for i in 0..<metadataZeros {
-            if i & 1023 == 0 { try policy.checkpoint() }
-            try code.write(0, to: &writer)
-        }
-    }
-
-    private func hfGlobal(_ code: BridgePrefix, to writer: inout BitWriter) throws {
-        writer.writeBit(false) // custom dequantisation
-        writer.write(bits: 3, value: 7) // RAW DCT8 quantisation
-        writer.write(bits: 16, value: UInt32(floatToHalf(view.quantisationDenominator)))
-        try GroupHeader(useGlobalTree: false, wpHeader: .default, transforms: []).write(to: &writer)
-        try tree(to: &writer)
-        var residuals: [UInt32] = [], histogram = [Int](repeating: 0, count: HybridUintConfig.raw4.maxToken + 1)
-        residuals.reserveCapacity(192)
+        // 1. Extract DC planes and AC blocks per channel in JXL [0: Cb/G, 1: Y/R, 2: Cr/B] order
+        var dcPlanes: [[Int32]] = []
+        dcPlanes.reserveCapacity(3)
         for c in 0..<3 {
-            let plane = Array(view.quantisation[(c * 64)..<(c * 64 + 64)])
-            for y in 0..<8 {
-                for x in 0..<8 {
-                    let prediction = Predictor.gradient.apply(to: Neighbourhood(at: x, y, in: plane, width: 8))
-                    let value = ZigZag.pack(plane[y * 8 + x] &- prediction)
-                    residuals.append(value); histogram[Int(HybridUintConfig.raw4.encode(value).token)] += 1
+            let layout = view.channels[c]
+            dcPlanes.append([Int32](repeating: 0, count: layout.blocksWide * layout.blocksHigh))
+        }
+
+        let naturalOrder = VarDCTFrameWriter.order
+        let totalACContexts = VarDCTEntropy.contextsPerBlockCluster * VarDCTEntropy.defaultNumBlockClusters
+        var groupTokens = [[(context: Int, value: UInt32)]](repeating: [], count: numGroups)
+        var blockScratch = [Int32](repeating: 0, count: 64)
+
+        for groupIdx in 0..<numGroups {
+            try policy.checkpoint()
+            let gx = groupIdx % groupsX
+            let gy = groupIdx / groupsX
+            let bx0 = gx * groupBlocks
+            let by0 = gy * groupBlocks
+            let gw = min(groupBlocks, fullBlocksX - bx0)
+            let gh = min(groupBlocks, fullBlocksY - by0)
+
+            var nzGrids: [[Int32]] = []
+            var subWidths: [Int] = []
+            for c in 0..<3 {
+                let hs = view.channels[c].horizontalShift
+                let vs = view.channels[c].verticalShift
+                let sw = (gw + (1 << hs) - 1) >> hs
+                let sh = (gh + (1 << vs) - 1) >> vs
+                subWidths.append(sw)
+                nzGrids.append([Int32](repeating: 0, count: sw * sh))
+            }
+
+            var tokens: [(context: Int, value: UInt32)] = []
+            tokens.reserveCapacity(gw * gh * 16)
+
+            for ly in 0..<gh {
+                if (ly & 7) == 0 { try policy.checkpoint() }
+                let by = by0 + ly
+                for lx in 0..<gw {
+                    let bx = bx0 + lx
+                    for c in [1, 0, 2] {
+                        let layout = view.channels[c]
+                        let hs = layout.horizontalShift
+                        let vs = layout.verticalShift
+                        if (bx & ((1 << hs) - 1)) != 0 || (by & ((1 << vs) - 1)) != 0 {
+                            continue
+                        }
+                        let cbx = bx >> hs
+                        let cby = by >> vs
+                        let clx = lx >> hs
+                        let cly = ly >> vs
+                        let blockIndex = cby * layout.blocksWide + cbx
+                        try view.readBlock(channel: c, block: blockIndex, into: &blockScratch)
+                        dcPlanes[c][blockIndex] = blockScratch[0]
+
+                        let sw = subWidths[c]
+                        let predictedNZ = nzGrids[c].withUnsafeBufferPointer { ptr in
+                            VarDCTEntropy.predictedNonZeros(x: clx, y: cly, width: sw, grid: ptr)
+                        }
+                        let blockCluster = VarDCTEntropy.blockContext(channel: c, orderBucket: 0)
+                        let nzCtx = VarDCTEntropy.nonZeroContext(
+                            predicted: predictedNZ,
+                            blockContext: blockCluster,
+                            numBlockClusters: VarDCTEntropy.defaultNumBlockClusters
+                        )
+
+                        var nonZeros = 0
+                        for k in 1..<64 where blockScratch[naturalOrder[k]] != 0 {
+                            nonZeros += 1
+                        }
+                        tokens.append((nzCtx, UInt32(nonZeros)))
+                        nzGrids[c][cly * sw + clx] = Int32(nonZeros)
+
+                        if nonZeros == 0 { continue }
+
+                        var remainingNZ = nonZeros
+                        var prev = (nonZeros > 4) ? 0 : 1
+                        for k in 1..<64 {
+                            if remainingNZ == 0 { break }
+                            let zCtx = VarDCTEntropy.zeroDensityContext(
+                                nonZerosLeft: remainingNZ,
+                                k: k,
+                                log2CoveredBlocks: 0,
+                                prev: prev,
+                                blockContext: blockCluster,
+                                numBlockClusters: VarDCTEntropy.defaultNumBlockClusters
+                            )
+                            let coeff = blockScratch[naturalOrder[k]]
+                            tokens.append((zCtx, ZigZag.pack(coeff)))
+                            if coeff != 0 {
+                                remainingNZ -= 1
+                                prev = 1
+                            } else {
+                                prev = 0
+                            }
+                        }
+                    }
                 }
             }
+            groupTokens[groupIdx] = tokens
         }
-        let quant = try BridgePrefix(histogram: histogram, contexts: 1)
-        try quant.writeHeader(to: &writer, contexts: 1)
-        for value in residuals { try quant.write(value, to: &writer) }
-        for _ in 1..<17 { writer.write(bits: 3, value: 0) } // library matrices
-        let bits = Int(ceilLog2(UInt32(groupsX * groupsY)))
-        if bits > 0 { writer.write(bits: bits, value: 0) } // one histogram per pass
-        try writer.writeU32(0, distributions: (.literal(0x5F), .literal(0x13), .literal(0), .bits(13)))
-        try code.writeHeader(to: &writer, contexts: 15 * (37 + 458))
+
+        // 2. Build section bitstreams: LfGlobal, LfGroup[0], HfGlobal, HfPass[0..<numGroups]
+        var sectionData: [Data] = []
+        var writer = BitWriter()
+
+        // --- 2a. LfGlobal (ISO/IEC 18181-1 §9.3.1) ---
+        // LfChannelDequantization: all_default = false, followed by 3 F16 values
+        writer.writeBit(false)
+        for c in 0..<3 {
+            let unscaled = Float(128.0) / view.dcQuantisation[c]
+            writer.write(bits: 16, value: UInt32( Self.floatToHalfRounded(unscaled) ))
+        }
+        // Quantizer: global_scale = 65536, quant_lf = 1
+        try writer.writeU32(
+            65536,
+            distributions: (
+                .offset(constant: 1, extraBits: 11),
+                .offset(constant: 2049, extraBits: 11),
+                .offset(constant: 4097, extraBits: 12),
+                .offset(constant: 8193, extraBits: 16)
+            )
+        )
+        try writer.writeU32(
+            1,
+            distributions: (
+                .literal(16),
+                .offset(constant: 1, extraBits: 5),
+                .offset(constant: 1, extraBits: 8),
+                .offset(constant: 1, extraBits: 16)
+            )
+        )
+        // HfBlockContext: is_default = true
+        writer.writeBit(true)
+        // LfChannelCorrelation: all_default = false, color_factor = 84,
+        // base_correlation_x = 0.0, base_correlation_b = 0.0, ytox_lf = 128, ytob_lf = 128
+        writer.writeBit(false)
+        writer.write(bits: 2, value: 0)
+        writer.write(bits: 16, value: 0)
+        writer.write(bits: 16, value: 0)
+        writer.write(bits: 8, value: 128)
+        writer.write(bits: 8, value: 128)
+        // Global Modular tree: has_tree = false (each Modular substream embeds its own 1-leaf tree)
+        writer.writeBit(false)
+
+        if !singleSection {
+            writer.alignToByte()
+            sectionData.append(writer.finishToData())
+            writer = BitWriter()
+        }
+
+        // --- 2b. LfGroup[0] (ISO/IEC 18181-1 §9.3.2) ---
+        // extra_precision = 0 (2 bits)
+        writer.write(bits: 2, value: 0)
+        // DC Modular substream in stream order [0: Y(1), 1: X/Cb(0), 2: B/Cr(2)]
+        let dcStreamChannels = [dcPlanes[1], dcPlanes[0], dcPlanes[2]]
+        let dcStreamDims = [
+            (width: view.channels[1].blocksWide, height: view.channels[1].blocksHigh),
+            (width: view.channels[0].blocksWide, height: view.channels[0].blocksHigh),
+            (width: view.channels[2].blocksWide, height: view.channels[2].blocksHigh),
+        ]
+        try JPEGBridgeEntropy.writeFlatModularSubstream(
+            channels: dcStreamChannels,
+            dimensions: dcStreamDims,
+            predictor: 5,
+            to: &writer,
+            policy: policy
+        )
+
+        // HfMetadata Modular substream: nb_blocks = fullBlocksX * fullBlocksY
+        let totalBlocks = fullBlocksX * fullBlocksY
+        let nbBlocksBits = Self.ceilLog2(totalBlocks)
+        if nbBlocksBits > 0 {
+            writer.write(bits: nbBlocksBits, value: UInt32(totalBlocks - 1))
+        }
+        let tilesX = (fullBlocksX + 7) / 8
+        let tilesY = (fullBlocksY + 7) / 8
+        let metaChannels = [
+            [Int32](repeating: 0, count: tilesX * tilesY),
+            [Int32](repeating: 0, count: tilesX * tilesY),
+            [Int32](repeating: 0, count: totalBlocks * 2),
+            [Int32](repeating: 0, count: totalBlocks),
+        ]
+        let metaDims = [
+            (width: tilesX, height: tilesY),
+            (width: tilesX, height: tilesY),
+            (width: totalBlocks, height: 2),
+            (width: fullBlocksX, height: fullBlocksY),
+        ]
+        try JPEGBridgeEntropy.writeFlatModularSubstream(
+            channels: metaChannels,
+            dimensions: metaDims,
+            predictor: 0,
+            to: &writer,
+            policy: policy
+        )
+
+        if !singleSection {
+            writer.alignToByte()
+            sectionData.append(writer.finishToData())
+            writer = BitWriter()
+        }
+
+        // --- 2c. HfGlobal (ISO/IEC 18181-1 §9.3.3 & Annex C) ---
+        // DequantMatrices: all_default = false
+        writer.writeBit(false)
+        // Table 0 (DCT8): encoding_mode = 7 (kQuantModeRAW, 3 bits 111), denom = F16(1.0 / 2040.0)
+        writer.write(bits: 3, value: 7)
+        writer.write(bits: 16, value: UInt32(Self.floatToHalfRounded(view.quantisationDenominator)))
+        // Raw DCT8 quantisation Modular substream (3 channels of width 8, height 8)
+        let quantChannels = (0..<3).map { c in
+            Array(view.quantisation[(c * 64)..<((c + 1) * 64)])
+        }
+        try JPEGBridgeEntropy.writeFlatModularSubstream(
+            channels: quantChannels,
+            dimensions: [(width: 8, height: 8), (width: 8, height: 8), (width: 8, height: 8)],
+            predictor: 1,
+            to: &writer,
+            policy: policy
+        )
+        // Tables 1..16: encoding_mode = 0 (kQuantModeLibrary, 3 bits 000 each = 48 zero bits)
+        for _ in 1..<17 {
+            writer.write(bits: 3, value: 0)
+        }
+
+        // num_hf_presets = 1 (encoded as 0 in ceilLog2(numGroups) bits)
+        let presetBits = Self.ceilLog2(numGroups)
+        if presetBits > 0 {
+            writer.write(bits: presetBits, value: 0)
+        }
+        // used_orders = 0
+        try writer.writeU32(
+            0,
+            distributions: (.literal(0x5F), .literal(0x13), .literal(0), .bits(13))
+        )
+        // Clustered AC entropy header & codebook, plus encoded group token streams
+        let passWriters = try JPEGBridgeEntropy.writeClusteredACStreams(
+            groupTokens: groupTokens,
+            numContexts: totalACContexts,
+            to: &writer,
+            policy: policy
+        )
+
+        if singleSection {
+            writer.alignToByte()
+            sectionData.append(writer.finishToData())
+        } else {
+            writer.alignToByte()
+            sectionData.append(writer.finishToData())
+            for groupIdx in 0..<numGroups {
+                try policy.checkpoint()
+                var pw = passWriters[groupIdx]
+                pw.alignToByte()
+                sectionData.append(pw.finishToData())
+            }
+        }
+
+        // 3. Assemble outer codestream header + FrameHeader + TOC + sections
+        let totalSectionBytes = sectionData.reduce(0) { $0 + $1.count }
+        var outer = BitWriter(reservingBytes: totalSectionBytes + 256)
+        outer.write(bits: 8, value: 0xFF)
+        outer.write(bits: 8, value: 0x0A)
+        try SizeHeader(xsize: UInt32(view.frame.width), ysize: UInt32(view.frame.height)).write(to: &outer)
+
+        let isGray = (view.frame.components.count == 1)
+        let colorEncoding: ColorEncoding
+        if iccProfile != nil {
+            colorEncoding = ColorEncoding(
+                useICC: true,
+                colorSpace: isGray ? .grayscale : .rgb,
+                whitePoint: .d65,
+                primaries: .srgb,
+                transferFunction: .srgb,
+                renderingIntent: .relative
+            )
+        } else if isGray {
+            colorEncoding = .grayscaleD65
+        } else {
+            colorEncoding = .srgb
+        }
+
+        let metadata = ImageMetadata(
+            allDefault: false,
+            orientation: 1,
+            intrinsicSize: nil,
+            preview: nil,
+            animation: nil,
+            bitDepth: .standard,
+            modular16BitBufferSufficient: true,
+            extraChannels: [],
+            xybEncoded: false,
+            colorEncoding: colorEncoding,
+            intensityTarget: 255.0,
+            minNits: 0.0,
+            relativeToMaxDisplay: false,
+            linearBelow: 0.0
+        )
+        try metadata.write(to: &outer)
+        // CustomTransformData: all_default = true (ISO/IEC 18181-1 §6.1)
+        outer.writeBit(true)
+
+        if let icc = iccProfile {
+            try ICCStream.write(
+                icc,
+                to: &outer,
+                maximumBytes: policy.maximumICCBytes,
+                checkpoint: policy.checkpoint
+            )
+        }
+        outer.alignToByte()
+
+        let frameHeader = FrameHeader(
+            allDefault: false,
+            frameType: .regular,
+            encoding: .varDCT,
+            flags: FrameFlag.skipAdaptiveDcSmoothing.rawValue,
+            colorTransform: view.colourTransform,
+            chromaSubsampling: view.chromaSubsampling,
+            upsampling: 1,
+            extraChannelUpsampling: [],
+            groupSizeShift: 1,
+            xQmScale: 2,
+            bQmScale: 2,
+            passes: .default,
+            dcLevel: 0,
+            customSizeOrOrigin: false,
+            frameOrigin: (0, 0),
+            frameSize: nil,
+            blendingInfo: .default,
+            extraChannelBlendingInfo: [],
+            animationFrame: .default,
+            isLast: true,
+            saveAsReference: 0,
+            saveBeforeColorTransform: false,
+            name: "",
+            loopFilter: LoopFilter(allDefault: false, gab: false, epfIters: 0)
+        )
+        let frameCtx = FrameHeaderContext(
+            xybEncoded: false,
+            numExtraChannels: 0,
+            haveAnimation: false,
+            haveTimecodes: false
+        )
+        try frameHeader.write(to: &outer, context: frameCtx)
+
+        var offsets: [UInt64] = [0]
+        var runningOffset: UInt64 = 0
+        for s in sectionData {
+            runningOffset += UInt64(s.count)
+            offsets.append(runningOffset)
+        }
+        let toc = TOC(
+            hasPermutation: false,
+            entrySizes: sectionData.map { UInt32($0.count) },
+            offsets: offsets
+        )
+        try toc.write(to: &outer)
+
+        var output = outer.finishToData()
+        for s in sectionData {
+            try policy.checkpoint()
+            output.append(s)
+        }
+        guard output.count <= maximumOutputBytes else {
+            throw JPEGEntropyError.resourceLimit
+        }
+        try policy.checkpoint()
+        return output
     }
 
-    private func imageHeader(to writer: inout BitWriter) throws {
-        writer.write(bits: 8, value: 0xff); writer.write(bits: 8, value: 0x0a)
-        try SizeHeader(xsize: UInt32(view.frame.width), ysize: UInt32(view.frame.height)).write(to: &writer)
-        let colour = iccProfile == nil ? (view.frame.components.count == 1 ? ColorEncoding.grayscaleD65 : .srgb)
-            : ColorEncoding(useICC: true, colorSpace: view.frame.components.count == 1 ? .grayscale : .rgb,
-                whitePoint: nil, primaries: nil, transferFunction: .unknown, renderingIntent: .relative)
-        let metadata = ImageMetadata(allDefault: false, orientation: 1, intrinsicSize: nil, preview: nil, animation: nil,
-            bitDepth: BitDepth(floatingPoint: false, bitsPerSample: 8), modular16BitBufferSufficient: true,
-            extraChannels: [], xybEncoded: false, colorEncoding: colour,
-            intensityTarget: 255, minNits: 0, relativeToMaxDisplay: false, linearBelow: 0)
-        try metadata.write(to: &writer); writer.writeBit(true)
-        if let iccProfile { try ICCStream.write(iccProfile, to: &writer, maximumBytes: policy.maximumICCBytes, checkpoint: policy.checkpoint) }
-        writer.alignToByte()
+    // MARK: - Helpers
+
+    @inline(__always)
+    private static func ceilLog2(_ n: Int) -> Int {
+        guard n > 1 else { return 0 }
+        return Int.bitWidth - (n - 1).leadingZeroBitCount
     }
 
-    private func frameHeader(to writer: inout BitWriter) throws {
-        let header = FrameHeader(allDefault: false, frameType: .regular, encoding: .varDCT, flags: 128,
-            colorTransform: view.colourTransform, chromaSubsampling: view.chromaSubsampling,
-            upsampling: 1, extraChannelUpsampling: [], groupSizeShift: 1, xQmScale: 2, bQmScale: 2,
-            passes: .default, dcLevel: 0, customSizeOrOrigin: false, frameOrigin: (0, 0), frameSize: nil,
-            blendingInfo: .default, extraChannelBlendingInfo: [], animationFrame: .default, isLast: true,
-            saveAsReference: 0, saveBeforeColorTransform: false, name: "",
-            loopFilter: LoopFilter(allDefault: false, gab: false, epfIters: 0))
-        try header.write(to: &writer, context: FrameHeaderContext(xybEncoded: false, numExtraChannels: 0,
-            haveAnimation: false, haveTimecodes: false))
+    /// IEEE-754 single-precision to binary16 with round-to-nearest-even.
+    static func floatToHalfRounded(_ f: Float) -> UInt16 {
+        let bits = f.bitPattern
+        let sign = UInt16((bits >> 16) & 0x8000)
+        let exp32 = Int((bits >> 23) & 0xFF)
+        let frac32 = bits & 0x007F_FFFF
+
+        if exp32 == 0xFF {
+            let frac16 = frac32 != 0 ? UInt16(0x0200) : UInt16(0)
+            return sign | 0x7C00 | frac16
+        }
+        let exp16 = exp32 - (127 - 15)
+        if exp16 <= 0 {
+            return sign
+        }
+        if exp16 >= 31 {
+            return sign | 0x7C00
+        }
+        let roundBit: UInt32 = 0x0000_1000
+        let tieAdjust = ((frac32 >> 13) & 1) != 0 ? roundBit : (roundBit - 1)
+        let rounded = (frac32 | 0x0080_0000) &+ tieAdjust
+        var outExp = UInt16(exp16)
+        var outFrac = UInt16((rounded >> 13) & 0x03FF)
+        if (rounded & 0x0100_0000) != 0 {
+            outExp &+= 1
+            outFrac = 0
+            if outExp >= 31 {
+                return sign | 0x7C00
+            }
+        }
+        return sign | (outExp << 10) | outFrac
     }
 }

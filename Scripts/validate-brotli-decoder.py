@@ -57,8 +57,8 @@ def main():
         raise RuntimeError('Unexpected independent dictionary ABI or size')
     blob = C.string_at(dictionary.data, dictionary.size)
     source = root / 'Sources/SwiftJXLCore/Brotli/BrotliStaticDictionary.swift'
-    strings = source.read_text().split('private static let dataBase64: [String] = [', 1)[1].split('    ]', 1)[0]
-    embedded = base64.b64decode(''.join(re.findall(r'"([A-Za-z0-9+/=]+)"', strings)), validate=True)
+    byte_block = source.read_text().split('static let dictionaryBytes: [UInt8] = [', 1)[1].split('    ]', 1)[0]
+    embedded = bytes(int(x) for x in re.findall(r'\d+', byte_block))
     vectors = json.loads((fixtures / 'transforms.json').read_text())
     if embedded != blob or sha(blob) != vectors['dictionarySHA256']:
         raise RuntimeError('Embedded dictionary does not match independent Brotli')

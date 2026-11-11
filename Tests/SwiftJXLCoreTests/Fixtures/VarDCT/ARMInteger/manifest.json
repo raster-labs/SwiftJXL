@@ -396,96 +396,96 @@
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-17-1-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "56b4e8282a2b4badf78c82b306edf49ac444888ae6233f03e3c9d7a0df5c13ac",
-      "referenceSHA256": "0feff1c63671e70f96e2635967c84e66055eb63a462537c417fa4758a0c9f181",
+      "streamSHA256": "eced0074e3ab6026828d9366dc32e611a8bc0d18cd1a847691ed9c4582943b59",
+      "referenceSHA256": "dd335860b8ef27a63cbca13d9422aac78343e81fb1c5c8b2867de9241eb77285",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-17-1-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-17-1-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "76cb5d480e193f62dcb29da8e5b6889636c83ad98982b6d2cc7a103279174d30",
-      "referenceSHA256": "49043b9fa80ef9bf3c4762ba752551f979804fd991ecd72820bea43e14bdc98c",
+      "streamSHA256": "3070c691c8a4e5a132772673e004db9f4c999a89061c938152651870608cecd9",
+      "referenceSHA256": "2133927d121c5b3da154fe0028de50b9264f9a559862e7bbb330bc238e65519b",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-17-1-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-17-2-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "89dd853106bcfa187278af594c781c2f19e270141dbf417076da71069437c51d",
-      "referenceSHA256": "f5cb74648848b7144c884037ab9ba9ba1778d9a76fa68e1533abb07c60b77cc8",
+      "streamSHA256": "6560942d92484a64b26b967999ee8b6164448d51a2669b730ba88824aa5d2f55",
+      "referenceSHA256": "fb1bd1a77f88d61e73ef683e1325b6f480bd88d55526f64033a0970d1ca8d4d7",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-17-2-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-17-2-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "643616be78c093bd48d54039067b998840d35d30ac72ad8da494028bceb05b82",
-      "referenceSHA256": "552822d7b431d29bd4041edee8a9a5f1158527821677fc1f9376fe0a83941f67",
+      "streamSHA256": "0b0717b4cd9fd9a442160538dd65e593b1be0cea83ac16d51228627a6f8a48ca",
+      "referenceSHA256": "37eb6d0486e24e7d8efeac8543503f405aea8e16a0876a85b04d280b2c0e6670",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-17-2-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-17-3-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "274511fd5ee648408d5862be7b27b2be71c1315cbd76711fe6a2f93b182db4ba",
-      "referenceSHA256": "28020887684ac788c3febd217d71e3535f4e831785f96b93ae437224444b7958",
+      "streamSHA256": "1df685a16bac5dda1cd12c8379fb272b878441f7a6bfa5cdf7252a7d8ba9eb86",
+      "referenceSHA256": "1a0105f7b9751bd61f9e398d284f7c376c21a5e214ff38d25de49959808a16b0",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-17-3-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-17-3-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "0b25c706886c51e7d85e0a982386e33ffc03716510aee0397f35c499e6e5d32d",
-      "referenceSHA256": "8973301c41ea9584b18061c4e802ccdf01ad46f5ee7997e4bec14163f68ba6c5",
+      "streamSHA256": "cb1e66fcd441f81d55ee28f1d6c425830150d8d293506479a6ab60c3e91da564",
+      "referenceSHA256": "25064fd83303d9816c0e18273de81e1ff08755d2ea16fb2e6d6488774d24ca51",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-17-3-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-17-4-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "e9fdd6f5703c8c9b0f72f77ed1f28ddcc588927f7b21f4ab63a9bd3d9359e36a",
-      "referenceSHA256": "22d86fa061d8138abe788cf40098821e8ae4285f6a14e624b1e5fb29a88f1eed",
+      "streamSHA256": "beb15e6603ecf96ec235aced318a7146cc82ffa090648ee53e02f6589c67bbb6",
+      "referenceSHA256": "9371c47aef9e74df8f52cfff720c141ab0ab41c0d9bdb9c173760a91b9cbd333",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-17-4-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-17-4-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "3215ee36b3e763144d47f6c4a0e9a6b2a33c07874a11bf5e6e76b7ed892889f5",
-      "referenceSHA256": "48a985c06dc68a6b3d207918fe4c710eae34497deaefbbae6134d557c6a1f462",
+      "streamSHA256": "dee212c2fecc0c6e2d6664bb901f3356f6d9f134cf01d7e5d2de8ba482308e7c",
+      "referenceSHA256": "67a0839d15bfbafff4cb1b7edcc12fb0761217af1006a9aaeeee54f84ba8636e",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-17-4-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-257-1-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "200d623604eebb52cdd6875affb0088aff33dc0c6d0aae193386734d4b7ca6e1",
-      "referenceSHA256": "20236a05572a92550d2fba25c50322af4340dfe4d19c0acfccb5c011294e2a6c",
+      "streamSHA256": "044b0385bdb5915f351d97a449a08fd1d61667c8396d842311b3bd21de1dcbf0",
+      "referenceSHA256": "077f326cbd6d0a36eb07cd2cf981e21e037f457d2b5cd08308e59a79f6e2f1a0",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-257-1-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-257-1-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "f4715733a593d4ea370eb99dd991c79ce02bacdc501a2be31b1268afaa68e8aa",
-      "referenceSHA256": "2e19e1ea9f10194af55872b718a86d3da9971e5cd1430cda4371db742de84bdb",
+      "streamSHA256": "ae762af287d1e88325ccbbc425519fff0e311dc3b891a58034f7dc9180ebcd1b",
+      "referenceSHA256": "15c7a4d7f03e0a5344739866364948c12e1235827fba1ea4f34c9c3bc8322290",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-257-1-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-257-3-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "3e9d0a0ce7ccd8fe7bb3a2f5d77de28a48d8cc61346cfb9c061979cb58ecfe1b",
-      "referenceSHA256": "351f7a3c0218a4184f756acc9f49d09ffddbd0c1636dbd7d0b8fbc321d18fd58",
+      "streamSHA256": "229f9ee6968c11b023168bf61af712503eca0f2c01b934a1d64ee8db0c5d7cfd",
+      "referenceSHA256": "91d38479cce42f4dcc4913256c92c02fb9d73822735ff1ac19286e05f5e0caa5",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-257-3-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-257-3-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "85bcedab5de5ec531dfb3d27719929043ab78e98207eaa0f18b87db5bb537bc7",
-      "referenceSHA256": "a110d487ea63cdd6c839269f743a3497a00172ec361e98424e5f3739fddd215f",
+      "streamSHA256": "d31d727c4f3dc957c6c407201c83814b4a18e51f3998a66fe36fee53c9823904",
+      "referenceSHA256": "1835908a864661ff7030dc2e8281aafd4a509cf338cf14e5c9019c45d343e189",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-257-3-8.oracle"
     },
     {
@@ -524,352 +524,352 @@
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-64-3-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "aa6d7c36431f39abe9ae5558861e85c431c2edae2302f25687a150c0efb844b1",
-      "referenceSHA256": "cb710b345586595eb605a1609abe53bd964db559cf4633d13ec03026506598b6",
+      "streamSHA256": "6e12473127b55855234c010cd042cf0ac49c331b65bd6f584ce60044209862c1",
+      "referenceSHA256": "3f40753aca549c41fa5ee66563c44dd3a57f6b98119950ff85bbaafaa6e7c860",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-64-3-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-64-3-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "5956d171828b8cf7be0c9e719a0a0ec326c17ae02a77439ccf618ed30d13dad5",
-      "referenceSHA256": "0c92ce9af96c008e1ef5369e2123f8c7c412f6b40c98984fed1b62eea33f3b86",
+      "streamSHA256": "48a1b7056b52207ab29609fe0075115b8fd6b47034df8a1ee23e5089cae0ffdd",
+      "referenceSHA256": "c958daa461c9decbdb37f3fd158bf42bb1666697fbff9bc8d9b66085fce983bc",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-64-3-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-64-4-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "fb43542b0d68d97f32d13b74a2697b660d22fa10fead4359d604ba2b697dd0ba",
-      "referenceSHA256": "a0c9270e895a739bd914b737e74d3a8f55f6dfdd5b7362f4558a3b477ff2ccfd",
+      "streamSHA256": "463f43cce2ecd25ef8ada0c559cfdd710cf2b0522da4145fa5a972ef3e30c624",
+      "referenceSHA256": "b418ada7b89eeca1ebc96b5ea5768acaf729e79d560c0e90b7d7c4fd0d1674ff",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-64-4-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderPrepared",
       "name": "enc-64-4-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "1756f2961f7946e9f176ea0c79f4ce0f5e0af44597a9f837d1fff3d001c5c478",
-      "referenceSHA256": "fa9540bf0d07ca21c29c8eaee5d8743365b82c961ce47b17133419a2674a02ab",
+      "streamSHA256": "9710c706640175d139bbd45e03f96945fe8384edbf1d8caa06cae967cef09fde",
+      "referenceSHA256": "854e299d9dd78c894d7d0aa1e339e7225dcd3e75bbed6b4a33f42ca0573b51d5",
       "referenceSource": "../vardct-preflight/encoder-prepared/enc-64-4-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-17-1-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "485be00286da3458b6aab14245d57df415209385bf57ec9d77fefb8cc97a820d",
-      "referenceSHA256": "f8d75f7aefdd61f32a20f435a92880812e5b5259d055db7ecc7e5d49f2c45bb9",
+      "streamSHA256": "d8d3e060cc1010141f6a748547789317dd2445fd5bac3792b59508c34ce74197",
+      "referenceSHA256": "2b15b9a2cf2ddf76dfcd83877731c25c051d22f4b9127e814c871822800f6c95",
       "referenceSource": "../vardct-preflight/encoder-small/enc-17-1-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-17-1-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "37ccf0084592bbf4991e970d85d9f46bd0346d7577cf5691eb43a3a8567ec8b8",
-      "referenceSHA256": "01d701e8bf2833960fddf83bdb4fa762042a44edac6e71d5660c12b660430247",
+      "streamSHA256": "f065eb931804f6fc7f7ea8c00a91868163b50b9eb8ced6a32f58b727daf6422a",
+      "referenceSHA256": "20b73591d66394dde1f9906871479e55ba5439aef93ac1b7a107b47d958bf9dc",
       "referenceSource": "../vardct-preflight/encoder-small/enc-17-1-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-17-2-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "2d1d16876e9e6e167665fa0e7808bd2dfe9c067e077fd27c7e192385baaa5029",
-      "referenceSHA256": "8cf4460db38d758ddb7ac956cbb2fa44bf281bdc9b554f06e91ab50468b3e5e3",
+      "streamSHA256": "5db28df815cff5882802b05984fc6b0246c6a111ec5d682c9ce20c3cf9988e45",
+      "referenceSHA256": "f76762d832b89cedb4ad40d848ae85baef335df646f8ffd85f21590faba26388",
       "referenceSource": "../vardct-preflight/encoder-small/enc-17-2-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-17-2-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "6cf5fba1f4243a17753c2320a7c6954ef4700b285d58b963fa8682f90b954abc",
-      "referenceSHA256": "0af2178c58037dc7ce9495d14dbbebb80545170fe8633e944306527142986c24",
+      "streamSHA256": "e5d06b31c3122eb61a9185167807e808132c0bcb9fc3e06f0a1efdee7b8d793b",
+      "referenceSHA256": "14d0bebe344fa0d01e21fb7ad4a30edc294ac1e2b314e679160c9437e9025adb",
       "referenceSource": "../vardct-preflight/encoder-small/enc-17-2-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-17-3-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "274511fd5ee648408d5862be7b27b2be71c1315cbd76711fe6a2f93b182db4ba",
-      "referenceSHA256": "28020887684ac788c3febd217d71e3535f4e831785f96b93ae437224444b7958",
+      "streamSHA256": "1df685a16bac5dda1cd12c8379fb272b878441f7a6bfa5cdf7252a7d8ba9eb86",
+      "referenceSHA256": "1a0105f7b9751bd61f9e398d284f7c376c21a5e214ff38d25de49959808a16b0",
       "referenceSource": "../vardct-preflight/encoder-small/enc-17-3-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-17-3-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "0b25c706886c51e7d85e0a982386e33ffc03716510aee0397f35c499e6e5d32d",
-      "referenceSHA256": "8973301c41ea9584b18061c4e802ccdf01ad46f5ee7997e4bec14163f68ba6c5",
+      "streamSHA256": "cb1e66fcd441f81d55ee28f1d6c425830150d8d293506479a6ab60c3e91da564",
+      "referenceSHA256": "25064fd83303d9816c0e18273de81e1ff08755d2ea16fb2e6d6488774d24ca51",
       "referenceSource": "../vardct-preflight/encoder-small/enc-17-3-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-17-4-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "e9fdd6f5703c8c9b0f72f77ed1f28ddcc588927f7b21f4ab63a9bd3d9359e36a",
-      "referenceSHA256": "22d86fa061d8138abe788cf40098821e8ae4285f6a14e624b1e5fb29a88f1eed",
+      "streamSHA256": "beb15e6603ecf96ec235aced318a7146cc82ffa090648ee53e02f6589c67bbb6",
+      "referenceSHA256": "9371c47aef9e74df8f52cfff720c141ab0ab41c0d9bdb9c173760a91b9cbd333",
       "referenceSource": "../vardct-preflight/encoder-small/enc-17-4-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-17-4-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "3215ee36b3e763144d47f6c4a0e9a6b2a33c07874a11bf5e6e76b7ed892889f5",
-      "referenceSHA256": "48a985c06dc68a6b3d207918fe4c710eae34497deaefbbae6134d557c6a1f462",
+      "streamSHA256": "dee212c2fecc0c6e2d6664bb901f3356f6d9f134cf01d7e5d2de8ba482308e7c",
+      "referenceSHA256": "67a0839d15bfbafff4cb1b7edcc12fb0761217af1006a9aaeeee54f84ba8636e",
       "referenceSource": "../vardct-preflight/encoder-small/enc-17-4-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-257-1-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "a8d86d224b21cb92d60b5edf8455b5b587034aecb79fbbe6dc72acca0a74cc09",
-      "referenceSHA256": "344abdb27f11d2473259ebf19e6bb4e2818e3b27efe6c4921e9a97d757990883",
+      "streamSHA256": "7f6c9563143f8c347da170a696ecd818e317bc29eb390669e508c72efb1a3827",
+      "referenceSHA256": "7e1f1a2e4508c490fb4a1708f338697dd141ca7d97cca5249d957420bff742f5",
       "referenceSource": "../vardct-preflight/encoder-small/enc-257-1-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-257-1-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "fb817bacdc746c73001c9cff55bd45e6361f91f3eb4e8da17b51acaaf7a54b55",
-      "referenceSHA256": "9aba60a89dbec9e759d64d9bf002fb4c55acf3bef7a4e78dc2d60534efbb610c",
+      "streamSHA256": "e51d5b651032906945135020c5e5fcc9c6f2dd35576e449839ce8acb15eab149",
+      "referenceSHA256": "fabbdacd63068a3bfae6a6f98753fc49e0aa06563f20c0ffa6de02213afbba53",
       "referenceSource": "../vardct-preflight/encoder-small/enc-257-1-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-257-3-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "ad8a24905e03726b04582bb298ab68e4ea3e208b05c93ba8a3324658ca28fc65",
-      "referenceSHA256": "b96141f677af135299372256dfaf87f7d1d701301db2011a9909869164a475e0",
+      "streamSHA256": "b2436984eafaefda8a40f27a71d543749fad62e70cfab971feb486b34e6c17ff",
+      "referenceSHA256": "1b80c18232f7c5c80df6f038a6d114353aab641699f4a4e6686fd6cc68f8c627",
       "referenceSource": "../vardct-preflight/encoder-small/enc-257-3-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-257-3-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "3bcdad9587c4f610d6e5d4c3ff1bd7f1a0a5dce5c68444889e90fc06c3ca961e",
-      "referenceSHA256": "f10b9a800900b55c007503dbbe75a3cc7fdbfcc25fb75f502dfdea3a5e80ddfb",
+      "streamSHA256": "9f5a0687bd46c20f1e7dbdd7056216aa17fd2ba0e740f59f2740b5851553750e",
+      "referenceSHA256": "fe967582155f983179bb4b6453dfa93c2810bab72d2da28f4002e565bfe974f9",
       "referenceSource": "../vardct-preflight/encoder-small/enc-257-3-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-64-1-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "cde48bd8740d0beec3e75e706191d4c3ef4b537b1b5f950b973b63cc6fa74dc5",
-      "referenceSHA256": "03fbb0ace2b49b2e4b4a0412cd8e272f22ade17078c4a4fe52c26fbbaee006f3",
+      "streamSHA256": "8b0846a1fff14bcfa3327f531c831713a52bfad9ed80a3936320dc04d71603e3",
+      "referenceSHA256": "2aa36477c179fb7ca0eb4f046aa8592791b1def81aa0a029008e24bfe536b43e",
       "referenceSource": "../vardct-preflight/encoder-small/enc-64-1-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-64-1-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "52414f7b95e9012e542b9319da85b42bad909a82716535b8dca49c257b078ee2",
-      "referenceSHA256": "53867a01e6794d9ce08c4c0dca2184c9e12f89c82cfc506c7a366e52b5eb76d3",
+      "streamSHA256": "f84dbda4a548f2aaee204c3b9e0a9ebf9506ad50a3c1c63df3c192f0c6ad3a5d",
+      "referenceSHA256": "7268457f7fdfdda086dd7d65d0b52bbe2ca350ce5f6164750e3c21089514f4a5",
       "referenceSource": "../vardct-preflight/encoder-small/enc-64-1-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-64-2-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "ea85de51de6bc36f04283586f073b0197275a4b49ee30e06fb395deaf283526f",
-      "referenceSHA256": "c21143ac5aacf142656617ac7ae2edcba9cb63b446ce06e5e54d0c78fc00d7b3",
+      "streamSHA256": "2e9656ec9618a21acf1b71694b1c94ae5e1bb40b5f56e04664ab1ba51afa359a",
+      "referenceSHA256": "f82d8a3ba46b8866e17fc90801b9f2fbda6c9f9dc62795952836ddd8dbc51cb6",
       "referenceSource": "../vardct-preflight/encoder-small/enc-64-2-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-64-2-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "8675715e5038d92013f08a87a13bd7e3d6ef847cb8b8d7614c058facdb0d020f",
-      "referenceSHA256": "c380c0b6b5fbd9b04e005f0149a72d7a1429abae5dbc378b40ce601930325dbe",
+      "streamSHA256": "8f4ccb823d0c55b88fd4e099cd59493dcc479c81912a9cc6c6342e0f00f8fb51",
+      "referenceSHA256": "7a2e6847556168d51c0656b8369c388a20f2d8a0474c2104a55300de1b193ac5",
       "referenceSource": "../vardct-preflight/encoder-small/enc-64-2-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-64-3-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "2ee58d73f9a5693825841e5331b3cd00cac3d8e247e038185711689aa9c8b024",
-      "referenceSHA256": "b16ec3fd4b218a8b369614c322b889a3edeeb3a204414a9367777b1efa7f610b",
+      "streamSHA256": "5829230efe1a0a4ddea27dfa661d34e5e60b46b3dd8ff9af7d3fc7e4d1c8e535",
+      "referenceSHA256": "79fd7100fe5ccb4f9d9a0b0a1378659d72ea2d99aaada34f5d9af7d2ea8dc7a0",
       "referenceSource": "../vardct-preflight/encoder-small/enc-64-3-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-64-3-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "ce3ec747928194e0a6c0c4c95e97c6b0245a554872fa86cc7f4278e89f1369a8",
-      "referenceSHA256": "7c9214f3930c474753e50beec35925fa67684caa49441573a8bda74b19d3261a",
+      "streamSHA256": "7a2a3984fbd126854f4a6341e18d8fd03dde66aa99a0c31e3c068ff6a7fa3a59",
+      "referenceSHA256": "2e02a765f95ba1abf82e676f051add3e5896206a7460c16877c3696aef662755",
       "referenceSource": "../vardct-preflight/encoder-small/enc-64-3-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-64-4-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "532fee70da8f3fe5c3564421f8ff30e8ff67813f5356b32378d9b0f1e6c19a6b",
-      "referenceSHA256": "860df97619dda365d1abd7bc5eae1c89dc1826fcc0ba4b56451ccf7dd854873c",
+      "streamSHA256": "a65232b811d0686ed7db5eb5c063afed58dd2f8cfa7fa6a573f70e5b514b0434",
+      "referenceSHA256": "e6a2c8e596d16074199534cc83b78e610ed694f4759e871f2bd4a43e609b12e2",
       "referenceSource": "../vardct-preflight/encoder-small/enc-64-4-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderSmall",
       "name": "enc-64-4-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "142eea716009c4b74cc6f3d78b5843c8e4702718bd26cf772dda22b98216d35c",
-      "referenceSHA256": "f83c56a08cc62c3445593d9ef53b40c20d180810399d0c61d9e94c01a0f63017",
+      "streamSHA256": "796a4ede5ad48892b413714c63508724958a12493e92914a9215469b80b18852",
+      "referenceSHA256": "40f73ff4d03a30e0cfc8cab073a49c249e427679ae52b9a77280155f55b9b765",
       "referenceSource": "../vardct-preflight/encoder-small/enc-64-4-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-17-1-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "8cac1988d38c80ec69681e5d0f1e8120355083d0e87d010b14381e54c4f25735",
-      "referenceSHA256": "8813ad93c72e06cdf0c8f37f8120b7b8e8ba503fd8c05d0c12fc589dd40fff9b",
+      "streamSHA256": "91d392096bd5883b4c63195b7a77ab2525bf03b5d3297b22c4abdfd236e1a712",
+      "referenceSHA256": "a1667451daddc62bf62ed5166db0c677fc9abc52321c0d0d6c2db21c39002820",
       "referenceSource": "../vardct-preflight/encoder-large/enc-17-1-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-17-1-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "fa56cec49e9108f50c0530f083bdb272648c56e823676d768c27818bbe5d13c9",
-      "referenceSHA256": "01d701e8bf2833960fddf83bdb4fa762042a44edac6e71d5660c12b660430247",
+      "streamSHA256": "2088620677e1812c01361c72aae20158b0bda3fbacbc0675f0115fd6cfb4eba0",
+      "referenceSHA256": "0aa5c50b47899ed7489ecd09639b49ae7661419c8592ab48a4e414a68a1092df",
       "referenceSource": "../vardct-preflight/encoder-large/enc-17-1-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-17-2-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "1917107bcceb5727ca4ff685ad6a60da19e14c875d7466e5671eec5a318ed05c",
-      "referenceSHA256": "640c72a836be3e5d04b7a508683578085e3f884a5e4a95cacbc1f8c28caa7041",
+      "streamSHA256": "1c01d4d1257b0a1fcccd0a5af57f37d0d91bd2d0a130f74fdc02e2b99a1edc78",
+      "referenceSHA256": "085efdbb9de05e68bb1297cb99ecd62297bf25ad8e801580fa65b77173c4d8b9",
       "referenceSource": "../vardct-preflight/encoder-large/enc-17-2-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-17-2-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "c6ecd008f09d35d80bb39e0138a846442c3a721a35e9b90fb2788759be9f9bd8",
-      "referenceSHA256": "0af2178c58037dc7ce9495d14dbbebb80545170fe8633e944306527142986c24",
+      "streamSHA256": "a46d2e2709d3875087c41cb15ad6c0e7cc7b5cacc00f04380bd482931ed90b13",
+      "referenceSHA256": "0b5d4a64bace1c277b7c8c545ff70cd2c3a5900d5e7f3e4cd2ff45c37400dcbf",
       "referenceSource": "../vardct-preflight/encoder-large/enc-17-2-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-17-3-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "ec0235426a69a164b31dd2bdfe6bf757dbadaa37035c3542e82c99e9ed567b96",
-      "referenceSHA256": "6a5192ab1c136013fbe3f69057ebb6647cbfde894f1a1ccd7382d46f337324c5",
+      "streamSHA256": "c8b2708356bf3de7302e1fed7e20adae42761aaec41c5f641ae3b95610d14be9",
+      "referenceSHA256": "15a73ba41fb0a8b4460f78cc316a0b839f7fb9e111e7d01be48838a14d3c10b2",
       "referenceSource": "../vardct-preflight/encoder-large/enc-17-3-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-17-3-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "17e3dcf81444ef5935045e529a399efd4411a4f45c7b24e4c0bbe0960a3d227b",
-      "referenceSHA256": "2ab273d3d1bdaab365d44595e1916e86f73cb8912cae5db1504aef05cc4f3925",
+      "streamSHA256": "a1417c0bab7f73a3d79633d3f841bf12031bda51b7c476ad5f120db75763f422",
+      "referenceSHA256": "5a6e365626bf4289bb6bb72e9d3220b3ee6529ede90654c36ab2b6c761f46dfd",
       "referenceSource": "../vardct-preflight/encoder-large/enc-17-3-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-17-4-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "b9d8f145c6a60e978bfae45c0ec3f2099a8042f0ce82a30b5ef01072f8e19f65",
-      "referenceSHA256": "80a8bc460f9cdca28807d6ce0594880b46de1de07a074a4f59afff9f9010cf98",
+      "streamSHA256": "08f88139fd7033249156a65d3a035fa699e911c788be6a676f96ceb08f3e26c5",
+      "referenceSHA256": "e29ca7219ec98f997b8621c3f1016833fcb5e4fad48ebdd0b79f516c3da1d9d9",
       "referenceSource": "../vardct-preflight/encoder-large/enc-17-4-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-17-4-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "46809127fe782f68b64b563929a5d4a4bf8399f9ce4a55f6a2097bed51cd4692",
-      "referenceSHA256": "b21a5cbf3df6c4adc9550b841aca6e95295454030ce26e2475d586e0fa8a8365",
+      "streamSHA256": "2cce9375cafe8a61cc23e0f2003c3ef4296d9f909b807d395c5bd9340828c538",
+      "referenceSHA256": "73c0972a39ef08a8c913fc67b94ec965224118bf2c6a02ae8e648ad691c93a7b",
       "referenceSource": "../vardct-preflight/encoder-large/enc-17-4-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-257-1-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "364a375251acd2eac166f5b1e15260e73474f1a3e168770a57c51ff1b9d4af61",
-      "referenceSHA256": "9711f22944b14dbd65c8bb8a9382ccc4eea4454dd91f8579144967b30101647f",
+      "streamSHA256": "f9e3674e93cf01ef81699e0e0dcd08f2b7543b0969d335fa51bc462c4228acfb",
+      "referenceSHA256": "9b054553425cfd8ee8408807ec423a429a1dbc5d7b6c01182197f80b56e56f44",
       "referenceSource": "../vardct-preflight/encoder-large/enc-257-1-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-257-1-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "448ce63cb7a11a353f86c429c68c5cc2091a09c3900ab45cb9ec494168b88316",
-      "referenceSHA256": "55f96bb2ef4b8c3ed05d9269fbc746333eef9f11944c4459285c4a64476b8b02",
+      "streamSHA256": "ce53b3e3a0e98fd92b5c9057c13a1a166ce91ee04da35ae3c0a371e17d639475",
+      "referenceSHA256": "d00cdc809e7201701d4eb9a37a3cda8bf9bfdfe78090195bf0803babafb446e2",
       "referenceSource": "../vardct-preflight/encoder-large/enc-257-1-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-257-3-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "36407d94752c8b92409cfcc11f478e0c1bf9f49d3b4958cb18e7505c5ab8854b",
-      "referenceSHA256": "435c6b73bd5c20910f7086602d4c4a5f3dafd58b0b639e2d3cb5299aca25e5cb",
+      "streamSHA256": "607cfee9503c090dc71cbb743f3f40dd853e0e4dfb394304f2fce69e21d2fa24",
+      "referenceSHA256": "aeee6e173546e4b4b1e2b92ce5efc3c71ee0d08817731a71014463f51685ff81",
       "referenceSource": "../vardct-preflight/encoder-large/enc-257-3-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-257-3-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "9130c366c89b55567a6559a59eed6201d054399461f492f4f08205a891524ecd",
-      "referenceSHA256": "6e33fd89892b8a86a75891db29e941dbf5b0225df2881af9b79d90ced0d25934",
+      "streamSHA256": "d4eb9ca0054ed10f25a4907713fe3445d36eb5b76e47a39b53e8c570b01b3c1a",
+      "referenceSHA256": "2c9b7ecba65acf18c2d7d990a7fd583b49a63c839f86479ff000d978a2cd40e6",
       "referenceSource": "../vardct-preflight/encoder-large/enc-257-3-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-64-1-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "1dca734b74fb7c580b3ef84df27d92a5c66e50d175adf2f13ec5b0c1a288c7aa",
-      "referenceSHA256": "cd081b04d416e3681ad71c5e702bc13ea4ca3474bface9d997fb236a5b696539",
+      "streamSHA256": "8b0846a1fff14bcfa3327f531c831713a52bfad9ed80a3936320dc04d71603e3",
+      "referenceSHA256": "2aa36477c179fb7ca0eb4f046aa8592791b1def81aa0a029008e24bfe536b43e",
       "referenceSource": "../vardct-preflight/encoder-large/enc-64-1-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-64-1-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "4686372812f2e12bb16dd13cfc0c8bf2496e0e68461a049023fbe239a8a12e80",
-      "referenceSHA256": "4f03eee02c739745b25eb778b49a0c0e2be413339027e8cd9abbb84f0744009c",
+      "streamSHA256": "f84dbda4a548f2aaee204c3b9e0a9ebf9506ad50a3c1c63df3c192f0c6ad3a5d",
+      "referenceSHA256": "7268457f7fdfdda086dd7d65d0b52bbe2ca350ce5f6164750e3c21089514f4a5",
       "referenceSource": "../vardct-preflight/encoder-large/enc-64-1-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-64-2-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "fba84b01e33ceb728c35eb82b96e40b0e1d291e0e3cd802fc5f1515f260044c6",
-      "referenceSHA256": "3aacb9343ec028ca6fc89f2b130372690c00e7e06ba4242f03e038236389abbf",
+      "streamSHA256": "2e9656ec9618a21acf1b71694b1c94ae5e1bb40b5f56e04664ab1ba51afa359a",
+      "referenceSHA256": "f82d8a3ba46b8866e17fc90801b9f2fbda6c9f9dc62795952836ddd8dbc51cb6",
       "referenceSource": "../vardct-preflight/encoder-large/enc-64-2-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-64-2-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "10e79bb71dac5f8be041588acd1757dbb0c8c242c4156947261104352c86828b",
-      "referenceSHA256": "dd723e0238cc2a6c82c561dbbe99a432be96aaeeb16fc511c8e18cbe21674d22",
+      "streamSHA256": "8f4ccb823d0c55b88fd4e099cd59493dcc479c81912a9cc6c6342e0f00f8fb51",
+      "referenceSHA256": "7a2e6847556168d51c0656b8369c388a20f2d8a0474c2104a55300de1b193ac5",
       "referenceSource": "../vardct-preflight/encoder-large/enc-64-2-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-64-3-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "c18c48a5af5baf8aee82d261054a98eaee6931d12e2cada77a5e62aa6183ef87",
-      "referenceSHA256": "ec40d00c2c9d8253d67025518a7886fcaaf7d138c6483ec8a56f42650575955b",
+      "streamSHA256": "25e24fa2a268306dc276dfe7a7017fff21ed3e8aaf89ce13205c9052f4c78b53",
+      "referenceSHA256": "7e78316f5bfdff63127059599f05a90cfce69aa660249e81f5b812d752518ce3",
       "referenceSource": "../vardct-preflight/encoder-large/enc-64-3-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-64-3-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "10135fc5d4a4094544c82f7476e608c7b1583acd96c52945d0a8fa91ad6ec592",
-      "referenceSHA256": "1cfcc4f79e3757f8852fa7546d9808a00f9d58fb534d3c5913570f308f9921cd",
+      "streamSHA256": "5728fd8e5a6d604c45460cbbd48dccdcfd78b7961a3e4a6f584cdb4ab85b5956",
+      "referenceSHA256": "9080044c4210feebb20e3b7d52aa905d5554cc043e2c30389dd53ddacf7328dc",
       "referenceSource": "../vardct-preflight/encoder-large/enc-64-3-8.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-64-4-16",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "742248cddb95763c93d5b15435c093b82868b264b9accde151b589b01bc8c9ee",
-      "referenceSHA256": "90d0d885bf9b7ded00f42e36ad7e4fbddac2e539ef1a131298885c8f6530bc34",
+      "streamSHA256": "976b1247a3b18012af43c85ea7aa49f527e1f44fe686d3872e623152317dae0a",
+      "referenceSHA256": "71e302b815619c00dfabc9647c044265dc1c5b18a895c124c12ce4fc913d77e4",
       "referenceSource": "../vardct-preflight/encoder-large/enc-64-4-16.oracle"
     },
     {
       "directory": "VarDCT/EncoderLarge",
       "name": "enc-64-4-8",
       "referenceExtension": "arm-integer",
-      "streamSHA256": "18b11e91376ecc6df719b1dd946c147de8deb225624ba3a8287035bfa6a6df38",
-      "referenceSHA256": "a9defa28d5000a6de6308e81f6e933e1c224dff58a0031a4e7a71a074ade73d5",
+      "streamSHA256": "def5f00794e6188c8785caf7063c5a26a5d11bb010a34ed18bfe7bc68bbc5276",
+      "referenceSHA256": "e98fabc5514a2f32206d4a4b8fda0e1ae3572443adb541fa19f5b2ada15cebc3",
       "referenceSource": "../vardct-preflight/encoder-large/enc-64-4-8.oracle"
     },
     {

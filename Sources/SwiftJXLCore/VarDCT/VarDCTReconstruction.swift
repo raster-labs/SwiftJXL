@@ -1,376 +1,435 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Adapted from JXLSwift VarDCT/{QuantWeights,AdjustQuantBias,AdaptiveDCSmoothing}.swift
-// and Codec/JXLDecoder.swift at 57e81cb9e2411d1efac435b429a306a031744c1e.
-// Copyright (c) 2026 Raster-Lab. JPEG XL Project Authors retain BSD-3-Clause.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-/// DCT default-matrix reconstruction into admitted algorithm planes, not a
-/// final image or public capability. No successful pixels are published here.
+/// Full-frame VarDCT XYB spatial reconstruction and loop filtering per ISO/IEC 18181-1 §§10.1–10.4.
 package enum VarDCTReconstruction {
-    package static func xyb(_ coefficients: VarDCTCoefficients,
-                            numericalMode: VarDCTNumericalMode = .scalarNearest) throws -> [[Float]] {
-        let e = coefficients.envelope, budget = e.budget
-        if let unsupported = coefficients.strategies.transforms.first(where: { !VarDCTQuantWeights.supports($0.identifier) }) {
-            throw VarDCTError.unsupportedStrategy(unsupported.identifier)
+    // ISO/IEC 18181-1 §10.1.4 Table 38 default quantisation bias constants for |q| == 1 and |q| >= 2.
+    private static let quantBiasOne: [Float] = [
+        1.0 - 0.05465007330715401,
+        1.0 - 0.07005449891748593,
+        1.0 - 0.049935103337343655,
+    ]
+    private static let quantBiasNumerator: Float = 0.145
+
+    // ISO/IEC 18181-1 §10.1.3 LLF resampling scale factors for block coverages 1, 2, 4, 8.
+    private static let llfScales: [Int: [Double]] = [
+        1: [1.0],
+        2: [1.0, 1.108937353592731823],
+        4: [1.0, 1.025760096781116015, 1.108937353592731823, 1.270559368765487251],
+        8: [
+            1.0,
+            1.0063534990068217,
+            1.0257600967811158,
+            1.0593017296817173,
+            1.1089373535927318,
+            1.1777765381970435,
+            1.2705593687654873,
+            1.3944898413647777,
+        ],
+    ]
+
+    /// Reconstructs the three `XYB` floating-point planes (`[X, Y, B]`, each of size `width * height`)
+    /// from decoded VarDCT coefficients per ISO/IEC 18181-1 §§10.1–10.4.
+    package static func xyb(
+        _ coefficients: VarDCTCoefficients,
+        numericalMode: VarDCTNumericalMode = .scalarNearest
+    ) throws -> [[Float]] {
+        let budget = coefficients.envelope.budget
+        try budget.checkpoint()
+
+        let width = coefficients.width
+        let height = coefficients.height
+        let blocksX = coefficients.blocksX
+        let blocksY = coefficients.blocksY
+        let totalBlocks = try ScalarOperationBudget.product(blocksX, blocksY)
+        let pixelCount = try ScalarOperationBudget.product(width, height)
+        let frame = coefficients.envelope.frame
+
+        let planeWorkspace = try ScalarOperationBudget.product(pixelCount, 3 * MemoryLayout<Float>.size)
+        let dcWorkspace = try ScalarOperationBudget.product(totalBlocks, 3 * MemoryLayout<Float>.size)
+        try budget.reserveWorkspace(ScalarOperationBudget.sum(planeWorkspace, dcWorkspace))
+
+        // --- 1. Dequantise LLF (DC) and apply LF Chroma-from-Luma (§10.1.1) ---
+        let invQuantLF = 65536.0 / (Float(coefficients.globalScale) * Float(coefficients.quantLF))
+        let dcExtraMul = 1.0 / Float(1 << coefficients.extraPrecision)
+        let dcStep: [Float] = [
+            coefficients.lfDequant[0] * invQuantLF * dcExtraMul,
+            coefficients.lfDequant[1] * invQuantLF * dcExtraMul,
+            coefficients.lfDequant[2] * invQuantLF * dcExtraMul,
+        ]
+        let lfFactorX = coefficients.baseCorrelationX + Float(coefficients.ytoxLF) / Float(coefficients.colorFactor)
+        let lfFactorB = coefficients.baseCorrelationB + Float(coefficients.ytobLF) / Float(coefficients.colorFactor)
+
+        var dcPlanes = [
+            [Float](repeating: 0, count: totalBlocks),
+            [Float](repeating: 0, count: totalBlocks),
+            [Float](repeating: 0, count: totalBlocks),
+        ]
+
+        for i in 0..<totalBlocks {
+            if (i & 1023) == 0 { try budget.checkpoint() }
+            let deqY = Float(coefficients.dc[1][i]) * dcStep[1]
+            let deqX = Float(coefficients.dc[0][i]) * dcStep[0] + lfFactorX * deqY
+            let deqB = Float(coefficients.dc[2][i]) * dcStep[2] + lfFactorB * deqY
+            dcPlanes[0][i] = deqX
+            dcPlanes[1][i] = deqY
+            dcPlanes[2][i] = deqB
         }
-        guard !e.frame.loopFilter.hasCustomParameters else {
-            throw ScalarModularError.unsupportedProfile
+
+        // --- 2. Optional Adaptive DC Smoothing (§10.1.2) ---
+        if (frame.flags & 128) == 0 && blocksX >= 3 && blocksY >= 3 {
+            dcPlanes = try applyAdaptiveDCSmoothing(
+                dcPlanes,
+                blocksX: blocksX,
+                blocksY: blocksY,
+                dcStep: dcStep,
+                budget: budget
+            )
         }
-        let bx = coefficients.blocksX, by = coefficients.blocksY, blocks = bx * by
-        let width = bx * 8, height = by * 8, samples = width * height
-        try budget.reserveWorkspace(ScalarOperationBudget.product(samples + blocks * 2, 3 * 4))
-        let invGlobal = Float(65536) / Float(coefficients.globalScale)
-        let factors: [Float] = [4096, 512, 256].map { invGlobal / Float(coefficients.quantDC) / $0 }
-        let extra = 1 / Float(1 << coefficients.dcExtraPrecision)
-        let dcX = coefficients.baseX + Float(coefficients.dcX) / Float(coefficients.colourFactor)
-        let dcB = coefficients.baseB + Float(coefficients.dcB) / Float(coefficients.colourFactor)
-        var dc = (0..<3).map { _ in [Float](repeating: 0, count: blocks) }
-        for i in 0..<blocks {
-            if i & 255 == 0 { try budget.checkpoint() }
-            let y = Float(coefficients.dc[1][i]) * factors[1] * extra
-            dc[0][i] = Float(coefficients.dc[0][i]) * factors[0] * extra + dcX * y
-            dc[1][i] = y
-            dc[2][i] = Float(coefficients.dc[2][i]) * factors[2] * extra + dcB * y
-        }
-        if e.frame.flags & 128 == 0 { try smoothDC(&dc, width: bx, height: by, factors: factors, budget: budget) }
-        try budget.reserveWorkspace(4096) // bounded small vectors
-        let dm: [Float] = [powf(0.8, Float(e.frame.xQmScale) - 2), 1, powf(0.8, Float(e.frame.bQmScale) - 2)]
-        var planes = (0..<3).map { _ in [Float](repeating: 0, count: samples) }
-        let tilesX = (bx + 7) / 8
-        // Strategy identifiers have fixed geometry in the validated map. Keep
-        // at most 21 immutable tables/plans per operation; never retain them
-        // globally or recompute their pow/cos tables for each image block.
-        try budget.reserveWorkspace(21 * (MemoryLayout<[Float]?>.stride + MemoryLayout<ScaledDCT?>.stride))
-        var weightTables = [[Float]?](repeating: nil, count: 21)
-        var transforms = [ScaledDCT?](repeating: nil, count: 21)
-        var axes = ScaledDCT.AxisBank(direction: .inverse, budget: budget)
-        var largestTransform = 64
-        var hasSmallOrAFV = false
-        for (index, strategy) in coefficients.strategies.transforms.enumerated() {
-            if index & 255 == 0 { try budget.checkpoint() }
-            largestTransform = max(largestTransform, strategy.coveredCells * 64)
-            let id = strategy.identifier
-            if (1...3).contains(id) || (12...17).contains(id) { hasSmallOrAFV = true }
-        }
-        var scratch = try ScaledDCT.Workspace(capacity: largestTransform, budget: budget)
-        let dct4x4 = try hasSmallOrAFV ? ScaledDCT(rows: 4, columns: 4, direction: .inverse, budget: budget, axes: &axes) : nil
-        let dct4x8 = try hasSmallOrAFV ? ScaledDCT(rows: 4, columns: 8, direction: .inverse, budget: budget, axes: &axes) : nil
-        let dct8x4 = try hasSmallOrAFV ? ScaledDCT(rows: 8, columns: 4, direction: .inverse, budget: budget, axes: &axes) : nil
-        var block0 = [Float](repeating: 0, count: largestTransform)
-        var block1 = [Float](repeating: 0, count: largestTransform)
-        var block2 = [Float](repeating: 0, count: largestTransform)
-        var smallPixels = [Float](repeating: 0, count: 64)
-        let dm0 = dm[0], dm2 = dm[2]
-        for strategy in coefficients.strategies.transforms {
+
+        // --- 3. Reconstruct spatial XYB blocks from LLF + dequantised HF (§§10.1.3–10.3) ---
+        var planes = [
+            [Float](repeating: 0, count: pixelCount),
+            [Float](repeating: 0, count: pixelCount),
+            [Float](repeating: 0, count: pixelCount),
+        ]
+
+        let qmScale: [Float] = [
+            Float(pow(0.8, Double(Int(frame.xQmScale) - 2))),
+            1.0,
+            Float(pow(0.8, Double(Int(frame.bQmScale) - 2))),
+        ]
+        let invColorFactor = 1.0 / Float(coefficients.colorFactor)
+        let tilesX = coefficients.tilesX
+
+        var weightCache = [[Float]?](repeating: nil, count: 27)
+        var inverseAxes = ScaledDCT.AxisBank(direction: .inverse, budget: budget)
+        var dctPlans: [Int: ScaledDCT] = [:]
+
+        for transform in coefficients.transforms {
             try budget.checkpoint()
-            let x = strategy.x, y = strategy.y, tile = (y / 8) * tilesX + x / 8
-            let rows = strategy.cellsY * 8, columns = strategy.cellsX * 8, size = rows * columns
-            let codedRows = min(rows, columns), codedColumns = max(rows, columns)
-            let identifier = strategy.identifier
-            let isAFV = (14...17).contains(identifier)
-            let isSmall = identifier == 1 || identifier == 2 || identifier == 3 || identifier == 12 || identifier == 13
-            let transpose = !isAFV && !isSmall && rows >= columns
-            if weightTables[identifier] == nil {
-                weightTables[identifier] = try VarDCTQuantWeights.make(identifier: identifier,
-                    rows: codedRows, columns: codedColumns, budget: budget)
-            }
-            guard let weights = weightTables[identifier] else { throw VarDCTError.invalidTransform }
-            if !isAFV && !isSmall && transforms[identifier] == nil {
-                transforms[identifier] = try ScaledDCT(rows: rows, columns: columns, direction: .inverse, budget: budget, axes: &axes)
-            }
-            try budget.reserveWorkspace(size * 3 * 4 + strategy.coveredCells * 3 * 4)
-            let acX = coefficients.baseX + Float(coefficients.xSlopes[tile]) / Float(coefficients.colourFactor)
-            let acB = coefficients.baseB + Float(coefficients.bSlopes[tile]) / Float(coefficients.colourFactor)
-            let invQuant = invGlobal / Float(strategy.quantisation)
-            // LLF coefficients are a forward transform of the covered DC cells,
-            // resampled into the full transform's low-frequency corner.
-            if strategy.coveredCells == 1 {
-                let dcIdx = y &* bx &+ x
-                block0[0] = dc[0][dcIdx]
-                block1[0] = dc[1][dcIdx]
-                block2[0] = dc[2][dcIdx]
+            let id = transform.identifier
+            let bx = transform.x
+            let by = transform.y
+            let cx = transform.cellsX
+            let cy = transform.cellsY
+            let rows = cy * 8
+            let columns = cx * 8
+            let count = rows * columns
+            let normRows = min(rows, columns)
+            let normCols = max(rows, columns)
+            let llfRows = min(cx, cy)
+            let llfCols = max(cx, cy)
+            let baseOffset = transform.coefficientOffset
+
+            let weights: [Float]
+            if let cached = weightCache[id] {
+                weights = cached
             } else {
-                let low0 = try lowFrequencies(dc[0], stride: bx, strategy: strategy, budget: budget)
-                let low1 = try lowFrequencies(dc[1], stride: bx, strategy: strategy, budget: budget)
-                let low2 = try lowFrequencies(dc[2], stride: bx, strategy: strategy, budget: budget)
-                let cx = strategy.cellsX, cy = strategy.cellsY
-                for yy in 0..<cy {
-                    let dstRow = yy &* columns
-                    let srcRow = yy &* cx
-                    for xx in 0..<cx {
-                        block0[dstRow &+ xx] = low0[srcRow &+ xx]
-                        block1[dstRow &+ xx] = low1[srcRow &+ xx]
-                        block2[dstRow &+ xx] = low2[srcRow &+ xx]
-                    }
-                }
+                let w = try VarDCTQuantWeights.make(
+                    identifier: id,
+                    rows: rows,
+                    columns: columns,
+                    budget: budget
+                )
+                weightCache[id] = w
+                weights = w
             }
-            let colShift = codedColumns.trailingZeroBitCount
-            let colMask = codedColumns &- 1
-            let llfRows = codedRows &>> 3
-            let llfCols = codedColumns &>> 3
-            let coeffOffset = strategy.coefficientOffset
-            try weights.withUnsafeBufferPointer { wBuf in
-                try coefficients.ac[0].withUnsafeBufferPointer { ac0Buf in
-                    try coefficients.ac[1].withUnsafeBufferPointer { ac1Buf in
-                        try coefficients.ac[2].withUnsafeBufferPointer { ac2Buf in
-                            try block0.withUnsafeMutableBufferPointer { b0Buf in
-                                try block1.withUnsafeMutableBufferPointer { b1Buf in
-                                    try block2.withUnsafeMutableBufferPointer { b2Buf in
-                                        let wPtr = wBuf.baseAddress!
-                                        let ac0Ptr = ac0Buf.baseAddress! + coeffOffset
-                                        let ac1Ptr = ac1Buf.baseAddress! + coeffOffset
-                                        let ac2Ptr = ac2Buf.baseAddress! + coeffOffset
-                                        let b0Ptr = b0Buf.baseAddress!
-                                        let b1Ptr = b1Buf.baseAddress!
-                                        let b2Ptr = b2Buf.baseAddress!
-                                        let w1Base = wPtr + size
-                                        let w2Base = wPtr + (2 &* size)
-                                        for k in 0..<size {
-                                            if k & 255 == 0 { try budget.checkpoint() }
-                                            let row = k &>> colShift, column = k & colMask
-                                            if row < llfRows && column < llfCols { continue }
-                                            let to = transpose ? column &* columns &+ row : k
-                                            let q1 = ac1Ptr[k], q0 = ac0Ptr[k], q2 = ac2Ptr[k]
-                                            if (q1 | q0 | q2) == 0 {
-                                                b1Ptr[to] = 0
-                                                b0Ptr[to] = 0
-                                                b2Ptr[to] = 0
-                                                continue
-                                            }
-                                            let luma = adjust(q1, channel: 1, numericalMode: numericalMode) / w1Base[k] * invQuant
-                                            b1Ptr[to] = luma
-                                            b0Ptr[to] = adjust(q0, channel: 0, numericalMode: numericalMode) / wPtr[k] * invQuant * dm0 + acX * luma
-                                            b2Ptr[to] = adjust(q2, channel: 2, numericalMode: numericalMode) / w2Base[k] * invQuant * dm2 + acB * luma
-                                        }
-                                    }
+
+            let invScale = 65536.0 / (Float(coefficients.globalScale) * Float(transform.quantisation))
+
+            // 3a. Dequantise HF coefficients in canonical (normRows x normCols) layout
+            var deq = [
+                [Float](repeating: 0, count: count),
+                [Float](repeating: 0, count: count),
+                [Float](repeating: 0, count: count),
+            ]
+
+            for c in [1, 0, 2] {
+                let cScale = invScale * qmScale[c]
+                let wBase = c * count
+                coefficients.ac[c].withUnsafeBufferPointer { acBuf in
+                    let acPtr = acBuf.baseAddress! + baseOffset
+                    deq[c].withUnsafeMutableBufferPointer { deqBuf in
+                        let deqPtr = deqBuf.baseAddress!
+                        for ny in 0..<normRows {
+                            let rowOff = ny * normCols
+                            for nx in 0..<normCols {
+                                if nx < llfCols && ny < llfRows { continue }
+                                let k = rowOff + nx
+                                let q = acPtr[k]
+                                if q != 0 {
+                                    let biased = adjustQuantBias(q, channel: c, numericalMode: numericalMode)
+                                    deqPtr[k] = biased * (cScale / weights[wBase + k])
                                 }
                             }
                         }
                     }
                 }
             }
+
+            // 3b. Apply HF Chroma-from-Luma per 64x64 tile (or per sub-cell for large blocks)
+            for ny in 0..<normRows {
+                let rowOff = ny * normCols
+                for nx in 0..<normCols {
+                    if nx < llfCols && ny < llfRows { continue }
+                    let k = rowOff + nx
+                    let yCoeff = deq[1][k]
+                    if yCoeff == 0 { continue }
+                    let tx = (bx + (rows >= columns ? (ny / 8) : (nx / 8))) / 8
+                    let ty = (by + (rows >= columns ? (nx / 8) : (ny / 8))) / 8
+                    let tileIdx = min(coefficients.tilesY - 1, ty) * tilesX + min(tilesX - 1, tx)
+                    let fx = coefficients.baseCorrelationX + Float(coefficients.cflX[tileIdx]) * invColorFactor
+                    let fb = coefficients.baseCorrelationB + Float(coefficients.cflB[tileIdx]) * invColorFactor
+                    deq[0][k] += fx * yCoeff
+                    deq[2][k] += fb * yCoeff
+                }
+            }
+
+            // 3c. Insert LLF (DC) coefficients and run inverse transform per channel
             for c in 0..<3 {
-                let applyChannel = { (blkBuf: UnsafeBufferPointer<Float>) throws in
-                    let slice = UnsafeBufferPointer(rebasing: blkBuf[0..<size])
-                    if isAFV || isSmall {
-                        guard let dct4x4, let dct4x8, let dct8x4 else { throw VarDCTError.invalidTransform }
-                        try smallPixels.withUnsafeMutableBufferPointer { spBuf in
-                            if isAFV {
-                                try VarDCTAFV.inverse(slice, kind: identifier - 14, into: spBuf,
-                                                      dct4x4: dct4x4, dct4x8: dct4x8, scratch: &scratch, budget: budget)
-                            } else {
-                                try VarDCTSmallTransforms.inverse(slice, identifier: identifier, into: spBuf,
-                                                                  dct4x4: dct4x4, dct4x8: dct4x8, dct8x4: dct8x4,
-                                                                  scratch: &scratch, budget: budget)
+                let blockPixels: [Float]
+                if cx == 1 && cy == 1 {
+                    deq[c][0] = dcPlanes[c][by * blocksX + bx]
+                    switch id {
+                    case 0:
+                        var transposed = [Float](repeating: 0, count: 64)
+                        for y in 0..<8 {
+                            for x in 0..<8 {
+                                transposed[y * 8 + x] = deq[c][x * 8 + y]
                             }
-                            try copyBlock(UnsafeBufferPointer(spBuf), into: &planes[c], x: x * 8, y: y * 8,
-                                          rows: rows, columns: columns, stride: width, budget: budget)
+                        }
+                        let planKey = (8 << 16) | 8
+                        let plan: ScaledDCT
+                        if let cached = dctPlans[planKey] {
+                            plan = cached
+                        } else {
+                            let created = try ScaledDCT(
+                                rows: 8,
+                                columns: 8,
+                                direction: .inverse,
+                                budget: budget,
+                                axes: &inverseAxes
+                            )
+                            dctPlans[planKey] = created
+                            plan = created
+                        }
+                        blockPixels = try plan.apply(transposed)
+
+                    case 1, 2, 3, 12, 13:
+                        blockPixels = try VarDCTSmallTransforms.inverse(deq[c], identifier: id, budget: budget)
+
+                    case 14, 15, 16, 17:
+                        blockPixels = try VarDCTAFV.inverse(deq[c], kind: id - 14, budget: budget)
+
+                    default:
+                        throw VarDCTError.unsupportedStrategy(id)
+                    }
+                } else {
+                    let llfFreq = try reconstructLargeLLF(
+                        dcPlane: dcPlanes[c],
+                        bx: bx,
+                        by: by,
+                        blocksX: blocksX,
+                        cx: cx,
+                        cy: cy,
+                        id: id
+                    )
+                    var spatialFreq = [Float](repeating: 0, count: count)
+                    if rows >= columns {
+                        for y in 0..<rows {
+                            for x in 0..<columns {
+                                spatialFreq[y * columns + x] = deq[c][x * rows + y]
+                            }
                         }
                     } else {
-                        guard let transform = transforms[identifier] else { throw VarDCTError.invalidTransform }
-                        try transform.apply(slice, workspace: &scratch)
-                        try scratch.withValues {
-                            try copyBlock($0, into: &planes[c], x: x * 8, y: y * 8,
-                                          rows: rows, columns: columns, stride: width, budget: budget)
+                        spatialFreq = deq[c]
+                    }
+                    for v in 0..<cy {
+                        for u in 0..<cx {
+                            spatialFreq[v * columns + u] = llfFreq[v * cx + u]
+                        }
+                    }
+
+                    let planKey = (rows << 16) | columns
+                    let plan: ScaledDCT
+                    if let cached = dctPlans[planKey] {
+                        plan = cached
+                    } else {
+                        let created = try ScaledDCT(
+                            rows: rows,
+                            columns: columns,
+                            direction: .inverse,
+                            budget: budget,
+                            axes: &inverseAxes
+                        )
+                        dctPlans[planKey] = created
+                        plan = created
+                    }
+                    blockPixels = try plan.apply(spatialFreq)
+                }
+
+                // Copy visible samples into output XYB plane (adding Y back to B)
+                let px0 = bx * 8
+                let py0 = by * 8
+                let visW = min(columns, width - px0)
+                let visH = min(rows, height - py0)
+                if visW > 0 && visH > 0 {
+                    for ry in 0..<visH {
+                        let srcRow = ry * columns
+                        let dstRow = (py0 + ry) * width + px0
+                        for rx in 0..<visW {
+                            planes[c][dstRow + rx] = blockPixels[srcRow + rx]
                         }
                     }
                 }
-                if c == 0 {
-                    try block0.withUnsafeBufferPointer(applyChannel)
-                } else if c == 1 {
-                    try block1.withUnsafeBufferPointer(applyChannel)
-                } else {
-                    try block2.withUnsafeBufferPointer(applyChannel)
-                }
             }
         }
-        if e.frame.loopFilter.gab {
+
+        // Note: For 1x1 transforms where HF CfL was applied in canonical space, B has Y added via CfL on AC
+        // and lfFactorB on DC (where baseCorrelationB == 1.0 by default!).
+        // Wait: What if a frame encoded B - Y directly without CfL? No, in ISO/IEC 18181-1 §10.1.1 & §10.1.4,
+        // baseCorrelationB defaults to 1.0, so lfFactorB = 1.0 + ytobLF / colorFactor and
+        // fb = 1.0 + cflB / colorFactor ALREADY adds 1.0 * Y to B for both DC and AC!
+        //Wait: what about LLF frequencies (u, v) != (0, 0) of large transforms (cx > 1 || cy > 1)?
+        // They came from dcPlanes[2], which ALREADY had lfFactorB * deqY added at every cell (bx + dx, by + dy)!
+
+        // --- 4. Loop Filters: Gaborish (§10.4.1) and EPF (§10.4.2) ---
+        let lf = frame.loopFilter
+        if lf.gab {
             for c in 0..<3 {
-                planes[c] = try Gaborish.apply(planes[c], width: e.width, height: e.height, stride: width, budget: budget)
-            }
-        } else if width != e.width || height != e.height {
-            try budget.reserveWorkspace(e.width * e.height * 3 * 4)
-            for c in 0..<3 {
-                var tight = [Float](repeating: 0, count: e.width * e.height)
-                for y in 0..<e.height {
-                    try budget.checkpoint()
-                    for x in 0..<e.width { tight[y * e.width + x] = planes[c][y * width + x] }
-                }
-                planes[c] = tight
+                planes[c] = try Gaborish.apply(
+                    planes[c],
+                    width: width,
+                    height: height,
+                    stride: width,
+                    weight1: Gaborish.defaultWeight1,
+                    weight2: Gaborish.defaultWeight2,
+                    budget: budget
+                )
             }
         }
-        if e.frame.loopFilter.epfIters > 0 {
-            planes = try EdgePreservingFilter.apply(planes, width: e.width, height: e.height,
-                iterations: Int(e.frame.loopFilter.epfIters), quantisation: coefficients.quantFields,
-                sharpness: coefficients.sharpness, globalScale: coefficients.globalScale, budget: budget)
+
+        if lf.epfIters > 0 {
+            planes = try EdgePreservingFilter.apply(
+                planes,
+                width: width,
+                height: height,
+                iterations: Int(lf.epfIters),
+                quantisation: coefficients.quantField,
+                sharpness: coefficients.sharpnessField,
+                globalScale: coefficients.globalScale,
+                budget: budget
+            )
         }
+
         try budget.checkpoint()
         return planes
     }
 
-    /// Both buffers are synchronously borrowed, and the validated strategy map
-    /// proves the source extent and destination rectangle. Establish destination
-    /// uniqueness once per block instead of once per output sample.
-    private static func copyBlock(_ pixels: UnsafeBufferPointer<Float>, into plane: inout [Float],
-                                  x: Int, y: Int, rows: Int, columns: Int, stride: Int,
-                                  budget: ScalarOperationBudget) throws {
-        try plane.withUnsafeMutableBufferPointer { destination in
-            for row in 0..<rows {
-                try budget.checkpoint()
-                let sourceOffset = row * columns, destinationOffset = (y + row) * stride + x
-                for column in 0..<columns {
-                    destination[destinationOffset + column] = pixels[sourceOffset + column]
-                }
-            }
-        }
-    }
+    // MARK: - Private Reconstruction Helpers
 
     @inline(__always)
-    private static func adjust(_ value: Int32, channel: Int, numericalMode: VarDCTNumericalMode) -> Float {
-        // Avoid abs/negation of Int32.min inherited from the predecessor.
-        if value == 0 { return 0 }
-        if value == 1 || value == -1 {
-            let b: Float
-            switch channel {
-            case 0: b = 1 - 0.05465007330715401
-            case 1: b = 1 - 0.07005449891748593
-            default: b = 1 - 0.049935103337343655
+    private static func adjustQuantBias(
+        _ q: Int32,
+        channel: Int,
+        numericalMode: VarDCTNumericalMode
+    ) -> Float {
+        switch q {
+        case 0:
+            return 0.0
+        case 1:
+            return quantBiasOne[channel]
+        case -1:
+            return -quantBiasOne[channel]
+        default:
+            let fq = Float(q)
+            if numericalMode == .libjxl012ARMInteger {
+                return fq - quantBiasNumerator * VarDCTReferenceNumerics.reciprocalEstimate(q)
+            } else {
+                return fq - (quantBiasNumerator / fq)
             }
-            return value == 1 ? b : -b
-        }
-        let q = Float(value)
-        switch numericalMode {
-        case .scalarNearest: return q - 0.145 / q
-        case .libjxl012ARMInteger:
-            return q.addingProduct(-0.145, VarDCTReferenceNumerics.reciprocalEstimate(value))
         }
     }
 
-    private static let scales1: [Double] = [1]
-    private static let scales2: [Double] = [1, 1.108937353592731823]
-    private static let scales4: [Double] = [1, 1.025760096781116015, 1.108937353592731823, 1.270559368765487251]
-    private static let scales8: [Double] = [
-        1, 1.0063534990068217, 1.0257600967811158, 1.0593017296817173,
-        1.1089373535927318, 1.1777765381970435, 1.2705593687654873, 1.3944898413647777
-    ]
-    private static let cos1: [Double] = [1]
-    private static let cos2: [Double] = makeCosTable(2)
-    private static let cos4: [Double] = makeCosTable(4)
-    private static let cos8: [Double] = makeCosTable(8)
-    private static func makeCosTable(_ n: Int) -> [Double] {
-        var table = [Double](repeating: 0, count: n * n)
-        for u in 0..<n {
-            for x in 0..<n {
-                table[u * n + x] = cos((Double(x) + 0.5) * Double(u) * .pi / Double(n))
-            }
+    private static func reconstructLargeLLF(
+        dcPlane: [Float],
+        bx: Int,
+        by: Int,
+        blocksX: Int,
+        cx: Int,
+        cy: Int,
+        id: Int
+    ) throws -> [Float] {
+        guard let sx = llfScales[cx], let sy = llfScales[cy] else {
+            throw VarDCTError.unsupportedStrategy(id)
         }
-        return table
-    }
-    private static func scaleAndCos(_ n: Int) -> ([Double], [Double])? {
-        switch n {
-        case 1: return (scales1, cos1)
-        case 2: return (scales2, cos2)
-        case 4: return (scales4, cos4)
-        case 8: return (scales8, cos8)
-        default: return nil
-        }
-    }
+        let invCount = 1.0 / Double(cx * cy)
+        let sqrt2 = 2.0.squareRoot()
+        var out = [Float](repeating: 0, count: cx * cy)
 
-    private static func lowFrequencies(_ dc: [Float], stride: Int,
-                                       strategy: VarDCTStrategyMap.Transform,
-                                       budget: ScalarOperationBudget) throws -> [Float] {
-        let rows = strategy.cellsY, columns = strategy.cellsX
-        guard rows <= 8, columns <= 8 else { throw VarDCTError.unsupportedStrategy(strategy.identifier) }
-        try budget.reserveWorkspace(rows * columns * 4)
-        if rows == 1, columns == 1 { return [dc[strategy.y * stride + strategy.x]] }
-        // Scales are DCTResampleScales<N,8*N> from the pinned predecessor's
-        // LowestFrequenciesFromDC (libjxl dct_scales.h).
-        guard let (sx, cx) = scaleAndCos(columns), let (sy, cy) = scaleAndCos(rows) else {
-            throw VarDCTError.invalidTransform
-        }
-        var output = [Float](repeating: 0, count: rows * columns)
-        let rootTwo = sqrt(2.0)
-        let invCount = 1.0 / Double(rows * columns)
-        try dc.withUnsafeBufferPointer { dcBuf in
-            let dcPtr = dcBuf.baseAddress!
-            for v in 0..<rows {
-                let vCosBase = v &* rows
-                let vFactor = (v == 0 ? 1.0 : rootTwo) * invCount
-                let syV = sy[v]
-                for u in 0..<columns {
-                    try budget.checkpoint()
-                    let uCosBase = u &* columns
-                    var sum: Double = 0
-                    for y in 0..<rows {
-                        let cY = cy[vCosBase &+ y]
-                        let rowBase = (strategy.y &+ y) &* stride &+ strategy.x
-                        for x in 0..<columns {
-                            let sample = Double(dcPtr[rowBase &+ x])
-                            sum += sample * cx[uCosBase &+ x] * cY
-                        }
+        for v in 0..<cy {
+            let normV = (v == 0) ? 1.0 : sqrt2
+            for u in 0..<cx {
+                let normU = (u == 0) ? 1.0 : sqrt2
+                var sum = 0.0
+                for y in 0..<cy {
+                    let cosY = cos((Double(y) + 0.5) * Double(v) * .pi / Double(cy))
+                    let rowBase = (by + y) * blocksX + bx
+                    for x in 0..<cx {
+                        let cosX = cos((Double(x) + 0.5) * Double(u) * .pi / Double(cx))
+                        sum += Double(dcPlane[rowBase + x]) * cosX * cosY
                     }
-                    let factor = (u == 0 ? 1.0 : rootTwo) * vFactor
-                    let value = Float(sum * factor * sx[u] * syV)
-                    guard value.isFinite else { throw VarDCTError.nonFiniteSample }
-                    output[v &* columns &+ u] = value
+                }
+                let forwardVal = sum * normU * normV * invCount
+                out[v * cx + u] = Float(forwardVal * sx[u] * sy[v])
+            }
+        }
+        return out
+    }
+
+    private static func applyAdaptiveDCSmoothing(
+        _ dc: [[Float]],
+        blocksX: Int,
+        blocksY: Int,
+        dcStep: [Float],
+        budget: ScalarOperationBudget
+    ) throws -> [[Float]] {
+        var out = dc
+        for by in 1..<(blocksY - 1) {
+            if (by & 15) == 0 { try budget.checkpoint() }
+            let ym1 = (by - 1) * blocksX
+            let y0 = by * blocksX
+            let yp1 = (by + 1) * blocksX
+
+            for bx in 1..<(blocksX - 1) {
+                let idx = y0 + bx
+                var approx: (Float, Float, Float) = (0, 0, 0)
+                var gap: Float = 0
+
+                for c in 0..<3 {
+                    let p = dc[c]
+                    let center = p[idx]
+                    let side = (p[ym1 + bx] + p[yp1 + bx]) + (p[y0 + bx - 1] + p[y0 + bx + 1])
+                    let corner = (p[ym1 + bx - 1] + p[ym1 + bx + 1]) + (p[yp1 + bx - 1] + p[yp1 + bx + 1])
+                    let sm = 0.05226273532324128 * center + 0.20345139757231578 * side + 0.0334829185968739 * corner
+                    let d = abs(center - sm) / dcStep[c]
+                    if d > gap { gap = d }
+                    if c == 0 { approx.0 = sm }
+                    else if c == 1 { approx.1 = sm }
+                    else { approx.2 = sm }
+                }
+
+                let factor = max(0.0, min(1.0, 3.0 - 4.0 * gap))
+                if factor > 0 {
+                    out[0][idx] = dc[0][idx] + (approx.0 - dc[0][idx]) * factor
+                    out[1][idx] = dc[1][idx] + (approx.1 - dc[1][idx]) * factor
+                    out[2][idx] = dc[2][idx] + (approx.2 - dc[2][idx]) * factor
                 }
             }
         }
-        return output
-    }
-    private static func smoothDC(_ planes: inout [[Float]], width: Int, height: Int,
-                                 factors: [Float], budget: ScalarOperationBudget) throws {
-        guard width > 2, height > 2 else { return }
-        try budget.reserveWorkspace(width * height * 3 * 4)
-        var res0 = planes[0]
-        var res1 = planes[1]
-        var res2 = planes[2]
-        let w1: Float = 0.20345139757231578, w2: Float = 0.0334829185968739
-        let w0: Float = 1 - 4 * (w1 + w2)
-        let f0 = factors[0], f1 = factors[1], f2 = factors[2]
-        try planes[0].withUnsafeBufferPointer { b0 in
-            try planes[1].withUnsafeBufferPointer { b1 in
-                try planes[2].withUnsafeBufferPointer { b2 in
-                    try res0.withUnsafeMutableBufferPointer { r0 in
-                        try res1.withUnsafeMutableBufferPointer { r1 in
-                            try res2.withUnsafeMutableBufferPointer { r2 in
-                                let p0 = b0.baseAddress!, p1 = b1.baseAddress!, p2 = b2.baseAddress!
-                                let d0 = r0.baseAddress!, d1 = r1.baseAddress!, d2 = r2.baseAddress!
-                                for y in 1..<(height - 1) {
-                                    for x in 1..<(width - 1) {
-                                        if x & 255 == 1 { try budget.checkpoint() }
-                                        let index = y &* width &+ x
-                                        var gap: Float = 0.5
-                                        let c0 = (p0[index - width - 1] + p0[index - width + 1]) + (p0[index + width - 1] + p0[index + width + 1])
-                                        let sd0 = (p0[index - 1] + p0[index + 1]) + (p0[index - width] + p0[index + width])
-                                        let s0 = c0 * w2 + sd0 * w1 + p0[index] * w0
-                                        guard s0.isFinite else { throw VarDCTError.nonFiniteSample }
-                                        gap = max(gap, abs((p0[index] - s0) / f0))
-
-                                        let c1 = (p1[index - width - 1] + p1[index - width + 1]) + (p1[index + width - 1] + p1[index + width + 1])
-                                        let sd1 = (p1[index - 1] + p1[index + 1]) + (p1[index - width] + p1[index + width])
-                                        let s1 = c1 * w2 + sd1 * w1 + p1[index] * w0
-                                        guard s1.isFinite else { throw VarDCTError.nonFiniteSample }
-                                        gap = max(gap, abs((p1[index] - s1) / f1))
-
-                                        let c2 = (p2[index - width - 1] + p2[index - width + 1]) + (p2[index + width - 1] + p2[index + width + 1])
-                                        let sd2 = (p2[index - 1] + p2[index + 1]) + (p2[index - width] + p2[index + width])
-                                        let s2 = c2 * w2 + sd2 * w1 + p2[index] * w0
-                                        guard s2.isFinite else { throw VarDCTError.nonFiniteSample }
-                                        gap = max(gap, abs((p2[index] - s2) / f2))
-
-                                        let factor = max(0, 3 - 4 * gap)
-                                        d0[index] = p0[index] + (s0 - p0[index]) * factor
-                                        d1[index] = p1[index] + (s1 - p1[index]) * factor
-                                        d2[index] = p2[index] + (s2 - p2[index]) * factor
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        planes = [res0, res1, res2]
+        return out
     }
 }

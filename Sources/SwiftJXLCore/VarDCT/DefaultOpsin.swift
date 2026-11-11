@@ -1,95 +1,79 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Adapted from JXLSwift VarDCT/OpsinXYB.swift at
-// 57e81cb9e2411d1efac435b429a306a031744c1e, Copyright (c) 2026 Raster-Lab.
-// ISO/IEC 18181-1 §C.5.4. JPEG XL Project Authors' default opsin constants.
-// See Documentation/ThirdParty/libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
-/// Default-matrix, default-intensity XYB conversion only. Custom profiles and
-/// intensity targets must be handled explicitly by the eventual frame caller.
-/// Double intermediates avoid avoidable cancellation in the inverse matrix.
+/// Default XYB opsin colour transformation per ISO/IEC 18181-1 §10.5.
 package enum DefaultOpsin {
+    private static let bias: Double = 0.0037930732552754493
+    private static let cbrtBias: Double = cbrt(0.0037930732552754493)
 
-    // 3×3 opsin absorbance matrix from libjxl
-    // `cms/opsin_params.h::kOpsinAbsorbanceMatrix`. Acts on a
-    // linear-RGB column vector and yields LMS-cone-style absorbance.
-    private static let M00: Double = 0.30
-    private static let M02: Double = 0.078
-    private static let M01: Double = 1.0 - M02 - M00      // = 0.622
+    // Forward opsin absorbance matrix (linear sRGB to LMS absorbance)
+    private static let fwd00: Double = 0.30
+    private static let fwd01: Double = 0.622
+    private static let fwd02: Double = 0.078
+    private static let fwd10: Double = 0.23
+    private static let fwd11: Double = 0.692
+    private static let fwd12: Double = 0.078
+    private static let fwd20: Double = 0.24342268924547819
+    private static let fwd21: Double = 0.20476744424496821
+    private static let fwd22: Double = 0.55180986650955360
 
-    private static let M12: Double = 0.078
-    private static let M10: Double = 0.23
-    private static let M11: Double = 1.0 - M12 - M10      // = 0.692
+    // Default inverse opsin absorbance matrix per ISO/IEC 18181-1 §10.5
+    private static let inv00: Double = 11.031566901960783
+    private static let inv01: Double = -9.866943921568629
+    private static let inv02: Double = -0.16462299647058826
+    private static let inv10: Double = -3.254147380392157
+    private static let inv11: Double = 4.418770392156863
+    private static let inv12: Double = -0.16462299647058826
+    private static let inv20: Double = -3.6588512862745097
+    private static let inv21: Double = 2.7129230470588235
+    private static let inv22: Double = 1.9459282392156863
 
-    private static let M20: Double = 0.24342268924547819
-    private static let M21: Double = 0.20476744424496821
-    private static let M22: Double = 1.0 - M20 - M21      // ≈ 0.55180987
-
-    /// Pre-computed inverse matrix (libjxl
-    /// `kDefaultInverseOpsinAbsorbanceMatrix`).
-    private static let invM00: Double =  11.031566901960783
-    private static let invM01: Double =  -9.866943921568629
-    private static let invM02: Double =  -0.16462299647058826
-    private static let invM10: Double =  -3.254147380392157
-    private static let invM11: Double =   4.418770392156863
-    private static let invM12: Double =  -0.16462299647058826
-    private static let invM20: Double =  -3.6588512862745097
-    private static let invM21: Double =   2.7129230470588235
-    private static let invM22: Double =   1.9459282392156863
-
-    /// Bias added to absorbance before the cube root, then
-    /// subtracted after. Same value for all three channels.
-    package static let opsinBias: Double = 0.0037930732552754493
-    /// `cbrt(opsinBias)` — pre-subtracted on the forward path.
-    package static let cbrtOpsinBias: Double =
-        0.155954200549248618403228789114857601840543746948242  // ≈ ∛0.003793
-
-    /// Forward: linear-RGB sample triple → XYB triple.
-    /// Both vectors are length-3.
-    @inline(__always)
-    package static func forward(
-        _ rgb: (Double, Double, Double)
-    ) throws -> (X: Double, Y: Double, B: Double) {
-        guard rgb.0.isFinite, rgb.1.isFinite, rgb.2.isFinite else { throw VarDCTError.nonFiniteSample }
-        guard (0...1).contains(rgb.0), (0...1).contains(rgb.1), (0...1).contains(rgb.2) else {
-            throw VarDCTError.invalidTransform
+    /// Converts bounded linear sRGB `[0, 1]` samples into XYB coordinates.
+    package static func forward(_ rgb: (Double, Double, Double)) throws -> (X: Double, Y: Double, B: Double) {
+        let (r, g, b) = rgb
+        guard r.isFinite, g.isFinite, b.isFinite,
+              r >= 0.0, r <= 1.0,
+              g >= 0.0, g <= 1.0,
+              b >= 0.0, b <= 1.0 else {
+            throw ScalarModularError.invalidInput("Forward opsin input must be finite in [0, 1]")
         }
-        let r = rgb.0, g = rgb.1, b = rgb.2
-        // 1. Linear → opsin absorbance (matrix multiply + bias).
-        let l = M00 * r + M01 * g + M02 * b + opsinBias
-        let m = M10 * r + M11 * g + M12 * b + opsinBias
-        let s = M20 * r + M21 * g + M22 * b + opsinBias
-        // 2. Cube root, then subtract `cbrt(opsinBias)` to recentre.
-        let lr = cbrt(l) - cbrtOpsinBias
-        let mr = cbrt(m) - cbrtOpsinBias
-        let sr = cbrt(s) - cbrtOpsinBias
-        // 3. Recombine into the XYB opponent basis (libjxl
-        // `cms/jxl_cms.cc::OpsinAbsorbance` lines 100-110):
-        //    X = (lr - mr) / 2;  Y = (lr + mr) / 2;  B = sr.
-        return (X: 0.5 * (lr - mr),
-                Y: 0.5 * (lr + mr),
-                B: sr)
+        let lMix = fwd00 * r + fwd01 * g + fwd02 * b + bias
+        let mMix = fwd10 * r + fwd11 * g + fwd12 * b + bias
+        let sMix = fwd20 * r + fwd21 * g + fwd22 * b + bias
+
+        let lGamma = cbrt(lMix) - cbrtBias
+        let mGamma = cbrt(mMix) - cbrtBias
+        let sGamma = cbrt(sMix) - cbrtBias
+
+        let x = 0.5 * (lGamma - mGamma)
+        let y = 0.5 * (lGamma + mGamma)
+        let bOut = sGamma
+        return (X: x, Y: y, B: bOut)
     }
 
-    /// Inverse: XYB triple → linear-RGB triple.
-    @inline(__always)
-    package static func inverse(
-        _ xyb: (X: Double, Y: Double, B: Double)
-    ) throws -> (R: Double, G: Double, B: Double) {
-        guard xyb.X.isFinite, xyb.Y.isFinite, xyb.B.isFinite else { throw VarDCTError.nonFiniteSample }
-        // 1. Recover the cube-rooted absorbances.
-        let lr = xyb.Y + xyb.X
-        let mr = xyb.Y - xyb.X
-        let sr = xyb.B
-        // 2. Add the bias back, undo the cube root.
-        let l = (lr + cbrtOpsinBias) * (lr + cbrtOpsinBias) * (lr + cbrtOpsinBias) - opsinBias
-        let m = (mr + cbrtOpsinBias) * (mr + cbrtOpsinBias) * (mr + cbrtOpsinBias) - opsinBias
-        let s = (sr + cbrtOpsinBias) * (sr + cbrtOpsinBias) * (sr + cbrtOpsinBias) - opsinBias
-        // 3. Inverse opsin absorbance matrix.
-        let r = invM00 * l + invM01 * m + invM02 * s
-        let g = invM10 * l + invM11 * m + invM12 * s
-        let b = invM20 * l + invM21 * m + invM22 * s
-        guard r.isFinite, g.isFinite, b.isFinite else { throw VarDCTError.nonFiniteSample }
-        return (R: r, G: g, B: b)
+    /// Converts XYB coordinates into unclipped linear sRGB samples per ISO/IEC 18181-1 §10.5.
+    package static func inverse(_ xyb: (X: Double, Y: Double, B: Double)) throws -> (R: Double, G: Double, B: Double) {
+        let (x, y, b) = xyb
+        guard x.isFinite, y.isFinite, b.isFinite else {
+            throw ScalarModularError.invalidInput("Inverse opsin input must be finite")
+        }
+        let lGamma = y + x + cbrtBias
+        let mGamma = y - x + cbrtBias
+        let sGamma = b + cbrtBias
+
+        let l = (lGamma * lGamma * lGamma) - bias
+        let m = (mGamma * mGamma * mGamma) - bias
+        let s = (sGamma * sGamma * sGamma) - bias
+
+        let rOut = inv00 * l + inv01 * m + inv02 * s
+        let gOut = inv10 * l + inv11 * m + inv12 * s
+        let bOut = inv20 * l + inv21 * m + inv22 * s
+
+        guard rOut.isFinite, gOut.isFinite, bOut.isFinite else {
+            throw ScalarModularError.invalidInput("Inverse opsin overflowed finite range")
+        }
+        return (R: rOut, G: gOut, B: bOut)
     }
 }

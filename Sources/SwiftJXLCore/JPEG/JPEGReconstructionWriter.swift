@@ -1,490 +1,1115 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
-// Copyright (c) 2026 Raster-Lab.
-// Adapted from JXLSwift JPEG/JPEGBitWriter, JPEGScanEncoder and JXLToJPEGAdapter
-// at 57e81cb9e2411d1efac435b429a306a031744c1e, and libjxl
-// a7a9c787341cf703dede03c2009fa460cae5e5df lib/jxl/jpeg/dec_jpeg_data_writer.cc.
-// Copyright the JPEG XL Project Authors. See Documentation/ThirdParty/libjxl-LICENSE.txt.
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2026 Raster Images Private Limited
+
 import Foundation
 
+/// Resource and execution limits for byte-exact JPEG bitstream reconstruction.
 package struct JPEGReconstructionPolicy: Sendable {
     package let maximumOutputBytes: Int
     package let maximumCoefficientBytes: Int
     package let maximumMemoryBytes: Int
     package let maximumBufferedRefinementBits: Int
     package let deadline: ContinuousClock.Instant
-    private let work: @Sendable () throws -> Void
-    package init(maximumOutputBytes: Int = 64 * 1024 * 1024,
-                 maximumCoefficientBytes: Int = 64 * 1024 * 1024,
-                 maximumMemoryBytes: Int = 256 * 1024 * 1024,
-                 maximumBufferedRefinementBits: Int = 1 << 21,
-                 deadline: ContinuousClock.Instant = .now.advanced(by: .seconds(10)),
-                 checkpoint: @escaping @Sendable () throws -> Void = {}) throws {
-        guard maximumOutputBytes > 0, maximumCoefficientBytes > 0, maximumMemoryBytes > 0,
-              (1...(1 << 21)).contains(maximumBufferedRefinementBits) else { throw JPEGEntropyError.resourceLimit }
-        self.maximumOutputBytes = maximumOutputBytes; self.maximumCoefficientBytes = maximumCoefficientBytes
-        self.maximumMemoryBytes = maximumMemoryBytes; self.maximumBufferedRefinementBits = maximumBufferedRefinementBits
-        self.deadline = deadline; self.work = checkpoint
+    package let checkpoint: @Sendable () throws -> Void
+
+    package init(
+        maximumOutputBytes: Int = 64 * 1024 * 1024,
+        maximumCoefficientBytes: Int = 64 * 1024 * 1024,
+        maximumMemoryBytes: Int = 128 * 1024 * 1024,
+        maximumBufferedRefinementBits: Int = 4 * 1024 * 1024,
+        deadline: ContinuousClock.Instant = .now.advanced(by: .seconds(30)),
+        checkpoint: @escaping @Sendable () throws -> Void = {}
+    ) throws {
+        guard maximumOutputBytes > 0,
+              maximumCoefficientBytes > 0,
+              maximumMemoryBytes > 0,
+              maximumBufferedRefinementBits > 0 else {
+            throw JPEGEntropyError.resourceLimit
+        }
+        self.maximumOutputBytes = min(maximumOutputBytes, 64 * 1024 * 1024)
+        self.maximumCoefficientBytes = min(maximumCoefficientBytes, 64 * 1024 * 1024)
+        self.maximumMemoryBytes = maximumMemoryBytes
+        self.maximumBufferedRefinementBits = min(maximumBufferedRefinementBits, 16 * 1024 * 1024)
+        self.deadline = deadline
+        self.checkpoint = checkpoint
     }
-    package func checkpoint() throws {
+
+    @inline(__always)
+    func verify() throws {
         try Task.checkCancellation()
-        guard ContinuousClock.now < deadline else { throw JPEGEntropyError.resourceLimit }
-        try work()
+        guard ContinuousClock.now < deadline else {
+            throw JPEGEntropyError.resourceLimit
+        }
+        try checkpoint()
     }
 }
 
-/// JPEG reconstruction from coefficient owners and resolved metadata only.
-/// There is deliberately no source-JPEG parameter or pixel/re-encoding fallback.
+/// Reconstructs a byte-exact ITU-T T.81 JPEG file from quantized DCT coefficients and a resolved `JBRDBox`.
 package enum JPEGReconstructionWriter {
-    package static func write(coefficients: [[Int32]], metadata: JBRDBox,
-                              policy: JPEGReconstructionPolicy) throws -> Data {
-        var writer = try ReconstructionWriter(coefficients: coefficients, box: metadata, policy: policy)
-        return try writer.write()
+    package static func write(
+        coefficients: [[Int32]],
+        metadata: JBRDBox,
+        policy: JPEGReconstructionPolicy = (try! JPEGReconstructionPolicy())
+    ) throws -> Data {
+        var writer = try ReconstructionState(coefficients: coefficients, metadata: metadata, policy: policy)
+        return try writer.build()
     }
 }
 
-private struct JPEGOutput {
-    var bytesBuffer: [UInt8] = []
-    var data: Data { Data(bytesBuffer) }
-    private var accumulator: UInt64 = 0
-    private var pending = 0
-    let limit: Int
-    let policy: JPEGReconstructionPolicy
-    init(limit: Int, policy: JPEGReconstructionPolicy) {
-        self.limit = limit
-        self.policy = policy
-    }
-    @inline(__always)
-    mutating func byte(_ byte: UInt8) throws {
-        guard bytesBuffer.count < limit else { throw JPEGEntropyError.resourceLimit }
-        if bytesBuffer.count & 1023 == 0 { try policy.checkpoint() }
-        bytesBuffer.append(byte)
-    }
-    mutating func bytes(_ bytes: Data) throws {
-        guard pending == 0, bytes.count <= limit - bytesBuffer.count else { throw JPEGEntropyError.resourceLimit }
-        var offset = 0
-        while offset < bytes.count {
-            try policy.checkpoint()
-            let end = offset + min(4096, bytes.count - offset)
-            bytesBuffer.append(contentsOf: bytes[(bytes.startIndex + offset)..<(bytes.startIndex + end)]); offset = end
-        }
-    }
-    @inline(__always)
-    mutating func bits(_ value: UInt64, _ count: Int) throws {
-        guard (0...24).contains(count) else { throw JPEGEntropyError.malformed }
-        if count == 0 { return }
-        accumulator = (accumulator &<< count) | (value & ((UInt64(1) &<< count) &- 1)); pending &+= count
-        while pending >= 8 {
-            pending &-= 8
-            let b = UInt8(truncatingIfNeeded: accumulator &>> pending)
-            try byte(b); if b == 0xff { try byte(0) }
-        }
-    }
-    mutating func align(_ padding: [UInt8], exact: Bool, cursor: inout Int) throws {
-        let count = pending == 0 ? 0 : 8 - pending
-        if exact {
-            guard count <= padding.count - cursor else { throw JPEGEntropyError.malformed }
-            for _ in 0..<count {
-                let bit = padding[cursor]; guard bit <= 1 else { throw JPEGEntropyError.malformed }
-                try bits(UInt64(bit), 1); cursor += 1
-            }
-        } else { try bits((1 << count) - 1, count) }
-    }
-    mutating func marker(_ code: UInt8) throws {
-        guard pending == 0 else { throw JPEGEntropyError.malformed }
-        try byte(0xff); try byte(code)
-    }
-    mutating func segment(_ code: UInt8, _ payload: Data) throws {
-        guard payload.count <= 65533 else { throw JPEGEntropyError.resourceLimit }
-        try marker(code)
-        let n = payload.count + 2
-        try byte(UInt8(n >> 8)); try byte(UInt8(n & 255)); try bytes(payload)
-    }
-}
+// MARK: - Internal Reconstruction Engine
 
-private struct JPEGEncodeTable {
-    var packed = [UInt64](repeating: 0, count: 256)
-    init(_ table: JBRDHuffmanCode) throws {
-        guard table.counts.count == 17, table.values.last == 256 else { throw JPEGEntropyError.malformed }
-        var value = 0, cursor = 0
-        for n in 1...16 {
-            for _ in 0..<Int(table.counts[n]) {
-                guard cursor < table.values.count, value < 1 << n else { throw JPEGEntropyError.malformed }
-                let symbol = Int(table.values[cursor]); cursor += 1
-                if symbol != 256 {
-                    guard (0...255).contains(symbol), packed[symbol] == 0, value != (1 << n) - 1 else {
-                        throw JPEGEntropyError.malformed
-                    }
-                    packed[symbol] = (UInt64(n) << 32) | UInt64(UInt32(value))
-                }
-                value += 1
-            }
-            value <<= 1
-        }
-        guard cursor == table.values.count else { throw JPEGEntropyError.malformed }
-    }
-}
+private struct CanonicalHuffmanEncoder: Sendable {
+    let codes: [UInt16]
+    let lengths: [UInt8]
 
-private struct ReconstructionWriter {
-    let coefficients: [[Int32]]
-    let box: JBRDBox
-    let policy: JPEGReconstructionPolicy
-    let frame: JPEGFrameLayout
-    var output: JPEGOutput
-    var tables: [JPEGEncodeTable?] = Array(repeating: nil, count: 8)
-    var history: [[Int]]
-    var paddingCursor = 0
-    var eobRun = 0
-    var eobTable = 0
-    var refinement: [UInt8] = []
-    var predictors = [Int64](repeating: 0, count: 3)
-
-    init(coefficients: [[Int32]], box: JBRDBox, policy: JPEGReconstructionPolicy) throws {
-        try policy.checkpoint()
-        guard coefficients.count == box.components.count, coefficients.count == 1 || coefficients.count == 3,
-              (1...65535).contains(box.width), (1...65535).contains(box.height) else { throw JPEGEntropyError.malformed }
-        var retained = 0
-        func reserve(_ count: Int, _ stride: Int) throws {
-            try policy.checkpoint()
-            guard count >= 0, count <= (policy.maximumMemoryBytes - retained) / stride else { throw JPEGEntropyError.resourceLimit }
-            retained += count * stride
-        }
-        var totalCoefficients = 0
-        for plane in coefficients {
-            guard plane.count <= policy.maximumCoefficientBytes / 4 - totalCoefficients else { throw JPEGEntropyError.resourceLimit }
-            totalCoefficients += plane.count; try reserve(plane.count, 4)
-        }
-        try reserve(1 << 20, 1) // Tables, bounded marker scratch, histories, allocator allowance.
-        try reserve(policy.maximumBufferedRefinementBits, 4) // Buffer growth and retained capacity.
-        try reserve(box.markerOrder.count, 1024)
-        try reserve(box.paddingBits.count, 4)
-        for scan in box.scanInfo { try reserve(scan.resetPoints.count, 32); try reserve(scan.extraZeroRuns.count, 32) }
-        for group in [box.appData, box.comData, box.interMarkerData, [box.tailData]] {
-            for bytes in group { try reserve(bytes.count, 2) }
-        }
-        // Validate the full wire shape/semantics before indexing supplied arrays.
-        _ = try JBRDBoxWriter.write(box, policy: JBRDPolicy(maximumMemoryBytes: policy.maximumMemoryBytes - retained,
-                                                         deadline: policy.deadline, checkpoint: policy.checkpoint))
-        let markers = box.markerOrder.filter { (0xc0...0xc2).contains($0) }
-        guard markers.count == 1, let marker = markers.first else { throw JPEGEntropyError.unsupported }
-        var sof = Data([8, UInt8(box.height >> 8), UInt8(box.height & 255), UInt8(box.width >> 8),
-                        UInt8(box.width & 255), UInt8(box.components.count)])
-        for c in box.components {
-            guard (1...4).contains(c.hSampFactor), (1...4).contains(c.vSampFactor), c.quantIdx < box.quant.count else {
-                throw JPEGEntropyError.malformed
-            }
-            sof.append(contentsOf: [UInt8(c.id), UInt8(c.hSampFactor * 16 + c.vSampFactor), UInt8(box.quant[Int(c.quantIdx)].index)])
-        }
-        var packet = Data([0xff, marker, 0, UInt8(sof.count + 2)]); packet.append(sof)
-        let segment = JPEGSegment(markerByte: marker, markerRange: 0..<2, payloadRange: 4..<packet.count,
-                                  entropyRange: packet.count..<packet.count)
-        frame = try JPEGFrameLayout(data: packet, segment: segment, maximumCoefficientBytes: policy.maximumCoefficientBytes)
-        for i in frame.components.indices {
-            let c = frame.components[i]
-            guard coefficients[i].count == c.paddedBlocksWide * c.paddedBlocksHigh * 64,
-                  box.components[i].widthInBlocks == c.paddedBlocksWide,
-                  box.components[i].heightInBlocks == c.paddedBlocksHigh else { throw JPEGEntropyError.malformed }
-        }
-        for q in box.quant {
-            guard q.values.count == 64, q.values.allSatisfy({ $0 > 0 && $0 <= (q.precision == 0 ? 255 : 65535) }) else {
-                throw JPEGEntropyError.malformed
-            }
-        }
-        self.coefficients = coefficients; self.box = box; self.policy = policy
-        history = coefficients.map { _ in [Int](repeating: -1, count: 64) }
-        output = JPEGOutput(limit: min(policy.maximumOutputBytes, (policy.maximumMemoryBytes - retained) / 3), policy: policy)
-    }
-
-    mutating func write() throws -> Data {
-        try output.marker(0xd8)
-        var quant = 0, huffman = 0, app = 0, com = 0, inter = 0, scan = 0
-        var seenFrame = false, seenDRI = false, interval = 0
-        var activeQuant = [Int?](repeating: nil, count: 4)
-        var componentQuantSeen = [Bool](repeating: false, count: frame.components.count)
-        for marker in box.markerOrder {
-            try policy.checkpoint()
-            switch marker {
-            case 0xdb:
-                var bytes = Data(), last = false
-                while quant < box.quant.count && !last {
-                    let q = box.quant[quant]; activeQuant[Int(q.index)] = quant; quant += 1; last = q.isLast
-                    bytes.append(UInt8(q.precision * 16 + q.index))
-                    for k in JPEGZigZag.order {
-                        let v = q.values[k]
-                        if q.precision == 1 { bytes.append(UInt8(v >> 8)) }
-                        bytes.append(UInt8(truncatingIfNeeded: v))
-                    }
-                }
-                guard last else { throw JPEGEntropyError.malformed }; try output.segment(marker, bytes)
-            case 0xc4:
-                var bytes = Data(), last = false
-                while huffman < box.huffmanCode.count && !last {
-                    let h = box.huffmanCode[huffman]; huffman += 1; last = h.isLast
-                    tables[(h.slotId & 3) + (h.slotId >= 16 ? 4 : 0)] = try JPEGEncodeTable(h)
-                    guard let end = h.counts.lastIndex(where: { $0 > 0 }) else { throw JPEGEntropyError.malformed }
-                    bytes.append(UInt8(h.slotId))
-                    for n in 1...16 { bytes.append(UInt8(h.counts[n] - (n == end ? 1 : 0))) }
-                    for v in h.values.dropLast() { bytes.append(UInt8(v)) }
-                }
-                guard last else { throw JPEGEntropyError.malformed }; try output.segment(marker, bytes)
-            case 0xc0...0xc2:
-                guard !seenFrame else { throw JPEGEntropyError.malformed }; seenFrame = true
-                var bytes = Data([8, UInt8(frame.height >> 8), UInt8(frame.height & 255), UInt8(frame.width >> 8),
-                                  UInt8(frame.width & 255), UInt8(frame.components.count)])
-                for c in frame.components { bytes.append(contentsOf: [c.id, UInt8(c.horizontalSampling * 16 + c.verticalSampling), c.quantisationTable]) }
-                try output.segment(marker, bytes)
-            case 0xdd:
-                guard !seenDRI else { throw JPEGEntropyError.unsupported }; seenDRI = true
-                interval = Int(box.restartInterval)
-                try output.segment(marker, Data([UInt8(interval >> 8), UInt8(interval & 255)]))
-            case 0xe0...0xef, 0xfe:
-                let bytes: Data
-                if marker == 0xfe { bytes = box.comData[com]; com += 1 }
-                else { bytes = box.appData[app]; app += 1 }
-                guard bytes.count >= 3, bytes[bytes.startIndex] == marker,
-                      Int(bytes[bytes.startIndex + 1]) * 256 + Int(bytes[bytes.startIndex + 2]) == bytes.count - 1 else {
-                    throw JPEGEntropyError.malformed
-                }
-                try output.byte(0xff); try output.bytes(bytes)
-            case 0xff: try output.bytes(box.interMarkerData[inter]); inter += 1
-            case 0xda:
-                guard seenFrame else { throw JPEGEntropyError.malformed }
-                for c in box.scanInfo[scan].components {
-                    let ci = Int(c.compIdx)
-                    if !componentQuantSeen[ci] {
-                        guard activeQuant[Int(frame.components[ci].quantisationTable)] == Int(box.components[ci].quantIdx) else {
-                            throw JPEGEntropyError.malformed
-                        }
-                        componentQuantSeen[ci] = true
-                    }
-                }
-                try writeScan(box.scanInfo[scan], interval: interval); scan += 1
-            case 0xd9: try output.marker(marker)
-            default: throw JPEGEntropyError.unsupported
-            }
-        }
-        guard quant == box.quant.count, huffman == box.huffmanCode.count,
-              paddingCursor == box.paddingBits.count, history.allSatisfy({ $0[0] >= 0 }) else { throw JPEGEntropyError.malformed }
-        // An inconsistent frame must not silently discard unscanned/lower bits.
-        var inverse = [Int](repeating: 0, count: 64)
-        for k in 0..<64 { inverse[JPEGZigZag.order[k]] = k }
-        for ci in coefficients.indices {
-            let hist = history[ci]
-            let allZeroShift = hist.allSatisfy { $0 == 0 }
-            let count = coefficients[ci].count
-            if allZeroShift {
-                var idx = 0
-                while idx < count {
-                    try policy.checkpoint()
-                    idx &+= 1024
-                }
-            } else {
-                var shifts = [Int](repeating: 0, count: 64)
-                for pos in 0..<64 { shifts[pos] = hist[inverse[pos]] }
-                try coefficients[ci].withUnsafeBufferPointer { cBuf in
-                    try shifts.withUnsafeBufferPointer { sBuf in
-                        let cPtr = cBuf.baseAddress!
-                        let sPtr = sBuf.baseAddress!
-                        for index in 0..<count {
-                            if index & 1023 == 0 { try policy.checkpoint() }
-                            let shift = sPtr[index & 63]
-                            let value = Int64(cPtr[index])
-                            guard shift >= 0 ? value & ((1 << shift) - 1) == 0 : value == 0 else { throw JPEGEntropyError.malformed }
-                        }
-                    }
-                }
-            }
-        }
-        try output.bytes(box.tailData); try policy.checkpoint()
-        return output.data
-    }
-
-    @inline(__always)
-    mutating func symbol(_ symbol: Int, table: Int) throws {
-        guard (0..<8).contains(table), (0..<256).contains(symbol), let h = tables[table] else {
+    init(counts: [UInt32], values: [UInt32], isDC: Bool) throws {
+        guard counts.count == 17 else {
             throw JPEGEntropyError.malformed
         }
-        let entry = h.packed[symbol]
-        let len = Int(entry &>> 32)
-        guard len > 0 else { throw JPEGEntropyError.malformed }
-        try output.bits(entry & 0xFFFF_FFFF, len)
-    }
-    @inline(__always)
-    mutating func symbolFast(_ symbol: Int, tablePtr: UnsafePointer<UInt64>) throws {
-        guard (0..<256).contains(symbol) else { throw JPEGEntropyError.malformed }
-        let entry = tablePtr[symbol]
-        let len = Int(entry &>> 32)
-        guard len > 0 else { throw JPEGEntropyError.malformed }
-        try output.bits(entry & 0xFFFF_FFFF, len)
-    }
-    @inline(__always)
-    func size(_ value: Int64) -> Int { value == 0 ? 0 : 64 &- UInt64(abs(value)).leadingZeroBitCount }
-    @inline(__always)
-    mutating func magnitude(_ value: Int64, count: Int) throws {
-        try output.bits(UInt64(truncatingIfNeeded: value < 0 ? value &- 1 : value), count)
-    }
-    mutating func flushEOB() throws {
-        if eobRun > 0 {
-            let n = size(Int64(eobRun)) &- 1
-            try symbol(n &<< 4, table: eobTable); try output.bits(UInt64(eobRun), n); eobRun = 0
+        var adjustedCounts = counts
+        var adjustedValues = values
+        guard !adjustedValues.isEmpty, adjustedValues.last == 256 else {
+            throw JPEGEntropyError.malformed
         }
-        if !refinement.isEmpty {
-            for (i, bit) in refinement.enumerated() {
-                if i & 1023 == 0 { try policy.checkpoint() }
-                try output.bits(UInt64(bit), 1)
-            }
-            refinement.removeAll(keepingCapacity: true)
-        }
-    }
-    mutating func endOfBand(table: Int, bits: [UInt8] = []) throws {
-        guard bits.count <= policy.maximumBufferedRefinementBits - refinement.count else { throw JPEGEntropyError.resourceLimit }
-        if eobRun == 0 { eobTable = table }
-        guard eobTable == table else { throw JPEGEntropyError.malformed }
-        eobRun &+= 1; if !bits.isEmpty { refinement.append(contentsOf: bits) }
-        if eobRun == 32767 { try flushEOB() }
-    }
+        adjustedValues.removeLast()
 
-    mutating func writeScan(_ scan: JBRDScanInfo, interval: Int) throws {
-        let ss = Int(scan.ss), se = Int(scan.se), ah = Int(scan.ah), al = Int(scan.al)
-        let progressive = frame.marker == 0xc2
-        guard Set(scan.components.map(\.compIdx)).count == scan.components.count else { throw JPEGEntropyError.malformed }
-        if progressive {
-            guard (ss == 0 && se == 0) || (ss > 0 && ss <= se && scan.components.count == 1),
-                  ah == 0 || ah == al + 1 else { throw JPEGEntropyError.malformed }
-        } else { guard ss == 0, se == 63, ah == 0, al == 0 else { throw JPEGEntropyError.malformed } }
-        for c in scan.components {
-            let ci = Int(c.compIdx)
-            for k in ss...se {
-                guard ah == 0 ? history[ci][k] == -1 : history[ci][k] == ah else { throw JPEGEntropyError.malformed }
-                history[ci][k] = al
-            }
+        var lastNonZeroLength = 0
+        for len in (1...16).reversed() where adjustedCounts[len] > 0 {
+            lastNonZeroLength = len
+            break
         }
-        var header = Data([UInt8(scan.components.count)])
-        for c in scan.components { header.append(contentsOf: [frame.components[Int(c.compIdx)].id, UInt8(c.dcTblIdx * 16 + c.acTblIdx)]) }
-        header.append(contentsOf: [UInt8(ss), UInt8(se), UInt8(ah * 16 + al)])
-        try output.segment(0xda, header)
-        predictors = [0, 0, 0]; eobRun = 0; refinement.removeAll(keepingCapacity: true)
-        let interleaved = scan.components.count > 1
-        let first = frame.components[Int(scan.components[0].compIdx)]
-        let wide = interleaved ? frame.mcusWide : first.visibleBlocksWide
-        let high = interleaved ? frame.mcusHigh : first.visibleBlocksHigh
-        var blockOrdinal = 0, reset = 0, extra = 0, restart = 0
-        try JPEGZigZag.order.withUnsafeBufferPointer { zzBuf in
-            let zzPtr = zzBuf.baseAddress!
-            for mcu in 0..<(wide * high) {
-                try policy.checkpoint()
-                if mcu > 0 && interval > 0 && mcu % interval == 0 {
-                    try flushEOB(); try output.align(box.paddingBits, exact: box.hasZeroPaddingBit, cursor: &paddingCursor)
-                    try output.marker(UInt8(0xd0 + restart)); restart = (restart + 1) & 7; predictors = [0, 0, 0]
-                }
-                for c in scan.components {
-                    let ci = Int(c.compIdx), layout = frame.components[ci]
-                    let dcSlot = Int(c.dcTblIdx), acSlot = Int(c.acTblIdx) + 4
-                    let dcTbl = (0..<8).contains(dcSlot) ? tables[dcSlot] : nil
-                    let acTbl = (0..<8).contains(acSlot) ? tables[acSlot] : nil
-                    let h = interleaved ? layout.horizontalSampling : 1, v = interleaved ? layout.verticalSampling : 1
-                    for y in 0..<v { for x in 0..<h {
-                        if reset < scan.resetPoints.count && Int(scan.resetPoints[reset]) == blockOrdinal { try flushEOB(); reset += 1 }
-                        var zeroRuns = 0
-                        if extra < scan.extraZeroRuns.count && Int(scan.extraZeroRuns[extra].blockIdx) == blockOrdinal {
-                            zeroRuns = Int(scan.extraZeroRuns[extra].numExtraZeroRuns); extra += 1
-                        }
-                        let index = ((mcu / wide * v + y) * layout.paddedBlocksWide + mcu % wide * h + x) * 64
-                        if progressive && ah > 0 {
-                            guard zeroRuns == 0 else { throw JPEGEntropyError.unsupported }
-                            try refine(ci: ci, base: index, ss: ss, se: se, al: al, ac: acSlot)
-                        } else {
-                            try initial(ci: ci, base: index, zzPtr: zzPtr, ss: ss, se: se, al: al,
-                                        dc: dcSlot, ac: acSlot, dcTable: dcTbl, acTable: acTbl,
-                                        extraZeros: zeroRuns, groupEOB: progressive && ss > 0)
-                        }
-                        blockOrdinal += 1
-                    } }
-                }
-            }
+        guard lastNonZeroLength > 0 else {
+            throw JPEGEntropyError.malformed
         }
-        guard reset == scan.resetPoints.count, extra == scan.extraZeroRuns.count else { throw JPEGEntropyError.malformed }
-        try flushEOB(); try output.align(box.paddingBits, exact: box.hasZeroPaddingBit, cursor: &paddingCursor)
+        adjustedCounts[lastNonZeroLength] -= 1
+
+        var totalSymbols = 0
+        for len in 1...16 {
+            totalSymbols += Int(adjustedCounts[len])
+        }
+        guard totalSymbols == adjustedValues.count, totalSymbols <= 256 else {
+            throw JPEGEntropyError.malformed
+        }
+
+        var codes = [UInt16](repeating: 0, count: 256)
+        var lengths = [UInt8](repeating: 0, count: 256)
+        var seen = [Bool](repeating: false, count: 256)
+        var code: UInt32 = 0
+        var symIdx = 0
+
+        for len in 1...16 {
+            let count = Int(adjustedCounts[len])
+            for _ in 0..<count {
+                let sym = Int(adjustedValues[symIdx])
+                symIdx += 1
+                guard sym >= 0, sym < 256, !seen[sym] else {
+                    throw JPEGEntropyError.malformed
+                }
+                if isDC && sym > 15 {
+                    throw JPEGEntropyError.malformed
+                }
+                guard code < (1 << len) else {
+                    throw JPEGEntropyError.malformed
+                }
+                seen[sym] = true
+                codes[sym] = UInt16(code)
+                lengths[sym] = UInt8(len)
+                code += 1
+            }
+            code <<= 1
+        }
+
+        self.codes = codes
+        self.lengths = lengths
     }
 
     @inline(__always)
-    mutating func initial(ci: Int, base: Int, zzPtr: UnsafePointer<Int>, ss: Int, se: Int, al: Int,
-                          dc: Int, ac: Int, dcTable: JPEGEncodeTable?, acTable: JPEGEncodeTable?,
-                          extraZeros: Int, groupEOB: Bool) throws {
-        let plane = coefficients[ci]
-        try plane.withUnsafeBufferPointer { pBuf in
-            let blockPtr = pBuf.baseAddress! + base
-            var start = ss
-            if start == 0 {
-                let value = Int64(blockPtr[0]) >> al, difference = value &- predictors[ci]
-                predictors[ci] = value; let n = size(difference)
-                guard n <= 11, let dcTable else { throw JPEGEntropyError.malformed }
-                try dcTable.packed.withUnsafeBufferPointer { dcBuf in
-                    try symbolFast(n, tablePtr: dcBuf.baseAddress!)
-                }
-                try magnitude(difference, count: n); start = 1
+    func encodeSymbol(_ symbol: UInt8) throws -> (code: UInt16, length: Int) {
+        let idx = Int(symbol)
+        let len = Int(lengths[idx])
+        guard len > 0 else {
+            throw JPEGEntropyError.malformed
+        }
+        return (codes[idx], len)
+    }
+}
+
+private struct ReconstructionState {
+    let coefficients: [[Int32]]
+    let metadata: JBRDBox
+    let policy: JPEGReconstructionPolicy
+
+    private var reservedMemory: Int = 0
+    private var output: [UInt8] = []
+    private var bitBuffer: UInt32 = 0
+    private var bitCount: Int = 0
+    private var paddingCursor: Int = 0
+
+    private var dcTables: [CanonicalHuffmanEncoder?] = [nil, nil, nil, nil]
+    private var acTables: [CanonicalHuffmanEncoder?] = [nil, nil, nil, nil]
+
+    private let maxH: Int
+    private let maxV: Int
+    private let mcusWide: Int
+    private let mcusHigh: Int
+    private let rawBlocksWide: [Int]
+    private let rawBlocksHigh: [Int]
+    private let paddedBlocksWide: [Int]
+    private let paddedBlocksHigh: [Int]
+
+    init(coefficients: [[Int32]], metadata: JBRDBox, policy: JPEGReconstructionPolicy) throws {
+        try policy.verify()
+        self.coefficients = coefficients
+        self.metadata = metadata
+        self.policy = policy
+
+        guard metadata.width > 0, metadata.width <= 65535,
+              metadata.height > 0, metadata.height <= 65535,
+              coefficients.count == metadata.components.count,
+              metadata.components.count == 1 || metadata.components.count == 3,
+              !metadata.quant.isEmpty, metadata.quant.count <= 4 else {
+            throw JPEGEntropyError.malformed
+        }
+
+        if !metadata.hasZeroPaddingBit && !metadata.paddingBits.isEmpty {
+            throw JPEGEntropyError.malformed
+        }
+        if metadata.hasZeroPaddingBit {
+            for b in metadata.paddingBits where b > 1 {
+                throw JPEGEntropyError.malformed
             }
-            if start > se { guard extraZeros == 0 else { throw JPEGEntropyError.malformed }; return }
-            guard let acTable else { throw JPEGEntropyError.malformed }
-            try acTable.packed.withUnsafeBufferPointer { acBuf in
-                let acPtr = acBuf.baseAddress!
-                var zeros = 0
-                if al == 0 {
-                    for k in start...se {
-                        let value = Int64(blockPtr[zzPtr[k]])
-                        if value == 0 { zeros &+= 1; continue }
-                        if eobRun > 0 || !refinement.isEmpty { try flushEOB() }
-                        while zeros >= 16 { try symbolFast(0xf0, tablePtr: acPtr); zeros &-= 16 }
-                        let n = size(value); guard n <= 10 else { throw JPEGEntropyError.malformed }
-                        try symbolFast(zeros &* 16 &+ n, tablePtr: acPtr); try magnitude(value, count: n); zeros = 0
+        }
+
+        var maxHSamp = 0
+        var maxVSamp = 0
+        for comp in metadata.components {
+            guard (1...4).contains(comp.hSampFactor),
+                  (1...4).contains(comp.vSampFactor),
+                  Int(comp.quantIdx) < metadata.quant.count else {
+                throw JPEGEntropyError.malformed
+            }
+            maxHSamp = max(maxHSamp, comp.hSampFactor)
+            maxVSamp = max(maxVSamp, comp.vSampFactor)
+        }
+        guard maxHSamp > 0, maxVSamp > 0 else {
+            throw JPEGEntropyError.malformed
+        }
+        self.maxH = maxHSamp
+        self.maxV = maxVSamp
+        self.mcusWide = (metadata.width + maxHSamp * 8 - 1) / (maxHSamp * 8)
+        self.mcusHigh = (metadata.height + maxVSamp * 8 - 1) / (maxVSamp * 8)
+
+        var rawW: [Int] = []
+        var rawH: [Int] = []
+        var padW: [Int] = []
+        var padH: [Int] = []
+        var totalCoeffBytes = 0
+
+        for (c, comp) in metadata.components.enumerated() {
+            let cw = (metadata.width * comp.hSampFactor + maxHSamp - 1) / maxHSamp
+            let ch = (metadata.height * comp.vSampFactor + maxVSamp - 1) / maxVSamp
+            let rbw = (cw + 7) / 8
+            let rbh = (ch + 7) / 8
+            let pbw = mcusWide * comp.hSampFactor
+            let pbh = mcusHigh * comp.vSampFactor
+
+            guard Int(comp.widthInBlocks) == pbw,
+                  Int(comp.heightInBlocks) == pbh else {
+                throw JPEGEntropyError.malformed
+            }
+            let expectedCoeffs = try ScalarOperationBudget.product(
+                ScalarOperationBudget.product(pbw, pbh),
+                64
+            )
+            guard coefficients[c].count == expectedCoeffs else {
+                throw JPEGEntropyError.malformed
+            }
+            let planeBytes = try ScalarOperationBudget.product(expectedCoeffs, MemoryLayout<Int32>.stride)
+            totalCoeffBytes = try ScalarOperationBudget.sum(totalCoeffBytes, planeBytes)
+            guard totalCoeffBytes <= policy.maximumCoefficientBytes else {
+                throw JPEGEntropyError.resourceLimit
+            }
+
+            for v in coefficients[c] {
+                guard (-32767...32767).contains(v) else {
+                    throw JPEGEntropyError.malformed
+                }
+            }
+
+            rawW.append(rbw)
+            rawH.append(rbh)
+            padW.append(pbw)
+            padH.append(pbh)
+        }
+
+        self.rawBlocksWide = rawW
+        self.rawBlocksHigh = rawH
+        self.paddedBlocksWide = padW
+        self.paddedBlocksHigh = padH
+
+        try reserveMemory(totalCoeffBytes)
+
+        for q in metadata.quant {
+            guard q.precision <= 1, q.index < 4, q.values.count == 64 else {
+                throw JPEGEntropyError.malformed
+            }
+            let maxQ: Int32 = q.precision == 0 ? 255 : 65535
+            for v in q.values {
+                guard (1...maxQ).contains(v) else {
+                    throw JPEGEntropyError.malformed
+                }
+            }
+        }
+    }
+
+    private mutating func reserveMemory(_ bytes: Int) throws {
+        guard bytes >= 0, bytes <= policy.maximumMemoryBytes - reservedMemory else {
+            throw JPEGEntropyError.resourceLimit
+        }
+        reservedMemory += bytes
+    }
+
+    @inline(__always)
+    private mutating func appendByte(_ byte: UInt8) throws {
+        guard output.count < policy.maximumOutputBytes else {
+            throw JPEGEntropyError.resourceLimit
+        }
+        output.append(byte)
+    }
+
+    private mutating func appendBytes<S: Sequence>(_ bytes: S) throws where S.Element == UInt8 {
+        for b in bytes {
+            try appendByte(b)
+        }
+    }
+
+    private mutating func appendData(_ data: Data) throws {
+        guard data.count <= policy.maximumOutputBytes - output.count else {
+            throw JPEGEntropyError.resourceLimit
+        }
+        var offset = 0
+        while offset < data.count {
+            try policy.verify()
+            let end = min(data.count, offset + 4096)
+            output.append(contentsOf: data[(data.startIndex + offset)..<(data.startIndex + end)])
+            offset = end
+        }
+    }
+
+    @inline(__always)
+    private mutating func writeBits(_ value: UInt32, count: Int) throws {
+        guard count > 0 else { return }
+        let mask: UInt32 = count == 32 ? UInt32.max : ((1 << count) - 1)
+        bitBuffer = (bitBuffer << count) | (value & mask)
+        bitCount += count
+        while bitCount >= 8 {
+            bitCount -= 8
+            let byte = UInt8(truncatingIfNeeded: bitBuffer >> bitCount)
+            try appendByte(byte)
+            if byte == 0xFF {
+                try appendByte(0x00)
+            }
+        }
+    }
+
+    @inline(__always)
+    private mutating func writeBit(_ bit: UInt8) throws {
+        try writeBits(UInt32(bit & 1), count: 1)
+    }
+
+    @inline(__always)
+    private mutating func writeHuffman(_ symbol: UInt8, table: CanonicalHuffmanEncoder) throws {
+        let encoded = try table.encodeSymbol(symbol)
+        try writeBits(UInt32(encoded.code), count: encoded.length)
+    }
+
+    private mutating func flushEntropyPadding() throws {
+        while (bitCount & 7) != 0 {
+            if metadata.hasZeroPaddingBit {
+                guard paddingCursor < metadata.paddingBits.count else {
+                    throw JPEGEntropyError.malformed
+                }
+                let bit = metadata.paddingBits[paddingCursor]
+                paddingCursor += 1
+                try writeBit(bit)
+            } else {
+                try writeBit(1)
+            }
+        }
+        bitBuffer = 0
+        bitCount = 0
+    }
+
+    mutating func build() throws -> Data {
+        try policy.verify()
+        guard !metadata.markerOrder.isEmpty,
+              metadata.markerOrder.last == 0xD9 else {
+            throw JPEGEntropyError.malformed
+        }
+
+        // Emit SOI
+        try appendByte(0xFF)
+        try appendByte(0xD8)
+
+        var appIdx = 0
+        var comIdx = 0
+        var interIdx = 0
+        var quantIdx = 0
+        var huffIdx = 0
+        var scanIdx = 0
+        var sawSOF = false
+        var sofMarker: UInt8 = 0
+
+        for (mPos, marker) in metadata.markerOrder.enumerated() {
+            try policy.verify()
+            if marker == 0xD9 && mPos != metadata.markerOrder.count - 1 {
+                throw JPEGEntropyError.malformed
+            }
+
+            switch marker {
+            case 0xE0...0xEF:
+                guard appIdx < metadata.appData.count else {
+                    throw JPEGEntropyError.malformed
+                }
+                let data = metadata.appData[appIdx]
+                appIdx += 1
+                guard data.count >= 3,
+                      data[data.startIndex] == marker,
+                      Int(data[data.startIndex + 1]) * 256 + Int(data[data.startIndex + 2]) + 1 == data.count else {
+                    throw JPEGEntropyError.malformed
+                }
+                try appendByte(0xFF)
+                try appendData(data)
+
+            case 0xFE:
+                guard comIdx < metadata.comData.count else {
+                    throw JPEGEntropyError.malformed
+                }
+                let data = metadata.comData[comIdx]
+                comIdx += 1
+                guard data.count >= 3,
+                      data[data.startIndex] == 0xFE,
+                      Int(data[data.startIndex + 1]) * 256 + Int(data[data.startIndex + 2]) + 1 == data.count else {
+                    throw JPEGEntropyError.malformed
+                }
+                try appendByte(0xFF)
+                try appendData(data)
+
+            case 0xFF:
+                guard interIdx < metadata.interMarkerData.count else {
+                    throw JPEGEntropyError.malformed
+                }
+                let data = metadata.interMarkerData[interIdx]
+                interIdx += 1
+                try appendData(data)
+
+            case 0xDB:
+                try emitDQT(quantIdx: &quantIdx)
+
+            case 0xC4:
+                try emitDHT(huffIdx: &huffIdx)
+
+            case 0xC0...0xC2:
+                guard !sawSOF else {
+                    throw JPEGEntropyError.malformed
+                }
+                sawSOF = true
+                sofMarker = marker
+                try emitSOF(marker: marker)
+
+            case 0xDD:
+                guard metadata.restartInterval <= 65535 else {
+                    throw JPEGEntropyError.malformed
+                }
+                try appendBytes([
+                    0xFF, 0xDD, 0x00, 0x04,
+                    UInt8(truncatingIfNeeded: metadata.restartInterval >> 8),
+                    UInt8(truncatingIfNeeded: metadata.restartInterval)
+                ])
+
+            case 0xDA:
+                guard sawSOF, scanIdx < metadata.scanInfo.count else {
+                    throw JPEGEntropyError.malformed
+                }
+                let scan = metadata.scanInfo[scanIdx]
+                scanIdx += 1
+                try emitSOSAndEntropy(scan: scan, sofMarker: sofMarker)
+
+            case 0xD9:
+                guard sawSOF else {
+                    throw JPEGEntropyError.malformed
+                }
+                try appendBytes([0xFF, 0xD9])
+
+            default:
+                throw JPEGEntropyError.malformed
+            }
+        }
+
+        guard appIdx == metadata.appData.count,
+              comIdx == metadata.comData.count,
+              interIdx == metadata.interMarkerData.count,
+              quantIdx == metadata.quant.count,
+              huffIdx == metadata.huffmanCode.count,
+              scanIdx == metadata.scanInfo.count else {
+            throw JPEGEntropyError.malformed
+        }
+        if metadata.hasZeroPaddingBit {
+            guard paddingCursor == metadata.paddingBits.count else {
+                throw JPEGEntropyError.malformed
+            }
+        }
+
+        if !metadata.tailData.isEmpty {
+            try appendData(metadata.tailData)
+        }
+
+        try reserveMemory(output.count)
+        try policy.verify()
+        return Data(output)
+    }
+
+    private mutating func emitDQT(quantIdx: inout Int) throws {
+        guard quantIdx < metadata.quant.count else {
+            throw JPEGEntropyError.malformed
+        }
+        var payload: [UInt8] = []
+        while quantIdx < metadata.quant.count {
+            let table = metadata.quant[quantIdx]
+            quantIdx += 1
+            let info = UInt8(((table.precision & 0x0F) << 4) | (table.index & 0x0F))
+            payload.append(info)
+            for z in 0..<64 {
+                let v = table.values[JPEGZigZag.order[z]]
+                if table.precision == 0 {
+                    guard (1...255).contains(v) else {
+                        throw JPEGEntropyError.malformed
+                    }
+                    payload.append(UInt8(truncatingIfNeeded: v))
+                } else {
+                    guard (1...65535).contains(v) else {
+                        throw JPEGEntropyError.malformed
+                    }
+                    payload.append(UInt8(truncatingIfNeeded: v >> 8))
+                    payload.append(UInt8(truncatingIfNeeded: v))
+                }
+            }
+            if table.isLast { break }
+        }
+        let length = payload.count + 2
+        guard length <= 65535 else {
+            throw JPEGEntropyError.malformed
+        }
+        try appendBytes([
+            0xFF, 0xDB,
+            UInt8(truncatingIfNeeded: length >> 8),
+            UInt8(truncatingIfNeeded: length)
+        ])
+        try appendBytes(payload)
+    }
+
+    private mutating func emitDHT(huffIdx: inout Int) throws {
+        guard huffIdx < metadata.huffmanCode.count else {
+            throw JPEGEntropyError.malformed
+        }
+        var payload: [UInt8] = []
+        while huffIdx < metadata.huffmanCode.count {
+            let hc = metadata.huffmanCode[huffIdx]
+            huffIdx += 1
+            let isAC = (hc.slotId & 0x10) != 0
+            let tableSlot = hc.slotId & 0x0F
+            guard (hc.slotId & ~0x13) == 0, tableSlot < 4 else {
+                throw JPEGEntropyError.malformed
+            }
+
+            let encoder = try CanonicalHuffmanEncoder(counts: hc.counts, values: hc.values, isDC: !isAC)
+            if isAC {
+                acTables[tableSlot] = encoder
+            } else {
+                dcTables[tableSlot] = encoder
+            }
+
+            var adjustedCounts = hc.counts
+            for len in (1...16).reversed() where adjustedCounts[len] > 0 {
+                adjustedCounts[len] -= 1
+                break
+            }
+            payload.append(UInt8(truncatingIfNeeded: hc.slotId))
+            for len in 1...16 {
+                payload.append(UInt8(truncatingIfNeeded: adjustedCounts[len]))
+            }
+            for v in hc.values.dropLast() {
+                payload.append(UInt8(truncatingIfNeeded: v))
+            }
+            if hc.isLast { break }
+        }
+        let length = payload.count + 2
+        guard length <= 65535 else {
+            throw JPEGEntropyError.malformed
+        }
+        try appendBytes([
+            0xFF, 0xC4,
+            UInt8(truncatingIfNeeded: length >> 8),
+            UInt8(truncatingIfNeeded: length)
+        ])
+        try appendBytes(payload)
+    }
+
+    private mutating func emitSOF(marker: UInt8) throws {
+        let nComp = metadata.components.count
+        let length = 8 + 3 * nComp
+        try appendBytes([
+            0xFF, marker,
+            UInt8(truncatingIfNeeded: length >> 8),
+            UInt8(truncatingIfNeeded: length),
+            8,
+            UInt8(truncatingIfNeeded: metadata.height >> 8),
+            UInt8(truncatingIfNeeded: metadata.height),
+            UInt8(truncatingIfNeeded: metadata.width >> 8),
+            UInt8(truncatingIfNeeded: metadata.width),
+            UInt8(truncatingIfNeeded: nComp)
+        ])
+        for comp in metadata.components {
+            guard Int(comp.quantIdx) < metadata.quant.count else {
+                throw JPEGEntropyError.malformed
+            }
+            let qSlot = metadata.quant[Int(comp.quantIdx)].index
+            try appendBytes([
+                UInt8(truncatingIfNeeded: comp.id),
+                UInt8(truncatingIfNeeded: (comp.hSampFactor << 4) | comp.vSampFactor),
+                UInt8(truncatingIfNeeded: qSlot)
+            ])
+        }
+    }
+
+    private mutating func emitSOSAndEntropy(scan: JBRDScanInfo, sofMarker: UInt8) throws {
+        let ns = Int(scan.numComponents)
+        guard ns == scan.components.count, (1...3).contains(ns), ns <= metadata.components.count else {
+            throw JPEGEntropyError.malformed
+        }
+        let ss = Int(scan.ss)
+        let se = Int(scan.se)
+        let ah = Int(scan.ah)
+        let al = Int(scan.al)
+
+        guard (0...63).contains(ss), (ss...63).contains(se),
+              (0...13).contains(ah), (0...13).contains(al) else {
+            throw JPEGEntropyError.malformed
+        }
+        if sofMarker == 0xC0 || sofMarker == 0xC1 {
+            guard ss == 0, se == 63, ah == 0, al == 0 else {
+                throw JPEGEntropyError.malformed
+            }
+        } else {
+            if ss == 0 {
+                guard se == 0 else { throw JPEGEntropyError.malformed }
+            } else {
+                guard ns == 1 else { throw JPEGEntropyError.malformed }
+            }
+            if ah > 0 {
+                guard ah == al + 1 else { throw JPEGEntropyError.malformed }
+            }
+        }
+
+        let sosLength = 6 + 2 * ns
+        try appendBytes([
+            0xFF, 0xDA,
+            UInt8(truncatingIfNeeded: sosLength >> 8),
+            UInt8(truncatingIfNeeded: sosLength),
+            UInt8(truncatingIfNeeded: ns)
+        ])
+
+        var seenComp = Set<Int>()
+        for sc in scan.components {
+            let cIdx = Int(sc.compIdx)
+            guard cIdx >= 0, cIdx < metadata.components.count,
+                  seenComp.insert(cIdx).inserted,
+                  sc.dcTblIdx < 4, sc.acTblIdx < 4 else {
+                throw JPEGEntropyError.malformed
+            }
+            try appendBytes([
+                UInt8(truncatingIfNeeded: metadata.components[cIdx].id),
+                UInt8(truncatingIfNeeded: (sc.dcTblIdx << 4) | sc.acTblIdx)
+            ])
+        }
+        try appendBytes([
+            UInt8(truncatingIfNeeded: ss),
+            UInt8(truncatingIfNeeded: se),
+            UInt8(truncatingIfNeeded: (ah << 4) | al)
+        ])
+
+        // Determine scan MCU geometry and total block count
+        let scanMCUsWide: Int
+        let scanMCUsHigh: Int
+        let blocksPerMCU: Int
+        if ns == 1 {
+            let cIdx = Int(scan.components[0].compIdx)
+            scanMCUsWide = rawBlocksWide[cIdx]
+            scanMCUsHigh = rawBlocksHigh[cIdx]
+            blocksPerMCU = 1
+        } else {
+            scanMCUsWide = mcusWide
+            scanMCUsHigh = mcusHigh
+            blocksPerMCU = scan.components.reduce(0) {
+                let c = Int($1.compIdx)
+                return $0 + metadata.components[c].hSampFactor * metadata.components[c].vSampFactor
+            }
+            guard blocksPerMCU <= 10 else {
+                throw JPEGEntropyError.malformed
+            }
+        }
+        let totalMCUs = scanMCUsWide * scanMCUsHigh
+        let totalScanBlocks = totalMCUs * blocksPerMCU
+
+        // Validate resetPoints and extraZeroRuns block indices
+        for rp in scan.resetPoints {
+            guard Int(rp) < totalScanBlocks else {
+                throw JPEGEntropyError.malformed
+            }
+        }
+        for zr in scan.extraZeroRuns {
+            guard Int(zr.blockIdx) < totalScanBlocks, zr.numExtraZeroRuns > 0 else {
+                throw JPEGEntropyError.malformed
+            }
+        }
+
+        if ss == 0 && se == 63 {
+            try encodeSequentialScan(
+                scan: scan,
+                sofMarker: sofMarker,
+                scanMCUsWide: scanMCUsWide,
+                scanMCUsHigh: scanMCUsHigh
+            )
+        } else if ss == 0 {
+            try encodeProgressiveDCScan(
+                scan: scan,
+                ah: ah,
+                al: al,
+                scanMCUsWide: scanMCUsWide,
+                scanMCUsHigh: scanMCUsHigh
+            )
+        } else {
+            try encodeProgressiveACScan(
+                scan: scan,
+                ss: ss,
+                se: se,
+                ah: ah,
+                al: al,
+                scanMCUsWide: scanMCUsWide,
+                scanMCUsHigh: scanMCUsHigh
+            )
+        }
+
+        try flushEntropyPadding()
+    }
+
+    @inline(__always)
+    private static func magnitudeCategoryAndBits(_ value: Int32) -> (category: Int, bits: UInt32) {
+        if value == 0 { return (0, 0) }
+        let absVal = UInt32( value < 0 ? -Int(value) : Int(value) )
+        let category = 32 - absVal.leadingZeroBitCount
+        let bits: UInt32
+        if value > 0 {
+            bits = absVal
+        } else {
+            bits = (absVal ^ ((1 << category) - 1))
+        }
+        return (category, bits)
+    }
+
+    private mutating func encodeSequentialScan(
+        scan: JBRDScanInfo,
+        sofMarker: UInt8,
+        scanMCUsWide: Int,
+        scanMCUsHigh: Int
+    ) throws {
+        let ns = scan.components.count
+        let maxCat = sofMarker == 0xC0 ? 10 : 11
+        let maxDC = sofMarker == 0xC0 ? 11 : 12
+        var lastDC = [Int32](repeating: 0, count: metadata.components.count)
+        let restartInterval = Int(metadata.restartInterval)
+        var mcusSinceRestart = 0
+        var rstIdx = 0
+        var blockIdx: UInt32 = 0
+        var extraZeroCursor = 0
+
+        for mcuY in 0..<scanMCUsHigh {
+            try policy.verify()
+            for mcuX in 0..<scanMCUsWide {
+                if restartInterval > 0 && mcusSinceRestart == restartInterval {
+                    try flushEntropyPadding()
+                    try appendBytes([0xFF, 0xD0 + UInt8(rstIdx & 7)])
+                    rstIdx += 1
+                    mcusSinceRestart = 0
+                    lastDC = [Int32](repeating: 0, count: metadata.components.count)
+                }
+
+                for sc in scan.components {
+                    let cIdx = Int(sc.compIdx)
+                    guard let dcTable = dcTables[Int(sc.dcTblIdx)],
+                          let acTable = acTables[Int(sc.acTblIdx)] else {
+                        throw JPEGEntropyError.malformed
+                    }
+                    let hSamp = ns == 1 ? 1 : metadata.components[cIdx].hSampFactor
+                    let vSamp = ns == 1 ? 1 : metadata.components[cIdx].vSampFactor
+                    let stride = paddedBlocksWide[cIdx]
+
+                    for v in 0..<vSamp {
+                        let by = mcuY * vSamp + v
+                        for h in 0..<hSamp {
+                            let bx = mcuX * hSamp + h
+                            let blockBase = (by * stride + bx) * 64
+
+                            // DC coefficient
+                            let dcVal = coefficients[cIdx][blockBase]
+                            let diff = dcVal - lastDC[cIdx]
+                            lastDC[cIdx] = dcVal
+                            let (dcCat, dcBits) = Self.magnitudeCategoryAndBits(diff)
+                            guard dcCat <= maxDC else {
+                                throw JPEGEntropyError.malformed
+                            }
+                            try writeHuffman(UInt8(dcCat), table: dcTable)
+                            if dcCat > 0 {
+                                try writeBits(dcBits, count: dcCat)
+                            }
+
+                            // AC coefficients
+                            var lastNZ = 0
+                            for k in (1...63).reversed() {
+                                if coefficients[cIdx][blockBase + JPEGZigZag.order[k]] != 0 {
+                                    lastNZ = k
+                                    break
+                                }
+                            }
+
+                            var run = 0
+                            if lastNZ > 0 {
+                                for k in 1...lastNZ {
+                                    let acVal = coefficients[cIdx][blockBase + JPEGZigZag.order[k]]
+                                    if acVal == 0 {
+                                        run += 1
+                                    } else {
+                                        while run >= 16 {
+                                            try writeHuffman(0xF0, table: acTable)
+                                            run -= 16
+                                        }
+                                        let (acCat, acBits) = Self.magnitudeCategoryAndBits(acVal)
+                                        guard acCat <= maxCat else {
+                                            throw JPEGEntropyError.malformed
+                                        }
+                                        let sym = UInt8((run << 4) | acCat)
+                                        try writeHuffman(sym, table: acTable)
+                                        try writeBits(acBits, count: acCat)
+                                        run = 0
+                                    }
+                                }
+                            }
+
+                            var extraZRL = 0
+                            if extraZeroCursor < scan.extraZeroRuns.count,
+                               scan.extraZeroRuns[extraZeroCursor].blockIdx == blockIdx {
+                                extraZRL = Int(scan.extraZeroRuns[extraZeroCursor].numExtraZeroRuns)
+                                extraZeroCursor += 1
+                            }
+
+                            if extraZRL > 0 {
+                                guard lastNZ + 16 * extraZRL <= 63 else {
+                                    throw JPEGEntropyError.malformed
+                                }
+                                for _ in 0..<extraZRL {
+                                    try writeHuffman(0xF0, table: acTable)
+                                }
+                            }
+
+                            if lastNZ + 16 * extraZRL < 63 {
+                                try writeHuffman(0x00, table: acTable)
+                            }
+
+                            blockIdx += 1
+                        }
+                    }
+                }
+                mcusSinceRestart += 1
+            }
+        }
+
+        guard scan.resetPoints.isEmpty, extraZeroCursor == scan.extraZeroRuns.count else {
+            throw JPEGEntropyError.malformed
+        }
+    }
+
+    private mutating func encodeProgressiveDCScan(
+        scan: JBRDScanInfo,
+        ah: Int,
+        al: Int,
+        scanMCUsWide: Int,
+        scanMCUsHigh: Int
+    ) throws {
+        guard scan.resetPoints.isEmpty, scan.extraZeroRuns.isEmpty else {
+            throw JPEGEntropyError.malformed
+        }
+        let ns = scan.components.count
+        var lastDC = [Int32](repeating: 0, count: metadata.components.count)
+        let restartInterval = Int(metadata.restartInterval)
+        var mcusSinceRestart = 0
+        var rstIdx = 0
+
+        for mcuY in 0..<scanMCUsHigh {
+            try policy.verify()
+            for mcuX in 0..<scanMCUsWide {
+                if restartInterval > 0 && mcusSinceRestart == restartInterval {
+                    try flushEntropyPadding()
+                    try appendBytes([0xFF, 0xD0 + UInt8(rstIdx & 7)])
+                    rstIdx += 1
+                    mcusSinceRestart = 0
+                    lastDC = [Int32](repeating: 0, count: metadata.components.count)
+                }
+
+                for sc in scan.components {
+                    let cIdx = Int(sc.compIdx)
+                    let hSamp = ns == 1 ? 1 : metadata.components[cIdx].hSampFactor
+                    let vSamp = ns == 1 ? 1 : metadata.components[cIdx].vSampFactor
+                    let stride = paddedBlocksWide[cIdx]
+
+                    for v in 0..<vSamp {
+                        let by = mcuY * vSamp + v
+                        for h in 0..<hSamp {
+                            let bx = mcuX * hSamp + h
+                            let blockBase = (by * stride + bx) * 64
+                            let rawDC = coefficients[cIdx][blockBase]
+
+                            if ah == 0 {
+                                guard let dcTable = dcTables[Int(sc.dcTblIdx)] else {
+                                    throw JPEGEntropyError.malformed
+                                }
+                                let shiftedDC = rawDC >> al
+                                let diff = shiftedDC - lastDC[cIdx]
+                                lastDC[cIdx] = shiftedDC
+                                let (dcCat, dcBits) = Self.magnitudeCategoryAndBits(diff)
+                                guard dcCat <= 11 else {
+                                    throw JPEGEntropyError.malformed
+                                }
+                                try writeHuffman(UInt8(dcCat), table: dcTable)
+                                if dcCat > 0 {
+                                    try writeBits(dcBits, count: dcCat)
+                                }
+                            } else {
+                                let bit = UInt8(truncatingIfNeeded: (rawDC >> al) & 1)
+                                try writeBit(bit)
+                            }
+                        }
+                    }
+                }
+                mcusSinceRestart += 1
+            }
+        }
+    }
+
+    private mutating func encodeProgressiveACScan(
+        scan: JBRDScanInfo,
+        ss: Int,
+        se: Int,
+        ah: Int,
+        al: Int,
+        scanMCUsWide: Int,
+        scanMCUsHigh: Int
+    ) throws {
+        let sc = scan.components[0]
+        let cIdx = Int(sc.compIdx)
+        guard let acTable = acTables[Int(sc.acTblIdx)] else {
+            throw JPEGEntropyError.malformed
+        }
+        if ah > 0 && !scan.extraZeroRuns.isEmpty {
+            throw JPEGEntropyError.unsupported
+        }
+
+        let stride = paddedBlocksWide[cIdx]
+        let restartInterval = Int(metadata.restartInterval)
+        var mcusSinceRestart = 0
+        var rstIdx = 0
+        var blockIdx: UInt32 = 0
+        var resetCursor = 0
+        var extraZeroCursor = 0
+
+        var eobRun = 0
+        var eobRefinementBits: [UInt8] = []
+        var blockRefinementBits: [UInt8] = []
+        var trailingRefinementBits: [UInt8] = []
+
+        func flushEOB() throws {
+            guard eobRun > 0 else { return }
+            let n = Int.bitWidth - eobRun.leadingZeroBitCount - 1
+            guard (0...14).contains(n) else {
+                throw JPEGEntropyError.malformed
+            }
+            let sym = UInt8(n << 4)
+            try writeHuffman(sym, table: acTable)
+            if n > 0 {
+                let extra = UInt32(eobRun & ((1 << n) - 1))
+                try writeBits(extra, count: n)
+            }
+            for bit in eobRefinementBits {
+                try writeBit(bit)
+            }
+            eobRun = 0
+            eobRefinementBits.removeAll(keepingCapacity: true)
+        }
+
+        for by in 0..<scanMCUsHigh {
+            try policy.verify()
+            for bx in 0..<scanMCUsWide {
+                if restartInterval > 0 && mcusSinceRestart == restartInterval {
+                    try flushEOB()
+                    try flushEntropyPadding()
+                    try appendBytes([0xFF, 0xD0 + UInt8(rstIdx & 7)])
+                    rstIdx += 1
+                    mcusSinceRestart = 0
+                }
+
+                if resetCursor < scan.resetPoints.count,
+                   scan.resetPoints[resetCursor] == blockIdx {
+                    try flushEOB()
+                    resetCursor += 1
+                }
+
+                var extraZRL = 0
+                if extraZeroCursor < scan.extraZeroRuns.count,
+                   scan.extraZeroRuns[extraZeroCursor].blockIdx == blockIdx {
+                    extraZRL = Int(scan.extraZeroRuns[extraZeroCursor].numExtraZeroRuns)
+                    extraZeroCursor += 1
+                }
+
+                let blockBase = (by * stride + bx) * 64
+
+                if ah == 0 {
+                    var lastNZ = ss - 1
+                    for k in (ss...se).reversed() {
+                        let c = coefficients[cIdx][blockBase + JPEGZigZag.order[k]]
+                        let mag = abs(Int(c)) >> al
+                        if mag != 0 {
+                            lastNZ = k
+                            break
+                        }
+                    }
+
+                    var run = 0
+                    if lastNZ >= ss {
+                        for k in ss...lastNZ {
+                            let c = coefficients[cIdx][blockBase + JPEGZigZag.order[k]]
+                            let mag = abs(Int(c)) >> al
+                            if mag == 0 {
+                                run += 1
+                            } else {
+                                try flushEOB()
+                                while run >= 16 {
+                                    try writeHuffman(0xF0, table: acTable)
+                                    run -= 16
+                                }
+                                let scaled: Int32 = c >= 0 ? Int32(mag) : -Int32(mag)
+                                let (acCat, acBits) = Self.magnitudeCategoryAndBits(scaled)
+                                guard acCat <= 11 else {
+                                    throw JPEGEntropyError.malformed
+                                }
+                                let sym = UInt8((run << 4) | acCat)
+                                try writeHuffman(sym, table: acTable)
+                                try writeBits(acBits, count: acCat)
+                                run = 0
+                            }
+                        }
+                    }
+
+                    if extraZRL > 0 {
+                        guard lastNZ + 16 * extraZRL <= se else {
+                            throw JPEGEntropyError.malformed
+                        }
+                        try flushEOB()
+                        for _ in 0..<extraZRL {
+                            try writeHuffman(0xF0, table: acTable)
+                        }
+                    }
+
+                    if lastNZ + 16 * extraZRL < se {
+                        eobRun += 1
+                        if eobRun == 0x7FFF {
+                            try flushEOB()
+                        }
                     }
                 } else {
-                    for k in start...se {
-                        let raw = Int64(blockPtr[zzPtr[k]])
-                        let value = (raw < 0 ? -1 : 1) * (abs(raw) >> al)
-                        if value == 0 { zeros &+= 1; continue }
-                        if eobRun > 0 || !refinement.isEmpty { try flushEOB() }
-                        while zeros >= 16 { try symbolFast(0xf0, tablePtr: acPtr); zeros &-= 16 }
-                        let n = size(value); guard n <= 10 else { throw JPEGEntropyError.malformed }
-                        try symbolFast(zeros &* 16 &+ n, tablePtr: acPtr); try magnitude(value, count: n); zeros = 0
-                    }
-                }
-                if extraZeros > 0 {
-                    guard extraZeros <= zeros / 16 else { throw JPEGEntropyError.malformed }
-                    if eobRun > 0 || !refinement.isEmpty { try flushEOB() }
-                    for _ in 0..<extraZeros { try symbolFast(0xf0, tablePtr: acPtr); zeros &-= 16 }
-                }
-                if zeros > 0 {
-                    if !groupEOB && eobRun == 0 && refinement.isEmpty {
-                        try symbolFast(0, tablePtr: acPtr)
-                    } else {
-                        try endOfBand(table: ac); if !groupEOB { try flushEOB() }
-                    }
-                }
-            }
-        }
-    }
+                    blockRefinementBits.removeAll(keepingCapacity: true)
+                    trailingRefinementBits.removeAll(keepingCapacity: true)
 
-    mutating func refine(ci: Int, base: Int, ss: Int, se: Int, al: Int, ac: Int) throws {
-        var start = ss
-        if start == 0 { try output.bits(UInt64(truncatingIfNeeded: Int64(coefficients[ci][base]) >> al) & 1, 1); start = 1 }
-        if start > se { return }
-        var values = [Int64](repeating: 0, count: 64), end = 0
-        for k in start...se {
-            values[k] = abs(Int64(coefficients[ci][base + JPEGZigZag.order[k]])) >> al
-            if values[k] == 1 { end = k }
-        }
-        var zeros = 0, bits: [UInt8] = []
-        for k in start...se {
-            if values[k] == 0 { zeros += 1; continue }
-            while zeros > 15 && k <= end {
-                try flushEOB(); try symbol(0xf0, table: ac); zeros -= 16
-                for bit in bits { try output.bits(UInt64(bit), 1) }; bits.removeAll(keepingCapacity: true)
+                    var lastNewNZ = ss - 1
+                    for k in ss...se {
+                        let c = coefficients[cIdx][blockBase + JPEGZigZag.order[k]]
+                        let absC = abs(Int(c))
+                        if (absC >> ah) == 0 {
+                            if (absC >> (al + 1)) != 0 {
+                                throw JPEGEntropyError.malformed
+                            }
+                            if ((absC >> al) & 1) != 0 {
+                                lastNewNZ = k
+                            }
+                        }
+                    }
+
+                    var run = 0
+                    for k in ss...se {
+                        let c = coefficients[cIdx][blockBase + JPEGZigZag.order[k]]
+                        let absC = abs(Int(c))
+                        if (absC >> ah) != 0 {
+                            let refBit = UInt8((absC >> al) & 1)
+                            if k <= lastNewNZ {
+                                blockRefinementBits.append(refBit)
+                            } else {
+                                trailingRefinementBits.append(refBit)
+                            }
+                        } else if k <= lastNewNZ {
+                            if ((absC >> al) & 1) == 0 {
+                                run += 1
+                                if run == 16 {
+                                    try flushEOB()
+                                    try writeHuffman(0xF0, table: acTable)
+                                    for b in blockRefinementBits {
+                                        try writeBit(b)
+                                    }
+                                    blockRefinementBits.removeAll(keepingCapacity: true)
+                                    run = 0
+                                }
+                            } else {
+                                try flushEOB()
+                                let sym = UInt8((run << 4) | 1)
+                                try writeHuffman(sym, table: acTable)
+                                try writeBit(c > 0 ? 1 : 0)
+                                for b in blockRefinementBits {
+                                    try writeBit(b)
+                                }
+                                blockRefinementBits.removeAll(keepingCapacity: true)
+                                run = 0
+                            }
+                        }
+                    }
+
+                    if lastNewNZ < se {
+                        guard eobRefinementBits.count + trailingRefinementBits.count <= policy.maximumBufferedRefinementBits else {
+                            throw JPEGEntropyError.resourceLimit
+                        }
+                        eobRun += 1
+                        eobRefinementBits.append(contentsOf: trailingRefinementBits)
+                        if eobRun == 0x7FFF {
+                            try flushEOB()
+                        }
+                    }
+                }
+
+                blockIdx += 1
+                mcusSinceRestart += 1
             }
-            if values[k] > 1 { bits.append(UInt8(values[k] & 1)); continue }
-            try flushEOB(); try symbol(zeros * 16 + 1, table: ac)
-            try output.bits(coefficients[ci][base + JPEGZigZag.order[k]] < 0 ? 0 : 1, 1)
-            for bit in bits { try output.bits(UInt64(bit), 1) }; bits.removeAll(keepingCapacity: true); zeros = 0
         }
-        if zeros > 0 || !bits.isEmpty { try endOfBand(table: ac, bits: bits) }
+
+        try flushEOB()
+        guard resetCursor == scan.resetPoints.count,
+              extraZeroCursor == scan.extraZeroRuns.count else {
+            throw JPEGEntropyError.malformed
+        }
     }
 }

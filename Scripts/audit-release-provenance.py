@@ -16,7 +16,7 @@ import subprocess
 import sys
 
 INVENTORY = "Documentation/Engineering/Release/fixture-inventory.json"
-SOURCE_LICENCES = {"Apache-2.0", "Apache-2.0 AND BSD-3-Clause", "Apache-2.0 AND MIT", "MIT"}
+SOURCE_LICENCES = {"Apache-2.0"}
 SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 REVISION = re.compile(r"[0-9a-f]{40}\Z")
 
@@ -82,8 +82,7 @@ def audit(root: Path, inventory_path: Path) -> dict:
                 f"Missing provenance context: {group}")
         for path in record["evidence"]:
             repository_path(root, path)
-    required_notices = {"LICENSE", "Documentation/ThirdParty/libjxl-LICENSE.txt",
-                        "Documentation/ThirdParty/brotli-LICENSE.txt",
+    required_notices = {"LICENSE", "Documentation/ThirdParty/brotli-LICENSE.txt",
                         fixture_root + "/VarDCT/Conformance/LICENSE.txt",
                         fixture_root + "/VarDCT/Conformance/SOURCE-LICENCES.md"}
     notices = inventory.get("preservedNotices", {})

@@ -151,7 +151,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        swift: ['6.2', '6.4']
+        swift: ['6.4']
         sanitizer: ${{ fromJSON(inputs.sanitizer == 'address' && '["address"]' || inputs.sanitizer == 'thread' && '["thread"]' || '["address","thread"]') }}
         runner: [ubuntu-24.04, ubuntu-24.04-arm]
         include:
