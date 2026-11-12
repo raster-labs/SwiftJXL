@@ -92,13 +92,7 @@ package struct JPEGEntropyReader {
     }
 
     @inline(__always)
-    fileprivate mutating func decodeSymbol(
-        fastLUT: [UInt16],
-        firstCode: [Int],
-        counts: [Int],
-        firstSymbol: [Int],
-        symbols: [UInt8]
-    ) throws -> UInt8 {
+    fileprivate mutating func decodeSymbol(table: borrowing JPEGHuffmanTable) throws -> UInt8 {
         if remaining == 0 {
             try refillByte()
         }
@@ -106,7 +100,7 @@ package struct JPEGEntropyReader {
         let hiMask = (1 << hiLen) - 1
         let hiBits = Int(current) & hiMask
         let idx = hiBits << (8 - hiLen)
-        let entry = fastLUT[idx]
+        let entry = table.fastLUT[idx]
         let len = Int(entry >> 8)
         if len > 0 && len <= hiLen {
             remaining = hiLen - len
@@ -120,7 +114,7 @@ package struct JPEGEntropyReader {
             remaining = 0
             try refillByte()
             let code8 = idx | Int(current >> hiLen)
-            let entry2 = fastLUT[code8]
+            let entry2 = table.fastLUT[code8]
             let len2 = Int(entry2 >> 8)
             if len2 > 0 {
                 remaining = 8 - (len2 - hiLen)
@@ -131,8 +125,8 @@ package struct JPEGEntropyReader {
         }
         for i in 8..<16 {
             code = code * 2 + (try bit())
-            let offset = code - firstCode[i]
-            if offset >= 0 && offset < counts[i] { return symbols[firstSymbol[i] + offset] }
+            let offset = code - table.firstCode[i]
+            if offset >= 0 && offset < table.counts[i] { return table.symbols[table.firstSymbol[i] + offset] }
         }
         throw JPEGEntropyError.malformed
     }
@@ -165,11 +159,11 @@ package struct JPEGEntropyReader {
 }
 
 package struct JPEGHuffmanTable: Sendable {
-    private let firstCode: [Int]
-    private let counts: [Int]
-    private let firstSymbol: [Int]
-    private let symbols: [UInt8]
-    private let fastLUT: [UInt16]
+    fileprivate let firstCode: [Int]
+    fileprivate let counts: [Int]
+    fileprivate let firstSymbol: [Int]
+    fileprivate let symbols: [UInt8]
+    fileprivate let fastLUT: [UInt16]
 
     package init(counts: [Int], symbols: [UInt8]) throws {
         guard counts.count == 16, counts.allSatisfy({ (0...255).contains($0) }),
@@ -203,14 +197,8 @@ package struct JPEGHuffmanTable: Sendable {
     }
 
     @inline(__always)
-    package func symbol(_ reader: inout JPEGEntropyReader) throws -> UInt8 {
-        try reader.decodeSymbol(
-            fastLUT: fastLUT,
-            firstCode: firstCode,
-            counts: counts,
-            firstSymbol: firstSymbol,
-            symbols: symbols
-        )
+    package borrowing func symbol(_ reader: inout JPEGEntropyReader) throws -> UInt8 {
+        try reader.decodeSymbol(table: self)
     }
 }
 

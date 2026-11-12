@@ -37,79 +37,70 @@ package enum SpecRCT {
                     let p1 = buf1.baseAddress!
                     let p2 = buf2.baseAddress!
 
+                    let out0: UnsafeMutablePointer<Int32>
+                    let out1: UnsafeMutablePointer<Int32>
+                    let out2: UnsafeMutablePointer<Int32>
+                    switch permutation {
+                    case 0:
+                        out0 = p0; out1 = p1; out2 = p2
+                    case 1:
+                        out0 = p1; out1 = p2; out2 = p0
+                    case 2:
+                        out0 = p2; out1 = p0; out2 = p1
+                    case 3:
+                        out0 = p0; out1 = p2; out2 = p1
+                    case 4:
+                        out0 = p1; out1 = p0; out2 = p2
+                    default: // case 5
+                        out0 = p2; out1 = p1; out2 = p0
+                    }
+
                     var start = 0
                     while start < count {
                         try checkpoint()
                         let end = min(start + 1024, count)
-                        for i in start..<end {
-                            let y0 = p0[i]
-                            let y1 = p1[i]
-                            let y2 = p2[i]
-
-                            let s0: Int32
-                            let s1: Int32
-                            let s2: Int32
-                            switch mode {
-                            case 0:
-                                s0 = y0
-                                s1 = y1
-                                s2 = y2
-                            case 1:
-                                s0 = y0
-                                s1 = y1
-                                s2 = y2 &+ y0
-                            case 2:
-                                s0 = y0
-                                s1 = y1 &+ y0
-                                s2 = y2
-                            case 3:
-                                s0 = y0
-                                s1 = y1 &+ y0
-                                s2 = y2 &+ y0
-                            case 4:
-                                s0 = y0
-                                s1 = y1 &+ ((y0 &+ y2) >> 1)
-                                s2 = y2
-                            case 5:
+                        switch mode {
+                        case 0:
+                            if permutation != 0 {
+                                for i in start..<end {
+                                    let y0 = p0[i], y1 = p1[i], y2 = p2[i]
+                                    out0[i] = y0; out1[i] = y1; out2[i] = y2
+                                }
+                            }
+                        case 1:
+                            for i in start..<end {
+                                let y0 = p0[i], y1 = p1[i], y2 = p2[i]
+                                out0[i] = y0; out1[i] = y1; out2[i] = y2 &+ y0
+                            }
+                        case 2:
+                            for i in start..<end {
+                                let y0 = p0[i], y1 = p1[i], y2 = p2[i]
+                                out0[i] = y0; out1[i] = y1 &+ y0; out2[i] = y2
+                            }
+                        case 3:
+                            for i in start..<end {
+                                let y0 = p0[i], y1 = p1[i], y2 = p2[i]
+                                out0[i] = y0; out1[i] = y1 &+ y0; out2[i] = y2 &+ y0
+                            }
+                        case 4:
+                            for i in start..<end {
+                                let y0 = p0[i], y1 = p1[i], y2 = p2[i]
+                                out0[i] = y0; out1[i] = y1 &+ ((y0 &+ y2) >> 1); out2[i] = y2
+                            }
+                        case 5:
+                            for i in start..<end {
+                                let y0 = p0[i], y1 = p1[i], y2 = p2[i]
                                 let third = y2 &+ y0
-                                s0 = y0
-                                s1 = y1 &+ ((y0 &+ third) >> 1)
-                                s2 = third
-                            default: // case 6: YCoCg-R
+                                out0[i] = y0; out1[i] = y1 &+ ((y0 &+ third) >> 1); out2[i] = third
+                            }
+                        default: // case 6: YCoCg-R
+                            for i in start..<end {
+                                let y0 = p0[i], y1 = p1[i], y2 = p2[i]
                                 let tmp = y0 &- (y2 >> 1)
                                 let g = y2 &+ tmp
                                 let b = tmp &- (y1 >> 1)
                                 let r = b &+ y1
-                                s0 = r
-                                s1 = g
-                                s2 = b
-                            }
-
-                            switch permutation {
-                            case 0:
-                                p0[i] = s0
-                                p1[i] = s1
-                                p2[i] = s2
-                            case 1:
-                                p0[i] = s2
-                                p1[i] = s0
-                                p2[i] = s1
-                            case 2:
-                                p0[i] = s1
-                                p1[i] = s2
-                                p2[i] = s0
-                            case 3:
-                                p0[i] = s0
-                                p1[i] = s2
-                                p2[i] = s1
-                            case 4:
-                                p0[i] = s1
-                                p1[i] = s0
-                                p2[i] = s2
-                            default: // case 5
-                                p0[i] = s2
-                                p1[i] = s1
-                                p2[i] = s0
+                                out0[i] = r; out1[i] = g; out2[i] = b
                             }
                         }
                         start = end

@@ -73,9 +73,59 @@ package enum VarDCTPixelDecoder {
         try budget.checkpoint()
     }
 
+    // Exact IEEE-754 threshold table for 8-bit scalarNearest sRGB encoding.
+    // Consecutive thresholds are separated by >= 11 buckets in Int(sqrt(linear) * 4096.0),
+    // so each bucket maps to either k or k + 1 via a single Double comparison with zero pow() calls.
+    nonisolated(unsafe) private static let srgb8Tables: (thresholds: UnsafePointer<Double>, bucketK: UnsafePointer<UInt8>) = {
+        let threshPtr = UnsafeMutablePointer<Double>.allocate(capacity: 256)
+        for k in 0..<255 {
+            var lo = (0.0).bitPattern
+            var hi = (1.0).bitPattern
+            while lo &+ 1 < hi {
+                let midBits = lo &+ ((hi &- lo) >> 1)
+                let mid = Double(bitPattern: midBits)
+                let enc = mid <= 0.0031308 ? 12.92 * mid : 1.055 * pow(mid, 1.0 / 2.4) - 0.055
+                let q = Int32((min(1.0, max(0.0, enc)) * 255.0).rounded())
+                if q <= Int32(k) {
+                    lo = midBits
+                } else {
+                    hi = midBits
+                }
+            }
+            threshPtr[k] = Double(bitPattern: hi)
+        }
+        threshPtr[255] = Double.infinity
+
+        let bucketPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: 4097)
+        for b in 0...4096 {
+            let xLo = max(0.0, Double(b - 1) / 4096.0)
+            let linLo = xLo * xLo
+            let enc = linLo <= 0.0031308 ? 12.92 * linLo : 1.055 * pow(linLo, 1.0 / 2.4) - 0.055
+            let q = Int(min(254, max(0, Int32((min(1.0, max(0.0, enc)) * 255.0).rounded()))))
+            bucketPtr[b] = UInt8(q)
+        }
+        return (UnsafePointer(threshPtr), UnsafePointer(bucketPtr))
+    }()
+
+    @inline(__always)
+    private static func encodeSRGB8ScalarNearest(_ linear: Double,
+                                                 thresholds: UnsafePointer<Double>,
+                                                 bucketK: UnsafePointer<UInt8>) -> Int32 {
+        if linear <= 0.0 { return 0 }
+        if linear >= 1.0 { return 255 }
+        let b = Int(linear.squareRoot() * 4096.0)
+        let k = Int(bucketK[b])
+        return linear >= thresholds[k] ? Int32(k &+ 1) : Int32(k)
+    }
+
+    @inline(__always)
     private static func encodeSRGB(_ linear: Double, maximum: Double, bits: Int,
                                    x: Int, y: Int, channel: Int,
                                    numericalMode: VarDCTNumericalMode) -> Int32 {
+        if bits == 8 && numericalMode == .scalarNearest {
+            let tables = srgb8Tables
+            return encodeSRGB8ScalarNearest(linear, thresholds: tables.thresholds, bucketK: tables.bucketK)
+        }
         // Clipping here is the explicit bounded integer output representation,
         // following reconstruction in the codestream's declared sRGB space.
         let bounded = min(1, max(0, linear))

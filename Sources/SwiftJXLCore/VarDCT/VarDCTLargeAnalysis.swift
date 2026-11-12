@@ -61,6 +61,20 @@ package struct VarDCTLargeAnalysis: Sendable {
         ]
     ]
 
+    private static let llfCosTables: [Int: [Double]] = {
+        var dict: [Int: [Double]] = [:]
+        for cells in [1, 2, 4, 8] {
+            var c = [Double](repeating: 0, count: cells * cells)
+            for pos in 0..<cells {
+                for freq in 0..<cells {
+                    c[pos * cells + freq] = cos((Double(pos) + 0.5) * Double(freq) * .pi / Double(cells))
+                }
+            }
+            dict[cells] = c
+        }
+        return dict
+    }()
+
     package static func dimensions(for identifier: Int) -> (rows: Int, columns: Int)? {
         switch identifier {
         case 4:  return (16, 16)
@@ -102,24 +116,12 @@ package struct VarDCTLargeAnalysis: Sendable {
 
         let cellsX = shape.columns / 8
         let cellsY = shape.rows / 8
-        guard let scalesX = Self.llfScales[cellsX], let scalesY = Self.llfScales[cellsY] else {
+        guard let scalesX = Self.llfScales[cellsX], let scalesY = Self.llfScales[cellsY],
+              let cx = Self.llfCosTables[cellsX], let cy = Self.llfCosTables[cellsY] else {
             throw VarDCTError.unsupportedStrategy(identifier)
         }
         self.sx = scalesX
         self.sy = scalesY
-
-        var cx = [Double](repeating: 0, count: cellsX * cellsX)
-        for x in 0..<cellsX {
-            for u in 0..<cellsX {
-                cx[x * cellsX + u] = cos((Double(x) + 0.5) * Double(u) * .pi / Double(cellsX))
-            }
-        }
-        var cy = [Double](repeating: 0, count: cellsY * cellsY)
-        for y in 0..<cellsY {
-            for v in 0..<cellsY {
-                cy[y * cellsY + v] = cos((Double(y) + 0.5) * Double(v) * .pi / Double(cellsY))
-            }
-        }
         self.cosX = cx
         self.cosY = cy
     }
@@ -179,6 +181,101 @@ package struct VarDCTLargeAnalysis: Sendable {
                     }
                 }
                 workspace.dc[y * cellsX + x] = Float(sum)
+            }
+        }
+    }
+
+    /// Fast unchecked multi-block analysis for callers that have already validated finiteness and budgets.
+    package func applyUnchecked(_ pixels: UnsafePointer<Float>, workspace: inout Workspace) {
+        applyDCTAndDCUnchecked(pixels, workspace: &workspace)
+        transposeCoefficientsUnchecked(workspace: &workspace)
+    }
+
+    /// Runs the 2D forward DCT and extracts LLF DC values without transposing AC coefficients yet.
+    @inline(__always)
+    package func applyDCTAndDCUnchecked(_ pixels: UnsafePointer<Float>, workspace: inout Workspace) {
+        let r = rows
+        let c = columns
+        let cellsX = c >> 3
+        let cellsY = r >> 3
+        let root2 = 2.0.squareRoot()
+
+        workspace.dctScratch.withMutablePointers { dctOut, inter in
+            ScaledDCT.applyUnchecked(
+                rows: r,
+                columns: c,
+                direction: .forward,
+                input: pixels,
+                output: dctOut,
+                scratch: inter
+            )
+
+            workspace.dc.withUnsafeMutableBufferPointer { dcBuf in
+                sx.withUnsafeBufferPointer { sxBuf in
+                    sy.withUnsafeBufferPointer { syBuf in
+                        cosX.withUnsafeBufferPointer { cxBuf in
+                            cosY.withUnsafeBufferPointer { cyBuf in
+                                let dcPtr = dcBuf.baseAddress!
+                                let sxPtr = sxBuf.baseAddress!
+                                let syPtr = syBuf.baseAddress!
+                                let cxPtr = cxBuf.baseAddress!
+                                let cyPtr = cyBuf.baseAddress!
+
+                                withUnsafeTemporaryAllocation(of: Double.self, capacity: 64) { sfBuf in
+                                    let sf = sfBuf.baseAddress!
+                                    for v in 0..<cellsY {
+                                        let vRow = v * c
+                                        let normV = v == 0 ? 1.0 : root2
+                                        let syV = syPtr[v]
+                                        let sfRow = v * cellsX
+                                        for u in 0..<cellsX {
+                                            let value = Double(dctOut[vRow + u]) / (sxPtr[u] * syV)
+                                            let normalisation = (u == 0 ? 1.0 : root2) * normV
+                                            sf[sfRow + u] = value * normalisation
+                                        }
+                                    }
+                                    for y in 0..<cellsY {
+                                        let cyBase = y * cellsY
+                                        for x in 0..<cellsX {
+                                            let cxBase = x * cellsX
+                                            var sum = 0.0
+                                            for v in 0..<cellsY {
+                                                let cosYV = cyPtr[cyBase + v]
+                                                let sfRow = v * cellsX
+                                                for u in 0..<cellsX {
+                                                    sum += sf[sfRow + u] * cxPtr[cxBase + u] * cosYV
+                                                }
+                                            }
+                                            dcPtr[y * cellsX + x] = Float(sum)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /// Transposes or copies the most recent `dctScratch` output into `workspace.coefficients`.
+    @inline(__always)
+    package func transposeCoefficientsUnchecked(workspace: inout Workspace) {
+        let r = rows
+        let c = columns
+        workspace.dctScratch.withMutablePointers { dctOut, _ in
+            workspace.coefficients.withUnsafeMutableBufferPointer { coeffBuf in
+                let coeffPtr = coeffBuf.baseAddress!
+                if r >= c {
+                    for y in 0..<r {
+                        let rowBase = y * c
+                        for x in 0..<c {
+                            coeffPtr[x * r + y] = dctOut[rowBase + x]
+                        }
+                    }
+                } else {
+                    coeffPtr.update(from: dctOut, count: r * c)
+                }
             }
         }
     }

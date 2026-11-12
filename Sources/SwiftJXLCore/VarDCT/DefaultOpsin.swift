@@ -31,6 +31,7 @@ package enum DefaultOpsin {
     private static let inv22: Double = 1.9459282392156863
 
     /// Converts bounded linear sRGB `[0, 1]` samples into XYB coordinates.
+    @inline(__always)
     package static func forward(_ rgb: (Double, Double, Double)) throws -> (X: Double, Y: Double, B: Double) {
         let (r, g, b) = rgb
         guard r.isFinite, g.isFinite, b.isFinite,
@@ -54,6 +55,7 @@ package enum DefaultOpsin {
     }
 
     /// Converts XYB coordinates into unclipped linear sRGB samples per ISO/IEC 18181-1 §10.5.
+    @inline(__always)
     package static func inverse(_ xyb: (X: Double, Y: Double, B: Double)) throws -> (R: Double, G: Double, B: Double) {
         let (x, y, b) = xyb
         guard x.isFinite, y.isFinite, b.isFinite else {

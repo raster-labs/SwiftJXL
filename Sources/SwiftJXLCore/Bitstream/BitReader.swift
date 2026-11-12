@@ -65,8 +65,8 @@ package struct BitReader: Sendable {
     /// Bounded checks also cover zero-bit symbols and nested context maps.
     @inline(__always)
     package mutating func checkpoint() throws {
-        operations += 1
-        if operations == 1 || operations & 255 == 0 {
+        operations &+= 1
+        if operations == 1 || (operations & 255) == 0 {
             try checkCancellationAndDeadline()
         }
     }
@@ -164,22 +164,25 @@ package struct BitReader: Sendable {
         bitCount &-= drop
     }
 
-    /// Top up the accumulator from `bytes` (to ≥ 57 bits, or to EOF).
+    /// Top up the accumulator from `bytes` (to ≥ 32 bits, or to EOF).
     @inline(__always)
     package mutating func refill() {
-        if bitCount <= 32 && nextByte &+ 4 <= bytes.count {
-            let b0 = UInt64(bytes[nextByte])
-            let b1 = UInt64(bytes[nextByte &+ 1]) &<< 8
-            let b2 = UInt64(bytes[nextByte &+ 2]) &<< 16
-            let b3 = UInt64(bytes[nextByte &+ 3]) &<< 24
-            bitBuf |= (b0 | b1 | b2 | b3) &<< UInt64(bitCount)
-            nextByte &+= 4
-            bitCount &+= 32
-        }
-        while bitCount <= 56 && nextByte < bytes.count {
-            bitBuf |= UInt64(bytes[nextByte]) &<< UInt64(bitCount)
-            nextByte &+= 1
-            bitCount &+= 8
+        if bitCount <= 32 {
+            if nextByte &+ 4 <= bytes.count {
+                let b0 = UInt64(bytes[nextByte])
+                let b1 = UInt64(bytes[nextByte &+ 1]) &<< 8
+                let b2 = UInt64(bytes[nextByte &+ 2]) &<< 16
+                let b3 = UInt64(bytes[nextByte &+ 3]) &<< 24
+                bitBuf |= (b0 | b1 | b2 | b3) &<< UInt64(bitCount)
+                nextByte &+= 4
+                bitCount &+= 32
+                return
+            }
+            while bitCount <= 56 && nextByte < bytes.count {
+                bitBuf |= UInt64(bytes[nextByte]) &<< UInt64(bitCount)
+                nextByte &+= 1
+                bitCount &+= 8
+            }
         }
     }
 
@@ -189,6 +192,7 @@ package struct BitReader: Sendable {
     package var isExhausted: Bool { pos >= totalBits }
 
     /// Read `count` bits as a `UInt32` (1...32 bits).
+    @inline(__always)
     package mutating func read(bits count: Int) throws -> UInt32 {
         try checkpoint()
         guard count >= 0 && count <= 32 else {
@@ -208,6 +212,7 @@ package struct BitReader: Sendable {
     }
 
     /// Read 1 bit as a Bool.
+    @inline(__always)
     package mutating func readBit() throws -> Bool {
         try read(bits: 1) == 1
     }

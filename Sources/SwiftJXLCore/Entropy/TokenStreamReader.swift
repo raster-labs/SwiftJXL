@@ -42,8 +42,25 @@ package struct TokenStreamReader: Sendable {
     package let codebook: MultiClusterCodebook
     package let distanceMultiplier: Int
 
-    private var ansDecoder: ANSStreamDecoder?
+    private let usePrefixCode: Bool
+    private let lz77Enabled: Bool
+    private let lz77MinSymbol: UInt32
+    private let numContexts: Int
+    private let numUintConfigs: Int
+    private let ctxMap: [UInt8]
+    private let uintConfigs: [HybridUintConfig]
+    private let huffmanTables: [PrefixCodeTable]
+    private let prefixDescriptors: [PrefixClusterDescriptor]
+    private let flatPrefixLUT: [UInt32]
+    private let numPrefixClusters: Int
+
+    private var ansDecoder: ANSStreamDecoder
+    private let ansUnavailable: Bool
     private let ansInitError: AliasTableError?
+    private let numANSClusters: Int
+    private let canFastANS: Bool
+    private var ansState: UInt32 = 0
+    private var ansInitialised: Bool = false
 
     private var lz77Window: [UInt32]
     private var lz77NumDecoded: Int = 0
@@ -58,43 +75,74 @@ package struct TokenStreamReader: Sendable {
         self.header = header
         self.codebook = codebook
         self.distanceMultiplier = max(0, distanceMultiplier)
+        self.usePrefixCode = header.usePrefixCode
+        self.lz77Enabled = header.lz77.enabled
+        self.lz77MinSymbol = header.lz77.minSymbol
+        self.numContexts = header.contextMap.numContexts
+        self.numUintConfigs = header.uintConfigs.count
+        self.ctxMap = header.contextMap.map
+        self.uintConfigs = header.uintConfigs
+        self.huffmanTables = codebook.huffmanTables
+        self.prefixDescriptors = codebook.prefixDescriptors
+        self.flatPrefixLUT = codebook.flatPrefixLUT
+        self.numPrefixClusters = codebook.prefixDescriptors.count
         self.lz77Window = header.lz77.enabled
             ? [UInt32](repeating: 0, count: Self.lz77WindowSize)
             : []
 
+        let dec: ANSStreamDecoder
+        let unavail: Bool
+        let initErr: AliasTableError?
         if header.usePrefixCode {
-            self.ansDecoder = nil
-            self.ansInitError = nil
+            dec = ANSStreamDecoder(distributions: [])
+            unavail = true
+            initErr = nil
+        } else if let prebuilt = codebook.prebuiltANSDecoder {
+            dec = prebuilt
+            unavail = false
+            initErr = nil
+        } else if let prebuiltErr = codebook.prebuiltANSError {
+            dec = ANSStreamDecoder(distributions: [])
+            unavail = true
+            initErr = prebuiltErr
         } else {
             do {
-                self.ansDecoder = try ANSStreamDecoder(
+                dec = try ANSStreamDecoder(
                     counts: codebook.ansCounts,
                     logAlphaSize: header.logAlphaSize
                 )
-                self.ansInitError = nil
+                unavail = false
+                initErr = nil
             } catch let error as AliasTableError {
-                self.ansDecoder = nil
-                self.ansInitError = error
+                dec = ANSStreamDecoder(distributions: [])
+                unavail = true
+                initErr = error
             } catch {
-                self.ansDecoder = nil
-                self.ansInitError = .sumNotEqualRange
+                dec = ANSStreamDecoder(distributions: [])
+                unavail = true
+                initErr = .sumNotEqualRange
             }
         }
+        self.ansDecoder = dec
+        self.ansUnavailable = unavail
+        self.ansInitError = initErr
+        self.numANSClusters = dec.aliasTables.count
+        self.canFastANS = !header.usePrefixCode && !unavail && initErr == nil
     }
 
     @inline(__always)
     package func canUseSingleContextANS(context: Int) -> Bool {
         guard !header.usePrefixCode,
               !header.lz77.enabled,
+              !ansUnavailable,
               ansInitError == nil,
-              let ans = ansDecoder,
               context >= 0,
               context < header.contextMap.numContexts else {
             return false
         }
         let cluster = Int(header.contextMap.map[context])
         return cluster >= 0
-            && cluster < ans.aliasTables.count
+            && cluster < ansDecoder.aliasTables.count
             && cluster < header.uintConfigs.count
     }
 
@@ -103,12 +151,11 @@ package struct TokenStreamReader: Sendable {
         context: Int
     ) -> (AliasTable, HybridUintConfig, UInt32, Bool) {
         let cluster = Int(header.contextMap.map[context])
-        let ans = ansDecoder!
         return (
-            ans.aliasTables[cluster],
+            ansDecoder.aliasTables[cluster],
             header.uintConfigs[cluster],
-            ans.currentState,
-            ans.hasInitialised
+            ansState,
+            ansInitialised
         )
     }
 
@@ -117,13 +164,12 @@ package struct TokenStreamReader: Sendable {
         context: Int
     ) -> (flatSlots: [UInt64], clusterOffset: Int, config: HybridUintConfig, state: UInt32, initialised: Bool) {
         let cluster = Int(header.contextMap.map[context])
-        let ans = ansDecoder!
         return (
-            ans.flatSlots,
+            ansDecoder.flatSlots,
             cluster &<< ANSConstants.logTabSize,
             header.uintConfigs[cluster],
-            ans.currentState,
-            ans.hasInitialised
+            ansState,
+            ansInitialised
         )
     }
 
@@ -155,11 +201,11 @@ package struct TokenStreamReader: Sendable {
         guard !header.usePrefixCode,
               !header.lz77.enabled,
               lz77NumToCopy == 0,
-              ansInitError == nil,
-              let ans = ansDecoder else {
+              !ansUnavailable,
+              ansInitError == nil else {
             return false
         }
-        return ans.useAliasTables
+        return ansDecoder.useAliasTables
     }
 
     @inline(__always)
@@ -172,15 +218,39 @@ package struct TokenStreamReader: Sendable {
         state: UInt32,
         initialised: Bool
     ) {
-        let ans = ansDecoder!
         return (
-            ans.flatSlots,
+            ansDecoder.flatSlots,
             header.contextMap.map,
             header.uintConfigs,
             header.contextMap.numContexts,
             header.uintConfigs.count,
-            ans.currentState,
-            ans.hasInitialised
+            ansState,
+            ansInitialised
+        )
+    }
+
+    @inline(__always)
+    package func canUseMultiContextPrefix() -> Bool {
+        return header.usePrefixCode
+            && !header.lz77.enabled
+            && lz77NumToCopy == 0
+            && codebook.huffmanTables.count == header.uintConfigs.count
+    }
+
+    @inline(__always)
+    package func multiContextPrefixState() -> (
+        tables: [PrefixCodeTable],
+        ctxMap: [UInt8],
+        uintConfigs: [HybridUintConfig],
+        userCtxBound: Int,
+        numHistograms: Int
+    ) {
+        return (
+            codebook.huffmanTables,
+            header.contextMap.map,
+            header.uintConfigs,
+            header.contextMap.numContexts,
+            header.uintConfigs.count
         )
     }
 
@@ -189,7 +259,77 @@ package struct TokenStreamReader: Sendable {
         _ state: UInt32,
         initialised: Bool
     ) {
-        ansDecoder?.updateState(state, initialised: initialised)
+        ansState = state
+        ansInitialised = initialised
+        ansDecoder.updateState(state, initialised: initialised)
+    }
+
+    @inline(never)
+    private func readPrefixSymbol(
+        cluster: Int,
+        from r: inout BitReader
+    ) throws -> UInt32 {
+        guard cluster >= 0 && cluster < numPrefixClusters else {
+            throw TokenStreamReaderError.clusterOutOfRange(
+                cluster,
+                max: numPrefixClusters - 1
+            )
+        }
+        let desc = prefixDescriptors[cluster]
+        let need = desc.usedMaxLength
+        if need == 0 {
+            return UInt32(desc.singleSymbol)
+        }
+        if r.bitCount < need {
+            r.refill()
+        }
+        if r.bitCount >= need {
+            let raw = Int(r.bitBuf & desc.usedMaxMask)
+            let entry = flatPrefixLUT[desc.lutOffset &+ raw]
+            let consumed = Int(entry &>> 16)
+            r.bitBuf &>>= UInt64(consumed)
+            r.bitCount &-= consumed
+            r.pos &+= consumed
+            return entry & 0xFFFF
+        }
+        do {
+            let sym = try huffmanTables[cluster].decode(from: &r)
+            return UInt32(sym)
+        } catch let error as PrefixCodeError {
+            throw TokenStreamReaderError.prefix(error)
+        }
+    }
+
+    @inline(never)
+    private mutating func readANSSymbol(
+        cluster: Int,
+        from r: inout BitReader
+    ) throws -> UInt32 {
+        if let err = ansInitError {
+            throw TokenStreamReaderError.alias(err)
+        }
+        guard !ansUnavailable,
+              cluster >= 0 && cluster < numANSClusters else {
+            throw TokenStreamReaderError.clusterOutOfRange(
+                cluster,
+                max: numANSClusters - 1
+            )
+        }
+        ansDecoder.updateState(ansState, initialised: ansInitialised)
+        do {
+            let sym = try ansDecoder.readSymbol(cluster: cluster, from: &r)
+            ansState = ansDecoder.currentState
+            ansInitialised = ansDecoder.hasInitialised
+            return sym
+        } catch let error as ANSError {
+            ansState = ansDecoder.currentState
+            ansInitialised = ansDecoder.hasInitialised
+            throw TokenStreamReaderError.ans(error)
+        } catch let error as BitstreamError {
+            ansState = ansDecoder.currentState
+            ansInitialised = ansDecoder.hasInitialised
+            throw TokenStreamReaderError.bitstream(error)
+        }
     }
 
     @inline(__always)
@@ -197,44 +337,15 @@ package struct TokenStreamReader: Sendable {
         cluster: Int,
         from r: inout BitReader
     ) throws -> UInt32 {
-        if header.usePrefixCode {
-            guard cluster >= 0 && cluster < codebook.huffmanTables.count else {
-                throw TokenStreamReaderError.clusterOutOfRange(
-                    cluster,
-                    max: codebook.huffmanTables.count - 1
-                )
-            }
-            do {
-                let sym = try codebook.huffmanTables[cluster].decode(from: &r)
-                return UInt32(sym)
-            } catch let error as PrefixCodeError {
-                throw TokenStreamReaderError.prefix(error)
-            }
+        if usePrefixCode {
+            return try readPrefixSymbol(cluster: cluster, from: &r)
         } else {
-            if let err = ansInitError {
-                throw TokenStreamReaderError.alias(err)
-            }
-            guard var ans = ansDecoder,
-                  cluster >= 0 && cluster < ans.aliasTables.count else {
-                throw TokenStreamReaderError.clusterOutOfRange(
-                    cluster,
-                    max: (ansDecoder?.aliasTables.count ?? 0) - 1
-                )
-            }
-            do {
-                let sym = try ans.readSymbol(cluster: cluster, from: &r)
-                self.ansDecoder = ans
-                return sym
-            } catch let error as ANSError {
-                throw TokenStreamReaderError.ans(error)
-            } catch let error as BitstreamError {
-                throw TokenStreamReaderError.bitstream(error)
-            }
+            return try readANSSymbol(cluster: cluster, from: &r)
         }
     }
 
     @inline(__always)
-    private func expandHybridUint(
+    private static func expandHybridUint(
         config: HybridUintConfig,
         token: UInt32,
         from r: inout BitReader
@@ -246,6 +357,117 @@ package struct TokenStreamReader: Sendable {
         }
     }
 
+    @inline(__always)
+    package mutating func readTokenNoLZ77(
+        context: Int,
+        from r: inout BitReader,
+        ctxMapPtr: UnsafePointer<UInt8>,
+        uintConfigsPtr: UnsafePointer<HybridUintConfig>,
+        flatSlotsPtr: UnsafePointer<UInt64>?,
+        prefixDescPtr: UnsafePointer<PrefixClusterDescriptor>?,
+        flatPrefixLUTPtr: UnsafePointer<UInt32>?
+    ) throws -> UInt32 {
+        try r.checkpoint()
+
+        guard UInt(bitPattern: context) < UInt(bitPattern: numContexts) else {
+            throw TokenStreamReaderError.contextOutOfRange(
+                context,
+                max: numContexts - 1
+            )
+        }
+        let cluster = Int(ctxMapPtr[context])
+        guard UInt(bitPattern: cluster) < UInt(bitPattern: numUintConfigs) else {
+            throw TokenStreamReaderError.clusterOutOfRange(
+                cluster,
+                max: numUintConfigs - 1
+            )
+        }
+
+        let token: UInt32
+        if usePrefixCode {
+            guard UInt(bitPattern: cluster) < UInt(bitPattern: numPrefixClusters),
+                  let descPtr = prefixDescPtr else {
+                throw TokenStreamReaderError.clusterOutOfRange(
+                    cluster,
+                    max: numPrefixClusters - 1
+                )
+            }
+            let desc = descPtr[cluster]
+            let need = desc.usedMaxLength
+            if need == 0 {
+                token = UInt32(desc.singleSymbol)
+            } else {
+                if r.bitCount < need {
+                    r.refill()
+                }
+                if r.bitCount >= need, let lutPtr = flatPrefixLUTPtr {
+                    let raw = Int(r.bitBuf & desc.usedMaxMask)
+                    let entry = lutPtr[desc.lutOffset &+ raw]
+                    let consumed = Int(entry &>> 16)
+                    r.bitBuf &>>= UInt64(consumed)
+                    r.bitCount &-= consumed
+                    r.pos &+= consumed
+                    token = entry & 0xFFFF
+                } else {
+                    token = try readPrefixSymbol(cluster: cluster, from: &r)
+                }
+            }
+        } else if canFastANS, let slotsPtr = flatSlotsPtr,
+                  UInt(bitPattern: cluster) < UInt(bitPattern: numANSClusters) {
+            if !ansInitialised {
+                do {
+                    ansState = try r.read(bits: 32)
+                    ansInitialised = true
+                } catch let error as BitstreamError {
+                    throw TokenStreamReaderError.bitstream(error)
+                }
+            }
+            let logTab = UInt32(ANSConstants.logTabSize)
+            var st = ansState
+            let slot = st & (ANSConstants.tabSize - 1)
+            let packed = slotsPtr[(cluster &<< ANSConstants.logTabSize) | Int(slot)]
+            let offsetPlusP = UInt32(truncatingIfNeeded: packed & 0xFFFF)
+            token = UInt32(truncatingIfNeeded: (packed &>> 16) & 0xFFFF)
+            let freq = UInt32(truncatingIfNeeded: packed &>> 32)
+            st = freq &* (st >> logTab) &+ offsetPlusP
+            if st < ANSConstants.stateLowerBound {
+                if r.bitCount < 16 {
+                    r.refill()
+                }
+                if r.bitCount >= 16 {
+                    let w = UInt32(truncatingIfNeeded: r.bitBuf & 0xFFFF)
+                    r.bitBuf &>>= 16
+                    r.bitCount &-= 16
+                    r.pos &+= 16
+                    st = (st << 16) | w
+                } else {
+                    do {
+                        let w = try r.read(bits: 16)
+                        st = (st << 16) | w
+                    } catch let error as BitstreamError {
+                        ansState = st
+                        throw TokenStreamReaderError.bitstream(error)
+                    }
+                }
+            }
+            ansState = st
+        } else {
+            token = try readANSSymbol(cluster: cluster, from: &r)
+        }
+
+        let config = uintConfigsPtr[cluster]
+        let split = UInt32(1) &<< UInt32(config.splitExponent)
+        if token < split {
+            return token
+        }
+        return try Self.expandHybridUint(
+            config: config,
+            token: token,
+            from: &r
+        )
+    }
+
+    @inline(__always)
     package mutating func readToken(
         context: Int,
         from r: inout BitReader
@@ -261,29 +483,31 @@ package struct TokenStreamReader: Sendable {
             return copied
         }
 
-        guard context >= 0 && context < header.contextMap.numContexts else {
+        guard context >= 0 && context < numContexts else {
             throw TokenStreamReaderError.contextOutOfRange(
                 context,
-                max: header.contextMap.numContexts - 1
+                max: numContexts - 1
             )
         }
-        let cluster = Int(header.contextMap.map[context])
-        guard cluster >= 0 && cluster < header.uintConfigs.count else {
+        let cluster = Int(ctxMap[context])
+        guard cluster >= 0 && cluster < numUintConfigs else {
             throw TokenStreamReaderError.clusterOutOfRange(
                 cluster,
-                max: header.uintConfigs.count - 1
+                max: numUintConfigs - 1
             )
         }
 
-        let token = try readRawSymbol(cluster: cluster, from: &r)
+        let token = usePrefixCode
+            ? try readPrefixSymbol(cluster: cluster, from: &r)
+            : try readANSSymbol(cluster: cluster, from: &r)
 
-        if !header.lz77.enabled || token < header.lz77.minSymbol {
-            let value = try expandHybridUint(
-                config: header.uintConfigs[cluster],
+        if !lz77Enabled || token < lz77MinSymbol {
+            let value = try Self.expandHybridUint(
+                config: uintConfigs[cluster],
                 token: token,
                 from: &r
             )
-            if header.lz77.enabled {
+            if lz77Enabled {
                 lz77Window[lz77NumDecoded & Self.lz77WindowMask] = value
                 lz77NumDecoded &+= 1
             }
@@ -292,7 +516,7 @@ package struct TokenStreamReader: Sendable {
 
         // ISO/IEC 18181-1 Clause 7.4: LZ77 length-and-distance pair.
         let lengthToken = token &- header.lz77.minSymbol
-        let baseLength = try expandHybridUint(
+        let baseLength = try Self.expandHybridUint(
             config: header.lz77.lengthUintConfig,
             token: lengthToken,
             from: &r
@@ -314,7 +538,7 @@ package struct TokenStreamReader: Sendable {
         }
 
         let distanceToken = try readRawSymbol(cluster: distanceCluster, from: &r)
-        let rawDistance = try expandHybridUint(
+        let rawDistance = try Self.expandHybridUint(
             config: header.uintConfigs[distanceCluster],
             token: distanceToken,
             from: &r
@@ -358,11 +582,11 @@ package struct TokenStreamReader: Sendable {
             if let err = ansInitError {
                 throw TokenStreamReaderError.alias(err)
             }
-            guard let ans = ansDecoder,
-                  ans.hasInitialised,
-                  ans.currentState == ANSConstants.initialState else {
+            guard !ansUnavailable,
+                  ansInitialised,
+                  ansState == ANSConstants.initialState else {
                 throw TokenStreamReaderError.ansFinalStateMismatch(
-                    got: ansDecoder?.currentState ?? 0
+                    got: ansState
                 )
             }
         }
@@ -371,10 +595,12 @@ package struct TokenStreamReader: Sendable {
     /// Consume the 32-bit initial rANS state if no symbols were decoded in an
     /// ANS section, then verify the terminal rANS checksum (`0x130000`).
     package mutating func finish(from r: inout BitReader) throws {
-        if !header.usePrefixCode, let ans = ansDecoder, !ans.hasInitialised {
+        if !header.usePrefixCode, !ansUnavailable, !ansInitialised {
             do {
                 let state = try r.read(bits: 32)
-                ansDecoder?.updateState(state, initialised: true)
+                ansState = state
+                ansInitialised = true
+                ansDecoder.updateState(state, initialised: true)
             } catch let error as BitstreamError {
                 throw TokenStreamReaderError.bitstream(error)
             }

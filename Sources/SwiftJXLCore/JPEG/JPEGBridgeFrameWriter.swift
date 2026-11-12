@@ -123,8 +123,10 @@ package enum JPEGBridgeFrameWriter {
                         )
 
                         var nonZeros = 0
+                        var lastNZ = 0
                         for k in 1..<64 where blockScratch[naturalOrder[k]] != 0 {
                             nonZeros += 1
+                            lastNZ = k
                         }
                         tokens.append((nzCtx, UInt32(nonZeros)))
                         nzGrids[c][cly * sw + clx] = Int32(nonZeros)
@@ -133,21 +135,22 @@ package enum JPEGBridgeFrameWriter {
 
                         var remainingNZ = nonZeros
                         var prev = (nonZeros > 4) ? 0 : 1
-                        for k in 1..<64 {
-                            if remainingNZ == 0 { break }
-                            let zCtx = VarDCTEntropy.zeroDensityContext(
-                                nonZerosLeft: remainingNZ,
-                                k: k,
-                                log2CoveredBlocks: 0,
-                                prev: prev,
-                                blockContext: blockCluster,
-                                numBlockClusters: VarDCTEntropy.defaultNumBlockClusters
-                            )
+                        let nbClusters = VarDCTEntropy.defaultNumBlockClusters
+                        let zCtxOffset = nbClusters * VarDCTEntropy.nonZeroBuckets + blockCluster
+                        let freqLut = VarDCTEntropy.coeffFreqContext
+                        let nzLut = VarDCTEntropy.coeffNumNonzeroContext
+                        var normNZ = min((remainingNZ + 1) >> 1, 31)
+                        var nzDensityBase = nzLut[normNZ]
+                        for k in 1...lastNZ {
+                            let densityCtx = (nzDensityBase + freqLut[k]) * 2 + prev
+                            let zCtx = zCtxOffset + densityCtx * nbClusters
                             let coeff = blockScratch[naturalOrder[k]]
                             tokens.append((zCtx, ZigZag.pack(coeff)))
                             if coeff != 0 {
                                 remainingNZ -= 1
                                 prev = 1
+                                normNZ = min((remainingNZ + 1) >> 1, 31)
+                                nzDensityBase = nzLut[normNZ]
                             } else {
                                 prev = 0
                             }

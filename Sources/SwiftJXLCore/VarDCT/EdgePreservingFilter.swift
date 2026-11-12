@@ -168,11 +168,18 @@ package enum EdgePreservingFilter {
         budget: ScalarOperationBudget
     ) throws -> [[Float]] {
         let pixelCount = width * height
-        var output = [
-            [Float](repeating: 0, count: pixelCount),
-            [Float](repeating: 0, count: pixelCount),
-            [Float](repeating: 0, count: pixelCount)
-        ]
+        var out0 = [Float](repeating: 0, count: pixelCount)
+        var out1 = [Float](repeating: 0, count: pixelCount)
+        var out2 = [Float](repeating: 0, count: pixelCount)
+
+        var stepInvSigma = [Float](repeating: 0, count: baseSigma.count * 2)
+        for i in 0..<baseSigma.count {
+            let sigma = baseSigma[i] * sigmaScale
+            if sigma > 1e-6 {
+                stepInvSigma[i * 2] = invSigmaNum / sigma
+                stepInvSigma[i * 2 + 1] = (invSigmaNum * borderSadMul) / sigma
+            }
+        }
 
         let offsets = (step == 0) ? step0Offsets : cardinalOffsets
         let useCrossSAD = (step != 2)
@@ -204,75 +211,274 @@ package enum EdgePreservingFilter {
             mirror(y, height)
         }
 
-        for y in 0..<height {
-            if (y & 7) == 0 { try budget.checkpoint() }
-            let by = y >> 3
-            let yBorder = ((y & 7) == 0) || ((y & 7) == 7)
-            let rowOffset = y * width
+        try input[0].withUnsafeBufferPointer { in0Buf in
+            try input[1].withUnsafeBufferPointer { in1Buf in
+                try input[2].withUnsafeBufferPointer { in2Buf in
+                    try out0.withUnsafeMutableBufferPointer { out0Buf in
+                        try out1.withUnsafeMutableBufferPointer { out1Buf in
+                            try out2.withUnsafeMutableBufferPointer { out2Buf in
+                                try stepInvSigma.withUnsafeBufferPointer { sigmaBuf in
+                                    let p0 = in0Buf.baseAddress!
+                                    let p1 = in1Buf.baseAddress!
+                                    let p2 = in2Buf.baseAddress!
+                                    let o0 = out0Buf.baseAddress!
+                                    let o1 = out1Buf.baseAddress!
+                                    let o2 = out2Buf.baseAddress!
+                                    let invSigBase = sigmaBuf.baseAddress!
+                                    let w = width
 
-            for x in 0..<width {
-                let bx = x >> 3
-                let sigma = baseSigma[by * blocksX + bx] * sigmaScale
-                let centerIndex = rowOffset + x
-                if sigma <= 1e-6 {
-                    output[0][centerIndex] = input[0][centerIndex]
-                    output[1][centerIndex] = input[1][centerIndex]
-                    output[2][centerIndex] = input[2][centerIndex]
-                    continue
-                }
+                                    @inline(__always)
+                                    func processBoundaryPixel(x: Int, y: Int, by: Int, yBorder: Bool, rowOffset: Int) {
+                                        let bIdx2 = (by * blocksX + (x >> 3)) * 2
+                                        let invInt = invSigBase[bIdx2]
+                                        let centerIndex = rowOffset + x
+                                        if invInt == 0 {
+                                            o0[centerIndex] = p0[centerIndex]
+                                            o1[centerIndex] = p1[centerIndex]
+                                            o2[centerIndex] = p2[centerIndex]
+                                            return
+                                        }
+                                        let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
+                                        let invSigma = isBorder ? invSigBase[bIdx2 + 1] : invInt
 
-                let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
-                let sadMul = isBorder ? borderSadMul : 1.0
-                let invSigma = (invSigmaNum * sadMul) / sigma
+                                        var sumW: Float = 1.0
+                                        var acc0: Float = p0[centerIndex]
+                                        var acc1: Float = p1[centerIndex]
+                                        var acc2: Float = p2[centerIndex]
 
-                var sumW: Float = 1.0
-                var acc0: Float = input[0][centerIndex]
-                var acc1: Float = input[1][centerIndex]
-                var acc2: Float = input[2][centerIndex]
+                                        for offset in offsets {
+                                            let nx = clampX(x + offset.dx)
+                                            let ny = clampY(y + offset.dy)
+                                            let nIndex = ny * w + nx
 
-                for offset in offsets {
-                    let nx = clampX(x + offset.dx)
-                    let ny = clampY(y + offset.dy)
-                    let nIndex = ny * width + nx
+                                            var sad: Float = 0
+                                            if useCrossSAD {
+                                                for cross in plusCross {
+                                                    let ax = clampX(x + cross.cx)
+                                                    let ay = clampY(y + cross.cy)
+                                                    let bxSample = clampX(x + offset.dx + cross.cx)
+                                                    let bySample = clampY(y + offset.dy + cross.cy)
+                                                    let aIdx = ay * w + ax
+                                                    let bIdx = bySample * w + bxSample
 
-                    var sad: Float = 0
-                    if useCrossSAD {
-                        for cross in plusCross {
-                            let ax = clampX(x + cross.cx)
-                            let ay = clampY(y + cross.cy)
-                            let bxSample = clampX(x + offset.dx + cross.cx)
-                            let bySample = clampY(y + offset.dy + cross.cy)
-                            let aIdx = ay * width + ax
-                            let bIdx = bySample * width + bxSample
+                                                    let d0 = abs(p0[aIdx] - p0[bIdx])
+                                                    let d1 = abs(p1[aIdx] - p1[bIdx])
+                                                    let d2 = abs(p2[aIdx] - p2[bIdx])
+                                                    sad += cs0 * d0 + cs1 * d1 + cs2 * d2
+                                                }
+                                            } else {
+                                                let d0 = abs(p0[centerIndex] - p0[nIndex])
+                                                let d1 = abs(p1[centerIndex] - p1[nIndex])
+                                                let d2 = abs(p2[centerIndex] - p2[nIndex])
+                                                sad = cs0 * d0 + cs1 * d1 + cs2 * d2
+                                            }
 
-                            let d0 = abs(input[0][aIdx] - input[0][bIdx])
-                            let d1 = abs(input[1][aIdx] - input[1][bIdx])
-                            let d2 = abs(input[2][aIdx] - input[2][bIdx])
-                            sad += cs0 * d0 + cs1 * d1 + cs2 * d2
+                                            let weight = max(0, 1.0 - sad * invSigma)
+                                            if weight > 0 {
+                                                sumW += weight
+                                                acc0 += weight * p0[nIndex]
+                                                acc1 += weight * p1[nIndex]
+                                                acc2 += weight * p2[nIndex]
+                                            }
+                                        }
+
+                                        let invW = 1.0 / sumW
+                                        o0[centerIndex] = acc0 * invW
+                                        o1[centerIndex] = acc1 * invW
+                                        o2[centerIndex] = acc2 * invW
+                                    }
+
+                                    let minMargin = (step == 0) ? 3 : 2
+                                    let crossOffsets: (Int, Int, Int, Int, Int) = (0, -1, 1, -w, w)
+                                    let step0StrideOffsets: [Int] = [
+                                        -1, 1, -w, w,
+                                        -w - 1, -w + 1, w - 1, w + 1,
+                                        -2, 2, -2 * w, 2 * w
+                                    ]
+                                    let cardinalStrideOffsets: [Int] = [-1, 1, -w, w]
+
+                                    try step0StrideOffsets.withUnsafeBufferPointer { step0Buf in
+                                        try cardinalStrideOffsets.withUnsafeBufferPointer { cardBuf in
+                                            let step0Ptr = step0Buf.baseAddress!
+                                            let cardPtr = cardBuf.baseAddress!
+
+                                            for y in 0..<height {
+                                                if (y & 7) == 0 { try budget.checkpoint() }
+                                                let by = y >> 3
+                                                let yBorder = ((y & 7) == 0) || ((y & 7) == 7)
+                                                let rowOffset = y * w
+                                                let rowBlockBase = by * blocksX
+
+                                                if y < minMargin || y >= height - minMargin || w < 2 * minMargin + 1 {
+                                                    for x in 0..<w {
+                                                        processBoundaryPixel(x: x, y: y, by: by, yBorder: yBorder, rowOffset: rowOffset)
+                                                    }
+                                                    continue
+                                                }
+
+                                                for x in 0..<minMargin {
+                                                    processBoundaryPixel(x: x, y: y, by: by, yBorder: yBorder, rowOffset: rowOffset)
+                                                }
+
+                                                if !useCrossSAD {
+                                                    // Step 2 interior fast path: 4 cardinal offsets, single-pixel SAD
+                                                    for x in minMargin..<(w - minMargin) {
+                                                        let bIdx2 = (rowBlockBase + (x >> 3)) * 2
+                                                        let invInt = invSigBase[bIdx2]
+                                                        let cIdx = rowOffset + x
+                                                        if invInt == 0 {
+                                                            o0[cIdx] = p0[cIdx]
+                                                            o1[cIdx] = p1[cIdx]
+                                                            o2[cIdx] = p2[cIdx]
+                                                            continue
+                                                        }
+                                                        let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
+                                                        let invSigma = isBorder ? invSigBase[bIdx2 + 1] : invInt
+                                                        let c0 = p0[cIdx], c1 = p1[cIdx], c2 = p2[cIdx]
+                                                        var sumW: Float = 1.0
+                                                        var acc0 = c0, acc1 = c1, acc2 = c2
+
+                                                        for k in 0..<4 {
+                                                            let nIdx = cIdx + cardPtr[k]
+                                                            let n0 = p0[nIdx], n1 = p1[nIdx], n2 = p2[nIdx]
+                                                            let sad = cs0 * abs(c0 - n0) + cs1 * abs(c1 - n1) + cs2 * abs(c2 - n2)
+                                                            let weight = max(0, 1.0 - sad * invSigma)
+                                                            if weight > 0 {
+                                                                sumW += weight
+                                                                acc0 += weight * n0
+                                                                acc1 += weight * n1
+                                                                acc2 += weight * n2
+                                                            }
+                                                        }
+                                                        let invW = 1.0 / sumW
+                                                        o0[cIdx] = acc0 * invW
+                                                        o1[cIdx] = acc1 * invW
+                                                        o2[cIdx] = acc2 * invW
+                                                    }
+                                                } else if step == 1 {
+                                                    // Step 1 interior fast path: 4 cardinal offsets, 5-point plus-cross SAD
+                                                    for x in minMargin..<(w - minMargin) {
+                                                        let bIdx2 = (rowBlockBase + (x >> 3)) * 2
+                                                        let invInt = invSigBase[bIdx2]
+                                                        let cIdx = rowOffset + x
+                                                        if invInt == 0 {
+                                                            o0[cIdx] = p0[cIdx]
+                                                            o1[cIdx] = p1[cIdx]
+                                                            o2[cIdx] = p2[cIdx]
+                                                            continue
+                                                        }
+                                                        let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
+                                                        let invSigma = isBorder ? invSigBase[bIdx2 + 1] : invInt
+                                                        let a0 = cIdx + crossOffsets.0
+                                                        let a1 = cIdx + crossOffsets.1
+                                                        let a2 = cIdx + crossOffsets.2
+                                                        let a3 = cIdx + crossOffsets.3
+                                                        let a4 = cIdx + crossOffsets.4
+                                                        let c0_0 = p0[a0], c1_0 = p1[a0], c2_0 = p2[a0]
+                                                        let c0_1 = p0[a1], c1_1 = p1[a1], c2_1 = p2[a1]
+                                                        let c0_2 = p0[a2], c1_2 = p1[a2], c2_2 = p2[a2]
+                                                        let c0_3 = p0[a3], c1_3 = p1[a3], c2_3 = p2[a3]
+                                                        let c0_4 = p0[a4], c1_4 = p1[a4], c2_4 = p2[a4]
+                                                        var sumW: Float = 1.0
+                                                        var acc0 = c0_0, acc1 = c1_0, acc2 = c2_0
+
+                                                        for k in 0..<4 {
+                                                            let nIdx = cIdx + cardPtr[k]
+                                                            var sad: Float = 0
+                                                            let b0 = nIdx + crossOffsets.0
+                                                            sad += cs0 * abs(c0_0 - p0[b0]) + cs1 * abs(c1_0 - p1[b0]) + cs2 * abs(c2_0 - p2[b0])
+                                                            let b1 = nIdx + crossOffsets.1
+                                                            sad += cs0 * abs(c0_1 - p0[b1]) + cs1 * abs(c1_1 - p1[b1]) + cs2 * abs(c2_1 - p2[b1])
+                                                            let b2 = nIdx + crossOffsets.2
+                                                            sad += cs0 * abs(c0_2 - p0[b2]) + cs1 * abs(c1_2 - p1[b2]) + cs2 * abs(c2_2 - p2[b2])
+                                                            let b3 = nIdx + crossOffsets.3
+                                                            sad += cs0 * abs(c0_3 - p0[b3]) + cs1 * abs(c1_3 - p1[b3]) + cs2 * abs(c2_3 - p2[b3])
+                                                            let b4 = nIdx + crossOffsets.4
+                                                            sad += cs0 * abs(c0_4 - p0[b4]) + cs1 * abs(c1_4 - p1[b4]) + cs2 * abs(c2_4 - p2[b4])
+
+                                                            let weight = max(0, 1.0 - sad * invSigma)
+                                                            if weight > 0 {
+                                                                sumW += weight
+                                                                acc0 += weight * p0[nIdx]
+                                                                acc1 += weight * p1[nIdx]
+                                                                acc2 += weight * p2[nIdx]
+                                                            }
+                                                        }
+                                                        let invW = 1.0 / sumW
+                                                        o0[cIdx] = acc0 * invW
+                                                        o1[cIdx] = acc1 * invW
+                                                        o2[cIdx] = acc2 * invW
+                                                    }
+                                                } else {
+                                                    // Step 0 interior fast path: 12 offsets, 5-point plus-cross SAD
+                                                    for x in minMargin..<(w - minMargin) {
+                                                        let bIdx2 = (rowBlockBase + (x >> 3)) * 2
+                                                        let invInt = invSigBase[bIdx2]
+                                                        let cIdx = rowOffset + x
+                                                        if invInt == 0 {
+                                                            o0[cIdx] = p0[cIdx]
+                                                            o1[cIdx] = p1[cIdx]
+                                                            o2[cIdx] = p2[cIdx]
+                                                            continue
+                                                        }
+                                                        let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
+                                                        let invSigma = isBorder ? invSigBase[bIdx2 + 1] : invInt
+                                                        let a0 = cIdx + crossOffsets.0
+                                                        let a1 = cIdx + crossOffsets.1
+                                                        let a2 = cIdx + crossOffsets.2
+                                                        let a3 = cIdx + crossOffsets.3
+                                                        let a4 = cIdx + crossOffsets.4
+                                                        let c0_0 = p0[a0], c1_0 = p1[a0], c2_0 = p2[a0]
+                                                        let c0_1 = p0[a1], c1_1 = p1[a1], c2_1 = p2[a1]
+                                                        let c0_2 = p0[a2], c1_2 = p1[a2], c2_2 = p2[a2]
+                                                        let c0_3 = p0[a3], c1_3 = p1[a3], c2_3 = p2[a3]
+                                                        let c0_4 = p0[a4], c1_4 = p1[a4], c2_4 = p2[a4]
+                                                        var sumW: Float = 1.0
+                                                        var acc0 = c0_0, acc1 = c1_0, acc2 = c2_0
+
+                                                        for k in 0..<12 {
+                                                            let nIdx = cIdx + step0Ptr[k]
+                                                            var sad: Float = 0
+                                                            let b0 = nIdx + crossOffsets.0
+                                                            sad += cs0 * abs(c0_0 - p0[b0]) + cs1 * abs(c1_0 - p1[b0]) + cs2 * abs(c2_0 - p2[b0])
+                                                            let b1 = nIdx + crossOffsets.1
+                                                            sad += cs0 * abs(c0_1 - p0[b1]) + cs1 * abs(c1_1 - p1[b1]) + cs2 * abs(c2_1 - p2[b1])
+                                                            let b2 = nIdx + crossOffsets.2
+                                                            sad += cs0 * abs(c0_2 - p0[b2]) + cs1 * abs(c1_2 - p1[b2]) + cs2 * abs(c2_2 - p2[b2])
+                                                            let b3 = nIdx + crossOffsets.3
+                                                            sad += cs0 * abs(c0_3 - p0[b3]) + cs1 * abs(c1_3 - p1[b3]) + cs2 * abs(c2_3 - p2[b3])
+                                                            let b4 = nIdx + crossOffsets.4
+                                                            sad += cs0 * abs(c0_4 - p0[b4]) + cs1 * abs(c1_4 - p1[b4]) + cs2 * abs(c2_4 - p2[b4])
+
+                                                            let weight = max(0, 1.0 - sad * invSigma)
+                                                            if weight > 0 {
+                                                                sumW += weight
+                                                                acc0 += weight * p0[nIdx]
+                                                                acc1 += weight * p1[nIdx]
+                                                                acc2 += weight * p2[nIdx]
+                                                            }
+                                                        }
+                                                        let invW = 1.0 / sumW
+                                                        o0[cIdx] = acc0 * invW
+                                                        o1[cIdx] = acc1 * invW
+                                                        o2[cIdx] = acc2 * invW
+                                                    }
+                                                }
+
+                                                for x in (w - minMargin)..<w {
+                                                    processBoundaryPixel(x: x, y: y, by: by, yBorder: yBorder, rowOffset: rowOffset)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    } else {
-                        let d0 = abs(input[0][centerIndex] - input[0][nIndex])
-                        let d1 = abs(input[1][centerIndex] - input[1][nIndex])
-                        let d2 = abs(input[2][centerIndex] - input[2][nIndex])
-                        sad = cs0 * d0 + cs1 * d1 + cs2 * d2
-                    }
-
-                    let w = max(0, 1.0 - sad * invSigma)
-                    if w > 0 {
-                        sumW += w
-                        acc0 += w * input[0][nIndex]
-                        acc1 += w * input[1][nIndex]
-                        acc2 += w * input[2][nIndex]
                     }
                 }
-
-                let invW = 1.0 / sumW
-                output[0][centerIndex] = acc0 * invW
-                output[1][centerIndex] = acc1 * invW
-                output[2][centerIndex] = acc2 * invW
             }
         }
 
-        return output
+        return [out0, out1, out2]
     }
 }

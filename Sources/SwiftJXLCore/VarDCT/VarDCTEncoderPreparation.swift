@@ -156,49 +156,49 @@ package enum VarDCTEncoderPreparation {
 
     /// Computes local adaptive quantisation (`qf`) from a borrowed 192-element (`3 x 64`) XYB buffer.
     package static func quantisation(_ patch: UnsafeBufferPointer<Float>, distance: Float) throws -> Int32 {
-        guard distance.isFinite, distance > 0, patch.count == 192 else {
+        guard distance.isFinite, distance > 0, patch.count == 192, let p = patch.baseAddress else {
             throw VarDCTError.invalidTransform
         }
         for i in 0..<192 {
-            guard patch[i].isFinite else {
+            guard p[i].isFinite else {
                 throw VarDCTError.nonFiniteSample
             }
         }
 
-        let channelWeights: (Double, Double, Double) = (0.35, 1.0, 0.15)
-        let weights = [channelWeights.0, channelWeights.1, channelWeights.2]
+        let weights: (Double, Double, Double) = (0.35, 1.0, 0.15)
         var weightedVariance = 0.0
         var weightedGradient = 0.0
 
         for c in 0..<3 {
+            let weight = c == 0 ? weights.0 : (c == 1 ? weights.1 : weights.2)
             let base = c * 64
             var sum = 0.0
             for i in 0..<64 {
-                sum += Double(patch[base + i])
+                sum += Double(p[base + i])
             }
-            let mean = sum / 64.0
+            let mean = sum * (1.0 / 64.0)
             var varSum = 0.0
             for i in 0..<64 {
-                let d = Double(patch[base + i]) - mean
+                let d = Double(p[base + i]) - mean
                 varSum += d * d
             }
-            weightedVariance += weights[c] * (varSum / 64.0)
+            weightedVariance += weight * (varSum * (1.0 / 64.0))
 
             var gradSum = 0.0
-            for y in 0..<8 {
+            for y in 0..<7 {
                 let row = base + y * 8
-                for x in 0..<8 {
-                    if x + 1 < 8 {
-                        let dx = abs(Double(patch[row + x + 1]) - Double(patch[row + x]))
-                        gradSum += dx
-                    }
-                    if y + 1 < 8 {
-                        let dy = abs(Double(patch[row + 8 + x]) - Double(patch[row + x]))
-                        gradSum += dy
-                    }
+                for x in 0..<7 {
+                    let cur = Double(p[row + x])
+                    gradSum += abs(Double(p[row + x + 1]) - cur)
+                    gradSum += abs(Double(p[row + 8 + x]) - cur)
                 }
+                gradSum += abs(Double(p[row + 8 + 7]) - Double(p[row + 7]))
             }
-            weightedGradient += weights[c] * (gradSum / 112.0)
+            let lastRow = base + 56
+            for x in 0..<7 {
+                gradSum += abs(Double(p[lastRow + x + 1]) - Double(p[lastRow + x]))
+            }
+            weightedGradient += weight * (gradSum / 112.0)
         }
 
         let activity = sqrt(weightedVariance / 1.5) + 0.5 * (weightedGradient / 1.5)

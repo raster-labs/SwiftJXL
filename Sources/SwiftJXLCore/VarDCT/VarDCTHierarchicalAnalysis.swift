@@ -20,6 +20,14 @@ package enum VarDCTHierarchicalAnalysis {
         var large: VarDCTLargeAnalysis.Workspace
         var patch3x64: [Float]
         var patchLarge: [Float]
+        var tilePlanes: [Float]
+        var candDC: [Int32]
+        var candAC: [Int32]
+        var bestDC1x1: [Int32]
+        var bestAC1x1: [Int32]
+        var cached4x4: [Float]
+        var cached4x8: [Float]
+        var cellPatch3x64: [Float]
 
         init(budget: ScalarOperationBudget) throws {
             self.small = try VarDCTSmallAnalysis.Workspace(budget: budget)
@@ -27,6 +35,14 @@ package enum VarDCTHierarchicalAnalysis {
             try budget.reserveWorkspace((192 + 4096) * MemoryLayout<Float>.stride)
             self.patch3x64 = [Float](repeating: 0, count: 192)
             self.patchLarge = [Float](repeating: 0, count: 4096)
+            self.tilePlanes = [Float](repeating: 0, count: 3 * 4096)
+            self.candDC = [Int32](repeating: 0, count: 3 * 64)
+            self.candAC = [Int32](repeating: 0, count: 3 * 4096)
+            self.bestDC1x1 = [Int32](repeating: 0, count: 3)
+            self.bestAC1x1 = [Int32](repeating: 0, count: 3 * 64)
+            self.cached4x4 = [Float](repeating: 0, count: 3 * 64)
+            self.cached4x8 = [Float](repeating: 0, count: 3 * 64)
+            self.cellPatch3x64 = [Float](repeating: 0, count: 3 * 64)
         }
     }
 
@@ -123,7 +139,6 @@ package enum VarDCTHierarchicalAnalysis {
         let ImmutablePlanes = planes
         let immutableLargePlans = largePlans
         let immutableWeights = weightTables
-        let immutableOrders = orderTables
 
         @Sendable
         func processTile(_ tileIndex: Int, scratch: inout WorkerScratch) throws -> TileAnalysisResult {
@@ -152,6 +167,36 @@ package enum VarDCTHierarchicalAnalysis {
                 }
             }
 
+            // Pre-extract the 64x64 tile (with B - Y in channel 2 and edge clamping) once per tile
+            let tileRows = tileCellsY * 8
+            let tileCols = tileCellsX * 8
+            ImmutablePlanes[0].withUnsafeBufferPointer { p0Buf in
+                ImmutablePlanes[1].withUnsafeBufferPointer { p1Buf in
+                    ImmutablePlanes[2].withUnsafeBufferPointer { p2Buf in
+                        scratch.tilePlanes.withUnsafeMutableBufferPointer { tileBuf in
+                            let p0 = p0Buf.baseAddress!
+                            let p1 = p1Buf.baseAddress!
+                            let p2 = p2Buf.baseAddress!
+                            let t0 = tileBuf.baseAddress!
+                            let t1 = t0 + 4096
+                            let t2 = t0 + 8192
+                            for y in 0..<tileRows {
+                                let sy = min(height - 1, pyStart + y) * width
+                                let dstRow = y * 64
+                                for x in 0..<tileCols {
+                                    let sx = min(width - 1, pxStart + x)
+                                    let idx = sy + sx
+                                    let yVal = p1[idx]
+                                    t0[dstRow + x] = p0[idx]
+                                    t1[dstRow + x] = yVal
+                                    t2[dstRow + x] = p2[idx] - yVal
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // Compute region quantisation from top-left 8x8 cell of the tile
             let regionQF: Int32
             if adaptiveQuantisation {
@@ -173,138 +218,368 @@ package enum VarDCTHierarchicalAnalysis {
                 regionQF = 5
             }
 
-            func evaluateSingleTransform(
+            let qScale = acScaleBase * Double(regionQF)
+
+            func evaluateLargeTransform(
                 id: Int,
                 cx: Int,
                 cy: Int,
                 cellsW: Int,
-                cellsH: Int
-            ) throws -> SelectedLeaf {
+                cellsH: Int,
+                maxCost: Double = .infinity,
+                allowTie: Bool = false
+            ) -> (leaf: SelectedLeaf?, cost: Double) {
                 let rows = cellsH * 8
                 let cols = cellsW * 8
                 let count = rows * cols
                 let covered = cellsW * cellsH
+                let normCols = max(rows, cols)
+                let llfRows = min(cellsW, cellsH)
+                let llfCols = max(cellsW, cellsH)
                 let weights = immutableWeights[id]!
-                let order = immutableOrders[id]!
-                let qScale = acScaleBase * Double(regionQF)
+                let plan = immutableLargePlans[id]!
+                let localX0 = (cx - cellX0) * 8
+                let localY0 = (cy - cellY0) * 8
 
-                var leafDC = [[Int32]](repeating: [Int32](repeating: 0, count: covered), count: 3)
-                var leafAC = [[Int32]](repeating: [Int32](repeating: 0, count: count), count: 3)
-                var acEnergy = 0.0
-                var nonZeroCount = 0
-
-                for c in 0..<3 {
-                    for y in 0..<rows {
-                        let sy = min(height - 1, cy * 8 + y) * width
-                        let dstRow = y * cols
-                        for x in 0..<cols {
-                            let sx = min(width - 1, cx * 8 + x)
-                            let idx = sy + sx
-                            scratch.patchLarge[dstRow + x] = (c == 2)
-                                ? (ImmutablePlanes[2][idx] - ImmutablePlanes[1][idx])
-                                : ImmutablePlanes[c][idx]
-                        }
-                    }
-
-                    if covered > 1 {
-                        let plan = immutableLargePlans[id]!
-                        let slice = UnsafeBufferPointer(
-                            start: scratch.patchLarge.withUnsafeBufferPointer { $0.baseAddress },
-                            count: count
-                        )
-                        try plan.apply(slice, workspace: &scratch.large)
-                        for i in 0..<covered {
-                            leafDC[c][i] = Int32((Double(scratch.large.dcValue(at: i)) * dcScales[c]).rounded())
-                        }
-                        let wBase = c * count
-                        for k in covered..<count {
-                            let pos = order[k]
-                            let q = Int32((Double(scratch.large.coefficient(at: pos)) * Double(weights[wBase + pos]) * qScale).rounded())
-                            leafAC[c][pos] = q
-                            if q != 0 {
-                                nonZeroCount += 1
-                                acEnergy += abs(Double(q))
-                            }
-                        }
-                    } else {
-                        let slice = UnsafeBufferPointer(
-                            start: scratch.patchLarge.withUnsafeBufferPointer { $0.baseAddress },
-                            count: 64
-                        )
-                        try smallPlan.apply(slice, identifier: id, workspace: &scratch.small)
-                        leafDC[c][0] = Int32((Double(scratch.small.value(at: 0)) * dcScales[c]).rounded())
-                        let wBase = c * 64
-                        for k in 1..<64 {
-                            let pos = order[k]
-                            let q = Int32((Double(scratch.small.value(at: pos)) * Double(weights[wBase + pos]) * qScale).rounded())
-                            leafAC[c][pos] = q
-                            if q != 0 {
-                                nonZeroCount += 1
-                                acEnergy += abs(Double(q))
-                            }
-                        }
-                    }
-                }
-
-                // Rate-distortion proxy: non-zero count + L1 magnitude + heterogeneity penalty for multi-cell transforms
-                var heterogeneity = 0.0
-                if covered > 1 {
-                    var minDC = leafDC[1][0]
-                    var maxDC = leafDC[1][0]
-                    for i in 1..<covered {
-                        let v = leafDC[1][i]
-                        if v < minDC { minDC = v }
-                        if v > maxDC { maxDC = v }
-                    }
-                    heterogeneity = Double(maxDC - minDC) * Double(covered) + Double(nonZeroCount) * Double(cellsW + cellsH)
-                }
                 let transformOverhead = 1.0
                 let sizePenalty = (id == 0 || id == 4 || id == 5 || id == 18) ? 0.0 : 0.5
-                let cost = Double(nonZeroCount) * 3.5 + acEnergy * 0.25 + heterogeneity + transformOverhead + sizePenalty
-                return SelectedLeaf(
-                    identifier: id,
+                let fixedBaseCost = transformOverhead + sizePenalty
+                let spanWeight = Double(cellsW + cellsH)
+
+                var acEnergy = 0.0
+                var nonZeroCount = 0
+                var dcHet = 0.0
+                var pruned = false
+                var prunedCost = Double.infinity
+
+                scratch.tilePlanes.withUnsafeBufferPointer { tileBuf in
+                    scratch.patchLarge.withUnsafeMutableBufferPointer { patchBuf in
+                        scratch.candDC.withUnsafeMutableBufferPointer { dcBuf in
+                            scratch.candAC.withUnsafeMutableBufferPointer { acBuf in
+                                weights.withUnsafeBufferPointer { wBuf in
+                                    let tileBase = tileBuf.baseAddress!
+                                    let patchPtr = patchBuf.baseAddress!
+                                    let dcPtr = dcBuf.baseAddress!
+                                    let acPtr = acBuf.baseAddress!
+                                    let wPtr = wBuf.baseAddress!
+
+                                    let channelOrder = (1, 0, 2)
+                                    for step in 0..<3 {
+                                        let c = step == 0 ? channelOrder.0 : (step == 1 ? channelOrder.1 : channelOrder.2)
+                                        let srcChannel = tileBase + c * 4096 + localY0 * 64 + localX0
+                                        if cols == 64 {
+                                            plan.applyDCTAndDCUnchecked(srcChannel, workspace: &scratch.large)
+                                        } else {
+                                            for y in 0..<rows {
+                                                (patchPtr + y * cols).update(from: srcChannel + y * 64, count: cols)
+                                            }
+                                            plan.applyDCTAndDCUnchecked(patchPtr, workspace: &scratch.large)
+                                        }
+
+                                        let dcScaleC = dcScales[c]
+                                        let cDC = dcPtr + c * covered
+                                        if c == 1 {
+                                            var minDC: Int32 = 0
+                                            var maxDC: Int32 = 0
+                                            scratch.large.dc.withUnsafeBufferPointer { largeDCBuf in
+                                                let ldc = largeDCBuf.baseAddress!
+                                                let d0 = Int32((Double(ldc[0]) * dcScaleC).rounded())
+                                                cDC[0] = d0
+                                                minDC = d0
+                                                maxDC = d0
+                                                for i in 1..<covered {
+                                                    let d = Int32((Double(ldc[i]) * dcScaleC).rounded())
+                                                    cDC[i] = d
+                                                    if d < minDC { minDC = d }
+                                                    if d > maxDC { maxDC = d }
+                                                }
+                                            }
+                                            dcHet = Double(maxDC - minDC) * Double(covered)
+                                            let dcBound = dcHet + fixedBaseCost
+                                            if allowTie ? (dcBound > maxCost) : (dcBound >= maxCost) {
+                                                pruned = true
+                                                prunedCost = dcBound
+                                                break
+                                            }
+                                        } else {
+                                            scratch.large.dc.withUnsafeBufferPointer { largeDCBuf in
+                                                let ldc = largeDCBuf.baseAddress!
+                                                for i in 0..<covered {
+                                                    cDC[i] = Int32((Double(ldc[i]) * dcScaleC).rounded())
+                                                }
+                                            }
+                                        }
+
+                                        plan.transposeCoefficientsUnchecked(workspace: &scratch.large)
+
+                                        let wBase = wPtr + c * count
+                                        let cAC = acPtr + c * count
+                                        scratch.large.coefficients.withUnsafeBufferPointer { coeffBuf in
+                                            let coeffPtr = coeffBuf.baseAddress!
+                                            for ny in 0..<llfRows {
+                                                let rowOff = ny * normCols
+                                                for nx in 0..<llfCols {
+                                                    cAC[rowOff + nx] = 0
+                                                }
+                                                for pos in (rowOff + llfCols)..<(rowOff + normCols) {
+                                                    let q = Int32((Double(coeffPtr[pos]) * Double(wBase[pos]) * qScale).rounded())
+                                                    cAC[pos] = q
+                                                    if q != 0 {
+                                                        nonZeroCount += 1
+                                                        acEnergy += abs(Double(q))
+                                                    }
+                                                }
+                                            }
+                                            for pos in (llfRows * normCols)..<count {
+                                                let q = Int32((Double(coeffPtr[pos]) * Double(wBase[pos]) * qScale).rounded())
+                                                cAC[pos] = q
+                                                if q != 0 {
+                                                    nonZeroCount += 1
+                                                    acEnergy += abs(Double(q))
+                                                }
+                                            }
+                                        }
+
+                                        if step < 2 {
+                                            let runningHet = dcHet + Double(nonZeroCount) * spanWeight
+                                            let runningCost = Double(nonZeroCount) * 3.5 + acEnergy * 0.25 + runningHet + fixedBaseCost
+                                            if allowTie ? (runningCost > maxCost) : (runningCost >= maxCost) {
+                                                pruned = true
+                                                prunedCost = runningCost
+                                                break
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if pruned {
+                    return (nil, prunedCost)
+                }
+
+                let heterogeneity = dcHet + Double(nonZeroCount) * spanWeight
+                let cost = Double(nonZeroCount) * 3.5 + acEnergy * 0.25 + heterogeneity + fixedBaseCost
+                if allowTie ? (cost > maxCost) : (cost >= maxCost) {
+                    return (nil, cost)
+                }
+
+                let leafDC = [
+                    Array(scratch.candDC[0..<covered]),
+                    Array(scratch.candDC[covered..<(2 * covered)]),
+                    Array(scratch.candDC[(2 * covered)..<(3 * covered)])
+                ]
+                let leafAC = [
+                    Array(scratch.candAC[0..<count]),
+                    Array(scratch.candAC[count..<(2 * count)]),
+                    Array(scratch.candAC[(2 * count)..<(3 * count)])
+                ]
+                return (
+                    SelectedLeaf(
+                        identifier: id,
+                        x: cx,
+                        y: cy,
+                        cellsX: cellsW,
+                        cellsY: cellsH,
+                        quantisation: regionQF,
+                        dc: leafDC,
+                        ac: leafAC,
+                        cost: cost
+                    ),
+                    cost
+                )
+            }
+
+            func selectBest1x1(cx: Int, cy: Int) -> (leaves: [SelectedLeaf], cost: Double) {
+                let localX0 = (cx - cellX0) * 8
+                let localY0 = (cy - cellY0) * 8
+
+                scratch.tilePlanes.withUnsafeBufferPointer { tileBuf in
+                    scratch.cellPatch3x64.withUnsafeMutableBufferPointer { cellBuf in
+                        let tileBase = tileBuf.baseAddress!
+                        let cellPtr = cellBuf.baseAddress!
+                        for c in 0..<3 {
+                            let src = tileBase + c * 4096 + localY0 * 64 + localX0
+                            let dst = cellPtr + c * 64
+                            for y in 0..<8 {
+                                (dst + y * 8).update(from: src + y * 64, count: 8)
+                            }
+                        }
+                    }
+                }
+
+                var bestID = 0
+                var bestCost = Double.infinity
+                var cached4x4Mask: UInt8 = 0
+                var cached4x8Mask: UInt8 = 0
+
+                @inline(__always)
+                func eval1x1Candidate(_ id: Int, intoBest: Bool, maxCost: Double) -> Double {
+                    let weights = immutableWeights[id]!
+                    let sizePenalty = (id == 0) ? 0.0 : 0.5
+                    let fixedBase = 1.0 + sizePenalty
+                    var acEnergy = 0.0
+                    var nonZeroCount = 0
+
+                    scratch.cellPatch3x64.withUnsafeBufferPointer { cellBuf in
+                        weights.withUnsafeBufferPointer { wBuf in
+                            scratch.cached4x4.withUnsafeMutableBufferPointer { c4x4Buf in
+                                scratch.cached4x8.withUnsafeMutableBufferPointer { c4x8Buf in
+                                    let cellPtr = cellBuf.baseAddress!
+                                    let wPtr = wBuf.baseAddress!
+                                    let c4x4Ptr = c4x4Buf.baseAddress!
+                                    let c4x8Ptr = c4x8Buf.baseAddress!
+
+                                    let isAFV = (id >= 14 && id <= 17)
+                                    let use4x4Cache = (id == 3 || isAFV)
+                                    let use4x8Cache = (id == 12 || isAFV)
+                                    let channelOrder = (1, 0, 2)
+
+                                    for step in 0..<3 {
+                                        let c = step == 0 ? channelOrder.0 : (step == 1 ? channelOrder.1 : channelOrder.2)
+                                        let cBit: UInt8 = 1 << c
+                                        if isAFV {
+                                            if (cached4x4Mask & cBit) == 0 {
+                                                smallPlan.applyUnchecked(
+                                                    cellPtr + c * 64,
+                                                    identifier: 3,
+                                                    workspace: &scratch.small,
+                                                    quad4x4Cache: c4x4Ptr + c * 64,
+                                                    half4x8Cache: nil
+                                                )
+                                                cached4x4Mask |= cBit
+                                            }
+                                            if (cached4x8Mask & cBit) == 0 {
+                                                smallPlan.applyUnchecked(
+                                                    cellPtr + c * 64,
+                                                    identifier: 12,
+                                                    workspace: &scratch.small,
+                                                    quad4x4Cache: nil,
+                                                    half4x8Cache: c4x8Ptr + c * 64
+                                                )
+                                                cached4x8Mask |= cBit
+                                            }
+                                        }
+                                        smallPlan.applyUnchecked(
+                                            cellPtr + c * 64,
+                                            identifier: id,
+                                            workspace: &scratch.small,
+                                            quad4x4Cache: use4x4Cache ? (c4x4Ptr + c * 64) : nil,
+                                            half4x8Cache: use4x8Cache ? (c4x8Ptr + c * 64) : nil
+                                        )
+                                        if id == 3 { cached4x4Mask |= cBit }
+                                        if id == 12 { cached4x8Mask |= cBit }
+
+                                        let dcScaleC = dcScales[c]
+                                        let wBase = wPtr + c * 64
+                                        scratch.small.output.withUnsafeBufferPointer { outBuf in
+                                            let outPtr = outBuf.baseAddress!
+                                            let dcQ = Int32((Double(outPtr[0]) * dcScaleC).rounded())
+                                            if intoBest {
+                                                scratch.bestDC1x1[c] = dcQ
+                                                scratch.bestAC1x1[c * 64] = 0
+                                                for pos in 1..<64 {
+                                                    let q = Int32((Double(outPtr[pos]) * Double(wBase[pos]) * qScale).rounded())
+                                                    scratch.bestAC1x1[c * 64 + pos] = q
+                                                    if q != 0 {
+                                                        nonZeroCount += 1
+                                                        acEnergy += abs(Double(q))
+                                                    }
+                                                }
+                                            } else {
+                                                scratch.candDC[c] = dcQ
+                                                scratch.candAC[c * 64] = 0
+                                                for pos in 1..<64 {
+                                                    let q = Int32((Double(outPtr[pos]) * Double(wBase[pos]) * qScale).rounded())
+                                                    scratch.candAC[c * 64 + pos] = q
+                                                    if q != 0 {
+                                                        nonZeroCount += 1
+                                                        acEnergy += abs(Double(q))
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        if step < 2 {
+                                            let partial = Double(nonZeroCount) * 3.5 + acEnergy * 0.25 + fixedBase
+                                            if partial >= maxCost {
+                                                break
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return Double(nonZeroCount) * 3.5 + acEnergy * 0.25 + fixedBase
+                }
+
+                bestCost = eval1x1Candidate(0, intoBest: true, maxCost: .infinity)
+                if bestCost > 6.5 {
+                    for id in [1, 2, 3, 12, 13, 14, 15, 16, 17] {
+                        let candCost = eval1x1Candidate(id, intoBest: false, maxCost: bestCost - 0.5)
+                        if candCost + 0.5 < bestCost {
+                            bestCost = candCost
+                            bestID = id
+                            scratch.bestDC1x1[0] = scratch.candDC[0]
+                            scratch.bestDC1x1[1] = scratch.candDC[1]
+                            scratch.bestDC1x1[2] = scratch.candDC[2]
+                            scratch.bestAC1x1.withUnsafeMutableBufferPointer { dst in
+                                scratch.candAC.withUnsafeBufferPointer { src in
+                                    dst.baseAddress!.update(from: src.baseAddress!, count: 192)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                let leaf = SelectedLeaf(
+                    identifier: bestID,
                     x: cx,
                     y: cy,
-                    cellsX: cellsW,
-                    cellsY: cellsH,
+                    cellsX: 1,
+                    cellsY: 1,
                     quantisation: regionQF,
-                    dc: leafDC,
-                    ac: leafAC,
-                    cost: cost
+                    dc: [[scratch.bestDC1x1[0]], [scratch.bestDC1x1[1]], [scratch.bestDC1x1[2]]],
+                    ac: [
+                        Array(scratch.bestAC1x1[0..<64]),
+                        Array(scratch.bestAC1x1[64..<128]),
+                        Array(scratch.bestAC1x1[128..<192])
+                    ],
+                    cost: bestCost
                 )
+                return ([leaf], bestCost)
             }
 
             func searchSubregion(cx: Int, cy: Int, w: Int, h: Int) throws -> (leaves: [SelectedLeaf], cost: Double) {
                 try budget.checkpoint()
                 if w == 1 && h == 1 {
-                    var best = try evaluateSingleTransform(id: 0, cx: cx, cy: cy, cellsW: 1, cellsH: 1)
-                    if best.cost > 6.5 {
-                        for id in [1, 2, 3, 12, 13, 14, 15, 16, 17] {
-                            let cand = try evaluateSingleTransform(id: id, cx: cx, cy: cy, cellsW: 1, cellsH: 1)
-                            if cand.cost + 0.5 < best.cost {
-                                best = cand
-                            }
-                        }
-                    }
-                    return ([best], best.cost)
+                    return selectBest1x1(cx: cx, cy: cy)
                 }
 
-                // Direct single-transform candidate if supported for (w, h)
                 var bestLeaves: [SelectedLeaf]? = nil
                 var bestCost = Double.infinity
 
-                if let directID = directStrategyID(cellsW: w, cellsH: h) {
-                    let direct = try evaluateSingleTransform(id: directID, cx: cx, cy: cy, cellsW: w, cellsH: h)
-                    bestLeaves = [direct]
-                    bestCost = direct.cost
-                    // Fast exit for completely smooth regions (all AC == 0 and uniform DC)
-                    if direct.cost <= 1.25 {
-                        return ([direct], direct.cost)
-                    }
-                }
-
                 // Quad/dyadic split into smaller transforms
                 if w >= 2 && h >= 2 && w == h && (w == 8 || w == 4 || w == 2) {
+                    let lx0 = (cx - cellX0) * 8
+                    let ly0 = (cy - cellY0) * 8
+                    let lx1 = lx0 + w * 8 - 1
+                    let ly1 = ly0 + h * 8 - 1
+                    let yCorner00 = scratch.tilePlanes[4096 + ly0 * 64 + lx0]
+                    let yCorner11 = scratch.tilePlanes[4096 + ly1 * 64 + lx1]
+                    if yCorner00 == yCorner11, let directID = directStrategyID(cellsW: w, cellsH: h) {
+                        let (directOpt, directCost) = evaluateLargeTransform(id: directID, cx: cx, cy: cy, cellsW: w, cellsH: h)
+                        let direct = directOpt!
+                        bestLeaves = [direct]
+                        bestCost = directCost
+                        if directCost <= 1.25 {
+                            return ([direct], directCost)
+                        }
+                    }
+
                     let half = w / 2
                     let q00 = try searchSubregion(cx: cx, cy: cy, w: half, h: half)
                     let q10 = try searchSubregion(cx: cx + half, cy: cy, w: half, h: half)
@@ -316,26 +591,53 @@ package enum VarDCTHierarchicalAnalysis {
                         bestLeaves = q00.leaves + q10.leaves + q01.leaves + q11.leaves
                     }
 
+                    if bestLeaves == nil || bestCost == splitCost, let directID = directStrategyID(cellsW: w, cellsH: h), yCorner00 != yCorner11 {
+                        let (directOpt, directCost) = evaluateLargeTransform(
+                            id: directID,
+                            cx: cx,
+                            cy: cy,
+                            cellsW: w,
+                            cellsH: h,
+                            maxCost: bestCost,
+                            allowTie: true
+                        )
+                        if let direct = directOpt {
+                            bestCost = directCost
+                            bestLeaves = [direct]
+                        }
+                    }
+
                     // Also check rectangular halves (e.g. 2x1, 1x2, 4x2, 2x4, 8x4, 4x8)
                     if let hID = directStrategyID(cellsW: w, cellsH: half) {
-                        let top = try evaluateSingleTransform(id: hID, cx: cx, cy: cy, cellsW: w, cellsH: half)
-                        let bot = try evaluateSingleTransform(id: hID, cx: cx, cy: cy + half, cellsW: w, cellsH: half)
-                        let hCost = top.cost + bot.cost
-                        if hCost < bestCost {
-                            bestCost = hCost
-                            bestLeaves = [top, bot]
+                        let (topOpt, topCost) = evaluateLargeTransform(id: hID, cx: cx, cy: cy, cellsW: w, cellsH: half, maxCost: bestCost)
+                        if let top = topOpt {
+                            let (botOpt, botCost) = evaluateLargeTransform(id: hID, cx: cx, cy: cy + half, cellsW: w, cellsH: half, maxCost: bestCost - topCost)
+                            if let bot = botOpt {
+                                bestCost = topCost + botCost
+                                bestLeaves = [top, bot]
+                            }
                         }
                     }
                     if let vID = directStrategyID(cellsW: half, cellsH: h) {
-                        let left = try evaluateSingleTransform(id: vID, cx: cx, cy: cy, cellsW: half, cellsH: h)
-                        let right = try evaluateSingleTransform(id: vID, cx: cx + half, cy: cy, cellsW: half, cellsH: h)
-                        let vCost = left.cost + right.cost
-                        if vCost < bestCost {
-                            bestCost = vCost
-                            bestLeaves = [left, right]
+                        let (leftOpt, leftCost) = evaluateLargeTransform(id: vID, cx: cx, cy: cy, cellsW: half, cellsH: h, maxCost: bestCost)
+                        if let left = leftOpt {
+                            let (rightOpt, rightCost) = evaluateLargeTransform(id: vID, cx: cx + half, cy: cy, cellsW: half, cellsH: h, maxCost: bestCost - leftCost)
+                            if let right = rightOpt {
+                                bestCost = leftCost + rightCost
+                                bestLeaves = [left, right]
+                            }
                         }
                     }
                 } else {
+                    if let directID = directStrategyID(cellsW: w, cellsH: h) {
+                        let (directOpt, directCost) = evaluateLargeTransform(id: directID, cx: cx, cy: cy, cellsW: w, cellsH: h)
+                        let direct = directOpt!
+                        bestLeaves = [direct]
+                        bestCost = directCost
+                        if directCost <= 1.25 {
+                            return ([direct], directCost)
+                        }
+                    }
                     // Non-power-of-two partial edge region: greedily tile in raster order
                     var covered = [Bool](repeating: false, count: w * h)
                     var leaves: [SelectedLeaf] = []
@@ -362,7 +664,8 @@ package enum VarDCTHierarchicalAnalysis {
                             if subW == subH {
                                 sub = try searchSubregion(cx: cx + lx, cy: cy + ly, w: subW, h: subH)
                             } else if let rectID = directStrategyID(cellsW: subW, cellsH: subH) {
-                                let rectLeaf = try evaluateSingleTransform(id: rectID, cx: cx + lx, cy: cy + ly, cellsW: subW, cellsH: subH)
+                                let (rectOpt, rectCost) = evaluateLargeTransform(id: rectID, cx: cx + lx, cy: cy + ly, cellsW: subW, cellsH: subH)
+                                let rectLeaf = rectOpt!
                                 var singleLeaves: [SelectedLeaf] = []
                                 var singleCost = 0.0
                                 for sy in 0..<subH {
@@ -372,8 +675,8 @@ package enum VarDCTHierarchicalAnalysis {
                                         singleCost += s.cost
                                     }
                                 }
-                                if rectLeaf.cost <= singleCost {
-                                    sub = ([rectLeaf], rectLeaf.cost)
+                                if rectCost <= singleCost {
+                                    sub = ([rectLeaf], rectCost)
                                 } else {
                                     sub = (singleLeaves, singleCost)
                                 }
@@ -527,13 +830,22 @@ package enum VarDCTHierarchicalAnalysis {
                     )
                 )
                 for c in 0..<3 {
-                    for ly in 0..<leaf.cellsY {
-                        for lx in 0..<leaf.cellsX {
-                            dc[c][(leaf.y + ly) * bx + (leaf.x + lx)] = leaf.dc[c][ly * leaf.cellsX + lx]
+                    dc[c].withUnsafeMutableBufferPointer { dcBuf in
+                        leaf.dc[c].withUnsafeBufferPointer { ldcBuf in
+                            let dcPtr = dcBuf.baseAddress!
+                            let ldcPtr = ldcBuf.baseAddress!
+                            for ly in 0..<leaf.cellsY {
+                                (dcPtr + (leaf.y + ly) * bx + leaf.x).update(
+                                    from: ldcPtr + ly * leaf.cellsX,
+                                    count: leaf.cellsX
+                                )
+                            }
                         }
                     }
-                    for i in 0..<count {
-                        ac[c][currentOffset + i] = leaf.ac[c][i]
+                    ac[c].withUnsafeMutableBufferPointer { acBuf in
+                        leaf.ac[c].withUnsafeBufferPointer { lacBuf in
+                            (acBuf.baseAddress! + currentOffset).update(from: lacBuf.baseAddress!, count: count)
+                        }
                     }
                 }
                 currentOffset += count

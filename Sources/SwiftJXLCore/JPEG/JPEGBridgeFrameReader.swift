@@ -543,192 +543,346 @@ package enum JPEGBridgeFrameReader {
         }
 
         // --- 4. HfPass[0..<numGroups] (ISO/IEC 18181-1 §9.3.4) ---
-        var coefficients: [[Int32]] = []
-        coefficients.reserveCapacity(numComponents)
-        for ci in 0..<numComponents {
-            let samp = componentSampling[ci]
-            coefficients.append([Int32](repeating: 0, count: samp.blocksWide * samp.blocksHigh * 64))
-        }
+        var coeff0 = [Int32](
+            repeating: 0,
+            count: componentSampling[0].blocksWide * componentSampling[0].blocksHigh * 64
+        )
+        var coeff1 = numComponents > 1
+            ? [Int32](repeating: 0, count: componentSampling[1].blocksWide * componentSampling[1].blocksHigh * 64)
+            : []
+        var coeff2 = numComponents > 2
+            ? [Int32](repeating: 0, count: componentSampling[2].blocksWide * componentSampling[2].blocksHigh * 64)
+            : []
 
-        var blockScratch = [Int32](repeating: 0, count: 64)
-        var lumaScratch = [Int32](repeating: 0, count: 64)
         let hfPassPresetBits = Self.ceilLog2(numHfPresets)
+        let tOrd0 = passOrders[0][0].map { (($0 & 7) &<< 3) | ($0 &>> 3) }
+        let tOrd1 = passOrders[0][1].map { (($0 & 7) &<< 3) | ($0 &>> 3) }
+        let tOrd2 = passOrders[0][2].map { (($0 & 7) &<< 3) | ($0 &>> 3) }
+        guard tOrd0.count == 64, tOrd1.count == 64, tOrd2.count == 64 else {
+            throw JPEGEntropyError.malformed
+        }
+        let nbClusters = hfBlockCtx.numBlockClusters
+        let hs0 = chHShift[0], hs1 = chHShift[1], hs2 = chHShift[2]
+        let vs0 = chVShift[0], vs1 = chVShift[1], vs2 = chVShift[2]
+        let bw0 = chBlocksWide[0], bw1 = chBlocksWide[1], bw2 = chBlocksWide[2]
+        let comp0 = jxlToJpegComp[0], comp1 = jxlToJpegComp[1], comp2 = jxlToJpegComp[2]
+        let is444 = subsampling.is444
+        let isNoneColor = (frame.colorTransform == .none)
+        let qDC0: Int32 = comp0.map { quantisation[$0][0] } ?? 1
+        let qDC1: Int32 = comp1.map { quantisation[$0][0] } ?? 1
+        let qDC2: Int32 = comp2.map { quantisation[$0][0] } ?? 1
+        let invColorFactor: Float = 1.0 / Float(cflColorFactor)
+        let acFlatSlots = acCodebook.prebuiltANSDecoder?.flatSlots ?? []
 
-        for groupIdx in 0..<numGroups {
-            try policy.checkpoint()
-            let gx = groupIdx % groupsX
-            let gy = groupIdx / groupsX
-            let bx0 = gx * groupBlocks
-            let by0 = gy * groupBlocks
-            let gw = min(groupBlocks, fullBlocksX - bx0)
-            let gh = min(groupBlocks, fullBlocksY - by0)
+        try coeff0.withUnsafeMutableBufferPointer { coeff0Buf in
+            try coeff1.withUnsafeMutableBufferPointer { coeff1Buf in
+                try coeff2.withUnsafeMutableBufferPointer { coeff2Buf in
+                    try dcPlanes[0].withUnsafeBufferPointer { dc0Buf in
+                        try dcPlanes[1].withUnsafeBufferPointer { dc1Buf in
+                            try dcPlanes[2].withUnsafeBufferPointer { dc2Buf in
+                                try metaPlanes[0].pixels.withUnsafeBufferPointer { meta0Buf in
+                                    try metaPlanes[1].pixels.withUnsafeBufferPointer { meta1Buf in
+                                        try VarDCTEntropy.coeffFreqContext.withUnsafeBufferPointer { freqBuf in
+                                            try VarDCTEntropy.coeffNumNonzeroContext.withUnsafeBufferPointer { nzBuf in
+                                                try acEntropyHeader.contextMap.map.withUnsafeBufferPointer { ctxMapBuf in
+                                                    try acEntropyHeader.uintConfigs.withUnsafeBufferPointer { uintCfgBuf in
+                                                        try acFlatSlots.withUnsafeBufferPointer { flatSlotsBuf in
+                                                            try acCodebook.prefixDescriptors.withUnsafeBufferPointer { prefixDescBuf in
+                                                                try acCodebook.flatPrefixLUT.withUnsafeBufferPointer { flatPrefixBuf in
+                                                                    try tOrd0.withUnsafeBufferPointer { tOrd0Buf in
+                                                                        try tOrd1.withUnsafeBufferPointer { tOrd1Buf in
+                                                                            try tOrd2.withUnsafeBufferPointer { tOrd2Buf in
+                                                                                let c0Base = coeff0Buf.baseAddress
+                                                                                let c1Base = coeff1Buf.baseAddress
+                                                                                let c2Base = coeff2Buf.baseAddress
+                                                                                let coeffForComp = { (ci: Int) -> UnsafeMutablePointer<Int32>? in
+                                                                                    ci == 0 ? c0Base : (ci == 1 ? c1Base : c2Base)
+                                                                                }
+                                                                                let ch0CoeffPtr = comp0.flatMap(coeffForComp)
+                                                                                let ch1CoeffPtr = comp1.flatMap(coeffForComp)
+                                                                                let ch2CoeffPtr = comp2.flatMap(coeffForComp)
+                                                                                let dc0Ptr = dc0Buf.baseAddress!
+                                                                                let dc1Ptr = dc1Buf.baseAddress!
+                                                                                let dc2Ptr = dc2Buf.baseAddress!
+                                                                                let meta0Ptr = meta0Buf.baseAddress!
+                                                                                let meta1Ptr = meta1Buf.baseAddress!
+                                                                                let freqLut = freqBuf.baseAddress!
+                                                                                let nzLut = nzBuf.baseAddress!
+                                                                                let ctxMapPtr = ctxMapBuf.baseAddress!
+                                                                                let uintCfgPtr = uintCfgBuf.baseAddress!
+                                                                                let flatSlotsPtr = flatSlotsBuf.baseAddress
+                                                                                let prefixDescPtr = prefixDescBuf.baseAddress
+                                                                                let flatPrefixPtr = flatPrefixBuf.baseAddress
+                                                                                let tOrd0Ptr = tOrd0Buf.baseAddress!
+                                                                                let tOrd1Ptr = tOrd1Buf.baseAddress!
+                                                                                let tOrd2Ptr = tOrd2Buf.baseAddress!
 
-            var passReader = singleSection ? sec0 : try makeSectionReader(3 + groupIdx)
-            let hfPreset: Int
-            if hfPassPresetBits > 0 {
-                hfPreset = Int(try passReader.read(bits: hfPassPresetBits))
-            } else {
-                hfPreset = 0
-            }
-            guard hfPreset >= 0, hfPreset < numHfPresets else {
-                throw JPEGEntropyError.malformed
-            }
+                                                                                for groupIdx in 0..<numGroups {
+                                                                                    try policy.checkpoint()
+                                                                                    let gx = groupIdx % groupsX
+                                                                                    let gy = groupIdx / groupsX
+                                                                                    let bx0 = gx * groupBlocks
+                                                                                    let by0 = gy * groupBlocks
+                                                                                    let gw = min(groupBlocks, fullBlocksX - bx0)
+                                                                                    let gh = min(groupBlocks, fullBlocksY - by0)
 
-            let presetCtxOffset = hfPreset * VarDCTEntropy.contextsPerBlockCluster * hfBlockCtx.numBlockClusters
-            var acStream = TokenStreamReader(header: acEntropyHeader, codebook: acCodebook)
+                                                                                    let sw0 = (gw + (1 << hs0) - 1) >> hs0
+                                                                                    let sh0 = (gh + (1 << vs0) - 1) >> vs0
+                                                                                    let sw1 = (gw + (1 << hs1) - 1) >> hs1
+                                                                                    let sh1 = (gh + (1 << vs1) - 1) >> vs1
+                                                                                    let sw2 = (gw + (1 << hs2) - 1) >> hs2
+                                                                                    let sh2 = (gh + (1 << vs2) - 1) >> vs2
+                                                                                    var nzGrid0 = [Int32](repeating: 0, count: sw0 * sh0)
+                                                                                    var nzGrid1 = [Int32](repeating: 0, count: sw1 * sh1)
+                                                                                    var nzGrid2 = [Int32](repeating: 0, count: sw2 * sh2)
 
-            var nzGrids: [[Int32]] = []
-            var subWidths: [Int] = []
-            for c in 0..<3 {
-                let hs = chHShift[c]
-                let vs = chVShift[c]
-                let sw = (gw + (1 << hs) - 1) >> hs
-                let sh = (gh + (1 << vs) - 1) >> vs
-                subWidths.append(sw)
-                nzGrids.append([Int32](repeating: 0, count: sw * sh))
-            }
+                                                                                    try nzGrid0.withUnsafeMutableBufferPointer { nz0Buf in
+                                                                                        try nzGrid1.withUnsafeMutableBufferPointer { nz1Buf in
+                                                                                            try nzGrid2.withUnsafeMutableBufferPointer { nz2Buf in
+                                                                                                var passReader = singleSection ? sec0 : try makeSectionReader(3 + groupIdx)
+                                                                                                let hfPreset: Int
+                                                                                                if hfPassPresetBits > 0 {
+                                                                                                    hfPreset = Int(try passReader.read(bits: hfPassPresetBits))
+                                                                                                } else {
+                                                                                                    hfPreset = 0
+                                                                                                }
+                                                                                                guard hfPreset >= 0, hfPreset < numHfPresets else {
+                                                                                                    throw JPEGEntropyError.malformed
+                                                                                                }
 
-            for ly in 0..<gh {
-                if (ly & 7) == 0 { try policy.checkpoint() }
-                let by = by0 + ly
-                for lx in 0..<gw {
-                    let bx = bx0 + lx
-                    for c in [1, 0, 2] {
-                        let hs = chHShift[c]
-                        let vs = chVShift[c]
-                        if (bx & ((1 << hs) - 1)) != 0 || (by & ((1 << vs) - 1)) != 0 {
-                            continue
-                        }
-                        let cbx = bx >> hs
-                        let cby = by >> vs
-                        let clx = lx >> hs
-                        let cly = ly >> vs
-                        let sw = subWidths[c]
-                        let predictedNZ = nzGrids[c].withUnsafeBufferPointer { ptr in
-                            VarDCTEntropy.predictedNonZeros(x: clx, y: cly, width: sw, grid: ptr)
-                        }
+                                                                                                let presetCtxOffset = hfPreset * VarDCTEntropy.contextsPerBlockCluster * nbClusters
+                                                                                                var acStream = TokenStreamReader(header: acEntropyHeader, codebook: acCodebook)
+                                                                                                let noLZ77 = !acEntropyHeader.lz77.enabled
 
-                        let dcX = dcPlanes[0][(by >> chVShift[0]) * chBlocksWide[0] + (bx >> chHShift[0])]
-                        let dcY = dcPlanes[1][(by >> chVShift[1]) * chBlocksWide[1] + (bx >> chHShift[1])]
-                        let dcB = dcPlanes[2][(by >> chVShift[2]) * chBlocksWide[2] + (bx >> chHShift[2])]
+                                                                                                let nz0Ptr = nz0Buf.baseAddress!
+                                                                                                let nz1Ptr = nz1Buf.baseAddress!
+                                                                                                let nz2Ptr = nz2Buf.baseAddress!
+                                                                                                let nz0UBuf = UnsafeBufferPointer(nz0Buf)
+                                                                                                let nz1UBuf = UnsafeBufferPointer(nz1Buf)
+                                                                                                let nz2UBuf = UnsafeBufferPointer(nz2Buf)
 
-                        let blockCluster = hfBlockCtx.cluster(
-                            channel: c,
-                            orderBucket: 0,
-                            quant: 1,
-                            dcX: dcX,
-                            dcY: dcY,
-                            dcB: dcB
-                        )
-                        let nzCtx = presetCtxOffset + VarDCTEntropy.nonZeroContext(
-                            predicted: predictedNZ,
-                            blockContext: blockCluster,
-                            numBlockClusters: hfBlockCtx.numBlockClusters
-                        )
-                        let nonZeros = Int(try acStream.readToken(context: nzCtx, from: &passReader))
-                        guard nonZeros >= 0, nonZeros <= 63 else {
-                            throw JPEGEntropyError.malformed
-                        }
-                        nzGrids[c][cly * sw + clx] = Int32(nonZeros)
+                                                                                                for ly in 0..<gh {
+                                                                                                    if (ly & 7) == 0 { try policy.checkpoint() }
+                                                                                                    let by = by0 + ly
+                                                                                                    for lx in 0..<gw {
+                                                                                                        let bx = bx0 + lx
+                                                                                                        let tileIdx = is444 ? ((by >> 3) * tilesX + (bx >> 3)) : 0
+                                                                                                        let dcX = dc0Ptr[(by >> vs0) * bw0 + (bx >> hs0)]
+                                                                                                        let dcY = dc1Ptr[(by >> vs1) * bw1 + (bx >> hs1)]
+                                                                                                        let dcB = dc2Ptr[(by >> vs2) * bw2 + (bx >> hs2)]
 
-                        let blockIndex = cby * chBlocksWide[c] + cbx
-                        var dcVal = dcPlanes[c][blockIndex]
-                        if c != 1 && subsampling.is444 {
-                            let lfFactor = (c == 0) ? cflYtoXLF : cflYtoBLF
-                            let baseCorr = (c == 0) ? cflBaseX : cflBaseB
-                            if lfFactor != 0 || baseCorr != 0 {
-                                let scale = baseCorr + Float(lfFactor) / Float(cflColorFactor)
-                                let dcCorr = Int32((Float(dcY) * scale).rounded(.toNearestOrEven))
-                                let (corrDC, corrOverflow) = dcVal.addingReportingOverflow(dcCorr)
-                                guard !corrOverflow else { throw JPEGEntropyError.malformed }
-                                dcVal = corrDC
-                            }
-                        }
-                        if frame.colorTransform == .none, let ci = jxlToJpegComp[c] {
-                            let qDC = quantisation[ci][0]
-                            guard qDC > 0 else { throw JPEGEntropyError.malformed }
-                            let dcOffset = Int32(1024) / qDC
-                            let (unshifted, overflow) = dcVal.subtractingReportingOverflow(dcOffset)
-                            guard !overflow else { throw JPEGEntropyError.malformed }
-                            dcVal = unshifted
-                        }
+                                                                                                        for cStep in 0..<3 {
+                                                                                                            let c = cStep == 0 ? 1 : (cStep == 1 ? 0 : 2)
+                                                                                                            let hs = c == 0 ? hs0 : (c == 1 ? hs1 : hs2)
+                                                                                                            let vs = c == 0 ? vs0 : (c == 1 ? vs1 : vs2)
+                                                                                                            if (bx & ((1 << hs) - 1)) != 0 || (by & ((1 << vs) - 1)) != 0 {
+                                                                                                                continue
+                                                                                                            }
+                                                                                                            let cbx = bx >> hs
+                                                                                                            let cby = by >> vs
+                                                                                                            let clx = lx >> hs
+                                                                                                            let cly = ly >> vs
+                                                                                                            let sw = c == 0 ? sw0 : (c == 1 ? sw1 : sw2)
+                                                                                                            let nzUBuf = c == 0 ? nz0UBuf : (c == 1 ? nz1UBuf : nz2UBuf)
+                                                                                                            let nzPtr = c == 0 ? nz0Ptr : (c == 1 ? nz1Ptr : nz2Ptr)
+                                                                                                            let predictedNZ = VarDCTEntropy.predictedNonZeros(x: clx, y: cly, width: sw, grid: nzUBuf)
 
-                        for k in 1..<64 {
-                            blockScratch[k] = 0
-                        }
-                        blockScratch[0] = dcVal
+                                                                                                            let blockCluster = hfBlockCtx.cluster(
+                                                                                                                channel: c,
+                                                                                                                orderBucket: 0,
+                                                                                                                quant: 1,
+                                                                                                                dcX: dcX,
+                                                                                                                dcY: dcY,
+                                                                                                                dcB: dcB
+                                                                                                            )
+                                                                                                            let nzCtx = presetCtxOffset &+ VarDCTEntropy.nonZeroContext(
+                                                                                                                predicted: predictedNZ,
+                                                                                                                blockContext: blockCluster,
+                                                                                                                numBlockClusters: nbClusters
+                                                                                                            )
+                                                                                                            let nonZeros: Int
+                                                                                                            if noLZ77 {
+                                                                                                                nonZeros = Int(try acStream.readTokenNoLZ77(
+                                                                                                                    context: nzCtx,
+                                                                                                                    from: &passReader,
+                                                                                                                    ctxMapPtr: ctxMapPtr,
+                                                                                                                    uintConfigsPtr: uintCfgPtr,
+                                                                                                                    flatSlotsPtr: flatSlotsPtr,
+                                                                                                                    prefixDescPtr: prefixDescPtr,
+                                                                                                                    flatPrefixLUTPtr: flatPrefixPtr
+                                                                                                                ))
+                                                                                                            } else {
+                                                                                                                nonZeros = Int(try acStream.readToken(context: nzCtx, from: &passReader))
+                                                                                                            }
+                                                                                                            guard nonZeros >= 0, nonZeros <= 63 else {
+                                                                                                                throw JPEGEntropyError.malformed
+                                                                                                            }
+                                                                                                            nzPtr[cly &* sw &+ clx] = Int32(nonZeros)
 
-                        if nonZeros > 0 {
-                            let order = passOrders[0][c]
-                            guard order.count == 64 else {
-                                throw JPEGEntropyError.malformed
-                            }
-                            var remainingNZ = nonZeros
-                            var prev = (nonZeros > 4) ? 0 : 1
-                            for k in 1..<64 {
-                                if remainingNZ == 0 { break }
-                                let zCtx = presetCtxOffset + VarDCTEntropy.zeroDensityContext(
-                                    nonZerosLeft: remainingNZ,
-                                    k: k,
-                                    log2CoveredBlocks: 0,
-                                    prev: prev,
-                                    blockContext: blockCluster,
-                                    numBlockClusters: hfBlockCtx.numBlockClusters
-                                )
-                                let rawTok = try acStream.readToken(context: zCtx, from: &passReader)
-                                let coeff = ZigZag.unpack(rawTok)
-                                blockScratch[order[k]] = coeff
-                                if coeff != 0 {
-                                    remainingNZ -= 1
-                                    prev = 1
-                                } else {
-                                    prev = 0
-                                }
-                            }
-                            guard remainingNZ == 0 else {
-                                throw JPEGEntropyError.malformed
-                            }
-                        }
+                                                                                                            let bw = c == 0 ? bw0 : (c == 1 ? bw1 : bw2)
+                                                                                                            let blockIndex = cby &* bw &+ cbx
+                                                                                                            var dcVal = c == 0 ? dc0Ptr[blockIndex] : (c == 1 ? dc1Ptr[blockIndex] : dc2Ptr[blockIndex])
+                                                                                                            if c != 1 && is444 {
+                                                                                                                let lfFactor = (c == 0) ? cflYtoXLF : cflYtoBLF
+                                                                                                                let baseCorr = (c == 0) ? cflBaseX : cflBaseB
+                                                                                                                if lfFactor != 0 || baseCorr != 0 {
+                                                                                                                    let scale = baseCorr + Float(lfFactor) * invColorFactor
+                                                                                                                    let dcCorr = Int32((Float(dcY) * scale).rounded(.toNearestOrEven))
+                                                                                                                    let (corrDC, corrOverflow) = dcVal.addingReportingOverflow(dcCorr)
+                                                                                                                    guard !corrOverflow else { throw JPEGEntropyError.malformed }
+                                                                                                                    dcVal = corrDC
+                                                                                                                }
+                                                                                                            }
+                                                                                                            let chCoeffPtr = c == 0 ? ch0CoeffPtr : (c == 1 ? ch1CoeffPtr : ch2CoeffPtr)
+                                                                                                            if isNoneColor, chCoeffPtr != nil {
+                                                                                                                let qDC = c == 0 ? qDC0 : (c == 1 ? qDC1 : qDC2)
+                                                                                                                guard qDC > 0 else { throw JPEGEntropyError.malformed }
+                                                                                                                let dcOffset = Int32(1024) / qDC
+                                                                                                                let (unshifted, overflow) = dcVal.subtractingReportingOverflow(dcOffset)
+                                                                                                                guard !overflow else { throw JPEGEntropyError.malformed }
+                                                                                                                dcVal = unshifted
+                                                                                                            }
 
-                        if c == 1 {
-                            for k in 0..<64 {
-                                lumaScratch[k] = blockScratch[k]
-                            }
-                        } else if subsampling.is444 {
-                            let tileIdx = (by / 8) * tilesX + (bx / 8)
-                            let mapVal = (c == 0)
-                                ? metaPlanes[0].pixels[tileIdx]
-                                : metaPlanes[1].pixels[tileIdx]
-                            let baseCorr = (c == 0) ? cflBaseX : cflBaseB
-                            if mapVal != 0 || baseCorr != 0 {
-                                let scale = baseCorr + Float(mapVal) / Float(cflColorFactor)
-                                for k in 1..<64 {
-                                    let corr = Int32((Float(lumaScratch[k]) * scale).rounded(.toNearestOrEven))
-                                    let (summed, overflow) = blockScratch[k].addingReportingOverflow(corr)
-                                    guard !overflow else { throw JPEGEntropyError.malformed }
-                                    blockScratch[k] = summed
-                                }
-                            }
-                        }
+                                                                                                            let base = blockIndex &<< 6
+                                                                                                            if let coeffBase = chCoeffPtr {
+                                                                                                                let dstPtr = coeffBase + base
+                                                                                                                dstPtr[0] = dcVal
+                                                                                                                if nonZeros > 0 {
+                                                                                                                    let tOrdPtr = c == 0 ? tOrd0Ptr : (c == 1 ? tOrd1Ptr : tOrd2Ptr)
+                                                                                                                    var remainingNZ = nonZeros
+                                                                                                                    var prev = (nonZeros > 4) ? 0 : 1
+                                                                                                                    let zCtxOffset = presetCtxOffset &+ nbClusters &* VarDCTEntropy.nonZeroBuckets &+ blockCluster
+                                                                                                                    var normNZ = min((remainingNZ &+ 1) >> 1, 31)
+                                                                                                                    var nzDensityBase = nzLut[normNZ]
+                                                                                                                    if noLZ77 {
+                                                                                                                        for k in 1..<64 {
+                                                                                                                            if remainingNZ == 0 { break }
+                                                                                                                            let densityCtx = (nzDensityBase &+ freqLut[k]) &* 2 &+ prev
+                                                                                                                            let zCtx = zCtxOffset &+ densityCtx &* nbClusters
+                                                                                                                            let rawTok = try acStream.readTokenNoLZ77(
+                                                                                                                                context: zCtx,
+                                                                                                                                from: &passReader,
+                                                                                                                                ctxMapPtr: ctxMapPtr,
+                                                                                                                                uintConfigsPtr: uintCfgPtr,
+                                                                                                                                flatSlotsPtr: flatSlotsPtr,
+                                                                                                                                prefixDescPtr: prefixDescPtr,
+                                                                                                                                flatPrefixLUTPtr: flatPrefixPtr
+                                                                                                                            )
+                                                                                                                            if rawTok != 0 {
+                                                                                                                                dstPtr[tOrdPtr[k]] = ZigZag.unpack(rawTok)
+                                                                                                                                remainingNZ &-= 1
+                                                                                                                                prev = 1
+                                                                                                                                normNZ = min((remainingNZ &+ 1) >> 1, 31)
+                                                                                                                                nzDensityBase = nzLut[normNZ]
+                                                                                                                            } else {
+                                                                                                                                prev = 0
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    } else {
+                                                                                                                        for k in 1..<64 {
+                                                                                                                            if remainingNZ == 0 { break }
+                                                                                                                            let densityCtx = (nzDensityBase &+ freqLut[k]) &* 2 &+ prev
+                                                                                                                            let zCtx = zCtxOffset &+ densityCtx &* nbClusters
+                                                                                                                            let rawTok = try acStream.readToken(context: zCtx, from: &passReader)
+                                                                                                                            if rawTok != 0 {
+                                                                                                                                dstPtr[tOrdPtr[k]] = ZigZag.unpack(rawTok)
+                                                                                                                                remainingNZ &-= 1
+                                                                                                                                prev = 1
+                                                                                                                                normNZ = min((remainingNZ &+ 1) >> 1, 31)
+                                                                                                                                nzDensityBase = nzLut[normNZ]
+                                                                                                                            } else {
+                                                                                                                                prev = 0
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    guard remainingNZ == 0 else {
+                                                                                                                        throw JPEGEntropyError.malformed
+                                                                                                                    }
+                                                                                                                }
 
-                        if let ci = jxlToJpegComp[c] {
-                            let base = blockIndex * 64
-                            for y in 0..<8 {
-                                for x in 0..<8 {
-                                    coefficients[ci][base + x * 8 + y] = blockScratch[y * 8 + x]
+                                                                                                                if c != 1 && is444, let lumaBase = ch1CoeffPtr {
+                                                                                                                    let mapVal = (c == 0) ? meta0Ptr[tileIdx] : meta1Ptr[tileIdx]
+                                                                                                                    let baseCorr = (c == 0) ? cflBaseX : cflBaseB
+                                                                                                                    if mapVal != 0 || baseCorr != 0 {
+                                                                                                                        let scale = baseCorr + Float(mapVal) * invColorFactor
+                                                                                                                        let lumaPtr = lumaBase + base
+                                                                                                                        for k in 1..<64 {
+                                                                                                                            let lVal = lumaPtr[k]
+                                                                                                                            if lVal == 0 { continue }
+                                                                                                                            let corr = Int32((Float(lVal) * scale).rounded(.toNearestOrEven))
+                                                                                                                            let (summed, overflow) = dstPtr[k].addingReportingOverflow(corr)
+                                                                                                                            guard !overflow else { throw JPEGEntropyError.malformed }
+                                                                                                                            dstPtr[k] = summed
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            } else if nonZeros > 0 {
+                                                                                                                var remainingNZ = nonZeros
+                                                                                                                var prev = (nonZeros > 4) ? 0 : 1
+                                                                                                                let zCtxOffset = presetCtxOffset &+ nbClusters &* VarDCTEntropy.nonZeroBuckets &+ blockCluster
+                                                                                                                var normNZ = min((remainingNZ &+ 1) >> 1, 31)
+                                                                                                                var nzDensityBase = nzLut[normNZ]
+                                                                                                                for k in 1..<64 {
+                                                                                                                    if remainingNZ == 0 { break }
+                                                                                                                    let densityCtx = (nzDensityBase &+ freqLut[k]) &* 2 &+ prev
+                                                                                                                    let zCtx = zCtxOffset &+ densityCtx &* nbClusters
+                                                                                                                    let rawTok = noLZ77
+                                                                                                                        ? try acStream.readTokenNoLZ77(
+                                                                                                                            context: zCtx,
+                                                                                                                            from: &passReader,
+                                                                                                                            ctxMapPtr: ctxMapPtr,
+                                                                                                                            uintConfigsPtr: uintCfgPtr,
+                                                                                                                            flatSlotsPtr: flatSlotsPtr,
+                                                                                                                            prefixDescPtr: prefixDescPtr,
+                                                                                                                            flatPrefixLUTPtr: flatPrefixPtr
+                                                                                                                        )
+                                                                                                                        : try acStream.readToken(context: zCtx, from: &passReader)
+                                                                                                                    if rawTok != 0 {
+                                                                                                                        remainingNZ &-= 1
+                                                                                                                        prev = 1
+                                                                                                                        normNZ = min((remainingNZ &+ 1) >> 1, 31)
+                                                                                                                        nzDensityBase = nzLut[normNZ]
+                                                                                                                    } else {
+                                                                                                                        prev = 0
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                guard remainingNZ == 0 else {
+                                                                                                                    throw JPEGEntropyError.malformed
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+
+                                                                                                try acStream.finish(from: &passReader)
+                                                                                                try passReader.expectZeroPadding()
+                                                                                                guard passReader.isExhausted else {
+                                                                                                    throw JPEGEntropyError.malformed
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-
-            try acStream.finish(from: &passReader)
-            try passReader.expectZeroPadding()
-            guard passReader.isExhausted else {
-                throw JPEGEntropyError.malformed
-            }
         }
+
+        let coefficients: [[Int32]] = numComponents == 1 ? [coeff0] : [coeff0, coeff1, coeff2]
 
         try policy.checkpoint()
         return JPEGBridgeFrame(
@@ -835,6 +989,7 @@ package enum JPEGBridgeFrameReader {
 }
 
 private struct BridgeHFBlockContext: Sendable {
+    let isDefault: Bool
     let lfThresholds: [[Int32]]
     let qfThresholds: [Int32]
     let blockCtxMap: [Int]
@@ -845,6 +1000,7 @@ private struct BridgeHFBlockContext: Sendable {
         let isDefault = try reader.readBit()
         if isDefault {
             return Self(
+                isDefault: true,
                 lfThresholds: [[], [], []],
                 qfThresholds: [],
                 blockCtxMap: VarDCTEntropy.defaultBlockCtxMap,
@@ -893,6 +1049,7 @@ private struct BridgeHFBlockContext: Sendable {
             throw JPEGEntropyError.malformed
         }
         return Self(
+            isDefault: false,
             lfThresholds: lfThresholds,
             qfThresholds: qfThresholds,
             blockCtxMap: cmap.map.map { Int($0) },
@@ -909,6 +1066,9 @@ private struct BridgeHFBlockContext: Sendable {
         dcY: Int32,
         dcB: Int32
     ) -> Int {
+        if isDefault {
+            return VarDCTEntropy.blockContext(channel: channel, orderBucket: orderBucket)
+        }
         let cIdx = (channel == 1) ? 0 : (channel == 0 ? 1 : 2)
         var idx = cIdx * 13 + orderBucket
         if !qfThresholds.isEmpty {
@@ -917,10 +1077,11 @@ private struct BridgeHFBlockContext: Sendable {
             idx = idx * (qfThresholds.count + 1) + qCtx
         }
         if !lfThresholds[0].isEmpty || !lfThresholds[1].isEmpty || !lfThresholds[2].isEmpty {
-            let dcs = [dcX, dcY, dcB]
+            let dcs = (dcX, dcY, dcB)
             for i in 0..<3 {
+                let dcVal = i == 0 ? dcs.0 : (i == 1 ? dcs.1 : dcs.2)
                 var lCtx = 0
-                for t in lfThresholds[i] where dcs[i] > t { lCtx += 1 }
+                for t in lfThresholds[i] where dcVal > t { lCtx += 1 }
                 idx = idx * (lfThresholds[i].count + 1) + lCtx
             }
         }

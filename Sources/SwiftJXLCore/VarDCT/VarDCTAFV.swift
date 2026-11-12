@@ -122,6 +122,127 @@ package enum VarDCTAFV {
         ]
     ]
 
+    package static let cornerBasisFlat: [Double] = cornerBasis.flatMap { $0 }
+
+    /// Zero-allocation in-place pointer fast path for 8x8 AFV (`kind in 0..<4`).
+    /// `scratch` must have capacity for at least 48 `Double`s, and `floatScratch` for at least 64 `Float`s.
+    package static func inverseInto(
+        _ coefficients: UnsafePointer<Float>,
+        output: UnsafeMutablePointer<Float>,
+        kind: Int,
+        scratch: UnsafeMutablePointer<Double>,
+        floatScratch: UnsafeMutablePointer<Float>
+    ) {
+        let flipX = (kind & 1) != 0
+        let flipY = (kind & 2) != 0
+
+        let afvHalfDC = Double(coefficients[0]) + Double(coefficients[8])
+        let dct4x8DC = Double(coefficients[0]) - Double(coefficients[8])
+        let afvDC = afvHalfDC + Double(coefficients[1])
+        let dct4x4DC = afvHalfDC - Double(coefficients[1])
+
+        let coeff4x8 = floatScratch
+        let pixels4x8 = floatScratch
+        for fy in 0..<4 {
+            let ky = fy * 2 + 1
+            for fx in 0..<8 {
+                coeff4x8[fy * 8 + fx] = coefficients[ky * 8 + fx]
+            }
+        }
+        coeff4x8[0] = Float(dct4x8DC)
+        ScaledDCT.applyUnchecked(
+            rows: 4,
+            columns: 8,
+            direction: .inverse,
+            input: coeff4x8,
+            output: pixels4x8,
+            scratch: scratch
+        )
+
+        let coeff4x4 = floatScratch + 32
+        let pixels4x4 = floatScratch + 32
+        for fy in 0..<4 {
+            for fx in 0..<4 {
+                let ky = fx * 2
+                let kx = fy * 2 + 1
+                coeff4x4[fy * 4 + fx] = coefficients[ky * 8 + kx]
+            }
+        }
+        coeff4x4[0] = Float(dct4x4DC)
+        ScaledDCT.applyUnchecked(
+            rows: 4,
+            columns: 4,
+            direction: .inverse,
+            input: coeff4x4,
+            output: pixels4x4,
+            scratch: scratch
+        )
+
+        let coeffAFV = scratch + 32
+        for sy in 0..<4 {
+            for sx in 0..<4 {
+                coeffAFV[sy * 4 + sx] = Double(coefficients[(sy * 2) * 8 + (sx * 2)])
+            }
+        }
+        coeffAFV[0] = afvDC
+
+        let pixelsAFV = floatScratch + 48
+        cornerBasisFlat.withUnsafeBufferPointer { basisBuf in
+            let basis = basisBuf.baseAddress!
+            for p in 0..<16 {
+                var sum = 0.0
+                for k in 0..<16 {
+                    sum += coeffAFV[k] * basis[k * 16 + p]
+                }
+                pixelsAFV[p] = Float(sum)
+            }
+        }
+
+        let afvRowStart = flipY ? 4 : 0
+        let dct4x8RowStart = flipY ? 0 : 4
+        let afvColStart = flipX ? 4 : 0
+        let dct4x4ColStart = flipX ? 0 : 4
+
+        for sy in 0..<4 {
+            let row4x8 = dct4x8RowStart + sy
+            for x in 0..<8 {
+                output[row4x8 * 8 + x] = pixels4x8[sy * 8 + x]
+            }
+
+            let rowAFV = afvRowStart + sy
+            let srcAFVY = flipY ? (3 - sy) : sy
+            for sx in 0..<4 {
+                output[rowAFV * 8 + (dct4x4ColStart + sx)] = pixels4x4[sy * 4 + sx]
+                let srcAFVX = flipX ? (3 - sx) : sx
+                output[rowAFV * 8 + (afvColStart + sx)] = pixelsAFV[srcAFVY * 4 + srcAFVX]
+            }
+        }
+    }
+
+    @inline(__always)
+    package static func forwardBasisUnchecked(
+        _ corner: UnsafePointer<Float>,
+        into output: UnsafeMutablePointer<Float>
+    ) {
+        var dcSum = 0.0
+        for i in 0..<16 {
+            dcSum += Double(corner[i])
+        }
+        output[0] = Float(dcSum * 0.0625)
+
+        cornerBasisFlat.withUnsafeBufferPointer { basisBuf in
+            let basis = basisBuf.baseAddress!
+            for k in 1..<16 {
+                let bRow = basis + k * 16
+                var dot = 0.0
+                for i in 0..<16 {
+                    dot += Double(corner[i]) * bRow[i]
+                }
+                output[k] = Float(dot)
+            }
+        }
+    }
+
     /// Reconstructs an 8x8 pixel block from 64 `AFV` (`kind in 0..<4`) coefficients.
     package static func inverse(
         _ coefficients: [Float],

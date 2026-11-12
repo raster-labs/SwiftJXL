@@ -237,6 +237,126 @@ package enum ModularFrameDecoder {
                       ch.pixels.count == ch.sampleCount else {
                     throw ScalarModularError.invalidInput("Decoded channel geometry mismatch")
                 }
+            }
+
+            if layouts.count == 3 {
+                let l0 = layouts[0], l1 = layouts[1], l2 = layouts[2]
+                let w = l0.width, h = l0.height
+                if l0.storageBits == 8 && l1.storageBits == 8 && l2.storageBits == 8
+                    && l0.pixelStride == 3 && l1.pixelStride == 3 && l2.pixelStride == 3
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes
+                    && l0.offset == 0 && l1.offset == 1 && l2.offset == 2 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    let rowStep = max(1, 4096 / max(1, w))
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress else { return }
+                                for ry in 0..<h {
+                                    if ry % rowStep == 0 { try budget.checkpoint() }
+                                    let srcRow = ry * w
+                                    var dstPos = ry * rowBytes
+                                    for rx in 0..<w {
+                                        let v0 = p0[srcRow + rx]
+                                        let v1 = p1[srcRow + rx]
+                                        let v2 = p2[srcRow + rx]
+                                        guard (UInt32(bitPattern: v0) | UInt32(bitPattern: v1) | UInt32(bitPattern: v2)) <= maxU else {
+                                            throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                        }
+                                        rawBase[dstPos] = UInt8(truncatingIfNeeded: v0)
+                                        rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: v1)
+                                        rawBase[dstPos + 2] = UInt8(truncatingIfNeeded: v2)
+                                        dstPos += 3
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return
+                }
+                if l0.storageBits == 16 && l1.storageBits == 16 && l2.storageBits == 16
+                    && l0.littleEndian && l1.littleEndian && l2.littleEndian
+                    && l0.pixelStride == 6 && l1.pixelStride == 6 && l2.pixelStride == 6
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes
+                    && l0.offset == 0 && l1.offset == 2 && l2.offset == 4 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    let rowStep = max(1, 4096 / max(1, w))
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress else { return }
+                                for ry in 0..<h {
+                                    if ry % rowStep == 0 { try budget.checkpoint() }
+                                    let srcRow = ry * w
+                                    var dstPos = ry * rowBytes
+                                    for rx in 0..<w {
+                                        let v0 = p0[srcRow + rx]
+                                        let v1 = p1[srcRow + rx]
+                                        let v2 = p2[srcRow + rx]
+                                        guard (UInt32(bitPattern: v0) | UInt32(bitPattern: v1) | UInt32(bitPattern: v2)) <= maxU else {
+                                            throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                        }
+                                        rawBase[dstPos] = UInt8(truncatingIfNeeded: v0)
+                                        rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: v0 >> 8)
+                                        rawBase[dstPos + 2] = UInt8(truncatingIfNeeded: v1)
+                                        rawBase[dstPos + 3] = UInt8(truncatingIfNeeded: v1 >> 8)
+                                        rawBase[dstPos + 4] = UInt8(truncatingIfNeeded: v2)
+                                        rawBase[dstPos + 5] = UInt8(truncatingIfNeeded: v2 >> 8)
+                                        dstPos += 6
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return
+                }
+            } else if layouts.count == 4 {
+                let l0 = layouts[0], l1 = layouts[1], l2 = layouts[2], l3 = layouts[3]
+                let w = l0.width, h = l0.height
+                if l0.storageBits == 8 && l1.storageBits == 8 && l2.storageBits == 8 && l3.storageBits == 8
+                    && l0.pixelStride == 4 && l1.pixelStride == 4 && l2.pixelStride == 4 && l3.pixelStride == 4
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes && l2.rowBytes == l3.rowBytes
+                    && l0.offset == 0 && l1.offset == 1 && l2.offset == 2 && l3.offset == 3 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    let rowStep = max(1, 4096 / max(1, w))
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                try channels[3].pixels.withUnsafeBufferPointer { b3 in
+                                    guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress, let p3 = b3.baseAddress else { return }
+                                    for ry in 0..<h {
+                                        if ry % rowStep == 0 { try budget.checkpoint() }
+                                        let srcRow = ry * w
+                                        var dstPos = ry * rowBytes
+                                        for rx in 0..<w {
+                                            let v0 = p0[srcRow + rx]
+                                            let v1 = p1[srcRow + rx]
+                                            let v2 = p2[srcRow + rx]
+                                            let v3 = p3[srcRow + rx]
+                                            guard (UInt32(bitPattern: v0) | UInt32(bitPattern: v1) | UInt32(bitPattern: v2) | UInt32(bitPattern: v3)) <= maxU else {
+                                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                            }
+                                            rawBase[dstPos] = UInt8(truncatingIfNeeded: v0)
+                                            rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: v1)
+                                            rawBase[dstPos + 2] = UInt8(truncatingIfNeeded: v2)
+                                            rawBase[dstPos + 3] = UInt8(truncatingIfNeeded: v3)
+                                            dstPos += 4
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return
+                }
+            }
+
+            for c in 0..<channels.count {
+                let ch = channels[c]
+                let layout = layouts[c]
                 try writeRectangleToLayout(
                     source: ch.pixels,
                     rectX: 0,
@@ -623,9 +743,7 @@ package enum ModularFrameDecoder {
                         if ry % rowStep == 0 { try budget.checkpoint() }
                         let srcRow = ry * srcStride
                         let dstRow = (slice.y0 + ry) * dstStride + slice.x0
-                        for rx in 0..<slice.width {
-                            dst[dstRow + rx] = src[srcRow + rx]
-                        }
+                        (dst + dstRow).update(from: src + srcRow, count: slice.width)
                     }
                 }
             }
@@ -650,12 +768,15 @@ package enum ModularFrameDecoder {
                 try budget.reserveWorkspace(
                     ScalarOperationBudget.product(sec0Entropy.codebook.ansCounts.count, 64 * 1024)
                 )
-                var sec0Stream = TokenStreamReader(
-                    header: sec0Entropy.header,
-                    codebook: sec0Entropy.codebook,
-                    distanceMultiplier: 0
-                )
-                try sec0Stream.finish(from: &sec0Reader)
+                if !sec0Entropy.header.usePrefixCode {
+                    if let err = sec0Entropy.codebook.prebuiltANSError {
+                        throw TokenStreamReaderError.alias(err)
+                    }
+                    let finalState = try sec0Reader.read(bits: 32)
+                    guard finalState == ANSConstants.initialState else {
+                        throw TokenStreamReaderError.ansFinalStateMismatch(got: finalState)
+                    }
+                }
                 try sec0Reader.expectZeroPadding()
                 guard sec0Reader.isExhausted else {
                     throw ScalarModularError.invalidInput("Unexpected trailing bytes in DC global section")
@@ -755,14 +876,15 @@ package enum ModularFrameDecoder {
                         }
                     }
                 } else {
+                    nonisolated(unsafe) let sharedBytes = bytes
                     var baseGroup = 0
                     while baseGroup < numGroups {
                         let batchCount = min(budget.maximumWorkers, numGroups - baseGroup)
                         let currentBase = baseGroup
-                        let batchResults: [([GroupChannelSlice], [ModularChannel])] = try modularDecodeBatch(
+                        let batchResults: [([GroupChannelSlice], [ModularChannel])?] = try modularDecodeBatch(
                             count: batchCount,
                             budget: budget
-                        ) { (offset: Int) -> ([GroupChannelSlice], [ModularChannel]) in
+                        ) { (offset: Int) -> ([GroupChannelSlice], [ModularChannel])? in
                             let groupIndex = currentBase + offset
                             let gx = groupIndex % groupsX
                             let gy = groupIndex / groupsX
@@ -775,26 +897,76 @@ package enum ModularFrameDecoder {
                             )
                             let secIndex = firstACSection + groupIndex
                             let gId = Int32(1 + 3 * numDcGroups + 17 + groupIndex)
-                            let planes = try decodeGroupSubstreamToPlanes(
-                                sectionIndex: secIndex,
-                                groupId: gId,
-                                slices: slices,
-                                sampleMaximum: sampleMax
-                            )
-                            return (slices, planes)
-                        }
-                        for (slices, planes) in batchResults {
-                            for (i, slice) in slices.enumerated() {
-                                try writeRectangleToLayout(
-                                    source: planes[i].pixels,
-                                    rectX: slice.x0,
-                                    rectY: slice.y0,
-                                    rectW: slice.width,
-                                    rectH: slice.height,
-                                    into: bytes,
-                                    layout: layouts[slice.parentChannelIndex],
-                                    maxU: maxU
+                            var reader = try sectionReader(secIndex)
+                            let groupHeader = try GroupHeader.read(from: &reader)
+                            if groupHeader.transforms.isEmpty {
+                                let pixelCount = slices.reduce(0) { $0 + $1.width * $1.height }
+                                let entropy = try selectEntropy(
+                                    header: groupHeader,
+                                    from: &reader,
+                                    pixelCount: pixelCount
                                 )
+                                try budget.reserveWorkspace(
+                                    ScalarOperationBudget.product(entropy.codebook.ansCounts.count, 64 * 1024)
+                                )
+                                let maxW = slices.map(\.width).max() ?? 0
+                                var stream = TokenStreamReader(
+                                    header: entropy.header,
+                                    codebook: entropy.codebook,
+                                    distanceMultiplier: maxW
+                                )
+                                for (i, slice) in slices.enumerated() {
+                                    ScalarStorageAudit.current?.workingPlane(
+                                        slice.width * slice.height * MemoryLayout<Int32>.stride
+                                    )
+                                    let subLayout = try layouts[slice.parentChannelIndex].rectangle(
+                                        x: slice.x0,
+                                        y: slice.y0,
+                                        width: slice.width,
+                                        height: slice.height
+                                    )
+                                    try decodeChannelIntoLayout(
+                                        bytes: sharedBytes,
+                                        layout: subLayout,
+                                        staticChannel: Int32(i),
+                                        groupId: gId,
+                                        tree: entropy.tree,
+                                        stream: &stream,
+                                        from: &reader,
+                                        wpHeader: groupHeader.wpHeader,
+                                        sampleMaximum: sampleMax
+                                    )
+                                }
+                                try stream.finish(from: &reader)
+                                try reader.expectZeroPadding()
+                                guard reader.isExhausted else {
+                                    throw ScalarModularError.invalidInput("Unexpected trailing bytes in Modular group section")
+                                }
+                                return nil
+                            } else {
+                                let planes = try decodeGroupSubstreamToPlanes(
+                                    sectionIndex: secIndex,
+                                    groupId: gId,
+                                    slices: slices,
+                                    sampleMaximum: sampleMax
+                                )
+                                return (slices, planes)
+                            }
+                        }
+                        for item in batchResults {
+                            if let (slices, planes) = item {
+                                for (i, slice) in slices.enumerated() {
+                                    try writeRectangleToLayout(
+                                        source: planes[i].pixels,
+                                        rectX: slice.x0,
+                                        rectY: slice.y0,
+                                        rectW: slice.width,
+                                        rectH: slice.height,
+                                        into: bytes,
+                                        layout: layouts[slice.parentChannelIndex],
+                                        maxU: maxU
+                                    )
+                                }
                             }
                         }
                         baseGroup += batchCount
@@ -804,7 +976,7 @@ package enum ModularFrameDecoder {
             }
 
             // General multi-section path with global transforms (e.g., global RCT, Palette, or Squeeze):
-            let working = try decodeMultiSectionToImage(sampleMax: sampleMax)
+            let working = try decodeMultiSectionToImage(sampleMax: sampleMax, validateRange: false)
             try writePlanesToLayouts(
                 working.channels,
                 into: bytes,
@@ -813,7 +985,7 @@ package enum ModularFrameDecoder {
             )
         }
 
-        private func decodeMultiSectionToImage(sampleMax: Int32) throws -> ModularImage {
+        private func decodeMultiSectionToImage(sampleMax: Int32, validateRange: Bool = true) throws -> ModularImage {
             let numDcGroups = dcGroupsX * dcGroupsY
             let numGroups = groupsX * groupsY
             var working = initialTransformedImage
@@ -968,7 +1140,9 @@ package enum ModularFrameDecoder {
                     bitDepth: bitsPerSample,
                     budget: budget
                 )
-                try validateSamplesInRange(working, sampleMax: sampleMax)
+                if validateRange {
+                    try validateSamplesInRange(working, sampleMax: sampleMax)
+                }
             }
             return working
         }

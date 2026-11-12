@@ -78,8 +78,14 @@ struct VarDCTFrameWriter {
         var modularMaxTok = 0
 
         @inline(__always)
+        func raw4Token(_ value: UInt32) -> Int {
+            if value < 16 { return Int(value) }
+            return 12 &+ (31 &- value.leadingZeroBitCount)
+        }
+
+        @inline(__always)
         func recordModularToken(_ value: UInt32) {
-            let tok = Int(postCfg.encode(value).token)
+            let tok = raw4Token(value)
             modularHisto[tok] += 1
             if tok > modularMaxTok { modularMaxTok = tok }
         }
@@ -175,11 +181,12 @@ struct VarDCTFrameWriter {
 
         @inline(__always)
         func recordACToken(_ value: UInt32) {
-            let tok = Int(postCfg.encode(value).token)
+            let tok = raw4Token(value)
             acHisto[tok] += 1
             if tok > acMaxTok { acMaxTok = tok }
         }
 
+        let channelOrder = [1, 0, 2]
         for groupIndex in 0..<numGroups {
             try budget.checkpoint()
             let gx = groupIndex % groupsX
@@ -201,23 +208,25 @@ struct VarDCTFrameWriter {
                     let baseOffset = transform.coefficientOffset
                     let order = bucketOrders[transform.orderBucket]!
 
-                    for c in [1, 0, 2] {
-                        let plane = coefficients.ac[c]
-                        var nonZeros = 0
-                        for k in covered..<coeffCount {
-                            if plane[baseOffset + order[k]] != 0 {
-                                nonZeros += 1
-                            }
-                        }
-                        recordACToken(UInt32(nonZeros))
-                        if nonZeros == 0 { continue }
-                        var remaining = nonZeros
-                        for k in covered..<coeffCount {
-                            if remaining == 0 { break }
-                            let v = plane[baseOffset + order[k]]
-                            recordACToken(ZigZag.pack(v))
-                            if v != 0 {
-                                remaining -= 1
+                    order.withUnsafeBufferPointer { ordBuf in
+                        let ordPtr = ordBuf.baseAddress!
+                        for c in channelOrder {
+                            coefficients.ac[c].withUnsafeBufferPointer { acBuf in
+                                let planePtr = acBuf.baseAddress! + baseOffset
+                                var nonZeros = 0
+                                var lastNZ = -1
+                                for k in covered..<coeffCount {
+                                    if planePtr[ordPtr[k]] != 0 {
+                                        nonZeros += 1
+                                        lastNZ = k
+                                    }
+                                }
+                                recordACToken(UInt32(nonZeros))
+                                if nonZeros == 0 { return }
+                                for k in covered...lastNZ {
+                                    let v = planePtr[ordPtr[k]]
+                                    recordACToken(ZigZag.pack(v))
+                                }
                             }
                         }
                     }
@@ -613,41 +622,68 @@ struct VarDCTFrameWriter {
         modularWriter: TokenStreamWriter,
         alphaInPass: Bool
     ) throws {
-        for ly in 0..<groupBlocksH {
-            try budget.checkpoint()
-            let by = by0 + ly
-            for lx in 0..<groupBlocksW {
-                let bx = bx0 + lx
-                let tIndex = transformAtBlock[by * coefficients.blocksX + bx]
-                if tIndex < 0 { continue }
-                let transform = coefficients.transforms[tIndex]
-                let covered = transform.coveredCells
-                let coeffCount = covered * 64
-                let baseOffset = transform.coefficientOffset
-                let order = bucketOrders[transform.orderBucket]!
+        let acTable = acWriter.codebook.huffmanTables[0]
+        let channelOrder = [1, 0, 2]
+        acTable.lengths.withUnsafeBufferPointer { lenBuf in
+            acTable.reversedCodewords.withUnsafeBufferPointer { cwBuf in
+                let lengths = lenBuf.baseAddress!
+                let revCodewords = cwBuf.baseAddress!
 
-                for c in [1, 0, 2] {
-                    let plane = coefficients.ac[c]
-                    var nonZeros = 0
-                    for k in covered..<coeffCount {
-                        if plane[baseOffset + order[k]] != 0 {
-                            nonZeros += 1
-                        }
+                @inline(__always)
+                func emitRaw4Token(_ value: UInt32) {
+                    if value < 16 {
+                        let s = Int(value)
+                        let l = Int(lengths[s])
+                        if l > 0 { w.write(bits: l, value: revCodewords[s]) }
+                    } else {
+                        let n = 31 &- value.leadingZeroBitCount
+                        let s = 12 &+ n
+                        let l = Int(lengths[s])
+                        if l > 0 { w.write(bits: l, value: revCodewords[s]) }
+                        let extra = value &- (UInt32(1) &<< UInt32(n))
+                        w.write(bits: n, value: extra)
                     }
-                    try acWriter.writeToken(context: 0, value: UInt32(nonZeros), to: &w)
-                    if nonZeros == 0 { continue }
-                    var remaining = nonZeros
-                    for k in covered..<coeffCount {
-                        if remaining == 0 { break }
-                        let v = plane[baseOffset + order[k]]
-                        try acWriter.writeToken(context: 0, value: ZigZag.pack(v), to: &w)
-                        if v != 0 {
-                            remaining -= 1
+                }
+
+                for ly in 0..<groupBlocksH {
+                    let by = by0 + ly
+                    for lx in 0..<groupBlocksW {
+                        let bx = bx0 + lx
+                        let tIndex = transformAtBlock[by * coefficients.blocksX + bx]
+                        if tIndex < 0 { continue }
+                        let transform = coefficients.transforms[tIndex]
+                        let covered = transform.coveredCells
+                        let coeffCount = covered * 64
+                        let baseOffset = transform.coefficientOffset
+                        let order = bucketOrders[transform.orderBucket]!
+
+                        order.withUnsafeBufferPointer { ordBuf in
+                            let ordPtr = ordBuf.baseAddress!
+                            for c in channelOrder {
+                                coefficients.ac[c].withUnsafeBufferPointer { acBuf in
+                                    let planePtr = acBuf.baseAddress! + baseOffset
+                                    var nonZeros = 0
+                                    var lastNZ = -1
+                                    for k in covered..<coeffCount {
+                                        if planePtr[ordPtr[k]] != 0 {
+                                            nonZeros += 1
+                                            lastNZ = k
+                                        }
+                                    }
+                                    emitRaw4Token(UInt32(nonZeros))
+                                    if nonZeros == 0 { return }
+                                    for k in covered...lastNZ {
+                                        let v = planePtr[ordPtr[k]]
+                                        emitRaw4Token(ZigZag.pack(v))
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+        try budget.checkpoint()
 
         if alphaInPass {
             let x0 = gx * Self.groupDimension
@@ -702,26 +738,29 @@ struct VarDCTFrameWriter {
         h: Int,
         emit: (UInt32) throws -> Void
     ) rethrows {
-        for ry in 0..<h {
-            let row = (y0 + ry) * planeWidth + x0
-            let prevRow = (y0 + ry - 1) * planeWidth + x0
-            for rx in 0..<w {
-                let actual = plane[row + rx]
-                let predicted: Int32
-                if ry == 0 && rx == 0 {
-                    predicted = 0
-                } else if ry == 0 {
-                    predicted = plane[row + rx - 1]
-                } else if rx == 0 {
-                    predicted = plane[prevRow]
-                } else {
-                    predicted = Self.gradientPredict(
-                        w: plane[row + rx - 1],
-                        n: plane[prevRow + rx],
-                        nw: plane[prevRow + rx - 1]
-                    )
+        try plane.withUnsafeBufferPointer { buf in
+            guard let ptr = buf.baseAddress else { return }
+            for ry in 0..<h {
+                let row = (y0 + ry) * planeWidth + x0
+                let prevRow = (y0 + ry - 1) * planeWidth + x0
+                for rx in 0..<w {
+                    let actual = ptr[row + rx]
+                    let predicted: Int32
+                    if ry == 0 && rx == 0 {
+                        predicted = 0
+                    } else if ry == 0 {
+                        predicted = ptr[row + rx - 1]
+                    } else if rx == 0 {
+                        predicted = ptr[prevRow]
+                    } else {
+                        predicted = Self.gradientPredict(
+                            w: ptr[row + rx - 1],
+                            n: ptr[prevRow + rx],
+                            nw: ptr[prevRow + rx - 1]
+                        )
+                    }
+                    try emit(ZigZag.pack(actual &- predicted))
                 }
-                try emit(ZigZag.pack(actual &- predicted))
             }
         }
     }

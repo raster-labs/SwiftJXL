@@ -41,6 +41,202 @@ package enum VarDCTSmallTransforms {
         }
     }
 
+    /// Zero-allocation in-place pointer fast path for 8x8 sub-transforms (`1, 2, 3, 12, 13`).
+    /// `scratch` must have capacity for at least 32 `Double`s, and `floatScratch` for at least 64 `Float`s.
+    package static func inverseInto(
+        _ input: UnsafePointer<Float>,
+        output: UnsafeMutablePointer<Float>,
+        identifier: Int,
+        scratch: UnsafeMutablePointer<Double>,
+        floatScratch: UnsafeMutablePointer<Float>
+    ) {
+        switch identifier {
+        case 1:
+            let (dc00, dc01, dc10, dc11) = idct2x2(
+                Double(input[0]), Double(input[8]),
+                Double(input[1]), Double(input[9])
+            )
+            let dcs: (Double, Double, Double, Double) = (dc00, dc01, dc10, dc11)
+            for qy in 0..<2 {
+                for qx in 0..<2 {
+                    for sy in 0..<4 {
+                        for sx in 0..<4 {
+                            let ky = sy * 2 + qy
+                            let kx = sx * 2 + qx
+                            scratch[sy * 4 + sx] = Double(input[ky * 8 + kx])
+                        }
+                    }
+                    scratch[0] = scratch[5]
+                    scratch[5] = 0.0
+                    var sum = 0.0
+                    for i in 0..<16 { sum += scratch[i] }
+                    let dcVal: Double
+                    switch qy * 2 + qx {
+                    case 0: dcVal = dcs.0
+                    case 1: dcVal = dcs.1
+                    case 2: dcVal = dcs.2
+                    default: dcVal = dcs.3
+                    }
+                    let offset = dcVal - (sum / 16.0)
+                    for sy in 0..<4 {
+                        let py = qy * 4 + sy
+                        for sx in 0..<4 {
+                            let px = qx * 4 + sx
+                            output[py * 8 + px] = Float(offset + scratch[sy * 4 + sx])
+                        }
+                    }
+                }
+            }
+        case 2:
+            let (q00, q01, q10, q11) = idct2x2(
+                Double(input[0]), Double(input[8]),
+                Double(input[1]), Double(input[9])
+            )
+            let quadDCs: (Double, Double, Double, Double) = (q00, q01, q10, q11)
+            for qy in 0..<2 {
+                for qx in 0..<2 {
+                    let m00: Double
+                    switch qy * 2 + qx {
+                    case 0: m00 = quadDCs.0
+                    case 1: m00 = quadDCs.1
+                    case 2: m00 = quadDCs.2
+                    default: m00 = quadDCs.3
+                    }
+                    let m01 = Double(input[(2 + qy) * 8 + qx])
+                    let m10 = Double(input[qy * 8 + (2 + qx)])
+                    let m11 = Double(input[(2 + qy) * 8 + (2 + qx)])
+                    let (b00, b01, b10, b11) = idct2x2(m00, m01, m10, m11)
+                    let baseY = qy * 2
+                    let baseX = qx * 2
+                    scratch[(baseY + 0) * 4 + (baseX + 0)] = b00
+                    scratch[(baseY + 0) * 4 + (baseX + 1)] = b01
+                    scratch[(baseY + 1) * 4 + (baseX + 0)] = b10
+                    scratch[(baseY + 1) * 4 + (baseX + 1)] = b11
+                }
+            }
+            for by in 0..<4 {
+                for bx in 0..<4 {
+                    let m00 = scratch[by * 4 + bx]
+                    let m01 = Double(input[(4 + by) * 8 + bx])
+                    let m10 = Double(input[by * 8 + (4 + bx)])
+                    let m11 = Double(input[(4 + by) * 8 + (4 + bx)])
+                    let (p00, p01, p10, p11) = idct2x2(m00, m01, m10, m11)
+                    let py = by * 2
+                    let px = bx * 2
+                    output[(py + 0) * 8 + (px + 0)] = Float(p00)
+                    output[(py + 0) * 8 + (px + 1)] = Float(p01)
+                    output[(py + 1) * 8 + (px + 0)] = Float(p10)
+                    output[(py + 1) * 8 + (px + 1)] = Float(p11)
+                }
+            }
+        case 3:
+            let (dc00, dc01, dc10, dc11) = idct2x2(
+                Double(input[0]), Double(input[8]),
+                Double(input[1]), Double(input[9])
+            )
+            let dcs: (Float, Float, Float, Float) = (Float(dc00), Float(dc01), Float(dc10), Float(dc11))
+            let sub = floatScratch
+            let pixels = floatScratch + 16
+            for qy in 0..<2 {
+                for qx in 0..<2 {
+                    for fy in 0..<4 {
+                        for fx in 0..<4 {
+                            let ky = fx * 2 + qy
+                            let kx = fy * 2 + qx
+                            sub[fy * 4 + fx] = input[ky * 8 + kx]
+                        }
+                    }
+                    switch qy * 2 + qx {
+                    case 0: sub[0] = dcs.0
+                    case 1: sub[0] = dcs.1
+                    case 2: sub[0] = dcs.2
+                    default: sub[0] = dcs.3
+                    }
+                    ScaledDCT.applyUnchecked(
+                        rows: 4,
+                        columns: 4,
+                        direction: .inverse,
+                        input: sub,
+                        output: pixels,
+                        scratch: scratch
+                    )
+                    for sy in 0..<4 {
+                        let py = qy * 4 + sy
+                        for sx in 0..<4 {
+                            let px = qx * 4 + sx
+                            output[py * 8 + px] = pixels[sy * 4 + sx]
+                        }
+                    }
+                }
+            }
+        case 12:
+            let topCoeff = floatScratch
+            let bottomCoeff = floatScratch + 32
+            for fy in 0..<4 {
+                let kyTop = fy * 2
+                let kyBottom = fy * 2 + 1
+                for fx in 0..<8 {
+                    topCoeff[fy * 8 + fx] = input[kyTop * 8 + fx]
+                    bottomCoeff[fy * 8 + fx] = input[kyBottom * 8 + fx]
+                }
+            }
+            topCoeff[0] = input[0] + input[8]
+            bottomCoeff[0] = input[0] - input[8]
+            ScaledDCT.applyUnchecked(
+                rows: 4,
+                columns: 8,
+                direction: .inverse,
+                input: topCoeff,
+                output: output,
+                scratch: scratch
+            )
+            ScaledDCT.applyUnchecked(
+                rows: 4,
+                columns: 8,
+                direction: .inverse,
+                input: bottomCoeff,
+                output: output + 32,
+                scratch: scratch
+            )
+        case 13:
+            let leftCoeff = floatScratch
+            let rightCoeff = floatScratch + 32
+            for fy in 0..<8 {
+                for fx in 0..<4 {
+                    leftCoeff[fy * 4 + fx] = input[(fx * 2) * 8 + fy]
+                    rightCoeff[fy * 4 + fx] = input[(fx * 2 + 1) * 8 + fy]
+                }
+            }
+            leftCoeff[0] = input[0] + input[8]
+            rightCoeff[0] = input[0] - input[8]
+            // Reuse leftCoeff / rightCoeff in-place via temporary output or write into floatScratch
+            ScaledDCT.applyUnchecked(
+                rows: 8,
+                columns: 4,
+                direction: .inverse,
+                input: leftCoeff,
+                output: leftCoeff,
+                scratch: scratch
+            )
+            ScaledDCT.applyUnchecked(
+                rows: 8,
+                columns: 4,
+                direction: .inverse,
+                input: rightCoeff,
+                output: rightCoeff,
+                scratch: scratch
+            )
+            for y in 0..<8 {
+                for x in 0..<4 {
+                    output[y * 8 + x] = leftCoeff[y * 4 + x]
+                    output[y * 8 + (4 + x)] = rightCoeff[y * 4 + x]
+                }
+            }
+        default:
+            break
+        }
+    }
+
     @inline(__always)
     private static func idct2x2(_ m00: Double, _ m01: Double, _ m10: Double, _ m11: Double) -> (Double, Double, Double, Double) {
         let a = m00 + m01

@@ -189,7 +189,7 @@ package struct PrefixCodeTable: Sendable {
     /// Decode a single symbol from `r`. Reads up to `usedMaxLength` bits
     /// (peek N, look up symbol, consume only the codeword length).
     @inline(__always)
-    package func decode(from r: inout BitReader) throws -> Int {
+    package borrowing func decode(from r: inout BitReader) throws -> Int {
         if usedMaxLength == 0 {
             return singleSymbol
         }

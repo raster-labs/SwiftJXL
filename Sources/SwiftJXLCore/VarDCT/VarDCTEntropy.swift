@@ -24,6 +24,64 @@ package enum VarDCTOrders {
         (32, 16), // 12: DCT128x256
     ]
 
+    /// Precomputed natural scan orders for all 13 order buckets.
+    package static let cachedNaturalOrders: [[Int]] = {
+        var orders: [[Int]] = []
+        orders.reserveCapacity(orderCount)
+        for b in 0..<orderCount {
+            let dims = orderDimensions[b]
+            orders.append(computeNaturalOrder(width: dims.width, height: dims.height))
+        }
+        return orders
+    }()
+
+    /// Precomputed `decodeOrders` result when `usedOrders == 0` (buckets 0..<9 populated with natural orders).
+    private static let cachedDefaultAllOrders: [[[Int]]] = {
+        var result: [[[Int]]] = Array(
+            repeating: Array(repeating: [], count: 3),
+            count: orderCount
+        )
+        for b in 0..<9 {
+            let nat = cachedNaturalOrders[b]
+            result[b] = [nat, nat, nat]
+        }
+        return result
+    }()
+
+    private static func computeNaturalOrder(width: Int, height: Int) -> [Int] {
+        let w = width * 8
+        let h = height * 8
+        let total = w * h
+        var order: [Int] = []
+        order.reserveCapacity(total)
+        for y in 0..<height {
+            for x in 0..<width {
+                order.append(y * w + x)
+            }
+        }
+        let yScale = width / height
+        var hf: [(key1: Int, key2: Int, index: Int)] = []
+        hf.reserveCapacity(total - width * height)
+        for y in 0..<h {
+            for x in 0..<w {
+                if x < width && y < height { continue }
+                let xs = x
+                let ys = y * yScale
+                let diag = xs + ys
+                let secondary = (diag & 1) == 1 ? y : -y
+                hf.append((diag, secondary, y * w + x))
+            }
+        }
+        hf.sort { a, b in
+            if a.key1 != b.key1 { return a.key1 < b.key1 }
+            return a.key2 < b.key2
+        }
+        for item in hf {
+            order.append(item.index)
+        }
+        return order
+    }
+
     /// Computes the natural scan order for a normalized `(width * 8) x (height * 8)` transform block (`width >= height`).
     package static func natural(
         width: Int,
@@ -41,46 +99,20 @@ package enum VarDCTOrders {
 
         try budget.reserveWorkspace(ScalarOperationBudget.product(total, MemoryLayout<Int>.stride))
 
-        var order: [Int] = []
-        order.reserveCapacity(total)
-
-        // 1. Lowest-frequency (LLF) corner in row-major order.
-        for y in 0..<height {
-            for x in 0..<width {
-                order.append(y * w + x)
+        for b in 0..<orderCount {
+            let dims = orderDimensions[b]
+            if dims.width == width && dims.height == height {
+                return cachedNaturalOrders[b]
             }
         }
-
-        // 2. High-frequency (HF) coefficients sorted by scaled anti-diagonal zigzag.
-        let yScale = width / height
-        var hf: [(key1: Int, key2: Int, index: Int)] = []
-        hf.reserveCapacity(total - width * height)
-
-        for y in 0..<h {
-            for x in 0..<w {
-                if x < width && y < height { continue }
-                let xs = x
-                let ys = y * yScale
-                let diag = xs + ys
-                let secondary = (diag & 1) == 1 ? y : -y
-                hf.append((diag, secondary, y * w + x))
-            }
-        }
-
-        hf.sort { a, b in
-            if a.key1 != b.key1 { return a.key1 < b.key1 }
-            return a.key2 < b.key2
-        }
-
-        for item in hf {
-            order.append(item.index)
-        }
-        return order
+        return computeNaturalOrder(width: width, height: height)
     }
 
     /// Computes the natural scan order for `AFV` (`orderID == 1`) per ISO/IEC 18181-1 §9.3.4.
     package static func naturalAFV(budget: ScalarOperationBudget) throws -> [Int] {
-        return try natural(width: 1, height: 1, budget: budget)
+        try budget.checkpoint()
+        try budget.reserveWorkspace(64 * MemoryLayout<Int>.stride)
+        return cachedNaturalOrders[1]
     }
 
     /// Reads the `used_orders` U32 mask from `reader` and decodes the HF scan orders for `usedBuckets`.
@@ -145,12 +177,11 @@ package enum VarDCTOrders {
 
         if usedOrders == 0 {
             for b in 0..<9 {
-                let nat = try getNatural(b)
-                for c in 0..<3 {
-                    result[b][c] = nat
-                }
+                let dims = orderDimensions[b]
+                try budget.checkpoint()
+                try budget.reserveWorkspace(dims.width * dims.height * 64 * MemoryLayout<Int>.stride)
             }
-            return result
+            return cachedDefaultAllOrders
         }
 
         let header = try EntropySectionHeader.read(from: &reader, numContexts: 8)
@@ -161,11 +192,11 @@ package enum VarDCTOrders {
         var stream = TokenStreamReader(header: header, codebook: codebook)
 
         for b in 0..<orderCount {
-            let nat = try getNatural(b)
-            let dims = orderDimensions[b]
-            let llf = dims.width * dims.height
-            let total = llf * 64
             if (usedOrders & (UInt32(1) << b)) != 0 {
+                let nat = try getNatural(b)
+                let dims = orderDimensions[b]
+                let llf = dims.width * dims.height
+                let total = llf * 64
                 for c in 0..<3 {
                     result[b][c] = try decodeLehmerPermutation(
                         naturalOrder: nat,
@@ -177,6 +208,7 @@ package enum VarDCTOrders {
                     )
                 }
             } else if b < 9 {
+                let nat = try getNatural(b)
                 for c in 0..<3 {
                     result[b][c] = nat
                 }
@@ -223,12 +255,29 @@ package enum VarDCTOrders {
             prev = val
         }
 
-        var available = Array(0..<totalCount)
+        var tree = [Int](repeating: 0, count: totalCount + 1)
+        for i in 1...totalCount { tree[i] = i & -i }
         var perm = [Int](repeating: 0, count: totalCount)
         for i in 0..<totalCount {
-            let idx = lehmer[i]
-            let chosen = available.remove(at: idx)
-            perm[i] = naturalOrder[chosen]
+            if (i & 255) == 0 { try budget.checkpoint() }
+            var rank = lehmer[i] + 1
+            var index = 0
+            var bit = totalCount
+            while bit > 0 {
+                let next = index + bit
+                if next <= totalCount, tree[next] < rank {
+                    index = next
+                    rank -= tree[next]
+                }
+                bit >>= 1
+            }
+            guard index < totalCount else { throw VarDCTError.invalidTransform }
+            perm[i] = naturalOrder[index]
+            var cursor = index + 1
+            while cursor <= totalCount {
+                tree[cursor] -= 1
+                cursor += cursor & -cursor
+            }
         }
         return perm
     }
@@ -251,14 +300,14 @@ package enum VarDCTEntropy {
         7, 8, 9, 9, 10, 11, 12, 13, 14, 14, 14, 14, 14,
     ]
 
-    private static let coeffFreqContext: [Int] = [
+    package static let coeffFreqContext: [Int] = [
         0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
         15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22,
         23, 23, 23, 23, 24, 24, 24, 24, 25, 25, 25, 25, 26, 26, 26, 26,
         27, 27, 27, 27, 28, 28, 28, 28, 29, 29, 29, 29, 30, 30, 30, 30,
     ]
 
-    private static let coeffNumNonzeroContext: [Int] = [
+    package static let coeffNumNonzeroContext: [Int] = [
         0, 0, 31, 62, 62, 93, 93, 93, 93, 123, 123, 123, 123, 152, 152, 152,
         152, 152, 152, 152, 152, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180, 180,
         180, 206, 206, 206, 206, 206, 206, 206, 206, 206, 206, 206, 206, 206, 206, 206,

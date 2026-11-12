@@ -267,12 +267,14 @@ package struct VarDCTCoefficients: Sendable {
             let streamToXYB = [1, 0, 2]
             for s in 0..<3 {
                 let dstC = streamToXYB[s]
-                let plane = dcPlanes[s].pixels
-                for ry in 0..<regionH {
-                    let srcRow = ry * regionW
-                    let dstRow = (by0 + ry) * blocksX + bx0
-                    for rx in 0..<regionW {
-                        dc[dstC][dstRow + rx] = plane[srcRow + rx]
+                dcPlanes[s].pixels.withUnsafeBufferPointer { srcBuf in
+                    dc[dstC].withUnsafeMutableBufferPointer { dstBuf in
+                        guard let src = srcBuf.baseAddress, let dst = dstBuf.baseAddress else { return }
+                        for ry in 0..<regionH {
+                            let srcRow = ry * regionW
+                            let dstRow = (by0 + ry) * blocksX + bx0
+                            (dst + dstRow).update(from: src + srcRow, count: regionW)
+                        }
                     }
                 }
             }
@@ -450,11 +452,9 @@ package struct VarDCTCoefficients: Sendable {
         }
 
         // --- 4. HfPass sections (ISO/IEC 18181-1 §9.3.4) ---
-        var ac = [
-            [Int32](repeating: 0, count: totalACCoefficients),
-            [Int32](repeating: 0, count: totalACCoefficients),
-            [Int32](repeating: 0, count: totalACCoefficients),
-        ]
+        var ac0 = [Int32](repeating: 0, count: totalACCoefficients)
+        var ac1 = [Int32](repeating: 0, count: totalACCoefficients)
+        var ac2 = [Int32](repeating: 0, count: totalACCoefficients)
 
         // Index transforms by their top-left (x, y) block coordinate for O(1) lookup per block
         var transformAtBlock = [Int](repeating: -1, count: totalBlocks)
@@ -463,165 +463,307 @@ package struct VarDCTCoefficients: Sendable {
         }
 
         let firstACSection = 2 + numDCGroups
-        for groupIndex in 0..<numGroups {
-            try budget.checkpoint()
-            let gx = groupIndex % groupsX
-            let gy = groupIndex / groupsX
-            let bx0 = gx * acGroupBlocks
-            let by0 = gy * acGroupBlocks
-            let groupBlocksW = min(acGroupBlocks, blocksX - bx0)
-            let groupBlocksH = min(acGroupBlocks, blocksY - by0)
-            let groupCellCount = groupBlocksW * groupBlocksH
+        let maxGroupCells = acGroupBlocks * acGroupBlocks
+        var nzGrid0 = [Int32](repeating: 0, count: maxGroupCells)
+        var nzGrid1 = [Int32](repeating: 0, count: maxGroupCells)
+        var nzGrid2 = [Int32](repeating: 0, count: maxGroupCells)
+        let numBlockClusters = hfBlockCtx.numBlockClusters
+        let nzClusterBase = numBlockClusters * VarDCTEntropy.nonZeroBuckets
+        let channelOrder = (1, 0, 2)
 
-            var passReader = singleSection ? sec0Reader : try envelope.section(firstACSection + groupIndex)
+        let acFlatSlots = acCodebook.prebuiltANSDecoder?.flatSlots ?? []
+        let acNoLZ77 = !acEntropyHeader.lz77.enabled
 
-            let presetBits = ceilLog2Int(numHfPresets)
-            let hfPreset: Int
-            if presetBits > 0 {
-                let rawPreset = try passReader.read(bits: presetBits)
-                hfPreset = Int(rawPreset)
-            } else {
-                hfPreset = 0
-            }
-            guard hfPreset >= 0, hfPreset < numHfPresets else {
-                throw ScalarModularError.invalidInput("Out-of-bounds hf_preset in VarDCT HfPass")
-            }
+        try ac0.withUnsafeMutableBufferPointer { ac0Buf in
+            try ac1.withUnsafeMutableBufferPointer { ac1Buf in
+                try ac2.withUnsafeMutableBufferPointer { ac2Buf in
+                    try nzGrid0.withUnsafeMutableBufferPointer { nz0Buf in
+                        try nzGrid1.withUnsafeMutableBufferPointer { nz1Buf in
+                            try nzGrid2.withUnsafeMutableBufferPointer { nz2Buf in
+                                try dc[0].withUnsafeBufferPointer { dc0Buf in
+                                    try dc[1].withUnsafeBufferPointer { dc1Buf in
+                                        try dc[2].withUnsafeBufferPointer { dc2Buf in
+                                            try VarDCTEntropy.coeffFreqContext.withUnsafeBufferPointer { freqCtxBuf in
+                                                try VarDCTEntropy.coeffNumNonzeroContext.withUnsafeBufferPointer { nzCtxBuf in
+                                                    try passOrders[0][0].withUnsafeBufferPointer { ord00Buf in
+                                                        try passOrders[0][1].withUnsafeBufferPointer { ord01Buf in
+                                                            try passOrders[0][2].withUnsafeBufferPointer { ord02Buf in
+                                                                try acEntropyHeader.contextMap.map.withUnsafeBufferPointer { ctxMapBuf in
+                                                                    try acEntropyHeader.uintConfigs.withUnsafeBufferPointer { uintCfgBuf in
+                                                                        try acFlatSlots.withUnsafeBufferPointer { flatSlotsBuf in
+                                                                            try acCodebook.prefixDescriptors.withUnsafeBufferPointer { prefixDescBuf in
+                                                                                try acCodebook.flatPrefixLUT.withUnsafeBufferPointer { flatLUTBuf in
+                                                                                    let acBasePtrs = (ac0Buf.baseAddress, ac1Buf.baseAddress, ac2Buf.baseAddress)
+                                                                                    let nzBasePtrs = (nz0Buf.baseAddress, nz1Buf.baseAddress, nz2Buf.baseAddress)
+                                                                                    let dc0Ptr = dc0Buf.baseAddress
+                                                                                    let dc1Ptr = dc1Buf.baseAddress
+                                                                                    let dc2Ptr = dc2Buf.baseAddress
+                                                                                    let freqCtxPtr = freqCtxBuf.baseAddress!
+                                                                                    let nzCtxPtr = nzCtxBuf.baseAddress!
+                                                                                    let ord0Ptrs = (ord00Buf.baseAddress, ord01Buf.baseAddress, ord02Buf.baseAddress)
+                                                                                    let ord0Valid = (ord00Buf.count == 64 && ord01Buf.count == 64 && ord02Buf.count == 64)
+                                                                                    let ctxMapPtr = ctxMapBuf.baseAddress
+                                                                                    let uintCfgPtr = uintCfgBuf.baseAddress
+                                                                                    let flatSlotsPtr = flatSlotsBuf.baseAddress
+                                                                                    let prefixDescPtr = prefixDescBuf.baseAddress
+                                                                                    let flatLUTPtr = flatLUTBuf.baseAddress
+                                                                                    let canUseFastAC = acNoLZ77 && ctxMapPtr != nil && uintCfgPtr != nil
 
-            let presetContextOffset = hfPreset * VarDCTEntropy.contextsPerBlockCluster * hfBlockCtx.numBlockClusters
-            var acStream = TokenStreamReader(header: acEntropyHeader, codebook: acCodebook)
-            var nzGrids = [
-                [Int32](repeating: 0, count: groupCellCount),
-                [Int32](repeating: 0, count: groupCellCount),
-                [Int32](repeating: 0, count: groupCellCount),
-            ]
+                                                                                    for groupIndex in 0..<numGroups {
+                                                                                        try budget.checkpoint()
+                                                                                        let gx = groupIndex % groupsX
+                                                                                        let gy = groupIndex / groupsX
+                                                                                        let bx0 = gx * acGroupBlocks
+                                                                                        let by0 = gy * acGroupBlocks
+                                                                                        let groupBlocksW = min(acGroupBlocks, blocksX - bx0)
+                                                                                        let groupBlocksH = min(acGroupBlocks, blocksY - by0)
+                                                                                        let groupCellCount = groupBlocksW * groupBlocksH
 
-            for ly in 0..<groupBlocksH {
-                try budget.checkpoint()
-                let by = by0 + ly
-                for lx in 0..<groupBlocksW {
-                    let bx = bx0 + lx
-                    let tIndex = transformAtBlock[by * blocksX + bx]
-                    if tIndex < 0 { continue }
-                    let transform = allTransforms[tIndex]
-                    let cx = transform.cellsX
-                    let cy = transform.cellsY
-                    let covered = transform.coveredCells
-                    let log2Covered = covered.trailingZeroBitCount
-                    let coeffCount = covered * 64
-                    let orderBucket = transform.orderBucket
-                    let baseOffset = transform.coefficientOffset
-                    let blockIdx = by * blocksX + bx
+                                                                                        var passReader = singleSection ? sec0Reader : try envelope.section(firstACSection + groupIndex)
 
-                    for c in [1, 0, 2] {
-                        let predictedNZ = nzGrids[c].withUnsafeBufferPointer { gridPtr in
-                            VarDCTEntropy.predictedNonZeros(
-                                x: lx,
-                                y: ly,
-                                width: groupBlocksW,
-                                grid: gridPtr
-                            )
-                        }
-                        let blockCluster = hfBlockCtx.cluster(
-                            channel: c,
-                            orderBucket: orderBucket,
-                            quant: Int32(transform.quantisation),
-                            dcX: dc[0][blockIdx],
-                            dcY: dc[1][blockIdx],
-                            dcB: dc[2][blockIdx]
-                        )
-                        let nzCtx = presetContextOffset + VarDCTEntropy.nonZeroContext(
-                            predicted: predictedNZ,
-                            blockContext: blockCluster,
-                            numBlockClusters: hfBlockCtx.numBlockClusters
-                        )
-                        let nonZeros = Int(try acStream.readToken(context: nzCtx, from: &passReader))
-                        guard nonZeros >= 0, nonZeros <= coeffCount - covered else {
-                            throw ScalarModularError.invalidInput("Invalid AC non-zero count in VarDCT HfPass")
-                        }
+                                                                                        let presetBits = ceilLog2Int(numHfPresets)
+                                                                                        let hfPreset: Int
+                                                                                        if presetBits > 0 {
+                                                                                            let rawPreset = try passReader.read(bits: presetBits)
+                                                                                            hfPreset = Int(rawPreset)
+                                                                                        } else {
+                                                                                            hfPreset = 0
+                                                                                        }
+                                                                                        guard hfPreset >= 0, hfPreset < numHfPresets else {
+                                                                                            throw ScalarModularError.invalidInput("Out-of-bounds hf_preset in VarDCT HfPass")
+                                                                                        }
 
-                        let normNZValue = Int32((nonZeros + covered - 1) >> log2Covered)
-                        for dy in 0..<cy where (ly + dy) < groupBlocksH {
-                            let rowBase = (ly + dy) * groupBlocksW
-                            for dx in 0..<cx where (lx + dx) < groupBlocksW {
-                                nzGrids[c][rowBase + (lx + dx)] = normNZValue
-                            }
-                        }
+                                                                                        let presetContextOffset = hfPreset * VarDCTEntropy.contextsPerBlockCluster * numBlockClusters
+                                                                                        var acStream = TokenStreamReader(header: acEntropyHeader, codebook: acCodebook)
+                                                                                        nzBasePtrs.0?.update(repeating: 0, count: groupCellCount)
+                                                                                        nzBasePtrs.1?.update(repeating: 0, count: groupCellCount)
+                                                                                        nzBasePtrs.2?.update(repeating: 0, count: groupCellCount)
 
-                        if nonZeros == 0 { continue }
+                                                                                        for ly in 0..<groupBlocksH {
+                                                                                            try budget.checkpoint()
+                                                                                            let by = by0 + ly
+                                                                                            let rowGridOffset = ly * groupBlocksW
+                                                                                            for lx in 0..<groupBlocksW {
+                                                                                                let bx = bx0 + lx
+                                                                                                let blockIdx = by * blocksX + bx
+                                                                                                let tIndex = transformAtBlock[blockIdx]
+                                                                                                if tIndex < 0 { continue }
+                                                                                                let transform = allTransforms[tIndex]
+                                                                                                let cx = transform.cellsX
+                                                                                                let cy = transform.cellsY
+                                                                                                let covered = transform.coveredCells
+                                                                                                let log2Covered = covered.trailingZeroBitCount
+                                                                                                let coeffCount = covered * 64
+                                                                                                let orderBucket = transform.orderBucket
+                                                                                                let baseOffset = transform.coefficientOffset
+                                                                                                let dcXVal = dc0Ptr![blockIdx]
+                                                                                                let dcYVal = dc1Ptr![blockIdx]
+                                                                                                let dcBVal = dc2Ptr![blockIdx]
+                                                                                                let qVal = Int32(transform.quantisation)
 
-                        let order = passOrders[orderBucket][c]
-                        guard order.count == coeffCount else {
-                            throw ScalarModularError.invalidInput("Missing scan order for VarDCT transform")
-                        }
+                                                                                                for step in 0..<3 {
+                                                                                                    let c = step == 0 ? channelOrder.0 : (step == 1 ? channelOrder.1 : channelOrder.2)
+                                                                                                    let gridBase = c == 0 ? nzBasePtrs.0! : (c == 1 ? nzBasePtrs.1! : nzBasePtrs.2!)
+                                                                                                    let gridBuf = UnsafeBufferPointer(start: UnsafePointer(gridBase), count: groupCellCount)
+                                                                                                    let predictedNZ = VarDCTEntropy.predictedNonZeros(
+                                                                                                        x: lx,
+                                                                                                        y: ly,
+                                                                                                        width: groupBlocksW,
+                                                                                                        grid: gridBuf
+                                                                                                    )
+                                                                                                    let blockCluster = hfBlockCtx.cluster(
+                                                                                                        channel: c,
+                                                                                                        orderBucket: orderBucket,
+                                                                                                        quant: qVal,
+                                                                                                        dcX: dcXVal,
+                                                                                                        dcY: dcYVal,
+                                                                                                        dcB: dcBVal
+                                                                                                    )
+                                                                                                    let nzCtx = presetContextOffset + VarDCTEntropy.nonZeroContext(
+                                                                                                        predicted: predictedNZ,
+                                                                                                        blockContext: blockCluster,
+                                                                                                        numBlockClusters: numBlockClusters
+                                                                                                    )
+                                                                                                    let nonZeros: Int
+                                                                                                    if canUseFastAC {
+                                                                                                        nonZeros = Int(try acStream.readTokenNoLZ77(
+                                                                                                            context: nzCtx,
+                                                                                                            from: &passReader,
+                                                                                                            ctxMapPtr: ctxMapPtr!,
+                                                                                                            uintConfigsPtr: uintCfgPtr!,
+                                                                                                            flatSlotsPtr: flatSlotsPtr,
+                                                                                                            prefixDescPtr: prefixDescPtr,
+                                                                                                            flatPrefixLUTPtr: flatLUTPtr
+                                                                                                        ))
+                                                                                                    } else {
+                                                                                                        nonZeros = Int(try acStream.readToken(context: nzCtx, from: &passReader))
+                                                                                                    }
+                                                                                                    guard nonZeros >= 0, nonZeros <= coeffCount - covered else {
+                                                                                                        throw ScalarModularError.invalidInput("Invalid AC non-zero count in VarDCT HfPass")
+                                                                                                    }
 
-                        var remainingNZ = nonZeros
-                        var prev = (nonZeros > (coeffCount >> 4)) ? 0 : 1
-                        try order.withUnsafeBufferPointer { ordBuf in
-                            try ac[c].withUnsafeMutableBufferPointer { acBuf in
-                                let ordPtr = ordBuf.baseAddress!
-                                let acPtr = acBuf.baseAddress! + baseOffset
-                                for k in covered..<coeffCount {
-                                    if remainingNZ == 0 { break }
-                                    let zCtx = presetContextOffset + VarDCTEntropy.zeroDensityContext(
-                                        nonZerosLeft: remainingNZ,
-                                        k: k,
-                                        log2CoveredBlocks: log2Covered,
-                                        prev: prev,
-                                        blockContext: blockCluster,
-                                        numBlockClusters: hfBlockCtx.numBlockClusters
-                                    )
-                                    let rawToken = try acStream.readToken(context: zCtx, from: &passReader)
-                                    let coeff = ZigZag.unpack(rawToken)
-                                    acPtr[ordPtr[k]] = coeff
-                                    if coeff != 0 {
-                                        remainingNZ -= 1
-                                        prev = 1
-                                    } else {
-                                        prev = 0
+                                                                                                    if covered == 1 {
+                                                                                                        gridBase[rowGridOffset + lx] = Int32(nonZeros)
+                                                                                                    } else {
+                                                                                                        let normNZValue = Int32((nonZeros + covered - 1) >> log2Covered)
+                                                                                                        for dy in 0..<cy where (ly + dy) < groupBlocksH {
+                                                                                                            let rowBase = (ly + dy) * groupBlocksW
+                                                                                                            for dx in 0..<cx where (lx + dx) < groupBlocksW {
+                                                                                                                gridBase[rowBase + (lx + dx)] = normNZValue
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+
+                                                                                                    if nonZeros == 0 { continue }
+
+                                                                                                    var remainingNZ = nonZeros
+                                                                                                    var prev = (nonZeros > (coeffCount >> 4)) ? 0 : 1
+                                                                                                    let clusterCtxBase = presetContextOffset + nzClusterBase + blockCluster * VarDCTEntropy.zeroDensityContextsPerCluster
+                                                                                                    let acPtr = (c == 0 ? acBasePtrs.0! : (c == 1 ? acBasePtrs.1! : acBasePtrs.2!)) + baseOffset
+
+                                                                                                    if orderBucket == 0 && ord0Valid {
+                                                                                                        let ordPtr = c == 0 ? ord0Ptrs.0! : (c == 1 ? ord0Ptrs.1! : ord0Ptrs.2!)
+                                                                                                        var nzDensityBase = clusterCtxBase + nzCtxPtr[remainingNZ] * 2
+                                                                                                        if canUseFastAC {
+                                                                                                            let cmPtr = ctxMapPtr!
+                                                                                                            let ucPtr = uintCfgPtr!
+                                                                                                            for k in 1..<64 {
+                                                                                                                let zCtx = nzDensityBase + freqCtxPtr[k] * 2 + prev
+                                                                                                                let rawToken = try acStream.readTokenNoLZ77(
+                                                                                                                    context: zCtx,
+                                                                                                                    from: &passReader,
+                                                                                                                    ctxMapPtr: cmPtr,
+                                                                                                                    uintConfigsPtr: ucPtr,
+                                                                                                                    flatSlotsPtr: flatSlotsPtr,
+                                                                                                                    prefixDescPtr: prefixDescPtr,
+                                                                                                                    flatPrefixLUTPtr: flatLUTPtr
+                                                                                                                )
+                                                                                                                if rawToken != 0 {
+                                                                                                                    acPtr[ordPtr[k]] = ZigZag.unpack(rawToken)
+                                                                                                                    remainingNZ -= 1
+                                                                                                                    if remainingNZ == 0 { break }
+                                                                                                                    prev = 1
+                                                                                                                    nzDensityBase = clusterCtxBase + nzCtxPtr[remainingNZ] * 2
+                                                                                                                } else {
+                                                                                                                    prev = 0
+                                                                                                                }
+                                                                                                            }
+                                                                                                        } else {
+                                                                                                            for k in 1..<64 {
+                                                                                                                let zCtx = nzDensityBase + freqCtxPtr[k] * 2 + prev
+                                                                                                                let rawToken = try acStream.readToken(context: zCtx, from: &passReader)
+                                                                                                                if rawToken != 0 {
+                                                                                                                    acPtr[ordPtr[k]] = ZigZag.unpack(rawToken)
+                                                                                                                    remainingNZ -= 1
+                                                                                                                    if remainingNZ == 0 { break }
+                                                                                                                    prev = 1
+                                                                                                                    nzDensityBase = clusterCtxBase + nzCtxPtr[remainingNZ] * 2
+                                                                                                                } else {
+                                                                                                                    prev = 0
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    } else {
+                                                                                                        let order = passOrders[orderBucket][c]
+                                                                                                        guard order.count == coeffCount else {
+                                                                                                            throw ScalarModularError.invalidInput("Missing scan order for VarDCT transform")
+                                                                                                        }
+                                                                                                        let coveredMinus1 = covered - 1
+                                                                                                        var normNZ = min(63, max(1, (remainingNZ + coveredMinus1) >> log2Covered))
+                                                                                                        var nzDensityBase = clusterCtxBase + nzCtxPtr[normNZ] * 2
+
+                                                                                                        try order.withUnsafeBufferPointer { ordBuf in
+                                                                                                            let ordPtr = ordBuf.baseAddress!
+                                                                                                            for k in covered..<coeffCount {
+                                                                                                                let normK = min(63, k >> log2Covered)
+                                                                                                                let zCtx = nzDensityBase + freqCtxPtr[normK] * 2 + prev
+                                                                                                                let rawToken: UInt32
+                                                                                                                if canUseFastAC {
+                                                                                                                    rawToken = try acStream.readTokenNoLZ77(
+                                                                                                                        context: zCtx,
+                                                                                                                        from: &passReader,
+                                                                                                                        ctxMapPtr: ctxMapPtr!,
+                                                                                                                        uintConfigsPtr: uintCfgPtr!,
+                                                                                                                        flatSlotsPtr: flatSlotsPtr,
+                                                                                                                        prefixDescPtr: prefixDescPtr,
+                                                                                                                        flatPrefixLUTPtr: flatLUTPtr
+                                                                                                                    )
+                                                                                                                } else {
+                                                                                                                    rawToken = try acStream.readToken(context: zCtx, from: &passReader)
+                                                                                                                }
+                                                                                                                if rawToken != 0 {
+                                                                                                                    acPtr[ordPtr[k]] = ZigZag.unpack(rawToken)
+                                                                                                                    remainingNZ -= 1
+                                                                                                                    if remainingNZ == 0 { break }
+                                                                                                                    prev = 1
+                                                                                                                    normNZ = min(63, max(1, (remainingNZ + coveredMinus1) >> log2Covered))
+                                                                                                                    nzDensityBase = clusterCtxBase + nzCtxPtr[normNZ] * 2
+                                                                                                                } else {
+                                                                                                                    prev = 0
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                    guard remainingNZ == 0 else {
+                                                                                                        throw ScalarModularError.invalidInput("Unconsumed non-zero count in VarDCT HfPass")
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+
+                                                                                        try acStream.finish(from: &passReader)
+
+                                                                                        // Optional extra-channel HfPass Modular sub-stream (for channels with min(hshift, vshift) < 3)
+                                                                                        if var img = extraImage {
+                                                                                            let slices = groupSlicesForExtra(
+                                                                                                image: img,
+                                                                                                firstNonGlobal: extraFirstNonGlobal,
+                                                                                                gx: gx,
+                                                                                                gy: gy,
+                                                                                                baseDim: groupDim,
+                                                                                                isDCGroup: false
+                                                                                            )
+                                                                                            if !slices.isEmpty {
+                                                                                                let planes = try decodeModularSubstream(
+                                                                                                    dimensions: slices.map { ($0.width, $0.height, $0.hshift, $0.vshift) },
+                                                                                                    groupId: Int32(1 + 3 * numDCGroups + 17 + groupIndex),
+                                                                                                    globalEntropy: globalEntropy,
+                                                                                                    bitDepth: bitsPerSample,
+                                                                                                    from: &passReader,
+                                                                                                    budget: budget
+                                                                                                )
+                                                                                                for (i, slice) in slices.enumerated() {
+                                                                                                    copySliceIntoChannel(planes[i], slice: slice, into: &img.channels[slice.channelIndex])
+                                                                                                }
+                                                                                                extraImage = img
+                                                                                            }
+                                                                                        }
+
+                                                                                        try passReader.expectZeroPadding()
+                                                                                        guard passReader.isExhausted else {
+                                                                                            throw ScalarModularError.invalidInput("Unexpected trailing bytes in VarDCT HfPass section")
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
-                        guard remainingNZ == 0 else {
-                            throw ScalarModularError.invalidInput("Unconsumed non-zero count in VarDCT HfPass")
-                        }
                     }
                 }
-            }
-
-            try acStream.finish(from: &passReader)
-
-            // Optional extra-channel HfPass Modular sub-stream (for channels with min(hshift, vshift) < 3)
-            if var img = extraImage {
-                let slices = groupSlicesForExtra(
-                    image: img,
-                    firstNonGlobal: extraFirstNonGlobal,
-                    gx: gx,
-                    gy: gy,
-                    baseDim: groupDim,
-                    isDCGroup: false
-                )
-                if !slices.isEmpty {
-                    let planes = try decodeModularSubstream(
-                        dimensions: slices.map { ($0.width, $0.height, $0.hshift, $0.vshift) },
-                        groupId: Int32(1 + 3 * numDCGroups + 17 + groupIndex),
-                        globalEntropy: globalEntropy,
-                        bitDepth: bitsPerSample,
-                        from: &passReader,
-                        budget: budget
-                    )
-                    for (i, slice) in slices.enumerated() {
-                        copySliceIntoChannel(planes[i], slice: slice, into: &img.channels[slice.channelIndex])
-                    }
-                    extraImage = img
-                }
-            }
-
-            try passReader.expectZeroPadding()
-            guard passReader.isExhausted else {
-                throw ScalarModularError.invalidInput("Unexpected trailing bytes in VarDCT HfPass section")
             }
         }
+        let ac = [ac0, ac1, ac2]
 
         // --- 5. Finalize optional alpha channel ---
         var decodedAlpha: [Int32]? = nil
@@ -683,6 +825,7 @@ package struct VarDCTCoefficients: Sendable {
 // MARK: - Internal Helpers for VarDCTCoefficients
 
 private struct HFBlockContextDescriptor: Sendable {
+    let isDefault: Bool
     let lfThresholds: [[Int32]]
     let qfThresholds: [Int32]
     let blockCtxMap: [Int]
@@ -693,6 +836,7 @@ private struct HFBlockContextDescriptor: Sendable {
         let isDefault = try reader.readBit()
         if isDefault {
             return Self(
+                isDefault: true,
                 lfThresholds: [[], [], []],
                 qfThresholds: [],
                 blockCtxMap: VarDCTEntropy.defaultBlockCtxMap,
@@ -743,6 +887,7 @@ private struct HFBlockContextDescriptor: Sendable {
             throw ScalarModularError.invalidInput("HfBlockContext cluster count exceeds limit")
         }
         return Self(
+            isDefault: false,
             lfThresholds: lfThresholds,
             qfThresholds: qfThresholds,
             blockCtxMap: cmap.map.map { Int($0) },
@@ -761,17 +906,30 @@ private struct HFBlockContextDescriptor: Sendable {
     ) -> Int {
         let cIdx = (channel == 1) ? 0 : (channel == 0 ? 1 : 2)
         var idx = cIdx * 13 + orderBucket
+        if isDefault {
+            return blockCtxMap[idx]
+        }
         if !qfThresholds.isEmpty {
             var qCtx = 0
             for t in qfThresholds where quant > t { qCtx += 1 }
             idx = idx * (qfThresholds.count + 1) + qCtx
         }
         if !lfThresholds[0].isEmpty || !lfThresholds[1].isEmpty || !lfThresholds[2].isEmpty {
-            let dcs = [dcX, dcY, dcB]
-            for i in 0..<3 {
+            let dcs = (dcX, dcY, dcB)
+            if !lfThresholds[0].isEmpty {
                 var lCtx = 0
-                for t in lfThresholds[i] where dcs[i] > t { lCtx += 1 }
-                idx = idx * (lfThresholds[i].count + 1) + lCtx
+                for t in lfThresholds[0] where dcs.0 > t { lCtx += 1 }
+                idx = idx * (lfThresholds[0].count + 1) + lCtx
+            }
+            if !lfThresholds[1].isEmpty {
+                var lCtx = 0
+                for t in lfThresholds[1] where dcs.1 > t { lCtx += 1 }
+                idx = idx * (lfThresholds[1].count + 1) + lCtx
+            }
+            if !lfThresholds[2].isEmpty {
+                var lCtx = 0
+                for t in lfThresholds[2] where dcs.2 > t { lCtx += 1 }
+                idx = idx * (lfThresholds[2].count + 1) + lCtx
             }
         }
         return blockCtxMap[idx]
@@ -829,11 +987,14 @@ private func copySliceIntoChannel(
 ) {
     let dstStride = destination.width
     let srcStride = slice.width
-    for ry in 0..<slice.height {
-        let srcRow = ry * srcStride
-        let dstRow = (slice.y0 + ry) * dstStride + slice.x0
-        for rx in 0..<slice.width {
-            destination.pixels[dstRow + rx] = source.pixels[srcRow + rx]
+    source.pixels.withUnsafeBufferPointer { srcBuf in
+        destination.pixels.withUnsafeMutableBufferPointer { dstBuf in
+            guard let src = srcBuf.baseAddress, let dst = dstBuf.baseAddress else { return }
+            for ry in 0..<slice.height {
+                let srcRow = ry * srcStride
+                let dstRow = (slice.y0 + ry) * dstStride + slice.x0
+                (dst + dstRow).update(from: src + srcRow, count: slice.width)
+            }
         }
     }
 }

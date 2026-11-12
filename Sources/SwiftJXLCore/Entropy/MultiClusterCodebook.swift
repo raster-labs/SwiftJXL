@@ -34,6 +34,13 @@ package enum MultiClusterCodebookError: Error, Sendable {
     case ans(SpecANSDistributionError)
 }
 
+package struct PrefixClusterDescriptor: Sendable {
+    package let usedMaxLength: Int
+    package let usedMaxMask: UInt64
+    package let lutOffset: Int
+    package let singleSymbol: Int
+}
+
 /// Per-cluster decoded codebook — either a Huffman table or an
 /// rANS distribution count array. Exactly one of `huffmanTables`
 /// and `ansCounts` is populated, picked by the surrounding
@@ -42,6 +49,10 @@ package struct MultiClusterCodebook: Sendable {
     /// One Huffman table per cluster; populated when the surrounding
     /// section uses prefix codes. Empty otherwise.
     package let huffmanTables: [PrefixCodeTable]
+    /// Flat per-cluster prefix descriptors without reference-counted fields.
+    package let prefixDescriptors: [PrefixClusterDescriptor]
+    /// Concatenated LSB-first lookup tables across all prefix-code clusters.
+    package let flatPrefixLUT: [UInt32]
     /// One frequency array per cluster; populated when the surrounding
     /// section uses rANS. Empty otherwise.
     package let ansCounts: [[Int32]]
@@ -50,15 +61,49 @@ package struct MultiClusterCodebook: Sendable {
     /// the count array's length (right-truncated by libjxl's
     /// trailing-zero pop).
     package let alphabetSizes: [Int]
+    /// Prebuilt alias-table ANS decoder when created via `read(from:header:)`.
+    package let prebuiltANSDecoder: ANSStreamDecoder?
+    /// Prebuilt alias-table validation error when created via `read(from:header:)`.
+    package let prebuiltANSError: AliasTableError?
 
     package init(
         huffmanTables: [PrefixCodeTable],
         ansCounts: [[Int32]],
-        alphabetSizes: [Int]
+        alphabetSizes: [Int],
+        prebuiltANSDecoder: ANSStreamDecoder? = nil,
+        prebuiltANSError: AliasTableError? = nil
     ) {
         self.huffmanTables = huffmanTables
+        if huffmanTables.isEmpty {
+            self.prefixDescriptors = []
+            self.flatPrefixLUT = []
+        } else {
+            var descs = [PrefixClusterDescriptor]()
+            descs.reserveCapacity(huffmanTables.count)
+            var totalLUT = 0
+            for t in huffmanTables {
+                totalLUT &+= t.lsbDecodeLUT.count
+            }
+            var flat = [UInt32]()
+            flat.reserveCapacity(totalLUT)
+            var offset = 0
+            for t in huffmanTables {
+                descs.append(PrefixClusterDescriptor(
+                    usedMaxLength: t.usedMaxLength,
+                    usedMaxMask: t.usedMaxMask,
+                    lutOffset: offset,
+                    singleSymbol: t.singleSymbol
+                ))
+                flat.append(contentsOf: t.lsbDecodeLUT)
+                offset &+= t.lsbDecodeLUT.count
+            }
+            self.prefixDescriptors = descs
+            self.flatPrefixLUT = flat
+        }
         self.ansCounts = ansCounts
         self.alphabetSizes = alphabetSizes
+        self.prebuiltANSDecoder = prebuiltANSDecoder
+        self.prebuiltANSError = prebuiltANSError
     }
 
     /// Read all per-cluster tables that follow an
@@ -132,9 +177,26 @@ package struct MultiClusterCodebook: Sendable {
             counts.append(cnt)
             alphabetSizes.append(cnt.count)
         }
+        let prebuiltDecoder: ANSStreamDecoder?
+        let prebuiltError: AliasTableError?
+        do {
+            prebuiltDecoder = try ANSStreamDecoder(
+                counts: counts,
+                logAlphaSize: header.logAlphaSize
+            )
+            prebuiltError = nil
+        } catch let error as AliasTableError {
+            prebuiltDecoder = nil
+            prebuiltError = error
+        } catch {
+            prebuiltDecoder = nil
+            prebuiltError = .sumNotEqualRange
+        }
         return MultiClusterCodebook(
             huffmanTables: [], ansCounts: counts,
-            alphabetSizes: alphabetSizes
+            alphabetSizes: alphabetSizes,
+            prebuiltANSDecoder: prebuiltDecoder,
+            prebuiltANSError: prebuiltError
         )
     }
 

@@ -117,11 +117,9 @@ package enum VarDCTPixelEncoder {
             ? VarDCTEncoderPreparation.EightBitConversion(grayscale: grayscale, budget: budget)
             : nil
 
-        var planes = [
-            [Float](repeating: 0, count: pixelCount),
-            [Float](repeating: 0, count: pixelCount),
-            [Float](repeating: 0, count: pixelCount)
-        ]
+        var plane0 = [Float](repeating: 0, count: pixelCount)
+        var plane1 = [Float](repeating: 0, count: pixelCount)
+        var plane2 = [Float](repeating: 0, count: pixelCount)
 
         let invMax = 1.0 / Double(maximum)
         @inline(__always)
@@ -130,51 +128,92 @@ package enum VarDCTPixelEncoder {
             return v <= 0.04045 ? (v / 12.92) : pow((v + 0.055) / 1.055, 2.4)
         }
 
-        for y in 0..<height {
-            if (y & 15) == 0 { try budget.checkpoint() }
-            let rowOffset = y * width
-            if grayscale {
-                for x in 0..<width {
-                    let sample = try source.sample(channel: 0, x: x, y: y)
-                    let idx = rowOffset + x
-                    if let table = eightBitTable {
-                        let xyb = table.grayscale[Int(sample)]
-                        planes[0][idx] = xyb.0
-                        planes[1][idx] = xyb.1
-                        planes[2][idx] = xyb.2
-                    } else {
-                        let lin = srgbToLinear(sample)
-                        let xyb = try DefaultOpsin.forward((lin, lin, lin))
-                        planes[0][idx] = Float(xyb.X)
-                        planes[1][idx] = Float(xyb.Y)
-                        planes[2][idx] = Float(xyb.B)
+        try plane0.withUnsafeMutableBufferPointer { p0Buf in
+            try plane1.withUnsafeMutableBufferPointer { p1Buf in
+                try plane2.withUnsafeMutableBufferPointer { p2Buf in
+                    let p0 = p0Buf.baseAddress!
+                    let p1 = p1Buf.baseAddress!
+                    let p2 = p2Buf.baseAddress!
+
+                    for y in 0..<height {
+                        if (y & 15) == 0 { try budget.checkpoint() }
+                        let rowOffset = y * width
+                        if grayscale {
+                            for x in 0..<width {
+                                let sample = try source.sample(channel: 0, x: x, y: y)
+                                let idx = rowOffset + x
+                                if let table = eightBitTable {
+                                    let xyb = table.grayscale[Int(sample)]
+                                    p0[idx] = xyb.0
+                                    p1[idx] = xyb.1
+                                    p2[idx] = xyb.2
+                                } else {
+                                    let lin = srgbToLinear(sample)
+                                    let xyb = try DefaultOpsin.forward((lin, lin, lin))
+                                    p0[idx] = Float(xyb.X)
+                                    p1[idx] = Float(xyb.Y)
+                                    p2[idx] = Float(xyb.B)
+                                }
+                            }
+                        } else if let table = eightBitTable,
+                                  layouts[0].storageBits == 8, layouts[1].storageBits == 8, layouts[2].storageBits == 8,
+                                  layouts[0].rowBytes == layouts[1].rowBytes, layouts[1].rowBytes == layouts[2].rowBytes,
+                                  layouts[0].pixelStride == layouts[1].pixelStride, layouts[1].pixelStride == layouts[2].pixelStride,
+                                  layouts[0].offset == 0, layouts[1].offset == 1, layouts[2].offset == 2 {
+                            let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                            let stride = layouts[0].pixelStride
+                            let rowBase = y * layouts[0].rowBytes
+                            let cbrtBias = cbrt(0.0037930732552754493)
+                            table.linear.withUnsafeBufferPointer { linBuf in
+                                let lin = linBuf.baseAddress!
+                                var srcPos = rowBase
+                                for x in 0..<width {
+                                    let r = lin[Int(rawBase[srcPos])]
+                                    let g = lin[Int(rawBase[srcPos + 1])]
+                                    let b = lin[Int(rawBase[srcPos + 2])]
+                                    srcPos += stride
+                                    let lMix = 0.30 * r + 0.622 * g + 0.078 * b + 0.0037930732552754493
+                                    let mMix = 0.23 * r + 0.692 * g + 0.078 * b + 0.0037930732552754493
+                                    let sMix = 0.24342268924547819 * r + 0.20476744424496821 * g + 0.55180986650955360 * b + 0.0037930732552754493
+                                    let lGamma = cbrt(lMix) - cbrtBias
+                                    let mGamma = cbrt(mMix) - cbrtBias
+                                    let sGamma = cbrt(sMix) - cbrtBias
+                                    let idx = rowOffset + x
+                                    p0[idx] = Float(0.5 * (lGamma - mGamma))
+                                    p1[idx] = Float(0.5 * (lGamma + mGamma))
+                                    p2[idx] = Float(sGamma)
+                                }
+                            }
+                        } else {
+                            for x in 0..<width {
+                                let sr = try source.sample(channel: 0, x: x, y: y)
+                                let sg = try source.sample(channel: 1, x: x, y: y)
+                                let sb = try source.sample(channel: 2, x: x, y: y)
+                                let r: Double
+                                let g: Double
+                                let b: Double
+                                if let table = eightBitTable {
+                                    r = table.linear[Int(sr)]
+                                    g = table.linear[Int(sg)]
+                                    b = table.linear[Int(sb)]
+                                } else {
+                                    r = srgbToLinear(sr)
+                                    g = srgbToLinear(sg)
+                                    b = srgbToLinear(sb)
+                                }
+                                let xyb = try DefaultOpsin.forward((r, g, b))
+                                let idx = rowOffset + x
+                                p0[idx] = Float(xyb.X)
+                                p1[idx] = Float(xyb.Y)
+                                p2[idx] = Float(xyb.B)
+                            }
+                        }
                     }
-                }
-            } else {
-                for x in 0..<width {
-                    let sr = try source.sample(channel: 0, x: x, y: y)
-                    let sg = try source.sample(channel: 1, x: x, y: y)
-                    let sb = try source.sample(channel: 2, x: x, y: y)
-                    let r: Double
-                    let g: Double
-                    let b: Double
-                    if let table = eightBitTable {
-                        r = table.linear[Int(sr)]
-                        g = table.linear[Int(sg)]
-                        b = table.linear[Int(sb)]
-                    } else {
-                        r = srgbToLinear(sr)
-                        g = srgbToLinear(sg)
-                        b = srgbToLinear(sb)
-                    }
-                    let xyb = try DefaultOpsin.forward((r, g, b))
-                    let idx = rowOffset + x
-                    planes[0][idx] = Float(xyb.X)
-                    planes[1][idx] = Float(xyb.Y)
-                    planes[2][idx] = Float(xyb.B)
                 }
             }
         }
+
+        var planes = [plane0, plane1, plane2]
 
         if gaborish {
             for c in 0..<3 {

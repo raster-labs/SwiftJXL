@@ -118,6 +118,371 @@ package struct VarDCTSmallAnalysis: Sendable {
         }
     }
 
+    /// Fast unchecked 8x8 analysis for callers that have already validated finiteness and budgets.
+    package func applyUnchecked(
+        _ pixels: UnsafePointer<Float>,
+        identifier: Int,
+        workspace: inout Workspace,
+        quad4x4Cache: UnsafeMutablePointer<Float>? = nil,
+        half4x8Cache: UnsafeMutablePointer<Float>? = nil
+    ) {
+        workspace.output.withUnsafeMutableBufferPointer { outBuf in
+            let out = outBuf.baseAddress!
+            switch identifier {
+            case 0:
+                workspace.dct8Scratch.withMutablePointers { dctOut, inter in
+                    ScaledDCT.applyUnchecked(
+                        rows: 8,
+                        columns: 8,
+                        direction: .forward,
+                        input: pixels,
+                        output: dctOut,
+                        scratch: inter
+                    )
+                    for y in 0..<8 {
+                        for x in 0..<8 {
+                            out[x * 8 + y] = dctOut[y * 8 + x]
+                        }
+                    }
+                }
+
+            case 1:
+                var dcs = (0.0, 0.0, 0.0, 0.0)
+                for qy in 0..<2 {
+                    for qx in 0..<2 {
+                        let anchor = Double(pixels[(qy * 4 + 1) * 8 + (qx * 4 + 1)])
+                        var sum = 0.0
+                        for sy in 0..<4 {
+                            for sx in 0..<4 {
+                                let v = Double(pixels[(qy * 4 + sy) * 8 + (qx * 4 + sx)])
+                                sum += v
+                                if sy == 0 && sx == 0 {
+                                    out[(2 + qy) * 8 + (2 + qx)] = Float(v - anchor)
+                                } else if !(sy == 1 && sx == 1) {
+                                    out[(sy * 2 + qy) * 8 + (sx * 2 + qx)] = Float(v - anchor)
+                                }
+                            }
+                        }
+                        let dc = sum * 0.0625
+                        switch qy * 2 + qx {
+                        case 0: dcs.0 = dc
+                        case 1: dcs.1 = dc
+                        case 2: dcs.2 = dc
+                        default: dcs.3 = dc
+                        }
+                    }
+                }
+                let (m00, m01, m10, m11) = Self.dct2x2(dcs.0, dcs.1, dcs.2, dcs.3)
+                out[0] = Float(m00)
+                out[8] = Float(m01)
+                out[1] = Float(m10)
+                out[9] = Float(m11)
+
+            case 2:
+                workspace.dct4x4Scratch.withMutablePointers { _, dc2 in
+                    for by in 0..<4 {
+                        for bx in 0..<4 {
+                            let py = by * 2
+                            let px = bx * 2
+                            let (m00, m01, m10, m11) = Self.dct2x2(
+                                Double(pixels[(py + 0) * 8 + (px + 0)]),
+                                Double(pixels[(py + 0) * 8 + (px + 1)]),
+                                Double(pixels[(py + 1) * 8 + (px + 0)]),
+                                Double(pixels[(py + 1) * 8 + (px + 1)])
+                            )
+                            dc2[by * 4 + bx] = m00
+                            out[(4 + by) * 8 + bx] = Float(m01)
+                            out[by * 8 + (4 + bx)] = Float(m10)
+                            out[(4 + by) * 8 + (4 + bx)] = Float(m11)
+                        }
+                    }
+                    var quadDCs = (0.0, 0.0, 0.0, 0.0)
+                    for qy in 0..<2 {
+                        for qx in 0..<2 {
+                            let baseY = qy * 2
+                            let baseX = qx * 2
+                            let (m00, m01, m10, m11) = Self.dct2x2(
+                                dc2[(baseY + 0) * 4 + (baseX + 0)],
+                                dc2[(baseY + 0) * 4 + (baseX + 1)],
+                                dc2[(baseY + 1) * 4 + (baseX + 0)],
+                                dc2[(baseY + 1) * 4 + (baseX + 1)]
+                            )
+                            switch qy * 2 + qx {
+                            case 0: quadDCs.0 = m00
+                            case 1: quadDCs.1 = m00
+                            case 2: quadDCs.2 = m00
+                            default: quadDCs.3 = m00
+                            }
+                            out[(2 + qy) * 8 + qx] = Float(m01)
+                            out[qy * 8 + (2 + qx)] = Float(m10)
+                            out[(2 + qy) * 8 + (2 + qx)] = Float(m11)
+                        }
+                    }
+                    let (m00, m01, m10, m11) = Self.dct2x2(quadDCs.0, quadDCs.1, quadDCs.2, quadDCs.3)
+                    out[0] = Float(m00)
+                    out[8] = Float(m01)
+                    out[1] = Float(m10)
+                    out[9] = Float(m11)
+                }
+
+            case 3:
+                workspace.patch16A.withUnsafeMutableBufferPointer { p16Buf in
+                    let p16 = p16Buf.baseAddress!
+                    workspace.dct4x4Scratch.withMutablePointers { dctOut, inter in
+                        var dcs = (0.0, 0.0, 0.0, 0.0)
+                        for qy in 0..<2 {
+                            for qx in 0..<2 {
+                                let qIdx = qy * 2 + qx
+                                for sy in 0..<4 {
+                                    for sx in 0..<4 {
+                                        p16[sy * 4 + sx] = pixels[(qy * 4 + sy) * 8 + (qx * 4 + sx)]
+                                    }
+                                }
+                                ScaledDCT.applyUnchecked(
+                                    rows: 4,
+                                    columns: 4,
+                                    direction: .forward,
+                                    input: p16,
+                                    output: dctOut,
+                                    scratch: inter
+                                )
+                                if let cache = quad4x4Cache {
+                                    (cache + qIdx * 16).update(from: dctOut, count: 16)
+                                }
+                                let dc = Double(dctOut[0])
+                                switch qIdx {
+                                case 0: dcs.0 = dc
+                                case 1: dcs.1 = dc
+                                case 2: dcs.2 = dc
+                                default: dcs.3 = dc
+                                }
+                                for fy in 0..<4 {
+                                    for fx in 0..<4 {
+                                        let ky = fx * 2 + qy
+                                        let kx = fy * 2 + qx
+                                        out[ky * 8 + kx] = dctOut[fy * 4 + fx]
+                                    }
+                                }
+                            }
+                        }
+                        let (m00, m01, m10, m11) = Self.dct2x2(dcs.0, dcs.1, dcs.2, dcs.3)
+                        out[0] = Float(m00)
+                        out[8] = Float(m01)
+                        out[1] = Float(m10)
+                        out[9] = Float(m11)
+                    }
+                }
+
+            case 12:
+                workspace.dct4x8Scratch.withMutablePointers { dctOut, inter in
+                    ScaledDCT.applyUnchecked(
+                        rows: 4,
+                        columns: 8,
+                        direction: .forward,
+                        input: pixels,
+                        output: dctOut,
+                        scratch: inter
+                    )
+                    if let cache = half4x8Cache {
+                        cache.update(from: dctOut, count: 32)
+                    }
+                    let topDC = Double(dctOut[0])
+                    for fy in 0..<4 {
+                        let kyTop = fy * 2
+                        for fx in 0..<8 {
+                            out[kyTop * 8 + fx] = dctOut[fy * 8 + fx]
+                        }
+                    }
+
+                    ScaledDCT.applyUnchecked(
+                        rows: 4,
+                        columns: 8,
+                        direction: .forward,
+                        input: pixels + 32,
+                        output: dctOut,
+                        scratch: inter
+                    )
+                    if let cache = half4x8Cache {
+                        (cache + 32).update(from: dctOut, count: 32)
+                    }
+                    let bottomDC = Double(dctOut[0])
+                    for fy in 0..<4 {
+                        let kyBottom = fy * 2 + 1
+                        for fx in 0..<8 {
+                            out[kyBottom * 8 + fx] = dctOut[fy * 8 + fx]
+                        }
+                    }
+
+                    out[0] = Float(0.5 * (topDC + bottomDC))
+                    out[8] = Float(0.5 * (topDC - bottomDC))
+                }
+
+            case 13:
+                workspace.patch32A.withUnsafeMutableBufferPointer { p32ABuf in
+                    workspace.patch32B.withUnsafeMutableBufferPointer { p32BBuf in
+                        let p32A = p32ABuf.baseAddress!
+                        let p32B = p32BBuf.baseAddress!
+                        for y in 0..<8 {
+                            for x in 0..<4 {
+                                p32A[y * 4 + x] = pixels[y * 8 + x]
+                                p32B[y * 4 + x] = pixels[y * 8 + (4 + x)]
+                            }
+                        }
+                        workspace.dct8x4Scratch.withMutablePointers { dctOut, inter in
+                            ScaledDCT.applyUnchecked(
+                                rows: 8,
+                                columns: 4,
+                                direction: .forward,
+                                input: p32A,
+                                output: dctOut,
+                                scratch: inter
+                            )
+                            let leftDC = Double(dctOut[0])
+                            for fy in 0..<8 {
+                                for fx in 0..<4 {
+                                    out[(fx * 2) * 8 + fy] = dctOut[fy * 4 + fx]
+                                }
+                            }
+                            ScaledDCT.applyUnchecked(
+                                rows: 8,
+                                columns: 4,
+                                direction: .forward,
+                                input: p32B,
+                                output: dctOut,
+                                scratch: inter
+                            )
+                            let rightDC = Double(dctOut[0])
+                            for fy in 0..<8 {
+                                for fx in 0..<4 {
+                                    out[(fx * 2 + 1) * 8 + fy] = dctOut[fy * 4 + fx]
+                                }
+                            }
+                            out[0] = Float(0.5 * (leftDC + rightDC))
+                            out[8] = Float(0.5 * (leftDC - rightDC))
+                        }
+                    }
+                }
+
+            case 14, 15, 16, 17:
+                let kind = identifier - 14
+                let flipX = (kind & 1) != 0
+                let flipY = (kind & 2) != 0
+                let afvRowStart = flipY ? 4 : 0
+                let dct4x8RowStart = flipY ? 0 : 4
+                let afvColStart = flipX ? 4 : 0
+                let dct4x4ColStart = flipX ? 0 : 4
+
+                workspace.patch16A.withUnsafeMutableBufferPointer { p16ABuf in
+                    workspace.patch16B.withUnsafeMutableBufferPointer { p16BBuf in
+                        let p16A = p16ABuf.baseAddress!
+                        let p16B = p16BBuf.baseAddress!
+
+                        let dct4x8DC: Double
+                        if let hCache = half4x8Cache {
+                            let cached4x8 = hCache + (flipY ? 0 : 32)
+                            dct4x8DC = Double(cached4x8[0])
+                            for fy in 0..<4 {
+                                let ky = fy * 2 + 1
+                                for fx in 0..<8 {
+                                    out[ky * 8 + fx] = cached4x8[fy * 8 + fx]
+                                }
+                            }
+                        } else {
+                            var tmpDC = 0.0
+                            workspace.dct4x8Scratch.withMutablePointers { dctOut, inter in
+                                ScaledDCT.applyUnchecked(
+                                    rows: 4,
+                                    columns: 8,
+                                    direction: .forward,
+                                    input: pixels + dct4x8RowStart * 8,
+                                    output: dctOut,
+                                    scratch: inter
+                                )
+                                tmpDC = Double(dctOut[0])
+                                for fy in 0..<4 {
+                                    let ky = fy * 2 + 1
+                                    for fx in 0..<8 {
+                                        out[ky * 8 + fx] = dctOut[fy * 8 + fx]
+                                    }
+                                }
+                            }
+                            dct4x8DC = tmpDC
+                        }
+
+                        let dct4x4DC: Double
+                        if let qCache = quad4x4Cache {
+                            let qy = flipY ? 1 : 0
+                            let qx = flipX ? 0 : 1
+                            let cached4x4 = qCache + (qy * 2 + qx) * 16
+                            dct4x4DC = Double(cached4x4[0])
+                            for fy in 0..<4 {
+                                for fx in 0..<4 {
+                                    let ky = fx * 2
+                                    let kx = fy * 2 + 1
+                                    out[ky * 8 + kx] = cached4x4[fy * 4 + fx]
+                                }
+                            }
+                            for sy in 0..<4 {
+                                let rowAFV = afvRowStart + sy
+                                let dstAFVY = flipY ? (3 - sy) : sy
+                                for sx in 0..<4 {
+                                    let dstAFVX = flipX ? (3 - sx) : sx
+                                    p16B[dstAFVY * 4 + dstAFVX] = pixels[rowAFV * 8 + (afvColStart + sx)]
+                                }
+                            }
+                        } else {
+                            for sy in 0..<4 {
+                                let rowAFV = afvRowStart + sy
+                                let dstAFVY = flipY ? (3 - sy) : sy
+                                for sx in 0..<4 {
+                                    p16A[sy * 4 + sx] = pixels[rowAFV * 8 + (dct4x4ColStart + sx)]
+                                    let dstAFVX = flipX ? (3 - sx) : sx
+                                    p16B[dstAFVY * 4 + dstAFVX] = pixels[rowAFV * 8 + (afvColStart + sx)]
+                                }
+                            }
+                            var tmpDC = 0.0
+                            workspace.dct4x4Scratch.withMutablePointers { dctOut, inter in
+                                ScaledDCT.applyUnchecked(
+                                    rows: 4,
+                                    columns: 4,
+                                    direction: .forward,
+                                    input: p16A,
+                                    output: dctOut,
+                                    scratch: inter
+                                )
+                                tmpDC = Double(dctOut[0])
+                                for fy in 0..<4 {
+                                    for fx in 0..<4 {
+                                        let ky = fx * 2
+                                        let kx = fy * 2 + 1
+                                        out[ky * 8 + kx] = dctOut[fy * 4 + fx]
+                                    }
+                                }
+                            }
+                            dct4x4DC = tmpDC
+                        }
+
+                        VarDCTAFV.forwardBasisUnchecked(p16B, into: p16A)
+                        let afvDC = Double(p16A[0])
+                        for sy in 0..<4 {
+                            for sx in 0..<4 {
+                                out[(sy * 2) * 8 + (sx * 2)] = p16A[sy * 4 + sx]
+                            }
+                        }
+
+                        let afvHalfDC = 0.5 * (afvDC + dct4x4DC)
+                        out[1] = Float(0.5 * (afvDC - dct4x4DC))
+                        out[0] = Float(0.5 * (afvHalfDC + dct4x8DC))
+                        out[8] = Float(0.5 * (afvHalfDC - dct4x8DC))
+                    }
+                }
+
+            default:
+                break
+            }
+        }
+    }
+
     @inline(__always)
     private static func dct2x2(_ p00: Double, _ p01: Double, _ p10: Double, _ p11: Double) -> (Double, Double, Double, Double) {
         let s0 = 0.5 * (p00 + p01)

@@ -178,7 +178,27 @@ extension HybridUintConfig {
         let nMinusSplit = Int(rest &>> msbLsb)
         // n - msb_in_token - lsb_in_token = number of extra bits to read.
         let nExtra = nMinusSplit &+ splitExponent &- msbInToken &- lsbInToken
-        let extra = nExtra > 0 ? try r.read(bits: nExtra) : 0
+        let extra: UInt32
+        if nExtra > 0 {
+            if nExtra <= 32 {
+                if r.bitCount < nExtra {
+                    r.refill()
+                }
+                if r.bitCount >= nExtra {
+                    let mask = (UInt64(1) &<< UInt64(nExtra)) &- 1
+                    extra = UInt32(truncatingIfNeeded: r.bitBuf & mask)
+                    r.bitBuf &>>= UInt64(nExtra)
+                    r.bitCount &-= nExtra
+                    r.pos &+= nExtra
+                } else {
+                    extra = try r.read(bits: nExtra)
+                }
+            } else {
+                extra = try r.read(bits: nExtra)
+            }
+        } else {
+            extra = 0
+        }
         // Unpack the MSB/LSB fields baked into the token.
         let lsbMask: UInt32 = lsbInToken == 0 ? 0 : (UInt32(1) &<< UInt32(lsbInToken)) &- 1
         let lsbBits = token & lsbMask

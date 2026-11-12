@@ -136,6 +136,106 @@ package enum VarDCTQuantWeights {
         return out
     }
 
+    private static let cached0: [Float] = buildDCTMatrix(dct8Bands, canonicalRows: 8, canonicalColumns: 8)
+    private static let cached1: [Float] = {
+        var out = [Float](repeating: 0, count: 192)
+        for c in 0..<3 {
+            let base = c * 64
+            for y in 0..<8 {
+                for x in 0..<8 {
+                    out[base + y * 8 + x] = (x < 2 && y < 2) ? hornussDC[c] : hornussAC[c]
+                }
+            }
+        }
+        return out
+    }()
+    private static let cached2: [Float] = {
+        var out = [Float](repeating: 0, count: 192)
+        for c in 0..<3 {
+            let b = dct2x2Bands[c]
+            let base = c * 64
+            for y in 0..<8 {
+                for x in 0..<8 {
+                    let w: Float
+                    if x < 2 && y < 2 {
+                        w = (x == 1 && y == 1) ? b[1] : b[0]
+                    } else if x < 4 && y < 4 {
+                        w = (x >= 2 && y >= 2) ? b[3] : b[2]
+                    } else if x < 4 || y < 4 {
+                        w = b[4]
+                    } else {
+                        w = b[5]
+                    }
+                    out[base + y * 8 + x] = w
+                }
+            }
+        }
+        return out
+    }()
+    private static let cached3: [Float] = {
+        let w4x4 = buildDCTMatrix(dct4x4Bands, canonicalRows: 4, canonicalColumns: 4)
+        var out = [Float](repeating: 0, count: 192)
+        for c in 0..<3 {
+            let base = c * 64
+            let base4x4 = c * 16
+            for y in 0..<8 {
+                for x in 0..<8 {
+                    out[base + y * 8 + x] = (x < 2 && y < 2)
+                        ? hornussDC[c]
+                        : w4x4[base4x4 + (y / 2) * 4 + (x / 2)]
+                }
+            }
+        }
+        return out
+    }()
+    private static let cached4: [Float] = buildDCTMatrix(dct16Bands, canonicalRows: 16, canonicalColumns: 16)
+    private static let cached5: [Float] = buildDCTMatrix(dct32Bands, canonicalRows: 32, canonicalColumns: 32)
+    private static let cached6_7: [Float] = buildDCTMatrix(dct8x16Bands, canonicalRows: 8, canonicalColumns: 16)
+    private static let cached8_9: [Float] = buildDCTMatrix(dct8x32Bands, canonicalRows: 8, canonicalColumns: 32)
+    private static let cached10_11: [Float] = buildDCTMatrix(dct16x32Bands, canonicalRows: 16, canonicalColumns: 32)
+    private static let cached12_13: [Float] = {
+        let w4x8 = buildDCTMatrix(dct4x8Bands, canonicalRows: 4, canonicalColumns: 8)
+        var out = [Float](repeating: 0, count: 192)
+        for c in 0..<3 {
+            let base = c * 64
+            let base4x8 = c * 32
+            for y in 0..<8 {
+                for x in 0..<8 {
+                    out[base + y * 8 + x] = w4x8[base4x8 + (y / 2) * 8 + x]
+                }
+            }
+        }
+        return out
+    }()
+    private static let cached14_17: [Float] = {
+        let w4x8 = buildDCTMatrix(dct4x8Bands, canonicalRows: 4, canonicalColumns: 8)
+        let w4x4 = buildDCTMatrix(dct4x4Bands, canonicalRows: 4, canonicalColumns: 4)
+        var out = [Float](repeating: 0, count: 192)
+        for c in 0..<3 {
+            let base = c * 64
+            let base4x8 = c * 32
+            let base4x4 = c * 16
+            for y in 0..<8 {
+                for x in 0..<8 {
+                    let w: Float
+                    if (y == 0 && x == 1) || (y == 1 && x == 0) {
+                        w = afvDC[c]
+                    } else if (y & 1) == 1 {
+                        w = w4x8[base4x8 + (y / 2) * 8 + x]
+                    } else if (x & 1) == 1 {
+                        w = w4x4[base4x4 + (y / 2) * 4 + (x / 2)]
+                    } else {
+                        w = afvWeights[c][(y / 2) * 4 + (x / 2)]
+                    }
+                    out[base + y * 8 + x] = w
+                }
+            }
+        }
+        return out
+    }()
+    private static let cached18: [Float] = buildDCTMatrix(dct64Bands, canonicalRows: 64, canonicalColumns: 64)
+    private static let cached19_20: [Float] = buildDCTMatrix(dct32x64Bands, canonicalRows: 32, canonicalColumns: 64)
+
     package static func make(
         identifier: Int,
         rows: Int,
@@ -159,132 +259,43 @@ package enum VarDCTQuantWeights {
         switch identifier {
         case 0:
             guard count == 64 else { throw VarDCTError.invalidTransform }
-            return buildDCTMatrix(dct8Bands, canonicalRows: 8, canonicalColumns: 8)
-
+            return cached0
         case 1:
             guard count == 64 else { throw VarDCTError.invalidTransform }
-            var out = [Float](repeating: 0, count: 192)
-            for c in 0..<3 {
-                let base = c * 64
-                for y in 0..<8 {
-                    for x in 0..<8 {
-                        out[base + y * 8 + x] = (x < 2 && y < 2) ? hornussDC[c] : hornussAC[c]
-                    }
-                }
-            }
-            return out
-
+            return cached1
         case 2:
             guard count == 64 else { throw VarDCTError.invalidTransform }
-            var out = [Float](repeating: 0, count: 192)
-            for c in 0..<3 {
-                let b = dct2x2Bands[c]
-                let base = c * 64
-                for y in 0..<8 {
-                    for x in 0..<8 {
-                        let w: Float
-                        if x < 2 && y < 2 {
-                            w = (x == 1 && y == 1) ? b[1] : b[0]
-                        } else if x < 4 && y < 4 {
-                            w = (x >= 2 && y >= 2) ? b[3] : b[2]
-                        } else if x < 4 || y < 4 {
-                            w = b[4]
-                        } else {
-                            w = b[5]
-                        }
-                        out[base + y * 8 + x] = w
-                    }
-                }
-            }
-            return out
-
+            return cached2
         case 3:
             guard count == 64 else { throw VarDCTError.invalidTransform }
-            let w4x4 = buildDCTMatrix(dct4x4Bands, canonicalRows: 4, canonicalColumns: 4)
-            var out = [Float](repeating: 0, count: 192)
-            for c in 0..<3 {
-                let base = c * 64
-                let base4x4 = c * 16
-                for y in 0..<8 {
-                    for x in 0..<8 {
-                        out[base + y * 8 + x] = (x < 2 && y < 2)
-                            ? hornussDC[c]
-                            : w4x4[base4x4 + (y / 2) * 4 + (x / 2)]
-                    }
-                }
-            }
-            return out
-
+            return cached3
         case 4:
             guard canonicalRows == 16 && canonicalColumns == 16 else { throw VarDCTError.invalidTransform }
-            return buildDCTMatrix(dct16Bands, canonicalRows: 16, canonicalColumns: 16)
-
+            return cached4
         case 5:
             guard canonicalRows == 32 && canonicalColumns == 32 else { throw VarDCTError.invalidTransform }
-            return buildDCTMatrix(dct32Bands, canonicalRows: 32, canonicalColumns: 32)
-
+            return cached5
         case 6, 7:
             guard canonicalRows == 8 && canonicalColumns == 16 else { throw VarDCTError.invalidTransform }
-            return buildDCTMatrix(dct8x16Bands, canonicalRows: 8, canonicalColumns: 16)
-
+            return cached6_7
         case 8, 9:
             guard canonicalRows == 8 && canonicalColumns == 32 else { throw VarDCTError.invalidTransform }
-            return buildDCTMatrix(dct8x32Bands, canonicalRows: 8, canonicalColumns: 32)
-
+            return cached8_9
         case 10, 11:
             guard canonicalRows == 16 && canonicalColumns == 32 else { throw VarDCTError.invalidTransform }
-            return buildDCTMatrix(dct16x32Bands, canonicalRows: 16, canonicalColumns: 32)
-
+            return cached10_11
         case 12, 13:
             guard count == 64 else { throw VarDCTError.invalidTransform }
-            let w4x8 = buildDCTMatrix(dct4x8Bands, canonicalRows: 4, canonicalColumns: 8)
-            var out = [Float](repeating: 0, count: 192)
-            for c in 0..<3 {
-                let base = c * 64
-                let base4x8 = c * 32
-                for y in 0..<8 {
-                    for x in 0..<8 {
-                        out[base + y * 8 + x] = w4x8[base4x8 + (y / 2) * 8 + x]
-                    }
-                }
-            }
-            return out
-
+            return cached12_13
         case 14, 15, 16, 17:
             guard count == 64 else { throw VarDCTError.invalidTransform }
-            let w4x8 = buildDCTMatrix(dct4x8Bands, canonicalRows: 4, canonicalColumns: 8)
-            let w4x4 = buildDCTMatrix(dct4x4Bands, canonicalRows: 4, canonicalColumns: 4)
-            var out = [Float](repeating: 0, count: 192)
-            for c in 0..<3 {
-                let base = c * 64
-                let base4x8 = c * 32
-                let base4x4 = c * 16
-                for y in 0..<8 {
-                    for x in 0..<8 {
-                        let w: Float
-                        if (y == 0 && x == 1) || (y == 1 && x == 0) {
-                            w = afvDC[c]
-                        } else if (y & 1) == 1 {
-                            w = w4x8[base4x8 + (y / 2) * 8 + x]
-                        } else if (x & 1) == 1 {
-                            w = w4x4[base4x4 + (y / 2) * 4 + (x / 2)]
-                        } else {
-                            w = afvWeights[c][(y / 2) * 4 + (x / 2)]
-                        }
-                        out[base + y * 8 + x] = w
-                    }
-                }
-            }
-            return out
-
+            return cached14_17
         case 18:
             guard canonicalRows == 64 && canonicalColumns == 64 else { throw VarDCTError.invalidTransform }
-            return buildDCTMatrix(dct64Bands, canonicalRows: 64, canonicalColumns: 64)
-
+            return cached18
         case 19, 20:
             guard canonicalRows == 32 && canonicalColumns == 64 else { throw VarDCTError.invalidTransform }
-            return buildDCTMatrix(dct32x64Bands, canonicalRows: 32, canonicalColumns: 64)
-
+            return cached19_20
         default:
             throw VarDCTError.invalidTransform
         }

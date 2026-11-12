@@ -144,8 +144,54 @@ package struct ANSStreamDecoder: Sendable {
         }
         // Renormalise: if state < 2^16, shift up and read 16 bits.
         if state < ANSConstants.stateLowerBound {
-            let w = try r.read(bits: 16)
-            state = (state << 16) | w
+            if r.bitCount < 16 {
+                r.refill()
+            }
+            if r.bitCount >= 16 {
+                let w = UInt32(truncatingIfNeeded: r.bitBuf & 0xFFFF)
+                r.bitBuf &>>= 16
+                r.bitCount &-= 16
+                r.pos &+= 16
+                state = (state << 16) | w
+            } else {
+                let w = try r.read(bits: 16)
+                state = (state << 16) | w
+            }
+        }
+        return symbol
+    }
+
+    @inline(__always)
+    package mutating func readSymbolAliasFast(
+        cluster: Int,
+        flatSlotsPtr: UnsafePointer<UInt64>,
+        from r: inout BitReader
+    ) throws -> UInt32 {
+        if !initialised {
+            state = try r.read(bits: 32)
+            initialised = true
+        }
+        let logTab = UInt32(ANSConstants.logTabSize)
+        let slot = state & (ANSConstants.tabSize - 1)
+        let packed = flatSlotsPtr[(cluster &<< ANSConstants.logTabSize) | Int(slot)]
+        let offsetPlusP = UInt32(truncatingIfNeeded: packed & 0xFFFF)
+        let symbol = UInt32(truncatingIfNeeded: (packed &>> 16) & 0xFFFF)
+        let freq = UInt32(truncatingIfNeeded: packed &>> 32)
+        state = freq &* (state >> logTab) &+ offsetPlusP
+        if state < ANSConstants.stateLowerBound {
+            if r.bitCount < 16 {
+                r.refill()
+            }
+            if r.bitCount >= 16 {
+                let w = UInt32(truncatingIfNeeded: r.bitBuf & 0xFFFF)
+                r.bitBuf &>>= 16
+                r.bitCount &-= 16
+                r.pos &+= 16
+                state = (state << 16) | w
+            } else {
+                let w = try r.read(bits: 16)
+                state = (state << 16) | w
+            }
         }
         return symbol
     }
