@@ -208,62 +208,169 @@ package enum ModularStorageEncoder {
             var channels: [[Int32]] = []
             channels.reserveCapacity(layouts.count)
             let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
-            for layout in layouts {
-                ScalarStorageAudit.current?.workingPlane(n * 4)
-                var plane = [Int32](repeating: 0, count: n)
-                try plane.withUnsafeMutableBufferPointer { dst in
-                    let dstBase = dst.baseAddress!
-                    let stride = layout.pixelStride
-                    if layout.storageBits == 8 {
-                        for y in 0..<height {
-                            if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
-                            var p = layout.offset &+ y &* layout.rowBytes
-                            let dstRow = y &* width
-                            if bitsPerSample >= 8 {
+            if layouts.count == 3 && width <= 4096
+                && layouts[0].storageBits == 8 && layouts[1].storageBits == 8 && layouts[2].storageBits == 8
+                && layouts[0].pixelStride == 3 && layouts[1].pixelStride == 3 && layouts[2].pixelStride == 3
+                && layouts[0].rowBytes == layouts[1].rowBytes && layouts[1].rowBytes == layouts[2].rowBytes
+                && layouts[0].offset == 0 && layouts[1].offset == 1 && layouts[2].offset == 2
+                && bitsPerSample >= 8 {
+                for _ in 0..<3 { ScalarStorageAudit.current?.workingPlane(n * 4) }
+                var p0 = [Int32](repeating: 0, count: n)
+                var p1 = [Int32](repeating: 0, count: n)
+                var p2 = [Int32](repeating: 0, count: n)
+                let rowBytes = layouts[0].rowBytes
+                try p0.withUnsafeMutableBufferPointer { b0 in
+                    try p1.withUnsafeMutableBufferPointer { b1 in
+                        try p2.withUnsafeMutableBufferPointer { b2 in
+                            let d0 = b0.baseAddress!, d1 = b1.baseAddress!, d2 = b2.baseAddress!
+                            for y in 0..<height {
+                                if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
+                                var p = y &* rowBytes
+                                let dstRow = y &* width
+                                for x in 0..<width {
+                                    let idx = dstRow &+ x
+                                    d0[idx] = Int32(rawBase[p])
+                                    d1[idx] = Int32(rawBase[p &+ 1])
+                                    d2[idx] = Int32(rawBase[p &+ 2])
+                                    p &+= 3
+                                }
+                            }
+                        }
+                    }
+                }
+                channels = [p0, p1, p2]
+            } else if layouts.count == 4 && width <= 4096
+                && layouts[0].storageBits == 8 && layouts[1].storageBits == 8 && layouts[2].storageBits == 8 && layouts[3].storageBits == 8
+                && layouts[0].pixelStride == 4 && layouts[1].pixelStride == 4 && layouts[2].pixelStride == 4 && layouts[3].pixelStride == 4
+                && layouts[0].rowBytes == layouts[1].rowBytes && layouts[1].rowBytes == layouts[2].rowBytes && layouts[2].rowBytes == layouts[3].rowBytes
+                && layouts[0].offset == 0 && layouts[1].offset == 1 && layouts[2].offset == 2 && layouts[3].offset == 3
+                && bitsPerSample >= 8 {
+                for _ in 0..<4 { ScalarStorageAudit.current?.workingPlane(n * 4) }
+                var p0 = [Int32](repeating: 0, count: n)
+                var p1 = [Int32](repeating: 0, count: n)
+                var p2 = [Int32](repeating: 0, count: n)
+                var p3 = [Int32](repeating: 0, count: n)
+                let rowBytes = layouts[0].rowBytes
+                try p0.withUnsafeMutableBufferPointer { b0 in
+                    try p1.withUnsafeMutableBufferPointer { b1 in
+                        try p2.withUnsafeMutableBufferPointer { b2 in
+                            try p3.withUnsafeMutableBufferPointer { b3 in
+                                let d0 = b0.baseAddress!, d1 = b1.baseAddress!, d2 = b2.baseAddress!, d3 = b3.baseAddress!
+                                for y in 0..<height {
+                                    if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
+                                    var p = y &* rowBytes
+                                    let dstRow = y &* width
+                                    for x in 0..<width {
+                                        let idx = dstRow &+ x
+                                        d0[idx] = Int32(rawBase[p])
+                                        d1[idx] = Int32(rawBase[p &+ 1])
+                                        d2[idx] = Int32(rawBase[p &+ 2])
+                                        d3[idx] = Int32(rawBase[p &+ 3])
+                                        p &+= 4
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                channels = [p0, p1, p2, p3]
+            } else if layouts.count == 3 && width <= 4096
+                && layouts[0].storageBits == 16 && layouts[1].storageBits == 16 && layouts[2].storageBits == 16
+                && layouts[0].littleEndian && layouts[1].littleEndian && layouts[2].littleEndian
+                && layouts[0].pixelStride == 6 && layouts[1].pixelStride == 6 && layouts[2].pixelStride == 6
+                && layouts[0].rowBytes == layouts[1].rowBytes && layouts[1].rowBytes == layouts[2].rowBytes
+                && layouts[0].offset == 0 && layouts[1].offset == 2 && layouts[2].offset == 4
+                && bitsPerSample == 16 {
+                for _ in 0..<3 { ScalarStorageAudit.current?.workingPlane(n * 4) }
+                var p0 = [Int32](repeating: 0, count: n)
+                var p1 = [Int32](repeating: 0, count: n)
+                var p2 = [Int32](repeating: 0, count: n)
+                let rowBytes = layouts[0].rowBytes
+                try p0.withUnsafeMutableBufferPointer { b0 in
+                    try p1.withUnsafeMutableBufferPointer { b1 in
+                        try p2.withUnsafeMutableBufferPointer { b2 in
+                            let d0 = b0.baseAddress!, d1 = b1.baseAddress!, d2 = b2.baseAddress!
+                            for y in 0..<height {
+                                if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
+                                var p = y &* rowBytes
+                                let dstRow = y &* width
+                                for x in 0..<width {
+                                    let idx = dstRow &+ x
+                                    d0[idx] = Int32(rawBase[p]) | (Int32(rawBase[p &+ 1]) &<< 8)
+                                    d1[idx] = Int32(rawBase[p &+ 2]) | (Int32(rawBase[p &+ 3]) &<< 8)
+                                    d2[idx] = Int32(rawBase[p &+ 4]) | (Int32(rawBase[p &+ 5]) &<< 8)
+                                    p &+= 6
+                                }
+                            }
+                        }
+                    }
+                }
+                channels = [p0, p1, p2]
+            } else {
+                for layout in layouts {
+                    ScalarStorageAudit.current?.workingPlane(n * 4)
+                    var plane = [Int32](repeating: 0, count: n)
+                    try plane.withUnsafeMutableBufferPointer { dst in
+                        let dstBase = dst.baseAddress!
+                        let stride = layout.pixelStride
+                        if layout.storageBits == 8 {
+                            for y in 0..<height {
+                                if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
+                                var p = layout.offset &+ y &* layout.rowBytes
+                                let dstRow = y &* width
+                                if bitsPerSample >= 8 {
+                                    if width <= 4096 {
+                                        for x in 0..<width {
+                                            dstBase[dstRow &+ x] = Int32(rawBase[p])
+                                            p &+= stride
+                                        }
+                                    } else {
+                                        for x in 0..<width {
+                                            if x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                            dstBase[dstRow &+ x] = Int32(rawBase[p])
+                                            p &+= stride
+                                        }
+                                    }
+                                } else {
+                                    for x in 0..<width {
+                                        if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                        let value = Int32(rawBase[p])
+                                        guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                                        dstBase[dstRow &+ x] = value
+                                        p &+= stride
+                                    }
+                                }
+                            }
+                        } else if layout.littleEndian {
+                            for y in 0..<height {
+                                if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
+                                var p = layout.offset &+ y &* layout.rowBytes
+                                let dstRow = y &* width
                                 for x in 0..<width {
                                     if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
-                                    dstBase[dstRow &+ x] = Int32(rawBase[p])
+                                    let value = Int32(rawBase[p]) | (Int32(rawBase[p &+ 1]) &<< 8)
+                                    guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                                    dstBase[dstRow &+ x] = value
                                     p &+= stride
                                 }
-                            } else {
+                            }
+                        } else {
+                            for y in 0..<height {
+                                if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
+                                var p = layout.offset &+ y &* layout.rowBytes
+                                let dstRow = y &* width
                                 for x in 0..<width {
                                     if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
-                                    let value = Int32(rawBase[p])
+                                    let value = (Int32(rawBase[p]) &<< 8) | Int32(rawBase[p &+ 1])
                                     guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
                                     dstBase[dstRow &+ x] = value
                                     p &+= stride
                                 }
                             }
                         }
-                    } else if layout.littleEndian {
-                        for y in 0..<height {
-                            if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
-                            var p = layout.offset &+ y &* layout.rowBytes
-                            let dstRow = y &* width
-                            for x in 0..<width {
-                                if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
-                                let value = Int32(rawBase[p]) | (Int32(rawBase[p &+ 1]) &<< 8)
-                                guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
-                                dstBase[dstRow &+ x] = value
-                                p &+= stride
-                            }
-                        }
-                    } else {
-                        for y in 0..<height {
-                            if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
-                            var p = layout.offset &+ y &* layout.rowBytes
-                            let dstRow = y &* width
-                            for x in 0..<width {
-                                if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
-                                let value = (Int32(rawBase[p]) &<< 8) | Int32(rawBase[p &+ 1])
-                                guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
-                                dstBase[dstRow &+ x] = value
-                                p &+= stride
-                            }
-                        }
                     }
+                    channels.append(plane)
                 }
-                channels.append(plane)
             }
             let data = try SpecModularEncoder.encodeInteger(width: width, height: height,
                 bitsPerSample: bitsPerSample, grayscale: grayscale, alphaAssociated: alphaAssociated,

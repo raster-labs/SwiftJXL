@@ -44,6 +44,185 @@ package enum VarDCTPixelDecoder {
             try planes[1].withUnsafeBufferPointer { b1 in
                 try planes[2].withUnsafeBufferPointer { b2 in
                     let p0 = b0.baseAddress!, p1 = b1.baseAddress!, p2 = b2.baseAddress!
+                    if bits == 8 && numericalMode == .scalarNearest && coefficients.alpha == nil {
+                        let tables = srgb8Tables
+                        let threshPtr = tables.thresholds
+                        let bucketPtr = tables.bucketK
+                        let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                        let workers = min(max(1, budget.maximumWorkers), 8)
+                        if !grayscale,
+                           layouts[0].rowBytes == layouts[1].rowBytes, layouts[1].rowBytes == layouts[2].rowBytes,
+                           layouts[0].pixelStride == layouts[1].pixelStride, layouts[1].pixelStride == layouts[2].pixelStride {
+                            let rowBytes = layouts[0].rowBytes
+                            if layouts[0].storageBits == 8, layouts[1].storageBits == 8, layouts[2].storageBits == 8,
+                               layouts[0].pixelStride == 3,
+                               layouts[0].offset == 0, layouts[1].offset == 1, layouts[2].offset == 2 {
+                                if workers > 1 && height >= 64 {
+                                    try budget.checkpoint()
+                                    let bandCount = min(workers, height)
+                                    nonisolated(unsafe) let uRawBase = rawBase
+                                    nonisolated(unsafe) let uP0 = p0, uP1 = p1, uP2 = p2
+                                    nonisolated(unsafe) let uThresh = threshPtr, uBucket = bucketPtr
+                                    DispatchQueue.concurrentPerform(iterations: bandCount) { band in
+                                        let y0 = (band * height) / bandCount
+                                        let y1 = ((band + 1) * height) / bandCount
+                                        for y in y0..<y1 {
+                                            let rowOffset = y &* width
+                                            var dstPos = y &* rowBytes
+                                            for x in 0..<width {
+                                                let i = rowOffset &+ x
+                                                let rgb = DefaultOpsin.inverseUnchecked(Double(uP0[i]), Double(uP1[i]), Double(uP2[i]))
+                                                uRawBase[dstPos] = encodeSRGB8Byte(rgb.R, thresholds: uThresh, bucketK: uBucket)
+                                                uRawBase[dstPos &+ 1] = encodeSRGB8Byte(rgb.G, thresholds: uThresh, bucketK: uBucket)
+                                                uRawBase[dstPos &+ 2] = encodeSRGB8Byte(rgb.B, thresholds: uThresh, bucketK: uBucket)
+                                                dstPos &+= 3
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    for y in 0..<height {
+                                        if (y & 15) == 0 { try budget.checkpoint() }
+                                        let rowOffset = y &* width
+                                        var dstPos = y &* rowBytes
+                                        for x in 0..<width {
+                                            let i = rowOffset &+ x
+                                            let rgb = DefaultOpsin.inverseUnchecked(Double(p0[i]), Double(p1[i]), Double(p2[i]))
+                                            rawBase[dstPos] = encodeSRGB8Byte(rgb.R, thresholds: threshPtr, bucketK: bucketPtr)
+                                            rawBase[dstPos &+ 1] = encodeSRGB8Byte(rgb.G, thresholds: threshPtr, bucketK: bucketPtr)
+                                            rawBase[dstPos &+ 2] = encodeSRGB8Byte(rgb.B, thresholds: threshPtr, bucketK: bucketPtr)
+                                            dstPos &+= 3
+                                        }
+                                    }
+                                }
+                                try budget.checkpoint()
+                                return
+                            } else if layouts[0].storageBits == 16, layouts[1].storageBits == 16, layouts[2].storageBits == 16,
+                                      layouts[0].littleEndian, layouts[1].littleEndian, layouts[2].littleEndian,
+                                      layouts[0].pixelStride == 6,
+                                      layouts[0].offset == 0, layouts[1].offset == 2, layouts[2].offset == 4 {
+                                if workers > 1 && height >= 64 {
+                                    try budget.checkpoint()
+                                    let bandCount = min(workers, height)
+                                    nonisolated(unsafe) let uRawBase = rawBase
+                                    nonisolated(unsafe) let uP0 = p0, uP1 = p1, uP2 = p2
+                                    nonisolated(unsafe) let uThresh = threshPtr, uBucket = bucketPtr
+                                    DispatchQueue.concurrentPerform(iterations: bandCount) { band in
+                                        let y0 = (band * height) / bandCount
+                                        let y1 = ((band + 1) * height) / bandCount
+                                        for y in y0..<y1 {
+                                            let rowOffset = y &* width
+                                            var dstPos = y &* rowBytes
+                                            for x in 0..<width {
+                                                let i = rowOffset &+ x
+                                                let rgb = DefaultOpsin.inverseUnchecked(Double(uP0[i]), Double(uP1[i]), Double(uP2[i]))
+                                                uRawBase[dstPos] = encodeSRGB8Byte(rgb.R, thresholds: uThresh, bucketK: uBucket)
+                                                uRawBase[dstPos &+ 1] = 0
+                                                uRawBase[dstPos &+ 2] = encodeSRGB8Byte(rgb.G, thresholds: uThresh, bucketK: uBucket)
+                                                uRawBase[dstPos &+ 3] = 0
+                                                uRawBase[dstPos &+ 4] = encodeSRGB8Byte(rgb.B, thresholds: uThresh, bucketK: uBucket)
+                                                uRawBase[dstPos &+ 5] = 0
+                                                dstPos &+= 6
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    for y in 0..<height {
+                                        if (y & 15) == 0 { try budget.checkpoint() }
+                                        let rowOffset = y &* width
+                                        var dstPos = y &* rowBytes
+                                        for x in 0..<width {
+                                            let i = rowOffset &+ x
+                                            let rgb = DefaultOpsin.inverseUnchecked(Double(p0[i]), Double(p1[i]), Double(p2[i]))
+                                            rawBase[dstPos] = encodeSRGB8Byte(rgb.R, thresholds: threshPtr, bucketK: bucketPtr)
+                                            rawBase[dstPos &+ 1] = 0
+                                            rawBase[dstPos &+ 2] = encodeSRGB8Byte(rgb.G, thresholds: threshPtr, bucketK: bucketPtr)
+                                            rawBase[dstPos &+ 3] = 0
+                                            rawBase[dstPos &+ 4] = encodeSRGB8Byte(rgb.B, thresholds: threshPtr, bucketK: bucketPtr)
+                                            rawBase[dstPos &+ 5] = 0
+                                            dstPos &+= 6
+                                        }
+                                    }
+                                }
+                                try budget.checkpoint()
+                                return
+                            }
+                        } else if grayscale, layouts[0].offset == 0 {
+                            let rowBytes = layouts[0].rowBytes
+                            if layouts[0].storageBits == 8, layouts[0].pixelStride == 1 {
+                                if workers > 1 && height >= 64 {
+                                    try budget.checkpoint()
+                                    let bandCount = min(workers, height)
+                                    nonisolated(unsafe) let uRawBase = rawBase
+                                    nonisolated(unsafe) let uP0 = p0, uP1 = p1, uP2 = p2
+                                    nonisolated(unsafe) let uThresh = threshPtr, uBucket = bucketPtr
+                                    DispatchQueue.concurrentPerform(iterations: bandCount) { band in
+                                        let y0 = (band * height) / bandCount
+                                        let y1 = ((band + 1) * height) / bandCount
+                                        for y in y0..<y1 {
+                                            let rowOffset = y &* width
+                                            let dstRow = y &* rowBytes
+                                            for x in 0..<width {
+                                                let i = rowOffset &+ x
+                                                let rgb = DefaultOpsin.inverseUnchecked(Double(uP0[i]), Double(uP1[i]), Double(uP2[i]))
+                                                uRawBase[dstRow &+ x] = encodeSRGB8Byte(rgb.R, thresholds: uThresh, bucketK: uBucket)
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    for y in 0..<height {
+                                        if (y & 15) == 0 { try budget.checkpoint() }
+                                        let rowOffset = y &* width
+                                        let dstRow = y &* rowBytes
+                                        for x in 0..<width {
+                                            let i = rowOffset &+ x
+                                            let rgb = DefaultOpsin.inverseUnchecked(Double(p0[i]), Double(p1[i]), Double(p2[i]))
+                                            rawBase[dstRow &+ x] = encodeSRGB8Byte(rgb.R, thresholds: threshPtr, bucketK: bucketPtr)
+                                        }
+                                    }
+                                }
+                                try budget.checkpoint()
+                                return
+                            } else if layouts[0].storageBits == 16, layouts[0].littleEndian, layouts[0].pixelStride == 2 {
+                                if workers > 1 && height >= 64 {
+                                    try budget.checkpoint()
+                                    let bandCount = min(workers, height)
+                                    nonisolated(unsafe) let uRawBase = rawBase
+                                    nonisolated(unsafe) let uP0 = p0, uP1 = p1, uP2 = p2
+                                    nonisolated(unsafe) let uThresh = threshPtr, uBucket = bucketPtr
+                                    DispatchQueue.concurrentPerform(iterations: bandCount) { band in
+                                        let y0 = (band * height) / bandCount
+                                        let y1 = ((band + 1) * height) / bandCount
+                                        for y in y0..<y1 {
+                                            let rowOffset = y &* width
+                                            var dstPos = y &* rowBytes
+                                            for x in 0..<width {
+                                                let i = rowOffset &+ x
+                                                let rgb = DefaultOpsin.inverseUnchecked(Double(uP0[i]), Double(uP1[i]), Double(uP2[i]))
+                                                uRawBase[dstPos] = encodeSRGB8Byte(rgb.R, thresholds: uThresh, bucketK: uBucket)
+                                                uRawBase[dstPos &+ 1] = 0
+                                                dstPos &+= 2
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    for y in 0..<height {
+                                        if (y & 15) == 0 { try budget.checkpoint() }
+                                        let rowOffset = y &* width
+                                        var dstPos = y &* rowBytes
+                                        for x in 0..<width {
+                                            let i = rowOffset &+ x
+                                            let rgb = DefaultOpsin.inverseUnchecked(Double(p0[i]), Double(p1[i]), Double(p2[i]))
+                                            rawBase[dstPos] = encodeSRGB8Byte(rgb.R, thresholds: threshPtr, bucketK: bucketPtr)
+                                            rawBase[dstPos &+ 1] = 0
+                                            dstPos &+= 2
+                                        }
+                                    }
+                                }
+                                try budget.checkpoint()
+                                return
+                            }
+                        }
+                    }
                     for y in 0..<height {
                         try budget.checkpoint()
                         let rowOffset = y &* width
@@ -74,8 +253,8 @@ package enum VarDCTPixelDecoder {
     }
 
     // Exact IEEE-754 threshold table for 8-bit scalarNearest sRGB encoding.
-    // Consecutive thresholds are separated by >= 11 buckets in Int(sqrt(linear) * 4096.0),
-    // so each bucket maps to either k or k + 1 via a single Double comparison with zero pow() calls.
+    // Because 1/4096 < 1/(255 * 12.92), each linear bucket Int(linear * 4096.0)
+    // spans at most one threshold, mapping to k or k + 1 with a single comparison and zero pow()/sqrt() calls.
     nonisolated(unsafe) private static let srgb8Tables: (thresholds: UnsafePointer<Double>, bucketK: UnsafePointer<UInt8>) = {
         let threshPtr = UnsafeMutablePointer<Double>.allocate(capacity: 256)
         for k in 0..<255 {
@@ -98,8 +277,7 @@ package enum VarDCTPixelDecoder {
 
         let bucketPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: 4097)
         for b in 0...4096 {
-            let xLo = max(0.0, Double(b - 1) / 4096.0)
-            let linLo = xLo * xLo
+            let linLo = Double(b) / 4096.0
             let enc = linLo <= 0.0031308 ? 12.92 * linLo : 1.055 * pow(linLo, 1.0 / 2.4) - 0.055
             let q = Int(min(254, max(0, Int32((min(1.0, max(0.0, enc)) * 255.0).rounded()))))
             bucketPtr[b] = UInt8(q)
@@ -108,14 +286,21 @@ package enum VarDCTPixelDecoder {
     }()
 
     @inline(__always)
+    private static func encodeSRGB8Byte(_ linear: Double,
+                                        thresholds: UnsafePointer<Double>,
+                                        bucketK: UnsafePointer<UInt8>) -> UInt8 {
+        if linear <= 0.0 { return 0 }
+        if linear >= 1.0 { return 255 }
+        let b = Int(linear * 4096.0)
+        let k = Int(bucketK[b])
+        return linear >= thresholds[k] ? UInt8(truncatingIfNeeded: k &+ 1) : UInt8(truncatingIfNeeded: k)
+    }
+
+    @inline(__always)
     private static func encodeSRGB8ScalarNearest(_ linear: Double,
                                                  thresholds: UnsafePointer<Double>,
                                                  bucketK: UnsafePointer<UInt8>) -> Int32 {
-        if linear <= 0.0 { return 0 }
-        if linear >= 1.0 { return 255 }
-        let b = Int(linear.squareRoot() * 4096.0)
-        let k = Int(bucketK[b])
-        return linear >= thresholds[k] ? Int32(k &+ 1) : Int32(k)
+        Int32(encodeSRGB8Byte(linear, thresholds: thresholds, bucketK: bucketK))
     }
 
     @inline(__always)

@@ -138,15 +138,24 @@ package enum VarDCTReconstruction {
 
         var weightCache = [[Float]?](repeating: nil, count: 27)
         let maxCount = max(64, coefficients.transforms.map { $0.coveredCells * 64 }.max() ?? 64)
-        var deq0 = [Float](repeating: 0, count: maxCount)
-        var deq1 = [Float](repeating: 0, count: maxCount)
-        var deq2 = [Float](repeating: 0, count: maxCount)
-        var blockPixels = [Float](repeating: 0, count: maxCount)
-        var dctScratch = [Double](repeating: 0, count: max(64, maxCount))
-        var floatScratch = [Float](repeating: 0, count: 64)
         let dcPlane0 = dcPlanes[0]
         let dcPlane1 = dcPlanes[1]
         let dcPlane2 = dcPlanes[2]
+        let workers = min(max(1, budget.maximumWorkers), 8)
+        let useParallelTransforms = workers > 1 && coefficients.transforms.count >= 64
+        if useParallelTransforms {
+            for transform in coefficients.transforms {
+                let id = transform.identifier
+                if id >= 0 && id < weightCache.count && weightCache[id] == nil {
+                    weightCache[id] = try VarDCTQuantWeights.make(
+                        identifier: id,
+                        rows: transform.cellsY * 8,
+                        columns: transform.cellsX * 8,
+                        budget: budget
+                    )
+                }
+            }
+        }
 
         try plane0.withUnsafeMutableBufferPointer { pl0Buf in
             try plane1.withUnsafeMutableBufferPointer { pl1Buf in
@@ -154,308 +163,396 @@ package enum VarDCTReconstruction {
                     try coefficients.ac[0].withUnsafeBufferPointer { ac0Buf in
                         try coefficients.ac[1].withUnsafeBufferPointer { ac1Buf in
                             try coefficients.ac[2].withUnsafeBufferPointer { ac2Buf in
-                                try deq0.withUnsafeMutableBufferPointer { deq0Buf in
-                                    try deq1.withUnsafeMutableBufferPointer { deq1Buf in
-                                        try deq2.withUnsafeMutableBufferPointer { deq2Buf in
-                                            try blockPixels.withUnsafeMutableBufferPointer { pixBuf in
-                                                try dctScratch.withUnsafeMutableBufferPointer { scratchBuf in
-                                                    try floatScratch.withUnsafeMutableBufferPointer { fScratchBuf in
-                                                        let pPlane0 = pl0Buf.baseAddress!
-                                                        let pPlane1 = pl1Buf.baseAddress!
-                                                        let pPlane2 = pl2Buf.baseAddress!
-                                                        let ac0Base = ac0Buf.baseAddress
-                                                        let ac1Base = ac1Buf.baseAddress
-                                                        let ac2Base = ac2Buf.baseAddress
-                                                        let pDeq0 = deq0Buf.baseAddress!
-                                                        let pDeq1 = deq1Buf.baseAddress!
-                                                        let pDeq2 = deq2Buf.baseAddress!
-                                                        let pPixels = pixBuf.baseAddress!
-                                                        let pScratch = scratchBuf.baseAddress!
-                                                        let pFScratch = fScratchBuf.baseAddress!
-                                                        let pDeq = (pDeq0, pDeq1, pDeq2)
-                                                        let pPlanes = (pPlane0, pPlane1, pPlane2)
+                                nonisolated(unsafe) let pPlane0 = pl0Buf.baseAddress!
+                                nonisolated(unsafe) let pPlane1 = pl1Buf.baseAddress!
+                                nonisolated(unsafe) let pPlane2 = pl2Buf.baseAddress!
+                                nonisolated(unsafe) let ac0Base = ac0Buf.baseAddress
+                                nonisolated(unsafe) let ac1Base = ac1Buf.baseAddress
+                                nonisolated(unsafe) let ac2Base = ac2Buf.baseAddress
+                                nonisolated(unsafe) let pPlanes = (pPlane0, pPlane1, pPlane2)
 
-                                                        for (tIdx, transform) in coefficients.transforms.enumerated() {
-                                                                    if (tIdx & 63) == 0 { try budget.checkpoint() }
-                                                                    let id = transform.identifier
-                                                                    let bx = transform.x
-                                                                    let by = transform.y
-                                                                    let cx = transform.cellsX
-                                                                    let cy = transform.cellsY
-                                                                    let rows = cy * 8
-                                                                    let columns = cx * 8
-                                                                    let count = rows * columns
-                                                                    let normRows = min(rows, columns)
-                                                                    let normCols = max(rows, columns)
-                                                                    let llfRows = min(cx, cy)
-                                                                    let llfCols = max(cx, cy)
-                                                                    let baseOffset = transform.coefficientOffset
+                                @inline(__always) @Sendable
+                                func reconstructSingleTransform(
+                                    _ transform: VarDCTStrategyMap.Transform,
+                                    weights: [Float],
+                                    pDeq0: UnsafeMutablePointer<Float>,
+                                    pDeq1: UnsafeMutablePointer<Float>,
+                                    pDeq2: UnsafeMutablePointer<Float>,
+                                    pPixels: UnsafeMutablePointer<Float>,
+                                    pScratch: UnsafeMutablePointer<Double>,
+                                    pFScratch: UnsafeMutablePointer<Float>
+                                ) throws {
+                                    let id = transform.identifier
+                                    let bx = transform.x
+                                    let by = transform.y
+                                    let cx = transform.cellsX
+                                    let cy = transform.cellsY
+                                    let rows = cy * 8
+                                    let columns = cx * 8
+                                    let count = rows * columns
+                                    let normRows = min(rows, columns)
+                                    let normCols = max(rows, columns)
+                                    let llfRows = min(cx, cy)
+                                    let llfCols = max(cx, cy)
+                                    let baseOffset = transform.coefficientOffset
+                                    let pDeq = (pDeq0, pDeq1, pDeq2)
 
-                                                                    let weights: [Float]
-                                                                    if let cached = weightCache[id] {
-                                                                        weights = cached
-                                                                    } else {
-                                                                        let w = try VarDCTQuantWeights.make(
-                                                                            identifier: id,
-                                                                            rows: rows,
-                                                                            columns: columns,
-                                                                            budget: budget
-                                                                        )
-                                                                        weightCache[id] = w
-                                                                        weights = w
-                                                                    }
+                                    let invScale = 65536.0 / (Float(coefficients.globalScale) * Float(transform.quantisation))
 
-                                                                    let invScale = 65536.0 / (Float(coefficients.globalScale) * Float(transform.quantisation))
+                                    // 3a & 3b. Dequantise HF coefficients and apply HF Chroma-from-Luma
+                                    if cx == 1 && cy == 1 {
+                                        let tx = min(tilesX - 1, bx >> 3)
+                                        let ty = min(coefficients.tilesY - 1, by >> 3)
+                                        let tileIdx = ty * tilesX + tx
+                                        let fx = coefficients.baseCorrelationX + Float(coefficients.cflX[tileIdx]) * invColorFactor
+                                        let fb = coefficients.baseCorrelationB + Float(coefficients.cflB[tileIdx]) * invColorFactor
+                                        let cScale0 = invScale * qmScale.0
+                                        let cScale1 = invScale * qmScale.1
+                                        let cScale2 = invScale * qmScale.2
 
-                                                                    // 3a & 3b. Dequantise HF coefficients and apply HF Chroma-from-Luma
-                                                                    if cx == 1 && cy == 1 {
-                                                                        let tx = min(tilesX - 1, bx >> 3)
-                                                                        let ty = min(coefficients.tilesY - 1, by >> 3)
-                                                                        let tileIdx = ty * tilesX + tx
-                                                                        let fx = coefficients.baseCorrelationX + Float(coefficients.cflX[tileIdx]) * invColorFactor
-                                                                        let fb = coefficients.baseCorrelationB + Float(coefficients.cflB[tileIdx]) * invColorFactor
-                                                                        let cScale0 = invScale * qmScale.0
-                                                                        let cScale1 = invScale * qmScale.1
-                                                                        let cScale2 = invScale * qmScale.2
+                                        weights.withUnsafeBufferPointer { wBuf in
+                                            let wPtr = wBuf.baseAddress!
+                                            let ac0 = ac0Base! + baseOffset
+                                            let ac1 = ac1Base! + baseOffset
+                                            let ac2 = ac2Base! + baseOffset
+                                            if id == 0 {
+                                                for k in 1..<64 {
+                                                    let to = (k & 7) * 8 + (k >> 3)
+                                                    let q1 = ac1[k]
+                                                    let q0 = ac0[k]
+                                                    let q2 = ac2[k]
+                                                    if (q1 | q0 | q2) == 0 {
+                                                        pDeq1[to] = 0
+                                                        pDeq0[to] = 0
+                                                        pDeq2[to] = 0
+                                                        continue
+                                                    }
+                                                    let yCoeff: Float
+                                                    if q1 != 0 {
+                                                        yCoeff = adjustQuantBias(q1, channel: 1, numericalMode: numericalMode) * (cScale1 / wPtr[64 + k])
+                                                    } else {
+                                                        yCoeff = 0
+                                                    }
+                                                    pDeq1[to] = yCoeff
 
-                                                                        weights.withUnsafeBufferPointer { wBuf in
-                                                                            let wPtr = wBuf.baseAddress!
-                                                                            let ac0 = ac0Base! + baseOffset
-                                                                            let ac1 = ac1Base! + baseOffset
-                                                                            let ac2 = ac2Base! + baseOffset
-                                                                            if id == 0 {
-                                                                                for k in 1..<64 {
-                                                                                    let to = (k & 7) * 8 + (k >> 3)
-                                                                                    let q1 = ac1[k]
-                                                                                    let q0 = ac0[k]
-                                                                                    let q2 = ac2[k]
-                                                                                    if (q1 | q0 | q2) == 0 {
-                                                                                        pDeq1[to] = 0
-                                                                                        pDeq0[to] = 0
-                                                                                        pDeq2[to] = 0
-                                                                                        continue
-                                                                                    }
-                                                                                    let yCoeff: Float
-                                                                                    if q1 != 0 {
-                                                                                        yCoeff = adjustQuantBias(q1, channel: 1, numericalMode: numericalMode) * (cScale1 / wPtr[64 + k])
-                                                                                    } else {
-                                                                                        yCoeff = 0
-                                                                                    }
-                                                                                    pDeq1[to] = yCoeff
+                                                    var xCoeff: Float = 0
+                                                    if q0 != 0 {
+                                                        xCoeff = adjustQuantBias(q0, channel: 0, numericalMode: numericalMode) * (cScale0 / wPtr[k])
+                                                    }
+                                                    if yCoeff != 0 {
+                                                        xCoeff += fx * yCoeff
+                                                    }
+                                                    pDeq0[to] = xCoeff
 
-                                                                                    var xCoeff: Float = 0
-                                                                                    if q0 != 0 {
-                                                                                        xCoeff = adjustQuantBias(q0, channel: 0, numericalMode: numericalMode) * (cScale0 / wPtr[k])
-                                                                                    }
-                                                                                    if yCoeff != 0 {
-                                                                                        xCoeff += fx * yCoeff
-                                                                                    }
-                                                                                    pDeq0[to] = xCoeff
+                                                    var bCoeff: Float = 0
+                                                    if q2 != 0 {
+                                                        bCoeff = adjustQuantBias(q2, channel: 2, numericalMode: numericalMode) * (cScale2 / wPtr[128 + k])
+                                                    }
+                                                    if yCoeff != 0 {
+                                                        bCoeff += fb * yCoeff
+                                                    }
+                                                    pDeq2[to] = bCoeff
+                                                }
+                                            } else {
+                                                for k in 1..<64 {
+                                                    let q1 = ac1[k]
+                                                    let q0 = ac0[k]
+                                                    let q2 = ac2[k]
+                                                    if (q1 | q0 | q2) == 0 {
+                                                        pDeq1[k] = 0
+                                                        pDeq0[k] = 0
+                                                        pDeq2[k] = 0
+                                                        continue
+                                                    }
+                                                    let yCoeff: Float
+                                                    if q1 != 0 {
+                                                        yCoeff = adjustQuantBias(q1, channel: 1, numericalMode: numericalMode) * (cScale1 / wPtr[64 + k])
+                                                    } else {
+                                                        yCoeff = 0
+                                                    }
+                                                    pDeq1[k] = yCoeff
 
-                                                                                    var bCoeff: Float = 0
-                                                                                    if q2 != 0 {
-                                                                                        bCoeff = adjustQuantBias(q2, channel: 2, numericalMode: numericalMode) * (cScale2 / wPtr[128 + k])
-                                                                                    }
-                                                                                    if yCoeff != 0 {
-                                                                                        bCoeff += fb * yCoeff
-                                                                                    }
-                                                                                    pDeq2[to] = bCoeff
-                                                                                }
-                                                                            } else {
-                                                                                for k in 1..<64 {
-                                                                                    let q1 = ac1[k]
-                                                                                    let q0 = ac0[k]
-                                                                                    let q2 = ac2[k]
-                                                                                    if (q1 | q0 | q2) == 0 {
-                                                                                        pDeq1[k] = 0
-                                                                                        pDeq0[k] = 0
-                                                                                        pDeq2[k] = 0
-                                                                                        continue
-                                                                                    }
-                                                                                    let yCoeff: Float
-                                                                                    if q1 != 0 {
-                                                                                        yCoeff = adjustQuantBias(q1, channel: 1, numericalMode: numericalMode) * (cScale1 / wPtr[64 + k])
-                                                                                    } else {
-                                                                                        yCoeff = 0
-                                                                                    }
-                                                                                    pDeq1[k] = yCoeff
+                                                    var xCoeff: Float = 0
+                                                    if q0 != 0 {
+                                                        xCoeff = adjustQuantBias(q0, channel: 0, numericalMode: numericalMode) * (cScale0 / wPtr[k])
+                                                    }
+                                                    if yCoeff != 0 {
+                                                        xCoeff += fx * yCoeff
+                                                    }
+                                                    pDeq0[k] = xCoeff
 
-                                                                                    var xCoeff: Float = 0
-                                                                                    if q0 != 0 {
-                                                                                        xCoeff = adjustQuantBias(q0, channel: 0, numericalMode: numericalMode) * (cScale0 / wPtr[k])
-                                                                                    }
-                                                                                    if yCoeff != 0 {
-                                                                                        xCoeff += fx * yCoeff
-                                                                                    }
-                                                                                    pDeq0[k] = xCoeff
+                                                    var bCoeff: Float = 0
+                                                    if q2 != 0 {
+                                                        bCoeff = adjustQuantBias(q2, channel: 2, numericalMode: numericalMode) * (cScale2 / wPtr[128 + k])
+                                                    }
+                                                    if yCoeff != 0 {
+                                                        bCoeff += fb * yCoeff
+                                                    }
+                                                    pDeq2[k] = bCoeff
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        let transpose = rows >= columns
+                                        let cScale0 = invScale * qmScale.0
+                                        let cScale1 = invScale * qmScale.1
+                                        let cScale2 = invScale * qmScale.2
+                                        let wBase1 = count
+                                        let wBase2 = count * 2
+                                        let maxTileX = tilesX - 1
+                                        let maxTileY = coefficients.tilesY - 1
+                                        let baseCorrX = coefficients.baseCorrelationX
+                                        let baseCorrB = coefficients.baseCorrelationB
 
-                                                                                    var bCoeff: Float = 0
-                                                                                    if q2 != 0 {
-                                                                                        bCoeff = adjustQuantBias(q2, channel: 2, numericalMode: numericalMode) * (cScale2 / wPtr[128 + k])
-                                                                                    }
-                                                                                    if yCoeff != 0 {
-                                                                                        bCoeff += fb * yCoeff
-                                                                                    }
-                                                                                    pDeq2[k] = bCoeff
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    } else {
-                                                                        let transpose = rows >= columns
-                                                                        let cScale0 = invScale * qmScale.0
-                                                                        let cScale1 = invScale * qmScale.1
-                                                                        let cScale2 = invScale * qmScale.2
-                                                                        let wBase1 = count
-                                                                        let wBase2 = count * 2
-                                                                        let maxTileX = tilesX - 1
-                                                                        let maxTileY = coefficients.tilesY - 1
-                                                                        let baseCorrX = coefficients.baseCorrelationX
-                                                                        let baseCorrB = coefficients.baseCorrelationB
+                                        weights.withUnsafeBufferPointer { wBuf in
+                                            coefficients.cflX.withUnsafeBufferPointer { cflXBuf in
+                                                coefficients.cflB.withUnsafeBufferPointer { cflBBuf in
+                                                    let wPtr = wBuf.baseAddress!
+                                                    let cflXPtr = cflXBuf.baseAddress!
+                                                    let cflBPtr = cflBBuf.baseAddress!
+                                                    let ac0 = ac0Base! + baseOffset
+                                                    let ac1 = ac1Base! + baseOffset
+                                                    let ac2 = ac2Base! + baseOffset
 
-                                                                        weights.withUnsafeBufferPointer { wBuf in
-                                                                            coefficients.cflX.withUnsafeBufferPointer { cflXBuf in
-                                                                                coefficients.cflB.withUnsafeBufferPointer { cflBBuf in
-                                                                                    let wPtr = wBuf.baseAddress!
-                                                                                    let cflXPtr = cflXBuf.baseAddress!
-                                                                                    let cflBPtr = cflBBuf.baseAddress!
-                                                                                    let ac0 = ac0Base! + baseOffset
-                                                                                    let ac1 = ac1Base! + baseOffset
-                                                                                    let ac2 = ac2Base! + baseOffset
+                                                    for ny in 0..<normRows {
+                                                        let rowOff = ny * normCols
+                                                        let nyBlock = ny >> 3
+                                                        var nxBase = 0
+                                                        while nxBase < normCols {
+                                                            let nxBlock = nxBase >> 3
+                                                            let tx = min(maxTileX, (bx + (transpose ? nyBlock : nxBlock)) >> 3)
+                                                            let ty = min(maxTileY, (by + (transpose ? nxBlock : nyBlock)) >> 3)
+                                                            let tileIdx = ty * tilesX + tx
+                                                            let fx = baseCorrX + Float(cflXPtr[tileIdx]) * invColorFactor
+                                                            let fb = baseCorrB + Float(cflBPtr[tileIdx]) * invColorFactor
 
-                                                                                    for ny in 0..<normRows {
-                                                                                        let rowOff = ny * normCols
-                                                                                        let nyBlock = ny >> 3
-                                                                                        var nxBase = 0
-                                                                                        while nxBase < normCols {
-                                                                                            let nxBlock = nxBase >> 3
-                                                                                            let tx = min(maxTileX, (bx + (transpose ? nyBlock : nxBlock)) >> 3)
-                                                                                            let ty = min(maxTileY, (by + (transpose ? nxBlock : nyBlock)) >> 3)
-                                                                                            let tileIdx = ty * tilesX + tx
-                                                                                            let fx = baseCorrX + Float(cflXPtr[tileIdx]) * invColorFactor
-                                                                                            let fb = baseCorrB + Float(cflBPtr[tileIdx]) * invColorFactor
-
-                                                                                            for nx in nxBase..<(nxBase + 8) {
-                                                                                                if nx < llfCols && ny < llfRows { continue }
-                                                                                                let k = rowOff + nx
-                                                                                                let to = transpose ? (nx * columns + ny) : k
-                                                                                                let q1 = ac1[k]
-                                                                                                let q0 = ac0[k]
-                                                                                                let q2 = ac2[k]
-                                                                                                if (q1 | q0 | q2) == 0 {
-                                                                                                    pDeq1[to] = 0
-                                                                                                    pDeq0[to] = 0
-                                                                                                    pDeq2[to] = 0
-                                                                                                    continue
-                                                                                                }
-                                                                                                let yCoeff: Float
-                                                                                                if q1 != 0 {
-                                                                                                    yCoeff = adjustQuantBias(q1, channel: 1, numericalMode: numericalMode) * (cScale1 / wPtr[wBase1 + k])
-                                                                                                } else {
-                                                                                                    yCoeff = 0
-                                                                                                }
-                                                                                                pDeq1[to] = yCoeff
-
-                                                                                                var xCoeff: Float = 0
-                                                                                                if q0 != 0 {
-                                                                                                    xCoeff = adjustQuantBias(q0, channel: 0, numericalMode: numericalMode) * (cScale0 / wPtr[k])
-                                                                                                }
-                                                                                                if yCoeff != 0 {
-                                                                                                    xCoeff += fx * yCoeff
-                                                                                                }
-                                                                                                pDeq0[to] = xCoeff
-
-                                                                                                var bCoeff: Float = 0
-                                                                                                if q2 != 0 {
-                                                                                                    bCoeff = adjustQuantBias(q2, channel: 2, numericalMode: numericalMode) * (cScale2 / wPtr[wBase2 + k])
-                                                                                                }
-                                                                                                if yCoeff != 0 {
-                                                                                                    bCoeff += fb * yCoeff
-                                                                                                }
-                                                                                                pDeq2[to] = bCoeff
-                                                                                            }
-                                                                                            nxBase += 8
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-
-                                                                    // 3c. Insert LLF (DC) coefficients and run inverse transform per channel
-                                                                    let px0 = bx * 8
-                                                                    let py0 = by * 8
-                                                                    let visW = min(columns, width - px0)
-                                                                    let visH = min(rows, height - py0)
-
-                                                                    let dcBlockIdx = by * blocksX + bx
-                                                                    for c in 0..<3 {
-                                                                        let deqPtr = (c == 0) ? pDeq.0 : ((c == 1) ? pDeq.1 : pDeq.2)
-                                                                        let dstBase = (c == 0) ? pPlanes.0 : ((c == 1) ? pPlanes.1 : pPlanes.2)
-                                                                        if cx == 1 && cy == 1 {
-                                                                            deqPtr[0] = (c == 0) ? dcPlane0[dcBlockIdx] : ((c == 1) ? dcPlane1[dcBlockIdx] : dcPlane2[dcBlockIdx])
-                                                                            switch id {
-                                                                            case 0:
-                                                                                ScaledDCT.applyUnchecked(
-                                                                                    rows: 8,
-                                                                                    columns: 8,
-                                                                                    direction: .inverse,
-                                                                                    input: deqPtr,
-                                                                                    output: pPixels,
-                                                                                    scratch: pScratch
-                                                                                )
-
-                                                                            case 1, 2, 3, 12, 13:
-                                                                                VarDCTSmallTransforms.inverseInto(
-                                                                                    deqPtr,
-                                                                                    output: pPixels,
-                                                                                    identifier: id,
-                                                                                    scratch: pScratch,
-                                                                                    floatScratch: pFScratch
-                                                                                )
-
-                                                                            case 14, 15, 16, 17:
-                                                                                VarDCTAFV.inverseInto(
-                                                                                    deqPtr,
-                                                                                    output: pPixels,
-                                                                                    kind: id - 14,
-                                                                                    scratch: pScratch,
-                                                                                    floatScratch: pFScratch
-                                                                                )
-
-                                                                            default:
-                                                                                throw VarDCTError.unsupportedStrategy(id)
-                                                                            }
-                                                                        } else {
-                                                                            try reconstructLargeLLFInto(
-                                                                                dcPlane: (c == 0) ? dcPlane0 : ((c == 1) ? dcPlane1 : dcPlane2),
-                                                                                bx: bx,
-                                                                                by: by,
-                                                                                blocksX: blocksX,
-                                                                                cx: cx,
-                                                                                cy: cy,
-                                                                                id: id,
-                                                                                output: deqPtr,
-                                                                                outputStride: columns
-                                                                            )
-                                                                            ScaledDCT.applyUnchecked(
-                                                                                rows: rows,
-                                                                                columns: columns,
-                                                                                direction: .inverse,
-                                                                                input: deqPtr,
-                                                                                output: pPixels,
-                                                                                scratch: pScratch
-                                                                            )
-                                                                        }
-
-                                                                        if visW > 0 && visH > 0 {
-                                                                            for ry in 0..<visH {
-                                                                                let srcRow = ry * columns
-                                                                                let dstRow = (py0 + ry) * width + px0
-                                                                                (dstBase + dstRow).update(from: pPixels + srcRow, count: visW)
-                                                                            }
-                                                                        }
-                                                                    }
+                                                            for nx in nxBase..<(nxBase + 8) {
+                                                                if nx < llfCols && ny < llfRows { continue }
+                                                                let k = rowOff + nx
+                                                                let to = transpose ? (nx * columns + ny) : k
+                                                                let q1 = ac1[k]
+                                                                let q0 = ac0[k]
+                                                                let q2 = ac2[k]
+                                                                if (q1 | q0 | q2) == 0 {
+                                                                    pDeq1[to] = 0
+                                                                    pDeq0[to] = 0
+                                                                    pDeq2[to] = 0
+                                                                    continue
                                                                 }
+                                                                let yCoeff: Float
+                                                                if q1 != 0 {
+                                                                    yCoeff = adjustQuantBias(q1, channel: 1, numericalMode: numericalMode) * (cScale1 / wPtr[wBase1 + k])
+                                                                } else {
+                                                                    yCoeff = 0
+                                                                }
+                                                                pDeq1[to] = yCoeff
+
+                                                                var xCoeff: Float = 0
+                                                                if q0 != 0 {
+                                                                    xCoeff = adjustQuantBias(q0, channel: 0, numericalMode: numericalMode) * (cScale0 / wPtr[k])
+                                                                }
+                                                                if yCoeff != 0 {
+                                                                    xCoeff += fx * yCoeff
+                                                                }
+                                                                pDeq0[to] = xCoeff
+
+                                                                var bCoeff: Float = 0
+                                                                if q2 != 0 {
+                                                                    bCoeff = adjustQuantBias(q2, channel: 2, numericalMode: numericalMode) * (cScale2 / wPtr[wBase2 + k])
+                                                                }
+                                                                if yCoeff != 0 {
+                                                                    bCoeff += fb * yCoeff
+                                                                }
+                                                                pDeq2[to] = bCoeff
+                                                            }
+                                                            nxBase += 8
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // 3c. Insert LLF (DC) coefficients and run inverse transform per channel
+                                    let px0 = bx * 8
+                                    let py0 = by * 8
+                                    let visW = min(columns, width - px0)
+                                    let visH = min(rows, height - py0)
+
+                                    let dcBlockIdx = by * blocksX + bx
+                                    for c in 0..<3 {
+                                        let deqPtr = (c == 0) ? pDeq.0 : ((c == 1) ? pDeq.1 : pDeq.2)
+                                        let dstBase = (c == 0) ? pPlanes.0 : ((c == 1) ? pPlanes.1 : pPlanes.2)
+                                        if cx == 1 && cy == 1 {
+                                            deqPtr[0] = (c == 0) ? dcPlane0[dcBlockIdx] : ((c == 1) ? dcPlane1[dcBlockIdx] : dcPlane2[dcBlockIdx])
+                                            switch id {
+                                            case 0:
+                                                ScaledDCT.applyUnchecked(
+                                                    rows: 8,
+                                                    columns: 8,
+                                                    direction: .inverse,
+                                                    input: deqPtr,
+                                                    output: pPixels,
+                                                    scratch: pScratch
+                                                )
+
+                                            case 1, 2, 3, 12, 13:
+                                                VarDCTSmallTransforms.inverseInto(
+                                                    deqPtr,
+                                                    output: pPixels,
+                                                    identifier: id,
+                                                    scratch: pScratch,
+                                                    floatScratch: pFScratch
+                                                )
+
+                                            case 14, 15, 16, 17:
+                                                VarDCTAFV.inverseInto(
+                                                    deqPtr,
+                                                    output: pPixels,
+                                                    kind: id - 14,
+                                                    scratch: pScratch,
+                                                    floatScratch: pFScratch
+                                                )
+
+                                            default:
+                                                throw VarDCTError.unsupportedStrategy(id)
+                                            }
+                                        } else {
+                                            try reconstructLargeLLFInto(
+                                                dcPlane: (c == 0) ? dcPlane0 : ((c == 1) ? dcPlane1 : dcPlane2),
+                                                bx: bx,
+                                                by: by,
+                                                blocksX: blocksX,
+                                                cx: cx,
+                                                cy: cy,
+                                                id: id,
+                                                output: deqPtr,
+                                                outputStride: columns
+                                            )
+                                            ScaledDCT.applyUnchecked(
+                                                rows: rows,
+                                                columns: columns,
+                                                direction: .inverse,
+                                                input: deqPtr,
+                                                output: pPixels,
+                                                scratch: pScratch
+                                            )
+                                        }
+
+                                        if visW > 0 && visH > 0 {
+                                            for ry in 0..<visH {
+                                                let srcRow = ry * columns
+                                                let dstRow = (py0 + ry) * width + px0
+                                                (dstBase + dstRow).update(from: pPixels + srcRow, count: visW)
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if useParallelTransforms {
+                                    try budget.checkpoint()
+                                    let tCount = coefficients.transforms.count
+                                    let bandCount = min(workers, tCount)
+                                    let frozenWeights = weightCache
+                                    var bandErrors = [Error?](repeating: nil, count: bandCount)
+                                    bandErrors.withUnsafeMutableBufferPointer { errBuf in
+                                        nonisolated(unsafe) let uErr = errBuf.baseAddress!
+                                        DispatchQueue.concurrentPerform(iterations: bandCount) { band in
+                                            let t0 = (band * tCount) / bandCount
+                                            let t1 = ((band + 1) * tCount) / bandCount
+                                            let pDeq0 = UnsafeMutablePointer<Float>.allocate(capacity: maxCount)
+                                            let pDeq1 = UnsafeMutablePointer<Float>.allocate(capacity: maxCount)
+                                            let pDeq2 = UnsafeMutablePointer<Float>.allocate(capacity: maxCount)
+                                            let pPixels = UnsafeMutablePointer<Float>.allocate(capacity: maxCount)
+                                            let pScratch = UnsafeMutablePointer<Double>.allocate(capacity: max(64, maxCount))
+                                            let pFScratch = UnsafeMutablePointer<Float>.allocate(capacity: 64)
+                                            pDeq0.initialize(repeating: 0, count: maxCount)
+                                            pDeq1.initialize(repeating: 0, count: maxCount)
+                                            pDeq2.initialize(repeating: 0, count: maxCount)
+                                            pPixels.initialize(repeating: 0, count: maxCount)
+                                            pScratch.initialize(repeating: 0, count: max(64, maxCount))
+                                            pFScratch.initialize(repeating: 0, count: 64)
+                                            defer {
+                                                pDeq0.deallocate()
+                                                pDeq1.deallocate()
+                                                pDeq2.deallocate()
+                                                pPixels.deallocate()
+                                                pScratch.deallocate()
+                                                pFScratch.deallocate()
+                                            }
+                                            do {
+                                                for tIdx in t0..<t1 {
+                                                    let transform = coefficients.transforms[tIdx]
+                                                    guard let weights = frozenWeights[transform.identifier] else {
+                                                        throw VarDCTError.unsupportedStrategy(transform.identifier)
+                                                    }
+                                                    try reconstructSingleTransform(
+                                                        transform,
+                                                        weights: weights,
+                                                        pDeq0: pDeq0,
+                                                        pDeq1: pDeq1,
+                                                        pDeq2: pDeq2,
+                                                        pPixels: pPixels,
+                                                        pScratch: pScratch,
+                                                        pFScratch: pFScratch
+                                                    )
+                                                }
+                                            } catch {
+                                                uErr[band] = error
+                                            }
+                                        }
+                                    }
+                                    for err in bandErrors {
+                                        if let err { throw err }
+                                    }
+                                    try budget.checkpoint()
+                                } else {
+                                    var deq0 = [Float](repeating: 0, count: maxCount)
+                                    var deq1 = [Float](repeating: 0, count: maxCount)
+                                    var deq2 = [Float](repeating: 0, count: maxCount)
+                                    var blockPixels = [Float](repeating: 0, count: maxCount)
+                                    var dctScratch = [Double](repeating: 0, count: max(64, maxCount))
+                                    var floatScratch = [Float](repeating: 0, count: 64)
+                                    try deq0.withUnsafeMutableBufferPointer { deq0Buf in
+                                        try deq1.withUnsafeMutableBufferPointer { deq1Buf in
+                                            try deq2.withUnsafeMutableBufferPointer { deq2Buf in
+                                                try blockPixels.withUnsafeMutableBufferPointer { pixBuf in
+                                                    try dctScratch.withUnsafeMutableBufferPointer { scratchBuf in
+                                                        try floatScratch.withUnsafeMutableBufferPointer { fScratchBuf in
+                                                            let pDeq0 = deq0Buf.baseAddress!
+                                                            let pDeq1 = deq1Buf.baseAddress!
+                                                            let pDeq2 = deq2Buf.baseAddress!
+                                                            let pPixels = pixBuf.baseAddress!
+                                                            let pScratch = scratchBuf.baseAddress!
+                                                            let pFScratch = fScratchBuf.baseAddress!
+                                                            for (tIdx, transform) in coefficients.transforms.enumerated() {
+                                                                if (tIdx & 63) == 0 { try budget.checkpoint() }
+                                                                let id = transform.identifier
+                                                                let weights: [Float]
+                                                                if let cached = weightCache[id] {
+                                                                    weights = cached
+                                                                } else {
+                                                                    let w = try VarDCTQuantWeights.make(
+                                                                        identifier: id,
+                                                                        rows: transform.cellsY * 8,
+                                                                        columns: transform.cellsX * 8,
+                                                                        budget: budget
+                                                                    )
+                                                                    weightCache[id] = w
+                                                                    weights = w
+                                                                }
+                                                                try reconstructSingleTransform(
+                                                                    transform,
+                                                                    weights: weights,
+                                                                    pDeq0: pDeq0,
+                                                                    pDeq1: pDeq1,
+                                                                    pDeq2: pDeq2,
+                                                                    pPixels: pPixels,
+                                                                    pScratch: pScratch,
+                                                                    pFScratch: pFScratch
+                                                                )
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }

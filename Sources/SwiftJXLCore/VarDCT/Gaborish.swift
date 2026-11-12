@@ -44,6 +44,68 @@ package enum Gaborish {
             try output.withUnsafeMutableBufferPointer { outBuf in
                 let src = inBuf.baseAddress!
                 let dst = outBuf.baseAddress!
+                let workers = min(max(1, budget.maximumWorkers), 8)
+
+                if workers > 1 && height >= 64 && width >= 3 {
+                    try budget.checkpoint()
+                    let bandCount = min(workers, height)
+                    var bandFailed = [UInt8](repeating: 0, count: bandCount)
+                    bandFailed.withUnsafeMutableBufferPointer { failBuf in
+                        nonisolated(unsafe) let uSrc = src
+                        nonisolated(unsafe) let uDst = dst
+                        nonisolated(unsafe) let uFail = failBuf.baseAddress!
+                        DispatchQueue.concurrentPerform(iterations: bandCount) { band in
+                            let yStart = (band * height) / bandCount
+                            let yEnd = ((band + 1) * height) / bandCount
+                            var localBad = false
+                            for y in yStart..<yEnd {
+                                let ym1 = max(0, y - 1) * stride
+                                let y0 = y * stride
+                                let yp1 = min(height - 1, y + 1) * stride
+                                let outRow = y * width
+                                do {
+                                    let center = uSrc[y0]
+                                    let cardinal = (uSrc[ym1] + uSrc[yp1]) + (uSrc[y0] + uSrc[y0 + 1])
+                                    let diagonal = (uSrc[ym1] + uSrc[ym1 + 1]) + (uSrc[yp1] + uSrc[yp1 + 1])
+                                    let val = center * w0 + cardinal * w1 + diagonal * w2
+                                    if !center.isFinite || !val.isFinite { localBad = true }
+                                    uDst[outRow] = val
+                                }
+                                let pYm1 = uSrc + ym1
+                                let pY0 = uSrc + y0
+                                let pYp1 = uSrc + yp1
+                                let pOut = uDst + outRow
+                                for x in 1..<(width - 1) {
+                                    let center = pY0[x]
+                                    let cardinal = (pYm1[x] + pYp1[x]) + (pY0[x - 1] + pY0[x + 1])
+                                    let diagonal = (pYm1[x - 1] + pYm1[x + 1]) + (pYp1[x - 1] + pYp1[x + 1])
+                                    pOut[x] = center * w0 + cardinal * w1 + diagonal * w2
+                                }
+                                for x in 1..<(width - 1) {
+                                    if !pY0[x].isFinite || !pOut[x].isFinite {
+                                        localBad = true
+                                        break
+                                    }
+                                }
+                                do {
+                                    let x = width - 1
+                                    let xm1 = x - 1
+                                    let center = uSrc[y0 + x]
+                                    let cardinal = (uSrc[ym1 + x] + uSrc[yp1 + x]) + (uSrc[y0 + xm1] + uSrc[y0 + x])
+                                    let diagonal = (uSrc[ym1 + xm1] + uSrc[ym1 + x]) + (uSrc[yp1 + xm1] + uSrc[yp1 + x])
+                                    let val = center * w0 + cardinal * w1 + diagonal * w2
+                                    if !center.isFinite || !val.isFinite { localBad = true }
+                                    uDst[outRow + x] = val
+                                }
+                            }
+                            if localBad { uFail[band] = 1 }
+                        }
+                    }
+                    if bandFailed.contains(1) {
+                        throw ScalarModularError.invalidInput("Non-finite sample in Gaborish input")
+                    }
+                    return
+                }
 
                 for y in 0..<height {
                     if (y & 15) == 0 { try budget.checkpoint() }
@@ -65,15 +127,20 @@ package enum Gaborish {
                             }
                             dst[outRow] = val
                         }
+                        let pYm1 = src + ym1
+                        let pY0 = src + y0
+                        let pYp1 = src + yp1
+                        let pOut = dst + outRow
                         for x in 1..<(width - 1) {
-                            let center = src[y0 + x]
-                            let cardinal = (src[ym1 + x] + src[yp1 + x]) + (src[y0 + x - 1] + src[y0 + x + 1])
-                            let diagonal = (src[ym1 + x - 1] + src[ym1 + x + 1]) + (src[yp1 + x - 1] + src[yp1 + x + 1])
-                            let val = center * w0 + cardinal * w1 + diagonal * w2
-                            guard center.isFinite, val.isFinite else {
+                            let center = pY0[x]
+                            let cardinal = (pYm1[x] + pYp1[x]) + (pY0[x - 1] + pY0[x + 1])
+                            let diagonal = (pYm1[x - 1] + pYm1[x + 1]) + (pYp1[x - 1] + pYp1[x + 1])
+                            pOut[x] = center * w0 + cardinal * w1 + diagonal * w2
+                        }
+                        for x in 1..<(width - 1) {
+                            if !pY0[x].isFinite || !pOut[x].isFinite {
                                 throw ScalarModularError.invalidInput("Non-finite sample in Gaborish input")
                             }
-                            dst[outRow + x] = val
                         }
                         do {
                             let x = width - 1

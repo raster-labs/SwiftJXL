@@ -352,6 +352,48 @@ package enum ModularFrameDecoder {
                     }
                     return
                 }
+                if l0.storageBits == 16 && l1.storageBits == 16 && l2.storageBits == 16 && l3.storageBits == 16
+                    && l0.littleEndian && l1.littleEndian && l2.littleEndian && l3.littleEndian
+                    && l0.pixelStride == 8 && l1.pixelStride == 8 && l2.pixelStride == 8 && l3.pixelStride == 8
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes && l2.rowBytes == l3.rowBytes
+                    && l0.offset == 0 && l1.offset == 2 && l2.offset == 4 && l3.offset == 6 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    let rowStep = max(1, 4096 / max(1, w))
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                try channels[3].pixels.withUnsafeBufferPointer { b3 in
+                                    guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress, let p3 = b3.baseAddress else { return }
+                                    for ry in 0..<h {
+                                        if ry % rowStep == 0 { try budget.checkpoint() }
+                                        let srcRow = ry * w
+                                        var dstPos = ry * rowBytes
+                                        for rx in 0..<w {
+                                            let v0 = p0[srcRow + rx]
+                                            let v1 = p1[srcRow + rx]
+                                            let v2 = p2[srcRow + rx]
+                                            let v3 = p3[srcRow + rx]
+                                            guard (UInt32(bitPattern: v0) | UInt32(bitPattern: v1) | UInt32(bitPattern: v2) | UInt32(bitPattern: v3)) <= maxU else {
+                                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                            }
+                                            rawBase[dstPos] = UInt8(truncatingIfNeeded: v0)
+                                            rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: v0 >> 8)
+                                            rawBase[dstPos + 2] = UInt8(truncatingIfNeeded: v1)
+                                            rawBase[dstPos + 3] = UInt8(truncatingIfNeeded: v1 >> 8)
+                                            rawBase[dstPos + 4] = UInt8(truncatingIfNeeded: v2)
+                                            rawBase[dstPos + 5] = UInt8(truncatingIfNeeded: v2 >> 8)
+                                            rawBase[dstPos + 6] = UInt8(truncatingIfNeeded: v3)
+                                            rawBase[dstPos + 7] = UInt8(truncatingIfNeeded: v3 >> 8)
+                                            dstPos += 8
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return
+                }
             }
 
             for c in 0..<channels.count {
@@ -496,6 +538,19 @@ package enum ModularFrameDecoder {
                 guard reader.isExhausted else {
                     throw ScalarModularError.invalidInput("Unexpected trailing bytes in Modular section")
                 }
+                if globalTransforms.count == 1,
+                   globalTransforms[0].id == .rct,
+                   globalTransforms[0].beginC == 0,
+                   globalTransforms[0].rctType == 6,
+                   working.nbMetaChannels == 0,
+                   try writePlanesToLayoutsWithRCT6(
+                       working.channels,
+                       into: bytes,
+                       layouts: layouts,
+                       sampleMax: sampleMax
+                   ) {
+                    return
+                }
                 try applyInverseTransforms(
                     image: &working,
                     transforms: globalTransforms,
@@ -509,6 +564,191 @@ package enum ModularFrameDecoder {
                     sampleMax: sampleMax
                 )
             }
+        }
+
+        private func writePlanesToLayoutsWithRCT6(
+            _ channels: [ModularChannel],
+            into bytes: UnsafeMutableRawBufferPointer,
+            layouts: [ModularChannelLayout],
+            sampleMax: Int32
+        ) throws -> Bool {
+            guard channels.count == layouts.count, channels.count == 3 || channels.count == 4 else {
+                return false
+            }
+            let l0 = layouts[0], l1 = layouts[1], l2 = layouts[2]
+            let w = l0.width, h = l0.height
+            for c in 0..<channels.count {
+                let ch = channels[c]
+                let layout = layouts[c]
+                guard ch.width == w, ch.height == h,
+                      layout.width == w, layout.height == h,
+                      ch.hshift == 0, ch.vshift == 0,
+                      ch.pixels.count == ch.sampleCount else {
+                    return false
+                }
+            }
+            let maxU = UInt32(bitPattern: sampleMax)
+            let rowStep = max(1, 4096 / max(1, w))
+            if layouts.count == 3 {
+                if l0.storageBits == 8 && l1.storageBits == 8 && l2.storageBits == 8
+                    && l0.pixelStride == 3 && l1.pixelStride == 3 && l2.pixelStride == 3
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes
+                    && l0.offset == 0 && l1.offset == 1 && l2.offset == 2 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress else { return }
+                                for ry in 0..<h {
+                                    if ry % rowStep == 0 { try budget.checkpoint() }
+                                    let srcRow = ry &* w
+                                    var dstPos = ry &* rowBytes
+                                    for rx in 0..<w {
+                                        let i = srcRow &+ rx
+                                        let y0 = p0[i], y1 = p1[i], y2 = p2[i]
+                                        let tmp = y0 &- (y2 >> 1)
+                                        let g = y2 &+ tmp
+                                        let b = tmp &- (y1 >> 1)
+                                        let r = b &+ y1
+                                        guard (UInt32(bitPattern: r) | UInt32(bitPattern: g) | UInt32(bitPattern: b)) <= maxU else {
+                                            throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                        }
+                                        rawBase[dstPos] = UInt8(truncatingIfNeeded: r)
+                                        rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: g)
+                                        rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: b)
+                                        dstPos &+= 3
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return true
+                }
+                if l0.storageBits == 16 && l1.storageBits == 16 && l2.storageBits == 16
+                    && l0.littleEndian && l1.littleEndian && l2.littleEndian
+                    && l0.pixelStride == 6 && l1.pixelStride == 6 && l2.pixelStride == 6
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes
+                    && l0.offset == 0 && l1.offset == 2 && l2.offset == 4 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress else { return }
+                                for ry in 0..<h {
+                                    if ry % rowStep == 0 { try budget.checkpoint() }
+                                    let srcRow = ry &* w
+                                    var dstPos = ry &* rowBytes
+                                    for rx in 0..<w {
+                                        let i = srcRow &+ rx
+                                        let y0 = p0[i], y1 = p1[i], y2 = p2[i]
+                                        let tmp = y0 &- (y2 >> 1)
+                                        let g = y2 &+ tmp
+                                        let b = tmp &- (y1 >> 1)
+                                        let r = b &+ y1
+                                        guard (UInt32(bitPattern: r) | UInt32(bitPattern: g) | UInt32(bitPattern: b)) <= maxU else {
+                                            throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                        }
+                                        rawBase[dstPos] = UInt8(truncatingIfNeeded: r)
+                                        rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: r >> 8)
+                                        rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: g)
+                                        rawBase[dstPos &+ 3] = UInt8(truncatingIfNeeded: g >> 8)
+                                        rawBase[dstPos &+ 4] = UInt8(truncatingIfNeeded: b)
+                                        rawBase[dstPos &+ 5] = UInt8(truncatingIfNeeded: b >> 8)
+                                        dstPos &+= 6
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return true
+                }
+            } else if layouts.count == 4 {
+                let l3 = layouts[3]
+                if l0.storageBits == 8 && l1.storageBits == 8 && l2.storageBits == 8 && l3.storageBits == 8
+                    && l0.pixelStride == 4 && l1.pixelStride == 4 && l2.pixelStride == 4 && l3.pixelStride == 4
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes && l2.rowBytes == l3.rowBytes
+                    && l0.offset == 0 && l1.offset == 1 && l2.offset == 2 && l3.offset == 3 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                try channels[3].pixels.withUnsafeBufferPointer { b3 in
+                                    guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress, let p3 = b3.baseAddress else { return }
+                                    for ry in 0..<h {
+                                        if ry % rowStep == 0 { try budget.checkpoint() }
+                                        let srcRow = ry &* w
+                                        var dstPos = ry &* rowBytes
+                                        for rx in 0..<w {
+                                            let i = srcRow &+ rx
+                                            let y0 = p0[i], y1 = p1[i], y2 = p2[i], a = p3[i]
+                                            let tmp = y0 &- (y2 >> 1)
+                                            let g = y2 &+ tmp
+                                            let b = tmp &- (y1 >> 1)
+                                            let r = b &+ y1
+                                            guard (UInt32(bitPattern: r) | UInt32(bitPattern: g) | UInt32(bitPattern: b) | UInt32(bitPattern: a)) <= maxU else {
+                                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                            }
+                                            rawBase[dstPos] = UInt8(truncatingIfNeeded: r)
+                                            rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: g)
+                                            rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: b)
+                                            rawBase[dstPos &+ 3] = UInt8(truncatingIfNeeded: a)
+                                            dstPos &+= 4
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return true
+                }
+                if l0.storageBits == 16 && l1.storageBits == 16 && l2.storageBits == 16 && l3.storageBits == 16
+                    && l0.littleEndian && l1.littleEndian && l2.littleEndian && l3.littleEndian
+                    && l0.pixelStride == 8 && l1.pixelStride == 8 && l2.pixelStride == 8 && l3.pixelStride == 8
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes && l2.rowBytes == l3.rowBytes
+                    && l0.offset == 0 && l1.offset == 2 && l2.offset == 4 && l3.offset == 6 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                try channels[3].pixels.withUnsafeBufferPointer { b3 in
+                                    guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress, let p3 = b3.baseAddress else { return }
+                                    for ry in 0..<h {
+                                        if ry % rowStep == 0 { try budget.checkpoint() }
+                                        let srcRow = ry &* w
+                                        var dstPos = ry &* rowBytes
+                                        for rx in 0..<w {
+                                            let i = srcRow &+ rx
+                                            let y0 = p0[i], y1 = p1[i], y2 = p2[i], a = p3[i]
+                                            let tmp = y0 &- (y2 >> 1)
+                                            let g = y2 &+ tmp
+                                            let b = tmp &- (y1 >> 1)
+                                            let r = b &+ y1
+                                            guard (UInt32(bitPattern: r) | UInt32(bitPattern: g) | UInt32(bitPattern: b) | UInt32(bitPattern: a)) <= maxU else {
+                                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                            }
+                                            rawBase[dstPos] = UInt8(truncatingIfNeeded: r)
+                                            rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: r >> 8)
+                                            rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: g)
+                                            rawBase[dstPos &+ 3] = UInt8(truncatingIfNeeded: g >> 8)
+                                            rawBase[dstPos &+ 4] = UInt8(truncatingIfNeeded: b)
+                                            rawBase[dstPos &+ 5] = UInt8(truncatingIfNeeded: b >> 8)
+                                            rawBase[dstPos &+ 6] = UInt8(truncatingIfNeeded: a)
+                                            rawBase[dstPos &+ 7] = UInt8(truncatingIfNeeded: a >> 8)
+                                            dstPos &+= 8
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return true
+                }
+            }
+            return false
         }
 
         private func decodeSingleSectionToImage(sampleMax: Int32) throws -> ModularImage {
@@ -647,15 +887,17 @@ package enum ModularFrameDecoder {
             sectionIndex: Int,
             groupId: Int32,
             slices: [GroupChannelSlice],
-            sampleMaximum: Int32?
-        ) throws -> [ModularChannel] {
+            sampleMaximum: Int32?,
+            globalRCTTransforms: [ModularTransform] = [],
+            canFuseRCT6InWrite: Bool = false
+        ) throws -> (channels: [ModularChannel], fusedRCT6: Bool) {
             var reader = try sectionReader(sectionIndex)
             if slices.isEmpty {
                 try reader.expectZeroPadding()
                 guard reader.isExhausted else {
                     throw ScalarModularError.invalidInput("Unexpected bytes in empty Modular group section")
                 }
-                return []
+                return ([], false)
             }
             let groupHeader = try GroupHeader.read(from: &reader)
             let pixelCount = slices.reduce(0) { $0 + $1.width * $1.height }
@@ -689,7 +931,7 @@ package enum ModularFrameDecoder {
                 codebook: entropy.codebook,
                 distanceMultiplier: maxWidth
             )
-            let checkMax: Int32? = localTransforms.isEmpty ? sampleMaximum : nil
+            let checkMax: Int32? = (localTransforms.isEmpty && globalRCTTransforms.isEmpty) ? sampleMaximum : nil
             for i in groupImage.channels.indices {
                 try groupImage.channels[i].allocatePixels(budget: budget)
                 try decodeChannelIntoArray(
@@ -708,6 +950,20 @@ package enum ModularFrameDecoder {
             guard reader.isExhausted else {
                 throw ScalarModularError.invalidInput("Unexpected trailing bytes in Modular group section")
             }
+            let isSingleRCT6: Bool = {
+                if localTransforms.count == 1 && globalRCTTransforms.isEmpty {
+                    let t = localTransforms[0]
+                    return t.id == .rct && t.beginC == 0 && t.rctType == 6
+                }
+                if localTransforms.isEmpty && globalRCTTransforms.count == 1 {
+                    let t = globalRCTTransforms[0]
+                    return t.id == .rct && t.beginC == 0 && t.rctType == 6
+                }
+                return false
+            }()
+            if canFuseRCT6InWrite && isSingleRCT6 && groupImage.nbMetaChannels == 0 && groupImage.channels.count == slices.count {
+                return (groupImage.channels, true)
+            }
             if !localTransforms.isEmpty {
                 try applyInverseTransforms(
                     image: &groupImage,
@@ -719,7 +975,348 @@ package enum ModularFrameDecoder {
             guard groupImage.channels.count == slices.count else {
                 throw ScalarModularError.invalidInput("Group channel count mismatch after inverse transforms")
             }
-            return groupImage.channels
+            if !globalRCTTransforms.isEmpty {
+                try applyInverseTransforms(
+                    image: &groupImage,
+                    transforms: globalRCTTransforms,
+                    bitDepth: bitsPerSample,
+                    budget: budget
+                )
+            }
+            return (groupImage.channels, false)
+        }
+
+        private func canFuseGroupSlicesRCT6(
+            slices: [GroupChannelSlice],
+            layouts: [ModularChannelLayout]
+        ) -> Bool {
+            if slices.count == 3 && layouts.count == 3
+                && slices[0].parentChannelIndex == 0 && slices[1].parentChannelIndex == 1 && slices[2].parentChannelIndex == 2
+                && slices[0].x0 == slices[1].x0 && slices[1].x0 == slices[2].x0
+                && slices[0].y0 == slices[1].y0 && slices[1].y0 == slices[2].y0
+                && slices[0].width == slices[1].width && slices[1].width == slices[2].width
+                && slices[0].height == slices[1].height && slices[1].height == slices[2].height {
+                let l0 = layouts[0], l1 = layouts[1], l2 = layouts[2]
+                if l0.storageBits == 8 && l1.storageBits == 8 && l2.storageBits == 8
+                    && l0.pixelStride == 3 && l1.pixelStride == 3 && l2.pixelStride == 3
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes
+                    && l0.offset == 0 && l1.offset == 1 && l2.offset == 2 {
+                    return true
+                }
+                if l0.storageBits == 16 && l1.storageBits == 16 && l2.storageBits == 16
+                    && l0.littleEndian && l1.littleEndian && l2.littleEndian
+                    && l0.pixelStride == 6 && l1.pixelStride == 6 && l2.pixelStride == 6
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes
+                    && l0.offset == 0 && l1.offset == 2 && l2.offset == 4 {
+                    return true
+                }
+            } else if slices.count == 4 && layouts.count == 4
+                && slices[0].parentChannelIndex == 0 && slices[1].parentChannelIndex == 1
+                && slices[2].parentChannelIndex == 2 && slices[3].parentChannelIndex == 3
+                && slices[0].x0 == slices[1].x0 && slices[1].x0 == slices[2].x0 && slices[2].x0 == slices[3].x0
+                && slices[0].y0 == slices[1].y0 && slices[1].y0 == slices[2].y0 && slices[2].y0 == slices[3].y0
+                && slices[0].width == slices[1].width && slices[1].width == slices[2].width && slices[2].width == slices[3].width
+                && slices[0].height == slices[1].height && slices[1].height == slices[2].height && slices[2].height == slices[3].height {
+                let l0 = layouts[0], l1 = layouts[1], l2 = layouts[2], l3 = layouts[3]
+                if l0.storageBits == 8 && l1.storageBits == 8 && l2.storageBits == 8 && l3.storageBits == 8
+                    && l0.pixelStride == 4 && l1.pixelStride == 4 && l2.pixelStride == 4 && l3.pixelStride == 4
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes && l2.rowBytes == l3.rowBytes
+                    && l0.offset == 0 && l1.offset == 1 && l2.offset == 2 && l3.offset == 3 {
+                    return true
+                }
+                if l0.storageBits == 16 && l1.storageBits == 16 && l2.storageBits == 16 && l3.storageBits == 16
+                    && l0.littleEndian && l1.littleEndian && l2.littleEndian && l3.littleEndian
+                    && l0.pixelStride == 8 && l1.pixelStride == 8 && l2.pixelStride == 8 && l3.pixelStride == 8
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes && l2.rowBytes == l3.rowBytes
+                    && l0.offset == 0 && l1.offset == 2 && l2.offset == 4 && l3.offset == 6 {
+                    return true
+                }
+            }
+            return false
+        }
+
+        private func writeGroupSlicesToLayouts(
+            _ channels: [ModularChannel],
+            slices: [GroupChannelSlice],
+            into bytes: UnsafeMutableRawBufferPointer,
+            layouts: [ModularChannelLayout],
+            maxU: UInt32,
+            fusedRCT6: Bool = false
+        ) throws {
+            if slices.count == 3 && layouts.count == 3
+                && slices[0].parentChannelIndex == 0 && slices[1].parentChannelIndex == 1 && slices[2].parentChannelIndex == 2
+                && slices[0].x0 == slices[1].x0 && slices[1].x0 == slices[2].x0
+                && slices[0].y0 == slices[1].y0 && slices[1].y0 == slices[2].y0
+                && slices[0].width == slices[1].width && slices[1].width == slices[2].width
+                && slices[0].height == slices[1].height && slices[1].height == slices[2].height {
+                let l0 = layouts[0], l1 = layouts[1], l2 = layouts[2]
+                let rectX = slices[0].x0, rectY = slices[0].y0
+                let rectW = slices[0].width, rectH = slices[0].height
+                let rowStep = max(1, 4096 / max(1, rectW))
+                if l0.storageBits == 8 && l1.storageBits == 8 && l2.storageBits == 8
+                    && l0.pixelStride == 3 && l1.pixelStride == 3 && l2.pixelStride == 3
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes
+                    && l0.offset == 0 && l1.offset == 1 && l2.offset == 2 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress else { return }
+                                if fusedRCT6 {
+                                    for ry in 0..<rectH {
+                                        if ry % rowStep == 0 { try budget.checkpoint() }
+                                        let srcRow = ry &* rectW
+                                        var dstPos = (rectY &+ ry) &* rowBytes &+ rectX &* 3
+                                        for rx in 0..<rectW {
+                                            let i = srcRow &+ rx
+                                            let yv = p0[i], co = p1[i], cg = p2[i]
+                                            let t = yv &- (cg >> 1)
+                                            let g = cg &+ t
+                                            let b = t &- (co >> 1)
+                                            let r = b &+ co
+                                            guard (UInt32(bitPattern: r) | UInt32(bitPattern: g) | UInt32(bitPattern: b)) <= maxU else {
+                                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                            }
+                                            rawBase[dstPos] = UInt8(truncatingIfNeeded: r)
+                                            rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: g)
+                                            rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: b)
+                                            dstPos &+= 3
+                                        }
+                                    }
+                                } else {
+                                    for ry in 0..<rectH {
+                                        if ry % rowStep == 0 { try budget.checkpoint() }
+                                        let srcRow = ry &* rectW
+                                        var dstPos = (rectY &+ ry) &* rowBytes &+ rectX &* 3
+                                        for rx in 0..<rectW {
+                                            let i = srcRow &+ rx
+                                            let v0 = p0[i], v1 = p1[i], v2 = p2[i]
+                                            guard (UInt32(bitPattern: v0) | UInt32(bitPattern: v1) | UInt32(bitPattern: v2)) <= maxU else {
+                                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                            }
+                                            rawBase[dstPos] = UInt8(truncatingIfNeeded: v0)
+                                            rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: v1)
+                                            rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: v2)
+                                            dstPos &+= 3
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return
+                }
+                if l0.storageBits == 16 && l1.storageBits == 16 && l2.storageBits == 16
+                    && l0.littleEndian && l1.littleEndian && l2.littleEndian
+                    && l0.pixelStride == 6 && l1.pixelStride == 6 && l2.pixelStride == 6
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes
+                    && l0.offset == 0 && l1.offset == 2 && l2.offset == 4 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress else { return }
+                                if fusedRCT6 {
+                                    for ry in 0..<rectH {
+                                        if ry % rowStep == 0 { try budget.checkpoint() }
+                                        let srcRow = ry &* rectW
+                                        var dstPos = (rectY &+ ry) &* rowBytes &+ rectX &* 6
+                                        for rx in 0..<rectW {
+                                            let i = srcRow &+ rx
+                                            let yv = p0[i], co = p1[i], cg = p2[i]
+                                            let t = yv &- (cg >> 1)
+                                            let g = cg &+ t
+                                            let b = t &- (co >> 1)
+                                            let r = b &+ co
+                                            guard (UInt32(bitPattern: r) | UInt32(bitPattern: g) | UInt32(bitPattern: b)) <= maxU else {
+                                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                            }
+                                            rawBase[dstPos] = UInt8(truncatingIfNeeded: r)
+                                            rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: r >> 8)
+                                            rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: g)
+                                            rawBase[dstPos &+ 3] = UInt8(truncatingIfNeeded: g >> 8)
+                                            rawBase[dstPos &+ 4] = UInt8(truncatingIfNeeded: b)
+                                            rawBase[dstPos &+ 5] = UInt8(truncatingIfNeeded: b >> 8)
+                                            dstPos &+= 6
+                                        }
+                                    }
+                                } else {
+                                    for ry in 0..<rectH {
+                                        if ry % rowStep == 0 { try budget.checkpoint() }
+                                        let srcRow = ry &* rectW
+                                        var dstPos = (rectY &+ ry) &* rowBytes &+ rectX &* 6
+                                        for rx in 0..<rectW {
+                                            let i = srcRow &+ rx
+                                            let v0 = p0[i], v1 = p1[i], v2 = p2[i]
+                                            guard (UInt32(bitPattern: v0) | UInt32(bitPattern: v1) | UInt32(bitPattern: v2)) <= maxU else {
+                                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                            }
+                                            rawBase[dstPos] = UInt8(truncatingIfNeeded: v0)
+                                            rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: v0 >> 8)
+                                            rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: v1)
+                                            rawBase[dstPos &+ 3] = UInt8(truncatingIfNeeded: v1 >> 8)
+                                            rawBase[dstPos &+ 4] = UInt8(truncatingIfNeeded: v2)
+                                            rawBase[dstPos &+ 5] = UInt8(truncatingIfNeeded: v2 >> 8)
+                                            dstPos &+= 6
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return
+                }
+            } else if slices.count == 4 && layouts.count == 4
+                && slices[0].parentChannelIndex == 0 && slices[1].parentChannelIndex == 1
+                && slices[2].parentChannelIndex == 2 && slices[3].parentChannelIndex == 3
+                && slices[0].x0 == slices[1].x0 && slices[1].x0 == slices[2].x0 && slices[2].x0 == slices[3].x0
+                && slices[0].y0 == slices[1].y0 && slices[1].y0 == slices[2].y0 && slices[2].y0 == slices[3].y0
+                && slices[0].width == slices[1].width && slices[1].width == slices[2].width && slices[2].width == slices[3].width
+                && slices[0].height == slices[1].height && slices[1].height == slices[2].height && slices[2].height == slices[3].height {
+                let l0 = layouts[0], l1 = layouts[1], l2 = layouts[2], l3 = layouts[3]
+                let rectX = slices[0].x0, rectY = slices[0].y0
+                let rectW = slices[0].width, rectH = slices[0].height
+                let rowStep = max(1, 4096 / max(1, rectW))
+                if l0.storageBits == 8 && l1.storageBits == 8 && l2.storageBits == 8 && l3.storageBits == 8
+                    && l0.pixelStride == 4 && l1.pixelStride == 4 && l2.pixelStride == 4 && l3.pixelStride == 4
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes && l2.rowBytes == l3.rowBytes
+                    && l0.offset == 0 && l1.offset == 1 && l2.offset == 2 && l3.offset == 3 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                try channels[3].pixels.withUnsafeBufferPointer { b3 in
+                                    guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress, let p3 = b3.baseAddress else { return }
+                                    if fusedRCT6 {
+                                        for ry in 0..<rectH {
+                                            if ry % rowStep == 0 { try budget.checkpoint() }
+                                            let srcRow = ry &* rectW
+                                            var dstPos = (rectY &+ ry) &* rowBytes &+ rectX &* 4
+                                            for rx in 0..<rectW {
+                                                let i = srcRow &+ rx
+                                                let yv = p0[i], co = p1[i], cg = p2[i], v3 = p3[i]
+                                                let t = yv &- (cg >> 1)
+                                                let g = cg &+ t
+                                                let b = t &- (co >> 1)
+                                                let r = b &+ co
+                                                guard (UInt32(bitPattern: r) | UInt32(bitPattern: g) | UInt32(bitPattern: b) | UInt32(bitPattern: v3)) <= maxU else {
+                                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                                }
+                                                rawBase[dstPos] = UInt8(truncatingIfNeeded: r)
+                                                rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: g)
+                                                rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: b)
+                                                rawBase[dstPos &+ 3] = UInt8(truncatingIfNeeded: v3)
+                                                dstPos &+= 4
+                                            }
+                                        }
+                                    } else {
+                                        for ry in 0..<rectH {
+                                            if ry % rowStep == 0 { try budget.checkpoint() }
+                                            let srcRow = ry &* rectW
+                                            var dstPos = (rectY &+ ry) &* rowBytes &+ rectX &* 4
+                                            for rx in 0..<rectW {
+                                                let i = srcRow &+ rx
+                                                let v0 = p0[i], v1 = p1[i], v2 = p2[i], v3 = p3[i]
+                                                guard (UInt32(bitPattern: v0) | UInt32(bitPattern: v1) | UInt32(bitPattern: v2) | UInt32(bitPattern: v3)) <= maxU else {
+                                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                                }
+                                                rawBase[dstPos] = UInt8(truncatingIfNeeded: v0)
+                                                rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: v1)
+                                                rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: v2)
+                                                rawBase[dstPos &+ 3] = UInt8(truncatingIfNeeded: v3)
+                                                dstPos &+= 4
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return
+                }
+                if l0.storageBits == 16 && l1.storageBits == 16 && l2.storageBits == 16 && l3.storageBits == 16
+                    && l0.littleEndian && l1.littleEndian && l2.littleEndian && l3.littleEndian
+                    && l0.pixelStride == 8 && l1.pixelStride == 8 && l2.pixelStride == 8 && l3.pixelStride == 8
+                    && l0.rowBytes == l1.rowBytes && l1.rowBytes == l2.rowBytes && l2.rowBytes == l3.rowBytes
+                    && l0.offset == 0 && l1.offset == 2 && l2.offset == 4 && l3.offset == 6 {
+                    let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    let rowBytes = l0.rowBytes
+                    try channels[0].pixels.withUnsafeBufferPointer { b0 in
+                        try channels[1].pixels.withUnsafeBufferPointer { b1 in
+                            try channels[2].pixels.withUnsafeBufferPointer { b2 in
+                                try channels[3].pixels.withUnsafeBufferPointer { b3 in
+                                    guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress, let p3 = b3.baseAddress else { return }
+                                    if fusedRCT6 {
+                                        for ry in 0..<rectH {
+                                            if ry % rowStep == 0 { try budget.checkpoint() }
+                                            let srcRow = ry &* rectW
+                                            var dstPos = (rectY &+ ry) &* rowBytes &+ rectX &* 8
+                                            for rx in 0..<rectW {
+                                                let i = srcRow &+ rx
+                                                let yv = p0[i], co = p1[i], cg = p2[i], v3 = p3[i]
+                                                let t = yv &- (cg >> 1)
+                                                let g = cg &+ t
+                                                let b = t &- (co >> 1)
+                                                let r = b &+ co
+                                                guard (UInt32(bitPattern: r) | UInt32(bitPattern: g) | UInt32(bitPattern: b) | UInt32(bitPattern: v3)) <= maxU else {
+                                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                                }
+                                                rawBase[dstPos] = UInt8(truncatingIfNeeded: r)
+                                                rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: r >> 8)
+                                                rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: g)
+                                                rawBase[dstPos &+ 3] = UInt8(truncatingIfNeeded: g >> 8)
+                                                rawBase[dstPos &+ 4] = UInt8(truncatingIfNeeded: b)
+                                                rawBase[dstPos &+ 5] = UInt8(truncatingIfNeeded: b >> 8)
+                                                rawBase[dstPos &+ 6] = UInt8(truncatingIfNeeded: v3)
+                                                rawBase[dstPos &+ 7] = UInt8(truncatingIfNeeded: v3 >> 8)
+                                                dstPos &+= 8
+                                            }
+                                        }
+                                    } else {
+                                        for ry in 0..<rectH {
+                                            if ry % rowStep == 0 { try budget.checkpoint() }
+                                            let srcRow = ry &* rectW
+                                            var dstPos = (rectY &+ ry) &* rowBytes &+ rectX &* 8
+                                            for rx in 0..<rectW {
+                                                let i = srcRow &+ rx
+                                                let v0 = p0[i], v1 = p1[i], v2 = p2[i], v3 = p3[i]
+                                                guard (UInt32(bitPattern: v0) | UInt32(bitPattern: v1) | UInt32(bitPattern: v2) | UInt32(bitPattern: v3)) <= maxU else {
+                                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                                }
+                                                rawBase[dstPos] = UInt8(truncatingIfNeeded: v0)
+                                                rawBase[dstPos &+ 1] = UInt8(truncatingIfNeeded: v0 >> 8)
+                                                rawBase[dstPos &+ 2] = UInt8(truncatingIfNeeded: v1)
+                                                rawBase[dstPos &+ 3] = UInt8(truncatingIfNeeded: v1 >> 8)
+                                                rawBase[dstPos &+ 4] = UInt8(truncatingIfNeeded: v2)
+                                                rawBase[dstPos &+ 5] = UInt8(truncatingIfNeeded: v2 >> 8)
+                                                rawBase[dstPos &+ 6] = UInt8(truncatingIfNeeded: v3)
+                                                rawBase[dstPos &+ 7] = UInt8(truncatingIfNeeded: v3 >> 8)
+                                                dstPos &+= 8
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return
+                }
+            }
+            for (i, slice) in slices.enumerated() {
+                try writeRectangleToLayout(
+                    source: channels[i].pixels,
+                    rectX: slice.x0,
+                    rectY: slice.y0,
+                    rectW: slice.width,
+                    rectH: slice.height,
+                    into: bytes,
+                    layout: layouts[slice.parentChannelIndex],
+                    maxU: maxU
+                )
+            }
         }
 
         private func copySlice(
@@ -756,9 +1353,16 @@ package enum ModularFrameDecoder {
         ) throws {
             let numDcGroups = dcGroupsX * dcGroupsY
             let numGroups = groupsX * groupsY
+            let canApplyGlobalRCTPerGroup = !globalTransforms.isEmpty
+                && globalTransforms.allSatisfy({ $0.id == .rct })
+                && initialTransformedImage.nbMetaChannels == 0
+                && initialTransformedImage.channels.count == channelsCount
+                && initialTransformedImage.channels.allSatisfy({
+                    $0.width == width && $0.height == height && $0.hshift == 0 && $0.vshift == 0
+                })
 
-            // Fast zero-working-plane path when there are no global transforms and a single pass:
-            if globalTransforms.isEmpty && passes.numPasses == 1 {
+            // Fast zero-full-frame-plane path when there are no global transforms (or only pixel-wise global RCT) and a single pass:
+            if (globalTransforms.isEmpty || canApplyGlobalRCTPerGroup) && passes.numPasses == 1 {
                 var sec0Reader = sec0ReaderAfterHeader
                 let sec0Entropy = try selectEntropy(
                     header: globalGroupHeader,
@@ -823,7 +1427,7 @@ package enum ModularFrameDecoder {
                         )
                         let groupId = Int32(1 + 3 * numDcGroups + 17 + groupIndex)
 
-                        if groupHeader.transforms.isEmpty {
+                        if groupHeader.transforms.isEmpty && globalTransforms.isEmpty {
                             let maxW = slices.map(\.width).max() ?? 0
                             var stream = TokenStreamReader(
                                 header: entropy.header,
@@ -855,24 +1459,23 @@ package enum ModularFrameDecoder {
                                 throw ScalarModularError.invalidInput("Unexpected trailing bytes in Modular group section")
                             }
                         } else {
-                            let channels = try decodeGroupSubstreamToPlanes(
+                            let canFuse = canFuseGroupSlicesRCT6(slices: slices, layouts: layouts)
+                            let (channels, fusedRCT6) = try decodeGroupSubstreamToPlanes(
                                 sectionIndex: firstACSection + groupIndex,
                                 groupId: groupId,
                                 slices: slices,
-                                sampleMaximum: sampleMax
+                                sampleMaximum: sampleMax,
+                                globalRCTTransforms: globalTransforms,
+                                canFuseRCT6InWrite: canFuse
                             )
-                            for (i, slice) in slices.enumerated() {
-                                try writeRectangleToLayout(
-                                    source: channels[i].pixels,
-                                    rectX: slice.x0,
-                                    rectY: slice.y0,
-                                    rectW: slice.width,
-                                    rectH: slice.height,
-                                    into: bytes,
-                                    layout: layouts[slice.parentChannelIndex],
-                                    maxU: maxU
-                                )
-                            }
+                            try writeGroupSlicesToLayouts(
+                                channels,
+                                slices: slices,
+                                into: bytes,
+                                layouts: layouts,
+                                maxU: maxU,
+                                fusedRCT6: fusedRCT6
+                            )
                         }
                     }
                 } else {
@@ -881,10 +1484,10 @@ package enum ModularFrameDecoder {
                     while baseGroup < numGroups {
                         let batchCount = min(budget.maximumWorkers, numGroups - baseGroup)
                         let currentBase = baseGroup
-                        let batchResults: [([GroupChannelSlice], [ModularChannel])?] = try modularDecodeBatch(
+                        _ = try modularDecodeBatch(
                             count: batchCount,
                             budget: budget
-                        ) { (offset: Int) -> ([GroupChannelSlice], [ModularChannel])? in
+                        ) { (offset: Int) -> Void in
                             let groupIndex = currentBase + offset
                             let gx = groupIndex % groupsX
                             let gy = groupIndex / groupsX
@@ -899,7 +1502,7 @@ package enum ModularFrameDecoder {
                             let gId = Int32(1 + 3 * numDcGroups + 17 + groupIndex)
                             var reader = try sectionReader(secIndex)
                             let groupHeader = try GroupHeader.read(from: &reader)
-                            if groupHeader.transforms.isEmpty {
+                            if groupHeader.transforms.isEmpty && globalTransforms.isEmpty {
                                 let pixelCount = slices.reduce(0) { $0 + $1.width * $1.height }
                                 let entropy = try selectEntropy(
                                     header: groupHeader,
@@ -942,31 +1545,24 @@ package enum ModularFrameDecoder {
                                 guard reader.isExhausted else {
                                     throw ScalarModularError.invalidInput("Unexpected trailing bytes in Modular group section")
                                 }
-                                return nil
                             } else {
-                                let planes = try decodeGroupSubstreamToPlanes(
+                                let canFuse = canFuseGroupSlicesRCT6(slices: slices, layouts: layouts)
+                                let (planes, fusedRCT6) = try decodeGroupSubstreamToPlanes(
                                     sectionIndex: secIndex,
                                     groupId: gId,
                                     slices: slices,
-                                    sampleMaximum: sampleMax
+                                    sampleMaximum: sampleMax,
+                                    globalRCTTransforms: globalTransforms,
+                                    canFuseRCT6InWrite: canFuse
                                 )
-                                return (slices, planes)
-                            }
-                        }
-                        for item in batchResults {
-                            if let (slices, planes) = item {
-                                for (i, slice) in slices.enumerated() {
-                                    try writeRectangleToLayout(
-                                        source: planes[i].pixels,
-                                        rectX: slice.x0,
-                                        rectY: slice.y0,
-                                        rectW: slice.width,
-                                        rectH: slice.height,
-                                        into: bytes,
-                                        layout: layouts[slice.parentChannelIndex],
-                                        maxU: maxU
-                                    )
-                                }
+                                try writeGroupSlicesToLayouts(
+                                    planes,
+                                    slices: slices,
+                                    into: sharedBytes,
+                                    layouts: layouts,
+                                    maxU: maxU,
+                                    fusedRCT6: fusedRCT6
+                                )
                             }
                         }
                         baseGroup += batchCount
@@ -1041,7 +1637,7 @@ package enum ModularFrameDecoder {
                     baseDim: dcGroupDim,
                     filter: isDCGroupChannel
                 )
-                let planes = try decodeGroupSubstreamToPlanes(
+                let (planes, _) = try decodeGroupSubstreamToPlanes(
                     sectionIndex: 1 + dcIndex,
                     groupId: Int32(1 + numDcGroups + dcIndex),
                     slices: slices,
@@ -1083,7 +1679,7 @@ package enum ModularFrameDecoder {
                             baseDim: groupDim,
                             filter: passFilter
                         )
-                        let planes = try decodeGroupSubstreamToPlanes(
+                        let (planes, _) = try decodeGroupSubstreamToPlanes(
                             sectionIndex: firstACSection + passIndex * numGroups + groupIndex,
                             groupId: Int32(1 + 3 * numDcGroups + 17 + passIndex * numGroups + groupIndex),
                             slices: slices,
@@ -1115,7 +1711,7 @@ package enum ModularFrameDecoder {
                             )
                             let secIndex = firstACSection + passIndex * numGroups + groupIndex
                             let gId = Int32(1 + 3 * numDcGroups + 17 + passIndex * numGroups + groupIndex)
-                            let planes = try decodeGroupSubstreamToPlanes(
+                            let (planes, _) = try decodeGroupSubstreamToPlanes(
                                 sectionIndex: secIndex,
                                 groupId: gId,
                                 slices: slices,

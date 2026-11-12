@@ -441,6 +441,170 @@ package struct ScaledDCT: Sendable {
         let vPtr = cachedSimdMatrixPointer(size: r, direction: direction)
         let hPtr = (r == c) ? vPtr : cachedSimdMatrixPointer(size: c, direction: direction)
 
+        if direction == .inverse && r >= 4 && c >= 4 {
+            var nonZeroRowMask: UInt64 = 0
+            if c == 8 {
+                for y in 0..<r {
+                    let r0 = y &* 8
+                    let f0 = inBase[r0], f1 = inBase[r0 &+ 1], f2 = inBase[r0 &+ 2], f3 = inBase[r0 &+ 3]
+                    let f4 = inBase[r0 &+ 4], f5 = inBase[r0 &+ 5], f6 = inBase[r0 &+ 6], f7 = inBase[r0 &+ 7]
+                    if f0 == 0 && f1 == 0 && f2 == 0 && f3 == 0 && f4 == 0 && f5 == 0 && f6 == 0 && f7 == 0 {
+                        continue
+                    }
+                    nonZeroRowMask |= (UInt64(1) &<< UInt64(y))
+                    var s0 = SIMD4<Double>(repeating: 0)
+                    var s1 = SIMD4<Double>(repeating: 0)
+                    if f0 != 0 { let v = SIMD4<Double>(repeating: Double(f0)); s0 += hPtr[0] * v; s1 += hPtr[8] * v }
+                    if f1 != 0 { let v = SIMD4<Double>(repeating: Double(f1)); s0 += hPtr[1] * v; s1 += hPtr[9] * v }
+                    if f2 != 0 { let v = SIMD4<Double>(repeating: Double(f2)); s0 += hPtr[2] * v; s1 += hPtr[10] * v }
+                    if f3 != 0 { let v = SIMD4<Double>(repeating: Double(f3)); s0 += hPtr[3] * v; s1 += hPtr[11] * v }
+                    if f4 != 0 { let v = SIMD4<Double>(repeating: Double(f4)); s0 += hPtr[4] * v; s1 += hPtr[12] * v }
+                    if f5 != 0 { let v = SIMD4<Double>(repeating: Double(f5)); s0 += hPtr[5] * v; s1 += hPtr[13] * v }
+                    if f6 != 0 { let v = SIMD4<Double>(repeating: Double(f6)); s0 += hPtr[6] * v; s1 += hPtr[14] * v }
+                    if f7 != 0 { let v = SIMD4<Double>(repeating: Double(f7)); s0 += hPtr[7] * v; s1 += hPtr[15] * v }
+                    inter[r0] = s0[0]; inter[r0 &+ 1] = s0[1]; inter[r0 &+ 2] = s0[2]; inter[r0 &+ 3] = s0[3]
+                    inter[r0 &+ 4] = s1[0]; inter[r0 &+ 5] = s1[1]; inter[r0 &+ 6] = s1[2]; inter[r0 &+ 7] = s1[3]
+                }
+            } else if c >= 16 {
+                let uSteps = c &>> 4
+                for y in 0..<r {
+                    let r0 = y &* c
+                    var colMask: UInt64 = 0
+                    for x in 0..<c {
+                        if inBase[r0 &+ x] != 0 {
+                            colMask |= (UInt64(1) &<< UInt64(x))
+                        }
+                    }
+                    if colMask == 0 { continue }
+                    nonZeroRowMask |= (UInt64(1) &<< UInt64(y))
+                    for uStep in 0..<uSteps {
+                        let u = uStep &* 16
+                        let hBase0 = (uStep &* 4) &* c
+                        let hBase1 = hBase0 &+ c
+                        let hBase2 = hBase1 &+ c
+                        let hBase3 = hBase2 &+ c
+                        var s0 = SIMD4<Double>(repeating: 0)
+                        var s1 = SIMD4<Double>(repeating: 0)
+                        var s2 = SIMD4<Double>(repeating: 0)
+                        var s3 = SIMD4<Double>(repeating: 0)
+                        var xm = colMask
+                        while xm != 0 {
+                            let x = xm.trailingZeroBitCount
+                            xm &= xm &- 1
+                            let v = SIMD4<Double>(repeating: Double(inBase[r0 &+ x]))
+                            s0 += hPtr[hBase0 &+ x] * v
+                            s1 += hPtr[hBase1 &+ x] * v
+                            s2 += hPtr[hBase2 &+ x] * v
+                            s3 += hPtr[hBase3 &+ x] * v
+                        }
+                        let o0 = r0 &+ u
+                        inter[o0] = s0[0]; inter[o0 &+ 1] = s0[1]; inter[o0 &+ 2] = s0[2]; inter[o0 &+ 3] = s0[3]
+                        inter[o0 &+ 4] = s1[0]; inter[o0 &+ 5] = s1[1]; inter[o0 &+ 6] = s1[2]; inter[o0 &+ 7] = s1[3]
+                        inter[o0 &+ 8] = s2[0]; inter[o0 &+ 9] = s2[1]; inter[o0 &+ 10] = s2[2]; inter[o0 &+ 11] = s2[3]
+                        inter[o0 &+ 12] = s3[0]; inter[o0 &+ 13] = s3[1]; inter[o0 &+ 14] = s3[2]; inter[o0 &+ 15] = s3[3]
+                    }
+                }
+            } else {
+                // c == 4
+                for y in 0..<r {
+                    let base = y &* 4
+                    let f0 = inBase[base], f1 = inBase[base &+ 1], f2 = inBase[base &+ 2], f3 = inBase[base &+ 3]
+                    if f0 == 0 && f1 == 0 && f2 == 0 && f3 == 0 { continue }
+                    nonZeroRowMask |= (UInt64(1) &<< UInt64(y))
+                    var sums = SIMD4<Double>(repeating: 0)
+                    if f0 != 0 { sums += hPtr[0] * SIMD4<Double>(repeating: Double(f0)) }
+                    if f1 != 0 { sums += hPtr[1] * SIMD4<Double>(repeating: Double(f1)) }
+                    if f2 != 0 { sums += hPtr[2] * SIMD4<Double>(repeating: Double(f2)) }
+                    if f3 != 0 { sums += hPtr[3] * SIMD4<Double>(repeating: Double(f3)) }
+                    inter[base] = sums[0]
+                    inter[base &+ 1] = sums[1]
+                    inter[base &+ 2] = sums[2]
+                    inter[base &+ 3] = sums[3]
+                }
+            }
+
+            if nonZeroRowMask == 0 {
+                out.initialize(repeating: 0, count: r &* c)
+                return
+            }
+
+            if r >= 8 {
+                let uSteps = r &>> 3
+                var x = 0
+                while x < c {
+                    for uStep in 0..<uSteps {
+                        let u = uStep &* 8
+                        let vBase0 = (uStep &* 2) &* r
+                        let vBase1 = vBase0 &+ r
+                        var sums0_0 = SIMD4<Double>(repeating: 0)
+                        var sums0_1 = SIMD4<Double>(repeating: 0)
+                        var sums0_2 = SIMD4<Double>(repeating: 0)
+                        var sums0_3 = SIMD4<Double>(repeating: 0)
+                        var sums1_0 = SIMD4<Double>(repeating: 0)
+                        var sums1_1 = SIMD4<Double>(repeating: 0)
+                        var sums1_2 = SIMD4<Double>(repeating: 0)
+                        var sums1_3 = SIMD4<Double>(repeating: 0)
+                        var ym = nonZeroRowMask
+                        while ym != 0 {
+                            let y = ym.trailingZeroBitCount
+                            ym &= ym &- 1
+                            let w0 = vPtr[vBase0 &+ y]
+                            let w1 = vPtr[vBase1 &+ y]
+                            let tIdx = y &* c &+ x
+                            let t0 = SIMD4<Double>(repeating: inter[tIdx])
+                            let t1 = SIMD4<Double>(repeating: inter[tIdx &+ 1])
+                            let t2 = SIMD4<Double>(repeating: inter[tIdx &+ 2])
+                            let t3 = SIMD4<Double>(repeating: inter[tIdx &+ 3])
+                            sums0_0 += w0 * t0; sums0_1 += w0 * t1; sums0_2 += w0 * t2; sums0_3 += w0 * t3
+                            sums1_0 += w1 * t0; sums1_1 += w1 * t1; sums1_2 += w1 * t2; sums1_3 += w1 * t3
+                        }
+                        for lane in 0..<4 {
+                            let oIdx0 = (u &+ lane) &* c &+ x
+                            out[oIdx0] = Float(sums0_0[lane])
+                            out[oIdx0 &+ 1] = Float(sums0_1[lane])
+                            out[oIdx0 &+ 2] = Float(sums0_2[lane])
+                            out[oIdx0 &+ 3] = Float(sums0_3[lane])
+                            let oIdx1 = (u &+ 4 &+ lane) &* c &+ x
+                            out[oIdx1] = Float(sums1_0[lane])
+                            out[oIdx1 &+ 1] = Float(sums1_1[lane])
+                            out[oIdx1 &+ 2] = Float(sums1_2[lane])
+                            out[oIdx1 &+ 3] = Float(sums1_3[lane])
+                        }
+                    }
+                    x &+= 4
+                }
+            } else {
+                // r == 4
+                var x = 0
+                while x < c {
+                    var sums0 = SIMD4<Double>(repeating: 0)
+                    var sums1 = SIMD4<Double>(repeating: 0)
+                    var sums2 = SIMD4<Double>(repeating: 0)
+                    var sums3 = SIMD4<Double>(repeating: 0)
+                    var ym = nonZeroRowMask
+                    while ym != 0 {
+                        let y = ym.trailingZeroBitCount
+                        ym &= ym &- 1
+                        let weights = vPtr[y]
+                        let tIdx = y &* c &+ x
+                        sums0 += weights * SIMD4<Double>(repeating: inter[tIdx])
+                        sums1 += weights * SIMD4<Double>(repeating: inter[tIdx &+ 1])
+                        sums2 += weights * SIMD4<Double>(repeating: inter[tIdx &+ 2])
+                        sums3 += weights * SIMD4<Double>(repeating: inter[tIdx &+ 3])
+                    }
+                    for lane in 0..<4 {
+                        let oIdx = lane &* c &+ x
+                        out[oIdx] = Float(sums0[lane])
+                        out[oIdx &+ 1] = Float(sums1[lane])
+                        out[oIdx &+ 2] = Float(sums2[lane])
+                        out[oIdx &+ 3] = Float(sums3[lane])
+                    }
+                    x &+= 4
+                }
+            }
+            return
+        }
+
         // 1. Horizontal pass (SIMD4<Double> across output frequencies, 2 rows per batch when r >= 2)
         if c == 8 {
             var y = 0

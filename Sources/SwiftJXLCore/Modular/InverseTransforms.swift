@@ -249,6 +249,54 @@ package func applyInverseTransforms(
     guard (1...31).contains(bitDepth) else {
         throw ModularGeometryError.invalidDimensions
     }
+    if transforms.count == 1 && transforms[0].id == .rct {
+        let transform = transforms[0]
+        try budget.checkpoint()
+        guard let begin = Int(exactly: transform.beginC),
+              begin >= 0 else {
+            throw ModularGeometryError.invalidChannelRange
+        }
+        let (end, over) = begin.addingReportingOverflow(3)
+        guard !over, end <= image.channels.count else {
+            throw ModularGeometryError.invalidChannelRange
+        }
+        guard end <= image.nbMetaChannels || begin >= image.nbMetaChannels else {
+            throw ModularGeometryError.invalidChannelRange
+        }
+        let c0 = image.channels[begin]
+        let c1 = image.channels[begin + 1]
+        let c2 = image.channels[begin + 2]
+        guard c0.width == c1.width, c0.width == c2.width,
+              c0.height == c1.height, c0.height == c2.height,
+              c0.hshift == c1.hshift, c0.hshift == c2.hshift,
+              c0.vshift == c1.vshift, c0.vshift == c2.vshift,
+              c0.pixels.count == c0.sampleCount,
+              c1.pixels.count == c1.sampleCount,
+              c2.pixels.count == c2.sampleCount else {
+            throw ModularGeometryError.channelMismatch
+        }
+        guard transform.rctType < 42 else {
+            throw SpecRCTError.invalidRCTType(transform.rctType)
+        }
+        var p0: [Int32] = []
+        var p1: [Int32] = []
+        var p2: [Int32] = []
+        swap(&p0, &image.channels[begin].pixels)
+        swap(&p1, &image.channels[begin + 1].pixels)
+        swap(&p2, &image.channels[begin + 2].pixels)
+        try SpecRCT.inverse(
+            rctType: transform.rctType,
+            channel0: &p0,
+            channel1: &p1,
+            channel2: &p2,
+            checkpoint: budget.checkpoint
+        )
+        swap(&p0, &image.channels[begin].pixels)
+        swap(&p1, &image.channels[begin + 1].pixels)
+        swap(&p2, &image.channels[begin + 2].pixels)
+        try budget.checkpoint()
+        return
+    }
     var working = image
 
     for transform in transforms.reversed() {

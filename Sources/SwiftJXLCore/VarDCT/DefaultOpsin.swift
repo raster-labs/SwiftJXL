@@ -78,4 +78,21 @@ package enum DefaultOpsin {
         }
         return (R: rOut, G: gOut, B: bOut)
     }
+
+    /// Unchecked inverse opsin transform for callers whose XYB inputs are already finite `Float` values.
+    @inline(__always)
+    package static func inverseUnchecked(_ x: Double, _ y: Double, _ b: Double) -> (R: Double, G: Double, B: Double) {
+        let lGamma = y + x + cbrtBias
+        let mGamma = y - x + cbrtBias
+        let sGamma = b + cbrtBias
+
+        let l = (lGamma * lGamma * lGamma) - bias
+        let m = (mGamma * mGamma * mGamma) - bias
+        let s = (sGamma * sGamma * sGamma) - bias
+
+        let rOut = inv00 * l + inv01 * m + inv02 * s
+        let gOut = inv10 * l + inv11 * m + inv12 * s
+        let bOut = inv20 * l + inv21 * m + inv22 * s
+        return (R: rOut, G: gOut, B: bOut)
+    }
 }

@@ -187,7 +187,7 @@ package enum EdgePreservingFilter {
         let cs1 = channelScale[1]
         let cs2 = channelScale[2]
 
-        @inline(__always)
+        @inline(__always) @Sendable
         func mirror(_ coord: Int, _ size: Int) -> Int {
             if size <= 1 { return 0 }
             var c = coord
@@ -201,12 +201,12 @@ package enum EdgePreservingFilter {
             return c
         }
 
-        @inline(__always)
+        @inline(__always) @Sendable
         func clampX(_ x: Int) -> Int {
             mirror(x, width)
         }
 
-        @inline(__always)
+        @inline(__always) @Sendable
         func clampY(_ y: Int) -> Int {
             mirror(y, height)
         }
@@ -218,16 +218,16 @@ package enum EdgePreservingFilter {
                         try out1.withUnsafeMutableBufferPointer { out1Buf in
                             try out2.withUnsafeMutableBufferPointer { out2Buf in
                                 try stepInvSigma.withUnsafeBufferPointer { sigmaBuf in
-                                    let p0 = in0Buf.baseAddress!
-                                    let p1 = in1Buf.baseAddress!
-                                    let p2 = in2Buf.baseAddress!
-                                    let o0 = out0Buf.baseAddress!
-                                    let o1 = out1Buf.baseAddress!
-                                    let o2 = out2Buf.baseAddress!
-                                    let invSigBase = sigmaBuf.baseAddress!
+                                    nonisolated(unsafe) let p0 = in0Buf.baseAddress!
+                                    nonisolated(unsafe) let p1 = in1Buf.baseAddress!
+                                    nonisolated(unsafe) let p2 = in2Buf.baseAddress!
+                                    nonisolated(unsafe) let o0 = out0Buf.baseAddress!
+                                    nonisolated(unsafe) let o1 = out1Buf.baseAddress!
+                                    nonisolated(unsafe) let o2 = out2Buf.baseAddress!
+                                    nonisolated(unsafe) let invSigBase = sigmaBuf.baseAddress!
                                     let w = width
 
-                                    @inline(__always)
+                                    @inline(__always) @Sendable
                                     func processBoundaryPixel(x: Int, y: Int, by: Int, yBorder: Bool, rowOffset: Int) {
                                         let bIdx2 = (by * blocksX + (x >> 3)) * 2
                                         let invInt = invSigBase[bIdx2]
@@ -299,11 +299,11 @@ package enum EdgePreservingFilter {
 
                                     try step0StrideOffsets.withUnsafeBufferPointer { step0Buf in
                                         try cardinalStrideOffsets.withUnsafeBufferPointer { cardBuf in
-                                            let step0Ptr = step0Buf.baseAddress!
-                                            let cardPtr = cardBuf.baseAddress!
+                                            nonisolated(unsafe) let step0Ptr = step0Buf.baseAddress!
+                                            nonisolated(unsafe) let cardPtr = cardBuf.baseAddress!
 
-                                            for y in 0..<height {
-                                                if (y & 7) == 0 { try budget.checkpoint() }
+                                            @inline(__always) @Sendable
+                                            func processRow(_ y: Int) {
                                                 let by = y >> 3
                                                 let yBorder = ((y & 7) == 0) || ((y & 7) == 7)
                                                 let rowOffset = y * w
@@ -313,7 +313,7 @@ package enum EdgePreservingFilter {
                                                     for x in 0..<w {
                                                         processBoundaryPixel(x: x, y: y, by: by, yBorder: yBorder, rowOffset: rowOffset)
                                                     }
-                                                    continue
+                                                    return
                                                 }
 
                                                 for x in 0..<minMargin {
@@ -322,6 +322,7 @@ package enum EdgePreservingFilter {
 
                                                 if !useCrossSAD {
                                                     // Step 2 interior fast path: 4 cardinal offsets, single-pixel SAD
+                                                    var prevSadRight: Float = -1
                                                     for x in minMargin..<(w - minMargin) {
                                                         let bIdx2 = (rowBlockBase + (x >> 3)) * 2
                                                         let invInt = invSigBase[bIdx2]
@@ -330,6 +331,7 @@ package enum EdgePreservingFilter {
                                                             o0[cIdx] = p0[cIdx]
                                                             o1[cIdx] = p1[cIdx]
                                                             o2[cIdx] = p2[cIdx]
+                                                            prevSadRight = -1
                                                             continue
                                                         }
                                                         let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
@@ -338,7 +340,40 @@ package enum EdgePreservingFilter {
                                                         var sumW: Float = 1.0
                                                         var acc0 = c0, acc1 = c1, acc2 = c2
 
-                                                        for k in 0..<4 {
+                                                        // k = 0 (-1)
+                                                        do {
+                                                            let nIdx = cIdx - 1
+                                                            let n0 = p0[nIdx], n1 = p1[nIdx], n2 = p2[nIdx]
+                                                            let sad: Float
+                                                            if prevSadRight >= 0 {
+                                                                sad = prevSadRight
+                                                            } else {
+                                                                sad = cs0 * abs(c0 - n0) + cs1 * abs(c1 - n1) + cs2 * abs(c2 - n2)
+                                                            }
+                                                            let weight = max(0, 1.0 - sad * invSigma)
+                                                            if weight > 0 {
+                                                                sumW += weight
+                                                                acc0 += weight * n0
+                                                                acc1 += weight * n1
+                                                                acc2 += weight * n2
+                                                            }
+                                                        }
+                                                        // k = 1 (+1)
+                                                        do {
+                                                            let nIdx = cIdx + 1
+                                                            let n0 = p0[nIdx], n1 = p1[nIdx], n2 = p2[nIdx]
+                                                            let sad = cs0 * abs(c0 - n0) + cs1 * abs(c1 - n1) + cs2 * abs(c2 - n2)
+                                                            prevSadRight = sad
+                                                            let weight = max(0, 1.0 - sad * invSigma)
+                                                            if weight > 0 {
+                                                                sumW += weight
+                                                                acc0 += weight * n0
+                                                                acc1 += weight * n1
+                                                                acc2 += weight * n2
+                                                            }
+                                                        }
+                                                        // k = 2, 3 (-w, +w)
+                                                        for k in 2..<4 {
                                                             let nIdx = cIdx + cardPtr[k]
                                                             let n0 = p0[nIdx], n1 = p1[nIdx], n2 = p2[nIdx]
                                                             let sad = cs0 * abs(c0 - n0) + cs1 * abs(c1 - n1) + cs2 * abs(c2 - n2)
@@ -357,6 +392,7 @@ package enum EdgePreservingFilter {
                                                     }
                                                 } else if step == 1 {
                                                     // Step 1 interior fast path: 4 cardinal offsets, 5-point plus-cross SAD
+                                                    var prevSadRight: Float = -1
                                                     for x in minMargin..<(w - minMargin) {
                                                         let bIdx2 = (rowBlockBase + (x >> 3)) * 2
                                                         let invInt = invSigBase[bIdx2]
@@ -365,6 +401,7 @@ package enum EdgePreservingFilter {
                                                             o0[cIdx] = p0[cIdx]
                                                             o1[cIdx] = p1[cIdx]
                                                             o2[cIdx] = p2[cIdx]
+                                                            prevSadRight = -1
                                                             continue
                                                         }
                                                         let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
@@ -385,16 +422,23 @@ package enum EdgePreservingFilter {
                                                         for k in 0..<4 {
                                                             let nIdx = cIdx + cardPtr[k]
                                                             var sad: Float = 0
-                                                            let b0 = nIdx + crossOffsets.0
-                                                            sad += cs0 * abs(c0_0 - p0[b0]) + cs1 * abs(c1_0 - p1[b0]) + cs2 * abs(c2_0 - p2[b0])
-                                                            let b1 = nIdx + crossOffsets.1
-                                                            sad += cs0 * abs(c0_1 - p0[b1]) + cs1 * abs(c1_1 - p1[b1]) + cs2 * abs(c2_1 - p2[b1])
-                                                            let b2 = nIdx + crossOffsets.2
-                                                            sad += cs0 * abs(c0_2 - p0[b2]) + cs1 * abs(c1_2 - p1[b2]) + cs2 * abs(c2_2 - p2[b2])
-                                                            let b3 = nIdx + crossOffsets.3
-                                                            sad += cs0 * abs(c0_3 - p0[b3]) + cs1 * abs(c1_3 - p1[b3]) + cs2 * abs(c2_3 - p2[b3])
-                                                            let b4 = nIdx + crossOffsets.4
-                                                            sad += cs0 * abs(c0_4 - p0[b4]) + cs1 * abs(c1_4 - p1[b4]) + cs2 * abs(c2_4 - p2[b4])
+                                                            if k == 0 && prevSadRight >= 0 {
+                                                                sad = prevSadRight
+                                                            } else {
+                                                                let b0 = nIdx + crossOffsets.0
+                                                                sad += cs0 * abs(c0_0 - p0[b0]) + cs1 * abs(c1_0 - p1[b0]) + cs2 * abs(c2_0 - p2[b0])
+                                                                let b1 = nIdx + crossOffsets.1
+                                                                sad += cs0 * abs(c0_1 - p0[b1]) + cs1 * abs(c1_1 - p1[b1]) + cs2 * abs(c2_1 - p2[b1])
+                                                                let b2 = nIdx + crossOffsets.2
+                                                                sad += cs0 * abs(c0_2 - p0[b2]) + cs1 * abs(c1_2 - p1[b2]) + cs2 * abs(c2_2 - p2[b2])
+                                                                let b3 = nIdx + crossOffsets.3
+                                                                sad += cs0 * abs(c0_3 - p0[b3]) + cs1 * abs(c1_3 - p1[b3]) + cs2 * abs(c2_3 - p2[b3])
+                                                                let b4 = nIdx + crossOffsets.4
+                                                                sad += cs0 * abs(c0_4 - p0[b4]) + cs1 * abs(c1_4 - p1[b4]) + cs2 * abs(c2_4 - p2[b4])
+                                                                if k == 1 {
+                                                                    prevSadRight = sad
+                                                                }
+                                                            }
 
                                                             let weight = max(0, 1.0 - sad * invSigma)
                                                             if weight > 0 {
@@ -411,6 +455,9 @@ package enum EdgePreservingFilter {
                                                     }
                                                 } else {
                                                     // Step 0 interior fast path: 12 offsets, 5-point plus-cross SAD
+                                                    var prevSadRight1: Float = -1
+                                                    var prevSadRight2_m1: Float = -1
+                                                    var prevSadRight2_m2: Float = -1
                                                     for x in minMargin..<(w - minMargin) {
                                                         let bIdx2 = (rowBlockBase + (x >> 3)) * 2
                                                         let invInt = invSigBase[bIdx2]
@@ -419,6 +466,9 @@ package enum EdgePreservingFilter {
                                                             o0[cIdx] = p0[cIdx]
                                                             o1[cIdx] = p1[cIdx]
                                                             o2[cIdx] = p2[cIdx]
+                                                            prevSadRight1 = -1
+                                                            prevSadRight2_m2 = prevSadRight2_m1
+                                                            prevSadRight2_m1 = -1
                                                             continue
                                                         }
                                                         let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
@@ -439,16 +489,28 @@ package enum EdgePreservingFilter {
                                                         for k in 0..<12 {
                                                             let nIdx = cIdx + step0Ptr[k]
                                                             var sad: Float = 0
-                                                            let b0 = nIdx + crossOffsets.0
-                                                            sad += cs0 * abs(c0_0 - p0[b0]) + cs1 * abs(c1_0 - p1[b0]) + cs2 * abs(c2_0 - p2[b0])
-                                                            let b1 = nIdx + crossOffsets.1
-                                                            sad += cs0 * abs(c0_1 - p0[b1]) + cs1 * abs(c1_1 - p1[b1]) + cs2 * abs(c2_1 - p2[b1])
-                                                            let b2 = nIdx + crossOffsets.2
-                                                            sad += cs0 * abs(c0_2 - p0[b2]) + cs1 * abs(c1_2 - p1[b2]) + cs2 * abs(c2_2 - p2[b2])
-                                                            let b3 = nIdx + crossOffsets.3
-                                                            sad += cs0 * abs(c0_3 - p0[b3]) + cs1 * abs(c1_3 - p1[b3]) + cs2 * abs(c2_3 - p2[b3])
-                                                            let b4 = nIdx + crossOffsets.4
-                                                            sad += cs0 * abs(c0_4 - p0[b4]) + cs1 * abs(c1_4 - p1[b4]) + cs2 * abs(c2_4 - p2[b4])
+                                                            if k == 0 && prevSadRight1 >= 0 {
+                                                                sad = prevSadRight1
+                                                            } else if k == 8 && prevSadRight2_m2 >= 0 {
+                                                                sad = prevSadRight2_m2
+                                                            } else {
+                                                                let b0 = nIdx + crossOffsets.0
+                                                                sad += cs0 * abs(c0_0 - p0[b0]) + cs1 * abs(c1_0 - p1[b0]) + cs2 * abs(c2_0 - p2[b0])
+                                                                let b1 = nIdx + crossOffsets.1
+                                                                sad += cs0 * abs(c0_1 - p0[b1]) + cs1 * abs(c1_1 - p1[b1]) + cs2 * abs(c2_1 - p2[b1])
+                                                                let b2 = nIdx + crossOffsets.2
+                                                                sad += cs0 * abs(c0_2 - p0[b2]) + cs1 * abs(c1_2 - p1[b2]) + cs2 * abs(c2_2 - p2[b2])
+                                                                let b3 = nIdx + crossOffsets.3
+                                                                sad += cs0 * abs(c0_3 - p0[b3]) + cs1 * abs(c1_3 - p1[b3]) + cs2 * abs(c2_3 - p2[b3])
+                                                                let b4 = nIdx + crossOffsets.4
+                                                                sad += cs0 * abs(c0_4 - p0[b4]) + cs1 * abs(c1_4 - p1[b4]) + cs2 * abs(c2_4 - p2[b4])
+                                                                if k == 1 {
+                                                                    prevSadRight1 = sad
+                                                                } else if k == 9 {
+                                                                    prevSadRight2_m2 = prevSadRight2_m1
+                                                                    prevSadRight2_m1 = sad
+                                                                }
+                                                            }
 
                                                             let weight = max(0, 1.0 - sad * invSigma)
                                                             if weight > 0 {
@@ -467,6 +529,25 @@ package enum EdgePreservingFilter {
 
                                                 for x in (w - minMargin)..<w {
                                                     processBoundaryPixel(x: x, y: y, by: by, yBorder: yBorder, rowOffset: rowOffset)
+                                                }
+                                            }
+
+                                            let workers = min(max(1, budget.maximumWorkers), 8)
+                                            if workers > 1 && height >= 64 {
+                                                try budget.checkpoint()
+                                                let bandCount = min(workers, height)
+                                                DispatchQueue.concurrentPerform(iterations: bandCount) { band in
+                                                    let y0 = (band * height) / bandCount
+                                                    let y1 = ((band + 1) * height) / bandCount
+                                                    for y in y0..<y1 {
+                                                        processRow(y)
+                                                    }
+                                                }
+                                                try budget.checkpoint()
+                                            } else {
+                                                for y in 0..<height {
+                                                    if (y & 7) == 0 { try budget.checkpoint() }
+                                                    processRow(y)
                                                 }
                                             }
                                         }
