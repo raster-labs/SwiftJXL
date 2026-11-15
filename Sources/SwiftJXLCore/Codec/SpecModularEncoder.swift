@@ -696,20 +696,34 @@ package enum SpecModularEncoder {
         let constant = channels.first?.first ?? 0
         var allConstant = !channels.isEmpty
         let maxHiU = UInt32(bitPattern: sampleHi)
+        let constVec = SIMD8<Int32>(repeating: constant)
+        let maxHiVec = SIMD8<UInt32>(repeating: maxHiU)
         for channel in channels {
             guard channel.count == width * height else {
                 throw SpecModularEncoderError.unsupportedFrame("Samples exceed declared geometry")
             }
             try channel.withUnsafeBufferPointer { buf in
                 guard let base = buf.baseAddress else { return }
+                let raw = UnsafeRawPointer(base)
                 let count = buf.count
-                for i in 0..<count {
+                var i = 0
+                while i + 8 <= count {
+                    if i & 4095 == 0 { try ScalarEncodingWork.checkpoint() }
+                    let v = raw.loadUnaligned(fromByteOffset: i * 4, as: SIMD8<Int32>.self)
+                    if allConstant && any(v .!= constVec) { allConstant = false }
+                    if any(SIMD8<UInt32>(truncatingIfNeeded: v) .> maxHiVec) {
+                        throw SpecModularEncoderError.unsupportedFrame("Samples exceed declared precision")
+                    }
+                    i += 8
+                }
+                while i < count {
                     if i & 4095 == 0 { try ScalarEncodingWork.checkpoint() }
                     let v = base[i]
                     if v != constant { allConstant = false }
                     guard UInt32(bitPattern: v) <= maxHiU else {
                         throw SpecModularEncoderError.unsupportedFrame("Samples exceed declared precision")
                     }
+                    i += 1
                 }
             }
         }
@@ -790,12 +804,34 @@ package enum SpecModularEncoder {
                                     guard count > 0,
                                           let in0 = s0.baseAddress, let in1 = s1.baseAddress, let in2 = s2.baseAddress,
                                           let out0 = p0.baseAddress, let out1 = p1.baseAddress, let out2 = p2.baseAddress else { return }
+                                    let rIn0 = UnsafeRawPointer(in0)
+                                    let rIn1 = UnsafeRawPointer(in1)
+                                    let rIn2 = UnsafeRawPointer(in2)
+                                    let rOut0 = UnsafeMutableRawPointer(out0)
+                                    let rOut1 = UnsafeMutableRawPointer(out1)
+                                    let rOut2 = UnsafeMutableRawPointer(out2)
                                     var start = 0
                                     while start < count {
                                         try ScalarEncodingWork.checkpoint()
                                         let end = min(start + 4096, count)
-                                        for i in start..<end {
+                                        var i = start
+                                        while i + 8 <= end {
+                                            let off = i &* 4
+                                            let vr = rIn0.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                                            let vg = rIn1.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                                            let vb = rIn2.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                                            let co  = vr &- vb
+                                            let tmp = vb &+ (co &>> 1)
+                                            let cg  = vg &- tmp
+                                            let y   = tmp &+ (cg &>> 1)
+                                            rOut0.storeBytes(of: y, toByteOffset: off, as: SIMD8<Int32>.self)
+                                            rOut1.storeBytes(of: co, toByteOffset: off, as: SIMD8<Int32>.self)
+                                            rOut2.storeBytes(of: cg, toByteOffset: off, as: SIMD8<Int32>.self)
+                                            i &+= 8
+                                        }
+                                        while i < end {
                                             (out0[i], out1[i], out2[i]) = RCT.forwardPixel(.ycocgR, r: in0[i], g: in1[i], b: in2[i])
+                                            i &+= 1
                                         }
                                         start = end
                                     }
@@ -1083,11 +1119,13 @@ package enum SpecModularEncoder {
         let gradBest = try bestModularPostCodebook(
             histo: grad.histo, alphabetSize: grad.alphabetSize,
             postCfg: postCfg, symbolsPerChannel: grad.flatSymbols,
+            perGroupSymbols: grad.perGroupSymbols,
             totalExtraNBits: grad.totalExtraNBits)
         let wp = try residuals(useWP: true)
         let wpBest = try bestModularPostCodebook(
             histo: wp.histo, alphabetSize: wp.alphabetSize,
             postCfg: postCfg, symbolsPerChannel: wp.flatSymbols,
+            perGroupSymbols: wp.perGroupSymbols,
             totalExtraNBits: wp.totalExtraNBits)
         let useWP = wpBest.bits < gradBest.bits
         let chosen = useWP ? wpBest : gradBest
@@ -3080,7 +3118,9 @@ package enum SpecModularEncoder {
     private static func bestModularPostCodebook(
         histo histoIn: [Int], alphabetSize alphabetSizeIn: Int,
         postCfg: HybridUintConfig,
-        symbolsPerChannel: [[UInt16]], totalExtraNBits: Int
+        symbolsPerChannel: [[UInt16]],
+        perGroupSymbols: [[[UInt16]]]? = nil,
+        totalExtraNBits: Int
     ) throws -> (header: EntropySectionHeader,
                  codebook: MultiClusterCodebook,
                  usePrefix: Bool, bits: Int) {
@@ -3169,7 +3209,16 @@ package enum SpecModularEncoder {
             if hc != Int.max,
                let aw = try ModularEffortWork.candidate({ try ANSTokenStreamWriter(
                    header: cand.0, codebook: cand.1) }) {
-                if let r = try ModularEffortWork.candidate({
+                if let perGroupSymbols, !perGroupSymbols.isEmpty {
+                    if let groupRefills = try ModularEffortWork.candidate({
+                        try parallelMap(perGroupSymbols.count) { gi in
+                            try aw.refillWordCount(singleClusterChunks: perGroupSymbols[gi])
+                        }
+                    }) {
+                        let totalRefills = groupRefills.reduce(0, +)
+                        ansBits = hc + 32 * (1 + perGroupSymbols.count) + 16 * totalRefills + totalExtraNBits
+                    }
+                } else if let r = try ModularEffortWork.candidate({
                     try aw.refillWordCount(singleClusterChunks: symbolsPerChannel)
                 }) {
                     ansBits = hc + 32 + 16 * r + totalExtraNBits

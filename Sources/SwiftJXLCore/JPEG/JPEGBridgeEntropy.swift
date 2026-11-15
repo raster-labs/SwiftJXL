@@ -1,7 +1,36 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster Images Private Limited
 
+import Dispatch
 import Foundation
+
+private struct UncheckedMutableWritersPtr: @unchecked Sendable {
+    let base: UnsafeMutablePointer<BitWriter>
+}
+
+private final class EntropyParallelErrorBox: @unchecked Sendable {
+    private let lock = NSLock()
+    private var stored: (any Error)?
+
+    func record(_ error: any Error) {
+        lock.lock()
+        if stored == nil { stored = error }
+        lock.unlock()
+    }
+
+    var hasError: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return stored != nil
+    }
+
+    func rethrowIfNeeded() throws {
+        lock.lock()
+        let err = stored
+        lock.unlock()
+        if let err { throw err }
+    }
+}
 
 /// Entropy coding utilities for the reversible JPEG-to-VarDCT coefficient bridge (ISO/IEC 18181-1 §§7, 8, 9.3).
 package enum JPEGBridgeEntropy {
@@ -315,6 +344,38 @@ package enum JPEGBridgeEntropy {
                 try tokenWriter.writeToken(context: tok.context, value: tok.value, to: &hfGlobalWriter)
             }
             return []
+        }
+
+        if policy.maximumWorkers > 1 && groupTokens.count >= 2 {
+            let groupCount = groupTokens.count
+            let workers = min(policy.maximumWorkers, groupCount)
+            var groupWriters = [BitWriter](repeating: BitWriter(), count: groupCount)
+            let encodingWork = ScalarEncodingWork.current
+            let errBox = EntropyParallelErrorBox()
+            try groupWriters.withUnsafeMutableBufferPointer { writerBuf in
+                let sWriters = UncheckedMutableWritersPtr(base: writerBuf.baseAddress!)
+                DispatchQueue.concurrentPerform(iterations: workers) { worker in
+                    ScalarEncodingWork.$current.withValue(encodingWork) {
+                        for gIdx in stride(from: worker, to: groupCount, by: workers) {
+                            if errBox.hasError { return }
+                            do {
+                                try policy.checkpoint()
+                                var gw = BitWriter()
+                                for (idx, tok) in groupTokens[gIdx].enumerated() {
+                                    if (idx & 1023) == 0 { try policy.checkpoint() }
+                                    try tokenWriter.writeToken(context: tok.context, value: tok.value, to: &gw)
+                                }
+                                sWriters.base[gIdx] = gw
+                            } catch {
+                                errBox.record(error)
+                                return
+                            }
+                        }
+                    }
+                }
+                try errBox.rethrowIfNeeded()
+            }
+            return groupWriters
         }
 
         var groupWriters: [BitWriter] = []

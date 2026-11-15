@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster Images Private Limited
 
+import Dispatch
 import Foundation
 
 /// Top-level clean-room VarDCT lossy pixel encoder.
@@ -69,6 +70,7 @@ package enum VarDCTPixelEncoder {
         dcSmoothing: Bool = false,
         smallStrategySearch: Bool = false,
         largeStrategySearch: Bool = false,
+        allowExtendedGeometry: Bool = false,
         budget: ScalarOperationBudget
     ) throws -> Data {
         try budget.checkpoint()
@@ -86,7 +88,9 @@ package enum VarDCTPixelEncoder {
         let width = first.width
         let height = first.height
         let pixelCount = try ScalarOperationBudget.product(width, height)
-        guard width > 0, height > 0, width <= 4096, height <= 4096, pixelCount <= 4 * 1024 * 1024 else {
+        let maxDim = allowExtendedGeometry ? 16384 : 4096
+        let maxPixels = allowExtendedGeometry ? (64 * 1024 * 1024) : (4 * 1024 * 1024)
+        guard width > 0, height > 0, width <= maxDim, height <= maxDim, pixelCount <= maxPixels else {
             throw ScalarModularError.unsupportedProfile
         }
         for layout in layouts {
@@ -113,8 +117,14 @@ package enum VarDCTPixelEncoder {
 
         let maximum = (Int32(1) << bitsPerSample) - 1
         let source = VarDCTBorrowedSource(bytes: bytes, layouts: layouts, maximum: maximum)
-        let eightBitTable = try bitsPerSample == 8
-            ? VarDCTEncoderPreparation.EightBitConversion(grayscale: grayscale, budget: budget)
+        let lutCount = 1 << bitsPerSample
+        let lutBytes = lutCount * (MemoryLayout<Double>.stride + (grayscale ? MemoryLayout<(Float, Float, Float)>.stride : 0))
+        let useTable = bitsPerSample == 8 || (
+            pixelCount >= 4096 &&
+            budget.maximumWorkspaceBytes - budget.reservedWorkspaceBytes >= lutBytes + 4 * 1024 * 1024
+        )
+        let sampleTable = try useTable
+            ? VarDCTEncoderPreparation.SampleConversion(bitsPerSample: bitsPerSample, grayscale: grayscale, budget: budget)
             : nil
 
         var planes = [
@@ -125,56 +135,115 @@ package enum VarDCTPixelEncoder {
 
         let invMax = 1.0 / Double(maximum)
         @inline(__always)
-        func srgbToLinear(_ s: Int32) -> Double {
+        @Sendable func srgbToLinear(_ s: Int32) -> Double {
             let v = Double(s) * invMax
             return v <= 0.04045 ? (v / 12.92) : pow((v + 0.055) / 1.055, 2.4)
         }
 
-        for y in 0..<height {
-            if (y & 15) == 0 { try budget.checkpoint() }
-            let rowOffset = y * width
-            if grayscale {
-                for x in 0..<width {
-                    let sample = try source.sample(channel: 0, x: x, y: y)
-                    let idx = rowOffset + x
-                    if let table = eightBitTable {
-                        let xyb = table.grayscale[Int(sample)]
-                        planes[0][idx] = xyb.0
-                        planes[1][idx] = xyb.1
-                        planes[2][idx] = xyb.2
-                    } else {
-                        let lin = srgbToLinear(sample)
-                        let xyb = try DefaultOpsin.forward((lin, lin, lin))
-                        planes[0][idx] = Float(xyb.X)
-                        planes[1][idx] = Float(xyb.Y)
-                        planes[2][idx] = Float(xyb.B)
+        let convWorkers = min(max(1, budget.maximumWorkers), height >= 32 ? min(8, height) : 1)
+        let rawSourceAddr = Int(bitPattern: bytes.baseAddress!)
+        let rawSourceCount = bytes.count
+        var plane0 = planes[0]
+        var plane1 = planes[1]
+        var plane2 = planes[2]
+        planes = []
+        try plane0.withUnsafeMutableBufferPointer { p0Buf in
+            try plane1.withUnsafeMutableBufferPointer { p1Buf in
+                try plane2.withUnsafeMutableBufferPointer { p2Buf in
+                    let p0Addr = Int(bitPattern: p0Buf.baseAddress!)
+                    let p1Addr = Int(bitPattern: p1Buf.baseAddress!)
+                    let p2Addr = Int(bitPattern: p2Buf.baseAddress!)
+
+                    @Sendable
+                    func convertRows(_ yStart: Int, _ yEnd: Int) throws {
+                        let localBytes = UnsafeRawBufferPointer(
+                            start: UnsafeRawPointer(bitPattern: rawSourceAddr),
+                            count: rawSourceCount
+                        )
+                        let localSource = VarDCTBorrowedSource(bytes: localBytes, layouts: layouts, maximum: maximum)
+                        let p0 = UnsafeMutablePointer<Float>(bitPattern: p0Addr)!
+                        let p1 = UnsafeMutablePointer<Float>(bitPattern: p1Addr)!
+                        let p2 = UnsafeMutablePointer<Float>(bitPattern: p2Addr)!
+
+                        for y in yStart..<yEnd {
+                            if (y & 15) == 0 { try budget.checkpoint() }
+                            let rowOffset = y * width
+                            if grayscale {
+                                if let table = sampleTable {
+                                    try table.grayscale.withUnsafeBufferPointer { tblBuf in
+                                        let tbl = tblBuf.baseAddress!
+                                        for x in 0..<width {
+                                            let sample = try localSource.sample(channel: 0, x: x, y: y)
+                                            let idx = rowOffset + x
+                                            let xyb = tbl[Int(sample)]
+                                            p0[idx] = xyb.0
+                                            p1[idx] = xyb.1
+                                            p2[idx] = xyb.2
+                                        }
+                                    }
+                                } else {
+                                    for x in 0..<width {
+                                        let sample = try localSource.sample(channel: 0, x: x, y: y)
+                                        let idx = rowOffset + x
+                                        let lin = srgbToLinear(sample)
+                                        let xyb = try DefaultOpsin.forward((lin, lin, lin))
+                                        p0[idx] = Float(xyb.X)
+                                        p1[idx] = Float(xyb.Y)
+                                        p2[idx] = Float(xyb.B)
+                                    }
+                                }
+                            } else {
+                                if let table = sampleTable {
+                                    try table.linear.withUnsafeBufferPointer { linBuf in
+                                        let lin = linBuf.baseAddress!
+                                        for x in 0..<width {
+                                            let sr = try localSource.sample(channel: 0, x: x, y: y)
+                                            let sg = try localSource.sample(channel: 1, x: x, y: y)
+                                            let sb = try localSource.sample(channel: 2, x: x, y: y)
+                                            let xyb = try DefaultOpsin.forward((lin[Int(sr)], lin[Int(sg)], lin[Int(sb)]))
+                                            let idx = rowOffset + x
+                                            p0[idx] = Float(xyb.X)
+                                            p1[idx] = Float(xyb.Y)
+                                            p2[idx] = Float(xyb.B)
+                                        }
+                                    }
+                                } else {
+                                    for x in 0..<width {
+                                        let sr = try localSource.sample(channel: 0, x: x, y: y)
+                                        let sg = try localSource.sample(channel: 1, x: x, y: y)
+                                        let sb = try localSource.sample(channel: 2, x: x, y: y)
+                                        let xyb = try DefaultOpsin.forward((srgbToLinear(sr), srgbToLinear(sg), srgbToLinear(sb)))
+                                        let idx = rowOffset + x
+                                        p0[idx] = Float(xyb.X)
+                                        p1[idx] = Float(xyb.Y)
+                                        p2[idx] = Float(xyb.B)
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
-            } else {
-                for x in 0..<width {
-                    let sr = try source.sample(channel: 0, x: x, y: y)
-                    let sg = try source.sample(channel: 1, x: x, y: y)
-                    let sb = try source.sample(channel: 2, x: x, y: y)
-                    let r: Double
-                    let g: Double
-                    let b: Double
-                    if let table = eightBitTable {
-                        r = table.linear[Int(sr)]
-                        g = table.linear[Int(sg)]
-                        b = table.linear[Int(sb)]
+
+                    if convWorkers <= 1 {
+                        try convertRows(0, height)
                     } else {
-                        r = srgbToLinear(sr)
-                        g = srgbToLinear(sg)
-                        b = srgbToLinear(sb)
+                        let errMutex = PackageMutex<(any Error)?>(nil)
+                        let rowsPerWorker = (height + convWorkers - 1) / convWorkers
+                        DispatchQueue.concurrentPerform(iterations: convWorkers) { w in
+                            let y0 = w * rowsPerWorker
+                            let y1 = min(height, y0 + rowsPerWorker)
+                            guard y0 < y1 else { return }
+                            do {
+                                try convertRows(y0, y1)
+                            } catch {
+                                errMutex.withLock { if $0 == nil { $0 = error } }
+                            }
+                        }
+                        if let err = errMutex.withLock({ $0 }) { throw err }
                     }
-                    let xyb = try DefaultOpsin.forward((r, g, b))
-                    let idx = rowOffset + x
-                    planes[0][idx] = Float(xyb.X)
-                    planes[1][idx] = Float(xyb.Y)
-                    planes[2][idx] = Float(xyb.B)
                 }
             }
         }
+        planes = [plane0, plane1, plane2]
 
         if gaborish {
             for c in 0..<3 {

@@ -1,7 +1,40 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster Images Private Limited
 
+import Dispatch
 import Foundation
+
+private struct UncheckedMutableInt32Ptr: @unchecked Sendable {
+    let base: UnsafeMutablePointer<Int32>
+}
+
+private struct UncheckedMutableTokensPtr: @unchecked Sendable {
+    let base: UnsafeMutablePointer<[(context: Int, value: UInt32)]>
+}
+
+private final class ParallelBridgeErrorBox: @unchecked Sendable {
+    private let lock = NSLock()
+    private var stored: (any Error)?
+
+    func record(_ error: any Error) {
+        lock.lock()
+        if stored == nil { stored = error }
+        lock.unlock()
+    }
+
+    var hasError: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return stored != nil
+    }
+
+    func rethrowIfNeeded() throws {
+        lock.lock()
+        let err = stored
+        lock.unlock()
+        if let err { throw err }
+    }
+}
 
 /// Writes a JPEG-bridged VarDCT codestream per ISO/IEC 18181-1 §§6, 7, 8, 9.1–9.3, Annex C.
 package enum JPEGBridgeFrameWriter {
@@ -66,9 +99,15 @@ package enum JPEGBridgeFrameWriter {
         let naturalOrder = VarDCTFrameWriter.order
         let totalACContexts = VarDCTEntropy.contextsPerBlockCluster * VarDCTEntropy.defaultNumBlockClusters
         var groupTokens = [[(context: Int, value: UInt32)]](repeating: [], count: numGroups)
-        var blockScratch = [Int32](repeating: 0, count: 64)
 
-        for groupIdx in 0..<numGroups {
+        @Sendable
+        func extractGroupTokens(
+            groupIdx: Int,
+            amortized: Bool,
+            dc0: UnsafeMutablePointer<Int32>,
+            dc1: UnsafeMutablePointer<Int32>,
+            dc2: UnsafeMutablePointer<Int32>
+        ) throws -> [(context: Int, value: UInt32)] {
             try policy.checkpoint()
             let gx = groupIdx % groupsX
             let gy = groupIdx / groupsX
@@ -90,6 +129,8 @@ package enum JPEGBridgeFrameWriter {
 
             var tokens: [(context: Int, value: UInt32)] = []
             tokens.reserveCapacity(gw * gh * 16)
+            var blockScratch = [Int32](repeating: 0, count: 64)
+            let dcPtrs = (dc0, dc1, dc2)
 
             for ly in 0..<gh {
                 if (ly & 7) == 0 { try policy.checkpoint() }
@@ -108,8 +149,16 @@ package enum JPEGBridgeFrameWriter {
                         let clx = lx >> hs
                         let cly = ly >> vs
                         let blockIndex = cby * layout.blocksWide + cbx
-                        try view.readBlock(channel: c, block: blockIndex, into: &blockScratch)
-                        dcPlanes[c][blockIndex] = blockScratch[0]
+                        if amortized {
+                            try view.readBlockAmortized(channel: c, block: blockIndex, into: &blockScratch)
+                        } else {
+                            try view.readBlock(channel: c, block: blockIndex, into: &blockScratch)
+                        }
+                        switch c {
+                        case 0: dcPtrs.0[blockIndex] = blockScratch[0]
+                        case 1: dcPtrs.1[blockIndex] = blockScratch[0]
+                        default: dcPtrs.2[blockIndex] = blockScratch[0]
+                        }
 
                         let sw = subWidths[c]
                         let predictedNZ = nzGrids[c].withUnsafeBufferPointer { ptr in
@@ -155,8 +204,61 @@ package enum JPEGBridgeFrameWriter {
                     }
                 }
             }
-            groupTokens[groupIdx] = tokens
+            return tokens
         }
+
+        var dc0Plane = dcPlanes[0]
+        var dc1Plane = dcPlanes[1]
+        var dc2Plane = dcPlanes[2]
+        dcPlanes = []
+        try dc0Plane.withUnsafeMutableBufferPointer { buf0 in
+            try dc1Plane.withUnsafeMutableBufferPointer { buf1 in
+                try dc2Plane.withUnsafeMutableBufferPointer { buf2 in
+                    guard let p0 = buf0.baseAddress, let p1 = buf1.baseAddress, let p2 = buf2.baseAddress else {
+                        return
+                    }
+                    if policy.maximumWorkers > 1 && numGroups >= 2 {
+                        let workers = min(policy.maximumWorkers, numGroups)
+                        let s0 = UncheckedMutableInt32Ptr(base: p0)
+                        let s1 = UncheckedMutableInt32Ptr(base: p1)
+                        let s2 = UncheckedMutableInt32Ptr(base: p2)
+                        let errBox = ParallelBridgeErrorBox()
+                        try groupTokens.withUnsafeMutableBufferPointer { tokBuf in
+                            let sTok = UncheckedMutableTokensPtr(base: tokBuf.baseAddress!)
+                            DispatchQueue.concurrentPerform(iterations: workers) { worker in
+                                for groupIdx in stride(from: worker, to: numGroups, by: workers) {
+                                    if errBox.hasError { return }
+                                    do {
+                                        sTok.base[groupIdx] = try extractGroupTokens(
+                                            groupIdx: groupIdx,
+                                            amortized: true,
+                                            dc0: s0.base,
+                                            dc1: s1.base,
+                                            dc2: s2.base
+                                        )
+                                    } catch {
+                                        errBox.record(error)
+                                        return
+                                    }
+                                }
+                            }
+                            try errBox.rethrowIfNeeded()
+                        }
+                    } else {
+                        for groupIdx in 0..<numGroups {
+                            groupTokens[groupIdx] = try extractGroupTokens(
+                                groupIdx: groupIdx,
+                                amortized: false,
+                                dc0: p0,
+                                dc1: p1,
+                                dc2: p2
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        dcPlanes = [dc0Plane, dc1Plane, dc2Plane]
 
         // 2. Build section bitstreams: LfGlobal, LfGroup[0], HfGlobal, HfPass[0..<numGroups]
         var sectionData: [Data] = []

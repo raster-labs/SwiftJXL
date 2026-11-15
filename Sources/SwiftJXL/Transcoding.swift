@@ -67,10 +67,21 @@ public struct Transcoder: Sendable {
         self.configuration = configuration
     }
 
+    /// Synchronous zero-hop native JPEG <-> JPEG XL transcode entry point.
+    public func transcodeSynchronously(_ data: Data, to target: TranscodeTarget,
+                                       options: TranscodeOptions = .init()) throws -> EncodedImage {
+        try transcodeImpl(data, to: target, options: options)
+    }
+
     /// Runs on the generic executor; retains compressed input until return.
     @concurrent
     public func transcode(_ data: Data, to target: TranscodeTarget,
                           options: TranscodeOptions = .init()) async throws -> EncodedImage {
+        try transcodeImpl(data, to: target, options: options)
+    }
+
+    private func transcodeImpl(_ data: Data, to target: TranscodeTarget,
+                               options: TranscodeOptions) throws -> EncodedImage {
         let start = ContinuousClock.now
         do {
             try Task.checkCancellation()
@@ -88,7 +99,8 @@ public struct Transcoder: Sendable {
                 coefficients: limits.maximumDecodedBytes, workspace: limits.maximumWorkspaceBytes,
                 memory: limits.maximumMemoryBytes, metadata: limits.maximumMetadataBytes,
                 dimension: limits.maximumDimension, pixels: limits.maximumPixels, nesting: limits.maximumNestingDepth, icc: limits.maximumICCBytes,
-                deadline: start.advanced(by: .seconds(min(limits.deadlineSeconds, 31_536_000))))
+                deadline: start.advanced(by: .seconds(min(limits.deadlineSeconds, 31_536_000))),
+                maximumWorkers: limits.maximumWorkers)
             options.progress?(try ProgressUpdate(phase: .processing, completedUnits: 0, totalUnits: 1))
             try policy.checkpoint()
             let result: JPEGNativeResult

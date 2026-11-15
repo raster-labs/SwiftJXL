@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import Dispatch
 import Foundation
 
 /// Internal scalar pixel integration. Public capability remains separately gated
@@ -34,38 +35,92 @@ package enum VarDCTPixelDecoder {
         let coefficients = try VarDCTCoefficients.read(envelope)
         let planes = try VarDCTReconstruction.xyb(coefficients, numericalMode: numericalMode)
         let maximum = Double((1 << bits) - 1)
-        let destination = layouts.map { BorrowedModularChannel(bytes: bytes, layout: $0) }
         let width = envelope.width, height = envelope.height
-        let dst0 = destination[0]
-        let dst1 = grayscale ? dst0 : destination[1]
-        let dst2 = grayscale ? dst0 : destination[2]
-        let dstAlpha = coefficients.alpha != nil ? destination[colours] : dst0
+        let alphaValues = coefficients.alpha
+        let outWorkers = min(max(1, budget.maximumWorkers), height >= 32 ? min(8, height) : 1)
+        let dstAddr = Int(bitPattern: bytes.baseAddress!)
+        let dstCount = bytes.count
+
         try planes[0].withUnsafeBufferPointer { b0 in
             try planes[1].withUnsafeBufferPointer { b1 in
                 try planes[2].withUnsafeBufferPointer { b2 in
-                    let p0 = b0.baseAddress!, p1 = b1.baseAddress!, p2 = b2.baseAddress!
-                    for y in 0..<height {
-                        try budget.checkpoint()
-                        let rowOffset = y &* width
-                        let r0 = dst0.rowAddress(y, width: width)
-                        let r1 = grayscale ? 0 : dst1.rowAddress(y, width: width)
-                        let r2 = grayscale ? 0 : dst2.rowAddress(y, width: width)
-                        let rAlpha = coefficients.alpha != nil ? dstAlpha.rowAddress(y, width: width) : 0
-                        for x in 0..<width {
-                            if x & 255 == 0 { try budget.checkpoint() }
-                            let i = rowOffset &+ x
-                            let rgb = try DefaultOpsin.inverse((X: Double(p0[i]),
-                                Y: Double(p1[i]), B: Double(p2[i])))
-                            dst0[row: r0, column: x] = encodeSRGB(rgb.R, maximum: maximum, bits: bits, x: x, y: y,
-                                channel: 0, numericalMode: numericalMode)
-                            if !grayscale {
-                                dst1[row: r1, column: x] = encodeSRGB(rgb.G, maximum: maximum, bits: bits, x: x, y: y,
-                                    channel: 1, numericalMode: numericalMode)
-                                dst2[row: r2, column: x] = encodeSRGB(rgb.B, maximum: maximum, bits: bits, x: x, y: y,
-                                    channel: 2, numericalMode: numericalMode)
+                    let p0Addr = Int(bitPattern: b0.baseAddress!)
+                    let p1Addr = Int(bitPattern: b1.baseAddress!)
+                    let p2Addr = Int(bitPattern: b2.baseAddress!)
+
+                    @Sendable
+                    func writeRows(_ yStart: Int, _ yEnd: Int) throws {
+                        let localBytes = UnsafeMutableRawBufferPointer(
+                            start: UnsafeMutableRawPointer(bitPattern: dstAddr),
+                            count: dstCount
+                        )
+                        let destination = layouts.map { BorrowedModularChannel(bytes: localBytes, layout: $0) }
+                        let dst0 = destination[0]
+                        let dst1 = grayscale ? dst0 : destination[1]
+                        let dst2 = grayscale ? dst0 : destination[2]
+                        let dstAlpha = alphaValues != nil ? destination[colours] : dst0
+                        let p0 = UnsafePointer<Float>(bitPattern: p0Addr)!
+                        let p1 = UnsafePointer<Float>(bitPattern: p1Addr)!
+                        let p2 = UnsafePointer<Float>(bitPattern: p2Addr)!
+
+                        for y in yStart..<yEnd {
+                            try budget.checkpoint()
+                            let rowOffset = y &* width
+                            let r0 = dst0.rowAddress(y, width: width)
+                            let r1 = grayscale ? 0 : dst1.rowAddress(y, width: width)
+                            let r2 = grayscale ? 0 : dst2.rowAddress(y, width: width)
+                            let rAlpha = alphaValues != nil ? dstAlpha.rowAddress(y, width: width) : 0
+                            if grayscale && alphaValues == nil && dst0.layout.storageBits == 16 &&
+                               dst0.layout.littleEndian && dst0.layout.pixelStride == 2 {
+                                let rowPtr = localBytes.baseAddress! + r0
+                                for x in 0..<width {
+                                    if x & 255 == 0 { try budget.checkpoint() }
+                                    let i = rowOffset &+ x
+                                    let rgb = try DefaultOpsin.inverse((X: Double(p0[i]), Y: Double(p1[i]), B: Double(p2[i])))
+                                    let val = encodeSRGB(rgb.R, maximum: maximum, bits: bits, x: x, y: y,
+                                        channel: 0, numericalMode: numericalMode)
+                                    rowPtr.storeBytes(
+                                        of: UInt16(truncatingIfNeeded: val).littleEndian,
+                                        toByteOffset: x &<< 1,
+                                        as: UInt16.self
+                                    )
+                                }
+                            } else {
+                                for x in 0..<width {
+                                    if x & 255 == 0 { try budget.checkpoint() }
+                                    let i = rowOffset &+ x
+                                    let rgb = try DefaultOpsin.inverse((X: Double(p0[i]),
+                                        Y: Double(p1[i]), B: Double(p2[i])))
+                                    dst0[row: r0, column: x] = encodeSRGB(rgb.R, maximum: maximum, bits: bits, x: x, y: y,
+                                        channel: 0, numericalMode: numericalMode)
+                                    if !grayscale {
+                                        dst1[row: r1, column: x] = encodeSRGB(rgb.G, maximum: maximum, bits: bits, x: x, y: y,
+                                            channel: 1, numericalMode: numericalMode)
+                                        dst2[row: r2, column: x] = encodeSRGB(rgb.B, maximum: maximum, bits: bits, x: x, y: y,
+                                            channel: 2, numericalMode: numericalMode)
+                                    }
+                                    if let values = alphaValues { dstAlpha[row: rAlpha, column: x] = values[i] }
+                                }
                             }
-                            if let values = coefficients.alpha { dstAlpha[row: rAlpha, column: x] = values[i] }
                         }
+                    }
+
+                    if outWorkers <= 1 {
+                        try writeRows(0, height)
+                    } else {
+                        let errMutex = PackageMutex<(any Error)?>(nil)
+                        let rowsPerWorker = (height + outWorkers - 1) / outWorkers
+                        DispatchQueue.concurrentPerform(iterations: outWorkers) { w in
+                            let y0 = w * rowsPerWorker
+                            let y1 = min(height, y0 + rowsPerWorker)
+                            guard y0 < y1 else { return }
+                            do {
+                                try writeRows(y0, y1)
+                            } catch {
+                                errMutex.withLock { if $0 == nil { $0 = error } }
+                            }
+                        }
+                        if let err = errMutex.withLock({ $0 }) { throw err }
                     }
                 }
             }

@@ -351,7 +351,7 @@ package struct ANSTokenStreamWriter: Sendable {
                         let flagBase = flags.baseAddress!
                         var i = totalCount - 1
                         while i >= 0 {
-                            if i & 255 == 0 { try checkWork() }
+                            if i & 4095 == 0 { try checkWork() }
                             let symbol = Int(symBase[i])
                             guard symbol < infoCount else {
                                 throw ANSTokenStreamWriterError.symbolHasZeroFrequency(cluster: 0, symbol: symbol)
@@ -388,7 +388,7 @@ package struct ANSTokenStreamWriter: Sendable {
                         let valCount = vals.count
                         for j in 0..<valCount {
                             guard index < totalCount else { throw ANSTokenStreamWriterError.invalidReplay }
-                            if index & 255 == 0 { try checkWork() }
+                            if index & 4095 == 0 { try checkWork() }
                             if flagBase[index >> 3] & UInt8(1 << (index & 7)) != 0 {
                                 w.write(bits: 16, value: UInt32(symBase[index]))
                             }
@@ -446,7 +446,7 @@ package struct ANSTokenStreamWriter: Sendable {
                         let symBase = symbols.baseAddress!
                         var i = symbols.count - 1
                         while i >= 0 {
-                            if processed & 255 == 0 { try checkWork() }
+                            if processed & 4095 == 0 { try checkWork() }
                             processed &+= 1
                             let symbol = Int(symBase[i])
                             guard symbol < infoCount else {
@@ -495,8 +495,9 @@ package struct ANSTokenStreamWriter: Sendable {
         var refills = 0
         var state: UInt32 = ANSConstants.initialState
         var i = symbols.count - 1
+        try ScalarEncodingWork.checkpoint()
         while i >= 0 {
-            if i & 255 == 0 { try ScalarEncodingWork.checkpoint() }
+            if i & 4095 == 0 { try ScalarEncodingWork.checkpoint() }
             let cl = clusterIdx.map { Int($0[i]) } ?? 0
             let sym = Int(symbols[i])
             guard cl < tables.count else {

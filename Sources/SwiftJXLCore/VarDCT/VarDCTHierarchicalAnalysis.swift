@@ -109,7 +109,9 @@ package enum VarDCTHierarchicalAnalysis {
                 : try VarDCTOrders.natural(width: maxCells, height: minCells, budget: budget)
         }
 
-        let workerCap = min(3, max(1, budget.maximumWorkers))
+        let maxWorkerCap = (tilesX >= 8 && tilesY >= 8 &&
+            budget.maximumWorkspaceBytes - budget.reservedWorkspaceBytes >= 2 * 1024 * 1024) ? 8 : 3
+        let workerCap = min(maxWorkerCap, max(1, budget.maximumWorkers))
         let scratchCount = totalTiles > 1 ? min(workerCap, totalTiles) : 1
         var scratches: [WorkerScratch] = []
         scratches.reserveCapacity(scratchCount)

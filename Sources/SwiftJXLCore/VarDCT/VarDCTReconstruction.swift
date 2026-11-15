@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster Images Private Limited
 
+import Dispatch
 import Foundation
 
 /// Full-frame VarDCT XYB spatial reconstruction and loop filtering per ISO/IEC 18181-1 §§10.1–10.4.
@@ -107,186 +108,291 @@ package enum VarDCTReconstruction {
         var weightCache = [[Float]?](repeating: nil, count: 27)
         var inverseAxes = ScaledDCT.AxisBank(direction: .inverse, budget: budget)
         var dctPlans: [Int: ScaledDCT] = [:]
+        var maxTransformCount = 64
 
         for transform in coefficients.transforms {
-            try budget.checkpoint()
             let id = transform.identifier
-            let bx = transform.x
-            let by = transform.y
-            let cx = transform.cellsX
-            let cy = transform.cellsY
-            let rows = cy * 8
-            let columns = cx * 8
+            let rows = transform.cellsY * 8
+            let columns = transform.cellsX * 8
             let count = rows * columns
-            let normRows = min(rows, columns)
-            let normCols = max(rows, columns)
-            let llfRows = min(cx, cy)
-            let llfCols = max(cx, cy)
-            let baseOffset = transform.coefficientOffset
-
-            let weights: [Float]
-            if let cached = weightCache[id] {
-                weights = cached
-            } else {
-                let w = try VarDCTQuantWeights.make(
+            if count > maxTransformCount { maxTransformCount = count }
+            if id < weightCache.count && weightCache[id] == nil {
+                weightCache[id] = try VarDCTQuantWeights.make(
                     identifier: id,
                     rows: rows,
                     columns: columns,
                     budget: budget
                 )
-                weightCache[id] = w
-                weights = w
             }
+            if transform.cellsX == 1 && transform.cellsY == 1 {
+                if id == 0 {
+                    let planKey = (8 << 16) | 8
+                    if dctPlans[planKey] == nil {
+                        dctPlans[planKey] = try ScaledDCT(
+                            rows: 8, columns: 8, direction: .inverse, budget: budget, axes: &inverseAxes
+                        )
+                    }
+                }
+            } else {
+                let planKey = (rows << 16) | columns
+                if dctPlans[planKey] == nil {
+                    dctPlans[planKey] = try ScaledDCT(
+                        rows: rows, columns: columns, direction: .inverse, budget: budget, axes: &inverseAxes
+                    )
+                }
+            }
+        }
 
-            let invScale = 65536.0 / (Float(coefficients.globalScale) * Float(transform.quantisation))
+        let numTransforms = coefficients.transforms.count
+        let reconWorkers: Int
+        if budget.maximumWorkers > 1 && numTransforms >= 64 &&
+           budget.maximumWorkspaceBytes - budget.reservedWorkspaceBytes >= 8 * maxTransformCount * 16 {
+            reconWorkers = min(8, min(budget.maximumWorkers, numTransforms / 16))
+        } else {
+            reconWorkers = 1
+        }
 
-            // 3a. Dequantise HF coefficients in canonical (normRows x normCols) layout
-            var deq = [
-                [Float](repeating: 0, count: count),
-                [Float](repeating: 0, count: count),
-                [Float](repeating: 0, count: count),
-            ]
+        var workerWorkspaces: [ScaledDCT.Workspace] = []
+        workerWorkspaces.reserveCapacity(reconWorkers)
+        for _ in 0..<reconWorkers {
+            workerWorkspaces.append(try ScaledDCT.Workspace(capacity: maxTransformCount, budget: budget))
+        }
 
-            for c in [1, 0, 2] {
-                let cScale = invScale * qmScale[c]
-                let wBase = c * count
-                coefficients.ac[c].withUnsafeBufferPointer { acBuf in
-                    let acPtr = acBuf.baseAddress! + baseOffset
-                    deq[c].withUnsafeMutableBufferPointer { deqBuf in
-                        let deqPtr = deqBuf.baseAddress!
-                        for ny in 0..<normRows {
-                            let rowOff = ny * normCols
-                            for nx in 0..<normCols {
-                                if nx < llfCols && ny < llfRows { continue }
-                                let k = rowOff + nx
-                                let q = acPtr[k]
-                                if q != 0 {
-                                    let biased = adjustQuantBias(q, channel: c, numericalMode: numericalMode)
-                                    deqPtr[k] = biased * (cScale / weights[wBase + k])
+        let immutableWeights = weightCache
+        let immutablePlans = dctPlans
+        let immutableDCPlanes = dcPlanes
+        let immutableTransforms = coefficients.transforms
+        let immutableAC = coefficients.ac
+        let immutableCflX = coefficients.cflX
+        let immutableCflB = coefficients.cflB
+        let globalScaleF = Float(coefficients.globalScale)
+        let baseCorrX = coefficients.baseCorrelationX
+        let baseCorrB = coefficients.baseCorrelationB
+        let tilesY = coefficients.tilesY
+        let maxTC = maxTransformCount
+        var plane0 = planes[0]
+        var plane1 = planes[1]
+        var plane2 = planes[2]
+        planes = []
+
+        try plane0.withUnsafeMutableBufferPointer { p0Buf in
+            try plane1.withUnsafeMutableBufferPointer { p1Buf in
+                try plane2.withUnsafeMutableBufferPointer { p2Buf in
+                    let pAddrs = [
+                        Int(bitPattern: p0Buf.baseAddress),
+                        Int(bitPattern: p1Buf.baseAddress),
+                        Int(bitPattern: p2Buf.baseAddress)
+                    ]
+
+                    @Sendable
+                    func reconstructSlice(
+                        _ tStart: Int,
+                        _ tEnd: Int,
+                        dctWorkspace: inout ScaledDCT.Workspace
+                    ) throws {
+                        var deq = [
+                            [Float](repeating: 0, count: maxTC),
+                            [Float](repeating: 0, count: maxTC),
+                            [Float](repeating: 0, count: maxTC),
+                        ]
+                        var spatialFreq = [Float](repeating: 0, count: maxTC)
+
+                        for tIdx in tStart..<tEnd {
+                            if ((tIdx - tStart) & 15) == 0 { try budget.checkpoint() }
+                            let transform = immutableTransforms[tIdx]
+                            let id = transform.identifier
+                            let bx = transform.x
+                            let by = transform.y
+                            let cx = transform.cellsX
+                            let cy = transform.cellsY
+                            let rows = cy * 8
+                            let columns = cx * 8
+                            let count = rows * columns
+                            let normRows = min(rows, columns)
+                            let normCols = max(rows, columns)
+                            let llfRows = min(cx, cy)
+                            let llfCols = max(cx, cy)
+                            let baseOffset = transform.coefficientOffset
+                            let weights = immutableWeights[id]!
+                            let invScale = 65536.0 / (globalScaleF * Float(transform.quantisation))
+
+                            for c in [1, 0, 2] {
+                                let cScale = invScale * qmScale[c]
+                                let wBase = c * count
+                                immutableAC[c].withUnsafeBufferPointer { acBuf in
+                                    let acPtr = acBuf.baseAddress! + baseOffset
+                                    deq[c].withUnsafeMutableBufferPointer { deqBuf in
+                                        let deqPtr = deqBuf.baseAddress!
+                                        for k in 0..<count { deqPtr[k] = 0 }
+                                        for ny in 0..<normRows {
+                                            let rowOff = ny * normCols
+                                            for nx in 0..<normCols {
+                                                if nx < llfCols && ny < llfRows { continue }
+                                                let k = rowOff + nx
+                                                let q = acPtr[k]
+                                                if q != 0 {
+                                                    let biased = adjustQuantBias(q, channel: c, numericalMode: numericalMode)
+                                                    deqPtr[k] = biased * (cScale / weights[wBase + k])
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            for ny in 0..<normRows {
+                                let rowOff = ny * normCols
+                                for nx in 0..<normCols {
+                                    if nx < llfCols && ny < llfRows { continue }
+                                    let k = rowOff + nx
+                                    let yCoeff = deq[1][k]
+                                    if yCoeff == 0 { continue }
+                                    let tx = (bx + (rows >= columns ? (ny / 8) : (nx / 8))) / 8
+                                    let ty = (by + (rows >= columns ? (nx / 8) : (ny / 8))) / 8
+                                    let tileIdx = min(tilesY - 1, ty) * tilesX + min(tilesX - 1, tx)
+                                    let fx = baseCorrX + Float(immutableCflX[tileIdx]) * invColorFactor
+                                    let fb = baseCorrB + Float(immutableCflB[tileIdx]) * invColorFactor
+                                    deq[0][k] += fx * yCoeff
+                                    deq[2][k] += fb * yCoeff
+                                }
+                            }
+
+                            let px0 = bx * 8
+                            let py0 = by * 8
+                            let visW = min(columns, width - px0)
+                            let visH = min(rows, height - py0)
+
+                            for c in 0..<3 {
+                                let outPlane = UnsafeMutablePointer<Float>(bitPattern: pAddrs[c])!
+                                if cx == 1 && cy == 1 {
+                                    deq[c][0] = immutableDCPlanes[c][by * blocksX + bx]
+                                    switch id {
+                                    case 0:
+                                        for y in 0..<8 {
+                                            for x in 0..<8 {
+                                                spatialFreq[y * 8 + x] = deq[c][x * 8 + y]
+                                            }
+                                        }
+                                        let plan = immutablePlans[(8 << 16) | 8]!
+                                        try spatialFreq.withUnsafeBufferPointer { sfBuf in
+                                            try plan.apply(
+                                                UnsafeBufferPointer(start: sfBuf.baseAddress, count: 64),
+                                                workspace: &dctWorkspace
+                                            )
+                                        }
+                                        if visW > 0 && visH > 0 {
+                                            dctWorkspace.withValues { blockPixels in
+                                                for ry in 0..<visH {
+                                                    let srcRow = ry * 8
+                                                    let dstRow = (py0 + ry) * width + px0
+                                                    for rx in 0..<visW {
+                                                        outPlane[dstRow + rx] = blockPixels[srcRow + rx]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    case 1, 2, 3, 12, 13:
+                                        let slice = Array(deq[c].prefix(64))
+                                        let blockPixels = try VarDCTSmallTransforms.inverse(slice, identifier: id, budget: budget)
+                                        if visW > 0 && visH > 0 {
+                                            for ry in 0..<visH {
+                                                let srcRow = ry * 8
+                                                let dstRow = (py0 + ry) * width + px0
+                                                for rx in 0..<visW {
+                                                    outPlane[dstRow + rx] = blockPixels[srcRow + rx]
+                                                }
+                                            }
+                                        }
+                                    case 14, 15, 16, 17:
+                                        let slice = Array(deq[c].prefix(64))
+                                        let blockPixels = try VarDCTAFV.inverse(slice, kind: id - 14, budget: budget)
+                                        if visW > 0 && visH > 0 {
+                                            for ry in 0..<visH {
+                                                let srcRow = ry * 8
+                                                let dstRow = (py0 + ry) * width + px0
+                                                for rx in 0..<visW {
+                                                    outPlane[dstRow + rx] = blockPixels[srcRow + rx]
+                                                }
+                                            }
+                                        }
+                                    default:
+                                        throw VarDCTError.unsupportedStrategy(id)
+                                    }
+                                } else {
+                                    let llfFreq = try reconstructLargeLLF(
+                                        dcPlane: immutableDCPlanes[c],
+                                        bx: bx,
+                                        by: by,
+                                        blocksX: blocksX,
+                                        cx: cx,
+                                        cy: cy,
+                                        id: id
+                                    )
+                                    if rows >= columns {
+                                        for y in 0..<rows {
+                                            for x in 0..<columns {
+                                                spatialFreq[y * columns + x] = deq[c][x * rows + y]
+                                            }
+                                        }
+                                    } else {
+                                        for k in 0..<count {
+                                            spatialFreq[k] = deq[c][k]
+                                        }
+                                    }
+                                    for v in 0..<cy {
+                                        for u in 0..<cx {
+                                            spatialFreq[v * columns + u] = llfFreq[v * cx + u]
+                                        }
+                                    }
+                                    let plan = immutablePlans[(rows << 16) | columns]!
+                                    try spatialFreq.withUnsafeBufferPointer { sfBuf in
+                                        try plan.apply(
+                                            UnsafeBufferPointer(start: sfBuf.baseAddress, count: count),
+                                            workspace: &dctWorkspace
+                                        )
+                                    }
+                                    if visW > 0 && visH > 0 {
+                                        dctWorkspace.withValues { blockPixels in
+                                            for ry in 0..<visH {
+                                                let srcRow = ry * columns
+                                                let dstRow = (py0 + ry) * width + px0
+                                                for rx in 0..<visW {
+                                                    outPlane[dstRow + rx] = blockPixels[srcRow + rx]
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            }
 
-            // 3b. Apply HF Chroma-from-Luma per 64x64 tile (or per sub-cell for large blocks)
-            for ny in 0..<normRows {
-                let rowOff = ny * normCols
-                for nx in 0..<normCols {
-                    if nx < llfCols && ny < llfRows { continue }
-                    let k = rowOff + nx
-                    let yCoeff = deq[1][k]
-                    if yCoeff == 0 { continue }
-                    let tx = (bx + (rows >= columns ? (ny / 8) : (nx / 8))) / 8
-                    let ty = (by + (rows >= columns ? (nx / 8) : (ny / 8))) / 8
-                    let tileIdx = min(coefficients.tilesY - 1, ty) * tilesX + min(tilesX - 1, tx)
-                    let fx = coefficients.baseCorrelationX + Float(coefficients.cflX[tileIdx]) * invColorFactor
-                    let fb = coefficients.baseCorrelationB + Float(coefficients.cflB[tileIdx]) * invColorFactor
-                    deq[0][k] += fx * yCoeff
-                    deq[2][k] += fb * yCoeff
-                }
-            }
-
-            // 3c. Insert LLF (DC) coefficients and run inverse transform per channel
-            for c in 0..<3 {
-                let blockPixels: [Float]
-                if cx == 1 && cy == 1 {
-                    deq[c][0] = dcPlanes[c][by * blocksX + bx]
-                    switch id {
-                    case 0:
-                        var transposed = [Float](repeating: 0, count: 64)
-                        for y in 0..<8 {
-                            for x in 0..<8 {
-                                transposed[y * 8 + x] = deq[c][x * 8 + y]
+                    if reconWorkers <= 1 {
+                        try reconstructSlice(0, numTransforms, dctWorkspace: &workerWorkspaces[0])
+                    } else {
+                        let perWorker = (numTransforms + reconWorkers - 1) / reconWorkers
+                        let wsMutex = PackageMutex<([ScaledDCT.Workspace], (any Error)?)>((workerWorkspaces, nil))
+                        DispatchQueue.concurrentPerform(iterations: reconWorkers) { w in
+                            let t0 = w * perWorker
+                            let t1 = min(numTransforms, t0 + perWorker)
+                            guard t0 < t1 else { return }
+                            var localWS = wsMutex.withLock { $0.0[w] }
+                            do {
+                                try reconstructSlice(t0, t1, dctWorkspace: &localWS)
+                                wsMutex.withLock { $0.0[w] = localWS }
+                            } catch {
+                                wsMutex.withLock { state in
+                                    state.0[w] = localWS
+                                    if state.1 == nil { state.1 = error }
+                                }
                             }
                         }
-                        let planKey = (8 << 16) | 8
-                        let plan: ScaledDCT
-                        if let cached = dctPlans[planKey] {
-                            plan = cached
-                        } else {
-                            let created = try ScaledDCT(
-                                rows: 8,
-                                columns: 8,
-                                direction: .inverse,
-                                budget: budget,
-                                axes: &inverseAxes
-                            )
-                            dctPlans[planKey] = created
-                            plan = created
-                        }
-                        blockPixels = try plan.apply(transposed)
-
-                    case 1, 2, 3, 12, 13:
-                        blockPixels = try VarDCTSmallTransforms.inverse(deq[c], identifier: id, budget: budget)
-
-                    case 14, 15, 16, 17:
-                        blockPixels = try VarDCTAFV.inverse(deq[c], kind: id - 14, budget: budget)
-
-                    default:
-                        throw VarDCTError.unsupportedStrategy(id)
-                    }
-                } else {
-                    let llfFreq = try reconstructLargeLLF(
-                        dcPlane: dcPlanes[c],
-                        bx: bx,
-                        by: by,
-                        blocksX: blocksX,
-                        cx: cx,
-                        cy: cy,
-                        id: id
-                    )
-                    var spatialFreq = [Float](repeating: 0, count: count)
-                    if rows >= columns {
-                        for y in 0..<rows {
-                            for x in 0..<columns {
-                                spatialFreq[y * columns + x] = deq[c][x * rows + y]
-                            }
-                        }
-                    } else {
-                        spatialFreq = deq[c]
-                    }
-                    for v in 0..<cy {
-                        for u in 0..<cx {
-                            spatialFreq[v * columns + u] = llfFreq[v * cx + u]
-                        }
-                    }
-
-                    let planKey = (rows << 16) | columns
-                    let plan: ScaledDCT
-                    if let cached = dctPlans[planKey] {
-                        plan = cached
-                    } else {
-                        let created = try ScaledDCT(
-                            rows: rows,
-                            columns: columns,
-                            direction: .inverse,
-                            budget: budget,
-                            axes: &inverseAxes
-                        )
-                        dctPlans[planKey] = created
-                        plan = created
-                    }
-                    blockPixels = try plan.apply(spatialFreq)
-                }
-
-                // Copy visible samples into output XYB plane (adding Y back to B)
-                let px0 = bx * 8
-                let py0 = by * 8
-                let visW = min(columns, width - px0)
-                let visH = min(rows, height - py0)
-                if visW > 0 && visH > 0 {
-                    for ry in 0..<visH {
-                        let srcRow = ry * columns
-                        let dstRow = (py0 + ry) * width + px0
-                        for rx in 0..<visW {
-                            planes[c][dstRow + rx] = blockPixels[srcRow + rx]
-                        }
+                        if let err = wsMutex.withLock({ $0.1 }) { throw err }
                     }
                 }
             }
         }
+        planes = [plane0, plane1, plane2]
 
         // Note: For 1x1 transforms where HF CfL was applied in canonical space, B has Y added via CfL on AC
         // and lfFactorB on DC (where baseCorrelationB == 1.0 by default!).

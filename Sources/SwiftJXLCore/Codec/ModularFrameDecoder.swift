@@ -263,23 +263,49 @@ package enum ModularFrameDecoder {
             guard source.count == rectW * rectH else {
                 throw ScalarModularError.invalidInput("Invalid rectangle sample count")
             }
-            let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+            let rawPtr = bytes.baseAddress!
+            let rawBase = rawPtr.assumingMemoryBound(to: UInt8.self)
             let stride = layout.pixelStride
             let rowStep = max(1, 4096 / max(1, rectW))
+            let maxVecU32 = SIMD8<UInt32>(repeating: maxU)
             try source.withUnsafeBufferPointer { srcBuf in
                 guard let src = srcBuf.baseAddress else { return }
+                let srcRaw = UnsafeRawPointer(src)
                 if layout.storageBits == 8 {
                     for ry in 0..<rectH {
                         if ry % rowStep == 0 { try budget.checkpoint() }
                         let srcRow = ry * rectW
                         var dstPos = layout.offset + (rectY + ry) * layout.rowBytes + rectX * stride
-                        for rx in 0..<rectW {
-                            let val = src[srcRow + rx]
-                            guard UInt32(bitPattern: val) <= maxU else {
-                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                        if stride == 1 {
+                            var rx = 0
+                            while rx + 8 <= rectW {
+                                let v32 = srcRaw.loadUnaligned(fromByteOffset: (srcRow + rx) * 4, as: SIMD8<Int32>.self)
+                                if any(SIMD8<UInt32>(truncatingIfNeeded: v32) .> maxVecU32) {
+                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                }
+                                let v8 = SIMD8<UInt8>(truncatingIfNeeded: v32)
+                                rawPtr.storeBytes(of: v8, toByteOffset: dstPos, as: SIMD8<UInt8>.self)
+                                dstPos += 8
+                                rx += 8
                             }
-                            rawBase[dstPos] = UInt8(truncatingIfNeeded: val)
-                            dstPos += stride
+                            while rx < rectW {
+                                let val = src[srcRow + rx]
+                                guard UInt32(bitPattern: val) <= maxU else {
+                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                }
+                                rawBase[dstPos] = UInt8(truncatingIfNeeded: val)
+                                dstPos += 1
+                                rx += 1
+                            }
+                        } else {
+                            for rx in 0..<rectW {
+                                let val = src[srcRow + rx]
+                                guard UInt32(bitPattern: val) <= maxU else {
+                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                }
+                                rawBase[dstPos] = UInt8(truncatingIfNeeded: val)
+                                dstPos += stride
+                            }
                         }
                     }
                 } else if layout.littleEndian {
@@ -287,14 +313,38 @@ package enum ModularFrameDecoder {
                         if ry % rowStep == 0 { try budget.checkpoint() }
                         let srcRow = ry * rectW
                         var dstPos = layout.offset + (rectY + ry) * layout.rowBytes + rectX * stride
-                        for rx in 0..<rectW {
-                            let val = src[srcRow + rx]
-                            guard UInt32(bitPattern: val) <= maxU else {
-                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                        if stride == 2 {
+                            var rx = 0
+                            while rx + 8 <= rectW {
+                                let v32 = srcRaw.loadUnaligned(fromByteOffset: (srcRow + rx) * 4, as: SIMD8<Int32>.self)
+                                if any(SIMD8<UInt32>(truncatingIfNeeded: v32) .> maxVecU32) {
+                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                }
+                                let v16 = SIMD8<UInt16>(truncatingIfNeeded: v32)
+                                rawPtr.storeBytes(of: v16, toByteOffset: dstPos, as: SIMD8<UInt16>.self)
+                                dstPos += 16
+                                rx += 8
                             }
-                            rawBase[dstPos] = UInt8(truncatingIfNeeded: val)
-                            rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: val >> 8)
-                            dstPos += stride
+                            while rx < rectW {
+                                let val = src[srcRow + rx]
+                                guard UInt32(bitPattern: val) <= maxU else {
+                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                }
+                                rawBase[dstPos] = UInt8(truncatingIfNeeded: val)
+                                rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: val >> 8)
+                                dstPos += 2
+                                rx += 1
+                            }
+                        } else {
+                            for rx in 0..<rectW {
+                                let val = src[srcRow + rx]
+                                guard UInt32(bitPattern: val) <= maxU else {
+                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                }
+                                rawBase[dstPos] = UInt8(truncatingIfNeeded: val)
+                                rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: val >> 8)
+                                dstPos += stride
+                            }
                         }
                     }
                 } else {
@@ -302,14 +352,39 @@ package enum ModularFrameDecoder {
                         if ry % rowStep == 0 { try budget.checkpoint() }
                         let srcRow = ry * rectW
                         var dstPos = layout.offset + (rectY + ry) * layout.rowBytes + rectX * stride
-                        for rx in 0..<rectW {
-                            let val = src[srcRow + rx]
-                            guard UInt32(bitPattern: val) <= maxU else {
-                                throw ScalarModularError.invalidInput("Sample outside declared precision")
+                        if stride == 2 {
+                            var rx = 0
+                            while rx + 8 <= rectW {
+                                let v32 = srcRaw.loadUnaligned(fromByteOffset: (srcRow + rx) * 4, as: SIMD8<Int32>.self)
+                                if any(SIMD8<UInt32>(truncatingIfNeeded: v32) .> maxVecU32) {
+                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                }
+                                let u16 = SIMD8<UInt16>(truncatingIfNeeded: v32)
+                                let swapped = (u16 &>> 8) | (u16 &<< 8)
+                                rawPtr.storeBytes(of: swapped, toByteOffset: dstPos, as: SIMD8<UInt16>.self)
+                                dstPos += 16
+                                rx += 8
                             }
-                            rawBase[dstPos] = UInt8(truncatingIfNeeded: val >> 8)
-                            rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: val)
-                            dstPos += stride
+                            while rx < rectW {
+                                let val = src[srcRow + rx]
+                                guard UInt32(bitPattern: val) <= maxU else {
+                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                }
+                                rawBase[dstPos] = UInt8(truncatingIfNeeded: val >> 8)
+                                rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: val)
+                                dstPos += 2
+                                rx += 1
+                            }
+                        } else {
+                            for rx in 0..<rectW {
+                                let val = src[srcRow + rx]
+                                guard UInt32(bitPattern: val) <= maxU else {
+                                    throw ScalarModularError.invalidInput("Sample outside declared precision")
+                                }
+                                rawBase[dstPos] = UInt8(truncatingIfNeeded: val >> 8)
+                                rawBase[dstPos + 1] = UInt8(truncatingIfNeeded: val)
+                                dstPos += stride
+                            }
                         }
                     }
                 }
@@ -449,7 +524,8 @@ package enum ModularFrameDecoder {
             try budget.reserveWorkspace(ScalarOperationBudget.product(length, 2))
             let range = (payloadStart + offset)..<(payloadStart + offset + length)
             return BitReader(
-                codestream.subdata(in: range),
+                sliceOf: codestream,
+                range: range,
                 deadline: budget.deadline,
                 maximumNestingDepth: maximumNestingDepth,
                 budget: budget
@@ -978,17 +1054,30 @@ package enum ModularFrameDecoder {
                 throw ScalarModularError.invalidInput("Invalid channel count after Modular inverse transforms")
             }
             let maxU = UInt32(bitPattern: sampleMax)
+            let maxVec = SIMD8<UInt32>(repeating: maxU)
             for ch in image.channels {
                 guard ch.width == width, ch.height == height, ch.pixels.count == ch.sampleCount else {
                     throw ScalarModularError.invalidInput("Invalid channel geometry after Modular inverse transforms")
                 }
                 try ch.pixels.withUnsafeBufferPointer { buf in
                     guard let base = buf.baseAddress else { return }
-                    for i in 0..<buf.count {
+                    let raw = UnsafeRawPointer(base)
+                    let count = buf.count
+                    var i = 0
+                    while i + 8 <= count {
+                        if (i & 4095) == 0 { try budget.checkpoint() }
+                        let v = raw.loadUnaligned(fromByteOffset: i * 4, as: SIMD8<Int32>.self)
+                        if any(SIMD8<UInt32>(truncatingIfNeeded: v) .> maxVec) {
+                            throw ScalarModularError.invalidInput("Sample outside declared precision")
+                        }
+                        i += 8
+                    }
+                    while i < count {
                         if (i & 4095) == 0 { try budget.checkpoint() }
                         if UInt32(bitPattern: base[i]) > maxU {
                             throw ScalarModularError.invalidInput("Sample outside declared precision")
                         }
+                        i += 1
                     }
                 }
             }

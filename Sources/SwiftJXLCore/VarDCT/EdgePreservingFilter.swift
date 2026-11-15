@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster Images Private Limited
 
+import Dispatch
 import Foundation
 
 /// Three-stage Edge-Preserving Filter (EPF) per ISO/IEC 18181-1 §10.4.2.
@@ -181,7 +182,7 @@ package enum EdgePreservingFilter {
         let cs2 = channelScale[2]
 
         @inline(__always)
-        func mirror(_ coord: Int, _ size: Int) -> Int {
+        @Sendable func mirror(_ coord: Int, _ size: Int) -> Int {
             if size <= 1 { return 0 }
             var c = coord
             while c < 0 || c >= size {
@@ -195,83 +196,140 @@ package enum EdgePreservingFilter {
         }
 
         @inline(__always)
-        func clampX(_ x: Int) -> Int {
+        @Sendable func clampX(_ x: Int) -> Int {
             mirror(x, width)
         }
 
         @inline(__always)
-        func clampY(_ y: Int) -> Int {
+        @Sendable func clampY(_ y: Int) -> Int {
             mirror(y, height)
         }
 
-        for y in 0..<height {
-            if (y & 7) == 0 { try budget.checkpoint() }
-            let by = y >> 3
-            let yBorder = ((y & 7) == 0) || ((y & 7) == 7)
-            let rowOffset = y * width
+        var out0 = output[0]
+        var out1 = output[1]
+        var out2 = output[2]
+        output = []
+        let workers = min(max(1, budget.maximumWorkers), height >= 32 ? min(8, height) : 1)
+        try input[0].withUnsafeBufferPointer { in0Buf in
+            try input[1].withUnsafeBufferPointer { in1Buf in
+                try input[2].withUnsafeBufferPointer { in2Buf in
+                    try out0.withUnsafeMutableBufferPointer { out0Buf in
+                        try out1.withUnsafeMutableBufferPointer { out1Buf in
+                            try out2.withUnsafeMutableBufferPointer { out2Buf in
+                                try baseSigma.withUnsafeBufferPointer { sigmaBuf in
+                                    let in0Addr = Int(bitPattern: in0Buf.baseAddress!)
+                                    let in1Addr = Int(bitPattern: in1Buf.baseAddress!)
+                                    let in2Addr = Int(bitPattern: in2Buf.baseAddress!)
+                                    let out0Addr = Int(bitPattern: out0Buf.baseAddress!)
+                                    let out1Addr = Int(bitPattern: out1Buf.baseAddress!)
+                                    let out2Addr = Int(bitPattern: out2Buf.baseAddress!)
+                                    let sigmaAddr = Int(bitPattern: sigmaBuf.baseAddress!)
 
-            for x in 0..<width {
-                let bx = x >> 3
-                let sigma = baseSigma[by * blocksX + bx] * sigmaScale
-                let centerIndex = rowOffset + x
-                if sigma <= 1e-6 {
-                    output[0][centerIndex] = input[0][centerIndex]
-                    output[1][centerIndex] = input[1][centerIndex]
-                    output[2][centerIndex] = input[2][centerIndex]
-                    continue
-                }
+                                    @Sendable
+                                    func processRows(_ yStart: Int, _ yEnd: Int) throws {
+                                        let pIn0 = UnsafePointer<Float>(bitPattern: in0Addr)!
+                                        let pIn1 = UnsafePointer<Float>(bitPattern: in1Addr)!
+                                        let pIn2 = UnsafePointer<Float>(bitPattern: in2Addr)!
+                                        let pOut0 = UnsafeMutablePointer<Float>(bitPattern: out0Addr)!
+                                        let pOut1 = UnsafeMutablePointer<Float>(bitPattern: out1Addr)!
+                                        let pOut2 = UnsafeMutablePointer<Float>(bitPattern: out2Addr)!
+                                        let pSigma = UnsafePointer<Float>(bitPattern: sigmaAddr)!
 
-                let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
-                let sadMul = isBorder ? borderSadMul : 1.0
-                let invSigma = (invSigmaNum * sadMul) / sigma
+                                        for y in yStart..<yEnd {
+                                            if ((y - yStart) & 7) == 0 { try budget.checkpoint() }
+                                            let by = y >> 3
+                                            let yBorder = ((y & 7) == 0) || ((y & 7) == 7)
+                                            let rowOffset = y * width
 
-                var sumW: Float = 1.0
-                var acc0: Float = input[0][centerIndex]
-                var acc1: Float = input[1][centerIndex]
-                var acc2: Float = input[2][centerIndex]
+                                            for x in 0..<width {
+                                                let bx = x >> 3
+                                                let sigma = pSigma[by * blocksX + bx] * sigmaScale
+                                                let centerIndex = rowOffset + x
+                                                if sigma <= 1e-6 {
+                                                    pOut0[centerIndex] = pIn0[centerIndex]
+                                                    pOut1[centerIndex] = pIn1[centerIndex]
+                                                    pOut2[centerIndex] = pIn2[centerIndex]
+                                                    continue
+                                                }
 
-                for offset in offsets {
-                    let nx = clampX(x + offset.dx)
-                    let ny = clampY(y + offset.dy)
-                    let nIndex = ny * width + nx
+                                                let isBorder = yBorder || ((x & 7) == 0) || ((x & 7) == 7)
+                                                let sadMul = isBorder ? borderSadMul : 1.0
+                                                let invSigma = (invSigmaNum * sadMul) / sigma
 
-                    var sad: Float = 0
-                    if useCrossSAD {
-                        for cross in plusCross {
-                            let ax = clampX(x + cross.cx)
-                            let ay = clampY(y + cross.cy)
-                            let bxSample = clampX(x + offset.dx + cross.cx)
-                            let bySample = clampY(y + offset.dy + cross.cy)
-                            let aIdx = ay * width + ax
-                            let bIdx = bySample * width + bxSample
+                                                var sumW: Float = 1.0
+                                                var acc0: Float = pIn0[centerIndex]
+                                                var acc1: Float = pIn1[centerIndex]
+                                                var acc2: Float = pIn2[centerIndex]
 
-                            let d0 = abs(input[0][aIdx] - input[0][bIdx])
-                            let d1 = abs(input[1][aIdx] - input[1][bIdx])
-                            let d2 = abs(input[2][aIdx] - input[2][bIdx])
-                            sad += cs0 * d0 + cs1 * d1 + cs2 * d2
+                                                for offset in offsets {
+                                                    let nx = clampX(x + offset.dx)
+                                                    let ny = clampY(y + offset.dy)
+                                                    let nIndex = ny * width + nx
+
+                                                    var sad: Float = 0
+                                                    if useCrossSAD {
+                                                        for cross in plusCross {
+                                                            let ax = clampX(x + cross.cx)
+                                                            let ay = clampY(y + cross.cy)
+                                                            let bxSample = clampX(x + offset.dx + cross.cx)
+                                                            let bySample = clampY(y + offset.dy + cross.cy)
+                                                            let aIdx = ay * width + ax
+                                                            let bIdx = bySample * width + bxSample
+
+                                                            let d0 = abs(pIn0[aIdx] - pIn0[bIdx])
+                                                            let d1 = abs(pIn1[aIdx] - pIn1[bIdx])
+                                                            let d2 = abs(pIn2[aIdx] - pIn2[bIdx])
+                                                            sad += cs0 * d0 + cs1 * d1 + cs2 * d2
+                                                        }
+                                                    } else {
+                                                        let d0 = abs(pIn0[centerIndex] - pIn0[nIndex])
+                                                        let d1 = abs(pIn1[centerIndex] - pIn1[nIndex])
+                                                        let d2 = abs(pIn2[centerIndex] - pIn2[nIndex])
+                                                        sad = cs0 * d0 + cs1 * d1 + cs2 * d2
+                                                    }
+
+                                                    let w = max(0, 1.0 - sad * invSigma)
+                                                    if w > 0 {
+                                                        sumW += w
+                                                        acc0 += w * pIn0[nIndex]
+                                                        acc1 += w * pIn1[nIndex]
+                                                        acc2 += w * pIn2[nIndex]
+                                                    }
+                                                }
+
+                                                let invW = 1.0 / sumW
+                                                pOut0[centerIndex] = acc0 * invW
+                                                pOut1[centerIndex] = acc1 * invW
+                                                pOut2[centerIndex] = acc2 * invW
+                                            }
+                                        }
+                                    }
+
+                                    if workers <= 1 {
+                                        try processRows(0, height)
+                                    } else {
+                                        let errMutex = PackageMutex<(any Error)?>(nil)
+                                        let rowsPerWorker = (height + workers - 1) / workers
+                                        DispatchQueue.concurrentPerform(iterations: workers) { w in
+                                            let y0 = w * rowsPerWorker
+                                            let y1 = min(height, y0 + rowsPerWorker)
+                                            guard y0 < y1 else { return }
+                                            do {
+                                                try processRows(y0, y1)
+                                            } catch {
+                                                errMutex.withLock { if $0 == nil { $0 = error } }
+                                            }
+                                        }
+                                        if let err = errMutex.withLock({ $0 }) { throw err }
+                                    }
+                                }
+                            }
                         }
-                    } else {
-                        let d0 = abs(input[0][centerIndex] - input[0][nIndex])
-                        let d1 = abs(input[1][centerIndex] - input[1][nIndex])
-                        let d2 = abs(input[2][centerIndex] - input[2][nIndex])
-                        sad = cs0 * d0 + cs1 * d1 + cs2 * d2
-                    }
-
-                    let w = max(0, 1.0 - sad * invSigma)
-                    if w > 0 {
-                        sumW += w
-                        acc0 += w * input[0][nIndex]
-                        acc1 += w * input[1][nIndex]
-                        acc2 += w * input[2][nIndex]
                     }
                 }
-
-                let invW = 1.0 / sumW
-                output[0][centerIndex] = acc0 * invW
-                output[1][centerIndex] = acc1 * invW
-                output[2][centerIndex] = acc2 * invW
             }
         }
+        output = [out0, out1, out2]
 
         return output
     }

@@ -12,6 +12,7 @@ package struct JPEGBridgePolicy: Sendable {
     package let maximumNestingDepth: Int
     package let maximumICCBytes: Int
     package let deadline: ContinuousClock.Instant
+    package let maximumWorkers: Int
     package let checkpointClosure: @Sendable () throws -> Void
 
     package init(
@@ -22,6 +23,7 @@ package struct JPEGBridgePolicy: Sendable {
         maximumNestingDepth: Int = 32,
         maximumICCBytes: Int = 4 * 1024 * 1024,
         deadline: ContinuousClock.Instant = .now.advanced(by: .seconds(10)),
+        maximumWorkers: Int = 1,
         checkpoint: @escaping @Sendable () throws -> Void = {}
     ) throws {
         guard maximumCoefficientBytes > 0,
@@ -29,7 +31,8 @@ package struct JPEGBridgePolicy: Sendable {
               maximumDimension > 0,
               maximumPixels > 0,
               maximumNestingDepth > 0,
-              maximumICCBytes > 0 else {
+              maximumICCBytes > 0,
+              maximumWorkers > 0 else {
             throw JPEGEntropyError.resourceLimit
         }
         self.maximumCoefficientBytes = maximumCoefficientBytes
@@ -39,6 +42,7 @@ package struct JPEGBridgePolicy: Sendable {
         self.maximumNestingDepth = maximumNestingDepth
         self.maximumICCBytes = maximumICCBytes
         self.deadline = deadline
+        self.maximumWorkers = min(maximumWorkers, 8)
         self.checkpointClosure = checkpoint
     }
 
@@ -258,5 +262,57 @@ package struct JPEGBridgeCoefficients: Sendable {
             }
         }
         scratch[0] = dcValue
+    }
+
+    /// Checkpoint-amortized block reader for multi-worker group loops that check cancellation per block-row.
+    package func readBlockAmortized(
+        channel: Int,
+        block: Int,
+        into scratch: inout [Int32]
+    ) throws {
+        guard (0..<3).contains(channel), scratch.count == 64 else {
+            throw JPEGEntropyError.malformed
+        }
+        let layout = channels[channel]
+        let totalBlocks = layout.blocksWide * layout.blocksHigh
+        guard block >= 0, block < totalBlocks else {
+            throw JPEGEntropyError.malformed
+        }
+        guard let ci = layout.jpegComponent else {
+            for k in 0..<64 {
+                scratch[k] = 0
+            }
+            return
+        }
+        let base = block * 64
+        let plane = sourceCoefficients[ci]
+        guard base >= 0, base + 64 <= plane.count else {
+            throw JPEGEntropyError.malformed
+        }
+
+        var dcValue = plane[base]
+        if colourTransform == .none {
+            let qDC = quantisation[channel * 64]
+            guard qDC > 0 else { throw JPEGEntropyError.malformed }
+            let dcOffset = Int32(1024) / qDC
+            let (shifted, overflow) = dcValue.addingReportingOverflow(dcOffset)
+            guard !overflow else {
+                throw JPEGEntropyError.malformed
+            }
+            dcValue = shifted
+        }
+
+        plane.withUnsafeBufferPointer { srcPtr in
+            let p = srcPtr.baseAddress! + base
+            scratch.withUnsafeMutableBufferPointer { dstPtr in
+                let d = dstPtr.baseAddress!
+                for j in 0..<8 {
+                    for i in 0..<8 {
+                        d[j * 8 + i] = p[i * 8 + j]
+                    }
+                }
+                d[0] = dcValue
+            }
+        }
     }
 }

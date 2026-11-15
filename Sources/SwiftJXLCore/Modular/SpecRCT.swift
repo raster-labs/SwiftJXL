@@ -37,11 +37,75 @@ package enum SpecRCT {
                     let p1 = buf1.baseAddress!
                     let p2 = buf2.baseAddress!
 
+                    let r0 = UnsafeMutableRawPointer(p0)
+                    let r1 = UnsafeMutableRawPointer(p1)
+                    let r2 = UnsafeMutableRawPointer(p2)
+
                     var start = 0
                     while start < count {
                         try checkpoint()
                         let end = min(start + 1024, count)
-                        for i in start..<end {
+                        var i = start
+                        while i + 8 <= end {
+                            let off = i &* 4
+                            let vy0 = r0.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                            let vy1 = r1.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                            let vy2 = r2.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+
+                            let vs0: SIMD8<Int32>
+                            let vs1: SIMD8<Int32>
+                            let vs2: SIMD8<Int32>
+                            switch mode {
+                            case 0:
+                                vs0 = vy0; vs1 = vy1; vs2 = vy2
+                            case 1:
+                                vs0 = vy0; vs1 = vy1; vs2 = vy2 &+ vy0
+                            case 2:
+                                vs0 = vy0; vs1 = vy1 &+ vy0; vs2 = vy2
+                            case 3:
+                                vs0 = vy0; vs1 = vy1 &+ vy0; vs2 = vy2 &+ vy0
+                            case 4:
+                                vs0 = vy0; vs1 = vy1 &+ ((vy0 &+ vy2) &>> 1); vs2 = vy2
+                            case 5:
+                                let third = vy2 &+ vy0
+                                vs0 = vy0; vs1 = vy1 &+ ((vy0 &+ third) &>> 1); vs2 = third
+                            default: // case 6: YCoCg-R
+                                let tmp = vy0 &- (vy2 &>> 1)
+                                let g = vy2 &+ tmp
+                                let b = tmp &- (vy1 &>> 1)
+                                let r = b &+ vy1
+                                vs0 = r; vs1 = g; vs2 = b
+                            }
+
+                            switch permutation {
+                            case 0:
+                                r0.storeBytes(of: vs0, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r1.storeBytes(of: vs1, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r2.storeBytes(of: vs2, toByteOffset: off, as: SIMD8<Int32>.self)
+                            case 1:
+                                r0.storeBytes(of: vs2, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r1.storeBytes(of: vs0, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r2.storeBytes(of: vs1, toByteOffset: off, as: SIMD8<Int32>.self)
+                            case 2:
+                                r0.storeBytes(of: vs1, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r1.storeBytes(of: vs2, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r2.storeBytes(of: vs0, toByteOffset: off, as: SIMD8<Int32>.self)
+                            case 3:
+                                r0.storeBytes(of: vs0, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r1.storeBytes(of: vs2, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r2.storeBytes(of: vs1, toByteOffset: off, as: SIMD8<Int32>.self)
+                            case 4:
+                                r0.storeBytes(of: vs1, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r1.storeBytes(of: vs0, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r2.storeBytes(of: vs2, toByteOffset: off, as: SIMD8<Int32>.self)
+                            default:
+                                r0.storeBytes(of: vs2, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r1.storeBytes(of: vs1, toByteOffset: off, as: SIMD8<Int32>.self)
+                                r2.storeBytes(of: vs0, toByteOffset: off, as: SIMD8<Int32>.self)
+                            }
+                            i &+= 8
+                        }
+                        while i < end {
                             let y0 = p0[i]
                             let y1 = p1[i]
                             let y2 = p2[i]
@@ -111,6 +175,7 @@ package enum SpecRCT {
                                 p1[i] = s1
                                 p2[i] = s0
                             }
+                            i &+= 1
                         }
                         start = end
                     }

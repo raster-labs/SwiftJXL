@@ -200,23 +200,70 @@ package struct ScaledDCT: Sendable {
                 try workspace.intermediate.withUnsafeMutableBufferPointer { interBuf in
                     let inter = interBuf.baseAddress!
 
-                    // 1. Horizontal transform along each row.
-                    for y in 0..<r {
-                        if y % hStep == 0 {
-                            try budget.checkpoint()
-                        }
-                        let rowOffset = y * c
-                        for u in 0..<c {
-                            let wOffset = u * c
-                            var sum: Double = 0
-                            for x in 0..<c {
-                                sum += Double(inBase[rowOffset + x]) * colMat[wOffset + x]
+                    // 1. Horizontal transform along each row (4-row batched when hStep >= 4 and r >= 4).
+                    if r >= 4 && hStep >= 4 {
+                        var y = 0
+                        while y + 4 <= r {
+                            if y % hStep == 0 {
+                                try budget.checkpoint()
                             }
-                            inter[rowOffset + u] = sum
+                            let ro0 = y &* c
+                            let ro1 = ro0 &+ c
+                            let ro2 = ro1 &+ c
+                            let ro3 = ro2 &+ c
+                            for u in 0..<c {
+                                let wOffset = u &* c
+                                var sum0: Double = 0
+                                var sum1: Double = 0
+                                var sum2: Double = 0
+                                var sum3: Double = 0
+                                for x in 0..<c {
+                                    let w = colMat[wOffset &+ x]
+                                    sum0 += Double(inBase[ro0 &+ x]) * w
+                                    sum1 += Double(inBase[ro1 &+ x]) * w
+                                    sum2 += Double(inBase[ro2 &+ x]) * w
+                                    sum3 += Double(inBase[ro3 &+ x]) * w
+                                }
+                                inter[ro0 &+ u] = sum0
+                                inter[ro1 &+ u] = sum1
+                                inter[ro2 &+ u] = sum2
+                                inter[ro3 &+ u] = sum3
+                            }
+                            y &+= 4
+                        }
+                        while y < r {
+                            if y % hStep == 0 {
+                                try budget.checkpoint()
+                            }
+                            let rowOffset = y &* c
+                            for u in 0..<c {
+                                let wOffset = u &* c
+                                var sum: Double = 0
+                                for x in 0..<c {
+                                    sum += Double(inBase[rowOffset &+ x]) * colMat[wOffset &+ x]
+                                }
+                                inter[rowOffset &+ u] = sum
+                            }
+                            y &+= 1
+                        }
+                    } else {
+                        for y in 0..<r {
+                            if y % hStep == 0 {
+                                try budget.checkpoint()
+                            }
+                            let rowOffset = y &* c
+                            for u in 0..<c {
+                                let wOffset = u &* c
+                                var sum: Double = 0
+                                for x in 0..<c {
+                                    sum += Double(inBase[rowOffset &+ x]) * colMat[wOffset &+ x]
+                                }
+                                inter[rowOffset &+ u] = sum
+                            }
                         }
                     }
 
-                    // 2. Vertical transform along columns (4-column batched when columns >= 4).
+                    // 2. Vertical transform along columns (4-column SIMD batched when c >= 4).
                     try workspace.staging.withUnsafeMutableBufferPointer { stageBuf in
                         let out = stageBuf.baseAddress!
                         if c >= 4 {
@@ -231,26 +278,26 @@ package struct ScaledDCT: Sendable {
                                     if v > 0 && v % vFreqStep == 0 {
                                         try budget.checkpoint()
                                     }
-                                    let wOffset = v * r
+                                    let wOffset = v &* r
                                     var s0: Double = 0
                                     var s1: Double = 0
                                     var s2: Double = 0
                                     var s3: Double = 0
                                     for y in 0..<r {
-                                        let w = rowMat[wOffset + y]
-                                        let base = y * c + x
+                                        let w = rowMat[wOffset &+ y]
+                                        let base = y &* c &+ x
                                         s0 += inter[base] * w
-                                        s1 += inter[base + 1] * w
-                                        s2 += inter[base + 2] * w
-                                        s3 += inter[base + 3] * w
+                                        s1 += inter[base &+ 1] * w
+                                        s2 += inter[base &+ 2] * w
+                                        s3 += inter[base &+ 3] * w
                                     }
-                                    let dstBase = v * c + x
+                                    let dstBase = v &* c &+ x
                                     out[dstBase] = Float(s0)
-                                    out[dstBase + 1] = Float(s1)
-                                    out[dstBase + 2] = Float(s2)
-                                    out[dstBase + 3] = Float(s3)
+                                    out[dstBase &+ 1] = Float(s1)
+                                    out[dstBase &+ 2] = Float(s2)
+                                    out[dstBase &+ 3] = Float(s3)
                                 }
-                                x += 4
+                                x &+= 4
                             }
                         } else {
                             let vSingleStep = max(1, 4096 / (r * r))
@@ -259,12 +306,12 @@ package struct ScaledDCT: Sendable {
                                     try budget.checkpoint()
                                 }
                                 for v in 0..<r {
-                                    let wOffset = v * r
+                                    let wOffset = v &* r
                                     var sum: Double = 0
                                     for y in 0..<r {
-                                        sum += inter[y * c + x] * rowMat[wOffset + y]
+                                        sum += inter[y &* c &+ x] * rowMat[wOffset &+ y]
                                     }
-                                    out[v * c + x] = Float(sum)
+                                    out[v &* c &+ x] = Float(sum)
                                 }
                             }
                         }
@@ -274,8 +321,12 @@ package struct ScaledDCT: Sendable {
         }
 
         try budget.checkpoint()
-        for i in 0..<count {
-            workspace.values[i] = workspace.staging[i]
+        if workspace.values.count == count && workspace.staging.count == count {
+            swap(&workspace.values, &workspace.staging)
+        } else {
+            for i in 0..<count {
+                workspace.values[i] = workspace.staging[i]
+            }
         }
     }
 }

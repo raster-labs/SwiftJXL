@@ -158,77 +158,90 @@ public struct DecodedImage: Sendable {
 /// sRGB/BT.709 transfer, rendering intent and alpha association are preserved
 /// without conversion through the documented required metadata entries.
 /// Explicit lossy mode selects bounded VarDCT sRGB 8–16-bit encoding with
-/// relative intent and optional straight alpha, at most 4096 per axis and
-/// 4,194,304 pixels. It reads the same owning layouts and reports lossy fidelity.
+/// relative intent and optional straight alpha, at most 16384 per axis and
+/// 67,108,864 pixels. It reads the same owning layouts and reports lossy fidelity.
 public struct Encoder: Sendable {
     public let configuration: EncoderConfiguration
     public static let capabilities = CodecCapabilities.pixelEncoding
     public var capabilities: CodecCapabilities { Self.capabilities }
     public init(configuration: EncoderConfiguration = .default) throws { self.configuration = configuration }
 
+    /// Synchronous zero-hop encoding entry point; avoids async Task/executor hops.
+    public func encodeSynchronously(_ image: Image, options: EncodeOptions = .init()) throws -> EncodedImage {
+        try encodeImpl(image, options: options, start: .now, cancellation: nil)
+    }
+
     @concurrent public func encode(_ image: Image, options: EncodeOptions = .init()) async throws -> EncodedImage {
         let start = ContinuousClock.now
         let cancellation = ScalarOperationCancellation()
         return try await withTaskCancellationHandler {
-            return try translateScalarErrors(encoding: true) {
-                try Task.checkCancellation()
-                try validateOperation(options.executionPolicy)
-                let limits = options.resourceLimits
-                try image.descriptor.validate(limits: limits)
-                let metadataBytes = try image.metadata.validate(limits: limits,
-                    additionalBytes: image.descriptor.iccProfile?.count ?? 0)
-                let layouts = try encoderSourceLayouts(image.descriptor)
-                let intent = try renderingIntent(image.metadata)
-                let transfer = try transferFunction(image.metadata)
-                guard image.metadata.requiredKeys.subtracting([renderingIntentKey, transferFunctionKey]).isEmpty,
-                      options.metadataPolicy == .discardAncillary || image.metadata.entries.keys.allSatisfy({ $0 == renderingIntentKey || $0 == transferFunctionKey }) else {
-                    throw CodecError(.unsupportedFeature, "The pixel encoder cannot preserve this metadata.")
-                }
-                if configuration.mode == .lossy {
-                    guard transfer == .srgb, intent == .relative,
-                          image.descriptor.alpha != .premultiplied,
-                          image.descriptor.width <= 4096, image.descriptor.height <= 4096,
-                          try checkedMultiply(image.descriptor.width, image.descriptor.height) <= 4 * 1024 * 1024 else {
-                        throw CodecError(.unsupportedFeature, "VarDCT requires bounded sRGB input with relative intent and optional straight alpha.")
-                    }
-                }
-                guard image.storage.byteCount <= limits.maximumDecodedBytes else {
-                    throw CodecError(.resourceLimitExceeded, "Source storage exceeds decoded limits.")
-                }
-                let budget = try operationBudget(limits, retained: checkedAdd(image.storage.byteCount, metadataBytes),
-                    start: start, maximumWorkers: limits.maximumWorkers, cancellation: cancellation)
-                try progress(options.progress, .processing, completed: 0)
-                let data = try image.storage.withUnsafeBytes { bytes in
-                    guard bytes.count == image.storage.byteCount, layouts.allSatisfy({ bytes.count >= $0.requiredBytes }) else {
-                        throw CodecError(.storageUnavailable, "Source provider returned inconsistent capacity.")
-                    }
-                    if configuration.mode == .lossy {
-                        let controls = configuration.codecOptions.varDCT ?? .default
-                        return try VarDCTPixelEncoder.encode(bytes, layouts: layouts,
-                            bitsPerSample: image.descriptor.meaningfulBits,
-                            grayscale: image.descriptor.colour == .greyscale,
-                            alphaAssociated: image.descriptor.alpha == .absent ? nil : false,
-                            distance: controls.distance, gaborish: controls.gaborish,
-                            adaptiveQuantisation: controls.adaptiveQuantisation,
-                            dcSmoothing: controls.dcSmoothing,
-                            smallStrategySearch: controls.strategySearch == .singleCell,
-                            largeStrategySearch: controls.strategySearch == .hierarchical, budget: budget)
-                    }
-                    return try ModularStorageEncoder.encode(bytes, layouts: layouts,
-                        bitsPerSample: image.descriptor.meaningfulBits, grayscale: image.descriptor.colour == .greyscale,
-                        alphaAssociated: image.descriptor.alpha == .absent ? nil : image.descriptor.alpha == .premultiplied,
-                        renderingIntent: intent, transferFunction: transfer, budget: budget)
-                }
-                let packaged = try packagePixelCodestream(data, format: configuration.codecOptions.container, budget: budget)
-                try budget.checkpoint()
-                try progress(options.progress, .completed, completed: 1)
-                try budget.checkpoint()
-                return EncodedImage(data: packaged.data, encoding: .init(format: "jpeg-xl", mode: configuration.mode),
-                    report: scalarReport(options.executionPolicy, start: start,
-                        fidelity: configuration.mode == .lossless ? .exactSamples : .lossy, copyEvents: packaged.copies))
-            }
+            try encodeImpl(image, options: options, start: start, cancellation: cancellation)
         } onCancel: {
             cancellation.cancel()
+        }
+    }
+
+    private func encodeImpl(_ image: Image, options: EncodeOptions,
+                            start: ContinuousClock.Instant,
+                            cancellation: ScalarOperationCancellation?) throws -> EncodedImage {
+        try translateScalarErrors(encoding: true) {
+            try Task.checkCancellation()
+            try validateOperation(options.executionPolicy)
+            let limits = options.resourceLimits
+            try image.descriptor.validate(limits: limits)
+            let metadataBytes = try image.metadata.validate(limits: limits,
+                additionalBytes: image.descriptor.iccProfile?.count ?? 0)
+            let layouts = try encoderSourceLayouts(image.descriptor)
+            let intent = try renderingIntent(image.metadata)
+            let transfer = try transferFunction(image.metadata)
+            guard image.metadata.requiredKeys.subtracting([renderingIntentKey, transferFunctionKey]).isEmpty,
+                  options.metadataPolicy == .discardAncillary || image.metadata.entries.keys.allSatisfy({ $0 == renderingIntentKey || $0 == transferFunctionKey }) else {
+                throw CodecError(.unsupportedFeature, "The pixel encoder cannot preserve this metadata.")
+            }
+            if configuration.mode == .lossy {
+                guard transfer == .srgb, intent == .relative,
+                      image.descriptor.alpha != .premultiplied,
+                      image.descriptor.width <= 16384, image.descriptor.height <= 16384,
+                      try checkedMultiply(image.descriptor.width, image.descriptor.height) <= 64 * 1024 * 1024 else {
+                    throw CodecError(.unsupportedFeature, "VarDCT requires bounded sRGB input with relative intent and optional straight alpha.")
+                }
+            }
+            guard image.storage.byteCount <= limits.maximumDecodedBytes else {
+                throw CodecError(.resourceLimitExceeded, "Source storage exceeds decoded limits.")
+            }
+            let budget = try operationBudget(limits, retained: checkedAdd(image.storage.byteCount, metadataBytes),
+                start: start, maximumWorkers: limits.maximumWorkers, cancellation: cancellation)
+            try progress(options.progress, .processing, completed: 0)
+            let data = try image.storage.withUnsafeBytes { bytes in
+                guard bytes.count == image.storage.byteCount, layouts.allSatisfy({ bytes.count >= $0.requiredBytes }) else {
+                    throw CodecError(.storageUnavailable, "Source provider returned inconsistent capacity.")
+                }
+                if configuration.mode == .lossy {
+                    let controls = configuration.codecOptions.varDCT ?? .default
+                    return try VarDCTPixelEncoder.encode(bytes, layouts: layouts,
+                        bitsPerSample: image.descriptor.meaningfulBits,
+                        grayscale: image.descriptor.colour == .greyscale,
+                        alphaAssociated: image.descriptor.alpha == .absent ? nil : false,
+                        distance: controls.distance, gaborish: controls.gaborish,
+                        adaptiveQuantisation: controls.adaptiveQuantisation,
+                        dcSmoothing: controls.dcSmoothing,
+                        smallStrategySearch: controls.strategySearch == .singleCell,
+                        largeStrategySearch: controls.strategySearch == .hierarchical,
+                        allowExtendedGeometry: true,
+                        budget: budget)
+                }
+                return try ModularStorageEncoder.encode(bytes, layouts: layouts,
+                    bitsPerSample: image.descriptor.meaningfulBits, grayscale: image.descriptor.colour == .greyscale,
+                    alphaAssociated: image.descriptor.alpha == .absent ? nil : image.descriptor.alpha == .premultiplied,
+                    renderingIntent: intent, transferFunction: transfer, budget: budget)
+            }
+            let packaged = try packagePixelCodestream(data, format: configuration.codecOptions.container, budget: budget)
+            try budget.checkpoint()
+            try progress(options.progress, .completed, completed: 1)
+            try budget.checkpoint()
+            return EncodedImage(data: packaged.data, encoding: .init(format: "jpeg-xl", mode: configuration.mode),
+                report: scalarReport(options.executionPolicy, start: start,
+                    fidelity: configuration.mode == .lossless ? .exactSamples : .lossy, copyEvents: packaged.copies))
         }
     }
 }
@@ -264,6 +277,39 @@ public struct Decoder: Sendable {
             return ImageInfo(format: "jpeg-xl", descriptor: descriptor, frameCount: 1, metadata: try frameMetadata(frame, limits: options.resourceLimits))
         }
     }
+
+    /// Synchronous header inspection alias matching the sibling codec APIs.
+    public func inspectSynchronously(_ data: Data, options: DecodeOptions = .init()) throws -> ImageInfo {
+        try inspect(data, options: options)
+    }
+
+    /// Synchronous zero-hop allocating decode; avoids async Task/executor hops.
+    public func decodeSynchronously(_ data: Data, options: DecodeOptions = .init()) throws -> DecodedImage {
+        let start = ContinuousClock.now
+        return try translateScalarErrors {
+            let (frame, budget) = try prepare(data, options: options, start: start, cancellation: nil)
+            let descriptor = try frameDescriptor(frame, limits: options.resourceLimits)
+            try budget.reservePixels(descriptor.requiredByteCount)
+            let destination = try ImageDestination.allocate(descriptor: descriptor, limits: options.resourceLimits)
+            return try finish(frame, into: destination, budget: budget, options: options, start: start,
+                numericalMode: configuration.varDCTNumericalProfile.coreMode)
+        }
+    }
+
+    /// Synchronous zero-hop caller-storage decode; avoids async Task/executor hops.
+    public func decodeSynchronously(_ data: Data, into destination: ImageDestination,
+                                    options: DecodeOptions = .init()) throws -> DecodedImage {
+        let start = ContinuousClock.now
+        return try translateScalarErrors {
+            try destination.descriptor.validate(limits: options.resourceLimits)
+            let (frame, budget) = try prepare(data, options: options, start: start,
+                destinationBytes: destination.storage.byteCount,
+                destinationMetadataBytes: destination.descriptor.iccProfile?.count ?? 0, cancellation: nil)
+            return try finish(frame, into: destination, budget: budget, options: options, start: start,
+                numericalMode: configuration.varDCTNumericalProfile.coreMode)
+        }
+    }
+
     @concurrent public func decode(_ data: Data, options: DecodeOptions = .init()) async throws -> DecodedImage {
         let start = ContinuousClock.now
         let cancellation = ScalarOperationCancellation()
@@ -305,7 +351,7 @@ private extension CodecCapabilities {
     static let pixelEncoding = Self(formats: ["jpeg-xl"], compressionModes: [.lossless, .lossy],
         sampleTypes: [.unsignedInteger], meaningfulPrecision: 8...16,
         layouts: ["Modular: greyscale/RGB, optional alpha; fixed effort 3",
-                  "VarDCT: sRGB greyscale/RGB, optional straight alpha; maximum 4096 per axis and 4,194,304 pixels",
+                  "VarDCT: sRGB greyscale/RGB, optional straight alpha; maximum 16384 per axis and 67,108,864 pixels",
                   "Planar/interleaved UInt8/UInt16; explicit byte order, offsets and strides"],
         availableBackends: [.scalarCPU], canInspect: false, canEncode: true, canDecode: false)
 }

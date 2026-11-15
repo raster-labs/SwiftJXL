@@ -67,20 +67,26 @@ package struct BitReader: Sendable {
     package mutating func checkpoint() throws {
         operations += 1
         if operations == 1 || operations & 255 == 0 {
-            try checkCancellationAndDeadline()
+            try checkCancellationAndDeadline(checkClock: operations == 1 || operations & 4095 == 0)
         }
     }
 
     // Keep the opaque clock-value stack allocation and metadata lookup out of
-    // every token/bit read. The check frequency and deadline are unchanged.
+    // every token/bit read. Cancellation is polled every 256 ops; wall-clock
+    // deadline is polled on op 1 and every 4096 ops.
     @inline(never)
-    private func checkCancellationAndDeadline() throws {
+    private func checkCancellationAndDeadline(checkClock: Bool) throws {
         // GCD group workers have no Swift task; the shared operation flag must
         // observe cancellation at the same bounded token/bit-read interval.
-        try budget?.checkpoint()
-        try Task.checkCancellation()
-        guard ContinuousClock.now < deadline else {
-            throw ScalarModularError.resourceLimit
+        if let budget {
+            try budget.checkCancellationOnly()
+        } else {
+            try Task.checkCancellation()
+        }
+        if checkClock {
+            guard ContinuousClock.now < deadline else {
+                throw ScalarModularError.resourceLimit
+            }
         }
     }
 
@@ -131,6 +137,42 @@ package struct BitReader: Sendable {
         self.maximumNestingDepth = max(0, min(maximumNestingDepth, 32))
         self.data = data
         self.bytes = [UInt8](data)
+        self.pos = position
+        self.bitBuf = 0
+        self.bitCount = 0
+        self.nextByte = 0
+        resync()
+    }
+
+    /// Construct a `BitReader` directly from `sourceData[range]` in a single
+    /// contiguous copy, avoiding an intermediate `Data` subslice allocation.
+    package init(sliceOf sourceData: Data, range: Range<Int>, startingAt position: Int = 0,
+                 deadline: ContinuousClock.Instant = ContinuousClock.now.advanced(by: .seconds(10)),
+                 maximumNestingDepth: Int = 32,
+                 maximumEntropyTableBytes: Int = 32 * 1024 * 1024,
+                 scalarProfile: Bool = false, budget: ScalarOperationBudget? = nil) {
+        self.scalarProfile = scalarProfile
+        self.budget = budget
+        self.maximumEntropyTableBytes = max(0, maximumEntropyTableBytes)
+        self.deadline = deadline
+        self.maximumNestingDepth = max(0, min(maximumNestingDepth, 32))
+        self.data = Data()
+        let sliceCount = max(0, range.count)
+        if sliceCount == 0 {
+            self.bytes = []
+        } else {
+            self.bytes = [UInt8](unsafeUninitializedCapacity: sliceCount) { dst, initializedCount in
+                sourceData.withUnsafeBytes { raw in
+                    let clampedLower = max(0, min(range.lowerBound, raw.count))
+                    let clampedUpper = max(clampedLower, min(range.upperBound, raw.count))
+                    let n = clampedUpper - clampedLower
+                    if n > 0, let srcBase = raw.baseAddress, let dstBase = dst.baseAddress {
+                        dstBase.initialize(from: srcBase.advanced(by: clampedLower).assumingMemoryBound(to: UInt8.self), count: n)
+                    }
+                    initializedCount = n
+                }
+            }
+        }
         self.pos = position
         self.bitBuf = 0
         self.bitCount = 0

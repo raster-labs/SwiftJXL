@@ -207,19 +207,38 @@ package enum ModularStorageEncoder {
             let rowStep = max(1, 4096 / max(1, width))
             var channels: [[Int32]] = []
             channels.reserveCapacity(layouts.count)
-            let rawBase = bytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+            let rawPtr = bytes.baseAddress!
+            let rawBase = rawPtr.assumingMemoryBound(to: UInt8.self)
+            let maxU16 = UInt16(clamping: maximum)
+            let maxVecU16 = SIMD8<UInt16>(repeating: maxU16)
             for layout in layouts {
                 ScalarStorageAudit.current?.workingPlane(n * 4)
                 var plane = [Int32](repeating: 0, count: n)
                 try plane.withUnsafeMutableBufferPointer { dst in
                     let dstBase = dst.baseAddress!
+                    let dstRaw = UnsafeMutableRawPointer(dstBase)
                     let stride = layout.pixelStride
                     if layout.storageBits == 8 {
                         for y in 0..<height {
                             if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
                             var p = layout.offset &+ y &* layout.rowBytes
                             let dstRow = y &* width
-                            if bitsPerSample >= 8 {
+                            if bitsPerSample >= 8 && stride == 1 {
+                                var x = 0
+                                while x + 8 <= width {
+                                    if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                    let v8 = rawPtr.loadUnaligned(fromByteOffset: p, as: SIMD8<UInt8>.self)
+                                    let v32 = SIMD8<Int32>(truncatingIfNeeded: v8)
+                                    dstRaw.storeBytes(of: v32, toByteOffset: (dstRow &+ x) &* 4, as: SIMD8<Int32>.self)
+                                    p &+= 8
+                                    x &+= 8
+                                }
+                                while x < width {
+                                    dstBase[dstRow &+ x] = Int32(rawBase[p])
+                                    p &+= 1
+                                    x &+= 1
+                                }
+                            } else if bitsPerSample >= 8 {
                                 for x in 0..<width {
                                     if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
                                     dstBase[dstRow &+ x] = Int32(rawBase[p])
@@ -240,12 +259,34 @@ package enum ModularStorageEncoder {
                             if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
                             var p = layout.offset &+ y &* layout.rowBytes
                             let dstRow = y &* width
-                            for x in 0..<width {
-                                if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
-                                let value = Int32(rawBase[p]) | (Int32(rawBase[p &+ 1]) &<< 8)
-                                guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
-                                dstBase[dstRow &+ x] = value
-                                p &+= stride
+                            if stride == 2 {
+                                var x = 0
+                                while x + 8 <= width {
+                                    if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                    let v16 = rawPtr.loadUnaligned(fromByteOffset: p, as: SIMD8<UInt16>.self)
+                                    if bitsPerSample < 16 && any(v16 .> maxVecU16) {
+                                        throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision")
+                                    }
+                                    let v32 = SIMD8<Int32>(truncatingIfNeeded: v16)
+                                    dstRaw.storeBytes(of: v32, toByteOffset: (dstRow &+ x) &* 4, as: SIMD8<Int32>.self)
+                                    p &+= 16
+                                    x &+= 8
+                                }
+                                while x < width {
+                                    let value = Int32(rawBase[p]) | (Int32(rawBase[p &+ 1]) &<< 8)
+                                    guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                                    dstBase[dstRow &+ x] = value
+                                    p &+= 2
+                                    x &+= 1
+                                }
+                            } else {
+                                for x in 0..<width {
+                                    if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                    let value = Int32(rawBase[p]) | (Int32(rawBase[p &+ 1]) &<< 8)
+                                    guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                                    dstBase[dstRow &+ x] = value
+                                    p &+= stride
+                                }
                             }
                         }
                     } else {
@@ -253,12 +294,35 @@ package enum ModularStorageEncoder {
                             if y % rowStep == 0 { try ScalarEncodingWork.checkpoint() }
                             var p = layout.offset &+ y &* layout.rowBytes
                             let dstRow = y &* width
-                            for x in 0..<width {
-                                if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
-                                let value = (Int32(rawBase[p]) &<< 8) | Int32(rawBase[p &+ 1])
-                                guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
-                                dstBase[dstRow &+ x] = value
-                                p &+= stride
+                            if stride == 2 {
+                                var x = 0
+                                while x + 8 <= width {
+                                    if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                    let raw16 = rawPtr.loadUnaligned(fromByteOffset: p, as: SIMD8<UInt16>.self)
+                                    let v16 = (raw16 &>> 8) | (raw16 &<< 8)
+                                    if bitsPerSample < 16 && any(v16 .> maxVecU16) {
+                                        throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision")
+                                    }
+                                    let v32 = SIMD8<Int32>(truncatingIfNeeded: v16)
+                                    dstRaw.storeBytes(of: v32, toByteOffset: (dstRow &+ x) &* 4, as: SIMD8<Int32>.self)
+                                    p &+= 16
+                                    x &+= 8
+                                }
+                                while x < width {
+                                    let value = (Int32(rawBase[p]) &<< 8) | Int32(rawBase[p &+ 1])
+                                    guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                                    dstBase[dstRow &+ x] = value
+                                    p &+= 2
+                                    x &+= 1
+                                }
+                            } else {
+                                for x in 0..<width {
+                                    if width > 4096 && x > 0 && (x & 4095 == 0) { try ScalarEncodingWork.checkpoint() }
+                                    let value = (Int32(rawBase[p]) &<< 8) | Int32(rawBase[p &+ 1])
+                                    guard value <= maximum else { throw ScalarModularError.invalidInput("Source sample exceeds meaningful precision") }
+                                    dstBase[dstRow &+ x] = value
+                                    p &+= stride
+                                }
                             }
                         }
                     }

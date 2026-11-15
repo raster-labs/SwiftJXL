@@ -1,33 +1,38 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster Images Private Limited
 
+import Dispatch
 import Foundation
 
 /// Forward pixel conversion, inverse-Gaborish pre-filtering, and local adaptive
 /// quantisation field (`qf`) estimation for the clean-room VarDCT encoder.
 package enum VarDCTEncoderPreparation {
-    /// Precomputed 8-bit IEC 61966-2-1 sRGB to linear sRGB and greyscale XYB lookup tables.
-    package struct EightBitConversion: Sendable {
+    /// Precomputed 8–16-bit IEC 61966-2-1 sRGB to linear sRGB and greyscale XYB lookup tables.
+    package struct SampleConversion: Sendable {
         package let linear: [Double]
         package let grayscale: [(Float, Float, Float)]
 
-        package init(grayscale: Bool, budget: ScalarOperationBudget) throws {
+        package init(bitsPerSample: Int, grayscale: Bool, budget: ScalarOperationBudget) throws {
             try budget.checkpoint()
-            let linearBytes = 256 * MemoryLayout<Double>.stride
-            let grayBytes = grayscale ? 256 * MemoryLayout<(Float, Float, Float)>.stride : 0
+            let count = 1 << bitsPerSample
+            let maxVal = Double(count - 1)
+            let linearBytes = count * MemoryLayout<Double>.stride
+            let grayBytes = grayscale ? count * MemoryLayout<(Float, Float, Float)>.stride : 0
             try budget.reserveWorkspace(linearBytes + grayBytes)
 
-            var lin = [Double](repeating: 0, count: 256)
-            for sample in 0..<256 {
-                let v = Double(sample) / 255.0
+            var lin = [Double](repeating: 0, count: count)
+            for sample in 0..<count {
+                if sample > 0 && (sample & 4095) == 0 { try budget.checkpoint() }
+                let v = Double(sample) / maxVal
                 lin[sample] = v <= 0.04045 ? v / 12.92 : pow((v + 0.055) / 1.055, 2.4)
             }
             self.linear = lin
 
             if grayscale {
                 var gray = [(Float, Float, Float)]()
-                gray.reserveCapacity(256)
-                for sample in 0..<256 {
+                gray.reserveCapacity(count)
+                for sample in 0..<count {
+                    if sample > 0 && (sample & 4095) == 0 { try budget.checkpoint() }
                     let l = lin[sample]
                     let xyb = try DefaultOpsin.forward((l, l, l))
                     gray.append((Float(xyb.X), Float(xyb.Y), Float(xyb.B)))
@@ -36,6 +41,18 @@ package enum VarDCTEncoderPreparation {
             } else {
                 self.grayscale = []
             }
+        }
+    }
+
+    /// Precomputed 8-bit IEC 61966-2-1 sRGB to linear sRGB and greyscale XYB lookup tables.
+    package struct EightBitConversion: Sendable {
+        package let linear: [Double]
+        package let grayscale: [(Float, Float, Float)]
+
+        package init(grayscale: Bool, budget: ScalarOperationBudget) throws {
+            let conv = try SampleConversion(bitsPerSample: 8, grayscale: grayscale, budget: budget)
+            self.linear = conv.linear
+            self.grayscale = conv.grayscale
         }
     }
 
@@ -74,7 +91,7 @@ package enum VarDCTEncoderPreparation {
         let w4 = g4 * normalise
 
         @inline(__always)
-        func mirror(_ coordinate: Int, _ size: Int) -> Int {
+        @Sendable func mirror(_ coordinate: Int, _ size: Int) -> Int {
             if size == 1 { return 0 }
             if coordinate < 0 { return -coordinate - 1 }
             if coordinate >= size { return size - 1 - (coordinate - size) }
@@ -82,58 +99,78 @@ package enum VarDCTEncoderPreparation {
         }
 
         var output = [Float](repeating: 0, count: count)
-        input.withUnsafeBufferPointer { src in
-            output.withUnsafeMutableBufferPointer { dst in
-                for y in 0..<height {
-                    if y >= 2 && y + 2 < height && width >= 5 {
-                        let rM2 = (y - 2) * width
-                        let rM1 = (y - 1) * width
-                        let r0  = y * width
-                        let rP1 = (y + 1) * width
-                        let rP2 = (y + 2) * width
+        let workers = min(max(1, budget.maximumWorkers), height >= 32 ? min(8, height) : 1)
+        input.withUnsafeBufferPointer { srcBuf in
+            output.withUnsafeMutableBufferPointer { dstBuf in
+                let srcAddr = Int(bitPattern: srcBuf.baseAddress!)
+                let dstAddr = Int(bitPattern: dstBuf.baseAddress!)
 
-                        for x in [0, 1, width - 2, width - 1] {
-                            let xm2 = mirror(x - 2, width)
-                            let xm1 = mirror(x - 1, width)
-                            let xp1 = mirror(x + 1, width)
-                            let xp2 = mirror(x + 2, width)
-                            let axis1 = src[r0 + xm1] + src[r0 + xp1] + src[rM1 + x] + src[rP1 + x]
-                            let diag1 = src[rM1 + xm1] + src[rM1 + xp1] + src[rP1 + xm1] + src[rP1 + xp1]
-                            let axis2 = src[r0 + xm2] + src[r0 + xp2] + src[rM2 + x] + src[rP2 + x]
-                            let knight = src[rM1 + xm2] + src[rP1 + xm2] + src[rM1 + xp2] + src[rP1 + xp2]
-                                + src[rM2 + xm1] + src[rM2 + xp1] + src[rP2 + xm1] + src[rP2 + xp1]
-                            let corner = src[rM2 + xm2] + src[rM2 + xp2] + src[rP2 + xm2] + src[rP2 + xp2]
-                            dst[r0 + x] = normalise * src[r0 + x] + w0 * axis1 + w1 * diag1 + w2 * axis2 + w3 * knight + w4 * corner
-                        }
+                @Sendable
+                func processRowRange(_ yStart: Int, _ yEnd: Int) {
+                    let src = UnsafePointer<Float>(bitPattern: srcAddr)!
+                    let dst = UnsafeMutablePointer<Float>(bitPattern: dstAddr)!
+                    for y in yStart..<yEnd {
+                        if y >= 2 && y + 2 < height && width >= 5 {
+                            let rM2 = (y - 2) * width
+                            let rM1 = (y - 1) * width
+                            let r0  = y * width
+                            let rP1 = (y + 1) * width
+                            let rP2 = (y + 2) * width
 
-                        for x in 2..<(width - 2) {
-                            let axis1 = src[r0 + x - 1] + src[r0 + x + 1] + src[rM1 + x] + src[rP1 + x]
-                            let diag1 = src[rM1 + x - 1] + src[rM1 + x + 1] + src[rP1 + x - 1] + src[rP1 + x + 1]
-                            let axis2 = src[r0 + x - 2] + src[r0 + x + 2] + src[rM2 + x] + src[rP2 + x]
-                            let knight = src[rM1 + x - 2] + src[rP1 + x - 2] + src[rM1 + x + 2] + src[rP1 + x + 2]
-                                + src[rM2 + x - 1] + src[rM2 + x + 1] + src[rP2 + x - 1] + src[rP2 + x + 1]
-                            let corner = src[rM2 + x - 2] + src[rM2 + x + 2] + src[rP2 + x - 2] + src[rP2 + x + 2]
-                            dst[r0 + x] = normalise * src[r0 + x] + w0 * axis1 + w1 * diag1 + w2 * axis2 + w3 * knight + w4 * corner
+                            for x in [0, 1, width - 2, width - 1] {
+                                let xm2 = mirror(x - 2, width)
+                                let xm1 = mirror(x - 1, width)
+                                let xp1 = mirror(x + 1, width)
+                                let xp2 = mirror(x + 2, width)
+                                let axis1 = src[r0 + xm1] + src[r0 + xp1] + src[rM1 + x] + src[rP1 + x]
+                                let diag1 = src[rM1 + xm1] + src[rM1 + xp1] + src[rP1 + xm1] + src[rP1 + xp1]
+                                let axis2 = src[r0 + xm2] + src[r0 + xp2] + src[rM2 + x] + src[rP2 + x]
+                                let knight = src[rM1 + xm2] + src[rP1 + xm2] + src[rM1 + xp2] + src[rP1 + xp2]
+                                    + src[rM2 + xm1] + src[rM2 + xp1] + src[rP2 + xm1] + src[rP2 + xp1]
+                                let corner = src[rM2 + xm2] + src[rM2 + xp2] + src[rP2 + xm2] + src[rP2 + xp2]
+                                dst[r0 + x] = normalise * src[r0 + x] + w0 * axis1 + w1 * diag1 + w2 * axis2 + w3 * knight + w4 * corner
+                            }
+
+                            for x in 2..<(width - 2) {
+                                let axis1 = src[r0 + x - 1] + src[r0 + x + 1] + src[rM1 + x] + src[rP1 + x]
+                                let diag1 = src[rM1 + x - 1] + src[rM1 + x + 1] + src[rP1 + x - 1] + src[rP1 + x + 1]
+                                let axis2 = src[r0 + x - 2] + src[r0 + x + 2] + src[rM2 + x] + src[rP2 + x]
+                                let knight = src[rM1 + x - 2] + src[rP1 + x - 2] + src[rM1 + x + 2] + src[rP1 + x + 2]
+                                    + src[rM2 + x - 1] + src[rM2 + x + 1] + src[rP2 + x - 1] + src[rP2 + x + 1]
+                                let corner = src[rM2 + x - 2] + src[rM2 + x + 2] + src[rP2 + x - 2] + src[rP2 + x + 2]
+                                dst[r0 + x] = normalise * src[r0 + x] + w0 * axis1 + w1 * diag1 + w2 * axis2 + w3 * knight + w4 * corner
+                            }
+                        } else {
+                            let rM2 = mirror(y - 2, height) * width
+                            let rM1 = mirror(y - 1, height) * width
+                            let r0  = y * width
+                            let rP1 = mirror(y + 1, height) * width
+                            let rP2 = mirror(y + 2, height) * width
+                            for x in 0..<width {
+                                let xm2 = mirror(x - 2, width)
+                                let xm1 = mirror(x - 1, width)
+                                let xp1 = mirror(x + 1, width)
+                                let xp2 = mirror(x + 2, width)
+                                let axis1 = src[r0 + xm1] + src[r0 + xp1] + src[rM1 + x] + src[rP1 + x]
+                                let diag1 = src[rM1 + xm1] + src[rM1 + xp1] + src[rP1 + xm1] + src[rP1 + xp1]
+                                let axis2 = src[r0 + xm2] + src[r0 + xp2] + src[rM2 + x] + src[rP2 + x]
+                                let knight = src[rM1 + xm2] + src[rP1 + xm2] + src[rM1 + xp2] + src[rP1 + xp2]
+                                    + src[rM2 + xm1] + src[rM2 + xp1] + src[rP2 + xm1] + src[rP2 + xp1]
+                                let corner = src[rM2 + xm2] + src[rM2 + xp2] + src[rP2 + xm2] + src[rP2 + xp2]
+                                dst[r0 + x] = normalise * src[r0 + x] + w0 * axis1 + w1 * diag1 + w2 * axis2 + w3 * knight + w4 * corner
+                            }
                         }
-                    } else {
-                        let rM2 = mirror(y - 2, height) * width
-                        let rM1 = mirror(y - 1, height) * width
-                        let r0  = y * width
-                        let rP1 = mirror(y + 1, height) * width
-                        let rP2 = mirror(y + 2, height) * width
-                        for x in 0..<width {
-                            let xm2 = mirror(x - 2, width)
-                            let xm1 = mirror(x - 1, width)
-                            let xp1 = mirror(x + 1, width)
-                            let xp2 = mirror(x + 2, width)
-                            let axis1 = src[r0 + xm1] + src[r0 + xp1] + src[rM1 + x] + src[rP1 + x]
-                            let diag1 = src[rM1 + xm1] + src[rM1 + xp1] + src[rP1 + xm1] + src[rP1 + xp1]
-                            let axis2 = src[r0 + xm2] + src[r0 + xp2] + src[rM2 + x] + src[rP2 + x]
-                            let knight = src[rM1 + xm2] + src[rP1 + xm2] + src[rM1 + xp2] + src[rP1 + xp2]
-                                + src[rM2 + xm1] + src[rM2 + xp1] + src[rP2 + xm1] + src[rP2 + xp1]
-                            let corner = src[rM2 + xm2] + src[rM2 + xp2] + src[rP2 + xm2] + src[rP2 + xp2]
-                            dst[r0 + x] = normalise * src[r0 + x] + w0 * axis1 + w1 * diag1 + w2 * axis2 + w3 * knight + w4 * corner
-                        }
+                    }
+                }
+
+                if workers <= 1 {
+                    processRowRange(0, height)
+                } else {
+                    let rowsPerWorker = (height + workers - 1) / workers
+                    DispatchQueue.concurrentPerform(iterations: workers) { w in
+                        let y0 = w * rowsPerWorker
+                        let y1 = min(height, y0 + rowsPerWorker)
+                        if y0 < y1 { processRowRange(y0, y1) }
                     }
                 }
             }

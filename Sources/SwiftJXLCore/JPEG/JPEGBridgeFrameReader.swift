@@ -1,7 +1,36 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster Images Private Limited
 
+import Dispatch
 import Foundation
+
+private struct UncheckedMutableCoeffPtr: @unchecked Sendable {
+    let base: UnsafeMutablePointer<Int32>
+}
+
+private final class ReaderParallelErrorBox: @unchecked Sendable {
+    private let lock = NSLock()
+    private var stored: (any Error)?
+
+    func record(_ error: any Error) {
+        lock.lock()
+        if stored == nil { stored = error }
+        lock.unlock()
+    }
+
+    var hasError: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return stored != nil
+    }
+
+    func rethrowIfNeeded() throws {
+        lock.lock()
+        let err = stored
+        lock.unlock()
+        if let err { throw err }
+    }
+}
 
 /// Decoded JPEG-bridged VarDCT frame (ISO/IEC 18181-1 §§6, 7, 8, 9.1–9.3, Annex C).
 package struct JPEGBridgeFrame: Sendable {
@@ -263,6 +292,7 @@ package enum JPEGBridgeFrameReader {
             }
         }
 
+        @Sendable
         func makeSectionReader(_ index: Int) throws -> BitReader {
             try policy.checkpoint()
             guard toc.entrySizes.indices.contains(index),
@@ -550,11 +580,25 @@ package enum JPEGBridgeFrameReader {
             coefficients.append([Int32](repeating: 0, count: samp.blocksWide * samp.blocksHigh * 64))
         }
 
-        var blockScratch = [Int32](repeating: 0, count: 64)
-        var lumaScratch = [Int32](repeating: 0, count: 64)
         let hfPassPresetBits = Self.ceilLog2(numHfPresets)
+        let chHShiftSnap = chHShift
+        let chVShiftSnap = chVShift
+        let chBlocksWideSnap = chBlocksWide
+        let cflYtoXLFSnap = cflYtoXLF
+        let cflYtoBLFSnap = cflYtoBLF
+        let cflBaseXSnap = cflBaseX
+        let cflBaseBSnap = cflBaseB
+        let cflColorFactorSnap = cflColorFactor
+        let quantisationSnap = quantisation
 
-        for groupIdx in 0..<numGroups {
+        @Sendable
+        func decodeGroup(
+            groupIdx: Int,
+            passReader initialReader: BitReader,
+            c0: UnsafeMutablePointer<Int32>,
+            c1: UnsafeMutablePointer<Int32>?,
+            c2: UnsafeMutablePointer<Int32>?
+        ) throws {
             try policy.checkpoint()
             let gx = groupIdx % groupsX
             let gy = groupIdx / groupsX
@@ -563,7 +607,7 @@ package enum JPEGBridgeFrameReader {
             let gw = min(groupBlocks, fullBlocksX - bx0)
             let gh = min(groupBlocks, fullBlocksY - by0)
 
-            var passReader = singleSection ? sec0 : try makeSectionReader(3 + groupIdx)
+            var passReader = initialReader
             let hfPreset: Int
             if hfPassPresetBits > 0 {
                 hfPreset = Int(try passReader.read(bits: hfPassPresetBits))
@@ -576,12 +620,14 @@ package enum JPEGBridgeFrameReader {
 
             let presetCtxOffset = hfPreset * VarDCTEntropy.contextsPerBlockCluster * hfBlockCtx.numBlockClusters
             var acStream = TokenStreamReader(header: acEntropyHeader, codebook: acCodebook)
+            var blockScratch = [Int32](repeating: 0, count: 64)
+            var lumaScratch = [Int32](repeating: 0, count: 64)
 
             var nzGrids: [[Int32]] = []
             var subWidths: [Int] = []
             for c in 0..<3 {
-                let hs = chHShift[c]
-                let vs = chVShift[c]
+                let hs = chHShiftSnap[c]
+                let vs = chVShiftSnap[c]
                 let sw = (gw + (1 << hs) - 1) >> hs
                 let sh = (gh + (1 << vs) - 1) >> vs
                 subWidths.append(sw)
@@ -594,8 +640,8 @@ package enum JPEGBridgeFrameReader {
                 for lx in 0..<gw {
                     let bx = bx0 + lx
                     for c in [1, 0, 2] {
-                        let hs = chHShift[c]
-                        let vs = chVShift[c]
+                        let hs = chHShiftSnap[c]
+                        let vs = chVShiftSnap[c]
                         if (bx & ((1 << hs) - 1)) != 0 || (by & ((1 << vs) - 1)) != 0 {
                             continue
                         }
@@ -608,9 +654,9 @@ package enum JPEGBridgeFrameReader {
                             VarDCTEntropy.predictedNonZeros(x: clx, y: cly, width: sw, grid: ptr)
                         }
 
-                        let dcX = dcPlanes[0][(by >> chVShift[0]) * chBlocksWide[0] + (bx >> chHShift[0])]
-                        let dcY = dcPlanes[1][(by >> chVShift[1]) * chBlocksWide[1] + (bx >> chHShift[1])]
-                        let dcB = dcPlanes[2][(by >> chVShift[2]) * chBlocksWide[2] + (bx >> chHShift[2])]
+                        let dcX = dcPlanes[0][(by >> chVShiftSnap[0]) * chBlocksWideSnap[0] + (bx >> chHShiftSnap[0])]
+                        let dcY = dcPlanes[1][(by >> chVShiftSnap[1]) * chBlocksWideSnap[1] + (bx >> chHShiftSnap[1])]
+                        let dcB = dcPlanes[2][(by >> chVShiftSnap[2]) * chBlocksWideSnap[2] + (bx >> chHShiftSnap[2])]
 
                         let blockCluster = hfBlockCtx.cluster(
                             channel: c,
@@ -631,13 +677,13 @@ package enum JPEGBridgeFrameReader {
                         }
                         nzGrids[c][cly * sw + clx] = Int32(nonZeros)
 
-                        let blockIndex = cby * chBlocksWide[c] + cbx
+                        let blockIndex = cby * chBlocksWideSnap[c] + cbx
                         var dcVal = dcPlanes[c][blockIndex]
                         if c != 1 && subsampling.is444 {
-                            let lfFactor = (c == 0) ? cflYtoXLF : cflYtoBLF
-                            let baseCorr = (c == 0) ? cflBaseX : cflBaseB
+                            let lfFactor = (c == 0) ? cflYtoXLFSnap : cflYtoBLFSnap
+                            let baseCorr = (c == 0) ? cflBaseXSnap : cflBaseBSnap
                             if lfFactor != 0 || baseCorr != 0 {
-                                let scale = baseCorr + Float(lfFactor) / Float(cflColorFactor)
+                                let scale = baseCorr + Float(lfFactor) / Float(cflColorFactorSnap)
                                 let dcCorr = Int32((Float(dcY) * scale).rounded(.toNearestOrEven))
                                 let (corrDC, corrOverflow) = dcVal.addingReportingOverflow(dcCorr)
                                 guard !corrOverflow else { throw JPEGEntropyError.malformed }
@@ -645,7 +691,7 @@ package enum JPEGBridgeFrameReader {
                             }
                         }
                         if frame.colorTransform == .none, let ci = jxlToJpegComp[c] {
-                            let qDC = quantisation[ci][0]
+                            let qDC = quantisationSnap[ci][0]
                             guard qDC > 0 else { throw JPEGEntropyError.malformed }
                             let dcOffset = Int32(1024) / qDC
                             let (unshifted, overflow) = dcVal.subtractingReportingOverflow(dcOffset)
@@ -699,9 +745,9 @@ package enum JPEGBridgeFrameReader {
                             let mapVal = (c == 0)
                                 ? metaPlanes[0].pixels[tileIdx]
                                 : metaPlanes[1].pixels[tileIdx]
-                            let baseCorr = (c == 0) ? cflBaseX : cflBaseB
+                            let baseCorr = (c == 0) ? cflBaseXSnap : cflBaseBSnap
                             if mapVal != 0 || baseCorr != 0 {
-                                let scale = baseCorr + Float(mapVal) / Float(cflColorFactor)
+                                let scale = baseCorr + Float(mapVal) / Float(cflColorFactorSnap)
                                 for k in 1..<64 {
                                     let corr = Int32((Float(lumaScratch[k]) * scale).rounded(.toNearestOrEven))
                                     let (summed, overflow) = blockScratch[k].addingReportingOverflow(corr)
@@ -713,9 +759,15 @@ package enum JPEGBridgeFrameReader {
 
                         if let ci = jxlToJpegComp[c] {
                             let base = blockIndex * 64
+                            let dst: UnsafeMutablePointer<Int32>
+                            switch ci {
+                            case 0: dst = c0
+                            case 1: dst = c1!
+                            default: dst = c2!
+                            }
                             for y in 0..<8 {
                                 for x in 0..<8 {
-                                    coefficients[ci][base + x * 8 + y] = blockScratch[y * 8 + x]
+                                    dst[base + x * 8 + y] = blockScratch[y * 8 + x]
                                 }
                             }
                         }
@@ -727,6 +779,92 @@ package enum JPEGBridgeFrameReader {
             try passReader.expectZeroPadding()
             guard passReader.isExhausted else {
                 throw JPEGEntropyError.malformed
+            }
+        }
+
+        if !singleSection && policy.maximumWorkers > 1 && numGroups >= 2 {
+            let workers = min(policy.maximumWorkers, numGroups)
+            let errBox = ReaderParallelErrorBox()
+            if numComponents == 1 {
+                var c0Plane = coefficients[0]
+                coefficients = []
+                try c0Plane.withUnsafeMutableBufferPointer { buf0 in
+                    let s0 = UncheckedMutableCoeffPtr(base: buf0.baseAddress!)
+                    DispatchQueue.concurrentPerform(iterations: workers) { worker in
+                        for groupIdx in stride(from: worker, to: numGroups, by: workers) {
+                            if errBox.hasError { return }
+                            do {
+                                let reader = try makeSectionReader(3 + groupIdx)
+                                try decodeGroup(groupIdx: groupIdx, passReader: reader, c0: s0.base, c1: nil, c2: nil)
+                            } catch {
+                                errBox.record(error)
+                                return
+                            }
+                        }
+                    }
+                    try errBox.rethrowIfNeeded()
+                }
+                coefficients = [c0Plane]
+            } else {
+                var c0Plane = coefficients[0]
+                var c1Plane = coefficients[1]
+                var c2Plane = coefficients[2]
+                coefficients = []
+                try c0Plane.withUnsafeMutableBufferPointer { buf0 in
+                    try c1Plane.withUnsafeMutableBufferPointer { buf1 in
+                        try c2Plane.withUnsafeMutableBufferPointer { buf2 in
+                            let s0 = UncheckedMutableCoeffPtr(base: buf0.baseAddress!)
+                            let s1 = UncheckedMutableCoeffPtr(base: buf1.baseAddress!)
+                            let s2 = UncheckedMutableCoeffPtr(base: buf2.baseAddress!)
+                            DispatchQueue.concurrentPerform(iterations: workers) { worker in
+                                for groupIdx in stride(from: worker, to: numGroups, by: workers) {
+                                    if errBox.hasError { return }
+                                    do {
+                                        let reader = try makeSectionReader(3 + groupIdx)
+                                        try decodeGroup(groupIdx: groupIdx, passReader: reader, c0: s0.base, c1: s1.base, c2: s2.base)
+                                    } catch {
+                                        errBox.record(error)
+                                        return
+                                    }
+                                }
+                            }
+                            try errBox.rethrowIfNeeded()
+                        }
+                    }
+                }
+                coefficients = [c0Plane, c1Plane, c2Plane]
+            }
+        } else {
+            if numComponents == 1 {
+                var c0Plane = coefficients[0]
+                coefficients = []
+                try c0Plane.withUnsafeMutableBufferPointer { buf0 in
+                    let p0 = buf0.baseAddress!
+                    for groupIdx in 0..<numGroups {
+                        let reader = singleSection ? sec0 : try makeSectionReader(3 + groupIdx)
+                        try decodeGroup(groupIdx: groupIdx, passReader: reader, c0: p0, c1: nil, c2: nil)
+                    }
+                }
+                coefficients = [c0Plane]
+            } else {
+                var c0Plane = coefficients[0]
+                var c1Plane = coefficients[1]
+                var c2Plane = coefficients[2]
+                coefficients = []
+                try c0Plane.withUnsafeMutableBufferPointer { buf0 in
+                    try c1Plane.withUnsafeMutableBufferPointer { buf1 in
+                        try c2Plane.withUnsafeMutableBufferPointer { buf2 in
+                            let p0 = buf0.baseAddress!
+                            let p1 = buf1.baseAddress!
+                            let p2 = buf2.baseAddress!
+                            for groupIdx in 0..<numGroups {
+                                let reader = singleSection ? sec0 : try makeSectionReader(3 + groupIdx)
+                                try decodeGroup(groupIdx: groupIdx, passReader: reader, c0: p0, c1: p1, c2: p2)
+                            }
+                        }
+                    }
+                }
+                coefficients = [c0Plane, c1Plane, c2Plane]
             }
         }
 

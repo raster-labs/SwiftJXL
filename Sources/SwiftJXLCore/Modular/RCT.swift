@@ -102,13 +102,37 @@ package enum RCT {
             channel0.count == channel1.count && channel1.count == channel2.count,
             "RCT requires channels of equal length"
         )
-        for i in 0..<channel0.count {
-            let (a, b, c) = forwardPixel(
-                variant, r: channel0[i], g: channel1[i], b: channel2[i]
-            )
-            channel0[i] = a
-            channel1[i] = b
-            channel2[i] = c
+        if variant == .identity { return }
+        let count = channel0.count
+        channel0.withUnsafeMutableBufferPointer { b0 in
+            channel1.withUnsafeMutableBufferPointer { b1 in
+                channel2.withUnsafeMutableBufferPointer { b2 in
+                    guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress else { return }
+                    let r0 = UnsafeMutableRawPointer(p0)
+                    let r1 = UnsafeMutableRawPointer(p1)
+                    let r2 = UnsafeMutableRawPointer(p2)
+                    var i = 0
+                    while i + 8 <= count {
+                        let off = i &* 4
+                        let vr = r0.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                        let vg = r1.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                        let vb = r2.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                        let co  = vr &- vb
+                        let tmp = vb &+ (co &>> 1)
+                        let cg  = vg &- tmp
+                        let y   = tmp &+ (cg &>> 1)
+                        r0.storeBytes(of: y, toByteOffset: off, as: SIMD8<Int32>.self)
+                        r1.storeBytes(of: co, toByteOffset: off, as: SIMD8<Int32>.self)
+                        r2.storeBytes(of: cg, toByteOffset: off, as: SIMD8<Int32>.self)
+                        i &+= 8
+                    }
+                    while i < count {
+                        let (a, b, c) = forwardPixel(variant, r: p0[i], g: p1[i], b: p2[i])
+                        p0[i] = a; p1[i] = b; p2[i] = c
+                        i &+= 1
+                    }
+                }
+            }
         }
     }
 
@@ -122,13 +146,37 @@ package enum RCT {
             channel0.count == channel1.count && channel1.count == channel2.count,
             "RCT requires channels of equal length"
         )
-        for i in 0..<channel0.count {
-            let (a, b, c) = inversePixel(
-                variant, y: channel0[i], co: channel1[i], cg: channel2[i]
-            )
-            channel0[i] = a
-            channel1[i] = b
-            channel2[i] = c
+        if variant == .identity { return }
+        let count = channel0.count
+        channel0.withUnsafeMutableBufferPointer { b0 in
+            channel1.withUnsafeMutableBufferPointer { b1 in
+                channel2.withUnsafeMutableBufferPointer { b2 in
+                    guard let p0 = b0.baseAddress, let p1 = b1.baseAddress, let p2 = b2.baseAddress else { return }
+                    let r0 = UnsafeMutableRawPointer(p0)
+                    let r1 = UnsafeMutableRawPointer(p1)
+                    let r2 = UnsafeMutableRawPointer(p2)
+                    var i = 0
+                    while i + 8 <= count {
+                        let off = i &* 4
+                        let vy  = r0.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                        let vco = r1.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                        let vcg = r2.loadUnaligned(fromByteOffset: off, as: SIMD8<Int32>.self)
+                        let tmp = vy &- (vcg &>> 1)
+                        let g   = vcg &+ tmp
+                        let b   = tmp &- (vco &>> 1)
+                        let r   = b &+ vco
+                        r0.storeBytes(of: r, toByteOffset: off, as: SIMD8<Int32>.self)
+                        r1.storeBytes(of: g, toByteOffset: off, as: SIMD8<Int32>.self)
+                        r2.storeBytes(of: b, toByteOffset: off, as: SIMD8<Int32>.self)
+                        i &+= 8
+                    }
+                    while i < count {
+                        let (a, b, c) = inversePixel(variant, y: p0[i], co: p1[i], cg: p2[i])
+                        p0[i] = a; p1[i] = b; p2[i] = c
+                        i &+= 1
+                    }
+                }
+            }
         }
     }
 }

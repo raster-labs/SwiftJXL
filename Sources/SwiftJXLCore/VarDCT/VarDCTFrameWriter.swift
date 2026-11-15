@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 Raster Images Private Limited
 
+import Dispatch
 import Foundation
 
 /// Forward ISO/IEC 18181-1 VarDCT frame bitstream writer (`LfGlobal`, `LfGroup`, `HfGlobal`, `HfPass`).
@@ -304,33 +305,119 @@ struct VarDCTFrameWriter {
         }
 
         // --- 3d. HfPasses ---
-        for groupIndex in 0..<numGroups {
-            try budget.checkpoint()
-            let gx = groupIndex % groupsX
-            let gy = groupIndex / groupsX
-            let bx0 = gx * Self.acGroupBlocks
-            let by0 = gy * Self.acGroupBlocks
-            let groupBlocksW = min(Self.acGroupBlocks, blocksX - bx0)
-            let groupBlocksH = min(Self.acGroupBlocks, blocksY - by0)
+        let alphaInPass = coefficients.hasAlpha && !alphaIsGlobal
+        if !singleSection && !alphaInPass && budget.maximumWorkers > 1 && numGroups >= 4 {
+            let passWorkers = min(8, min(budget.maximumWorkers, numGroups))
+            let encodingWork = ScalarEncodingWork.current
+            let immutableCoeffs = coefficients
+            let immutableBudget = budget
+            let immutableTransformAt = transformAtBlock
+            let immutableOrders = bucketOrders
+            let immutableACWriter = acWriter
+            let groupsPerWorker = (numGroups + passWorkers - 1) / passWorkers
+            let resultsMutex = PackageMutex<([Data?], (any Error)?)>((Array(repeating: nil, count: numGroups), nil))
 
-            try writeHfPass(
-                to: &currentWriter,
-                gx: gx,
-                gy: gy,
-                bx0: bx0,
-                by0: by0,
-                groupBlocksW: groupBlocksW,
-                groupBlocksH: groupBlocksH,
-                transformAtBlock: transformAtBlock,
-                bucketOrders: bucketOrders,
-                acWriter: acWriter,
-                modularWriter: modularWriter,
-                alphaInPass: coefficients.hasAlpha && !alphaIsGlobal
-            )
-            currentWriter.alignToByte()
-            sectionData.append(currentWriter.finishToData())
-            if groupIndex + 1 < numGroups {
-                currentWriter = BitWriter()
+            DispatchQueue.concurrentPerform(iterations: passWorkers) { w in
+                let gStart = w * groupsPerWorker
+                let gEnd = min(numGroups, gStart + groupsPerWorker)
+                guard gStart < gEnd else { return }
+                let runChunk = { () throws -> [(Int, Data)] in
+                    var localOut: [(Int, Data)] = []
+                    localOut.reserveCapacity(gEnd - gStart)
+                    for groupIndex in gStart..<gEnd {
+                        try immutableBudget.checkpoint()
+                        let gx = groupIndex % groupsX
+                        let gy = groupIndex / groupsX
+                        let bx0 = gx * Self.acGroupBlocks
+                        let by0 = gy * Self.acGroupBlocks
+                        let groupBlocksW = min(Self.acGroupBlocks, blocksX - bx0)
+                        let groupBlocksH = min(Self.acGroupBlocks, blocksY - by0)
+                        var gw = BitWriter()
+                        for ly in 0..<groupBlocksH {
+                            try immutableBudget.checkpoint()
+                            let by = by0 + ly
+                            for lx in 0..<groupBlocksW {
+                                let bx = bx0 + lx
+                                let tIndex = immutableTransformAt[by * blocksX + bx]
+                                if tIndex < 0 { continue }
+                                let transform = immutableCoeffs.transforms[tIndex]
+                                let covered = transform.coveredCells
+                                let coeffCount = covered * 64
+                                let baseOffset = transform.coefficientOffset
+                                let order = immutableOrders[transform.orderBucket]!
+                                for c in [1, 0, 2] {
+                                    let plane = immutableCoeffs.ac[c]
+                                    var nonZeros = 0
+                                    for k in covered..<coeffCount {
+                                        if plane[baseOffset + order[k]] != 0 { nonZeros += 1 }
+                                    }
+                                    try immutableACWriter.writeToken(context: 0, value: UInt32(nonZeros), to: &gw)
+                                    if nonZeros == 0 { continue }
+                                    var remaining = nonZeros
+                                    for k in covered..<coeffCount {
+                                        if remaining == 0 { break }
+                                        let v = plane[baseOffset + order[k]]
+                                        try immutableACWriter.writeToken(context: 0, value: ZigZag.pack(v), to: &gw)
+                                        if v != 0 { remaining -= 1 }
+                                    }
+                                }
+                            }
+                        }
+                        gw.alignToByte()
+                        localOut.append((groupIndex, gw.finishToData()))
+                    }
+                    return localOut
+                }
+                do {
+                    let localOut: [(Int, Data)]
+                    if let encodingWork {
+                        localOut = try ScalarEncodingWork.$current.withValue(encodingWork) { try runChunk() }
+                    } else {
+                        localOut = try runChunk()
+                    }
+                    resultsMutex.withLock { state in
+                        for (idx, data) in localOut { state.0[idx] = data }
+                    }
+                } catch {
+                    resultsMutex.withLock { state in
+                        if state.1 == nil { state.1 = error }
+                    }
+                }
+            }
+            let (passSections, passErr) = resultsMutex.withLock { $0 }
+            if let passErr { throw passErr }
+            for groupIndex in 0..<numGroups {
+                sectionData.append(passSections[groupIndex]!)
+            }
+        } else {
+            for groupIndex in 0..<numGroups {
+                try budget.checkpoint()
+                let gx = groupIndex % groupsX
+                let gy = groupIndex / groupsX
+                let bx0 = gx * Self.acGroupBlocks
+                let by0 = gy * Self.acGroupBlocks
+                let groupBlocksW = min(Self.acGroupBlocks, blocksX - bx0)
+                let groupBlocksH = min(Self.acGroupBlocks, blocksY - by0)
+
+                try writeHfPass(
+                    to: &currentWriter,
+                    gx: gx,
+                    gy: gy,
+                    bx0: bx0,
+                    by0: by0,
+                    groupBlocksW: groupBlocksW,
+                    groupBlocksH: groupBlocksH,
+                    transformAtBlock: transformAtBlock,
+                    bucketOrders: bucketOrders,
+                    acWriter: acWriter,
+                    modularWriter: modularWriter,
+                    alphaInPass: alphaInPass
+                )
+                currentWriter.alignToByte()
+                sectionData.append(currentWriter.finishToData())
+                if groupIndex + 1 < numGroups {
+                    currentWriter = BitWriter()
+                }
             }
         }
 
