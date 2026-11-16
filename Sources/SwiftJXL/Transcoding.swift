@@ -70,21 +70,28 @@ public struct Transcoder: Sendable {
     /// Synchronous zero-hop native JPEG <-> JPEG XL transcode entry point.
     public func transcodeSynchronously(_ data: Data, to target: TranscodeTarget,
                                        options: TranscodeOptions = .init()) throws -> EncodedImage {
-        try transcodeImpl(data, to: target, options: options)
+        try transcodeImpl(data, to: target, options: options, cancellation: nil)
     }
 
     /// Runs on the generic executor; retains compressed input until return.
     @concurrent
     public func transcode(_ data: Data, to target: TranscodeTarget,
                           options: TranscodeOptions = .init()) async throws -> EncodedImage {
-        try transcodeImpl(data, to: target, options: options)
+        let cancellation = ScalarOperationCancellation()
+        return try await withTaskCancellationHandler {
+            try transcodeImpl(data, to: target, options: options, cancellation: cancellation)
+        } onCancel: {
+            cancellation.cancel()
+        }
     }
 
     private func transcodeImpl(_ data: Data, to target: TranscodeTarget,
-                               options: TranscodeOptions) throws -> EncodedImage {
+                               options: TranscodeOptions,
+                               cancellation: ScalarOperationCancellation?) throws -> EncodedImage {
         let start = ContinuousClock.now
         do {
             try Task.checkCancellation()
+            try cancellation?.checkpoint()
             let limits = options.resourceLimits
             guard data.count <= limits.maximumCompressedBytes, data.count <= limits.maximumMemoryBytes else {
                 throw CodecError(.resourceLimitExceeded, "Compressed input exceeds the admission budget.")
@@ -100,7 +107,8 @@ public struct Transcoder: Sendable {
                 memory: limits.maximumMemoryBytes, metadata: limits.maximumMetadataBytes,
                 dimension: limits.maximumDimension, pixels: limits.maximumPixels, nesting: limits.maximumNestingDepth, icc: limits.maximumICCBytes,
                 deadline: start.advanced(by: .seconds(min(limits.deadlineSeconds, 31_536_000))),
-                maximumWorkers: limits.maximumWorkers)
+                maximumWorkers: limits.maximumWorkers,
+                cancellation: cancellation)
             options.progress?(try ProgressUpdate(phase: .processing, completedUnits: 0, totalUnits: 1))
             try policy.checkpoint()
             let result: JPEGNativeResult

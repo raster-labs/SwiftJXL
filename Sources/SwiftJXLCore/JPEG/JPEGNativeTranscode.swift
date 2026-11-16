@@ -8,9 +8,11 @@ package struct JPEGNativePolicy: Sendable {
     package let metadata: Int, dimension: Int, pixels: Int, nesting: Int, icc: Int
     package let deadline: ContinuousClock.Instant
     package let maximumWorkers: Int
+    package let cancellation: ScalarOperationCancellation?
     package init(compressed: Int, coefficients: Int, workspace: Int, memory: Int,
                  metadata: Int, dimension: Int, pixels: Int, nesting: Int, icc: Int = 4 * 1024 * 1024,
-                 deadline: ContinuousClock.Instant, maximumWorkers: Int = 1) throws {
+                 deadline: ContinuousClock.Instant, maximumWorkers: Int = 1,
+                 cancellation: ScalarOperationCancellation? = nil) throws {
         guard [compressed, coefficients, workspace, memory, metadata, dimension, pixels, nesting, icc, maximumWorkers].allSatisfy({ $0 > 0 }) else {
             throw JPEGEntropyError.resourceLimit
         }
@@ -20,9 +22,11 @@ package struct JPEGNativePolicy: Sendable {
         self.dimension = min(dimension, 2048); self.pixels = min(pixels, 2048 * 2048)
         self.nesting = min(nesting, 32); self.icc = min(icc, 4 * 1024 * 1024); self.deadline = deadline
         self.maximumWorkers = min(maximumWorkers, 8)
+        self.cancellation = cancellation
     }
     package func checkpoint() throws {
         try Task.checkCancellation()
+        try cancellation?.checkpoint()
         guard ContinuousClock.now < deadline else { throw JPEGEntropyError.resourceLimit }
     }
 }
@@ -82,7 +86,8 @@ private struct NativeOperation {
         try JPEGBridgePolicy(maximumCoefficientBytes: policy.coefficients, maximumMemoryBytes: available(),
             maximumDimension: policy.dimension, maximumPixels: policy.pixels, maximumNestingDepth: policy.nesting,
             maximumICCBytes: min(policy.icc, max(1, remainingMetadataBytes ?? policy.metadata)),
-            deadline: policy.deadline, maximumWorkers: policy.maximumWorkers)
+            deadline: policy.deadline, maximumWorkers: policy.maximumWorkers,
+            cancellation: policy.cancellation)
     }
     func dimensions(_ width: Int, _ height: Int) throws {
         guard width > 0, height > 0, width <= policy.dimension, height <= policy.dimension,

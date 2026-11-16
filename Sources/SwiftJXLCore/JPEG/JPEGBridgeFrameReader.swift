@@ -102,7 +102,9 @@ package enum JPEGBridgeFrameReader {
             maximumMemoryBytes: policy.maximumMemoryBytes,
             maximumDecodedBytes: policy.maximumCoefficientBytes,
             maximumCompressedBytes: max(1, data.count),
-            deadline: policy.deadline
+            deadline: policy.deadline,
+            maximumWorkers: policy.maximumWorkers,
+            cancellation: policy.cancellation
         )
         try budget.reserveWorkspace(
             ScalarOperationBudget.sum(

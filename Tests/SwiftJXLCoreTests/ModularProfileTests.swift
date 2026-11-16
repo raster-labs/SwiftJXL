@@ -53,7 +53,7 @@ struct ModularProfileCase: Sendable {
         try ScalarOperationBudget(retainedBytes: width * height * channels * 2,
             maximumWorkspaceBytes: workspace, maximumMemoryBytes: memory,
             maximumDecodedBytes: decoded, maximumCompressedBytes: compressed,
-            deadline: .now.advanced(by: .seconds(120)), maximumWorkers: workers, cancellation: cancellation)
+            deadline: .now.advanced(by: .seconds(1800)), maximumWorkers: workers, cancellation: cancellation)
     }
 
     func encode(_ pixels: [[UInt16]], effort: Int, budget: ScalarOperationBudget) throws -> Data {

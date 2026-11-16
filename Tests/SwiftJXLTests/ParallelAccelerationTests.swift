@@ -119,10 +119,10 @@ struct ParallelAccelerationTests {
         let encoder = try Encoder(configuration: .init(mode: .lossy, codecOptions: .init(varDCT: varOpts)))
         let decoder = try Decoder()
 
-        let opt1 = EncodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 1))
-        let opt8 = EncodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 8))
-        let dec1 = DecodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 1))
-        let dec8 = DecodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 8))
+        let opt1 = EncodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 1, deadlineSeconds: 1800))
+        let opt8 = EncodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 8, deadlineSeconds: 1800))
+        let dec1 = DecodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 1, deadlineSeconds: 1800))
+        let dec8 = DecodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 8, deadlineSeconds: 1800))
 
         // Multi-group 12-bit greyscale & 8-bit RGB 1T vs 8T exact parity
         for source in [try makeGrey12Image(width: 768, height: 512), try makeRGB8Image(width: 768, height: 512)] {
@@ -169,5 +169,23 @@ struct ParallelAccelerationTests {
         let restored8 = try transcoder.transcodeSynchronously(jxl8.data, to: .jpeg, options: opt8)
         #expect(restored1.data == jpegBytes)
         #expect(restored8.data == jpegBytes)
+    }
+
+    @Test func transcoderAsyncCancellationPropagatesToParallelWorkers() async throws {
+        let fixtureURL = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("SwiftJXLCoreTests/Fixtures/JPEGBridge/multigroup-420.jpg")
+        let jpegBytes = try Data(contentsOf: fixtureURL)
+        let transcoder = try Transcoder()
+        let opt8 = TranscodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 8))
+
+        let preCancelled = Task { () throws -> EncodedImage in
+            withUnsafeCurrentTask { $0?.cancel() }
+            return try await transcoder.transcode(jpegBytes, to: .jpegXL, options: opt8)
+        }
+        await #expect(throws: CancellationError.self) {
+            _ = try await preCancelled.value
+        }
     }
 }

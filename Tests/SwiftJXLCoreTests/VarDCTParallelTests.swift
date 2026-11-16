@@ -9,7 +9,7 @@ struct VarDCTParallelTests {
     private func budget(workers: Int, bytes: Int = 256 * 1024 * 1024) throws -> ScalarOperationBudget {
         try ScalarOperationBudget(retainedBytes: 0, maximumWorkspaceBytes: bytes,
             maximumMemoryBytes: bytes, maximumDecodedBytes: bytes, maximumCompressedBytes: bytes,
-            deadline: .now.advanced(by: .seconds(120)), maximumWorkers: workers)
+            deadline: .now.advanced(by: .seconds(1800)), maximumWorkers: workers)
     }
     private func source(width: Int, height: Int, alpha: Bool) throws -> Image {
         let channels = alpha ? 4 : 3

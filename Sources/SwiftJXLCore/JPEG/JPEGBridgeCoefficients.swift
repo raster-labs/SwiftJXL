@@ -13,6 +13,7 @@ package struct JPEGBridgePolicy: Sendable {
     package let maximumICCBytes: Int
     package let deadline: ContinuousClock.Instant
     package let maximumWorkers: Int
+    package let cancellation: ScalarOperationCancellation?
     package let checkpointClosure: @Sendable () throws -> Void
 
     package init(
@@ -24,6 +25,7 @@ package struct JPEGBridgePolicy: Sendable {
         maximumICCBytes: Int = 4 * 1024 * 1024,
         deadline: ContinuousClock.Instant = .now.advanced(by: .seconds(10)),
         maximumWorkers: Int = 1,
+        cancellation: ScalarOperationCancellation? = nil,
         checkpoint: @escaping @Sendable () throws -> Void = {}
     ) throws {
         guard maximumCoefficientBytes > 0,
@@ -43,11 +45,13 @@ package struct JPEGBridgePolicy: Sendable {
         self.maximumICCBytes = maximumICCBytes
         self.deadline = deadline
         self.maximumWorkers = min(maximumWorkers, 8)
+        self.cancellation = cancellation
         self.checkpointClosure = checkpoint
     }
 
     package func checkpoint() throws {
         try Task.checkCancellation()
+        try cancellation?.checkpoint()
         guard ContinuousClock.now < deadline else {
             throw JPEGEntropyError.resourceLimit
         }

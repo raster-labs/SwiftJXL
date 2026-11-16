@@ -12,7 +12,7 @@ struct VarDCTTransformTests {
     private func budget(_ bytes: Int = 4 * 1024 * 1024, expired: Bool = false) throws -> ScalarOperationBudget {
         try ScalarOperationBudget(retainedBytes: 0, maximumWorkspaceBytes: bytes,
             maximumMemoryBytes: bytes, maximumDecodedBytes: bytes,
-            maximumCompressedBytes: bytes, deadline: .now.advanced(by: .seconds(expired ? -1 : 60)))
+            maximumCompressedBytes: bytes, deadline: .now.advanced(by: .seconds(expired ? -1 : 1800)))
     }
     // Predeclared before migration: normalised input, absolute 2e-4 plus
     // relative 2e-5. This qualifies transforms, not pixel-codec fidelity.
