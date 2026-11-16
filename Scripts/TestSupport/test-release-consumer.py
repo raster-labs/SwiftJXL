@@ -15,7 +15,7 @@ spec.loader.exec_module(gate)
 class ReleaseConsumerGateTests(unittest.TestCase):
     def setUp(self):
         self.revision = "a" * 40
-        self.version = "2.0.1"
+        self.version = "2.1.0"
         self.url = "file:///private/rehearsal/SwiftJXL.git"
         self.pin = {"identity": "swiftjxl", "kind": "localSourceControl", "location": "/private/rehearsal/SwiftJXL.git",
                     "state": {"revision": self.revision, "version": self.version}}
@@ -32,7 +32,7 @@ class ReleaseConsumerGateTests(unittest.TestCase):
             gate.validate_lockfile({"pins": [pin]}, self.revision, None, self.url)
 
     def test_wrong_revision_or_version_is_rejected(self):
-        for key, value in [("revision", "b" * 40), ("version", "2.1.0")]:
+        for key, value in [("revision", "b" * 40), ("version", "2.2.0")]:
             pin = copy.deepcopy(self.pin)
             pin["state"][key] = value
             with self.subTest(key=key), self.assertRaises(RuntimeError):

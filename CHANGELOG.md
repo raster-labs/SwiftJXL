@@ -1,5 +1,14 @@
 # Change log
 
+## SwiftJXL 2.1.0 — 2026-11-16
+
+Minor release of SwiftJXL (`2.1.0`, tagged `v2.1.0`), adding SIMD/Accelerate (`vDSP`) and bounded multi-worker acceleration across Modular, VarDCT, and native `jbrd` JPEG reconstruction while preserving bit-exact `1T == 8T` determinism and MIT single-licence provenance (shared contract `0.10.0`, Swift `6.2` tools minimum / Swift `6.4` qualified in Swift `6` language mode, Apple OS `26.0` deployment floors):
+
+- Promote `VERSION`, `swiftjxl-cli` (`Sources/SwiftJXLCLI/main.swift`), the section 1 manual (`ManPages/swiftjxl-cli.1`), and `Documentation/Engineering/Release/release-gates.json` to `2.1.0` (`v2.1.0`), and record release qualification in [Documentation/RELEASE-v2.1.0.md](Documentation/RELEASE-v2.1.0.md).
+- Accelerate Modular, VarDCT (`> 4 MiP`), and native `jbrd` JPEG reconstruction paths with SIMD / Apple Accelerate (`vDSP`) kernels and bounded parallel group coding (`daffc2c`).
+- Parallelise VarDCT single-cell and hierarchical strategy analysis with per-worker allocation-free transform scratch, explicit parallel AC histogram workspace charging, worker-count audit reporting, and `1T == 8T` single-cell / large-grid bitstream parity (`b52b9d2`, `307b7c9`).
+- Eliminate Brotli static dictionary TSan stack-frame blowup, honour bridge transcoder cooperative cancellation, and harden contended suite deadlines (`6dadd52`).
+
 ## SwiftJXL 2.0.1 — 2026-11-11
 
 Patch release of SwiftJXL (`2.0.1`, tagged `v2.0.1`), publishing the 100% clean-room `ISO/IEC 18181` & `RFC 7932` Swift codec implementation, hot-path optimisations, and **MIT** relicensing on preserved release branch `codex/release-2.0.1` while keeping published tag `v2.0.0` immutable (shared contract `0.10.0`, Swift `6.2` tools minimum / Swift `6.4` qualified in Swift `6` language mode, Apple OS `26.0` deployment floors):
