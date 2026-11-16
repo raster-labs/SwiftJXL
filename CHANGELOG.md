@@ -1,5 +1,13 @@
 # Change log
 
+## SwiftJXL 2.1.1 — 2026-11-16
+
+Patch release of SwiftJXL (`2.1.1`, tagged `v2.1.1`), restoring `Xcode 26.6` (`Swift 6.3.3`) Debug, ASan, TSan, and Apple OS `26.0` SDK compilation and `validate-brotli-decoder.py` qualification while keeping published tag `v2.1.0` immutable:
+
+- Decompose chained `SIMD4<Double>` / `Double` operator expressions in `Sources/SwiftJXLCore/VarDCT/ScaledDCT.swift` and `Sources/SwiftJXLCore/VarDCT/VarDCTAFV.swift` with identical IEEE-754 evaluation order so `Xcode 26.6` (`Swift 6.3.3`) Debug, sanitizer, and Apple OS `26.0` SDK cross-builds type-check cleanly.
+- Update `Scripts/validate-brotli-decoder.py` to decode `BrotliStaticDictionary.base64Chunks` when verifying the embedded 122,784-byte RFC 7932 dictionary against `libbrotlicommon`.
+- Promote `VERSION`, `swiftjxl-cli` (`Sources/SwiftJXLCLI/main.swift`), `ManPages/swiftjxl-cli.1`, and `Documentation/Engineering/Release/release-gates.json` to `2.1.1` (`v2.1.1`), and record release qualification in [Documentation/RELEASE-v2.1.1.md](Documentation/RELEASE-v2.1.1.md).
+
 ## SwiftJXL 2.1.0 — 2026-11-16
 
 Minor release of SwiftJXL (`2.1.0`, tagged `v2.1.0`), adding SIMD/Accelerate (`vDSP`) and bounded multi-worker acceleration across Modular, VarDCT, and native `jbrd` JPEG reconstruction while preserving bit-exact `1T == 8T` determinism and MIT single-licence provenance (shared contract `0.10.0`, Swift `6.2` tools minimum / Swift `6.4` qualified in Swift `6` language mode, Apple OS `26.0` deployment floors):

@@ -233,7 +233,10 @@ package enum VarDCTAFV {
         c8 = Double(corner[8]); c9 = Double(corner[9]); c10 = Double(corner[10]); c11 = Double(corner[11])
         c12 = Double(corner[12]); c13 = Double(corner[13]); c14 = Double(corner[14]); c15 = Double(corner[15])
 
-        let exactDC = (((((((((((((((c0 + c1) + c2) + c3) + c4) + c5) + c6) + c7) + c8) + c9) + c10) + c11) + c12) + c13) + c14) + c15)
+        let dc0: Double = ((c0 + c1) + c2) + c3
+        let dc1: Double = (((dc0 + c4) + c5) + c6) + c7
+        let dc2: Double = (((dc1 + c8) + c9) + c10) + c11
+        let exactDC: Double = (((dc2 + c12) + c13) + c14) + c15
         output[0] = Float(exactDC * 0.0625)
 
         flatCornerBasis.withUnsafeBufferPointer { basisBuf in

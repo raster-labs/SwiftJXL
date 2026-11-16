@@ -474,10 +474,14 @@ package struct ScaledDCT: Sendable {
                 for u in 0..<8 {
                     let w = mat + (u &* 8)
                     let w0 = w[0], w1 = w[1], w2 = w[2], w3 = w[3], w4 = w[4], w5 = w[5], w6 = w[6], w7 = w[7]
-                    inter[ro0 &+ u] = ((((((d00 * w0 + d01 * w1) + d02 * w2) + d03 * w3) + d04 * w4) + d05 * w5) + d06 * w6) + d07 * w7
-                    inter[ro1 &+ u] = ((((((d10 * w0 + d11 * w1) + d12 * w2) + d13 * w3) + d14 * w4) + d15 * w5) + d16 * w6) + d17 * w7
-                    inter[ro2 &+ u] = ((((((d20 * w0 + d21 * w1) + d22 * w2) + d23 * w3) + d24 * w4) + d25 * w5) + d26 * w6) + d27 * w7
-                    inter[ro3 &+ u] = ((((((d30 * w0 + d31 * w1) + d32 * w2) + d33 * w3) + d34 * w4) + d35 * w5) + d36 * w6) + d37 * w7
+                    let s0Lo: Double = ((d00 * w0 + d01 * w1) + d02 * w2) + d03 * w3
+                    inter[ro0 &+ u] = (((s0Lo + d04 * w4) + d05 * w5) + d06 * w6) + d07 * w7
+                    let s1Lo: Double = ((d10 * w0 + d11 * w1) + d12 * w2) + d13 * w3
+                    inter[ro1 &+ u] = (((s1Lo + d14 * w4) + d15 * w5) + d16 * w6) + d17 * w7
+                    let s2Lo: Double = ((d20 * w0 + d21 * w1) + d22 * w2) + d23 * w3
+                    inter[ro2 &+ u] = (((s2Lo + d24 * w4) + d25 * w5) + d26 * w6) + d27 * w7
+                    let s3Lo: Double = ((d30 * w0 + d31 * w1) + d32 * w2) + d33 * w3
+                    inter[ro3 &+ u] = (((s3Lo + d34 * w4) + d35 * w5) + d36 * w6) + d37 * w7
                 }
             }
             let interRaw = UnsafeRawPointer(inter)
@@ -492,7 +496,10 @@ package struct ScaledDCT: Sendable {
                 let r7 = interRaw.loadUnaligned(fromByteOffset: (7 &* 8 &+ x) &* 8, as: SIMD4<Double>.self)
                 for v in 0..<8 {
                     let w = mat + (v &* 8)
-                    let sVec = ((((((r0 * w[0] + r1 * w[1]) + r2 * w[2]) + r3 * w[3]) + r4 * w[4]) + r5 * w[5]) + r6 * w[6]) + r7 * w[7]
+                    let w0 = w[0], w1 = w[1], w2 = w[2], w3 = w[3]
+                    let w4 = w[4], w5 = w[5], w6 = w[6], w7 = w[7]
+                    let sVecLo: SIMD4<Double> = ((r0 * w0 + r1 * w1) + r2 * w2) + r3 * w3
+                    let sVec: SIMD4<Double> = (((sVecLo + r4 * w4) + r5 * w5) + r6 * w6) + r7 * w7
                     outTransposed[(x &+ 0) &* 8 &+ v] = Float(sVec[0])
                     outTransposed[(x &+ 1) &* 8 &+ v] = Float(sVec[1])
                     outTransposed[(x &+ 2) &* 8 &+ v] = Float(sVec[2])
