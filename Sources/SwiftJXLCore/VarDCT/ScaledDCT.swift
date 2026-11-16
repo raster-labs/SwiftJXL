@@ -58,6 +58,17 @@ package struct ScaledDCT: Sendable {
         package func withValues<R>(_ body: (UnsafeBufferPointer<Float>) throws -> R) rethrows -> R {
             try values.withUnsafeBufferPointer(body)
         }
+
+        @inline(__always)
+        package mutating func withFastPointers<R>(
+            _ body: (UnsafeMutablePointer<Double>, UnsafeMutablePointer<Float>) throws -> R
+        ) rethrows -> R {
+            try intermediate.withUnsafeMutableBufferPointer { interBuf in
+                try values.withUnsafeMutableBufferPointer { valBuf in
+                    try body(interBuf.baseAddress!, valBuf.baseAddress!)
+                }
+            }
+        }
     }
 
     package static let supportedAxisSizes: Set<Int> = [2, 4, 8, 16, 32, 64]
@@ -326,6 +337,167 @@ package struct ScaledDCT: Sendable {
         } else {
             for i in 0..<count {
                 workspace.values[i] = workspace.staging[i]
+            }
+        }
+    }
+
+    /// Fast internal separable DCT over pre-validated finite input with caller-managed checkpoints.
+    /// Produces IEEE-754 bit-identical output to `apply(_:workspace:)`.
+    @inline(__always)
+    package func applyFast(
+        _ inBase: UnsafePointer<Float>,
+        into out: UnsafeMutablePointer<Float>,
+        inter: UnsafeMutablePointer<Double>
+    ) {
+        let r = rows
+        let c = columns
+        columnMatrix.withUnsafeBufferPointer { colMatBuf in
+            rowMatrix.withUnsafeBufferPointer { rowMatBuf in
+                let colMat = colMatBuf.baseAddress!
+                let rowMat = rowMatBuf.baseAddress!
+
+                if r >= 4 {
+                    var y = 0
+                    while y + 4 <= r {
+                        let ro0 = y &* c
+                        let ro1 = ro0 &+ c
+                        let ro2 = ro1 &+ c
+                        let ro3 = ro2 &+ c
+                        for u in 0..<c {
+                            let wOffset = u &* c
+                            var sum0: Double = 0
+                            var sum1: Double = 0
+                            var sum2: Double = 0
+                            var sum3: Double = 0
+                            for x in 0..<c {
+                                let w = colMat[wOffset &+ x]
+                                sum0 += Double(inBase[ro0 &+ x]) * w
+                                sum1 += Double(inBase[ro1 &+ x]) * w
+                                sum2 += Double(inBase[ro2 &+ x]) * w
+                                sum3 += Double(inBase[ro3 &+ x]) * w
+                            }
+                            inter[ro0 &+ u] = sum0
+                            inter[ro1 &+ u] = sum1
+                            inter[ro2 &+ u] = sum2
+                            inter[ro3 &+ u] = sum3
+                        }
+                        y &+= 4
+                    }
+                    while y < r {
+                        let rowOffset = y &* c
+                        for u in 0..<c {
+                            let wOffset = u &* c
+                            var sum: Double = 0
+                            for x in 0..<c {
+                                sum += Double(inBase[rowOffset &+ x]) * colMat[wOffset &+ x]
+                            }
+                            inter[rowOffset &+ u] = sum
+                        }
+                        y &+= 1
+                    }
+                } else {
+                    for y in 0..<r {
+                        let rowOffset = y &* c
+                        for u in 0..<c {
+                            let wOffset = u &* c
+                            var sum: Double = 0
+                            for x in 0..<c {
+                                sum += Double(inBase[rowOffset &+ x]) * colMat[wOffset &+ x]
+                            }
+                            inter[rowOffset &+ u] = sum
+                        }
+                    }
+                }
+
+                if c >= 4 {
+                    let interRaw = UnsafeRawPointer(inter)
+                    var x = 0
+                    while x < c {
+                        for v in 0..<r {
+                            let wOffset = v &* r
+                            var sVec = SIMD4<Double>.zero
+                            for y in 0..<r {
+                                let w = rowMat[wOffset &+ y]
+                                let rowVec = interRaw.loadUnaligned(
+                                    fromByteOffset: (y &* c &+ x) &* 8,
+                                    as: SIMD4<Double>.self
+                                )
+                                sVec += rowVec * w
+                            }
+                            let dstBase = v &* c &+ x
+                            out[dstBase] = Float(sVec[0])
+                            out[dstBase &+ 1] = Float(sVec[1])
+                            out[dstBase &+ 2] = Float(sVec[2])
+                            out[dstBase &+ 3] = Float(sVec[3])
+                        }
+                        x &+= 4
+                    }
+                } else {
+                    for x in 0..<c {
+                        for v in 0..<r {
+                            let wOffset = v &* r
+                            var sum: Double = 0
+                            for y in 0..<r {
+                                sum += inter[y &* c &+ x] * rowMat[wOffset &+ y]
+                            }
+                            out[v &* c &+ x] = Float(sum)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /// Specialized 8x8 forward DCT writing directly in transposed `[u * 8 + v]` layout (`id == 0`).
+    /// Bit-identical to `apply` + transpose.
+    @inline(__always)
+    package func applyFastTransposed8x8(
+        _ inBase: UnsafePointer<Float>,
+        into outTransposed: UnsafeMutablePointer<Float>,
+        inter: UnsafeMutablePointer<Double>
+    ) {
+        rowMatrix.withUnsafeBufferPointer { matBuf in
+            let mat = matBuf.baseAddress!
+            for yGrp in stride(from: 0, to: 8, by: 4) {
+                let ro0 = yGrp &* 8
+                let ro1 = ro0 &+ 8
+                let ro2 = ro1 &+ 8
+                let ro3 = ro2 &+ 8
+                let d00 = Double(inBase[ro0]), d01 = Double(inBase[ro0 &+ 1]), d02 = Double(inBase[ro0 &+ 2]), d03 = Double(inBase[ro0 &+ 3])
+                let d04 = Double(inBase[ro0 &+ 4]), d05 = Double(inBase[ro0 &+ 5]), d06 = Double(inBase[ro0 &+ 6]), d07 = Double(inBase[ro0 &+ 7])
+                let d10 = Double(inBase[ro1]), d11 = Double(inBase[ro1 &+ 1]), d12 = Double(inBase[ro1 &+ 2]), d13 = Double(inBase[ro1 &+ 3])
+                let d14 = Double(inBase[ro1 &+ 4]), d15 = Double(inBase[ro1 &+ 5]), d16 = Double(inBase[ro1 &+ 6]), d17 = Double(inBase[ro1 &+ 7])
+                let d20 = Double(inBase[ro2]), d21 = Double(inBase[ro2 &+ 1]), d22 = Double(inBase[ro2 &+ 2]), d23 = Double(inBase[ro2 &+ 3])
+                let d24 = Double(inBase[ro2 &+ 4]), d25 = Double(inBase[ro2 &+ 5]), d26 = Double(inBase[ro2 &+ 6]), d27 = Double(inBase[ro2 &+ 7])
+                let d30 = Double(inBase[ro3]), d31 = Double(inBase[ro3 &+ 1]), d32 = Double(inBase[ro3 &+ 2]), d33 = Double(inBase[ro3 &+ 3])
+                let d34 = Double(inBase[ro3 &+ 4]), d35 = Double(inBase[ro3 &+ 5]), d36 = Double(inBase[ro3 &+ 6]), d37 = Double(inBase[ro3 &+ 7])
+                for u in 0..<8 {
+                    let w = mat + (u &* 8)
+                    let w0 = w[0], w1 = w[1], w2 = w[2], w3 = w[3], w4 = w[4], w5 = w[5], w6 = w[6], w7 = w[7]
+                    inter[ro0 &+ u] = ((((((d00 * w0 + d01 * w1) + d02 * w2) + d03 * w3) + d04 * w4) + d05 * w5) + d06 * w6) + d07 * w7
+                    inter[ro1 &+ u] = ((((((d10 * w0 + d11 * w1) + d12 * w2) + d13 * w3) + d14 * w4) + d15 * w5) + d16 * w6) + d17 * w7
+                    inter[ro2 &+ u] = ((((((d20 * w0 + d21 * w1) + d22 * w2) + d23 * w3) + d24 * w4) + d25 * w5) + d26 * w6) + d27 * w7
+                    inter[ro3 &+ u] = ((((((d30 * w0 + d31 * w1) + d32 * w2) + d33 * w3) + d34 * w4) + d35 * w5) + d36 * w6) + d37 * w7
+                }
+            }
+            let interRaw = UnsafeRawPointer(inter)
+            for x in [0, 4] {
+                let r0 = interRaw.loadUnaligned(fromByteOffset: (0 &* 8 &+ x) &* 8, as: SIMD4<Double>.self)
+                let r1 = interRaw.loadUnaligned(fromByteOffset: (1 &* 8 &+ x) &* 8, as: SIMD4<Double>.self)
+                let r2 = interRaw.loadUnaligned(fromByteOffset: (2 &* 8 &+ x) &* 8, as: SIMD4<Double>.self)
+                let r3 = interRaw.loadUnaligned(fromByteOffset: (3 &* 8 &+ x) &* 8, as: SIMD4<Double>.self)
+                let r4 = interRaw.loadUnaligned(fromByteOffset: (4 &* 8 &+ x) &* 8, as: SIMD4<Double>.self)
+                let r5 = interRaw.loadUnaligned(fromByteOffset: (5 &* 8 &+ x) &* 8, as: SIMD4<Double>.self)
+                let r6 = interRaw.loadUnaligned(fromByteOffset: (6 &* 8 &+ x) &* 8, as: SIMD4<Double>.self)
+                let r7 = interRaw.loadUnaligned(fromByteOffset: (7 &* 8 &+ x) &* 8, as: SIMD4<Double>.self)
+                for v in 0..<8 {
+                    let w = mat + (v &* 8)
+                    let sVec = ((((((r0 * w[0] + r1 * w[1]) + r2 * w[2]) + r3 * w[3]) + r4 * w[4]) + r5 * w[5]) + r6 * w[6]) + r7 * w[7]
+                    outTransposed[(x &+ 0) &* 8 &+ v] = Float(sVec[0])
+                    outTransposed[(x &+ 1) &* 8 &+ v] = Float(sVec[1])
+                    outTransposed[(x &+ 2) &* 8 &+ v] = Float(sVec[2])
+                    outTransposed[(x &+ 3) &* 8 &+ v] = Float(sVec[3])
+                }
             }
         }
     }

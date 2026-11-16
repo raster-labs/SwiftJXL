@@ -35,8 +35,14 @@ package struct VarDCTSmallAnalysis: Sendable {
             self.patch16B = [Float](repeating: 0, count: 16)
         }
 
+        @inline(__always)
         package func value(at index: Int) -> Float {
             output[index]
+        }
+
+        @inline(__always)
+        package func withOutputBuffer<R>(_ body: (UnsafeBufferPointer<Float>) throws -> R) rethrows -> R {
+            try output.withUnsafeBufferPointer(body)
         }
     }
 
@@ -115,6 +121,301 @@ package struct VarDCTSmallAnalysis: Sendable {
 
         default:
             throw VarDCTError.invalidTransform
+        }
+    }
+
+    /// Fast internal 8x8/sub-8x8 transform over pre-validated finite input with caller-managed checkpoints.
+    package func applyFast(
+        _ pixels: UnsafePointer<Float>,
+        identifier: Int,
+        workspace: inout Workspace
+    ) {
+        switch identifier {
+        case 0:
+            workspace.output.withUnsafeMutableBufferPointer { outBuf in
+                workspace.dct8Scratch.withFastPointers { inter, _ in
+                    dct8.applyFastTransposed8x8(pixels, into: outBuf.baseAddress!, inter: inter)
+                }
+            }
+        case 1:
+            workspace.output.withUnsafeMutableBufferPointer { outBuf in
+                forwardHornussFast(pixels, into: outBuf.baseAddress!)
+            }
+        case 2:
+            workspace.output.withUnsafeMutableBufferPointer { outBuf in
+                forwardDCT2x2Fast(pixels, into: outBuf.baseAddress!)
+            }
+        case 3:
+            forwardDCT4x4Fast(pixels, workspace: &workspace)
+        case 12:
+            forwardDCT4x8Fast(pixels, workspace: &workspace)
+        case 13:
+            forwardDCT8x4Fast(pixels, workspace: &workspace)
+        case 14, 15, 16, 17:
+            forwardAFVFast(pixels, kind: identifier - 14, workspace: &workspace)
+        default:
+            break
+        }
+    }
+
+    private func forwardHornussFast(_ pixels: UnsafePointer<Float>, into output: UnsafeMutablePointer<Float>) {
+        var dcs = (0.0, 0.0, 0.0, 0.0)
+        for qy in 0..<2 {
+            for qx in 0..<2 {
+                let anchor = Double(pixels[(qy * 4 + 1) * 8 + (qx * 4 + 1)])
+                var sum = 0.0
+                for sy in 0..<4 {
+                    for sx in 0..<4 {
+                        let v = Double(pixels[(qy * 4 + sy) * 8 + (qx * 4 + sx)])
+                        sum += v
+                        if sy == 0 && sx == 0 {
+                            output[(2 + qy) * 8 + (2 + qx)] = Float(v - anchor)
+                        } else if !(sy == 1 && sx == 1) {
+                            output[(sy * 2 + qy) * 8 + (sx * 2 + qx)] = Float(v - anchor)
+                        }
+                    }
+                }
+                let dc = sum * 0.0625
+                switch qy * 2 + qx {
+                case 0: dcs.0 = dc
+                case 1: dcs.1 = dc
+                case 2: dcs.2 = dc
+                default: dcs.3 = dc
+                }
+            }
+        }
+        let (m00, m01, m10, m11) = Self.dct2x2(dcs.0, dcs.1, dcs.2, dcs.3)
+        output[0] = Float(m00)
+        output[8] = Float(m01)
+        output[1] = Float(m10)
+        output[9] = Float(m11)
+    }
+
+    private func forwardDCT2x2Fast(_ pixels: UnsafePointer<Float>, into output: UnsafeMutablePointer<Float>) {
+        var dc2: (
+            Double, Double, Double, Double,
+            Double, Double, Double, Double,
+            Double, Double, Double, Double,
+            Double, Double, Double, Double
+        ) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        withUnsafeMutablePointer(to: &dc2) { tuplePtr in
+            let dc2Ptr = UnsafeMutableRawPointer(tuplePtr).assumingMemoryBound(to: Double.self)
+            for by in 0..<4 {
+                for bx in 0..<4 {
+                    let py = by * 2
+                    let px = bx * 2
+                    let (m00, m01, m10, m11) = Self.dct2x2(
+                        Double(pixels[(py + 0) * 8 + (px + 0)]),
+                        Double(pixels[(py + 0) * 8 + (px + 1)]),
+                        Double(pixels[(py + 1) * 8 + (px + 0)]),
+                        Double(pixels[(py + 1) * 8 + (px + 1)])
+                    )
+                    dc2Ptr[by * 4 + bx] = m00
+                    output[(4 + by) * 8 + bx] = Float(m01)
+                    output[by * 8 + (4 + bx)] = Float(m10)
+                    output[(4 + by) * 8 + (4 + bx)] = Float(m11)
+                }
+            }
+
+            var quadDCs = (0.0, 0.0, 0.0, 0.0)
+            for qy in 0..<2 {
+                for qx in 0..<2 {
+                    let baseY = qy * 2
+                    let baseX = qx * 2
+                    let (m00, m01, m10, m11) = Self.dct2x2(
+                        dc2Ptr[(baseY + 0) * 4 + (baseX + 0)],
+                        dc2Ptr[(baseY + 0) * 4 + (baseX + 1)],
+                        dc2Ptr[(baseY + 1) * 4 + (baseX + 0)],
+                        dc2Ptr[(baseY + 1) * 4 + (baseX + 1)]
+                    )
+                    switch qy * 2 + qx {
+                    case 0: quadDCs.0 = m00
+                    case 1: quadDCs.1 = m00
+                    case 2: quadDCs.2 = m00
+                    default: quadDCs.3 = m00
+                    }
+                    output[(2 + qy) * 8 + qx] = Float(m01)
+                    output[qy * 8 + (2 + qx)] = Float(m10)
+                    output[(2 + qy) * 8 + (2 + qx)] = Float(m11)
+                }
+            }
+
+            let (m00, m01, m10, m11) = Self.dct2x2(quadDCs.0, quadDCs.1, quadDCs.2, quadDCs.3)
+            output[0] = Float(m00)
+            output[8] = Float(m01)
+            output[1] = Float(m10)
+            output[9] = Float(m11)
+        }
+    }
+
+    private func forwardDCT4x4Fast(_ pixels: UnsafePointer<Float>, workspace: inout Workspace) {
+        var dcs = (0.0, 0.0, 0.0, 0.0)
+        workspace.patch16A.withUnsafeMutableBufferPointer { p16Buf in
+            let p16 = p16Buf.baseAddress!
+            workspace.output.withUnsafeMutableBufferPointer { outBuf in
+                let out = outBuf.baseAddress!
+                workspace.dct4x4Scratch.withFastPointers { inter, scratchOut in
+                    for qy in 0..<2 {
+                        for qx in 0..<2 {
+                            for sy in 0..<4 {
+                                for sx in 0..<4 {
+                                    p16[sy * 4 + sx] = pixels[(qy * 4 + sy) * 8 + (qx * 4 + sx)]
+                                }
+                            }
+                            dct4.applyFast(p16, into: scratchOut, inter: inter)
+                            let dc = Double(scratchOut[0])
+                            switch qy * 2 + qx {
+                            case 0: dcs.0 = dc
+                            case 1: dcs.1 = dc
+                            case 2: dcs.2 = dc
+                            default: dcs.3 = dc
+                            }
+                            for fy in 0..<4 {
+                                for fx in 0..<4 {
+                                    out[(fx * 2 + qy) * 8 + (fy * 2 + qx)] = scratchOut[fy * 4 + fx]
+                                }
+                            }
+                        }
+                    }
+                }
+                let (m00, m01, m10, m11) = Self.dct2x2(dcs.0, dcs.1, dcs.2, dcs.3)
+                out[0] = Float(m00)
+                out[8] = Float(m01)
+                out[1] = Float(m10)
+                out[9] = Float(m11)
+            }
+        }
+    }
+
+    private func forwardDCT4x8Fast(_ pixels: UnsafePointer<Float>, workspace: inout Workspace) {
+        workspace.output.withUnsafeMutableBufferPointer { outBuf in
+            let out = outBuf.baseAddress!
+            workspace.dct4x8Scratch.withFastPointers { inter, scratchOut in
+                dct4x8.applyFast(pixels, into: scratchOut, inter: inter)
+                let topDC = Double(scratchOut[0])
+                for fy in 0..<4 {
+                    let kyTop = fy * 2
+                    for fx in 0..<8 {
+                        out[kyTop * 8 + fx] = scratchOut[fy * 8 + fx]
+                    }
+                }
+                dct4x8.applyFast(pixels + 32, into: scratchOut, inter: inter)
+                let bottomDC = Double(scratchOut[0])
+                for fy in 0..<4 {
+                    let kyBottom = fy * 2 + 1
+                    for fx in 0..<8 {
+                        out[kyBottom * 8 + fx] = scratchOut[fy * 8 + fx]
+                    }
+                }
+                out[0] = Float(0.5 * (topDC + bottomDC))
+                out[8] = Float(0.5 * (topDC - bottomDC))
+            }
+        }
+    }
+
+    private func forwardDCT8x4Fast(_ pixels: UnsafePointer<Float>, workspace: inout Workspace) {
+        workspace.patch32A.withUnsafeMutableBufferPointer { pA in
+            workspace.patch32B.withUnsafeMutableBufferPointer { pB in
+                let aPtr = pA.baseAddress!, bPtr = pB.baseAddress!
+                for y in 0..<8 {
+                    for x in 0..<4 {
+                        aPtr[y * 4 + x] = pixels[y * 8 + x]
+                        bPtr[y * 4 + x] = pixels[y * 8 + (4 + x)]
+                    }
+                }
+                workspace.output.withUnsafeMutableBufferPointer { outBuf in
+                    let out = outBuf.baseAddress!
+                    workspace.dct8x4Scratch.withFastPointers { inter, scratchOut in
+                        dct8x4.applyFast(aPtr, into: scratchOut, inter: inter)
+                        let leftDC = Double(scratchOut[0])
+                        for fy in 0..<8 {
+                            for fx in 0..<4 {
+                                out[(fx * 2) * 8 + fy] = scratchOut[fy * 4 + fx]
+                            }
+                        }
+                        dct8x4.applyFast(bPtr, into: scratchOut, inter: inter)
+                        let rightDC = Double(scratchOut[0])
+                        for fy in 0..<8 {
+                            for fx in 0..<4 {
+                                out[(fx * 2 + 1) * 8 + fy] = scratchOut[fy * 4 + fx]
+                            }
+                        }
+                        out[0] = Float(0.5 * (leftDC + rightDC))
+                        out[8] = Float(0.5 * (leftDC - rightDC))
+                    }
+                }
+            }
+        }
+    }
+
+    private func forwardAFVFast(_ pixels: UnsafePointer<Float>, kind: Int, workspace: inout Workspace) {
+        let flipX = (kind & 1) != 0
+        let flipY = (kind & 2) != 0
+        let afvRowStart = flipY ? 4 : 0
+        let dct4x8RowStart = flipY ? 0 : 4
+        let afvColStart = flipX ? 4 : 0
+        let dct4x4ColStart = flipX ? 0 : 4
+
+        workspace.patch32A.withUnsafeMutableBufferPointer { p32Buf in
+            workspace.patch16A.withUnsafeMutableBufferPointer { p16ABuf in
+                workspace.patch16B.withUnsafeMutableBufferPointer { p16BBuf in
+                    let p32 = p32Buf.baseAddress!
+                    let p16A = p16ABuf.baseAddress!
+                    let p16B = p16BBuf.baseAddress!
+                    for sy in 0..<4 {
+                        let row4x8 = dct4x8RowStart + sy
+                        for x in 0..<8 {
+                            p32[sy * 8 + x] = pixels[row4x8 * 8 + x]
+                        }
+                        let rowAFV = afvRowStart + sy
+                        let dstAFVY = flipY ? (3 - sy) : sy
+                        for sx in 0..<4 {
+                            p16A[sy * 4 + sx] = pixels[rowAFV * 8 + (dct4x4ColStart + sx)]
+                            let dstAFVX = flipX ? (3 - sx) : sx
+                            p16B[dstAFVY * 4 + dstAFVX] = pixels[rowAFV * 8 + (afvColStart + sx)]
+                        }
+                    }
+
+                    workspace.output.withUnsafeMutableBufferPointer { outBuf in
+                        let out = outBuf.baseAddress!
+                        var dct4x8DC = 0.0
+                        workspace.dct4x8Scratch.withFastPointers { inter, scratchOut in
+                            dct4x8.applyFast(p32, into: scratchOut, inter: inter)
+                            dct4x8DC = Double(scratchOut[0])
+                            for fy in 0..<4 {
+                                let ky = fy * 2 + 1
+                                for fx in 0..<8 {
+                                    out[ky * 8 + fx] = scratchOut[fy * 8 + fx]
+                                }
+                            }
+                        }
+
+                        var dct4x4DC = 0.0
+                        workspace.dct4x4Scratch.withFastPointers { inter, scratchOut in
+                            dct4.applyFast(p16A, into: scratchOut, inter: inter)
+                            dct4x4DC = Double(scratchOut[0])
+                            for fy in 0..<4 {
+                                for fx in 0..<4 {
+                                    out[(fx * 2) * 8 + (fy * 2 + 1)] = scratchOut[fy * 4 + fx]
+                                }
+                            }
+                        }
+
+                        VarDCTAFV.forwardBasisFast(p16B, into: p16A)
+                        let afvDC = Double(p16A[0])
+                        for sy in 0..<4 {
+                            for sx in 0..<4 {
+                                out[(sy * 2) * 8 + (sx * 2)] = p16A[sy * 4 + sx]
+                            }
+                        }
+
+                        let afvHalfDC = 0.5 * (afvDC + dct4x4DC)
+                        out[1] = Float(0.5 * (afvDC - dct4x4DC))
+                        out[0] = Float(0.5 * (afvHalfDC + dct4x8DC))
+                        out[8] = Float(0.5 * (afvHalfDC - dct4x8DC))
+                    }
+                }
+            }
         }
     }
 

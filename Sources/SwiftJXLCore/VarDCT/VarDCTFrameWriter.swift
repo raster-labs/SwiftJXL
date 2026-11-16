@@ -171,54 +171,120 @@ struct VarDCTFrameWriter {
         let modularWriter = TokenStreamWriter(header: modularHeader, codebook: modularCodebook)
 
         // 2. Build AC token histogram across all HfPass groups
-        var acHisto = [Int](repeating: 0, count: postCfg.maxToken + 1)
+        let histoCount = postCfg.maxToken + 1
+        var acHisto = [Int](repeating: 0, count: histoCount)
         var acMaxTok = 0
 
-        @inline(__always)
-        func recordACToken(_ value: UInt32) {
-            let tok = Int(postCfg.encode(value).token)
-            acHisto[tok] += 1
-            if tok > acMaxTok { acMaxTok = tok }
-        }
+        try coefficients.ac[0].withUnsafeBufferPointer { ac0Buf in
+            try coefficients.ac[1].withUnsafeBufferPointer { ac1Buf in
+                try coefficients.ac[2].withUnsafeBufferPointer { ac2Buf in
+                    try transformAtBlock.withUnsafeBufferPointer { tAtBuf in
+                        try coefficients.transforms.withUnsafeBufferPointer { tBuf in
+                            let a0Addr = Int(bitPattern: ac0Buf.baseAddress!)
+                            let a1Addr = Int(bitPattern: ac1Buf.baseAddress!)
+                            let a2Addr = Int(bitPattern: ac2Buf.baseAddress!)
+                            let tAtAddr = Int(bitPattern: tAtBuf.baseAddress!)
+                            let tBaseAddr = Int(bitPattern: tBuf.baseAddress!)
+                            let immutableOrders = bucketOrders
+                            let localBudget = budget
 
-        for groupIndex in 0..<numGroups {
-            try budget.checkpoint()
-            let gx = groupIndex % groupsX
-            let gy = groupIndex / groupsX
-            let bx0 = gx * Self.acGroupBlocks
-            let by0 = gy * Self.acGroupBlocks
-            let groupBlocksW = min(Self.acGroupBlocks, blocksX - bx0)
-            let groupBlocksH = min(Self.acGroupBlocks, blocksY - by0)
+                            @Sendable
+                            func accumulateGroupRange(_ gStart: Int, _ gEnd: Int, into histo: UnsafeMutablePointer<Int>, maxTok: inout Int) throws {
+                                let a0 = UnsafePointer<Int32>(bitPattern: a0Addr)!
+                                let a1 = UnsafePointer<Int32>(bitPattern: a1Addr)!
+                                let a2 = UnsafePointer<Int32>(bitPattern: a2Addr)!
+                                let tAt = UnsafePointer<Int>(bitPattern: tAtAddr)!
+                                let tBase = UnsafePointer<VarDCTStrategyMap.Transform>(bitPattern: tBaseAddr)!
+                                let planePtrs = (a1, a0, a2) // stream order [Y=1, X=0, B=2]
 
-            for ly in 0..<groupBlocksH {
-                let by = by0 + ly
-                for lx in 0..<groupBlocksW {
-                    let bx = bx0 + lx
-                    let tIndex = transformAtBlock[by * blocksX + bx]
-                    if tIndex < 0 { continue }
-                    let transform = coefficients.transforms[tIndex]
-                    let covered = transform.coveredCells
-                    let coeffCount = covered * 64
-                    let baseOffset = transform.coefficientOffset
-                    let order = bucketOrders[transform.orderBucket]!
+                                for groupIndex in gStart..<gEnd {
+                                    try localBudget.checkpoint()
+                                    let gx = groupIndex % groupsX
+                                    let gy = groupIndex / groupsX
+                                    let bx0 = gx * Self.acGroupBlocks
+                                    let by0 = gy * Self.acGroupBlocks
+                                    let groupBlocksW = min(Self.acGroupBlocks, blocksX - bx0)
+                                    let groupBlocksH = min(Self.acGroupBlocks, blocksY - by0)
 
-                    for c in [1, 0, 2] {
-                        let plane = coefficients.ac[c]
-                        var nonZeros = 0
-                        for k in covered..<coeffCount {
-                            if plane[baseOffset + order[k]] != 0 {
-                                nonZeros += 1
+                                    for ly in 0..<groupBlocksH {
+                                        let rowOff = (by0 + ly) &* blocksX &+ bx0
+                                        for lx in 0..<groupBlocksW {
+                                            let tIndex = tAt[rowOff &+ lx]
+                                            if tIndex < 0 { continue }
+                                            let transform = tBase[tIndex]
+                                            let covered = transform.coveredCells
+                                            let coeffCount = covered &* 64
+                                            let baseOffset = transform.coefficientOffset
+                                            immutableOrders[transform.orderBucket]!.withUnsafeBufferPointer { ordBuf in
+                                                let ord = ordBuf.baseAddress!
+                                                for chIdx in 0..<3 {
+                                                    let plane = chIdx == 0 ? planePtrs.0 : (chIdx == 1 ? planePtrs.1 : planePtrs.2)
+                                                    var nonZeros = 0
+                                                    for k in covered..<coeffCount {
+                                                        if plane[baseOffset &+ ord[k]] != 0 {
+                                                            nonZeros &+= 1
+                                                        }
+                                                    }
+                                                    let nzTok = Int(postCfg.encode(UInt32(nonZeros)).token)
+                                                    histo[nzTok] &+= 1
+                                                    if nzTok > maxTok { maxTok = nzTok }
+                                                    if nonZeros == 0 { continue }
+                                                    var remaining = nonZeros
+                                                    for k in covered..<coeffCount {
+                                                        if remaining == 0 { break }
+                                                        let v = plane[baseOffset &+ ord[k]]
+                                                        let vTok = Int(postCfg.encode(ZigZag.pack(v)).token)
+                                                        histo[vTok] &+= 1
+                                                        if vTok > maxTok { maxTok = vTok }
+                                                        if v != 0 {
+                                                            remaining &-= 1
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        }
-                        recordACToken(UInt32(nonZeros))
-                        if nonZeros == 0 { continue }
-                        var remaining = nonZeros
-                        for k in covered..<coeffCount {
-                            if remaining == 0 { break }
-                            let v = plane[baseOffset + order[k]]
-                            recordACToken(ZigZag.pack(v))
-                            if v != 0 {
-                                remaining -= 1
+
+                            if budget.maximumWorkers > 1 && numGroups >= 4 {
+                                let histWorkers = min(8, min(budget.maximumWorkers, numGroups))
+                                let groupsPerWorker = (numGroups + histWorkers - 1) / histWorkers
+                                let histMutex = PackageMutex<([[Int]?], [Int], (any Error)?)>((Array(repeating: nil, count: histWorkers), Array(repeating: 0, count: histWorkers), nil))
+                                DispatchQueue.concurrentPerform(iterations: histWorkers) { w in
+                                    let g0 = w * groupsPerWorker
+                                    let g1 = min(numGroups, g0 + groupsPerWorker)
+                                    guard g0 < g1 else { return }
+                                    var localHisto = [Int](repeating: 0, count: histoCount)
+                                    var localMax = 0
+                                    do {
+                                        try localHisto.withUnsafeMutableBufferPointer { hBuf in
+                                            try accumulateGroupRange(g0, g1, into: hBuf.baseAddress!, maxTok: &localMax)
+                                        }
+                                        histMutex.withLock { state in
+                                            state.0[w] = localHisto
+                                            state.1[w] = localMax
+                                        }
+                                    } catch {
+                                        histMutex.withLock { state in
+                                            if state.2 == nil { state.2 = error }
+                                        }
+                                    }
+                                }
+                                let (partials, maxes, err) = histMutex.withLock { $0 }
+                                if let err { throw err }
+                                for w in 0..<histWorkers {
+                                    if maxes[w] > acMaxTok { acMaxTok = maxes[w] }
+                                    if let p = partials[w] {
+                                        for t in 0...maxes[w] {
+                                            acHisto[t] &+= p[t]
+                                        }
+                                    }
+                                }
+                            } else {
+                                try acHisto.withUnsafeMutableBufferPointer { hBuf in
+                                    try accumulateGroupRange(0, numGroups, into: hBuf.baseAddress!, maxTok: &acMaxTok)
+                                }
                             }
                         }
                     }

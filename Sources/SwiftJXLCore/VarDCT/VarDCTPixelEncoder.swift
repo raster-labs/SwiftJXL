@@ -3,6 +3,7 @@
 
 import Dispatch
 import Foundation
+import Synchronization
 
 /// Top-level clean-room VarDCT lossy pixel encoder.
 package enum VarDCTPixelEncoder {
@@ -296,130 +297,315 @@ package enum VarDCTPixelEncoder {
             }
         }
 
-        // Single-cell (8x8) analysis path
+        // Single-cell (8x8) analysis path — zero per-block heap allocations + multi-worker block-row parallelism
         let smallPlan = try VarDCTSmallAnalysis(budget: budget)
-        var smallWorkspace = try VarDCTSmallAnalysis.Workspace(budget: budget)
         let candidateIDs = smallStrategySearch ? VarDCTSmallAnalysis.supportedIdentifiers : [0]
-        var weightTables: [Int: [Float]] = [:]
+        var weightTables = [[Float]?](repeating: nil, count: 18)
         for id in candidateIDs {
             weightTables[id] = try VarDCTQuantWeights.make(identifier: id, rows: 8, columns: 8, budget: budget)
         }
-        let order = VarDCTFrameWriter.order
-        let dcScales = [4096.0, 512.0, 256.0].map { Double(globalScale) * 17.0 * $0 / 65536.0 }
+        let naturalOrder = VarDCTFrameWriter.order
+        let dcScale0 = Double(globalScale) * 17.0 * 4096.0 / 65536.0
+        let dcScale1 = Double(globalScale) * 17.0 * 512.0 / 65536.0
+        let dcScale2 = Double(globalScale) * 17.0 * 256.0 / 65536.0
         let acScaleBase = Double(globalScale) / 65536.0
+
+        let cellWorkers = (budget.maximumWorkers > 1 && blocksY >= 4 &&
+            budget.maximumWorkspaceBytes - budget.reservedWorkspaceBytes >= 512 * 1024)
+            ? min(8, min(budget.maximumWorkers, blocksY))
+            : 1
+
+        struct SingleCellScratch {
+            var small: VarDCTSmallAnalysis.Workspace
+            var patch: [Float]
+            var cflPatch: [Float]
+            var candAC: [Int32]
+            var bestAC: [Int32]
+            init(budget: ScalarOperationBudget) throws {
+                self.small = try VarDCTSmallAnalysis.Workspace(budget: budget)
+                try budget.reserveWorkspace(384 * MemoryLayout<Float>.stride + 384 * MemoryLayout<Int32>.stride)
+                self.patch = [Float](repeating: 0, count: 192)
+                self.cflPatch = [Float](repeating: 0, count: 192)
+                self.candAC = [Int32](repeating: 0, count: 192)
+                self.bestAC = [Int32](repeating: 0, count: 192)
+            }
+        }
+
+        var cellScratches: [SingleCellScratch] = []
+        cellScratches.reserveCapacity(cellWorkers)
+        for _ in 0..<cellWorkers {
+            cellScratches.append(try SingleCellScratch(budget: budget))
+        }
 
         var strategies = [Int32](repeating: 0, count: totalBlocks)
         var quantAC = [Int32](repeating: 5, count: totalBlocks)
-        var transforms: [VarDCTStrategyMap.Transform] = []
-        transforms.reserveCapacity(totalBlocks)
-        var dc = [
-            [Int32](repeating: 0, count: totalBlocks),
-            [Int32](repeating: 0, count: totalBlocks),
-            [Int32](repeating: 0, count: totalBlocks)
-        ]
-        var ac = [
-            [Int32](repeating: 0, count: totalBlocks * 64),
-            [Int32](repeating: 0, count: totalBlocks * 64),
-            [Int32](repeating: 0, count: totalBlocks * 64)
-        ]
+        var dc0 = [Int32](repeating: 0, count: totalBlocks)
+        var dc1 = [Int32](repeating: 0, count: totalBlocks)
+        var dc2 = [Int32](repeating: 0, count: totalBlocks)
+        var ac0 = [Int32](repeating: 0, count: totalBlocks * 64)
+        var ac1 = [Int32](repeating: 0, count: totalBlocks * 64)
+        var ac2 = [Int32](repeating: 0, count: totalBlocks * 64)
 
-        var patch = [[Float]](repeating: [Float](repeating: 0, count: 64), count: 3)
-        var cflPatch = [[Float]](repeating: [Float](repeating: 0, count: 64), count: 3)
+        let immutableWeights = weightTables
+        let immutablePlanes = planes
 
-        for by in 0..<blocksY {
-            try budget.checkpoint()
-            for bx in 0..<blocksX {
-                let block = by * blocksX + bx
-                for c in 0..<3 {
-                    let plane = planes[c]
-                    for y in 0..<8 {
-                        let sy = min(height - 1, by * 8 + y) * width
-                        for x in 0..<8 {
-                            let sx = min(width - 1, bx * 8 + x)
-                            let v = plane[sy + sx]
-                            patch[c][y * 8 + x] = v
-                        }
-                    }
-                }
-                cflPatch[0] = patch[0]
-                cflPatch[1] = patch[1]
-                for i in 0..<64 {
-                    cflPatch[2][i] = patch[2][i] - patch[1][i]
-                }
+        try immutablePlanes[0].withUnsafeBufferPointer { p0Buf in
+            try immutablePlanes[1].withUnsafeBufferPointer { p1Buf in
+                try immutablePlanes[2].withUnsafeBufferPointer { p2Buf in
+                    try strategies.withUnsafeMutableBufferPointer { stratBuf in
+                        try quantAC.withUnsafeMutableBufferPointer { qfBuf in
+                            try dc0.withUnsafeMutableBufferPointer { d0Buf in
+                                try dc1.withUnsafeMutableBufferPointer { d1Buf in
+                                    try dc2.withUnsafeMutableBufferPointer { d2Buf in
+                                        try ac0.withUnsafeMutableBufferPointer { a0Buf in
+                                            try ac1.withUnsafeMutableBufferPointer { a1Buf in
+                                                try ac2.withUnsafeMutableBufferPointer { a2Buf in
+                                                    let p0Addr = Int(bitPattern: p0Buf.baseAddress!)
+                                                    let p1Addr = Int(bitPattern: p1Buf.baseAddress!)
+                                                    let p2Addr = Int(bitPattern: p2Buf.baseAddress!)
+                                                    let stratAddr = Int(bitPattern: stratBuf.baseAddress!)
+                                                    let qfAddr = Int(bitPattern: qfBuf.baseAddress!)
+                                                    let d0Addr = Int(bitPattern: d0Buf.baseAddress!)
+                                                    let d1Addr = Int(bitPattern: d1Buf.baseAddress!)
+                                                    let d2Addr = Int(bitPattern: d2Buf.baseAddress!)
+                                                    let a0Addr = Int(bitPattern: a0Buf.baseAddress!)
+                                                    let a1Addr = Int(bitPattern: a1Buf.baseAddress!)
+                                                    let a2Addr = Int(bitPattern: a2Buf.baseAddress!)
 
-                let qf: Int32 = adaptiveQuantisation
-                    ? try VarDCTEncoderPreparation.quantisation(patch, distance: distance)
-                    : 5
-                quantAC[block] = qf
-                let qScale = acScaleBase * Double(qf)
+                                                    @Sendable
+                                                    func processBlockRow(_ by: Int, scratch: inout SingleCellScratch) throws {
+                                                        try budget.checkpoint()
+                                                        let p0 = UnsafePointer<Float>(bitPattern: p0Addr)!
+                                                        let p1 = UnsafePointer<Float>(bitPattern: p1Addr)!
+                                                        let p2 = UnsafePointer<Float>(bitPattern: p2Addr)!
+                                                        let stratOut = UnsafeMutablePointer<Int32>(bitPattern: stratAddr)!
+                                                        let qfOut = UnsafeMutablePointer<Int32>(bitPattern: qfAddr)!
+                                                        let d0Out = UnsafeMutablePointer<Int32>(bitPattern: d0Addr)!
+                                                        let d1Out = UnsafeMutablePointer<Int32>(bitPattern: d1Addr)!
+                                                        let d2Out = UnsafeMutablePointer<Int32>(bitPattern: d2Addr)!
+                                                        let a0Out = UnsafeMutablePointer<Int32>(bitPattern: a0Addr)!
+                                                        let a1Out = UnsafeMutablePointer<Int32>(bitPattern: a1Addr)!
+                                                        let a2Out = UnsafeMutablePointer<Int32>(bitPattern: a2Addr)!
 
-                var bestID = 0
-                var bestCost = Double.infinity
-                var bestDC = (Int32(0), Int32(0), Int32(0))
-                var bestAC = [[Int32]](repeating: [Int32](repeating: 0, count: 64), count: 3)
+                                                        try naturalOrder.withUnsafeBufferPointer { natOrdBuf in
+                                                                let natOrd = natOrdBuf.baseAddress!
 
-                for id in candidateIDs {
-                    let weights = weightTables[id]!
-                    var candDC = (Int32(0), Int32(0), Int32(0))
-                    var candAC = [[Int32]](repeating: [Int32](repeating: 0, count: 64), count: 3)
-                    var nonZeros = 0
-                    var acEnergy = 0.0
+                                                                for bx in 0..<blocksX {
+                                                                    let block = by &* blocksX &+ bx
+                                                                    try scratch.patch.withUnsafeMutableBufferPointer { patchBuf in
+                                                                        let patchPtr = patchBuf.baseAddress!
+                                                                        let baseX = bx &* 8
+                                                                        for y in 0..<8 {
+                                                                            let sy = min(height - 1, by &* 8 &+ y) &* width
+                                                                            let rOff = y &* 8
+                                                                            if baseX + 8 <= width {
+                                                                                let sBase = sy &+ baseX
+                                                                                for x in 0..<8 {
+                                                                                    let v0 = p0[sBase &+ x]
+                                                                                    let v1 = p1[sBase &+ x]
+                                                                                    let v2 = p2[sBase &+ x]
+                                                                                    guard v0.isFinite, v1.isFinite, v2.isFinite else {
+                                                                                        throw VarDCTError.nonFiniteSample
+                                                                                    }
+                                                                                    patchPtr[rOff &+ x] = v0
+                                                                                    patchPtr[64 &+ rOff &+ x] = v1
+                                                                                    patchPtr[128 &+ rOff &+ x] = v2
+                                                                                }
+                                                                            } else {
+                                                                                for x in 0..<8 {
+                                                                                    let idx = sy &+ min(width - 1, baseX &+ x)
+                                                                                    let v0 = p0[idx]
+                                                                                    let v1 = p1[idx]
+                                                                                    let v2 = p2[idx]
+                                                                                    guard v0.isFinite, v1.isFinite, v2.isFinite else {
+                                                                                        throw VarDCTError.nonFiniteSample
+                                                                                    }
+                                                                                    patchPtr[rOff &+ x] = v0
+                                                                                    patchPtr[64 &+ rOff &+ x] = v1
+                                                                                    patchPtr[128 &+ rOff &+ x] = v2
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
 
-                    for c in 0..<3 {
-                        try cflPatch[c].withUnsafeBufferPointer { buf in
-                            try smallPlan.apply(buf, identifier: id, workspace: &smallWorkspace)
-                        }
-                        let dcVal = Int32((Double(smallWorkspace.value(at: 0)) * dcScales[c]).rounded())
-                        switch c {
-                        case 0: candDC.0 = dcVal
-                        case 1: candDC.1 = dcVal
-                        default: candDC.2 = dcVal
-                        }
-                        let wBase = c * 64
-                        for k in 1..<64 {
-                            let pos = order[k]
-                            let q = Int32((Double(smallWorkspace.value(at: pos)) * Double(weights[wBase + pos]) * qScale).rounded())
-                            candAC[c][pos] = q
-                            if q != 0 {
-                                nonZeros += 1
-                                acEnergy += abs(Double(q))
+                                                                    scratch.patch.withUnsafeBufferPointer { patchBuf in
+                                                                        scratch.cflPatch.withUnsafeMutableBufferPointer { cflBuf in
+                                                                            let src = patchBuf.baseAddress!
+                                                                            let dst = cflBuf.baseAddress!
+                                                                            dst.update(from: src, count: 128)
+                                                                            for i in 0..<64 {
+                                                                                dst[128 &+ i] = src[128 &+ i] - src[64 &+ i]
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                    let qf: Int32 = adaptiveQuantisation
+                                                                        ? try scratch.patch.withUnsafeBufferPointer {
+                                                                            try VarDCTEncoderPreparation.quantisation($0, distance: distance)
+                                                                        }
+                                                                        : 5
+                                                                    qfOut[block] = qf
+                                                                    let qScale = acScaleBase * Double(qf)
+
+                                                                    if candidateIDs.count == 1 && candidateIDs[0] == 0 {
+                                                                        let acOffset = block &* 64
+                                                                        immutableWeights[0]!.withUnsafeBufferPointer { wBuf in
+                                                                            let weights = wBuf.baseAddress!
+                                                                            for c in 0..<3 {
+                                                                                scratch.cflPatch.withUnsafeBufferPointer { cflBuf in
+                                                                                    smallPlan.applyFast(cflBuf.baseAddress! + (c &* 64), identifier: 0, workspace: &scratch.small)
+                                                                                }
+                                                                                scratch.small.withOutputBuffer { outBuf in
+                                                                                    let coeffs = outBuf.baseAddress!
+                                                                                    let dScale = (c == 0) ? dcScale0 : (c == 1 ? dcScale1 : dcScale2)
+                                                                                    let dcVal = Int32((Double(coeffs[0]) * dScale).rounded())
+                                                                                    let aOut: UnsafeMutablePointer<Int32>
+                                                                                    if c == 0 {
+                                                                                        d0Out[block] = dcVal; aOut = a0Out
+                                                                                    } else if c == 1 {
+                                                                                        d1Out[block] = dcVal; aOut = a1Out
+                                                                                    } else {
+                                                                                        d2Out[block] = dcVal; aOut = a2Out
+                                                                                    }
+                                                                                    let wBase = c &* 64
+                                                                                    aOut[acOffset] = 0
+                                                                                    for k in 1..<64 {
+                                                                                        let pos = natOrd[k]
+                                                                                        aOut[acOffset &+ pos] = Int32((Double(coeffs[pos]) * Double(weights[wBase &+ pos]) * qScale).rounded())
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        stratOut[block] = 0
+                                                                    } else {
+                                                                        var bestID = 0
+                                                                        var bestCost = Double.infinity
+                                                                        var bestDC = (Int32(0), Int32(0), Int32(0))
+
+                                                                        for id in candidateIDs {
+                                                                            var candDC = (Int32(0), Int32(0), Int32(0))
+                                                                            var nonZeros = 0
+                                                                            var acEnergy = 0.0
+
+                                                                            immutableWeights[id]!.withUnsafeBufferPointer { wBuf in
+                                                                                let weights = wBuf.baseAddress!
+                                                                                scratch.candAC.withUnsafeMutableBufferPointer { candBuf in
+                                                                                    let candPtr = candBuf.baseAddress!
+                                                                                    for c in 0..<3 {
+                                                                                        scratch.cflPatch.withUnsafeBufferPointer { cflBuf in
+                                                                                            smallPlan.applyFast(cflBuf.baseAddress! + (c &* 64), identifier: id, workspace: &scratch.small)
+                                                                                        }
+                                                                                        scratch.small.withOutputBuffer { outBuf in
+                                                                                            let coeffs = outBuf.baseAddress!
+                                                                                            let dScale = (c == 0) ? dcScale0 : (c == 1 ? dcScale1 : dcScale2)
+                                                                                            let dcVal = Int32((Double(coeffs[0]) * dScale).rounded())
+                                                                                            if c == 0 { candDC.0 = dcVal }
+                                                                                            else if c == 1 { candDC.1 = dcVal }
+                                                                                            else { candDC.2 = dcVal }
+                                                                                            let wBase = c &* 64
+                                                                                            candPtr[wBase] = 0
+                                                                                            for k in 1..<64 {
+                                                                                                let pos = natOrd[k]
+                                                                                                let q = Int32((Double(coeffs[pos]) * Double(weights[wBase &+ pos]) * qScale).rounded())
+                                                                                                candPtr[wBase &+ pos] = q
+                                                                                                if q != 0 {
+                                                                                                    nonZeros &+= 1
+                                                                                                    acEnergy += abs(Double(q))
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+
+                                                                            let penalty = (id == 0) ? 0.0 : 1.5
+                                                                            let cost = Double(nonZeros) * 3.5 + acEnergy * 0.25 + penalty
+                                                                            if cost + (id == 0 ? 0.0 : 0.5) < bestCost {
+                                                                                bestCost = cost
+                                                                                bestID = id
+                                                                                bestDC = candDC
+                                                                                swap(&scratch.bestAC, &scratch.candAC)
+                                                                            }
+                                                                        }
+
+                                                                        stratOut[block] = Int32(bestID)
+                                                                        d0Out[block] = bestDC.0
+                                                                        d1Out[block] = bestDC.1
+                                                                        d2Out[block] = bestDC.2
+                                                                        let acOffset = block &* 64
+                                                                        scratch.bestAC.withUnsafeBufferPointer { bestBuf in
+                                                                            let bPtr = bestBuf.baseAddress!
+                                                                            a0Out.advanced(by: acOffset).update(from: bPtr, count: 64)
+                                                                            a1Out.advanced(by: acOffset).update(from: bPtr.advanced(by: 64), count: 64)
+                                                                            a2Out.advanced(by: acOffset).update(from: bPtr.advanced(by: 128), count: 64)
+                                                                        }
+                                                                    }
+                                                                }
+                                                        }
+                                                    }
+
+                                                    if cellWorkers <= 1 {
+                                                        for by in 0..<blocksY {
+                                                            try processBlockRow(by, scratch: &cellScratches[0])
+                                                        }
+                                                    } else {
+                                                        let audit = ScalarStorageAudit.current
+                                                        let nextRow = Atomic<Int>(0)
+                                                        let errMutex = PackageMutex<(any Error)?>(nil)
+                                                        cellScratches.withUnsafeMutableBufferPointer { scBuf in
+                                                            let scAddr = Int(bitPattern: scBuf.baseAddress!)
+                                                            DispatchQueue.concurrentPerform(iterations: cellWorkers) { w in
+                                                                audit?.workerStarted()
+                                                                defer { audit?.workerCompleted() }
+                                                                let sPtr = UnsafeMutablePointer<SingleCellScratch>(bitPattern: scAddr)! + w
+                                                                while true {
+                                                                    if errMutex.withLock({ $0 != nil }) { break }
+                                                                    let by = nextRow.wrappingAdd(1, ordering: .relaxed).oldValue
+                                                                    if by >= blocksY { break }
+                                                                    do {
+                                                                        try processBlockRow(by, scratch: &sPtr.pointee)
+                                                                    } catch {
+                                                                        errMutex.withLock { if $0 == nil { $0 = error } }
+                                                                        break
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        if let err = errMutex.withLock({ $0 }) { throw err }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-
-                    let penalty = (id == 0) ? 0.0 : 1.5
-                    let cost = Double(nonZeros) * 3.5 + acEnergy * 0.25 + penalty
-                    if cost + (id == 0 ? 0.0 : 0.5) < bestCost {
-                        bestCost = cost
-                        bestID = id
-                        bestDC = candDC
-                        bestAC = candAC
-                    }
                 }
+            }
+        }
 
-                strategies[block] = Int32(bestID)
-                dc[0][block] = bestDC.0
-                dc[1][block] = bestDC.1
-                dc[2][block] = bestDC.2
-                let acOffset = block * 64
-                for c in 0..<3 {
-                    for i in 0..<64 {
-                        ac[c][acOffset + i] = bestAC[c][i]
-                    }
-                }
+        var transforms: [VarDCTStrategyMap.Transform] = []
+        transforms.reserveCapacity(totalBlocks)
+        for by in 0..<blocksY {
+            let rowBase = by * blocksX
+            for bx in 0..<blocksX {
+                let block = rowBase + bx
                 transforms.append(
                     VarDCTStrategyMap.Transform(
-                        identifier: bestID,
+                        identifier: Int(strategies[block]),
                         x: bx,
                         y: by,
                         cellsX: 1,
                         cellsY: 1,
-                        quantisation: UInt32(qf),
-                        coefficientOffset: acOffset
+                        quantisation: UInt32(quantAC[block]),
+                        coefficientOffset: block * 64
                     )
                 )
             }
         }
+        let dc = [dc0, dc1, dc2]
+        let ac = [ac0, ac1, ac2]
 
         let coefficients = Coefficients(
             width: width,

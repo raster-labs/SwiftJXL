@@ -39,6 +39,17 @@ package struct VarDCTLargeAnalysis: Sendable {
         package func dcValue(at index: Int) -> Float {
             dc[index]
         }
+
+        @inline(__always)
+        package func withBuffers<R>(
+            _ body: (UnsafeBufferPointer<Float>, UnsafeBufferPointer<Float>) throws -> R
+        ) rethrows -> R {
+            try coefficients.withUnsafeBufferPointer { cBuf in
+                try dc.withUnsafeBufferPointer { dBuf in
+                    try body(cBuf, dBuf)
+                }
+            }
+        }
     }
 
     package let identifier: Int
@@ -179,6 +190,69 @@ package struct VarDCTLargeAnalysis: Sendable {
                     }
                 }
                 workspace.dc[y * cellsX + x] = Float(sum)
+            }
+        }
+    }
+
+    /// Fast internal multi-cell forward DCT + LLF DC extraction over pre-validated finite input.
+    package func applyFast(_ pixels: UnsafePointer<Float>, workspace: inout Workspace) {
+        let r = rows
+        let c = columns
+        let transpose = r >= c
+        let cellsX = c / 8
+        let cellsY = r / 8
+        let root2 = 2.0.squareRoot()
+
+        workspace.dctScratch.withFastPointers { inter, dctOut in
+            dct.applyFast(pixels, into: dctOut, inter: inter)
+
+            workspace.coefficients.withUnsafeMutableBufferPointer { coeffBuf in
+                let coeff = coeffBuf.baseAddress!
+                if transpose {
+                    for y in 0..<r {
+                        let rowBase = y &* c
+                        for x in 0..<c {
+                            coeff[x &* r &+ y] = dctOut[rowBase &+ x]
+                        }
+                    }
+                } else {
+                    coeff.update(from: dctOut, count: r &* c)
+                }
+            }
+
+            sx.withUnsafeBufferPointer { sxBuf in
+                sy.withUnsafeBufferPointer { syBuf in
+                    cosX.withUnsafeBufferPointer { cxBuf in
+                        cosY.withUnsafeBufferPointer { cyBuf in
+                            workspace.dc.withUnsafeMutableBufferPointer { dcBuf in
+                                let sxPtr = sxBuf.baseAddress!
+                                let syPtr = syBuf.baseAddress!
+                                let cxPtr = cxBuf.baseAddress!
+                                let cyPtr = cyBuf.baseAddress!
+                                let dcPtr = dcBuf.baseAddress!
+                                for y in 0..<cellsY {
+                                    let cyBase = y &* cellsY
+                                    for x in 0..<cellsX {
+                                        let cxBase = x &* cellsX
+                                        var sum = 0.0
+                                        for v in 0..<cellsY {
+                                            let vRow = v &* c
+                                            let normV = v == 0 ? 1.0 : root2
+                                            let syV = syPtr[v]
+                                            let cosYV = cyPtr[cyBase &+ v]
+                                            for u in 0..<cellsX {
+                                                let value = Double(dctOut[vRow &+ u]) / (sxPtr[u] * syV)
+                                                let normalisation = (u == 0 ? 1.0 : root2) * normV
+                                                sum += value * normalisation * cxPtr[cxBase &+ u] * cosYV
+                                            }
+                                        }
+                                        dcPtr[y &* cellsX &+ x] = Float(sum)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

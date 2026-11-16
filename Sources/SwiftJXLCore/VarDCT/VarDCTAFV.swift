@@ -216,6 +216,52 @@ package enum VarDCTAFV {
         return output
     }
 
+    private static let flatCornerBasis: [Double] = cornerBasis.flatMap { $0 }
+
+    /// Projects a pre-validated 4x4 corner block onto the 16 forward AFV basis vectors without per-block syscalls.
+    @inline(__always)
+    package static func forwardBasisFast(
+        _ corner: UnsafePointer<Float>,
+        into output: UnsafeMutablePointer<Float>
+    ) {
+        var c0: Double = 0, c1: Double = 0, c2: Double = 0, c3: Double = 0
+        var c4: Double = 0, c5: Double = 0, c6: Double = 0, c7: Double = 0
+        var c8: Double = 0, c9: Double = 0, c10: Double = 0, c11: Double = 0
+        var c12: Double = 0, c13: Double = 0, c14: Double = 0, c15: Double = 0
+        c0 = Double(corner[0]); c1 = Double(corner[1]); c2 = Double(corner[2]); c3 = Double(corner[3])
+        c4 = Double(corner[4]); c5 = Double(corner[5]); c6 = Double(corner[6]); c7 = Double(corner[7])
+        c8 = Double(corner[8]); c9 = Double(corner[9]); c10 = Double(corner[10]); c11 = Double(corner[11])
+        c12 = Double(corner[12]); c13 = Double(corner[13]); c14 = Double(corner[14]); c15 = Double(corner[15])
+
+        let exactDC = (((((((((((((((c0 + c1) + c2) + c3) + c4) + c5) + c6) + c7) + c8) + c9) + c10) + c11) + c12) + c13) + c14) + c15)
+        output[0] = Float(exactDC * 0.0625)
+
+        flatCornerBasis.withUnsafeBufferPointer { basisBuf in
+            let bPtr = basisBuf.baseAddress!
+            for k in 1..<16 {
+                let row = bPtr + (k &* 16)
+                var dot = 0.0
+                dot += c0 * row[0]
+                dot += c1 * row[1]
+                dot += c2 * row[2]
+                dot += c3 * row[3]
+                dot += c4 * row[4]
+                dot += c5 * row[5]
+                dot += c6 * row[6]
+                dot += c7 * row[7]
+                dot += c8 * row[8]
+                dot += c9 * row[9]
+                dot += c10 * row[10]
+                dot += c11 * row[11]
+                dot += c12 * row[12]
+                dot += c13 * row[13]
+                dot += c14 * row[14]
+                dot += c15 * row[15]
+                output[k] = Float(dot)
+            }
+        }
+    }
+
     /// Projects a 4x4 corner block onto the 16 forward AFV basis vectors.
     package static func forwardBasis(
         _ corner: UnsafeBufferPointer<Float>,
@@ -231,19 +277,6 @@ package enum VarDCTAFV {
                 throw VarDCTError.invalidTransform
             }
         }
-        var dcSum = 0.0
-        for i in 0..<16 {
-            dcSum += Double(corner[i])
-        }
-        output[0] = Float(dcSum * 0.0625)
-
-        for k in 1..<16 {
-            let basis = cornerBasis[k]
-            var dot = 0.0
-            for i in 0..<16 {
-                dot += Double(corner[i]) * basis[i]
-            }
-            output[k] = Float(dot)
-        }
+        forwardBasisFast(corner.baseAddress!, into: output.baseAddress!)
     }
 }
