@@ -247,11 +247,18 @@ struct VarDCTFrameWriter {
                                 }
                             }
 
-                            if budget.maximumWorkers > 1 && numGroups >= 4 {
-                                let histWorkers = min(8, min(budget.maximumWorkers, numGroups))
+                            let candidateHistWorkers = min(8, min(budget.maximumWorkers, numGroups))
+                            let histWorkspaceBytes = candidateHistWorkers * histoCount * MemoryLayout<Int>.stride
+                            if budget.maximumWorkers > 1 && numGroups >= 4 &&
+                                budget.maximumWorkspaceBytes - budget.reservedWorkspaceBytes >= histWorkspaceBytes {
+                                let histWorkers = candidateHistWorkers
+                                try budget.reserveWorkspace(histWorkspaceBytes)
+                                let audit = ScalarStorageAudit.current
                                 let groupsPerWorker = (numGroups + histWorkers - 1) / histWorkers
                                 let histMutex = PackageMutex<([[Int]?], [Int], (any Error)?)>((Array(repeating: nil, count: histWorkers), Array(repeating: 0, count: histWorkers), nil))
                                 DispatchQueue.concurrentPerform(iterations: histWorkers) { w in
+                                    audit?.workerStarted()
+                                    defer { audit?.workerCompleted() }
                                     let g0 = w * groupsPerWorker
                                     let g1 = min(numGroups, g0 + groupsPerWorker)
                                     guard g0 < g1 else { return }
@@ -374,6 +381,7 @@ struct VarDCTFrameWriter {
         let alphaInPass = coefficients.hasAlpha && !alphaIsGlobal
         if !singleSection && !alphaInPass && budget.maximumWorkers > 1 && numGroups >= 4 {
             let passWorkers = min(8, min(budget.maximumWorkers, numGroups))
+            let audit = ScalarStorageAudit.current
             let encodingWork = ScalarEncodingWork.current
             let immutableCoeffs = coefficients
             let immutableBudget = budget
@@ -384,6 +392,8 @@ struct VarDCTFrameWriter {
             let resultsMutex = PackageMutex<([Data?], (any Error)?)>((Array(repeating: nil, count: numGroups), nil))
 
             DispatchQueue.concurrentPerform(iterations: passWorkers) { w in
+                audit?.workerStarted()
+                defer { audit?.workerCompleted() }
                 let gStart = w * groupsPerWorker
                 let gEnd = min(numGroups, gStart + groupsPerWorker)
                 guard gStart < gEnd else { return }

@@ -2,7 +2,7 @@
 import Foundation
 import Testing
 import SwiftJXL
-import SwiftJXLCore
+@testable import SwiftJXLCore
 
 @Suite("Synchronous APIs, extended VarDCT geometry, and 1T vs 8T parity")
 struct ParallelAccelerationTests {
@@ -186,6 +186,44 @@ struct ParallelAccelerationTests {
         }
         await #expect(throws: CancellationError.self) {
             _ = try await preCancelled.value
+        }
+    }
+
+    @Test func varDCTSingleCellAndLargeGridHierarchical1TAnd8TBitExactParity() throws {
+        // 519x517 -> blocks 65x65 -> 9x9 (81) 64x64 tiles (`isLargeGrid == true`) and 3x3 (9) 256x256 AC groups (`numGroups >= 4`)
+        let source = try makeRGB8Image(width: 519, height: 517)
+        let decoder = try Decoder()
+        let opt1 = EncodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 1, deadlineSeconds: 1800))
+        let opt8 = EncodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 8, deadlineSeconds: 1800))
+        let dec1 = DecodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 1, deadlineSeconds: 1800))
+        let dec8 = DecodeOptions(resourceLimits: try ResourceLimits(maximumWorkers: 8, deadlineSeconds: 1800))
+
+        for mode in [VarDCTStrategySearch.singleCell, VarDCTStrategySearch.hierarchical] {
+            let varOpts = try VarDCTEncodingOptions(distance: 1.2, strategySearch: mode)
+            let encoder = try Encoder(configuration: .init(mode: .lossy, codecOptions: .init(varDCT: varOpts)))
+
+            let serialAudit = ScalarStorageAudit()
+            let parallelAudit = ScalarStorageAudit()
+            let enc1 = try ScalarStorageAudit.$current.withValue(serialAudit) {
+                try encoder.encodeSynchronously(source, options: opt1)
+            }
+            let enc8 = try ScalarStorageAudit.$current.withValue(parallelAudit) {
+                try encoder.encodeSynchronously(source, options: opt8)
+            }
+            #expect(enc1.data == enc8.data)
+            #expect(serialAudit.snapshot.workerJobsStarted == 0)
+            let snap = parallelAudit.snapshot
+            #expect(snap.workerJobsStarted >= 8)
+            #expect(snap.workerJobsCompleted == snap.workerJobsStarted)
+            #expect(snap.activeWorkerJobs == 0)
+
+            let out1 = try decoder.decodeSynchronously(enc8.data, options: dec1)
+            let out8 = try decoder.decodeSynchronously(enc8.data, options: dec8)
+            try out1.image.storage.withUnsafeBytes { raw1 in
+                try out8.image.storage.withUnsafeBytes { raw8 in
+                    #expect(Data(raw1) == Data(raw8))
+                }
+            }
         }
     }
 }
